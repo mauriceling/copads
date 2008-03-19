@@ -5,7 +5,7 @@ Copyright (c) Maurice H.T. Ling <mauriceling@acm.org>
 Date created: 17th August 2005
 """
 
-from JMathsExceptions import DistributionParameterError
+from CopadsExceptions import DistributionParameterError
 
 class Distribution:
     """

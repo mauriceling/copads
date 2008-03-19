@@ -6,8 +6,8 @@ Date created: 17th August 2005
 """
 
 from Matrix import Matrix
-from JMathsExceptions import VertexNotFoundError, NotAdjacencyGraphMatrixError
-from JMathsExceptions import GraphEdgeSizeMismatchError, GraphParameterError
+from CopadsExceptions import VertexNotFoundError, NotAdjacencyGraphMatrixError
+from CopadsExceptions import GraphEdgeSizeMismatchError, GraphParameterError
 
 
 class Graph:

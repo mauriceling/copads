@@ -6,7 +6,7 @@ Date created: 17th August 2005
 """
 
 import string
-from JMathsExceptions import StringDistanceInputSizeError
+from CopadsExceptions import StringDistanceInputSizeError
 
 def Jaccard(original = '', test = ''):
     """

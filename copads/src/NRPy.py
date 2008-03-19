@@ -39,8 +39,8 @@ is to own a copy of both NRP and NRC2.
 
 import math
 import Constants
-from JMathsExceptions import FunctionParameterTypeError
-from JMathsExceptions import FunctionParameterValueError
+from CopadsExceptions import FunctionParameterTypeError
+from CopadsExceptions import FunctionParameterValueError
 
 
 def adi(): 

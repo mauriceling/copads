@@ -1,7 +1,7 @@
 """
-File containing all the exceptions definied for JMaths. 
+File containing all the exceptions defined for CoPADS. 
 
-JMathsError
+CopadsError
 |- MatrixError
 |  |- MatrixArithmeticError
 |  |  |- MatrixMultiplicationError
@@ -33,12 +33,12 @@ Copyright (c) Maurice H.T. Ling <mauriceling@acm.org>
 Date created: 1st May 2005
 """
 
-class JMathsError(Exception):
-    """Base class for all JMaths-defined exceptions."""
+class CopadsError(Exception):
+    """Base class for all Copads-defined exceptions."""
     pass
         
 
-class MatrixError(JMathsError):
+class MatrixError(CopadsError):
     """Abstract parent for all matrix exceptions"""
     pass
 
@@ -101,7 +101,7 @@ class MatrixDeterminantError(MatrixSquareError):
     def __init__(self): MatrixSquareError.__init__(self, "The determinant is")
         
     
-class GraphError(JMathsError):
+class GraphError(CopadsError):
     """Abstract parent for all graph exceptions"""
     pass
 
@@ -144,7 +144,7 @@ class GraphParameterError(GraphError):
     def __str__(self): return self.msg
     
 
-class StatisticsError(JMathsError):
+class StatisticsError(CopadsError):
     """Abstract parent for all statistics exceptions
     """
     pass
@@ -164,7 +164,7 @@ class DistributionParameterError(DistributionError):
     def __init__(self, msg): self.msg = msg
     def __str__(self): return self.msg
     
-class StringDistanceError(JMathsError):
+class StringDistanceError(CopadsError):
     """Abstract parent for all exceptions related to calculating distances between strings."""
     pass
     
@@ -175,7 +175,7 @@ class StringDistanceInputSizeError(StringDistanceError):
     def __init__(self, msg): self.msg = msg
     def __str__(self): return self.msg
     
-class TreeError(JMathsError):
+class TreeError(CopadsError):
     """Abstract parent for all tree exceptions"""
     pass
 
@@ -185,12 +185,12 @@ class TreeNodeTypeError(TreeError):
     def __init__(self, msg): self.msg = msg
     def __str__(self): return self.msg
     
-class FunctionParameterTypeError(JMathsError):
+class FunctionParameterTypeError(CopadsError):
     """Exception to be thrown when trying a function parameter is of the wrong data type"""
     def __init__(self, msg): self.msg = msg
     def __str__(self): return self.msg
     
-class FunctionParameterValueError(JMathsError):
+class FunctionParameterValueError(CopadsError):
     """Exception to be thrown when trying a function parameter is of wrong value"""
     def __init__(self, msg): self.msg = msg
     def __str__(self): return self.msg

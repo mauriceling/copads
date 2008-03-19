@@ -1,10 +1,10 @@
 import types
 import operator
 import math
-from JMathsExceptions import MatrixError, MatrixMultiplicationError
-from JMathsExceptions import MatrixAdditionError, MatrixSquareError
-from JMathsExceptions import MatrixTraceError, MatrixMinorError
-from JMathsExceptions import MatrixDeterminantError
+from CopadsExceptions import MatrixError, MatrixMultiplicationError
+from CopadsExceptions import MatrixAdditionError, MatrixSquareError
+from CopadsExceptions import MatrixTraceError, MatrixMinorError
+from CopadsExceptions import MatrixDeterminantError
 
 class Vector(list):
     """

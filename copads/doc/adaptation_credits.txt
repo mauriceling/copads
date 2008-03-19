@@ -1,24 +1,52 @@
-ADALP adapted numerous codes available from other sources. Wherever possible, specific credits are given within individual source files. The original sources can be found in doc/adaptation_source directory. A summary of credits to acknowledge the works of various authors/developers is as follows:
+CoPADS adapted numerous codes available from other sources. 
+Wherever possible, specific credits are given within individual source files. 
+The original sources can be found in doc/adaptation_source directory. 
+A summary of credits to acknowledge the works of various authors/developers is 
+as follows:
 
-1. MatrixError subclasses (MatrixError, MatrixArithmeticError, MatrixMultiplicationError, MatrixAdditionError, MatrixSquareError, MatrixTraceError, MatrixMinorError, MatrixDeterminantError) in JMathsException.py from http://http://aspn.activestate.com/ASPN/Cookbook/Python/Recipe/189971 (file: doc/adaptation_source/189971.py)
+1. MatrixError subclasses (MatrixError, MatrixArithmeticError, 
+MatrixMultiplicationError, MatrixAdditionError, MatrixSquareError, 
+MatrixTraceError, MatrixMinorError, MatrixDeterminantError) 
+http://http://aspn.activestate.com/ASPN/Cookbook/Python/Recipe/189971 
+(file: doc/adaptation_source/189971.py)
 
-2. Matrix class in Matrix.py from from http://http://aspn.activestate.com/ASPN/Cookbook/Python/Recipe/189971 (file: doc/adaptation_source/189971.py)
+2. Matrix class 
+http://http://aspn.activestate.com/ASPN/Cookbook/Python/Recipe/189971 
+(file: doc/adaptation_source/189971.py)
 
-3. Bag class in Bag.py from aspn.activestate.com/ASPN/Cookbook/Python/Recipe/259174 (file: doc/adaptation_source/259174.py)
+3. Bag class
+http://aspn.activestate.com/ASPN/Cookbook/Python/Recipe/259174 
+(file: doc/adaptation_source/259174.py)
 
-4. GeometricMean, HarmonicMean, ArithmeticMean, Median, MedianScore, Mode, Moment, Variation, Skew, Kurtosis and Describe functions in CentralTendency.py from ttp://www.nmr.mgh.harvard.edu/Neural_Systems_Group/gary/python/stats.py (file: doc/adapation_source/harvard_gary_stat.py)
+4. GeometricMean, HarmonicMean, ArithmeticMean, Median, MedianScore, Mode, 
+Moment, Variation, Skew, Kurtosis, Describe 
+http://www.nmr.mgh.harvard.edu/Neural_Systems_Group/gary/python/stats.py 
+(file: doc/adapation_source/harvard_gary_stat.py)
 
-5. asdict, items, count, contents, intersection, difference, itemindex, indexesof, take, take_byfn, fcmp, intd, safe_log, safe_log2, safe_exp functions in Operations.py; Euclidean function in StringDistance.py from BioPython project.
+5. asdict, items, count, contents, intersection, difference, itemindex, 
+indexesof, take, take_byfn, fcmp, intd, safe_log, safe_log2, safe_exp, Euclidean 
+BioPython project.
 
-6. PriorityDictionary class in PriorityDictionary.py from http://aspn.activestate.com/ASPN/Cookbook/Python/Recipe/117228 (file: doc/adaptation_source/117228.py)
+6. PriorityDictionary class 
+http://aspn.activestate.com/ASPN/Cookbook/Python/Recipe/117228 
+(file: doc/adaptation_source/117228.py)
 
-7. RingList class in RingList.py from http://aspn.activestate.com/ASPN/Cookbook/Python/Recipe/435902 (file: doc/adaptation_source/435902.py)
+7. RingList class
+http://aspn.activestate.com/ASPN/Cookbook/Python/Recipe/435902 
+(file: doc/adaptation_source/435902.py)
 
-8. Levenshtein function in ObjectDistance.py from http://www.hetland.org/python/distance.py
+8. Levenshtein
+http://www.hetland.org/python/distance.py
 
-9. Vector class in Vector.py from http://aspn.activestate.com/ASPN/Cookbook/Python/Recipe/52272 (file: doc/adaptation_source/52272.py)
+9. Vector class
+http://aspn.activestate.com/ASPN/Cookbook/Python/Recipe/52272 
+(file: doc/adaptation_source/52272.py)
 
-10. SparseMatrix class in SparseMatrix.py from http://aspn.activestate.com/ASPN/Cookbook/Python/Recipe/52275 (file: doc/adaptation_source/52275.py)
+10. SparseMatrix class
+http://aspn.activestate.com/ASPN/Cookbook/Python/Recipe/52275 
+(file: doc/adaptation_source/52275.py)
 
-11. floatRgb, strRgb, rgc, htmlRgb functions in ColorMap.pu from Adapted from http://aspn.activestate.com/ASPN/Cookbook/Python/Recipe/52275 (file: doc/adaptation_source_52275)
+11. floatRgb, strRgb, rgc, htmlRgb 
+http://aspn.activestate.com/ASPN/Cookbook/Python/Recipe/52275 
+(file: doc/adaptation_source_52275)
 
