@@ -48,5 +48,8 @@ http://aspn.activestate.com/ASPN/Cookbook/Python/Recipe/52275
 
 11. floatRgb, strRgb, rgc, htmlRgb 
 http://aspn.activestate.com/ASPN/Cookbook/Python/Recipe/52275 
-(file: doc/adaptation_source_52275)
+(file: doc/adaptation_source/52275)
 
+12. Red-Black Tree
+http://newcenturycomputers.net/projects/rbtree.html
+(file: doc/adaptation_source/RBTree.py)

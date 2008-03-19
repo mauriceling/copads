@@ -190,6 +190,15 @@ def variance(inlist, mean):
 def standarddeviation(inlist, mean):
     return math.sqrt(variance(inlist, mean))
 
+def covariance(inlist1, inlist2):
+    """
+    Calculates covariance using the formula: Cov(xy)  =  E{xy}  -  E{x}E{y}
+    """
+    mean_xy = ArithmeticMean([inlist1[i]*inlist1[i] for i in range(inlist1)])
+    mean_x = ArithmeticMean(inlist1)
+    mean_y = ArithmeticMean(inlist2)
+    return mean_xy - (mean_x * mean_y)
+    
 def Describe(inlist):
     """
 Returns some descriptive statistics of the passed list (assumed to be 1D).
