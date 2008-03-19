@@ -1,0 +1,18 @@
+Metadata-Version: 1.0
+Name: copads
+Version: 0.1
+Summary: Collection of Python Algorithms and Data Structures
+Home-page: 
+Author: Maurice HT Ling
+Author-email: mauriceling@acm.org
+License: GNU General Public License version 2
+Download-URL: 
+Description: Collection of Python Algorithms and Data Structures
+Platform: UNKNOWN
+Classifier: Development Status :: Experimental
+Classifier: Intended Audience :: Developers
+Classifier: License :: Freely Distributable
+Classifier: Programming Language :: Python
+Classifier: Topic :: Mathematics
+Classifier: Topic :: Statistics
+Classifier: Topic :: Software Development :: Libraries :: Application Frameworks
