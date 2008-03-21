@@ -44,14 +44,14 @@ from CopadsExceptions import FunctionParameterValueError
 
 
 def adi(): 
-    pass
-def amoeba(): pass
-def anneal(): pass
-def avevar(): pass
-def badluk(): pass
-def balanc(): pass
-def bcucof(): pass
-def bcuint(): pass
+    raise NotImplementedError
+def amoeba(): raise NotImplementedError
+def anneal(): raise NotImplementedError
+def avevar(): raise NotImplementedError
+def badluk(): raise NotImplementedError
+def balanc(): raise NotImplementedError
+def bcucof(): raise NotImplementedError
+def bcuint(): raise NotImplementedError
 def bessi(n, x):
     """Modified Bessel function I-sub-n(x). Ref: NRP 6.5
     
@@ -426,12 +426,12 @@ def bico(n, k):
     """ 
     return math.floor(math.exp(factln(n) - factln(k) - factln(n-k)))
 
-def bnldev(): pass
-def brent(): pass
-def bsstep(): pass
-def caldat(): pass
-def cel(): pass
-def chder(): pass
+def bnldev(): raise NotImplementedError
+def brent(): raise NotImplementedError
+def bsstep(): raise NotImplementedError
+def caldat(): raise NotImplementedError
+def cel(): raise NotImplementedError
+def chder(): raise NotImplementedError
 
 def chebev(a, b, c, m , x):
     """Chebyshev evaluation.
@@ -457,27 +457,27 @@ def chebev(a, b, c, m , x):
             dd = sv
         return y * d - dd + 0.5 * c[0]
     
-def chebtf(): pass
-def chebpc(): pass
-def chint(): pass
-def chsone(): pass
-def chstwo(): pass
-def cntab1(): pass
-def cntab2(): pass
-def convlv(): pass
-def correl(): pass
-def cosft(): pass
-def covsrt(): pass
-def dbrent(): pass
-def ddpoly(): pass
-def des(): pass
-def df1dim(): pass
-def dfpmin(): pass
-def eclass(): pass
-def eclazz(): pass
-def eigsrt(): pass
-def el2(): pass
-def elmhes(): pass
+def chebtf(): raise NotImplementedError
+def chebpc(): raise NotImplementedError
+def chint(): raise NotImplementedError
+def chsone(): raise NotImplementedError
+def chstwo(): raise NotImplementedError
+def cntab1(): raise NotImplementedError
+def cntab2(): raise NotImplementedError
+def convlv(): raise NotImplementedError
+def correl(): raise NotImplementedError
+def cosft(): raise NotImplementedError
+def covsrt(): raise NotImplementedError
+def dbrent(): raise NotImplementedError
+def ddpoly(): raise NotImplementedError
+def des(): raise NotImplementedError
+def df1dim(): raise NotImplementedError
+def dfpmin(): raise NotImplementedError
+def eclass(): raise NotImplementedError
+def eclazz(): raise NotImplementedError
+def eigsrt(): raise NotImplementedError
+def el2(): raise NotImplementedError
+def elmhes(): raise NotImplementedError
 
 def erf(x): 
     """
@@ -522,10 +522,10 @@ def erfcc(x):
     if x >= 0.0: return ans
     else: return 2.0 - ans
     
-def eulsum(): pass
-def evlmem(): pass
-def expdev(): pass
-def f1dim(): pass
+def eulsum(): raise NotImplementedError
+def evlmem(): raise NotImplementedError
+def expdev(): raise NotImplementedError
+def f1dim(): raise NotImplementedError
 def factln(n):
     """Natural logarithm of factorial: ln(n!)
     Ref: NRP 6.1
@@ -542,17 +542,17 @@ def factrl(n):
     @return: factorial of n """
     return math.exp(gammln(n + 1.0))
 
-def fgauss(): pass
-def fit(): pass
-def fixrts(): pass
-def fleg(): pass
-def flmoon(): pass
-def four1(): pass
-def fourn(): pass
-def fpoly(): pass
-def frprmn(): pass
-def ftest(): pass
-def gamdev(): pass
+def fgauss(): raise NotImplementedError
+def fit(): raise NotImplementedError
+def fixrts(): raise NotImplementedError
+def fleg(): raise NotImplementedError
+def flmoon(): raise NotImplementedError
+def four1(): raise NotImplementedError
+def fourn(): raise NotImplementedError
+def fpoly(): raise NotImplementedError
+def frprmn(): raise NotImplementedError
+def ftest(): raise NotImplementedError
+def gamdev(): raise NotImplementedError
 
 def gammln(n):
     """Gamma function. Ref: NRP 6.1
@@ -584,30 +584,30 @@ def gammp(a, x):
         gcf(a, x, gammcf, gln)
         return 1.0 - gammcf
     
-def gammq(): pass
-def gasdev(): pass
-def gauleg(): pass
-def gaussj(): pass
-def gcf(): pass
-def golden(): pass
-def gser(): pass
-def hqr(): pass
-def hunt(): pass
-def indexx(): pass
-def irbit1(): pass
-def irbit2(): pass
-def jacobi(): pass
-def julday(): pass
-def kendl1(): pass
-def kendl2(): pass
-def ksone(): pass
-def kstwo(): pass
-def laguer(): pass
-def lfit(): pass
-def linmin(): pass
-def locate(): pass
-def lubksb(): pass
-def ludcmp(): pass
+def gammq(): raise NotImplementedError
+def gasdev(): raise NotImplementedError
+def gauleg(): raise NotImplementedError
+def gaussj(): raise NotImplementedError
+def gcf(): raise NotImplementedError
+def golden(): raise NotImplementedError
+def gser(): raise NotImplementedError
+def hqr(): raise NotImplementedError
+def hunt(): raise NotImplementedError
+def indexx(): raise NotImplementedError
+def irbit1(): raise NotImplementedError
+def irbit2(): raise NotImplementedError
+def jacobi(): raise NotImplementedError
+def julday(): raise NotImplementedError
+def kendl1(): raise NotImplementedError
+def kendl2(): raise NotImplementedError
+def ksone(): raise NotImplementedError
+def kstwo(): raise NotImplementedError
+def laguer(): raise NotImplementedError
+def lfit(): raise NotImplementedError
+def linmin(): raise NotImplementedError
+def locate(): raise NotImplementedError
+def lubksb(): raise NotImplementedError
+def ludcmp(): raise NotImplementedError
 def mdian1(data):
     """Calculates the median of a list of numerical values using sorting. Ref: NRP 13.2
     
@@ -619,17 +619,17 @@ def mdian1(data):
     if n2 % 2 == 1: return data[n2+1]
     else: return 0.5*(x[n2] + x[n2+1])
     
-def mdian2(): pass
-def medfit(): pass
-def memcof(): pass
-def midexp(): pass
-def midinf(): pass
-def midpnt(): pass
-def midsql(): pass
-def midsqu(): pass
-def mmid(): pass
-def mnbrak(): pass
-def mnewt(): pass
+def mdian2(): raise NotImplementedError
+def medfit(): raise NotImplementedError
+def memcof(): raise NotImplementedError
+def midexp(): raise NotImplementedError
+def midinf(): raise NotImplementedError
+def midpnt(): raise NotImplementedError
+def midsql(): raise NotImplementedError
+def midsqu(): raise NotImplementedError
+def mmid(): raise NotImplementedError
+def mnbrak(): raise NotImplementedError
+def mnewt(): raise NotImplementedError
 
 def moment(data):
     """Calculates moment from a list of numerical data. Ref: NRP 13.1
@@ -667,202 +667,202 @@ def moment(data):
         kurt = (kurt/(len(data)*svar*svar)) - 3.0
     return (ave, adev, sdev, var, skew, kurt)
 
-def mprove(): pass
-def mrqmin(): pass
-def odeint(): pass
-def pcshft(): pass
-def pearsn(): pass
-def piksr2(): pass
-def piksrt(): pass
-def plgndr(): pass
-def poidev(): pass
-def poicoe(): pass
-def polcof(): pass
-def poldiv(): pass
-def polin2(): pass
-def polint(): pass
-def powell(): pass
-def predic(): pass
-def probks(): pass
-def pzextr(): pass
-def qcksrt(): pass
-def qgaus(): pass
-def qromb(): pass
-def qromo(): pass
-def qroot(): pass
-def qsimp(): pass
-def qtrap(): pass
-def quad3d(): pass
-def ran0(): pass
-def ran1(): pass
-def ran2(): pass
-def ran3(): pass
-def ran4(): pass
-def rank(): pass
-def ratint(): pass
-def realft(): pass
-def rk4(): pass
-def rkdumb(): pass
-def rkqc(): pass
-def rtbis(): pass
-def rtflsp(): pass
-def rtnewt(): pass
-def rtsafe(): pass
-def rtsec(): pass
-def rzextr(): pass
-def scrsho(): pass
-def sfroid(): pass
-def shell(): pass
-def shoot(): pass
-def shootf(): pass
-def simplx(): pass
-def sinft(): pass
-def smooft(): pass
-def sncndn(): pass
-def solvde(): pass
-def sor(): pass
-def sort(): pass
-def sort2(): pass
-def sort3(): pass
-def sparse(): pass
-def spctrm(): pass
-def spear(): pass
-def splie2(): pass
-def splin2(): pass
-def spline(): pass
-def splint(): pass
-def svbksb(): pass
-def svdcmp(): pass
-def svdfit(): pass
-def svdvar(): pass
-def toeplz(): pass
-def tptest(): pass
-def tqli(): pass
-def trapzd(): pass
-def tred2(): pass
-def tridag(): pass
-def ttest(): pass
-def tutest(): pass
-def twofft(): pass
-def vander(): pass
-def zbrac(): pass
-def zbrak(): pass
-def zbrent(): pass
-def zroots(): pass
+def mprove(): raise NotImplementedError
+def mrqmin(): raise NotImplementedError
+def odeint(): raise NotImplementedError
+def pcshft(): raise NotImplementedError
+def pearsn(): raise NotImplementedError
+def piksr2(): raise NotImplementedError
+def piksrt(): raise NotImplementedError
+def plgndr(): raise NotImplementedError
+def poidev(): raise NotImplementedError
+def poicoe(): raise NotImplementedError
+def polcof(): raise NotImplementedError
+def poldiv(): raise NotImplementedError
+def polin2(): raise NotImplementedError
+def polint(): raise NotImplementedError
+def powell(): raise NotImplementedError
+def predic(): raise NotImplementedError
+def probks(): raise NotImplementedError
+def pzextr(): raise NotImplementedError
+def qcksrt(): raise NotImplementedError
+def qgaus(): raise NotImplementedError
+def qromb(): raise NotImplementedError
+def qromo(): raise NotImplementedError
+def qroot(): raise NotImplementedError
+def qsimp(): raise NotImplementedError
+def qtrap(): raise NotImplementedError
+def quad3d(): raise NotImplementedError
+def ran0(): raise NotImplementedError
+def ran1(): raise NotImplementedError
+def ran2(): raise NotImplementedError
+def ran3(): raise NotImplementedError
+def ran4(): raise NotImplementedError
+def rank(): raise NotImplementedError
+def ratint(): raise NotImplementedError
+def realft(): raise NotImplementedError
+def rk4(): raise NotImplementedError
+def rkdumb(): raise NotImplementedError
+def rkqc(): raise NotImplementedError
+def rtbis(): raise NotImplementedError
+def rtflsp(): raise NotImplementedError
+def rtnewt(): raise NotImplementedError
+def rtsafe(): raise NotImplementedError
+def rtsec(): raise NotImplementedError
+def rzextr(): raise NotImplementedError
+def scrsho(): raise NotImplementedError
+def sfroid(): raise NotImplementedError
+def shell(): raise NotImplementedError
+def shoot(): raise NotImplementedError
+def shootf(): raise NotImplementedError
+def simplx(): raise NotImplementedError
+def sinft(): raise NotImplementedError
+def smooft(): raise NotImplementedError
+def sncndn(): raise NotImplementedError
+def solvde(): raise NotImplementedError
+def sor(): raise NotImplementedError
+def sort(): raise NotImplementedError
+def sort2(): raise NotImplementedError
+def sort3(): raise NotImplementedError
+def sparse(): raise NotImplementedError
+def spctrm(): raise NotImplementedError
+def spear(): raise NotImplementedError
+def splie2(): raise NotImplementedError
+def splin2(): raise NotImplementedError
+def spline(): raise NotImplementedError
+def splint(): raise NotImplementedError
+def svbksb(): raise NotImplementedError
+def svdcmp(): raise NotImplementedError
+def svdfit(): raise NotImplementedError
+def svdvar(): raise NotImplementedError
+def toeplz(): raise NotImplementedError
+def tptest(): raise NotImplementedError
+def tqli(): raise NotImplementedError
+def trapzd(): raise NotImplementedError
+def tred2(): raise NotImplementedError
+def tridag(): raise NotImplementedError
+def ttest(): raise NotImplementedError
+def tutest(): raise NotImplementedError
+def twofft(): raise NotImplementedError
+def vander(): raise NotImplementedError
+def zbrac(): raise NotImplementedError
+def zbrak(): raise NotImplementedError
+def zbrent(): raise NotImplementedError
+def zroots(): raise NotImplementedError
 
-def airy(): pass
-def amebsa(): pass
-def anorm2(): pass
-def arcmak(): pass
-def arcode(): pass
-def arcsum(): pass
-def banbks(): pass
-def bandec(): pass
-def banmul(): pass
-def beschb(): pass
-def bessik(): pass
-def bessjy(): pass
-def broydn(): pass
-def choldc(): pass
-def cholsl(): pass
-def cisi(): pass
-def cosft1(): pass
-def cosft2(): pass
-def crank(): pass
-def cyclic(): pass
-def daub4(): pass
-def dawson(): pass
-def decchk(): pass
-def dfridr(): pass
-def dftint(): pass
-def ei(): pass
-def elle(): pass
-def ellf(): pass
-def ellpi(): pass
-def expint(): pass
-def fasper(): pass
-def fitexy(): pass
-def fourfs(): pass
-def fred2(): pass
-def fredex(): pass
-def fredin(): pass
-def frenel(): pass
-def gaucof(): pass
-def gauher(): pass
-def gaujac(): pass
-def gaulag(): pass
-def hpsel(): pass
-def hpsort(): pass
-def hufapp(): pass
-def hufdec(): pass
-def hufenc(): pass
-def hufmak(): pass
-def hypdrv(): pass
-def hypgeo(): pass
-def hypser(): pass
-def icrc(): pass
-def icrc1(): pass
-def igray(): pass
-def ks2d1s(): pass
-def ks2d2s(): pass
-def linbcg(): pass
-def lnsrch(): pass
-def lop(): pass
-def machar(): pass
-def mgfas(): pass
-def mglin(): pass
-def miser(): pass
-def mp2dfr(): pass
-def mpdiv(): pass
-def mpinv(): pass
-def mppi(): pass
-def mrqcof(): pass
-def newt(): pass
-def orthog(): pass
-def pade(): pass
-def pccheb(): pass
-def period(): pass
-def psdes(): pass
-def pwt(): pass
-def pwtest(): pass
-def qrdcmp(): pass
-def qrsolv(): pass
-def qrupdt(): pass
-def quadvl(): pass
-def ratlsq(): pass
-def ratval(): pass
-def rc(): pass
-def rd(): pass
-def rf(): pass
-def rj(): pass
-def rkqs(): pass
-def rlft3(): pass
-def rofunc(): pass
-def savgol(): pass
-def select(): pass
-def selip(): pass
-def simpr(): pass
-def sobseq(): pass
-def sphbes(): pass
-def sphfpt(): pass
-def sphoot(): pass
-def spread(): pass
-def sprsax(): pass
-def sprsin(): pass
-def sprspm(): pass
-def sprstm(): pass
-def sprstp(): pass
-def sprstx(): pass
-def stifbs(): pass
-def stiff(): pass
-def stoerm(): pass
-def vegas(): pass
-def voltra(): pass
-def wt1(): pass
-def wtn(): pass
-def wwghts(): pass
-def zrhqr(): pass
-def zriddr(): pass
+def airy(): raise NotImplementedError
+def amebsa(): raise NotImplementedError
+def anorm2(): raise NotImplementedError
+def arcmak(): raise NotImplementedError
+def arcode(): raise NotImplementedError
+def arcsum(): raise NotImplementedError
+def banbks(): raise NotImplementedError
+def bandec(): raise NotImplementedError
+def banmul(): raise NotImplementedError
+def beschb(): raise NotImplementedError
+def bessik(): raise NotImplementedError
+def bessjy(): raise NotImplementedError
+def broydn(): raise NotImplementedError
+def choldc(): raise NotImplementedError
+def cholsl(): raise NotImplementedError
+def cisi(): raise NotImplementedError
+def cosft1(): raise NotImplementedError
+def cosft2(): raise NotImplementedError
+def crank(): raise NotImplementedError
+def cyclic(): raise NotImplementedError
+def daub4(): raise NotImplementedError
+def dawson(): raise NotImplementedError
+def decchk(): raise NotImplementedError
+def dfridr(): raise NotImplementedError
+def dftint(): raise NotImplementedError
+def ei(): raise NotImplementedError
+def elle(): raise NotImplementedError
+def ellf(): raise NotImplementedError
+def ellpi(): raise NotImplementedError
+def expint(): raise NotImplementedError
+def fasper(): raise NotImplementedError
+def fitexy(): raise NotImplementedError
+def fourfs(): raise NotImplementedError
+def fred2(): raise NotImplementedError
+def fredex(): raise NotImplementedError
+def fredin(): raise NotImplementedError
+def frenel(): raise NotImplementedError
+def gaucof(): raise NotImplementedError
+def gauher(): raise NotImplementedError
+def gaujac(): raise NotImplementedError
+def gaulag(): raise NotImplementedError
+def hpsel(): raise NotImplementedError
+def hpsort(): raise NotImplementedError
+def hufapp(): raise NotImplementedError
+def hufdec(): raise NotImplementedError
+def hufenc(): raise NotImplementedError
+def hufmak(): raise NotImplementedError
+def hypdrv(): raise NotImplementedError
+def hypgeo(): raise NotImplementedError
+def hypser(): raise NotImplementedError
+def icrc(): raise NotImplementedError
+def icrc1(): raise NotImplementedError
+def igray(): raise NotImplementedError
+def ks2d1s(): raise NotImplementedError
+def ks2d2s(): raise NotImplementedError
+def linbcg(): raise NotImplementedError
+def lnsrch(): raise NotImplementedError
+def lop(): raise NotImplementedError
+def machar(): raise NotImplementedError
+def mgfas(): raise NotImplementedError
+def mglin(): raise NotImplementedError
+def miser(): raise NotImplementedError
+def mp2dfr(): raise NotImplementedError
+def mpdiv(): raise NotImplementedError
+def mpinv(): raise NotImplementedError
+def mppi(): raise NotImplementedError
+def mrqcof(): raise NotImplementedError
+def newt(): raise NotImplementedError
+def orthog(): raise NotImplementedError
+def pade(): raise NotImplementedError
+def pccheb(): raise NotImplementedError
+def period(): raise NotImplementedError
+def psdes(): raise NotImplementedError
+def pwt(): raise NotImplementedError
+def pwtest(): raise NotImplementedError
+def qrdcmp(): raise NotImplementedError
+def qrsolv(): raise NotImplementedError
+def qrupdt(): raise NotImplementedError
+def quadvl(): raise NotImplementedError
+def ratlsq(): raise NotImplementedError
+def ratval(): raise NotImplementedError
+def rc(): raise NotImplementedError
+def rd(): raise NotImplementedError
+def rf(): raise NotImplementedError
+def rj(): raise NotImplementedError
+def rkqs(): raise NotImplementedError
+def rlft3(): raise NotImplementedError
+def rofunc(): raise NotImplementedError
+def savgol(): raise NotImplementedError
+def select(): raise NotImplementedError
+def selip(): raise NotImplementedError
+def simpr(): raise NotImplementedError
+def sobseq(): raise NotImplementedError
+def sphbes(): raise NotImplementedError
+def sphfpt(): raise NotImplementedError
+def sphoot(): raise NotImplementedError
+def spread(): raise NotImplementedError
+def sprsax(): raise NotImplementedError
+def sprsin(): raise NotImplementedError
+def sprspm(): raise NotImplementedError
+def sprstm(): raise NotImplementedError
+def sprstp(): raise NotImplementedError
+def sprstx(): raise NotImplementedError
+def stifbs(): raise NotImplementedError
+def stiff(): raise NotImplementedError
+def stoerm(): raise NotImplementedError
+def vegas(): raise NotImplementedError
+def voltra(): raise NotImplementedError
+def wt1(): raise NotImplementedError
+def wtn(): raise NotImplementedError
+def wwghts(): raise NotImplementedError
+def zrhqr(): raise NotImplementedError
+def zriddr(): raise NotImplementedError
 def cdf_poisson(k, x):
     """
     Cummulative density function of Poisson distribution from 0 to k - 1 
