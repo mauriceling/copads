@@ -12,9 +12,9 @@ class Distribution:
     Abstract class for all statistical distributions.
     Due to the large variations of parameters for each distribution, it is unlikely to be able to 
     standardize a parameter list for each method that is meaningful for all distributions. Instead, the 
-    parameters to construct each distribution is read from a 'parameters' dictionary.
+    parameters to construct each distribution is to be given as keyword arguments.
     """
-    def __init__(self, parameters = {}): 
+    def __init__(self, **parameters): 
         """Constructor method. The parameters are used to construct the probability distribution."""
         raise NotImplementedError
     def CDF(self, x): 
@@ -70,7 +70,7 @@ class NormalDistribution(Distribution):
     def variance(self): return self.variance
     
 class ChiSquareDistribution(Distribution):
-    def __init__(self, parameters = {}): 
+    def __init__(self, **parameters): 
         """Constructor method. The parameters are used to construct the probability distribution."""
         raise NotImplementedError
     def CDF(self, x): 
@@ -106,7 +106,7 @@ class ChiSquareDistribution(Distribution):
         raise NotImplementedError
     
 class TDistribution(Distribution):
-    def __init__(self, parameters = {}): 
+    def __init__(self, **parameters): 
         """Constructor method. The parameters are used to construct the probability distribution."""
         raise NotImplementedError
     def CDF(self, x): 
@@ -142,7 +142,7 @@ class TDistribution(Distribution):
         raise NotImplementedError
  
 class FDistribution(Distribution):
-    def __init__(self, parameters = {}): 
+    def __init__(self, **parameters): 
         """Constructor method. The parameters are used to construct the probability distribution."""
         raise NotImplementedError
     def CDF(self, x): 
@@ -178,7 +178,7 @@ class FDistribution(Distribution):
         raise NotImplementedError
        
 class BinomialDistribution(Distribution):
-    def __init__(self, parameters = {}): 
+    def __init__(self, **parameters): 
         """Constructor method. The parameters are used to construct the probability distribution."""
         raise NotImplementedError
     def CDF(self, x): 
@@ -214,7 +214,7 @@ class BinomialDistribution(Distribution):
         raise NotImplementedError
     
 class PoissonDistribution(Distribution):
-    def __init__(self, parameters = {}): 
+    def __init__(self, **parameters): 
         """Constructor method. The parameters are used to construct the probability distribution."""
         self.mean = parameters['mean']
     def CDF(self, x): 
@@ -250,7 +250,7 @@ class PoissonDistribution(Distribution):
         raise NotImplementedError
     
 class GeometricDistribution(Distribution):
-    def __init__(self, parameters = {}): 
+    def __init__(self, **parameters): 
         """Constructor method. The parameters are used to construct the probability distribution."""
         raise NotImplementedError
     def CDF(self, x): 
@@ -286,7 +286,7 @@ class GeometricDistribution(Distribution):
         raise NotImplementedError
     
 class LogNormalDistribution(Distribution):
-    def __init__(self, parameters = {}): 
+    def __init__(self, **parameters): 
         """Constructor method. The parameters are used to construct the probability distribution."""
         raise NotImplementedError
     def CDF(self, x): 
@@ -322,7 +322,7 @@ class LogNormalDistribution(Distribution):
         raise NotImplementedError
         
 class BetaDistribution(Distribution):
-    def __init__(self, parameters = {}): 
+    def __init__(self, **parameters): 
         """Constructor method. The parameters are used to construct the probability distribution."""
         raise NotImplementedError
     def CDF(self, x): 
@@ -358,7 +358,7 @@ class BetaDistribution(Distribution):
         raise NotImplementedError
     
 class WeiBullDistribution(Distribution):
-    def __init__(self, parameters = {}): 
+    def __init__(self, **parameters): 
         """Constructor method. The parameters are used to construct the probability distribution."""
         raise NotImplementedError
     def CDF(self, x): 
@@ -394,7 +394,7 @@ class WeiBullDistribution(Distribution):
         raise NotImplementedError
     
 class ParetoDistribution(Distribution):
-    def __init__(self, parameters = {}): 
+    def __init__(self, **parameters): 
         """Constructor method. The parameters are used to construct the probability distribution."""
         raise NotImplementedError
     def CDF(self, x): 
@@ -430,7 +430,7 @@ class ParetoDistribution(Distribution):
         raise NotImplementedError
     
 class CauchyDistribution(Distribution):
-    def __init__(self, parameters = {}): 
+    def __init__(self, **parameters): 
         """Constructor method. The parameters are used to construct the probability distribution."""
         raise NotImplementedError
     def CDF(self, x): 
@@ -466,7 +466,7 @@ class CauchyDistribution(Distribution):
         raise NotImplementedError
     
 class ExponentialDistribution(Distribution):
-    def __init__(self, parameters = {}): 
+    def __init__(self, **parameters): 
         """Constructor method. The parameters are used to construct the probability distribution."""
         raise NotImplementedError
     def CDF(self, x): 
@@ -502,7 +502,7 @@ class ExponentialDistribution(Distribution):
         raise NotImplementedError
     
 class SampleDistribution(Distribution):
-    def __init__(self, parameters = {}): 
+    def __init__(self, **parameters): 
         """Constructor method. The parameters are used to construct the probability distribution."""
         from SampleStatistics import ArithmeticMean
         from SampleStatistics import variance

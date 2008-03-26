@@ -53,3 +53,7 @@ http://aspn.activestate.com/ASPN/Cookbook/Python/Recipe/52275
 12. Red-Black Tree
 http://newcenturycomputers.net/projects/rbtree.html
 (file: doc/adaptation_source/RBTree.py)
+
+13. Dijkstra
+http://aspn.activestate.com/ASPN/Cookbook/Python/Recipe/119466
+(file: doc/adaptation_source/119466)

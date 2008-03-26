@@ -3,25 +3,25 @@ This file hold the functions to calculate descriptive statistics of a data set.
 
 The following functions were adapted from http://www.nmr.mgh.harvard.edu/Neural_Systems_Group/gary/
 python/stats.py (assumes 1-dimensional list as input):
-    1. GeometricMean
-    2. HarmonicMean
-    3. ArithmeticMean
-    4. Median
-    5. MedianScore
-    6. Mode
-    7. Moment
-    8. Variation
-    9. Skew
-    10. Kurtosis
-    11. Describe
+    1. geometricMean
+    2. harmonicMean
+    3. arithmeticMean
+    4. median
+    5. medianScore
+    6. mode
+    7. moment
+    8. variation
+    9. skew
+    10. kurtosis
+    11. describe
     """
     
-def GeometricMean (inlist):
+def geometricMean (inlist):
     """
     Calculates the geometric mean of the values in the passed list. That is:  n-th root of 
     (x1 * x2 * ... * xn).  Assumes a '1D' list.
 
-    Usage:   GeometricMean(inlist)
+    Usage:   geometricMean(inlist)
     """
     mult = 1.0
     one_over_n = 1.0/len(inlist)
@@ -29,38 +29,38 @@ def GeometricMean (inlist):
     return mult
 
 
-def HarmonicMean (inlist):
+def harmonicMean (inlist):
     """
 Calculates the harmonic mean of the values in the passed list.
 That is:  n / (1/x1 + 1/x2 + ... + 1/xn).  Assumes a '1D' list.
 
-Usage:   HarmonicMean(inlist)
+Usage:   harmonicMean(inlist)
 """
     sum = 0
     for item in inlist: sum = sum + 1.0/item
     return len(inlist) / sum
 
 
-def ArithmeticMean (inlist):
+def arithmeticMean (inlist):
     """
 Returns the arithematic mean of the values in the passed list.
 Assumes a '1D' list, but will function on the 1st dim of an array(!).
 
-Usage:   ArithmeticMean(inlist)
+Usage:   arithmeticMean(inlist)
 """
     sum = 0
     for item in inlist: sum = sum + item
     return sum/float(len(inlist))
 
 
-def Median (inlist,numbins=1000):
+def median (inlist,numbins=1000):
     """
 Returns the computed median value of a list of numbers, given the
 number of bins to use for the histogram (more bins brings the computed value
 closer to the median score, default number of bins = 1000).  See G.W.
 Heiman's Basic Stats (1st Edition), or CRC Probability & Statistics.
 
-Usage:   Median (inlist, numbins=1000)
+Usage:   median (inlist, numbins=1000)
 """
     (hist, smallest, binsize, extras) = histogram(inlist,numbins) # make histog
     cumhist = cumsum(hist)              # make cumulative histogram
@@ -75,12 +75,12 @@ Usage:   Median (inlist, numbins=1000)
     return median
 
 
-def MedianScore (inlist):
+def medianScore (inlist):
     """
 Returns the 'middle' score of the passed list.  If there is an even
 number of scores, the mean of the 2 middle scores is returned.
 
-Usage:   MedianScore(inlist)
+Usage:   medianScore(inlist)
 """
 
     newlist = copy.deepcopy(inlist)
@@ -94,13 +94,13 @@ Usage:   MedianScore(inlist)
     return median
 
 
-def Mode(inlist):
+def mode(inlist):
     """
 Returns a list of the modal (most common) score(s) in the passed
 list.  If there is more than one such score, all are returned.  The
 bin-count for the mode(s) is also returned.
 
-Usage:   Mode(inlist)
+Usage:   mode(inlist)
 Returns: bin-count for mode(s), a list of modal value(s)
 """
 
@@ -124,12 +124,12 @@ Returns: bin-count for mode(s), a list of modal value(s)
 
 
 
-def Moment(inlist,moment=1):
+def moment(inlist,moment=1):
     """
 Calculates the nth moment about the mean for a sample (defaults to
 the 1st moment).  Used to calculate coefficients of skewness and kurtosis.
 
-Usage:   Moment(inlist,moment=1)
+Usage:   moment(inlist,moment=1)
 Returns: appropriate moment (r) from ... 1/n * SUM((inlist(i)-mean)**r)
 """
     if moment == 1:
@@ -143,32 +143,33 @@ Returns: appropriate moment (r) from ... 1/n * SUM((inlist(i)-mean)**r)
         return s/float(n)
 
 
-def Variation(inlist):
+def variation(inlist):
     """
 Returns the coefficient of variation, as defined in CRC Standard
 Probability and Statistics, p.6.
+Ref: http://en.wikipedia.org/wiki/Coefficient_of_variation
 
-Usage:   Variation(inlist)
+Usage:   variation(inlist)
 """
-    return 100.0*samplestdev(inlist)/float(mean(inlist))
+    return 100.0*stdev(inlist)/float(mean(inlist))
 
 
-def Skew(inlist):
+def skew(inlist):
     """
 Returns the skewness of a distribution, as defined in Numerical
 Recipies (alternate defn in CRC Standard Probability and Statistics, p.6.)
 
-Usage:   Skew(inlist)
+Usage:   skew(inlist)
 """
     return moment(inlist,3)/pow(moment(inlist,2),1.5)
 
 
-def Kurtosis(inlist):
+def kurtosis(inlist):
     """
 Returns the kurtosis of a distribution, as defined in Numerical
 Recipies (alternate defn in CRC Standard Probability and Statistics, p.6.)
 
-Usage:   Kurtosis(inlist)
+Usage:   kurtosis(inlist)
 """
     return moment(inlist,4)/pow(moment(inlist,2),2.0)
 
@@ -187,23 +188,23 @@ def variance(inlist, mean):
         sum = sum + (float(item)-float(mean))**2
     return sum/float(len(inlist)-1)
 
-def standarddeviation(inlist, mean):
-    return math.sqrt(variance(inlist, mean))
+def stdev(inlist):
+    return math.sqrt(variance(inlist, arithmeticMean(inlist)))
 
 def covariance(inlist1, inlist2):
     """
     Calculates covariance using the formula: Cov(xy)  =  E{xy}  -  E{x}E{y}
     """
-    mean_xy = ArithmeticMean([inlist1[i]*inlist1[i] for i in range(inlist1)])
-    mean_x = ArithmeticMean(inlist1)
-    mean_y = ArithmeticMean(inlist2)
+    mean_xy = arithmeticMean([inlist1[i]*inlist1[i] for i in range(inlist1)])
+    mean_x = arithmeticMean(inlist1)
+    mean_y = arithmeticMean(inlist2)
     return mean_xy - (mean_x * mean_y)
     
-def Describe(inlist):
+def describe(inlist):
     """
 Returns some descriptive statistics of the passed list (assumed to be 1D).
 
-Usage:   Describe(inlist)
+Usage:   describe(inlist)
 Returns: n, mean, standard deviation, skew, kurtosis
 """
     n = len(inlist)
