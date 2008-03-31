@@ -1,5 +1,6 @@
 """
-This file contains Python implementations of the numerical functions in 
+This file contains Python implementations of the numerical functions 
+which are mainly (not entirely) derived from 
 
 Press, William H., Flannery, Brian P., Teukolsky, Saul A., and Vetterling, 
 William T. 1989. Numerical Recipes in Pascal. Cambridge University Press,
@@ -11,12 +12,6 @@ Press, Cambridge (ISBN 978-0521431088)
 Numerical Recipes in C, 2nd edition is freely browsable online at 
 http://www.nrbook.com/a/bookcpdf.php but is not intended as a substitution
 for purchasing the book.
-
-Unless otherwise stated as "No reference implementation", the functions 
-implemented in this file (module) has a reference implementation in a 
-programming language used in the reference book. In mathematics, it is 
-likely that a function is built (depends) on other simpler functions,
-such dependencies (if any) are listed in each function.
 
 Functions will be named as in the references and will be referred to section 
 number. For example, the reference "NRP 5.2" refers to Numerical Recipes 
@@ -43,15 +38,6 @@ from CopadsExceptions import FunctionParameterTypeError
 from CopadsExceptions import FunctionParameterValueError
 
 
-def adi(): 
-    raise NotImplementedError
-def amoeba(): raise NotImplementedError
-def anneal(): raise NotImplementedError
-def avevar(): raise NotImplementedError
-def badluk(): raise NotImplementedError
-def balanc(): raise NotImplementedError
-def bcucof(): raise NotImplementedError
-def bcuint(): raise NotImplementedError
 def bessi(n, x):
     """Modified Bessel function I-sub-n(x). Ref: NRP 6.5
     
@@ -426,13 +412,6 @@ def bico(n, k):
     """ 
     return math.floor(math.exp(factln(n) - factln(k) - factln(n-k)))
 
-def bnldev(): raise NotImplementedError
-def brent(): raise NotImplementedError
-def bsstep(): raise NotImplementedError
-def caldat(): raise NotImplementedError
-def cel(): raise NotImplementedError
-def chder(): raise NotImplementedError
-
 def chebev(a, b, c, m , x):
     """Chebyshev evaluation.
     Ref: NRP 5.6
@@ -457,28 +436,6 @@ def chebev(a, b, c, m , x):
             dd = sv
         return y * d - dd + 0.5 * c[0]
     
-def chebtf(): raise NotImplementedError
-def chebpc(): raise NotImplementedError
-def chint(): raise NotImplementedError
-def chsone(): raise NotImplementedError
-def chstwo(): raise NotImplementedError
-def cntab1(): raise NotImplementedError
-def cntab2(): raise NotImplementedError
-def convlv(): raise NotImplementedError
-def correl(): raise NotImplementedError
-def cosft(): raise NotImplementedError
-def covsrt(): raise NotImplementedError
-def dbrent(): raise NotImplementedError
-def ddpoly(): raise NotImplementedError
-def des(): raise NotImplementedError
-def df1dim(): raise NotImplementedError
-def dfpmin(): raise NotImplementedError
-def eclass(): raise NotImplementedError
-def eclazz(): raise NotImplementedError
-def eigsrt(): raise NotImplementedError
-def el2(): raise NotImplementedError
-def elmhes(): raise NotImplementedError
-
 def erf(x): 
     """
     Error function (a special incomplete gamma function) equivalent to gammp(0.5, x^2) 
@@ -521,11 +478,7 @@ def erfcc(x):
         (-0.82215223 + t * 0.17087277)))))))
     if x >= 0.0: return ans
     else: return 2.0 - ans
-    
-def eulsum(): raise NotImplementedError
-def evlmem(): raise NotImplementedError
-def expdev(): raise NotImplementedError
-def f1dim(): raise NotImplementedError
+
 def factln(n):
     """Natural logarithm of factorial: ln(n!)
     Ref: NRP 6.1
@@ -541,18 +494,6 @@ def factrl(n):
     @param n: positive integer
     @return: factorial of n """
     return math.exp(gammln(n + 1.0))
-
-def fgauss(): raise NotImplementedError
-def fit(): raise NotImplementedError
-def fixrts(): raise NotImplementedError
-def fleg(): raise NotImplementedError
-def flmoon(): raise NotImplementedError
-def four1(): raise NotImplementedError
-def fourn(): raise NotImplementedError
-def fpoly(): raise NotImplementedError
-def frprmn(): raise NotImplementedError
-def ftest(): raise NotImplementedError
-def gamdev(): raise NotImplementedError
 
 def gammln(n):
     """Gamma function. Ref: NRP 6.1
@@ -584,30 +525,6 @@ def gammp(a, x):
         gcf(a, x, gammcf, gln)
         return 1.0 - gammcf
     
-def gammq(): raise NotImplementedError
-def gasdev(): raise NotImplementedError
-def gauleg(): raise NotImplementedError
-def gaussj(): raise NotImplementedError
-def gcf(): raise NotImplementedError
-def golden(): raise NotImplementedError
-def gser(): raise NotImplementedError
-def hqr(): raise NotImplementedError
-def hunt(): raise NotImplementedError
-def indexx(): raise NotImplementedError
-def irbit1(): raise NotImplementedError
-def irbit2(): raise NotImplementedError
-def jacobi(): raise NotImplementedError
-def julday(): raise NotImplementedError
-def kendl1(): raise NotImplementedError
-def kendl2(): raise NotImplementedError
-def ksone(): raise NotImplementedError
-def kstwo(): raise NotImplementedError
-def laguer(): raise NotImplementedError
-def lfit(): raise NotImplementedError
-def linmin(): raise NotImplementedError
-def locate(): raise NotImplementedError
-def lubksb(): raise NotImplementedError
-def ludcmp(): raise NotImplementedError
 def mdian1(data):
     """Calculates the median of a list of numerical values using sorting. Ref: NRP 13.2
     
@@ -618,18 +535,6 @@ def mdian1(data):
     n2 = len(data) % 2
     if n2 % 2 == 1: return data[n2+1]
     else: return 0.5*(x[n2] + x[n2+1])
-    
-def mdian2(): raise NotImplementedError
-def medfit(): raise NotImplementedError
-def memcof(): raise NotImplementedError
-def midexp(): raise NotImplementedError
-def midinf(): raise NotImplementedError
-def midpnt(): raise NotImplementedError
-def midsql(): raise NotImplementedError
-def midsqu(): raise NotImplementedError
-def mmid(): raise NotImplementedError
-def mnbrak(): raise NotImplementedError
-def mnewt(): raise NotImplementedError
 
 def moment(data):
     """Calculates moment from a list of numerical data. Ref: NRP 13.1
@@ -667,6 +572,91 @@ def moment(data):
         kurt = (kurt/(len(data)*svar*svar)) - 3.0
     return (ave, adev, sdev, var, skew, kurt)
 
+def adi(): raise NotImplementedError
+def amoeba(): raise NotImplementedError
+def anneal(): raise NotImplementedError
+def avevar(): raise NotImplementedError
+def badluk(): raise NotImplementedError
+def balanc(): raise NotImplementedError
+def bcucof(): raise NotImplementedError
+def bcuint(): raise NotImplementedError
+def bnldev(): raise NotImplementedError
+def brent(): raise NotImplementedError
+def bsstep(): raise NotImplementedError
+def caldat(): raise NotImplementedError
+def cel(): raise NotImplementedError
+def chder(): raise NotImplementedError
+def chebtf(): raise NotImplementedError
+def chebpc(): raise NotImplementedError
+def chint(): raise NotImplementedError
+def chsone(): raise NotImplementedError
+def chstwo(): raise NotImplementedError
+def cntab1(): raise NotImplementedError
+def cntab2(): raise NotImplementedError
+def convlv(): raise NotImplementedError
+def correl(): raise NotImplementedError
+def cosft(): raise NotImplementedError
+def covsrt(): raise NotImplementedError
+def dbrent(): raise NotImplementedError
+def ddpoly(): raise NotImplementedError
+def des(): raise NotImplementedError
+def df1dim(): raise NotImplementedError
+def dfpmin(): raise NotImplementedError
+def eclass(): raise NotImplementedError
+def eclazz(): raise NotImplementedError
+def eigsrt(): raise NotImplementedError
+def el2(): raise NotImplementedError
+def elmhes(): raise NotImplementedError    
+def eulsum(): raise NotImplementedError
+def evlmem(): raise NotImplementedError
+def expdev(): raise NotImplementedError
+def f1dim(): raise NotImplementedError
+def fgauss(): raise NotImplementedError
+def fit(): raise NotImplementedError
+def fixrts(): raise NotImplementedError
+def fleg(): raise NotImplementedError
+def flmoon(): raise NotImplementedError
+def four1(): raise NotImplementedError
+def fourn(): raise NotImplementedError
+def fpoly(): raise NotImplementedError
+def frprmn(): raise NotImplementedError
+def ftest(): raise NotImplementedError
+def gamdev(): raise NotImplementedError
+def gammq(): raise NotImplementedError
+def gasdev(): raise NotImplementedError
+def gauleg(): raise NotImplementedError
+def gaussj(): raise NotImplementedError
+def gcf(): raise NotImplementedError
+def golden(): raise NotImplementedError
+def gser(): raise NotImplementedError
+def hqr(): raise NotImplementedError
+def hunt(): raise NotImplementedError
+def indexx(): raise NotImplementedError
+def irbit1(): raise NotImplementedError
+def irbit2(): raise NotImplementedError
+def jacobi(): raise NotImplementedError
+def julday(): raise NotImplementedError
+def kendl1(): raise NotImplementedError
+def kendl2(): raise NotImplementedError
+def ksone(): raise NotImplementedError
+def kstwo(): raise NotImplementedError
+def laguer(): raise NotImplementedError
+def lfit(): raise NotImplementedError
+def linmin(): raise NotImplementedError
+def locate(): raise NotImplementedError
+def lubksb(): raise NotImplementedError
+def ludcmp(): raise NotImplementedError
+def mdian2(): raise NotImplementedError
+def medfit(): raise NotImplementedError
+def memcof(): raise NotImplementedError
+def midexp(): raise NotImplementedError
+def midinf(): raise NotImplementedError
+def midpnt(): raise NotImplementedError
+def midsql(): raise NotImplementedError
+def midsqu(): raise NotImplementedError
+def mmid(): raise NotImplementedError
+def mnbrak(): raise NotImplementedError
+def mnewt(): raise NotImplementedError
 def mprove(): raise NotImplementedError
 def mrqmin(): raise NotImplementedError
 def odeint(): raise NotImplementedError

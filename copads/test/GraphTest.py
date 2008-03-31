@@ -2,51 +2,43 @@ import unittest
 import os
 import sys
 
+G = {'s':{'u':10, 'x':5},
+     'u':{'v':1, 'x':2},
+     'v':{'y':4},
+     'x':{'u':3, 'v':9, 'y':2},
+     'y':{'s':7, 'v':6}}
 
 class testGraph(unittest.TestCase):
     """Unit test cases for Graph.Graph object."""
-    def testInitNothing(self):
-        try:
-            g = Graph()
-        except GraphParameterError, e:
-            print e
-            print "This test 'testInitNothing' is expected to give GraphParameterError" + os.linesep
-    
-    def testInitNoVertices(self):
-        g = Graph(EdgeList = [('a', 'b'), ('a', 'c')])
-        assert g.verticesNumber() == 3
-        assert g.edgeNumber() == 2
-       
-    def testEdgeError1(self):
-        try:
-            g = Graph(EdgeList = [('a', 'b'), ('a', None)])
-        except GraphEdgeSizeMismatchError, e:
-            print e
-            print "This test 'testEdgeError1' is expected to give GraphEdgeSizeMismatchError" + os.linesep
+    def testInit(self):
+        self.assertTrue(Graph(graph=G))
         
-    def testEdgeError2(self):
-        try: g = Graph(EdgeList = [('a', 'b'), ('a', '')])
-        except GraphEdgeSizeMismatchError, e:
-            print e
-            print "This test 'testEdgeError2' is expected to give GraphEdgeSizeMismatchError" + os.linesep
+    def testShortestPath(self):
+        g = Graph(graph = G)
+        self.assertEquals(g.shortestPath('s', 'v'), ['s', 'x', 'u', 'v'])
         
-    def testEdgeError3(self):
-        try: g = Graph(EdgeList = [(' ', 'b'), ('a', None)])
-        except GraphEdgeSizeMismatchError, e:
-            print e
-            print "This test 'testEdgeError3' is expected to give GraphEdgeSizeMismatchError" + os.linesep
-         
-    def testAdjacency(self):
-        edge = [('a', 'b'), ('a', 'c'), ('a', 'd'), ('a', 'e'), ('b', 'c'), ('c', 'd'), ('e', 'e')]
-        g = Graph(EdgeList = edge)
-        (m, v) = g.toAdjacencyMatrix()
-        print m
-        print v
+    def testMakeGraphFromVertices(self):
+        g = Graph(vertices = ['s', 'u', 'v', 'x', 'y'])
+        self.assertEquals(g.graph, {'s':{}, 'u':{}, 'v':{}, 'x':{}, 'y':{}})
+        
+    def testMakeGraphFromEdges(self):
+        g = Graph(edges = [('s', 'u'),('s', 'u'),('s', 'u'),('s', 'u'),
+                           ('s', 'u'),('s', 'u'),('s', 'u'),('s', 'u'),
+                           ('s', 'u'),('s', 'u'),('s', 'x'),('s', 'x'),
+                           ('s', 'x'),('s', 'x'),('s', 'x'),('u', 'v'), 
+                           ('u', 'x'),('u', 'x'),('x', 'u'),('x', 'u'),
+                           ('x', 'u'),('x', 'v'),('x', 'v'),('x', 'v'),
+                           ('x', 'v'),('x', 'v'),('x', 'v'),('x', 'v'),
+                           ('x', 'v'),('x', 'v'),('x', 'y'),('x', 'y'),
+                           ('y', 's'),('y', 's'),('y', 's'),('y', 's'),
+                           ('y', 's'),('y', 's'),('y', 's'),('y', 'v'),
+                           ('y', 'v'),('y', 'v'),('y', 'v'),('y', 'v'),
+                           ('y', 'v')])
+        self.assertEquals(g.graph, G)
     
         
 if __name__ == "__main__":
-    #    print os.path.join(os.path.dirname(os.getcwd()), 'adalp')
-    sys.path.append(os.path.join(os.path.dirname(os.getcwd()), 'copads'))
+    sys.path.append(os.path.join(os.path.dirname(os.getcwd()), 'src'))
     from Graph import Graph
-    from JMathsExceptions import *
+    from CopadsExceptions import *
     unittest.main()

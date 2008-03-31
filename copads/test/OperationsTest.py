@@ -65,7 +65,6 @@ class testBoolean(unittest.TestCase):
         
 
 if __name__ == "__main__":
-    #    print os.path.join(os.path.dirname(os.getcwd()), 'adalp')
-    sys.path.append(os.path.join(os.path.dirname(os.getcwd()), 'copads'))
+    sys.path.append(os.path.join(os.path.dirname(os.getcwd()), 'src'))
     import Operations
     unittest.main()
