@@ -23,7 +23,7 @@ class Graph:
             self.makeGraphFromEdges(kwarg['edges'])
         elif kwarg.has_key('adjacency'): 
             self.makeGraphFromAdjacency(kwarg['adjacency'])
-        else: pass
+        else: self.graph = {}
         
     def makeGraphFromAdjacency(self, adj):
         vertices = adj.pop(0)
@@ -43,19 +43,12 @@ class Graph:
     def makeGraphFromEdges(self, edges):
         if type(edges) != list: raise GraphParameterError('Edges must be a list of tuples')
         from Set import Set
-        unique_edges = list(Set(edges))
-        e = {}
-        for edge in unique_edges: e[edge] = edges.count(edge)
-        sources = list(Set([x[0] for x in unique_edges]))
-        ends = list(Set([x[1] for x in unique_edges]))
-        t = {}
-        for source in sources:
-            ends = [(edge[1], e[(source,edge[1])]) for edge in unique_edges if edge[0] == source]
-            for end in ends:
-                t[end[0]] = end[1]
-                self.graph[source][end[0]] = end[1]
-            print t
-            t.clear()
+        usources = list(Set([x[0] for x in edges]))
+        for index in range(len(usources)):
+            source = usources[index]
+            t = [x[1] for x in edges if x[0] == source]
+            t = [(end, t.count(end)) for end in list(Set(t))]
+            self.graph[usources[index]] = dict(t)
     
 
     def Dijkstra(self, start,end=None):

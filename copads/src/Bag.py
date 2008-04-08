@@ -92,9 +92,9 @@ class Bag(object):
     def itercounts(self):
         return self._data.iteritems()     
 
-#    def mostcommon(self, n=None):
-#        if n is None:
-#            return sorted(self.itercounts(), key=itemgetter(1), reverse=True)
-#        it = enumerate(self.itercounts())
-#        nl = nlargest(n, ((cnt, i, elem) for (i, (elem, cnt)) in it))
-#        return [(elem, cnt) for cnt, i, elem in nl]
+    def mostcommon(self, n=None):
+        if n is None:
+            return sorted(self.itercounts(), key=itemgetter(1), reverse=True)
+        it = enumerate(self.itercounts())
+        nl = nlargest(n, ((cnt, i, elem) for (i, (elem, cnt)) in it))
+        return [(elem, cnt) for cnt, i, elem in nl]
