@@ -48,7 +48,7 @@ http://aspn.activestate.com/ASPN/Cookbook/Python/Recipe/52275
 
 11. floatRgb, strRgb, rgc, htmlRgb 
 http://aspn.activestate.com/ASPN/Cookbook/Python/Recipe/52275 
-(file: doc/adaptation_source/52275)
+(file: doc/adaptation_source/52275.py)
 
 12. Red-Black Tree
 http://newcenturycomputers.net/projects/rbtree.html
@@ -56,4 +56,8 @@ http://newcenturycomputers.net/projects/rbtree.html
 
 13. Dijkstra
 http://aspn.activestate.com/ASPN/Cookbook/Python/Recipe/119466
-(file: doc/adaptation_source/119466)
+(file: doc/adaptation_source/119466.py)
+
+14. Numerical algorithms by Tom Loredo
+http://mail.python.org/pipermail/python-list/2000-June/039873.html
+(file: 2000_June_039873.py)

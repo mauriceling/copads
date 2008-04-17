@@ -59,7 +59,7 @@ def bessi(n, x):
             bip = 0.0
             bi = 1.0
             m = 2 * (n + math.floor(math.sqrt(iacc * n)))
-            for j in range(m, 1, -1):
+            for j in range(int(m), 1, -1):
                 bim = bip+j*tox*bi
                 bip = bi
                 bi = bim
@@ -472,12 +472,15 @@ def erfcc(x):
     @return: float number
     """
     z = abs(x)
-    t = 1.0 / (1.0 + 0.5 * z)
-    ans = t * math.exp(-z * z - 1.26551223 + t * (1.00002368 + t * (0.37409196 + t * \
-        (0.09678418 + t * (-0.18628806 + t * (-1.13520398 + t * 1.48851587 + t * \
-        (-0.82215223 + t * 0.17087277)))))))
-    if x >= 0.0: return ans
-    else: return 2.0 - ans
+    t = 1.0 / (1.0 + 0.5*z)
+    r = t * math.exp(-z*z-1.26551223+t*(1.00002368+t*(0.37409196+
+        t*(0.09678418+t*(-0.18628806+t*(0.27886807+
+        t*(-1.13520398+t*(1.48851587+t*(-0.82215223+
+        t*0.17087277)))))))))
+    if (x >= 0.0):
+        return r
+    else:
+        return 2.0 - r
 
 def factln(n):
     """Natural logarithm of factorial: ln(n!)
@@ -496,16 +499,21 @@ def factrl(n):
     return math.exp(gammln(n + 1.0))
 
 def gammln(n):
-    """Gamma function. Ref: NRP 6.1
+    """Gamma function. 
+    Ref: NRP 6.1 and http://mail.python.org/pipermail/python-list/2000-June/039873.html
     
     @param n: float number
     @return: float number"""
-    x = n - 1
+    gammln_cof = [76.18009173, -86.50532033, 24.01409822,
+                  -1.231739516e0, 0.120858003e-2, -0.536382e-5]
+    x = n - 1.0
     tmp = x + 5.5
-    tmp = (x + 0.5) * math.log(tmp) - tmp
-    ser = 1.0 + (76.18009173/(x + 1.0)) - (86.50532033/(x+2.0)) + (24.01409822/(x+3.0)) \
-        (-1.231739516/(x+4.0)) + (0.120858003e-2/(x+5.0)) - (0.536382e-5/(x+6.0))
-    return tmp + math.log(Constants.SQRT2PI * ser)
+    tmp = (x + 0.5)*math.log(tmp) - tmp
+    ser = 1.
+    for j in range(6):
+        x = x + 1.
+        ser = ser + gammln_cof[j]/x
+    return tmp + math.log(2.50662827465*ser)
 
 def gammp(a, x): 
     """Gamma incomplete function, P(a,x). 
@@ -628,7 +636,26 @@ def gauleg(): raise NotImplementedError
 def gaussj(): raise NotImplementedError
 def gcf(): raise NotImplementedError
 def golden(): raise NotImplementedError
-def gser(): raise NotImplementedError
+def gser(a, x, itmax=700, eps=3.e-7):
+    """Series approximation to the incomplete gamma function.
+    Ref: http://mail.python.org/pipermail/python-list/2000-June/039873.html"""
+    gln = gammln(a)
+    if (x < 0.0):
+        raise bad_arg, x
+    if (x == 0.0):
+        return(0.0)
+    ap = a
+    sum = 1.0 / a
+    delta = sum
+    n = 1
+    while n <= itmax:
+        ap = ap + 1.0
+        delta = delta * x / ap
+        sum = sum + delta
+        if (math.abs(delta) < math.abs(sum)*eps):
+            return (sum * math.exp(-x + a*math.log(x) - gln), gln)
+        n = n + 1
+    raise max_iters, str((abs(delta), abs(sum)*eps))
 def hqr(): raise NotImplementedError
 def hunt(): raise NotImplementedError
 def indexx(): raise NotImplementedError
