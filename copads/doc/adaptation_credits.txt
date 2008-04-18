@@ -60,4 +60,8 @@ http://aspn.activestate.com/ASPN/Cookbook/Python/Recipe/119466
 
 14. Numerical algorithms by Tom Loredo
 http://mail.python.org/pipermail/python-list/2000-June/039873.html
-(file: 2000_June_039873.py)
+(file: doc/adaptation_source/2000_June_039873.py)
+
+15. Digamma, trigamma unctions by Gavin E Crooks
+http://www.koders.com/python/fidA1F143F7BBA4CFACA5F3442265D17800581A493F.aspx
+(file: doc/adaptation_source/moremaths.py)

@@ -1,5 +1,9 @@
 """
 File containing the functions for various statistical distributions.
+References:
+1. Regress+ A compendium of common probability distributions (version 2.3)
+by Michael P. McLaughlin (mpmcl@mitre.org)
+http://www.causascientia.org/math_stat/Dists/Compendium.pdf
 
 Copyright (c) Maurice H.T. Ling <mauriceling@acm.org>
 Date created: 17th August 2005
@@ -39,8 +43,8 @@ class Distribution:
     def mean(self): 
         """Gives the arithmetic mean of the sample."""
         raise NotImplementedError
-    def moments(self, r): 
-        """Gives the r-th moments of the sample."""
+    def mode(self): 
+        """Gives the mode of the sample, if closed-form is available."""
         raise NotImplementedError
     def kurtosis(self): 
         """Gives the kurtosis of the sample."""
@@ -51,10 +55,526 @@ class Distribution:
     def variance(self): 
         """Gives the variance of the sample."""
         raise NotImplementedError
+    def quantile1(self): 
+        """Gives the 1st quantile of the sample, if closed-form is available."""
+        raise NotImplementedError
+    def quantile3(self): 
+        """Gives the 3rd quantile of the sample, if closed-form is available."""
+        raise NotImplementedError
+    def qmean(self): 
+        """Gives the quantile of the arithmetic mean of the sample, if 
+        closed-form is available."""
+        raise NotImplementedError
+    def qmode(self): 
+        """Gives the quantile of the mode of the sample, if closed-form is 
+        available."""
+        raise NotImplementedError
     def random(self):
         """Gives a random number based on the distribution."""
         raise NotImplementedError
         
+
+class BetaDistribution(Distribution):
+    def __init__(self, **parameters): 
+        """Constructor method. The parameters are used to construct the probability distribution."""
+        self.location = parameters['location']
+        self.scale = parameters['scale']
+        self.p = parameters['p']
+        self.q = parameters['q']
+    def CDF(self, x): 
+        """
+        Cummulative Distribution Function, which gives the cummulative probability (area under the 
+        probability curve) from -infinity or 0 to a give x-value on the x-axis where y-axis is the 
+        probability."""
+        return NRPy.betai((x - self.location)/(self.scale - self.location), self.p, self.q)
+    def PDF(self, x): 
+        """
+        Partial Distribution Function, which gives the probability for the particular value of x, or
+        the area under probability distribution from x-h to x+h for continuous distribution."""
+        n = (self.scale - self.location) ** (self.p + self.q - 1)
+        n = NRPy.gammln(self.p) * NRPy.gammln(self.q) * n
+        n = NRPy.gammln(self.p + self.q)/n
+        p = (x - self.location) ** (self.p - 1)
+        q = (self.scale - x) ** (self.q - 1)
+        return n * p * q
+#    def inverseCDF(self, probability): 
+#        """
+#        It does the reverse of CDF() method, it takes a probability value and returns the corresponding 
+#        value on the x-axis."""
+#        raise NotImplementedError
+    def mean(self): 
+        """Gives the arithmetic mean of the sample."""
+        n = (self.location * self.q) + (self.scale * self.p)
+        return n / (self.p + self.q)
+    def mode(self): 
+        """Gives the mode of the sample."""
+        n = (self.location * (self.q - 1)) + (self.scale * (self.p - 1))
+        return n / (self.p + self.q - 2)
+    def kurtosis(self): 
+        """Gives the kurtosis of the sample."""
+        n = (self.p ** 2) * (self.q + 2) + \
+            (2 * (self.q ** 2)) + \
+            ((self.p * self.q) * (self.q - 2))
+        n = n * (self.p + self.q + 1)
+        d = self.p * self.q * (self.p + self.q + 2) * (self.p + self.q + 3)
+        return 3 * ((n / d) - 1)
+    def skew(self): 
+        """Gives the skew of the sample."""
+        d = (self.p + self.q) ** 3
+        d = d * (self.p + self.q + 1) * (self.p + self.q + 2)
+        e = ((self.p + self.q) ** 2) * (self.p + self.q + 1)
+        e = (self.p * self.q) / e
+        e = e ** 1.5
+        return ((2 * self.p * self.q) * (self.q - self.q))/(d * e)
+    def variance(self): 
+        """Gives the variance of the sample."""
+        n = self.p * self.q * ((self.scale - self.location) ** 2)
+        d = (self.p + self.q + 1) * ((self.p + self.q) ** 2)
+        return n/d
+#    def random(self):
+#        """Gives a random number based on the distribution."""
+#        raise NotImplementedError
+
+
+class BinomialDistribution(Distribution):
+    def __init__(self, **parameters): 
+        """Constructor method. The parameters are used to construct the probability distribution."""
+        try: self.success = float(parameters['success'])
+        except KeyError: self.success = 0.5
+        try: self.trial = int(parameters['trial'])
+        except KeyError: self.trial = 1000
+    def CDF(self, x): 
+        """
+        Cummulative Distribution Function, which gives the cummulative probability (area under the 
+        probability curve) from -infinity or 0 to a give x-value on the x-axis where y-axis is the 
+        probability."""
+        return NRPy.cdf_binomial(x, self.trial, self.success)
+    def PDF(self, x): 
+        """
+        Partial Distribution Function, which gives the probability for the particular value of x, or
+        the area under probability distribution from x-h to x+h for continuous distribution."""
+        x = int(x)
+        return NRPy.bico(self.trial, x) * \
+            (self.success ** x) * \
+            ((1 - self.success) ** (self.trial - x))
+#    def inverseCDF(self, probability): 
+#        """
+#        It does the reverse of CDF() method, it takes a probability value and returns the corresponding 
+#        value on the x-axis."""
+#        raise NotImplementedError
+    def mean(self): 
+        """Gives the arithmetic mean of the sample."""
+        return self.success * self.trial
+    def mode(self): 
+        """Gives the mode of the sample."""
+        return int(self.success * (self.trial + 1))
+#    def kurtosis(self): 
+#        """Gives the kurtosis of the sample."""
+#        raise NotImplementedError
+#    def skew(self): 
+#        """Gives the skew of the sample."""
+#        raise NotImplementedError
+    def variance(self): 
+        """Gives the variance of the sample."""
+        return self.mean() * (1 - self.success)
+#    def random(self):
+#        """Gives a random number based on the distribution."""
+#        raise NotImplementedError
+
+
+class CauchyDistribution(Distribution):
+    def __init__(self, **parameters): 
+        """Constructor method. The parameters are used to construct the probability distribution."""
+        try: self.location = parameter['location']
+        except KeyError: self.location = 0.0
+        try: self.scale = parameter['scale']
+        except KeyError: self.scale = 1.0
+    def CDF(self, x): 
+        """
+        Cummulative Distribution Function, which gives the cummulative probability (area under the 
+        probability curve) from -infinity or 0 to a give x-value on the x-axis where y-axis is the 
+        probability."""
+        return 0.5 + 1/PI * atan((x-self.location)/self.scale)
+    def PDF(self, x): 
+        """
+        Partial Distribution Function, which gives the probability for the particular value of x, or
+        the area under probability distribution from x-h to x+h for continuous distribution."""
+        return 1 / (PI * self.scale * (1 + (((x - self.location)/self.scale) ** 2)))
+#    def inverseCDF(self, probability): 
+#        """
+#        It does the reverse of CDF() method, it takes a probability value and returns the corresponding 
+#        value on the x-axis."""
+#        raise NotImplementedError
+#    def mean(self): 
+#        """Gives the arithmetic mean of the sample."""
+#        raise NotImplementedError
+    def mode(self): 
+        """Gives the mode of the sample."""
+        return self.location
+    def median(self): 
+        """Gives the median of the sample."""
+        return self.location
+    def quantile1(self): 
+        """Gives the 1st quantile of the sample."""
+        return self.location - self.scale
+    def quantile3(self): 
+        """Gives the 3rd quantile of the sample."""
+        return self.location + self.scale
+    def qmode(self): 
+        """Gives the quantile of the mode of the sample."""
+        return 0.5
+#    def kurtosis(self): 
+#        """Gives the kurtosis of the sample."""
+#        raise NotImplementedError
+#    def skew(self): 
+#        """Gives the skew of the sample."""
+#        raise NotImplementedError
+#    def variance(self): 
+#        """Gives the variance of the sample."""
+#        raise NotImplementedError
+#    def random(self):
+#        """Gives a random number based on the distribution."""
+#        raise NotImplementedError
+
+
+class ChiSquareDistribution(Distribution):
+    pass
+#    def __init__(self, **parameters): 
+#        """Constructor method. The parameters are used to construct the probability distribution."""
+#        raise NotImplementedError
+#    def CDF(self, x): 
+#        """
+#        Cummulative Distribution Function, which gives the cummulative probability (area under the 
+#        probability curve) from -infinity or 0 to a give x-value on the x-axis where y-axis is the 
+#        probability."""
+#        raise NotImplementedError
+#    def PDF(self, x): 
+#        """
+#        Partial Distribution Function, which gives the probability for the particular value of x, or
+#        the area under probability distribution from x-h to x+h for continuous distribution."""
+#        raise NotImplementedError
+#    def inverseCDF(self, probability): 
+#        """
+#        It does the reverse of CDF() method, it takes a probability value and returns the corresponding 
+#        value on the x-axis."""
+#        raise NotImplementedError
+#    def mean(self): 
+#        """Gives the arithmetic mean of the sample."""
+#        raise NotImplementedError
+#    def mode(self): 
+#        """Gives the mode of the sample."""
+#        raise NotImplementedError
+#    def kurtosis(self): 
+#        """Gives the kurtosis of the sample."""
+#        raise NotImplementedError
+#    def skew(self): 
+#        """Gives the skew of the sample."""
+#        raise NotImplementedError
+#    def variance(self): 
+#        """Gives the variance of the sample."""
+#        raise NotImplementedError
+#    def random(self):
+#        """Gives a random number based on the distribution."""
+#        raise NotImplementedError
+
+
+class CosineDistribution(Distribution):
+    def __init__(self, **parameters): 
+        """Constructor method. The parameters are used to construct the probability distribution."""
+        try: self.location = parameters['location']
+        except KeyError: self.location = 0.0
+        try: self.scale = parameters['scale']
+        except KeyError: self.scale = 1.0
+    def CDF(self, x): 
+        """
+        Cummulative Distribution Function, which gives the cummulative probability (area under the 
+        probability curve) from -infinity or 0 to a give x-value on the x-axis where y-axis is the 
+        probability."""
+        n = PI + (x - self.location)/self.scale + math.sin((x - self.location)/self.scale)
+        return (1/PI2) * n
+    def PDF(self, x): 
+        """
+        Partial Distribution Function, which gives the probability for the particular value of x, or
+        the area under probability distribution from x-h to x+h for continuous distribution."""
+        return (1/(PI2 * self.scale)) * (1 + math.cos((x - self.location)/self.scale))
+#    def inverseCDF(self, probability): 
+#        """
+#        It does the reverse of CDF() method, it takes a probability value and returns the corresponding 
+#        value on the x-axis."""
+#        raise NotImplementedError
+    def mean(self): 
+        """Gives the arithmetic mean of the sample."""
+        return self.location
+    def mode(self): 
+        """Gives the mode of the sample."""
+        return self.location
+    def median(self): 
+        """Gives the median of the sample."""
+        return self.location
+    def kurtosis(self): 
+        """Gives the kurtosis of the sample."""
+        return -0.5938
+    def skew(self): 
+        """Gives the skew of the sample."""
+        return 0.0
+    def variance(self): 
+        """Gives the variance of the sample."""
+        return (((PI * PI)/3) - 2) * (self.scale ** 2)
+    def quantile1(self): 
+        """Gives the 1st quantile of the sample."""
+        return self.location - (0.8317 * self.scale)
+    def quantile3(self): 
+        """Gives the 13rd quantile of the sample."""
+        return self.location + (0.8317 * self.scale)
+    def qmean(self): 
+        """Gives the quantile of the arithmetic mean of the sample."""
+        return 0.5
+    def qmode(self): 
+        """Gives the quantile of the mode of the sample."""
+        return 0.5
+#    def random(self):
+#        """Gives a random number based on the distribution."""
+#        raise NotImplementedError
+
+
+class ExponentialDistribution(Distribution):
+    def __init__(self, **parameters): 
+        """Constructor method. The parameters are used to construct the probability distribution."""
+        try: self.location = parameters['location']
+        except KeyError: self.location = 0.0
+        try: self.scale = parameters['scale']
+        except KeyError: self.scale = 1.0
+    def CDF(self, x): 
+        """
+        Cummulative Distribution Function, which gives the cummulative probability (area under the 
+        probability curve) from -infinity or 0 to a give x-value on the x-axis where y-axis is the 
+        probability."""
+        return 1 - math.exp((self.location - x)/self.scale)
+    def PDF(self, x): 
+        """
+        Partial Distribution Function, which gives the probability for the particular value of x, or
+        the area under probability distribution from x-h to x+h for continuous distribution."""
+        return (1/self.scale) * math.exp((self.location - x)/self.scale)
+#    def inverseCDF(self, probability): 
+#        """
+#        It does the reverse of CDF() method, it takes a probability value and returns the corresponding 
+#        value on the x-axis."""
+#        raise NotImplementedError
+    def mean(self): 
+        """Gives the arithmetic mean of the sample."""
+        return self.location + self.scale
+    def mode(self): 
+        """Gives the mode of the sample."""
+        return self.location
+    def median(self): 
+        """Gives the median of the sample."""
+        return self.location + (self.scale * math.log(2))
+    def kurtosis(self): 
+        """Gives the kurtosis of the sample."""
+        return 6.0
+    def skew(self): 
+        """Gives the skew of the sample."""
+        return 2.0
+    def variance(self): 
+        """Gives the variance of the sample."""
+        return self.scale * self.scale
+    def quantile1(self): 
+        """Gives the 1st quantile of the sample."""
+        return self.location + (self.scale * math.log(1.333))
+    def quantile3(self): 
+        """Gives the 3rd quantile of the sample."""
+        return self.location + (self.scale * math.log(4))
+    def qmean(self): 
+        """Gives the quantile of the arithmetic mean of the sample."""
+        return 0.6321
+    def qmode(self): 
+        """Gives the quantile of the mode of the sample."""
+        return 0.0
+#    def random(self):
+#        """Gives a random number based on the distribution."""
+#        raise NotImplementedError
+
+
+class FDistribution(Distribution):
+    pass
+#    def __init__(self, **parameters): 
+#        """Constructor method. The parameters are used to construct the probability distribution."""
+#        raise NotImplementedError
+#    def CDF(self, x): 
+#        """
+#        Cummulative Distribution Function, which gives the cummulative probability (area under the 
+#        probability curve) from -infinity or 0 to a give x-value on the x-axis where y-axis is the 
+#        probability."""
+#        raise NotImplementedError
+#    def PDF(self, x): 
+#        """
+#        Partial Distribution Function, which gives the probability for the particular value of x, or
+#        the area under probability distribution from x-h to x+h for continuous distribution."""
+#        raise NotImplementedError
+#    def inverseCDF(self, probability): 
+#        """
+#        It does the reverse of CDF() method, it takes a probability value and returns the corresponding 
+#        value on the x-axis."""
+#        raise NotImplementedError
+#    def mean(self): 
+#        """Gives the arithmetic mean of the sample."""
+#        raise NotImplementedError
+#    def mode(self): 
+#        """Gives the mode of the sample."""
+#        raise NotImplementedError
+#    def kurtosis(self): 
+#        """Gives the kurtosis of the sample."""
+#        raise NotImplementedError
+#    def skew(self): 
+#        """Gives the skew of the sample."""
+#        raise NotImplementedError
+#    def variance(self): 
+#        """Gives the variance of the sample."""
+#        raise NotImplementedError
+#    def random(self):
+#        """Gives a random number based on the distribution."""
+#        raise NotImplementedError
+
+
+class GeometricDistribution(Distribution):
+    pass
+    def __init__(self, **parameters): 
+        """Constructor method. The parameters are used to construct the probability distribution."""
+        try: self.prob = parameters['success']
+        except KeyError: self.prob = 0.5
+    def CDF(self, x): 
+        """
+        Cummulative Distribution Function, which gives the cummulative probability (area under the 
+        probability curve) from -infinity or 0 to a give x-value on the x-axis where y-axis is the 
+        probability."""
+        sum = 0.0
+        for i in range(int(x)): sum = sum + self.PDF(i)
+        return sum
+    def PDF(self, x): 
+        """
+        Partial Distribution Function, which gives the probability for the particular value of x, or
+        the area under probability distribution from x-h to x+h for continuous distribution."""
+        return self.prob * ((1 - self.prob) ** (x - 1))
+#    def inverseCDF(self, probability): 
+#        """
+#        It does the reverse of CDF() method, it takes a probability value and returns the corresponding 
+#        value on the x-axis."""
+#        raise NotImplementedError
+    def mean(self): 
+        """Gives the arithmetic mean of the sample."""
+        return 1/self.prob
+    def mode(self): 
+        """Gives the mode of the sample."""
+        return 1.0
+#    def kurtosis(self): 
+#        """Gives the kurtosis of the sample."""
+#        raise NotImplementedError
+#    def skew(self): 
+#        """Gives the skew of the sample."""
+#        raise NotImplementedError
+    def variance(self): 
+        """Gives the variance of the sample."""
+        return (1 - self.prob) / (self.prob ** 2)
+#    def random(self):
+#        """Gives a random number based on the distribution."""
+#        raise NotImplementedError
+
+
+class LogarithmicDistribution(Distribution):
+    def __init__(self, **parameters): 
+        """Constructor method. The parameters are used to construct the probability distribution."""
+        self.shape = parameters['shape']
+    def CDF(self, x): 
+        """
+        Cummulative Distribution Function, which gives the cummulative probability (area under the 
+        probability curve) from -infinity or 0 to a give x-value on the x-axis where y-axis is the 
+        probability."""
+        sum = 0.0
+        for i in range(x): sum = sum + self.PDF(i)
+        return sum
+    def PDF(self, x): 
+        """
+        Partial Distribution Function, which gives the probability for the particular value of x, or
+        the area under probability distribution from x-h to x+h for continuous distribution."""
+        return (-1 * (self.shape ** x)) / (math.log(1 - self.shape) * x)
+#    def inverseCDF(self, probability): 
+#        """
+#        It does the reverse of CDF() method, it takes a probability value and returns the corresponding 
+#        value on the x-axis."""
+#        raise NotImplementedError
+    def mean(self): 
+        """Gives the arithmetic mean of the sample."""
+        return (-1 * self.shape)/((1 - self.shape) * math.log(1 - self.shape))
+    def mode(self): 
+        """Gives the mode of the sample."""
+        return 1.0
+#    def kurtosis(self): 
+#        """Gives the kurtosis of the sample."""
+#        raise NotImplementedError
+#    def skew(self): 
+#        """Gives the skew of the sample."""
+#        raise NotImplementedError
+    def variance(self): 
+        """Gives the variance of the sample."""
+        n = (-1 * self.shape) * (self.shape + math.log(1 - self.shape))
+        d = ((1 - self.shape) ** 2) * math.log(1 - self.shape) * math.log(1 - self.shape)
+        return n / d
+#    def quantile1(self): 
+#        """Gives the 1st quantile of the sample."""
+#        raise NotImplementedError
+#    def quantile3(self): 
+#        """Gives the 3rd quantile of the sample."""
+#        raise NotImplementedError
+#    def qmean(self): 
+#        """Gives the quantile of the arithmetic mean of the sample."""
+#        raise NotImplementedError
+#    def qmode(self): 
+#        """Gives the quantile of the mode of the sample."""
+#        raise NotImplementedError
+#    def random(self):
+#        """Gives a random number based on the distribution."""
+#        raise NotImplementedError
+
+class LogNormalDistribution(Distribution):
+    pass
+#    def __init__(self, **parameters): 
+#        """Constructor method. The parameters are used to construct the probability distribution."""
+#        raise NotImplementedError
+#    def CDF(self, x): 
+#        """
+#        Cummulative Distribution Function, which gives the cummulative probability (area under the 
+#        probability curve) from -infinity or 0 to a give x-value on the x-axis where y-axis is the 
+#        probability."""
+#        raise NotImplementedError
+#    def PDF(self, x): 
+#        """
+#        Partial Distribution Function, which gives the probability for the particular value of x, or
+#        the area under probability distribution from x-h to x+h for continuous distribution."""
+#        raise NotImplementedError
+#    def inverseCDF(self, probability): 
+#        """
+#        It does the reverse of CDF() method, it takes a probability value and returns the corresponding 
+#        value on the x-axis."""
+#        raise NotImplementedError
+#    def mean(self): 
+#        """Gives the arithmetic mean of the sample."""
+#        raise NotImplementedError
+#    def mode(self): 
+#        """Gives the mode of the sample."""
+#        raise NotImplementedError
+#    def kurtosis(self): 
+#        """Gives the kurtosis of the sample."""
+#        raise NotImplementedError
+#    def skew(self): 
+#        """Gives the skew of the sample."""
+#        raise NotImplementedError
+#    def variance(self): 
+#        """Gives the variance of the sample."""
+#        raise NotImplementedError
+#    def random(self):
+#        """Gives a random number based on the distribution."""
+#        raise NotImplementedError
+
 
 class NormalDistribution(Distribution):
     def __init__(self, **kwargs):
@@ -87,7 +607,7 @@ class NormalDistribution(Distribution):
         return sign*g
     def mean(self): 
         return self.mean
-#    def moments(self, r): raise NotImplementedError
+#    def mode(self): raise NotImplementedError
     def kurtosis(self): 
         return 0.0
     def skew(self): 
@@ -96,382 +616,9 @@ class NormalDistribution(Distribution):
         return self.stdev * self.stdev
 #    def random(self):
 #        """Gives a random number based on the distribution."""
-#        raise NotImplementedError
-    
-class ChiSquareDistribution(Distribution):
-    pass
-#    def __init__(self, **parameters): 
-#        """Constructor method. The parameters are used to construct the probability distribution."""
-#        raise NotImplementedError
-#    def CDF(self, x): 
-#        """
-#        Cummulative Distribution Function, which gives the cummulative probability (area under the 
-#        probability curve) from -infinity or 0 to a give x-value on the x-axis where y-axis is the 
-#        probability."""
-#        raise NotImplementedError
-#    def PDF(self, x): 
-#        """
-#        Partial Distribution Function, which gives the probability for the particular value of x, or
-#        the area under probability distribution from x-h to x+h for continuous distribution."""
-#        raise NotImplementedError
-#    def inverseCDF(self, probability): 
-#        """
-#        It does the reverse of CDF() method, it takes a probability value and returns the corresponding 
-#        value on the x-axis."""
-#        raise NotImplementedError
-#    def mean(self): 
-#        """Gives the arithmetic mean of the sample."""
-#        raise NotImplementedError
-#    def moments(self, r): 
-#        """Gives the moments of the sample."""
-#        raise NotImplementedError
-#    def kurtosis(self): 
-#        """Gives the kurtosis of the sample."""
-#        raise NotImplementedError
-#    def skew(self): 
-#        """Gives the skew of the sample."""
-#        raise NotImplementedError
-#    def variance(self): 
-#        """Gives the variance of the sample."""
-#        raise NotImplementedError
-#    def random(self):
-#        """Gives a random number based on the distribution."""
-#        raise NotImplementedError
-    
-class TDistribution(Distribution):
-    def __init__(self, **parameters): 
-        """Constructor method. The parameters are used to construct the probability distribution."""
-        try: self.mean = parameter['location']
-        except KeyError: self.mean = 0.0
-        try: self.stdev = parameter['scale']
-        except KeyError: self.stdev = 1.0
-        try: self.df = parameter['shape']
-        except KeyError: self.df = 2
-#    def CDF(self, x): 
-#        """
-#       """
-#        raise NotImplementedError
-#    def PDF(self, x): 
-#        """
-#        Calculates the density (probability) at x with n-th degrees of freedom as:
-#        f(x) = Gamma((n+1)/2) / (sqrt(n pi) Gamma(n/2)) (1 + x^2/n)^-((n+1)/2)
-#        for all real x. It has mean 0 (for n > 1) and variance n/(n-2) (for n > 2)."""
-#        raise NotImplementedError
-#    def inverseCDF(self, probability): 
-#        """
-#        It does the reverse of CDF() method, it takes a probability value and returns the corresponding 
-#        value on the x-axis."""
-#        raise NotImplementedError
-    def mean(self): 
-        """Gives the arithmetic mean of the sample."""
-        return self.mean
-#    def moments(self, r): 
-#        """Gives the moments of the sample."""
-#        raise NotImplementedError
-#    def kurtosis(self): 
-#        """Gives the kurtosis of the sample."""
-#        raise NotImplementedError
-    def skew(self): 
-        """Gives the skew of the sample."""
-        return 0.0
-    def variance(self): 
-        """Gives the variance of the sample."""
-        return (self.df / (self.df - 2)) * self.stdev * self.stdev
-#    def random(self):
-#        """Gives a random number based on the distribution."""
-#        raise NotImplementedError
- 
-class FDistribution(Distribution):
-    pass
-#    def __init__(self, **parameters): 
-#        """Constructor method. The parameters are used to construct the probability distribution."""
-#        raise NotImplementedError
-#    def CDF(self, x): 
-#        """
-#        Cummulative Distribution Function, which gives the cummulative probability (area under the 
-#        probability curve) from -infinity or 0 to a give x-value on the x-axis where y-axis is the 
-#        probability."""
-#        raise NotImplementedError
-#    def PDF(self, x): 
-#        """
-#        Partial Distribution Function, which gives the probability for the particular value of x, or
-#        the area under probability distribution from x-h to x+h for continuous distribution."""
-#        raise NotImplementedError
-#    def inverseCDF(self, probability): 
-#        """
-#        It does the reverse of CDF() method, it takes a probability value and returns the corresponding 
-#        value on the x-axis."""
-#        raise NotImplementedError
-#    def mean(self): 
-#        """Gives the arithmetic mean of the sample."""
-#        raise NotImplementedError
-#    def moments(self, r): 
-#        """Gives the moments of the sample."""
-#        raise NotImplementedError
-#    def kurtosis(self): 
-#        """Gives the kurtosis of the sample."""
-#        raise NotImplementedError
-#    def skew(self): 
-#        """Gives the skew of the sample."""
-#        raise NotImplementedError
-#    def variance(self): 
-#        """Gives the variance of the sample."""
-#        raise NotImplementedError
-#    def random(self):
-#        """Gives a random number based on the distribution."""
-#        raise NotImplementedError
+#        raise NotImplementedError    
        
-class BinomialDistribution(Distribution):
-    def __init__(self, **parameters): 
-        """Constructor method. The parameters are used to construct the probability distribution."""
-        try: self.success = float(parameters['success'])
-        except KeyError: self.success = 0.5
-        try: self.trial = int(parameters['trial'])
-        except KeyError: self.trial = 1000
-    def CDF(self, x): 
-        """
-        Cummulative Distribution Function, which gives the cummulative probability (area under the 
-        probability curve) from -infinity or 0 to a give x-value on the x-axis where y-axis is the 
-        probability."""
-        sum = 0.0
-        for i in range(int(x)): sum = sum + self.PDF(i)
-        return sum
-    def PDF(self, x): 
-        """
-        Partial Distribution Function, which gives the probability for the particular value of x, or
-        the area under probability distribution from x-h to x+h for continuous distribution."""
-        x = int(x)
-        return NRPy.bico(self.trial, x) * \
-            (self.success ** x) * \
-            ((1 - self.success) ** (self.trial - x))
-#    def inverseCDF(self, probability): 
-#        """
-#        It does the reverse of CDF() method, it takes a probability value and returns the corresponding 
-#        value on the x-axis."""
-#        raise NotImplementedError
-    def mean(self): 
-        """Gives the arithmetic mean of the sample."""
-        return self.success * self.trial
-#    def moments(self, r): 
-#        """Gives the moments of the sample."""
-#        raise NotImplementedError
-#    def kurtosis(self): 
-#        """Gives the kurtosis of the sample."""
-#        raise NotImplementedError
-#    def skew(self): 
-#        """Gives the skew of the sample."""
-#        raise NotImplementedError
-    def variance(self): 
-        """Gives the variance of the sample."""
-        return self.mean() * (1 - self.success)
-#    def random(self):
-#        """Gives a random number based on the distribution."""
-#        raise NotImplementedError
-    
-class PoissonDistribution(Distribution):
-    def __init__(self, **parameters): 
-        """Constructor method. The parameters are used to construct the probability distribution."""
-        self.mean = parameters['expectation']
-    def CDF(self, x): 
-        """
-        Cummulative Distribution Function, which gives the cummulative probability (area under the 
-        probability curve) from -infinity or 0 to a give x-value on the x-axis where y-axis is the 
-        probability."""
-        sum = 0.0
-        for i in range(int(x)): sum = sum + self.PDF(i)
-        return sum
-    def PDF(self, x): 
-        """
-        Partial Distribution Function, which gives the probability for the particular value of x, or
-        the area under probability distribution from x-h to x+h for continuous distribution."""
-        return (math.exp(-1 ** self.mean) * (self.mean ** x)) / NRPy.factrl(x)
-#    def inverseCDF(self, probability): 
-#        """
-#        It does the reverse of CDF() method, it takes a probability value and returns the corresponding 
-#        value on the x-axis."""
-#        raise NotImplementedError
-    def mean(self): 
-        """Gives the arithmetic mean of the sample."""
-        return self.mean
-#    def moments(self, r): 
-#        """Gives the moments of the sample."""
-#        raise NotImplementedError
-#    def kurtosis(self): 
-#        """Gives the kurtosis of the sample."""
-#        raise NotImplementedError
-#    def skew(self): 
-#        """Gives the skew of the sample."""
-#        raise NotImplementedError
-    def variance(self): 
-        """Gives the variance of the sample."""
-        return self.mean
-#    def random(self):
-#        """Gives a random number based on the distribution."""
-#        raise NotImplementedError
-    
-class GeometricDistribution(Distribution):
-    pass
-    def __init__(self, **parameters): 
-        """Constructor method. The parameters are used to construct the probability distribution."""
-        try: self.prob = parameters['success']
-        except KeyError: self.prob = 0.5
-    def CDF(self, x): 
-        """
-        Cummulative Distribution Function, which gives the cummulative probability (area under the 
-        probability curve) from -infinity or 0 to a give x-value on the x-axis where y-axis is the 
-        probability."""
-        sum = 0.0
-        for i in range(int(x)): sum = sum + self.PDF(i)
-        return sum
-    def PDF(self, x): 
-        """
-        Partial Distribution Function, which gives the probability for the particular value of x, or
-        the area under probability distribution from x-h to x+h for continuous distribution."""
-        return self.prob * ((1 - self.prob) ** (x - 1))
-#    def inverseCDF(self, probability): 
-#        """
-#        It does the reverse of CDF() method, it takes a probability value and returns the corresponding 
-#        value on the x-axis."""
-#        raise NotImplementedError
-#    def mean(self): 
-#        """Gives the arithmetic mean of the sample."""
-#        raise NotImplementedError
-#    def moments(self, r): 
-#        """Gives the moments of the sample."""
-#        raise NotImplementedError
-#    def kurtosis(self): 
-#        """Gives the kurtosis of the sample."""
-#        raise NotImplementedError
-#    def skew(self): 
-#        """Gives the skew of the sample."""
-#        raise NotImplementedError
-#    def variance(self): 
-#        """Gives the variance of the sample."""
-#        raise NotImplementedError
-#    def random(self):
-#        """Gives a random number based on the distribution."""
-#        raise NotImplementedError
-    
-class LogNormalDistribution(Distribution):
-    pass
-#    def __init__(self, **parameters): 
-#        """Constructor method. The parameters are used to construct the probability distribution."""
-#        raise NotImplementedError
-#    def CDF(self, x): 
-#        """
-#        Cummulative Distribution Function, which gives the cummulative probability (area under the 
-#        probability curve) from -infinity or 0 to a give x-value on the x-axis where y-axis is the 
-#        probability."""
-#        raise NotImplementedError
-#    def PDF(self, x): 
-#        """
-#        Partial Distribution Function, which gives the probability for the particular value of x, or
-#        the area under probability distribution from x-h to x+h for continuous distribution."""
-#        raise NotImplementedError
-#    def inverseCDF(self, probability): 
-#        """
-#        It does the reverse of CDF() method, it takes a probability value and returns the corresponding 
-#        value on the x-axis."""
-#        raise NotImplementedError
-#    def mean(self): 
-#        """Gives the arithmetic mean of the sample."""
-#        raise NotImplementedError
-#    def moments(self, r): 
-#        """Gives the moments of the sample."""
-#        raise NotImplementedError
-#    def kurtosis(self): 
-#        """Gives the kurtosis of the sample."""
-#        raise NotImplementedError
-#    def skew(self): 
-#        """Gives the skew of the sample."""
-#        raise NotImplementedError
-#    def variance(self): 
-#        """Gives the variance of the sample."""
-#        raise NotImplementedError
-#    def random(self):
-#        """Gives a random number based on the distribution."""
-#        raise NotImplementedError
-        
-class BetaDistribution(Distribution):
-    pass
-#    def __init__(self, **parameters): 
-#        """Constructor method. The parameters are used to construct the probability distribution."""
-#        raise NotImplementedError
-#    def CDF(self, x): 
-#        """
-#        Cummulative Distribution Function, which gives the cummulative probability (area under the 
-#        probability curve) from -infinity or 0 to a give x-value on the x-axis where y-axis is the 
-#        probability."""
-#        raise NotImplementedError
-#    def PDF(self, x): 
-#        """
-#        Partial Distribution Function, which gives the probability for the particular value of x, or
-#        the area under probability distribution from x-h to x+h for continuous distribution."""
-#        raise NotImplementedError
-#    def inverseCDF(self, probability): 
-#        """
-#        It does the reverse of CDF() method, it takes a probability value and returns the corresponding 
-#        value on the x-axis."""
-#        raise NotImplementedError
-#    def mean(self): 
-#        """Gives the arithmetic mean of the sample."""
-#        raise NotImplementedError
-#    def moments(self, r): 
-#        """Gives the moments of the sample."""
-#        raise NotImplementedError
-#    def kurtosis(self): 
-#        """Gives the kurtosis of the sample."""
-#        raise NotImplementedError
-#    def skew(self): 
-#        """Gives the skew of the sample."""
-#        raise NotImplementedError
-#    def variance(self): 
-#        """Gives the variance of the sample."""
-#        raise NotImplementedError
-#    def random(self):
-#        """Gives a random number based on the distribution."""
-#        raise NotImplementedError
-    
-class WeiBullDistribution(Distribution):
-    pass
-#    def __init__(self, **parameters): 
-#        """Constructor method. The parameters are used to construct the probability distribution."""
-#        raise NotImplementedError
-#    def CDF(self, x): 
-#        """
-#        Cummulative Distribution Function, which gives the cummulative probability (area under the 
-#        probability curve) from -infinity or 0 to a give x-value on the x-axis where y-axis is the 
-#        probability."""
-#        raise NotImplementedError
-#    def PDF(self, x): 
-#        """
-#        Partial Distribution Function, which gives the probability for the particular value of x, or
-#        the area under probability distribution from x-h to x+h for continuous distribution."""
-#        raise NotImplementedError
-#    def inverseCDF(self, probability): 
-#        """
-#        It does the reverse of CDF() method, it takes a probability value and returns the corresponding 
-#        value on the x-axis."""
-#        raise NotImplementedError
-#    def mean(self): 
-#        """Gives the arithmetic mean of the sample."""
-#        raise NotImplementedError
-#    def moments(self, r): 
-#        """Gives the moments of the sample."""
-#        raise NotImplementedError
-#    def kurtosis(self): 
-#        """Gives the kurtosis of the sample."""
-#        raise NotImplementedError
-#    def skew(self): 
-#        """Gives the skew of the sample."""
-#        raise NotImplementedError
-#    def variance(self): 
-#        """Gives the variance of the sample."""
-#        raise NotImplementedError
-#    def random(self):
-#        """Gives a random number based on the distribution."""
-#        raise NotImplementedError
-    
+
 class ParetoDistribution(Distribution):
     pass
     def __init__(self, **parameters): 
@@ -500,9 +647,12 @@ class ParetoDistribution(Distribution):
     def mean(self): 
         """Gives the arithmetic mean of the sample."""
         return (self.location * self.shape) / (self.shape - 1)
-#    def moments(self, r): 
-#        """Gives the moments of the sample."""
-#        raise NotImplementedError
+    def mode(self): 
+        """Gives the mode of the sample."""
+        return self.location
+    def median(self): 
+        """Gives the median of the sample."""
+        return self.location * (2 ** (1/self.shape))
     def kurtosis(self): 
         """Gives the kurtosis of the sample."""
         n = 6 * (self.shape ** 3 + self.shape ** 2 + 6 * self.shape - 2)
@@ -518,28 +668,123 @@ class ParetoDistribution(Distribution):
         n = (self.location ** 2) * self.shape
         d = (self.shape - 2) * ((self.shape - 1) ** 2)
         return n/d
+    def quantile1(self): 
+        """Gives the 1st quantile of the sample."""
+        return self.location * (1.333 ** (1/self.shape))
+    def quantile3(self): 
+        """Gives the 3rd quantile of the sample."""
+        return self.location * (4 ** (1/self.shape))
+    def qmean(self): 
+        """Gives the quantile of the arithmetic mean of the sample."""
+        return 1 - (((self.shape - 1)/self.shape) ** self.shape)
+    def qmode(self): 
+        """Gives the quantile of the mode of the sample."""
+        return 0.0
 #    def random(self):
 #        """Gives a random number based on the distribution."""
-#        raise NotImplementedError
+#        raise NotImplementedError    
+
     
-class CauchyDistribution(Distribution):
+class PoissonDistribution(Distribution):
     def __init__(self, **parameters): 
         """Constructor method. The parameters are used to construct the probability distribution."""
-        try: self.location = parameter['location']
-        except KeyError: self.location = 0.0
-        try: self.scale = parameter['scale']
-        except KeyError: self.scale = 1.0
+        self.mean = parameters['expectation']
     def CDF(self, x): 
         """
         Cummulative Distribution Function, which gives the cummulative probability (area under the 
         probability curve) from -infinity or 0 to a give x-value on the x-axis where y-axis is the 
         probability."""
-        return 0.5 + 1/PI * atan((x-self.location)/self.scale)
+        return NRPy.cdf_poisson(x, self.mean)
     def PDF(self, x): 
         """
         Partial Distribution Function, which gives the probability for the particular value of x, or
         the area under probability distribution from x-h to x+h for continuous distribution."""
-        return 1 / (PI * self.scale * (1 + (((x - self.location)/self.scale) ** 2)))
+        return (math.exp(-1 ** self.mean) * (self.mean ** x)) / NRPy.factrl(x)
+#    def inverseCDF(self, probability): 
+#        """
+#        It does the reverse of CDF() method, it takes a probability value and returns the corresponding 
+#        value on the x-axis."""
+#        raise NotImplementedError
+    def mean(self): 
+        """Gives the arithmetic mean of the sample."""
+        return self.mean
+    def mode(self): 
+        """Gives the mode of the sample."""
+        return int(self.mean)
+#    def kurtosis(self): 
+#        """Gives the kurtosis of the sample."""
+#        raise NotImplementedError
+#    def skew(self): 
+#        """Gives the skew of the sample."""
+#        raise NotImplementedError
+    def variance(self): 
+        """Gives the variance of the sample."""
+        return self.mean
+#    def random(self):
+#        """Gives a random number based on the distribution."""
+#        raise NotImplementedError    
+
+
+class TDistribution(Distribution):
+    def __init__(self, **parameters): 
+        """Constructor method. The parameters are used to construct the probability distribution."""
+        try: self.mean = parameter['location']
+        except KeyError: self.mean = 0.0
+        try: self.stdev = parameter['scale']
+        except KeyError: self.stdev = 1.0
+        try: self.df = parameter['shape']
+        except KeyError: self.df = 2
+#    def CDF(self, x): 
+#        """
+#       """
+#        raise NotImplementedError
+#    def PDF(self, x): 
+#        """
+#        Calculates the density (probability) at x with n-th degrees of freedom as:
+#        f(x) = Gamma((n+1)/2) / (sqrt(n pi) Gamma(n/2)) (1 + x^2/n)^-((n+1)/2)
+#        for all real x. It has mean 0 (for n > 1) and variance n/(n-2) (for n > 2)."""
+#        raise NotImplementedError
+#    def inverseCDF(self, probability): 
+#        """
+#        It does the reverse of CDF() method, it takes a probability value and returns the corresponding 
+#        value on the x-axis."""
+#        raise NotImplementedError
+    def mean(self): 
+        """Gives the arithmetic mean of the sample."""
+        return self.mean
+#    def mode(self): 
+#        """Gives the mode of the sample."""
+#        raise NotImplementedError
+#    def kurtosis(self): 
+#        """Gives the kurtosis of the sample."""
+#        raise NotImplementedError
+    def skew(self): 
+        """Gives the skew of the sample."""
+        return 0.0
+    def variance(self): 
+        """Gives the variance of the sample."""
+        return (self.df / (self.df - 2)) * self.stdev * self.stdev
+#    def random(self):
+#        """Gives a random number based on the distribution."""
+#        raise NotImplementedError
+
+    
+class WeiBullDistribution(Distribution):
+    pass
+#    def __init__(self, **parameters): 
+#        """Constructor method. The parameters are used to construct the probability distribution."""
+#        raise NotImplementedError
+#    def CDF(self, x): 
+#        """
+#        Cummulative Distribution Function, which gives the cummulative probability (area under the 
+#        probability curve) from -infinity or 0 to a give x-value on the x-axis where y-axis is the 
+#        probability."""
+#        raise NotImplementedError
+#    def PDF(self, x): 
+#        """
+#        Partial Distribution Function, which gives the probability for the particular value of x, or
+#        the area under probability distribution from x-h to x+h for continuous distribution."""
+#        raise NotImplementedError
 #    def inverseCDF(self, probability): 
 #        """
 #        It does the reverse of CDF() method, it takes a probability value and returns the corresponding 
@@ -548,8 +793,8 @@ class CauchyDistribution(Distribution):
 #    def mean(self): 
 #        """Gives the arithmetic mean of the sample."""
 #        raise NotImplementedError
-#    def moments(self, r): 
-#        """Gives the moments of the sample."""
+#    def mode(self): 
+#        """Gives the mode of the sample."""
 #        raise NotImplementedError
 #    def kurtosis(self): 
 #        """Gives the kurtosis of the sample."""
@@ -563,48 +808,212 @@ class CauchyDistribution(Distribution):
 #    def random(self):
 #        """Gives a random number based on the distribution."""
 #        raise NotImplementedError
-    
-class ExponentialDistribution(Distribution):
+
+
+# -------------------------------------------------------------------
+# Special case distributions
+# -------------------------------------------------------------------
+
+class BernoulliDistribution(Distribution):
     def __init__(self, **parameters): 
         """Constructor method. The parameters are used to construct the probability distribution."""
-        try: self.location = parameters['location']
-        except KeyError: self.location = 0.0
-        try: self.scale = parameters['scale']
-        except KeyError: self.scale = 1.0
+        self.distribution = BinomialDistribution(parameters['success'], 1)
     def CDF(self, x): 
         """
         Cummulative Distribution Function, which gives the cummulative probability (area under the 
         probability curve) from -infinity or 0 to a give x-value on the x-axis where y-axis is the 
         probability."""
-        return 1 - math.exp((self.location - x)/self.scale)
+        return self.distribution.CDF(x)
     def PDF(self, x): 
         """
         Partial Distribution Function, which gives the probability for the particular value of x, or
         the area under probability distribution from x-h to x+h for continuous distribution."""
-        return (1/self.scale) * math.exp((self.location - x)/self.scale)
+        return self.distribution.PDF(x)
 #    def inverseCDF(self, probability): 
 #        """
 #        It does the reverse of CDF() method, it takes a probability value and returns the corresponding 
 #        value on the x-axis."""
-#        raise NotImplementedError
+#        return self.distribution.inverseCDF(probability)
     def mean(self): 
         """Gives the arithmetic mean of the sample."""
-        return self.location + self.scale
-#    def moments(self, r): 
-#        """Gives the moments of the sample."""
-#        raise NotImplementedError
+        return self.distribution.mean()
+    def mode(self): 
+        """Gives the mode of the sample."""
+        return self.distribution.mode()
     def kurtosis(self): 
         """Gives the kurtosis of the sample."""
-        return 6.0
+        return self.distribution.kurtosis()
     def skew(self): 
         """Gives the skew of the sample."""
-        return 2.0
+        return self.distribution.skew()
     def variance(self): 
         """Gives the variance of the sample."""
-        return self.scale * self.scale
+        return self.distribution.variance()
 #    def random(self):
 #        """Gives a random number based on the distribution."""
-#        raise NotImplementedError
+#        return self.distribution.random()
+
+
+class HalfNormalDistribution(Distribution):
+    def __init__(self, **parameters): 
+        """Constructor method. The parameters are used to construct the probability distribution."""
+        self.distribution = ChiDistribution(parameters['location'],
+                                            parameters['scale'],
+                                            1)
+    def CDF(self, x): 
+        """
+        Cummulative Distribution Function, which gives the cummulative probability (area under the 
+        probability curve) from -infinity or 0 to a give x-value on the x-axis where y-axis is the 
+        probability."""
+        return self.distribution.CDF(x)
+    def PDF(self, x): 
+        """
+        Partial Distribution Function, which gives the probability for the particular value of x, or
+        the area under probability distribution from x-h to x+h for continuous distribution."""
+        return self.distribution.PDF(x)
+#    def inverseCDF(self, probability): 
+#        """
+#        It does the reverse of CDF() method, it takes a probability value and returns the corresponding 
+#        value on the x-axis."""
+#        return self.distribution.inverseCDF(probability)
+    def mean(self): 
+        """Gives the arithmetic mean of the sample."""
+        return self.distribution.mean()
+    def mode(self): 
+        """Gives the mode of the sample."""
+        return self.distribution.mode()
+    def kurtosis(self): 
+        """Gives the kurtosis of the sample."""
+        return self.distribution.kurtosis()
+    def skew(self): 
+        """Gives the skew of the sample."""
+        return self.distribution.skew()
+    def variance(self): 
+        """Gives the variance of the sample."""
+        return self.distribution.variance()
+#    def random(self):
+#        """Gives a random number based on the distribution."""
+#        return self.distribution.random()
+
+
+class MaxwellDistribution(Distribution):
+    def __init__(self, **parameters): 
+        """Constructor method. The parameters are used to construct the probability distribution."""
+        self.distribution = ChiDistribution(0, parameters['scale'], 3)
+    def CDF(self, x): 
+        """
+        Cummulative Distribution Function, which gives the cummulative probability (area under the 
+        probability curve) from -infinity or 0 to a give x-value on the x-axis where y-axis is the 
+        probability."""
+        return self.distribution.CDF(x)
+    def PDF(self, x): 
+        """
+        Partial Distribution Function, which gives the probability for the particular value of x, or
+        the area under probability distribution from x-h to x+h for continuous distribution."""
+        return self.distribution.PDF(x)
+#    def inverseCDF(self, probability): 
+#        """
+#        It does the reverse of CDF() method, it takes a probability value and returns the corresponding 
+#        value on the x-axis."""
+#        return self.distribution.inverseCDF(probability)
+    def mean(self): 
+        """Gives the arithmetic mean of the sample."""
+        return self.distribution.mean()
+    def mode(self): 
+        """Gives the mode of the sample."""
+        return self.distribution.mode()
+    def kurtosis(self): 
+        """Gives the kurtosis of the sample."""
+        return self.distribution.kurtosis()
+    def skew(self): 
+        """Gives the skew of the sample."""
+        return self.distribution.skew()
+    def variance(self): 
+        """Gives the variance of the sample."""
+        return self.distribution.variance()
+#    def random(self):
+#        """Gives a random number based on the distribution."""
+#        return self.distribution.random()
+
+
+class PowerFunctionDistribution(Distribution):
+    def __init__(self, **parameters): 
+        """Constructor method. The parameters are used to construct the probability distribution."""
+        self.distribution = BetaDistribution(0, 1, parameters['shape'], 1)
+    def CDF(self, x): 
+        """
+        Cummulative Distribution Function, which gives the cummulative probability (area under the 
+        probability curve) from -infinity or 0 to a give x-value on the x-axis where y-axis is the 
+        probability."""
+        return self.distribution.CDF(x)
+    def PDF(self, x): 
+        """
+        Partial Distribution Function, which gives the probability for the particular value of x, or
+        the area under probability distribution from x-h to x+h for continuous distribution."""
+        return self.distribution.PDF(x)
+#    def inverseCDF(self, probability): 
+#        """
+#        It does the reverse of CDF() method, it takes a probability value and returns the corresponding 
+#        value on the x-axis."""
+#        return self.distribution.inverseCDF(probability)
+    def mean(self): 
+        """Gives the arithmetic mean of the sample."""
+        return self.distribution.mean()
+    def mode(self): 
+        """Gives the mode of the sample."""
+        return self.distribution.mode()
+    def kurtosis(self): 
+        """Gives the kurtosis of the sample."""
+        return self.distribution.kurtosis()
+    def skew(self): 
+        """Gives the skew of the sample."""
+        return self.distribution.skew()
+    def variance(self): 
+        """Gives the variance of the sample."""
+        return self.distribution.variance()
+#    def random(self):
+#        """Gives a random number based on the distribution."""
+#        return self.distribution.random()
+
+
+class RayleighDistribution(Distribution):
+    def __init__(self, **parameters): 
+        """Constructor method. The parameters are used to construct the probability distribution."""
+        self.distribution = ChiDistribution(0, parameters['scale'], 2)
+    def CDF(self, x): 
+        """
+        Cummulative Distribution Function, which gives the cummulative probability (area under the 
+        probability curve) from -infinity or 0 to a give x-value on the x-axis where y-axis is the 
+        probability."""
+        return self.distribution.CDF(x)
+    def PDF(self, x): 
+        """
+        Partial Distribution Function, which gives the probability for the particular value of x, or
+        the area under probability distribution from x-h to x+h for continuous distribution."""
+        return self.distribution.PDF(x)
+#    def inverseCDF(self, probability): 
+#        """
+#        It does the reverse of CDF() method, it takes a probability value and returns the corresponding 
+#        value on the x-axis."""
+#        return self.distribution.inverseCDF(probability)
+    def mean(self): 
+        """Gives the arithmetic mean of the sample."""
+        return self.distribution.mean()
+    def mode(self): 
+        """Gives the mode of the sample."""
+        return self.distribution.mode()
+    def kurtosis(self): 
+        """Gives the kurtosis of the sample."""
+        return self.distribution.kurtosis()
+    def skew(self): 
+        """Gives the skew of the sample."""
+        return self.distribution.skew()
+    def variance(self): 
+        """Gives the variance of the sample."""
+        return self.distribution.variance()
+#    def random(self):
+#        """Gives a random number based on the distribution."""
+#        return self.distribution.random()
     
 class SampleDistribution(Distribution):
     def __init__(self, **parameters): 
@@ -640,8 +1049,8 @@ class SampleDistribution(Distribution):
     def mean(self): 
         """Gives the arithmetic mean of the sample."""
         return self.mean
-#    def moments(self, r): 
-#        """Gives the moments of the sample."""
+#    def mode(self): 
+#        """Gives the mode of the sample."""
 #        raise NotImplementedError
 #    def kurtosis(self): 
 #        """Gives the kurtosis of the sample."""
@@ -658,6 +1067,24 @@ class SampleDistribution(Distribution):
         self.n = len(self.data)
         self.mean = arithmeticMean(self.data)
         self.variance = variance(self.data, self.mean)
+
+
+# -------------------------------------------------------------------
+# Distribution alias
+# -------------------------------------------------------------------
+
+def ErlangDistribution(**parameters):
+    parameters['shape'] = int(parameters['shape'])
+    return GammaDistribution(**parameters)
+
+def FurryDistribution(**parameters):
+    return GammaDistribution(**parameters)
+
+def LorentzDistribution(**parameters):
+    return CauchyDistribution(**parameters)
+
+def NegativeExponentialDistribution(**parameters):
+    return ExponentialDistribution(**parameters)
         
 #class DummyDistribution(Distribution):
 #    def __init__(self, **parameters): 
@@ -682,8 +1109,8 @@ class SampleDistribution(Distribution):
 #    def mean(self): 
 #        """Gives the arithmetic mean of the sample."""
 #        raise NotImplementedError
-#    def moments(self, r): 
-#        """Gives the moments of the sample."""
+#    def mode(self): 
+#        """Gives the mode of the sample."""
 #        raise NotImplementedError
 #    def kurtosis(self): 
 #        """Gives the kurtosis of the sample."""
@@ -693,6 +1120,18 @@ class SampleDistribution(Distribution):
 #        raise NotImplementedError
 #    def variance(self): 
 #        """Gives the variance of the sample."""
+#        raise NotImplementedError
+#    def quantile1(self): 
+#        """Gives the 1st quantile of the sample."""
+#        raise NotImplementedError
+#    def quantile3(self): 
+#        """Gives the 3rd quantile of the sample."""
+#        raise NotImplementedError
+#    def qmean(self): 
+#        """Gives the quantile of the arithmetic mean of the sample."""
+#        raise NotImplementedError
+#    def qmode(self): 
+#        """Gives the quantile of the mode of the sample."""
 #        raise NotImplementedError
 #    def random(self):
 #        """Gives a random number based on the distribution."""
