@@ -499,7 +499,7 @@ def factrl(n):
     return math.exp(gammln(n + 1.0))
 
 def gammln(n):
-    """Gamma function. 
+    """Complete Gamma function. 
     Ref: NRP 6.1 and http://mail.python.org/pipermail/python-list/2000-June/039873.html
     
     @param n: float number
