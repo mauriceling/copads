@@ -525,13 +525,12 @@ def gammp(a, x):
     @param x: float number
     @return: float number
     """
-    if x < 0.0 and a <= 0.0: raise TypeError
-    if x < a + 1.0:
-        gser(a, x, gamser, gln)
-        return gamser
+    if (x < 0.0 or a <= 0.0):
+        raise ValueError, (a, x)
+    if (x < a+1.0):
+        return gser(a,x)[0]
     else:
-        gcf(a, x, gammcf, gln)
-        return 1.0 - gammcf
+        return 1.-gcf(a,x)[0]
     
 def mdian1(data):
     """Calculates the median of a list of numerical values using sorting. Ref: NRP 13.2
@@ -630,11 +629,47 @@ def fpoly(): raise NotImplementedError
 def frprmn(): raise NotImplementedError
 def ftest(): raise NotImplementedError
 def gamdev(): raise NotImplementedError
-def gammq(): raise NotImplementedError
+def gammq(a, x):
+    """Incomplete gamma function.
+    Ref: http://mail.python.org/pipermail/python-list/2000-June/039873.html"""
+    if (x < 0. or a <= 0.):
+        raise ValueError, repr((a, x))
+    if (x < a+1.):
+        return 1.-gser(a,x)[0]
+    else:
+        return gcf(a,x)[0]
 def gasdev(): raise NotImplementedError
 def gauleg(): raise NotImplementedError
 def gaussj(): raise NotImplementedError
-def gcf(): raise NotImplementedError
+
+def gcf(a, x, itmax=200, eps=3.e-7):
+    """Continued fraction approx'n of the incomplete gamma function.
+    Ref: http://mail.python.org/pipermail/python-list/2000-June/039873.html"""
+    gln = gammln(a)
+    gold = 0.0
+    a0 = 1.0
+    a1 = x
+    b0 = 0.0
+    b1 = 1.0
+    fac = 1.0
+    n = 1
+    while n <= itmax:
+        an = n
+        ana = an - a
+        a0 = (a1 + a0*ana)*fac
+        b0 = (b1 + b0*ana)*fac
+        anf = an*fac
+        a1 = x*a0 + anf*a1
+        b1 = x*b0 + anf*b1
+        if (a1 != 0.0):
+            fac = 1.0 / a1
+            g = b1*fac
+            if (abs((g-gold)/g) < eps):
+                return (g*math.exp(-x+a*math.log(x)-gln), gln)
+            gold = g
+        n = n + 1
+    raise max_iters, str(abs((g-gold)/g))
+
 def golden(): raise NotImplementedError
 def gser(a, x, itmax=700, eps=3.e-7):
     """Series approximation to the incomplete gamma function.
@@ -652,10 +687,11 @@ def gser(a, x, itmax=700, eps=3.e-7):
         ap = ap + 1.0
         delta = delta * x / ap
         sum = sum + delta
-        if (math.abs(delta) < math.abs(sum)*eps):
+        if (abs(delta) < abs(sum)*eps):
             return (sum * math.exp(-x + a*math.log(x) - gln), gln)
         n = n + 1
     raise max_iters, str((abs(delta), abs(sum)*eps))
+
 def hqr(): raise NotImplementedError
 def hunt(): raise NotImplementedError
 def indexx(): raise NotImplementedError

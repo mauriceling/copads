@@ -66,7 +66,8 @@ class NormalDistribution(Distribution):
         except KeyError:
             self.mean = 0.0
             self.variance = 1.0
-#    def CDF(self, x): raise NotImplementedError
+    def CDF(self, x):
+        return 1.0 - 0.5 * NRPy.erfcc(x/SQRT2)
     def PDF(self, x): 
         """
         Calculates the density (probability) at x by the formula:
@@ -75,7 +76,21 @@ class NormalDistribution(Distribution):
         
         return (1/(math.sqrt(PI2) * self.stdev)) * \
                 math.exp(-((x - self.stdev)**2/(2 * self.stdev**2)))
-#    def inverseCDF(self, probability): raise NotImplementedError
+    def inverseCDF(self, probability):
+        c0 = 2.515517
+        c1 = 0.802853
+        c2 = 0.010328
+        d1 = 1.432788
+        d2 = 0.189269
+        d3 = 0.001308
+        sign = -1.0
+        if (p > 0.5):
+            sign = 1.0
+            p = 1.0 - p
+        arg = -2.0 * math.log(p)
+        t = math.sqrt(arg)
+        g = t - (c0 + t*(c1 + t*c2)) / (1.0 + t*(d1 + t*(d2 + t*d3)))
+        return sign*g
     def mean(self): 
         return self.mean
 #    def moments(self, r): raise NotImplementedError
