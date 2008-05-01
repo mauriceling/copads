@@ -525,15 +525,16 @@ def gammp(a, x):
     @param x: float number
     @return: float number
     """
-    if (x < 0.0 or a <= 0.0):
+    if (x < 0. or a <= 0.):
         raise ValueError, (a, x)
     if (x < a+1.0):
         return gser(a,x)[0]
     else:
-        return 1.-gcf(a,x)[0]
-
+        return 1.0-gcf(a,x)[0]
+    
 def gammq(a, x):
     """Incomplete gamma function: Q(a, x) = 1 - P(a, x) = 1 - gammp(a, x)
+    Also commonly known as Q-equation.
     Ref: http://mail.python.org/pipermail/python-list/2000-June/039873.html"""
     if (x < 0. or a <= 0.):
         raise ValueError, repr((a, x))

@@ -928,7 +928,65 @@ class PoissonDistribution(Distribution):
 #        """Gives a random number based on the distribution."""
 #        raise NotImplementedError    
 
-
+class SemicircularDistribution(Distribution):
+    def __init__(self, **parameters): 
+        """Constructor method. The parameters are used to construct the probability distribution."""
+        self.scale = parameters['scale']
+        self.location = parameters['location']
+    def CDF(self, x): 
+        """
+        Cummulative Distribution Function, which gives the cummulative probability (area under the 
+        probability curve) from -infinity or 0 to a give x-value on the x-axis where y-axis is the 
+        probability."""
+        t = ((x - self.location)/self.scale)**2
+        return 0.5 + (1/PI) * (t * math.srqt(1 - (t ** 2)) + math.asin(t))
+    def PDF(self, x): 
+        """
+        Partial Distribution Function, which gives the probability for the particular value of x, or
+        the area under probability distribution from x-h to x+h for continuous distribution."""
+        return (2/(self.scale * PI)) * math.sqrt(1 - ((x - self.location)/self.scale)**2)
+    def inverseCDF(self, probability, start = 0.0, step = 0.01): 
+        """
+        It does the reverse of CDF() method, it takes a probability value and returns the corresponding 
+        value on the x-axis."""
+        cprob = self.CDF(start)
+        if probability < cprob: return (start, cprob)
+        while (probability > cprob):
+            start = start + step
+            cprob = self.CDF(start)
+            # print start, cprob
+        return (start, cprob)
+    def mean(self): 
+        """Gives the arithmetic mean of the sample."""
+        return self.location
+    def mode(self): 
+        """Gives the mode of the sample."""
+        return self.location
+    def kurtosis(self): 
+        """Gives the kurtosis of the sample."""
+        return -1.0
+    def skew(self): 
+        """Gives the skew of the sample."""
+        return 0.0
+    def variance(self): 
+        """Gives the variance of the sample."""
+        return 0.25 * (self.scale ** 2)
+    def quantile1(self): 
+        """Gives the 1st quantile of the sample."""
+        return self.location - (0.404 * self.scale)
+    def quantile3(self): 
+        """Gives the 3rd quantile of the sample."""
+        return self.location + (0.404 * self.scale)
+    def qmean(self): 
+        """Gives the quantile of the arithmetic mean of the sample."""
+        return 0.5
+    def qmode(self): 
+        """Gives the quantile of the mode of the sample."""
+        return 0.5
+#    def random(self):
+#        """Gives a random number based on the distribution."""
+#        raise NotImplementedError
+        
 class TDistribution(Distribution):
     def __init__(self, **parameters): 
         """Constructor method. The parameters are used to construct the probability distribution."""
