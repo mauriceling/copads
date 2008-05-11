@@ -21,7 +21,7 @@ class testGraph(unittest.TestCase):
         g = Graph(vertices = ['s', 'u', 'v', 'x', 'y'])
         self.assertEquals(g.graph, {'s':{}, 'u':{}, 'v':{}, 'x':{}, 'y':{}})
         
-    def testMakeGraphFromEdges(self):
+    def testMakeGraphFromEdges1(self):
         g = Graph(edges = [('s', 'u'),('s', 'u'),('s', 'u'),('s', 'u'),
                            ('s', 'u'),('s', 'u'),('s', 'u'),('s', 'u'),
                            ('s', 'u'),('s', 'u'),('s', 'x'),('s', 'x'),
@@ -34,7 +34,7 @@ class testGraph(unittest.TestCase):
                            ('y', 's'),('y', 's'),('y', 's'),('y', 's'),
                            ('y', 's'),('y', 's'),('y', 's'),('y', 'v'),
                            ('y', 'v'),('y', 'v'),('y', 'v'),('y', 'v'),
-                           ('y', 'v')])
+                           ('y', 'v')], digraph = True)
         self.assertEquals(g.graph, G)
     
         

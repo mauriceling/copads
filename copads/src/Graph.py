@@ -15,12 +15,15 @@ class Graph:
     graph = {}
     
     def __init__(self, **kwarg):
+        if not kwarg.has_key('digraph'): kwarg['digraph'] = False
         if kwarg.has_key('graph'): 
             self.graph = kwarg['graph']
         elif kwarg.has_key('vertices'): 
             self.makeGraphFromVertices(kwarg['vertices'])
         elif kwarg.has_key('edges'): 
-            self.makeGraphFromEdges(kwarg['edges'])
+            if kwarg['digraph'] == True:
+                self.makeGraphFromEdges1(kwarg['edges'])
+            else: self.makeGraphFromEdges2(kwarg['edges'])
         elif kwarg.has_key('adjacency'): 
             self.makeGraphFromAdjacency(kwarg['adjacency'])
         else: self.graph = {}
@@ -34,56 +37,48 @@ class Graph:
             for col in range(len(adj[row])):
                 if adj[row][col] > 0: ends[vertices[col]] = adj[row][col]
             self.graph[vertices[row]] = ends
-            ends.clear()
+            ends = {}
     
     def makeGraphFromVertices(self, vertices):
         if type(vertices) != list: raise GraphParameterError('Vertices must be a list')
         for vertex in vertices: self.graph[vertex] = {}
-            
-    def makeGraphFromEdges(self, edges):
+    
+    def makeGraphFromEdges1(self, edges):
         if type(edges) != list: raise GraphParameterError('Edges must be a list of tuples')
         from Set import Set
-        usources = list(Set([x[0] for x in edges]))
-        for index in range(len(usources)):
-            source = usources[index]
-            t = [x[1] for x in edges if x[0] == source]
-            t = [(end, t.count(end)) for end in list(Set(t))]
-            self.graph[usources[index]] = dict(t)
-    
+        from Matrix import Matrix
+        vertices = list(Set([x[0] for x in edges] + [x[1] for x in edges]))
+        adj = Matrix(len(vertices))
+        adj = adj.m
+        for e in edges:
+            row = vertices.index(e[0])
+            col = vertices.index(e[1])
+            # fill values into lower triangular matrix
+            adj[row][col] = adj[row][col] + 1
+        adj.insert(0, vertices)
+        self.makeGraphFromAdjacency(adj)
+        
+    def makeGraphFromEdges2(self, edges):
+        if type(edges) != list: raise GraphParameterError('Edges must be a list of tuples')
+        from Set import Set
+        from Matrix import Matrix
+        vertices = list(Set([x[0] for x in edges] + [x[1] for x in edges]))
+        adj = Matrix(len(vertices))
+        adj = adj.m
+        for e in edges:
+            row = vertices.index(e[0])
+            col = vertices.index(e[1])
+            # fill values into lower triangular matrix
+            adj[row][col] = adj[row][col] + 1
+            # repeat on the upper triangular matrix for undirectional graph
+            adj[col][row] = adj[col][row] + 1
+        adj.insert(0, vertices)
+        self.makeGraphFromAdjacency(adj)
 
     def Dijkstra(self, start,end=None):
         """
         Find shortest paths from the start vertex to all
         vertices nearer than or equal to the end.
-    
-        The input graph G is assumed to have the following
-        representation: A vertex can be any object that can
-        be used as an index into a dictionary.  G is a
-        dictionary, indexed by vertices.  For any vertex v,
-        G[v] is itself a dictionary, indexed by the neighbors
-        of v.  For any edge v->w, G[v][w] is the length of
-        the edge.  This is related to the representation in
-        <http://www.python.org/doc/essays/graphs.html>
-        where Guido van Rossum suggests representing graphs
-        as dictionaries mapping vertices to lists of neighbors,
-        however dictionaries of edges have many advantages
-        over lists: they can store extra information (here,
-        the lengths), they support fast existence tests,
-        and they allow easy modification of the graph by edge
-        insertion and removal.  Such modifications are not
-        needed here but are important in other graph algorithms.
-        Since dictionaries obey iterator protocol, a graph
-        represented as described here could be handed without
-        modification to an algorithm using Guido's representation.
-    
-        Of course, G and G[v] need not be Python dict objects;
-        they can be any other object that obeys dict protocol,
-        for instance a wrapper in which vertices are URLs
-        and a call to G[v] loads the web page and finds its links.
-        
-        The output is a pair (D,P) where D[v] is the distance
-        from start to v and P[v] is the predecessor of v along
-        the shortest path from s to v.
         
         Dijkstra's algorithm is only guaranteed to work correctly
         when all edge lengths are positive. This code does not
@@ -118,10 +113,8 @@ class Graph:
     def shortestPath(self,start,end):
         """
         Find a single shortest path from the given start vertex
-        to the given end vertex.
-        The input has the same conventions as Dijkstra().
-        The output is a list of the vertices in order along
-        the shortest path.
+        to the given end vertex. The output is a list of the vertices 
+        in order along the shortest path.
         """
     
         D,P = self.Dijkstra(start,end)
