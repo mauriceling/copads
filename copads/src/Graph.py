@@ -15,6 +15,20 @@ class Graph:
     graph = {}
     
     def __init__(self, **kwarg):
+        """
+        Initialization method. It can accept the following keyword parameters:
+        adjacency: accepts an adjacency matrix, with vertices as the first row.
+        digraph: state whether the input values is to construct a directional
+                    graph (True for directional graph). Default = False.
+                    Default to false if not given.
+        edges: edges are input as a list of 2-element tuples where each tuple 
+                is (<source>, <destination>). Uses digraph parameter.
+        graph: accepts a dictionary of dictionary as graph as 
+                {<source> : <destination dictionary>} where
+                <destination dictionary> ::= 
+                    {<destination> : <attribute>}.
+        vertices: a list of vertices (nodes).
+        """
         if not kwarg.has_key('digraph'): kwarg['digraph'] = False
         if kwarg.has_key('graph'): 
             self.graph = kwarg['graph']
@@ -29,6 +43,12 @@ class Graph:
         else: self.graph = {}
         
     def makeGraphFromAdjacency(self, adj):
+        """
+        Constructs a graph from an adjacency (adj) matrix, which is given
+        as a list of list (rows). 
+        The first row of the matrix contains a list of the vertices; hence,
+        there will be n+1 rows and n-columns in the given matrix.
+        """
         vertices = adj.pop(0)
         for l in adj:
             if len(l) != len(vertices): raise GraphEdgeSizeMismatchError
@@ -40,10 +60,17 @@ class Graph:
             ends = {}
     
     def makeGraphFromVertices(self, vertices):
+        """
+        Initialize a list of nodes (vertices) without edges.
+        """
         if type(vertices) != list: raise GraphParameterError('Vertices must be a list')
         for vertex in vertices: self.graph[vertex] = {}
     
     def makeGraphFromEdges1(self, edges):
+        """
+        Constructs a directional graph from edges (a list of tuple).
+        Each tuple contains 2 vertices. 
+        For example, P -> Q is written as ('P', 'Q')."""
         if type(edges) != list: raise GraphParameterError('Edges must be a list of tuples')
         from Set import Set
         from Matrix import Matrix
@@ -59,6 +86,12 @@ class Graph:
         self.makeGraphFromAdjacency(adj)
         
     def makeGraphFromEdges2(self, edges):
+        """
+        Constructs an un-directional graph from edges (a list of tuple).
+        Each tuple contains 2 vertices.
+        An un-directional graph is implemented as a directional graph where
+        each edges runs both directions.
+        """
         if type(edges) != list: raise GraphParameterError('Edges must be a list of tuples')
         from Set import Set
         from Matrix import Matrix
@@ -74,6 +107,19 @@ class Graph:
             adj[col][row] = adj[col][row] + 1
         adj.insert(0, vertices)
         self.makeGraphFromAdjacency(adj)
+        
+    def isVertices(self, vlist):
+        """
+        Checks whether each element in vlist is a vertex (node) of
+        the graph. It returns a dictionary of 
+        <element of vlist> : <True | False>
+        """
+        result = {}
+        from Set import Set
+        vlist = list(Set(vlist))
+        for v in vlist:
+            if self.graph.has_key(v): result[v] = True
+            else: result[v] = False
 
     def Dijkstra(self, start,end=None):
         """
