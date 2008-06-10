@@ -120,6 +120,7 @@ class Graph:
         for v in vlist:
             if self.graph.has_key(v): result[v] = True
             else: result[v] = False
+        return result
 
     def Dijkstra(self, start,end=None):
         """
