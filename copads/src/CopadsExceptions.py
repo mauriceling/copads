@@ -19,6 +19,8 @@ CopadsError
 |- StatisticsError
 |  |- DistributionError
 |  |  |- NormalDistributionTypeError
+|  |- DistributionParameterError
+|  |- DistributionFunctionError
 |- StringDistanceError
 |  |- StringDistanceInputSizeError
 |- TreeError
@@ -161,6 +163,11 @@ class NormalDistributionTypeError(DistributionError):
     
 class DistributionParameterError(DistributionError):
     """Exception for parameter errors in distributions (StatisticsDistribution.*)."""
+    def __init__(self, msg): self.msg = msg
+    def __str__(self): return self.msg
+    
+class DistributionFunctionError(DistributionError):
+    """Exception for undefined functions in distributions (StatisticsDistribution.*)."""
     def __init__(self, msg): self.msg = msg
     def __str__(self): return self.msg
     
