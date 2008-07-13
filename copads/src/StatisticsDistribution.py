@@ -14,7 +14,8 @@ Date created: 17th August 2005
 
 import math
 import random
-from CopadsExceptions import DistributionParameterError
+from CopadsExceptions import DistributionParameterError, DistributionFunctionError
+from CopadsExceptions import NormalDistributionTypeError
 import NRPy
 from Constants import *
 
@@ -81,10 +82,14 @@ class Distribution:
 class BetaDistribution(Distribution):
     def __init__(self, **parameters): 
         """Constructor method. The parameters are used to construct the probability distribution."""
-        self.location = parameters['location']
-        self.scale = parameters['scale']
-        self.p = parameters['p']
-        self.q = parameters['q']
+        try:
+            self.location = parameters['location']
+            self.scale = parameters['scale']
+            self.p = parameters['p']
+            self.q = parameters['q']
+        except KeyError: 
+            raise DistributionParameterError('Beta distribution requires location, \
+            scale (upper bound), p and q (shape parameters)')
     def CDF(self, x): 
         """
         Cummulative Distribution Function, which gives the cummulative probability (area under the 
@@ -233,9 +238,9 @@ class CauchyDistribution(Distribution):
             cprob = self.CDF(start)
             # print start, cprob
         return (start, cprob)
-#    def mean(self): 
-#        """Gives the arithmetic mean of the sample."""
-#        raise NotImplementedError
+    def mean(self): 
+        """Gives the arithmetic mean of the sample."""
+        raise DistributionFunctionError('Mean for Cauchy Distribution is undefined')
     def mode(self): 
         """Gives the mode of the sample."""
         return self.location
@@ -251,15 +256,15 @@ class CauchyDistribution(Distribution):
     def qmode(self): 
         """Gives the quantile of the mode of the sample."""
         return 0.5
-#    def kurtosis(self): 
-#        """Gives the kurtosis of the sample."""
-#        raise NotImplementedError
-#    def skew(self): 
-#        """Gives the skew of the sample."""
-#        raise NotImplementedError
-#    def variance(self): 
-#        """Gives the variance of the sample."""
-#        raise NotImplementedError
+    def kurtosis(self): 
+        """Gives the kurtosis of the sample."""
+        raise DistributionFunctionError('Kurtosis for Cauchy Distribution is undefined')
+    def skew(self): 
+        """Gives the skew of the sample."""
+        raise DistributionFunctionError('Skew for Cauchy Distribution is undefined')
+    def variance(self): 
+        """Gives the variance of the sample."""
+        raise DistributionFunctionError('Variance for Cauchy Distribution is undefined')
 #    def random(self):
 #        """Gives a random number based on the distribution."""
 #        raise NotImplementedError
@@ -539,8 +544,11 @@ class GeometricDistribution(Distribution):
 class GumbelDistribution(Distribution):
     def __init__(self, **parameters): 
         """Constructor method. The parameters are used to construct the probability distribution."""
-        self.location = parameters['location']
-        self.scale = parameters['scale']
+        try:
+            self.location = parameters['location']
+            self.scale = parameters['scale']
+        except KeyError: 
+            raise DistributionParameterError('Gumbel distribution requires location and scale.')
     def CDF(self, x): 
         """
         Cummulative Distribution Function, which gives the cummulative probability (area under the 
@@ -601,7 +609,9 @@ class GumbelDistribution(Distribution):
 class LogarithmicDistribution(Distribution):
     def __init__(self, **parameters): 
         """Constructor method. The parameters are used to construct the probability distribution."""
-        self.shape = parameters['shape']
+        try: self.shape = parameters['shape']
+        except KeyError: 
+            raise DistributionParameterError('Logarithmic distribution requires share parameter')
     def CDF(self, x): 
         """
         Cummulative Distribution Function, which gives the cummulative probability (area under the 
@@ -708,8 +718,12 @@ class LogNormalDistribution(Distribution):
 class NegativeBinomialDistribution(Distribution):
     def __init__(self, **parameters): 
         """Constructor method. The parameters are used to construct the probability distribution."""
-        self.success = parameters['success']
-        self.target = parameters['target']
+        try:
+            self.success = parameters['success']
+            self.target = parameters['target']
+        except KeyError: 
+            raise DistributionParameterError('Negative Binomial distribution requires \
+            success and target parameters')
     def CDF(self, x): 
         """
         Cummulative Distribution Function, which gives the cummulative probability (area under the 
@@ -781,21 +795,17 @@ class NormalDistribution(Distribution):
         
         return (1/(math.sqrt(PI2) * self.stdev)) * \
                 math.exp(-((x - self.stdev)**2/(2 * self.stdev**2)))
-    def inverseCDF(self, probability, start = 0.0, step =0.01):
-        c0 = 2.515517
-        c1 = 0.802853
-        c2 = 0.010328
-        d1 = 1.432788
-        d2 = 0.189269
-        d3 = 0.001308
-        sign = -1.0
-        if (probability > 0.5):
-            sign = 1.0
-            probability = 1.0 - probability
-        arg = -2.0 * math.log(probability)
-        t = math.sqrt(arg)
-        g = t - (c0 + t*(c1 + t*c2)) / (1.0 + t*(d1 + t*(d2 + t*d3)))
-        return sign*g
+    def inverseCDF(self, probability, start = -10.0, step = 0.01): 
+        """
+        It does the reverse of CDF() method, it takes a probability value and returns the corresponding 
+        value on the x-axis."""
+        cprob = self.CDF(start)
+        if probability < cprob: return (start, cprob)
+        while (probability > cprob):
+            start = start + step
+            cprob = self.CDF(start)
+#            print start, cprob
+        return (start, cprob)
     def mean(self): 
         return self.mean
     def mode(self):
@@ -886,7 +896,9 @@ class ParetoDistribution(Distribution):
 class PoissonDistribution(Distribution):
     def __init__(self, **parameters): 
         """Constructor method. The parameters are used to construct the probability distribution."""
-        self.mean = parameters['expectation']
+        try: self.mean = parameters['expectation']
+        except KeyError: 
+            raise DistributionParameterError('Poisson distribution requires expectation (lambda)')
     def CDF(self, x): 
         """
         Cummulative Distribution Function, which gives the cummulative probability (area under the 
@@ -931,8 +943,12 @@ class PoissonDistribution(Distribution):
 class SemicircularDistribution(Distribution):
     def __init__(self, **parameters): 
         """Constructor method. The parameters are used to construct the probability distribution."""
-        self.scale = parameters['scale']
-        self.location = parameters['location']
+        try:
+            self.scale = parameters['scale']
+            self.location = parameters['location']
+        except KeyError: 
+            raise DistributionParameterError('Semicircular distribution requires location and \
+            scale parameters')
     def CDF(self, x): 
         """
         Cummulative Distribution Function, which gives the cummulative probability (area under the 
@@ -1040,8 +1056,12 @@ class TDistribution(Distribution):
 class UniformDistribution(Distribution):
     def __init__(self, **parameters): 
         """Constructor method. The parameters are used to construct the probability distribution."""
-        self.location = parameters['location']
-        self.scale = parameters['scale']
+        try: 
+            self.location = parameters['location']
+            self.scale = parameters['scale']
+        except KeyError: 
+            raise DistributionParameterError('Uniform distribution requires location and \
+            scale parameters')
     def CDF(self, x): 
         """
         Cummulative Distribution Function, which gives the cummulative probability (area under the 
@@ -1149,7 +1169,9 @@ class WeiBullDistribution(Distribution):
 class BernoulliDistribution(Distribution):
     def __init__(self, **parameters): 
         """Constructor method. The parameters are used to construct the probability distribution."""
-        self.distribution = BinomialDistribution(parameters['success'], 1)
+        try: self.distribution = BinomialDistribution(parameters['success'], 1)
+        except KeyError: 
+            raise DistributionParameterError('Bernoulli distribution requires success parameter')
     def CDF(self, x): 
         """
         Cummulative Distribution Function, which gives the cummulative probability (area under the 
@@ -1189,9 +1211,12 @@ class BernoulliDistribution(Distribution):
 class HalfNormalDistribution(Distribution):
     def __init__(self, **parameters): 
         """Constructor method. The parameters are used to construct the probability distribution."""
-        self.distribution = ChiDistribution(parameters['location'],
-                                            parameters['scale'],
-                                            1)
+        try: self.distribution = ChiDistribution(parameters['location'],
+                                                 parameters['scale'],
+                                                 1)
+        except KeyError: 
+            raise DistributionParameterError('Halfnormal distribution requires location and \
+            scale parameters')
     def CDF(self, x): 
         """
         Cummulative Distribution Function, which gives the cummulative probability (area under the 
@@ -1231,7 +1256,9 @@ class HalfNormalDistribution(Distribution):
 class MaxwellDistribution(Distribution):
     def __init__(self, **parameters): 
         """Constructor method. The parameters are used to construct the probability distribution."""
-        self.distribution = ChiDistribution(0, parameters['scale'], 3)
+        try: self.distribution = ChiDistribution(0, parameters['scale'], 3)
+        except KeyError: 
+            raise DistributionParameterError('Maxwell distribution requires scale parameter')
     def CDF(self, x): 
         """
         Cummulative Distribution Function, which gives the cummulative probability (area under the 
@@ -1271,8 +1298,11 @@ class MaxwellDistribution(Distribution):
 class PascalDistribution(Distribution):
     def __init__(self, **parameters): 
         """Constructor method. The parameters are used to construct the probability distribution."""
-        self.distribution = NegativeBinomialDistribution(parameters['success'],
-                                                         int(parameters['target']))
+        try: self.distribution = NegativeBinomialDistribution(parameters['success'],
+                                                              int(parameters['target']))
+        except KeyError: 
+            raise DistributionParameterError('Pascal distribution requires success and \
+            target parameters')
     def CDF(self, x): 
         """
         Cummulative Distribution Function, which gives the cummulative probability (area under the 
@@ -1311,7 +1341,10 @@ class PascalDistribution(Distribution):
 class PowerFunctionDistribution(Distribution):
     def __init__(self, **parameters): 
         """Constructor method. The parameters are used to construct the probability distribution."""
-        self.distribution = BetaDistribution(0, 1, parameters['shape'], 1)
+        try: self.distribution = BetaDistribution(0, 1, parameters['shape'], 1)
+        except KeyError: 
+            raise DistributionParameterError('Power Function distribution require shape \
+            parameter')
     def CDF(self, x): 
         """
         Cummulative Distribution Function, which gives the cummulative probability (area under the 
@@ -1351,7 +1384,9 @@ class PowerFunctionDistribution(Distribution):
 class RayleighDistribution(Distribution):
     def __init__(self, **parameters): 
         """Constructor method. The parameters are used to construct the probability distribution."""
-        self.distribution = ChiDistribution(0, parameters['scale'], 2)
+        try: self.distribution = ChiDistribution(0, parameters['scale'], 2)
+        except KeyError: 
+            raise DistributionParameterError('Rayleigh distribution requires scale parameter')
     def CDF(self, x): 
         """
         Cummulative Distribution Function, which gives the cummulative probability (area under the 
@@ -1450,8 +1485,16 @@ class SampleDistribution(Distribution):
 # Distribution alias
 # -------------------------------------------------------------------
 
+def AntiLogNormalDistribution(**parameters):
+    return LogNormalDistribution(**parameters)
+
+def CobbDouglasDistribution(**parameters):
+    return LogNormalDistribution(**parameters)
+
 def ErlangDistribution(**parameters):
-    parameters['shape'] = int(parameters['shape'])
+    try: parameters['shape'] = int(parameters['shape'])
+    except KeyError: 
+            raise DistributionParameterError('Erlang distribution requires shape parameter')
     return GammaDistribution(**parameters)
 
 def FisherTippettDistribution(**parameters):
