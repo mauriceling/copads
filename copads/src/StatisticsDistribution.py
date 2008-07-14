@@ -1054,7 +1054,7 @@ class RademacherDistribution(Distribution):
             probability distribution."""
         pass
     def CDF(self, x): 
-       """
+        """
         Cummulative Distribution Function, which gives the cummulative 
         probability (area under the probability curve) from -infinity or 0 to 
         a give x-value on the x-axis where y-axis is the probability."""
