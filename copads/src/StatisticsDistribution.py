@@ -637,6 +637,65 @@ class GumbelDistribution(Distribution):
 #        """Gives a random number based on the distribution."""
 #        raise DistributionFunctionError
 
+
+class HypergeometricDistribution(Distribution):
+    def __init__(self, **parameters): 
+        """Constructor method. The parameters are used to construct the 
+            probability distribution."""
+        raise DistributionFunctionError
+#    def CDF(self, x): 
+#       """
+#        Cummulative Distribution Function, which gives the cummulative 
+#        probability (area under the probability curve) from -infinity or 0 to 
+#        a give x-value on the x-axis where y-axis is the probability."""
+#        raise DistributionFunctionError
+#    def PDF(self, x): 
+#        """
+#        Partial Distribution Function, which gives the probability for the 
+#        particular value of x, or the area under probability distribution 
+#        from x-h to x+h for continuous distribution."""
+#        raise DistributionFunctionError
+#    def inverseCDF(self, probability, start = 0.0, step = 0.01): 
+#        """
+#        It does the reverse of CDF() method, it takes a probability value 
+#        and returns the corresponding value on the x-axis."""
+#        cprob = self.CDF(start)
+#        if probability < cprob: return (start, cprob)
+#        while (probability > cprob):
+#            start = start + step
+#            cprob = self.CDF(start)
+#            # print start, cprob
+#        return (start, cprob)
+#    def mean(self): 
+#        """Gives the arithmetic mean of the sample."""
+#        raise DistributionFunctionError
+#    def mode(self): 
+#        """Gives the mode of the sample."""
+#        raise DistributionFunctionError
+#    def kurtosis(self): 
+#        """Gives the kurtosis of the sample."""
+#        raise DistributionFunctionError
+#    def skew(self): 
+#        """Gives the skew of the sample."""
+#        raise DistributionFunctionError
+#    def variance(self): 
+#        """Gives the variance of the sample."""
+#        raise DistributionFunctionError
+#    def quantile1(self): 
+#        """Gives the 1st quantile of the sample."""
+#        raise DistributionFunctionError
+#    def quantile3(self): 
+#        """Gives the 3rd quantile of the sample."""
+#        raise DistributionFunctionError
+#    def qmean(self): 
+#        """Gives the quantile of the arithmetic mean of the sample."""
+#        raise DistributionFunctionError
+#    def qmode(self): 
+#        """Gives the quantile of the mode of the sample."""
+#        raise DistributionFunctionError
+#    def random(self):
+#        """Gives a random number based on the distribution."""
+#        raise DistributionFunctionError
         
 class LogarithmicDistribution(Distribution):
     def __init__(self, **parameters): 
@@ -987,6 +1046,65 @@ class PoissonDistribution(Distribution):
 #    def random(self):
 #        """Gives a random number based on the distribution."""
 #        raise DistributionFunctionError    
+
+
+class RademacherDistribution(Distribution):
+    def __init__(self, **parameters): 
+        """Constructor method. The parameters are used to construct the 
+            probability distribution."""
+        pass
+    def CDF(self, x): 
+       """
+        Cummulative Distribution Function, which gives the cummulative 
+        probability (area under the probability curve) from -infinity or 0 to 
+        a give x-value on the x-axis where y-axis is the probability."""
+        if x < -1: return 0.0
+        elif x > -1 and x < 1: return 0.5
+        else: return 1.0
+    def PDF(self, x): 
+        """
+        Partial Distribution Function, which gives the probability for the 
+        particular value of x, or the area under probability distribution 
+        from x-h to x+h for continuous distribution."""
+        if x == -1 or x == 1: return 0.5
+        else: return 0.0
+    def inverseCDF(self, probability, start = 0.0, step = 0.01): 
+        """
+        It does the reverse of CDF() method, it takes a probability value 
+        and returns the corresponding value on the x-axis."""
+        if probability == 0.0: return (-1.0001, 0.0)
+        if probability == 1.0: return (1.0, 1.0)
+        else: return (0.999, 0.5)
+    def mean(self): 
+        """Gives the arithmetic mean of the sample."""
+        return 0
+#    def mode(self): 
+#        """Gives the mode of the sample."""
+#        raise DistributionFunctionError
+#    def kurtosis(self): 
+#        """Gives the kurtosis of the sample."""
+#        raise DistributionFunctionError
+    def skew(self): 
+        """Gives the skew of the sample."""
+        return 0
+    def variance(self): 
+        """Gives the variance of the sample."""
+        return 1
+#    def quantile1(self): 
+#        """Gives the 1st quantile of the sample."""
+#        raise DistributionFunctionError
+#    def quantile3(self): 
+#        """Gives the 3rd quantile of the sample."""
+#        raise DistributionFunctionError
+#    def qmean(self): 
+#        """Gives the quantile of the arithmetic mean of the sample."""
+#        raise DistributionFunctionError
+#    def qmode(self): 
+#        """Gives the quantile of the mode of the sample."""
+#        raise DistributionFunctionError
+#    def random(self):
+#        """Gives a random number based on the distribution."""
+#        raise DistributionFunctionError
 
 class SemicircularDistribution(Distribution):
     def __init__(self, **parameters): 
