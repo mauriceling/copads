@@ -1564,12 +1564,19 @@ class SampleDistribution(Distribution):
 # -------------------------------------------------------------------
 
 def AntiLogNormalDistribution(**parameters):
+    """
+    Anti-Lognormal distribution is an alias of Lognormal distribution."""
     return LogNormalDistribution(**parameters)
 
 def CobbDouglasDistribution(**parameters):
+    """
+    Cobb-Douglas distribution is an alias of Lognormal distribution."""
     return LogNormalDistribution(**parameters)
 
 def ErlangDistribution(**parameters):
+    """
+    Erlang distribution is an alias of Gamma distribution where the shape
+    parameter is an integer."""
     try: parameters['shape'] = int(parameters['shape'])
     except KeyError: 
             raise DistributionParameterError('Erlang distribution requires \
@@ -1577,27 +1584,43 @@ def ErlangDistribution(**parameters):
     return GammaDistribution(**parameters)
 
 def FisherTippettDistribution(**parameters):
+    """
+    Fisher-Tippett distribution is an alias of Gumbel distribution."""
     return GumbelDistribution(**parameters)
 
 def FurryDistribution(**parameters):
+    """
+    Furry distribution is an alias of Gamma distribution."""
     return GammaDistribution(**parameters)
 
 def GompertzDistribution(**parameters):
+    """
+    Gompertz distribution is an alias of Gumbel distribution."""
     return GumbelDistribution(**parameters)
 
 def LogWeibullDistribution(**parameters):
+    """
+    Log-Weibull distribution is an alias of Gumbel distribution."""
     return GumbelDistribution(**parameters)
 
 def LorentzDistribution(**parameters):
+    """
+    Lorentz distribution is an alias of Cauchy distribution."""
     return CauchyDistribution(**parameters)
 
 def NegativeExponentialDistribution(**parameters):
+    """
+    Negative-exponential distribution is an alias of Exponential distribution."""
     return ExponentialDistribution(**parameters)
 
 def PolyaDistribution(**parameters):
+    """
+    Polya distribution is an alias of Negative-binomial distribution."""
     return NegativeBinomialDistribution(**parameters)
 
 def RectangularDistribution(**parameters):
+    """
+    Rectangular distribution is an alias of Uniform distribution."""
     return UniformDistribution(**parameters)
         
 #class DummyDistribution(Distribution):
