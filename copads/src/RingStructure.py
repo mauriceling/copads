@@ -9,12 +9,16 @@ class RingList:
     Original author: Flavio Catalani
     """
     def __init__(self, length):
+        """
+        Initializes an empty RingList of maximum given length as given in 
+        length parameter"""
         self.__data__ = []
         self.__full__ = 0
         self.__max__ = length
         self.__cur__ = 0
 
     def append(self, x):
+        """Append parameter x to the data structure."""
         if self.__full__ == 1:
             for i in range (0, self.__cur__ - 1):
                 self.__data__[i] = self.__data__[i + 1]
@@ -26,19 +30,24 @@ class RingList:
                 self.__full__ = 1
 
     def get(self):
+        """Retrieves the data."""
         return self.__data__
 
     def remove(self):
+        """Removes the last element of the ring."""
         if (self.__cur__ > 0):
             del self.__data__[self.__cur__ - 1]
             self.__cur__ -= 1
 
     def size(self):
+        """Returns the current size of the ring."""
         return self.__cur__
 
     def maxsize(self):
+        """Returns the maximum allowed size of the ring."""
         return self.__max__
 
     def __str__(self):
+        """Returns the ring as a string."""
         return ''.join(self.__data__) 
         

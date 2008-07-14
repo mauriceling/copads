@@ -12,7 +12,7 @@ class OrderedBinaryTree:
     Original author: Lawrence Oluyede
     """
     def __init__(self):
-        # initializes the root member
+        """Initializes the root member"""
         self.root = None
     
     def addNode(self, data):
