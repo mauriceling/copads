@@ -49,8 +49,8 @@ def bessi(n, x):
     bigno = 1.0e10
     bigni = 1.0e-10
     if n < 2: 
-        raise FunctionParameterValueError('n must be more than 1 - use bessi0 or bessi1 \
-            for n = 0 or 1 respectively')
+        raise FunctionParameterValueError('n must be more than 1 - use \
+            bessi0 or bessi1 for n = 0 or 1 respectively')
     else:
         if x == 0.0: ans = 0.0
         else:
@@ -83,7 +83,8 @@ def bessi0(x):
     else:
         ax = abs(x)
         y = 3.75/ax
-        return (math.exp(ax)/math.sqrt(ax)) * (0.39894228 + y * (0.1328592e-1 + \
+        return (math.exp(ax)/math.sqrt(ax)) * (0.39894228 + y * \
+            (0.1328592e-1 + \
              y * (0.225319e-2 + y * (-0.157565e-2 + y * (0.916281e-2 + y * \
              (-0.2057706e-1 + y * (0.2635537e-1 + y * (-0.1647633e-1 + y * \
                0.392377e-2))))))))
@@ -96,7 +97,8 @@ def bessi1(x):
     """
     if abs(x) < 3.75:
         y = (x/3.75)*(x/3.75)
-        return x * (0.5 + y * (0.87890594 + y * (0.51498869 + y * (0.15084934 + \
+        return x * (0.5 + y * (0.87890594 + y * (0.51498869 + y * \
+            (0.15084934 + \
                y * (0.2658733e-1 + y * (0.301532e-2 + y * 0.32411e-3))))))
     else:
         ax = abs(x)
@@ -119,8 +121,8 @@ def bessj(n, x):
     bigno = 1.0e10
     bigni = 1.0e-10
     if n < 2: 
-        raise FunctionParameterValueError('n must be more than 1 - use bessj0 or bessj1 \
-            for n = 0 or 1 respectively')
+        raise FunctionParameterValueError('n must be more than 1 - use \
+            bessj0 or bessj1 for n = 0 or 1 respectively')
     if x == 0.0: ans = 0.0
     else:
         if abs(x) > 1.0 * n:

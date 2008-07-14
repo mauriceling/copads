@@ -2,20 +2,23 @@ from __future__ import generators
 
 class PriorityDictionary(dict):
     """
-    This data structure acts almost like a dictionary, with two modifications: First, D.smallest() 
-    returns the value x minimizing D[x]. For this to work correctly, all values D[x] stored in the 
-    dictionary must be comparable. Second, iterating 'for x in D' finds and removes the items from D 
-    in sorted order. Each item is not removed until the next item is requested, so D[x] will still 
-    return a useful value until the next iteration of the for-loop.
+    This data structure acts almost like a dictionary, with two modifications: 
+    First, D.smallest() returns the value x minimizing D[x]. For this to work 
+    correctly, all values D[x] stored in the dictionary must be comparable. 
+    Second, iterating 'for x in D' finds and removes the items from D in 
+    sorted order. Each item is not removed until the next item is requested, 
+    so D[x] will still return a useful value until the next iteration of the 
+    for-loop.
     
     Adapted from: http://aspn.activestate.com/ASPN/Cookbook/Python/Recipe/117228
     Original author: David Eppstein
     """
     def __init__(self):
         """
-        Initialize priorityDictionary by creating binary heap of pairs (value,key). Note that changing 
-        or removing a dict entry will not remove the old pair from the heap until it is found by 
-        smallest() or until the heap is rebuilt.
+        Initialize priorityDictionary by creating binary heap of pairs 
+        (value,key). Note that changing or removing a dict entry will not 
+        remove the old pair from the heap until it is found by smallest() 
+        or until the heap is rebuilt.
         """
         self.__heap = []
         dict.__init__(self)
@@ -51,8 +54,9 @@ class PriorityDictionary(dict):
     
     def __setitem__(self,key,val):
         """
-        Change value stored in dictionary and add corresponding pair to heap.  Rebuilds the heap if the 
-        number of deleted items grows too large, to avoid memory leakage."""
+        Change value stored in dictionary and add corresponding pair to heap.
+        Rebuilds the heap if the number of deleted items grows too large, to 
+        avoid memory leakage."""
         dict.__setitem__(self,key,val)
         heap = self.__heap
         if len(heap) > 2 * len(self):

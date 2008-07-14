@@ -1,8 +1,9 @@
 class RingList:
     """
-    The RingList is a class implementing a circular list. The ring have a fixed size and when it is full 
-    and you append a new element, the first one will be deleted. The class lets you access to the data 
-    like a python list or like a string.
+    The RingList is a class implementing a circular list. The ring have a 
+    fixed size and when it is full and you append a new element, the first 
+    one will be deleted. The class lets you access to the data like a python 
+    list or like a string.
 
     Adapted from: http://aspn.activestate.com/ASPN/Cookbook/Python/Recipe/435902 
     Original author: Flavio Catalani

@@ -1,8 +1,9 @@
 """
 This file hold the functions to calculate descriptive statistics of a data set.
 
-The following functions were adapted from http://www.nmr.mgh.harvard.edu/Neural_Systems_Group/gary/
-python/stats.py (assumes 1-dimensional list as input):
+The following functions were adapted from http://www.nmr.mgh.harvard.edu/
+Neural_Systems_Group/gary/python/stats.py (assumes 1-dimensional list as 
+input):
     1. geometricMean
     2. harmonicMean
     3. arithmeticMean
@@ -18,8 +19,8 @@ python/stats.py (assumes 1-dimensional list as input):
     
 def geometricMean (inlist):
     """
-    Calculates the geometric mean of the values in the passed list. That is:  n-th root of 
-    (x1 * x2 * ... * xn).  Assumes a '1D' list.
+    Calculates the geometric mean of the values in the passed list. That is:  
+    n-th root of (x1 * x2 * ... * xn).  Assumes a '1D' list.
 
     Usage:   geometricMean(inlist)
     """
@@ -180,7 +181,8 @@ def range(inlist):
 
 def midrange(inlist):
     inlist.sort()
-    return float(inlist[int(round(len(inlist)*0.75))])-float(inlist[int(round(len(inlist)*0.75))])
+    return float(inlist[int(round(len(inlist)*0.75))]) - \
+            float(inlist[int(round(len(inlist)*0.75))])
 
 def variance(inlist, mean):
     sum = 0.0

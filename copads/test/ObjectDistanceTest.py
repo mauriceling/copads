@@ -18,6 +18,15 @@ class testD(unittest.TestCase):
         
     def testHamming(self):
         self.assertEqual(D.Hamming(o1, t1), 1)
+        
+    def testKulczynski(self):
+        pass
+        
+    def testLevenshtein(self):
+        pass
+        
+    def testEuclidean(self):
+        pass
 
 
 if __name__ == '__main__':

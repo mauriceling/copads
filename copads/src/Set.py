@@ -4,8 +4,8 @@ class Set:
     Adapted from: http://aspn.activestate.com/ASPN/Cookbook/Python/Recipe/106469"""
 
     def __init__(self, seq = None):
-        """The constructor. It can take any object giving an iterator as an optional
-        argument to populate the new set."""
+        """The constructor. It can take any object giving an iterator as an 
+        optional argument to populate the new set."""
         self.elems = []
         if seq:
             for elem in seq:
@@ -36,11 +36,13 @@ class Set:
             self.elems.append(elem)
 
     def remove(self, elem):
-        """Remove an element from the set. Return an error if elem is not in the set."""
+        """Remove an element from the set. Return an error if elem is not in 
+        the set."""
         try:
             self.elems.remove(elem)
         except ValueError:
-            raise LookupError, "Object %s is not a member of the set." % str(elem)
+            raise LookupError, "Object %s is not a member of the set." \
+                % str(elem)
 
     def discard(self, elem):
         """Remove an element from the set. Do nothing if elem is not in the set."""
@@ -95,7 +97,8 @@ class Set:
         """Cartesian product of two sets."""
         ret = Set()
         for elemself in self.elems:
-            ret.elems.extend([(elemself, elemother) for elemother in other.elems])
+            ret.elems.extend([(elemself, elemother) 
+                            for elemother in other.elems])
         return ret
 
     #Some of the binary comparisons.

@@ -24,11 +24,13 @@ Original author: A. Pletzer
             return Vector(super(Vector, self).__getslice__(i,j))
         except: raise TypeError, 'vector::FAILURE in __getslice__'
         
-    def __add__(self, other): return Vector(map(lambda x,y: x+y, self, other))
+    def __add__(self, other): 
+        return Vector(map(lambda x,y: x+y, self, other))
 
     def __neg__(self): return Vector([-x for x in self])
     
-    def __sub__(self, other): return Vector(map(lambda x,y: x-y, self, other))
+    def __sub__(self, other): 
+        return Vector(map(lambda x,y: x-y, self, other))
 
     def __mul__(self, other):
         """
@@ -515,7 +517,8 @@ Original author: Alexander Pletzer
         return res
         
     def __neg__(self):
-        return SparseMatrix(zip(self.keys(), map(operator.neg, self.values())))
+        return SparseMatrix(zip(self.keys(), 
+                            map(operator.neg, self.values())))
 
     def __sub__(self, other):
         res = SparseMatrix(self.copy())
@@ -538,21 +541,25 @@ Original author: Alexander Pletzer
             return res
         except:
             # other is scalar
-            return SparseMatrix(zip(self.keys(), map(lambda x: x*other, self.values())))
+            return SparseMatrix(zip(self.keys(), 
+                                map(lambda x: x*other, self.values())))
 
 
     def __rmul__(self, other): return self.__mul__(other)
 
     def __div__(self, other):
         " element by element division self/other: other is scalar"
-        return SparseMatrix(zip(self.keys(), map(lambda x: x/other, self.values())))
+        return SparseMatrix(zip(self.keys(), 
+                            map(lambda x: x/other, self.values())))
         
     def __rdiv__(self, other):
         " element by element division other/self: other is scalar"
-        return SparseMatrix(zip(self.keys(), map(lambda x: other/x, self.values())))
+        return SparseMatrix(zip(self.keys(), 
+                            map(lambda x: other/x, self.values())))
 
     def abs(self):
-        return SparseMatrix(zip(self.keys(), map(operator.abs, self.values())))
+        return SparseMatrix(zip(self.keys(), 
+                            map(operator.abs, self.values())))
 
     def out(self):
         print '# (i, j) -- value'

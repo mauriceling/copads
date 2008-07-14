@@ -63,7 +63,8 @@ class Graph:
         """
         Initialize a list of nodes (vertices) without edges.
         """
-        if type(vertices) != list: raise GraphParameterError('Vertices must be a list')
+        if type(vertices) != list: raise GraphParameterError('Vertices must \
+                                    be a list')
         for vertex in vertices: self.graph[vertex] = {}
     
     def makeGraphFromEdges1(self, edges):
@@ -71,7 +72,8 @@ class Graph:
         Constructs a directional graph from edges (a list of tuple).
         Each tuple contains 2 vertices. 
         For example, P -> Q is written as ('P', 'Q')."""
-        if type(edges) != list: raise GraphParameterError('Edges must be a list of tuples')
+        if type(edges) != list: raise GraphParameterError('Edges must be a \
+                                list of tuples')
         from Set import Set
         from Matrix import Matrix
         vertices = list(Set([x[0] for x in edges] + [x[1] for x in edges]))
@@ -92,7 +94,8 @@ class Graph:
         An un-directional graph is implemented as a directional graph where
         each edges runs both directions.
         """
-        if type(edges) != list: raise GraphParameterError('Edges must be a list of tuples')
+        if type(edges) != list: raise GraphParameterError('Edges must be a \
+                                list of tuples')
         from Set import Set
         from Matrix import Matrix
         vertices = list(Set([x[0] for x in edges] + [x[1] for x in edges]))

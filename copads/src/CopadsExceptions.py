@@ -29,7 +29,8 @@ CopadsError
 |- FunctionParameterValueError
 
 Credits:
-    MatrixError subclasses (http://aspn.activestate.com/ASPN/Cookbook/Python/Recipe/189971)
+    MatrixError subclasses 
+    (http://aspn.activestate.com/ASPN/Cookbook/Python/Recipe/189971)
 
 Copyright (c) Maurice H.T. Ling <mauriceling@acm.org>
 Date created: 1st May 2005
@@ -66,16 +67,18 @@ class MatrixArithmeticError(MatrixError):
 class MatrixMultiplicationError(MatrixArithmeticError):
     """Thrown when you try to multiply matricies of incompatible dimensions.
 
-    This exception is also thrown when you try to right-multiply a row vector or
-    left-multiply a column vector.
+    This exception is also thrown when you try to right-multiply a row vector 
+    or left-multiply a column vector.
     """
-    def __init__(self, a, b): MatrixArithmeticError.__init__(self, a, b, "multiply")
+    def __init__(self, a, b): MatrixArithmeticError.__init__(self, a, b, 
+                                                            "multiply")
 
 
 class MatrixAdditionError(MatrixArithmeticError):
     """Thrown when you try to add matricies of incompatible dimensions.
     """
-    def __init__(self, a, b): MatrixArithmeticError.__init__(self, a, b, "add")
+    def __init__(self, a, b): MatrixArithmeticError.__init__(self, a, b, 
+                                                            "add")
 
 
 class MatrixSquareError(MatrixError):
@@ -85,7 +88,8 @@ class MatrixSquareError(MatrixError):
     defined for square matricies on a non-square matrix.
     """
     def __init__(self, func): self.func = func
-    def __str__(self): return "%s only defined for square matricies." % self.func
+    def __str__(self): return "%s only defined for square matricies." % \
+                            self.func
 
 
 class MatrixTraceError(MatrixSquareError):
@@ -108,32 +112,38 @@ class GraphError(CopadsError):
     pass
 
 class EdgeNotFoundError(GraphError):
-    """Exception to be thrown when trying to retrieve an edge that is not found in the graph."""
+    """Exception to be thrown when trying to retrieve an edge that is not 
+    found in the graph."""
     def __init__(self, edge): self.edge = edge
     def __str__(self): return "Edge, %s, is not found." % self.edge
         
 class VertexNotFoundError(GraphError):
-    """Exception to be thrown when trying to retrieve a vertex that is not found in the graph."""
+    """Exception to be thrown when trying to retrieve a vertex that is not 
+    found in the graph."""
     def __init__(self, vertex):
         self.vertex = vertex
     def __str__(self): return "Vertex, %s, is not found." % self.vertex
         
 class UnknownGraphMatrixError(GraphError):
-    """Exception to be thrown when trying to use an unknown type of graph matrix."""
+    """Exception to be thrown when trying to use an unknown type of graph 
+    matrix."""
     def __init__(self, type):
         self.type = type
-    def __str__(self): return "Graph matrix type, %s, is not known." % self.type
+    def __str__(self): return "Graph matrix type, %s, is not known." % \
+        self.type
         
 class NotAdjacencyGraphMatrixError(UnknownGraphMatrixError):
-    """Exception to be thrown when trying to enter a non-square matrix into Graph.GraphAdjacencyMatrix
-    object or when not supplying an adjacency matrix when the calculation requires it."""
+    """Exception to be thrown when trying to enter a non-square matrix into 
+    Graph.GraphAdjacencyMatrix object or when not supplying an adjacency 
+    matrix when the calculation requires it."""
     def __init__(self, type):
         self.type = type
     def __str__(self):
         return 'The graph inputted or required is not an adjacency matrix.'
         
 class GraphEdgeSizeMismatchError(GraphError):
-    """Exception for number of output edges do not match the number of input edges."""
+    """Exception for number of output edges do not match the number of input 
+    edges."""
     def __init__(self, index, edge):
         self.index = index
         self.edge = edge
@@ -152,33 +162,38 @@ class StatisticsError(CopadsError):
     pass
     
 class DistributionError(StatisticsError):
-    """Abstract parent for all exceptions pertaining to statistical distributions
+    """Abstract parent for all exceptions pertaining to statistical 
+    distributions
     """
     pass
     
 class NormalDistributionTypeError(DistributionError):
-    """Exception for type errors in normal distribution (StatisticsDistribution.NormalDistribution)."""
+    """Exception for type errors in normal distribution 
+    (StatisticsDistribution.NormalDistribution)."""
     def __init__(self, msg): self.msg = msg
     def __str__(self): return self.msg
     
 class DistributionParameterError(DistributionError):
-    """Exception for parameter errors in distributions (StatisticsDistribution.*)."""
+    """Exception for parameter errors in distributions 
+    (StatisticsDistribution.*)."""
     def __init__(self, msg): self.msg = msg
     def __str__(self): return self.msg
     
 class DistributionFunctionError(DistributionError):
-    """Exception for undefined functions in distributions (StatisticsDistribution.*)."""
+    """Exception for undefined functions in distributions 
+    (StatisticsDistribution.*)."""
     def __init__(self, msg): self.msg = msg
     def __str__(self): return self.msg
     
 class StringDistanceError(CopadsError):
-    """Abstract parent for all exceptions related to calculating distances between strings."""
+    """Abstract parent for all exceptions related to calculating distances 
+    between strings."""
     pass
     
 class StringDistanceInputSizeError(StringDistanceError):
     """
-    Exception for input parameter size errors for string distance routines that have specific 
-    requirements for the size of inputs."""
+    Exception for input parameter size errors for string distance routines 
+    that have specific requirements for the size of inputs."""
     def __init__(self, msg): self.msg = msg
     def __str__(self): return self.msg
     
@@ -187,17 +202,19 @@ class TreeError(CopadsError):
     pass
 
 class TreeNodeTypeError(TreeError):
-    """Exception to be thrown when trying to add a non-Node class object (Tree.Node) into a 
-    Tree object (Tree.BinaryTree)"""
+    """Exception to be thrown when trying to add a non-Node class object 
+    (Tree.Node) into a Tree object (Tree.BinaryTree)"""
     def __init__(self, msg): self.msg = msg
     def __str__(self): return self.msg
     
 class FunctionParameterTypeError(CopadsError):
-    """Exception to be thrown when trying a function parameter is of the wrong data type"""
+    """Exception to be thrown when trying a function parameter is of the wrong 
+    data type"""
     def __init__(self, msg): self.msg = msg
     def __str__(self): return self.msg
     
 class FunctionParameterValueError(CopadsError):
-    """Exception to be thrown when trying a function parameter is of wrong value"""
+    """Exception to be thrown when trying a function parameter is of wrong 
+    value"""
     def __init__(self, msg): self.msg = msg
     def __str__(self): return self.msg

@@ -290,7 +290,8 @@ class RBTree(object):
                 if self.unique == False: 
                     current.count += 1
                 else: # raise an Error
-                    print "Warning: This element is already in the list ... ignored!"
+                    print "Warning: This element is already in the list ... \
+                    ignored!"
                     #SF I don't want to raise an error because I want to keep 
                     #SF the code compatible to previous versions
                     #SF But here would be the right place to do this

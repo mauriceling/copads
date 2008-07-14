@@ -60,8 +60,8 @@ def Sokal_Michener(original = '', test = ''):
     original = string.split(original, ' ')
     test = string.split(test, ' ')
     if len(original) <> len(test): 
-        raise StringDistanceInputSizeError("Size (length) of inputs must be equal \
-                for Sokal & Michener's distance")
+        raise StringDistanceInputSizeError("Size (length) of inputs must be \
+                equal for Sokal & Michener's distance")
     in_original = 0.0
 #    in_test = 0.0
     in_both = 0.0
@@ -74,8 +74,8 @@ def Sokal_Michener(original = '', test = ''):
     
 def Kulczynski(original = '', test = ''):
     """
-    Given 2 space-delimited strings (original and test), calculates the Kulczynski 
-    Distance based on the formula,
+    Given 2 space-delimited strings (original and test), calculates the \
+    Kulczynski Distance based on the formula,
     
     1-(mean of (
        ((number of regions where both species are present)/
@@ -101,8 +101,8 @@ def Hamming(original = '', test = ''):
     original = string.split(original, ' ')
     test = string.split(test, ' ')
     if len(original) <> len(test): 
-        raise StringDistanceInputSizeError("Size (length) of inputs must be equal \
-            for Hamming's distance")
+        raise StringDistanceInputSizeError("Size (length) of inputs must be \
+            equal for Hamming's distance")
     mismatch = 0
     for index in range(len(original)):
         if original[index] <> test[index]: mismatch = mismatch + 1
@@ -136,8 +136,8 @@ def Euclidean(x = '', y = ''):
     # vectors.
     import math
     if len(x) != len(y):
-        raise StringDistanceInputSizeError("Size (length) of inputs must be equal \
-            for Euclidean distance")
+        raise StringDistanceInputSizeError("Size (length) of inputs must be \
+            equal for Euclidean distance")
     sum = 0
     for i in range(len(x)):
         sum += (x[i]-y[i])**2
