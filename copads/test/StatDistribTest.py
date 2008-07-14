@@ -109,8 +109,8 @@ class testNegativeBinomial(unittest.TestCase):
 class testNormal(unittest.TestCase):
     def testCDF1(self):
         self.assertAlmostEqual(N.NormalDistribution().CDF(0), 0.5)
-#    def testPDF1(self):
-#        self.assertAlmostEqual(N.NormalDistribution().PDF(0), 0.3989423)
+    def testPDF1(self):
+        self.assertAlmostEqual(N.NormalDistribution().PDF(0), 0.3989423)
     def testinverseCDF1(self):
         self.assertAlmostEqual(N.NormalDistribution().inverseCDF(0.5)[0], 0)
   
