@@ -9,6 +9,7 @@ from Matrix import Matrix
 from PriorityDictionary import PriorityDictionary
 from CopadsExceptions import VertexNotFoundError, NotAdjacencyGraphMatrixError
 from CopadsExceptions import GraphEdgeSizeMismatchError, GraphParameterError
+from CopadsExceptions import FunctionParameterTypeError
 
 
 class Graph:
@@ -17,17 +18,18 @@ class Graph:
     def __init__(self, **kwarg):
         """
         Initialization method. It can accept the following keyword parameters:
-        adjacency: accepts an adjacency matrix, with vertices as the first row.
-        digraph: state whether the input values is to construct a directional
-                    graph (True for directional graph). Default = False.
-                    Default to false if not given.
-        edges: edges are input as a list of 2-element tuples where each tuple 
-                is (<source>, <destination>). Uses digraph parameter.
-        graph: accepts a dictionary of dictionary as graph as 
-                {<source> : <destination dictionary>} where
-                <destination dictionary> ::= 
-                    {<destination> : <attribute>}.
-        vertices: a list of vertices (nodes).
+        
+        adjacency (Matrix - list of list) - an adjacency matrix, with vertices 
+            as the first row - row count is 1 more than column count
+        digraph (boolean) - state whether the input values is to construct a 
+            graph (True for directional graph). Default = False.
+        edges (list of 2-element tuples) - defines a list of edges where each 
+            tuple is (<source>, <destination>). Uses digraph parameter.
+        graph (dictionary of dictionary) - graph as 
+            {<source> : <destination dictionary>} 
+            where
+            <destination dictionary> ::= {<destination> : <attribute>}.
+        vertices (list) - list of vertices (nodes).
         """
         if not kwarg.has_key('digraph'): kwarg['digraph'] = False
         if kwarg.has_key('graph'): 
@@ -127,16 +129,15 @@ class Graph:
 
     def Dijkstra(self, start,end=None):
         """
-        Find shortest paths from the start vertex to all
-        vertices nearer than or equal to the end.
+        Find shortest paths from the start vertex to all vertices nearer than 
+        or equal to the end.
         
-        Dijkstra's algorithm is only guaranteed to work correctly
-        when all edge lengths are positive. This code does not
-        verify this property for all edges (only the edges seen
-         before the end vertex is reached), but will correctly
-        compute shortest paths even for some graphs with negative
-        edges, and will raise an exception if it discovers that
-        a negative edge has caused it to make a mistake.
+        Dijkstra's algorithm is only guaranteed to work correctly when all 
+        edge lengths are positive. This code does not verify this property 
+        for all edges (only the edges seen before the end vertex is reached), 
+        but will correctly compute shortest paths even for some graphs with 
+        negative edges, and will raise an exception if it discovers that a 
+        negative edge has caused it to make a mistake.
         """
     
         D = {}    # dictionary of final distances
@@ -176,3 +177,35 @@ class Graph:
         Path.reverse()
         return Path
        
+    def RandomGraph(self, nodes, edges, maxweight = 100.0):
+        """
+        Generates a graph of random edges.
+        
+        nodes (list or integer) - list of nodes or number of nodes in the 
+            random graph
+        edges (integer) - number of edges to generate in the random graph
+        maxweight (float) - maximum weight of each edge
+        """
+        import random
+        nodes_size = 0
+        if type(nodes) == int:
+            adjacency = [range(nodes)]
+            nodes_size = nodes
+            for node in range(nodes):
+                adjacency.append([0 for x in range(nodes)])
+        elif type(nodes) == list:
+            adjacency = nodes
+            nodes_size = len(nodes)
+            for node in range(nodes_size):
+                adjacency.append([0 for x in range(nodes_size)])
+        else: raise FunctionParameterTypeError('nodes can only be a list \
+                or integer')
+        count = 0
+        while count <= edges:
+            edge = (int(random.uniform(0, nodes_size)) + 1, 
+                    int(random.uniform(0, nodes_size)),
+                    int(random.uniform(0, 1) * maxweight))
+            if adjacency[edge[0]][edge[1]] == 0:
+                adjacency[edge[0]][edge[1]] = edge[2]
+                count = count + 1
+        self.makeGraphFromAdjacency(adjacency)
