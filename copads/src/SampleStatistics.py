@@ -17,6 +17,9 @@ input):
     11. describe
     """
     
+from StatisticsDistribution import Distribution
+import NRPy
+
 def geometricMean (inlist):
     """
     Calculates the geometric mean of the values in the passed list. That is:  
@@ -216,3 +219,65 @@ Returns: n, mean, standard deviation, skew, kurtosis
     sk = skew(inlist)
     kurt = kurtosis(inlist)
     return n, mm, m, sd, sk, kurt
+
+class SampleDistribution(Distribution):
+    def __init__(self, **parameters): 
+        """Constructor method. The parameters are used to construct the 
+        probability distribution."""
+        try: 
+            self.data = list(parameters['data'])
+            self.n = len(self.data)
+            summary = NRPy.moment(self.data) # summary = (ave, adev, sdev, 
+                                              #             var, skew, kurt)
+            self.mean = summary[0]
+            self.variance = summary[3]
+            self.skew = summary[4]
+            self.kurtosis = summary[5]
+        except KeyError: 
+            self.data = []
+            self.n = 0
+            self.mean = None
+            self.variance = None
+            self.skew = None
+            self.kurtosis = None
+#    def CDF(self, x): 
+#        """
+#        Cummulative Distribution Function, which gives the cummulative 
+#        probability (area under the probability curve) from -infinity or 0 
+#        to a give x-value on the x-axis where y-axis is the probability."""
+#        raise DistributionFunctionError
+#    def PDF(self, x): 
+#        """
+#        Partial Distribution Function, which gives the probability for the 
+#        particular value of x, or the area under probability distribution 
+#        from x-h to x+h for continuous distribution."""
+#        raise DistributionFunctionError
+#    def inverseCDF(self, probability, start = 0.0, step =0.01): 
+#        """
+#        It does the reverse of CDF() method, it takes a probability value and returns the corresponding 
+#        value on the x-axis."""
+#        raise DistributionFunctionError
+    def mean(self): 
+        """Gives the arithmetic mean of the sample."""
+        return self.mean
+#    def mode(self): 
+#        """Gives the mode of the sample."""
+#        raise DistributionFunctionError
+    def kurtosis(self): 
+        """Gives the kurtosis of the sample."""
+        return self.kurtosis
+    def skew(self): 
+        """Gives the skew of the sample."""
+        return self.skew
+    def variance(self): 
+        """Gives the variance of the sample."""
+        return self.variance
+    def update(self, datalist):
+        self.data.append(datalist)
+        self.n = len(self.data)
+        summary = NRPy.moment(self.data) # summary = (ave, adev, sdev, var, 
+                                          #             skew, kurt)
+        self.mean = summary[0]
+        self.variance = summary[3]
+        self.skew = summary[4]
+        self.kurtosis = summary[5]
