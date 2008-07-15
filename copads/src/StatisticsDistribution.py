@@ -1058,8 +1058,10 @@ class RademacherDistribution(Distribution):
         Cummulative Distribution Function, which gives the cummulative 
         probability (area under the probability curve) from -infinity or 0 to 
         a give x-value on the x-axis where y-axis is the probability."""
-        if x < -1: return 0.0
-        elif x > -1 and x < 1: return 0.5
+        if x < -1: 
+            return 0.0
+        elif x > -1 and x < 1: 
+            return 0.5
         else: return 1.0
     def PDF(self, x): 
         """
