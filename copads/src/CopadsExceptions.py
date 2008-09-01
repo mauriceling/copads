@@ -21,8 +21,8 @@ CopadsError
 |  |  |- NormalDistributionTypeError
 |  |- DistributionParameterError
 |  |- DistributionFunctionError
-|- StringDistanceError
-|  |- StringDistanceInputSizeError
+|- DistanceError
+|  |- DistanceInputSizeError
 |- TreeError
 |  |- TreeNodeTypeError
 |- FunctionParameterTypeError
@@ -185,14 +185,14 @@ class DistributionFunctionError(DistributionError):
     def __init__(self, msg): self.msg = msg
     def __str__(self): return self.msg
     
-class StringDistanceError(CopadsError):
+class DistanceError(CopadsError):
     """Abstract parent for all exceptions related to calculating distances 
-    between strings."""
+    between lists."""
     pass
     
-class StringDistanceInputSizeError(StringDistanceError):
+class DistanceInputSizeError(StringDistanceError):
     """
-    Exception for input parameter size errors for string distance routines 
+    Exception for input parameter size errors for list (object) distance routines 
     that have specific requirements for the size of inputs."""
     def __init__(self, msg): self.msg = msg
     def __str__(self): return self.msg
