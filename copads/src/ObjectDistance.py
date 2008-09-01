@@ -9,8 +9,8 @@ from CopadsExceptions import DistanceInputSizeError
 
 def Jaccard(original = '', test = ''):
     """
-    Given 2 lists (original and test), calculates the Jaccard Distance based 
-    on the formula,
+    Given 2 lists (original and test), calculates the Jaccard Distance 
+    (1 - Jaccard Index) based on the formula,
     
     1 - [(number of regions where both species are present)/
          (number of regions where at least one species is present)]
@@ -52,8 +52,6 @@ def Sokal_Michener(original = '', test = ''):
     Ref: Sokal RR, Michener CD (1958) A statistical method for evaluating 
         systematic relationships. Univ Kansas Sci Bull 38:1409-1438
     """
-    original = string.split(original, ' ')
-    test = string.split(test, ' ')
     if len(original) <> len(test): 
         raise DistanceInputSizeError("Size (length) of inputs must be \
                 equal for Sokal & Michener's distance")
@@ -66,7 +64,17 @@ def Sokal_Michener(original = '', test = ''):
 #        if original[index] < test[index]: in_test = in_test + 1
 #    print in_original
     return 1-(in_both/(in_both+in_original))
+
+def Dice(original = '', test = ''):
+    """
+    Given 2 lists (original and test), calculates the Dice Distance based 
+    on the formula,
     
+    number of regions where both species / sum of species in each list
+    """
+    both = float(len([x for x in original if x in test]))
+    return (2 * both) / (float(len(original)) + float(len(test)))
+       
 def Kulczynski(original = '', test = ''):
     """
     Given 2 lists (original and test), calculates the Kulczynski Distance 
