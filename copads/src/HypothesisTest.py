@@ -13,17 +13,22 @@ Test 1-100: Gopal K. Kanji. 2006. 100 Statistical Tests, 3rd edition.
 """
 
 from StatisticsDistribution import *
-from math import sqrt
+from math import sqrt, log
 
-def test(statistic, critical):
+def test(statistic, distribution, alpha):
     """
-    Compares test statistic and critical region for alternate hypothesis 
-    acceptance (returns True, reject null hypothesis and accept alternate
-    hypothesis where statistic > critical) or rejection (returns false, 
-    accept null hypothesis and reject alternate hypothesis where 
-    statistic <= critical)"""
-    if statistic < critical: return False
-    else: return True
+    Generates the critcal region from distribution and alpha value using
+    the distribution's inverseCDF method. 
+    
+    Return a 3-element tuple: (result, statistic, critical)
+    where
+        result = True (reject null hypothesis; statistic > critical) or 
+                    False (accept null hypothesis; statistic <= critical)
+        statistic = calculated statistic value
+        critical = value of critical region for statistical test"""
+    critical = distribution.inverseCDF(alpha)
+    if statistic < critical: return (False, statistic, critical)
+    else: return (True, statistic, critical)
     
 def Z1Mean1Variance(**kwargs):
     """
@@ -32,6 +37,9 @@ def Z1Mean1Variance(**kwargs):
     To investigate the significance of the difference between an assumed 
     population mean and sample mean when the population variance is
     known.
+    
+    Limitations:
+    1. Requires population variance (use Test 7 if population variance unknown)
     
     Parameters:
     smean = sample mean
@@ -43,11 +51,9 @@ def Z1Mean1Variance(**kwargs):
     pmean = kwargs['pmean']
     pvar = kwargs['pvar']
     ssize = kwargs['ssize']
-    Z = (smean - pmean)/ \
-        (pvar / sqrt(ssize))
-    distribution = NormalDistribution()
-    x = distribution.inverseCDF(kwargs['alpha'])
-    return (test(Z, x), Z, x)
+    statistic = (smean - pmean)/ \
+                (pvar / sqrt(ssize))
+    return test(statistic, NormalDistribution(), kwargs['alpha'])
 
 def Z2Mean1Variance(**kwargs):
     """
@@ -55,6 +61,10 @@ def Z2Mean1Variance(**kwargs):
     
     To investigate the significance of the difference between the means of two 
     samples when the variances are known and equal.
+    
+    Limitations:
+    1. Population variances must be known and equal (use Test 8 if population
+    variances unknown
     
     Parameters:
     smean1 = sample mean of sample #1
@@ -76,18 +86,20 @@ def Z2Mean1Variance(**kwargs):
     pvar = kwargs['pvar']
     ssize1 = kwargs['ssize1']
     ssize2 = kwargs['ssize2']
-    Z = ((smean1 - smean2) - (pmean1 - pmean2))/ \
-        (pvar * sqrt((1 / ssize1) + (1 / ssize2)))
-    distribution = NormalDistribution()
-    x = distribution.inverseCDF(kwargs['alpha'])
-    return (test(Z, x), Z, x)
-    
+    statistic = ((smean1 - smean2) - (pmean1 - pmean2))/ \
+                (pvar * sqrt((1 / ssize1) + (1 / ssize2)))
+    return test(statistic, NormalDistribution(), kwargs['alpha'])    
+
 def Z2Mean2Variance(**kwargs):    
     """
     Test 3: Z-test for two population means (variances known and unequal)
     
     To investigate the significance of the difference between the means of two
     samples when the variances are known and unequal.
+    
+    Limitations:
+    1. Population variances must be known(use Test 9 if population variances 
+    unknown
     
     Parameters:
     smean1 = sample mean of sample #1
@@ -111,11 +123,9 @@ def Z2Mean2Variance(**kwargs):
     pvar2 = kwargs['pvar2']
     ssize1 = kwargs['ssize1']
     ssize2 = kwargs['ssize2']
-    Z = ((smean1 - smean2) - (pmean1 - pmean2))/ \
-        sqrt((pvar1 / ssize1) + (pvar2 / ssize2))
-    distribution = NormalDistribution()
-    x = distribution.inverseCDF(kwargs['alpha'])
-    return (test(Z, x), Z, x)
+    statistic = ((smean1 - smean2) - (pmean1 - pmean2))/ \
+                sqrt((pvar1 / ssize1) + (pvar2 / ssize2))
+    return test(statistic, NormalDistribution(), kwargs['alpha'])
 
 def Z1Proportion(**kwargs):    
     """
@@ -123,6 +133,10 @@ def Z1Proportion(**kwargs):
     
     To investigate the significance of the difference between an assumed 
     proportion and an observed proportion.
+    
+    Limitations:
+    1. Requires sufficiently large sample size to use Normal approximation to
+    binomial
     
     Parameters:
     spro = sample proportion
@@ -132,17 +146,19 @@ def Z1Proportion(**kwargs):
     spro = kwargs['spro']
     ppro = kwargs['ppro']
     ssize = kwargs['ssize']
-    Z = (abs(ppro - spro) - (1 / (2 * ssize)))/ \
-        sqrt((ppro * (1 - spro)) / ssize)
-    distribution = NormalDistribution()
-    x = distribution.inverseCDF(kwargs['alpha'])
-    return (test(Z, x), Z, x)
+    statistic = (abs(ppro - spro) - (1 / (2 * ssize)))/ \
+                sqrt((ppro * (1 - spro)) / ssize)
+    return test(statistic, NormalDistribution(), kwargs['alpha'])
 
 def Z2Proportion(**kwargs):    
     """
     Test 5: Z-test for the equality of two proportions (binomial distribution)
     To investigate the assumption that the proportions of elements from two 
     populations are equal, based on two samples, one from each population.
+    
+    Limitations:
+    1. Requires sufficiently large sample size to use Normal approximation to
+    binomial
     
     Parameters:
     spro1 = sample proportion #1
@@ -155,17 +171,19 @@ def Z2Proportion(**kwargs):
     ssize1 = kwargs['ssize1']
     ssize2 = kwargs['ssize2']
     P = ((spro1 * ssize1) + (spro2 * ssize2)) / (ssize1 + ssize2)
-    Z = (spro1 - spro2) / \
-        sqrt((P * (1 - P)) * ((1 / ssize1) * (1 / ssize2)))
-    distribution = NormalDistribution()
-    x = distribution.inverseCDF(kwargs['alpha'])
-    return (test(Z, x), Z, x)
+    statistic = (spro1 - spro2) / \
+                sqrt((P * (1 - P)) * ((1 / ssize1) * (1 / ssize2)))
+    return test(statistic, NormalDistribution(), kwargs['alpha'])
 
 def Z2Count(**kwargs):    
     """
     Test 6: Z-test for comparing two counts (Poisson distribution)
     
     To investigate the significance of the differences between two counts.
+    
+    Limitations:
+    1. Requires sufficiently large sample size to use Normal approximation to
+    binomial
     
     Parameters:
     time1 = first measurement time
@@ -177,10 +195,8 @@ def Z2Count(**kwargs):
     time2 = kwargs['time2']
     R1 = kwargs['count1'] / time1
     R2 = kwargs['count2'] / time2
-    Z = (R1 - R2) / sqrt((R1 / time1) + (R2 / time2))
-    distribution = NormalDistribution()
-    x = distribution.inverseCDF(kwargs['alpha'])
-    return (test(Z, x), Z, x)
+    statistic = (R1 - R2) / sqrt((R1 / time1) + (R2 / time2))
+    return test(statistic, NormalDistribution(), kwargs['alpha'])
 
 def t1Mean(**kwargs):
     """
@@ -189,6 +205,9 @@ def t1Mean(**kwargs):
     To investigate the significance of the difference between an assumed 
     population mean and a sample mean when the population variance is 
     unknown and cannot be assumed equal or not equal.
+    
+    Limitations:
+    1. Weaker form of Test 1
     
     Parameters:
     smean = sample mean
@@ -199,10 +218,8 @@ def t1Mean(**kwargs):
     pmean = kwargs['pmean']
     svar = kwargs['svar']
     ssize = kwargs['ssize']
-    t = (smean - pmean) / (svar / sqrt(ssize))
-    distribution = TDistribution(location = 0.0, scale = svar, df = ssize - 1)
-    x = distribution.inverseCDF(kwargs['alpha'])
-    return (test(t, x), t, x)
+    statistic = (smean - pmean) / (svar / sqrt(ssize))
+    return test(statistic, TDistribution(df = ssize - 1), kwargs['alpha'])
 
 def t2Mean2EqualVariance(**kwargs):    
     """
@@ -212,6 +229,9 @@ def t2Mean2EqualVariance(**kwargs):
     To investigate the significance of the difference between the means of 
     two populations when the population variances are unknown but assumed
     equal.
+    
+    Limitations:
+    1. Weaker form of Test 2
     
     Parameters:
     smean1 = sample mean of sample #1
@@ -237,11 +257,9 @@ def t2Mean2EqualVariance(**kwargs):
     ssize2 = kwargs['ssize2']
     df = ssize1 + ssize2 - 2
     pvar = (((ssize1 - 1) * svar1) + ((ssize2 - 1) * svar2)) / df
-    t = ((smean1 - smean2) - (pmean1 - pmean2)) / \
-        (pvar * sqrt((1 / ssize1) + (1 / ssize2)))
-    distribution = TDistribution(df = df)
-    x = distribution.inverseCDF(kwargs['alpha'])
-    return (test(t, x), t, x)
+    statistic = ((smean1 - smean2) - (pmean1 - pmean2)) / \
+                (pvar * sqrt((1 / ssize1) + (1 / ssize2)))
+    return test(statistic, TDistribution(df = df), kwargs['alpha'])
 
 def t2Mean2UnequalVariance(**kwargs):
     """
@@ -250,6 +268,9 @@ def t2Mean2UnequalVariance(**kwargs):
     
     To investigate the significance of the difference between the means of 
     two populations when the population variances are unknown and unequal.
+    
+    Limitations:
+    1. Weaker form of Test 3
     
     Parameters:
     smean1 = sample mean of sample #1
@@ -273,37 +294,89 @@ def t2Mean2UnequalVariance(**kwargs):
     svar2 = kwargs['svar2']
     ssize1 = kwargs['ssize1']
     ssize2 = kwargs['ssize2']
-    t = ((smean1 - smean2) - (pmean1 - pmean2)) / \
-        sqrt((svar1 / ssize1) + (svar2 / ssize2))
+    statistic = ((smean1 - smean2) - (pmean1 - pmean2)) / \
+                sqrt((svar1 / ssize1) + (svar2 / ssize2))
     df = (((svar1 / ssize1) + (svar2 / ssize2)) ** 2) / \
         (((svar1 ** 2) / ((ssize1 ** 2) * (ssize1 - 1))) + \
             ((svar2 ** 2) / ((ssize2 ** 2) * (ssize2 - 1))))
-    distribution = TDistribution(df = df)
-    x = distribution.inverseCDF(kwargs['alpha'])
-    return (test(t, x), t, x)
-    
+    return test(statistic, TDistribution(df = df), kwargs['alpha'])
+
+def tPaired(**kwargs):    
     """
     Test 10: t-test for two population means (method of paired comparisons)
     
     To investigate the significance of the difference between two population
-    means when no assumption is made about the population variances."""
+    means when no assumption is made about the population variances.
+    
+    Parameters:
+    smean1 = sample mean of sample #1
+    smean2 = sample mean of sample #2
+    svar = variance of differences between pairs
+    ssize = sample size
+    alpha = confidence level"""
+    smean1 = kwargs['smean1']
+    smean2 = kwargs['smean2']
+    svar = kwargs['svar']
+    ssize = kwargs['ssize']
+    statistic = (smean1 - smean2) / sqrt(svar / ssize)
+    return test(statistic, TDistribution(df = ssize - 1), kwargs['alpha'])
     
     """
     Test 11: t-test of a regression coefficient
     
-    To investigate the significance of the regression coefficient."""
+    To investigate the significance of the regression coefficient.
     
+    Limitations:
+    1. Homoedasticity of values"""
+
+def tPearsonCorrelation(**kwargs):    
     """
     Test 12: t-test of a correlation coefficient
     
     To investigate whether the difference between the sample correlation
-    coefficient and zero is statistically significant."""
+    coefficient and zero is statistically significant.
     
+    Limitations:
+    1. Assumes population correlation coefficient to be zero (use Test 13 for 
+    testing other population correlation coefficient
+    2. Assumes a linear relationship (regression line as Y = MX + C)
+    3. Independence of x-values and y-values
+    
+    Use Test 59 when these conditions cannot be met
+    
+    Parameters:
+    r = calculated Pearson's product-moment correlation coefficient
+    ssize = sample size"""
+    ssize = kwargs['ssize']
+    r = kwargs['r']
+    statistic = (r * sqrt(ssize - 2)) / sqrt(1 - (r **2))
+    return test(statistic, TDistribution(df = ssize - 2), kwargs['alpha'])
+
+def ZPearsonCorrelation(**kwargs):    
     """
     Test 13: Z-test of a correlation coefficient
     
     To investigate the significance of the difference between a correlation
-    coefficient and a specified value."""
+    coefficient and a specified value.
+    
+    Limitations:
+    1. Assumes a linear relationship (regression line as Y = MX + C)
+    2. Independence of x-values and y-values
+    
+    Use Test 59 when these conditions cannot be met
+    
+     Parameters:
+    sr = calculated sample Pearson's product-moment correlation coefficient
+    pr = specified Pearson's product-moment correlation coefficient to test
+    ssize = sample size"""
+    ssize = kwargs['ssize']
+    sr = kwargs['sr']
+    pr = kwargs['pr']
+    Z1 = 0.5 * log((1 + sr) / (1 - sr))
+    meanZ1 = 0.5 * log((1 + pr) / (1 - pr))
+    sigmaZ1 = 1 / sqrt(ssize - 3)
+    statistic = (Z1 - meanZ1) / sigmaZ1
+    return test(statistic, NormalDistribution(), kwargs['alpha'])
     
     """
     Test 14: Z-test for two correlation coefficients
