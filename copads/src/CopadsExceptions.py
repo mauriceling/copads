@@ -190,7 +190,7 @@ class DistanceError(CopadsError):
     between lists."""
     pass
     
-class DistanceInputSizeError(StringDistanceError):
+class DistanceInputSizeError(DistanceError):
     """
     Exception for input parameter size errors for list (object) distance routines 
     that have specific requirements for the size of inputs."""

@@ -1,10 +1,13 @@
 """
-File containing functions for use in calculating distances between 2 objects
+File containing functions for use in calculating distances between 2 objects.
+Distances are common measures of differences (dissimilarity) rather than 
+similarity. That is, 2 identical objects will have 0 distance.
 
 Copyright (c) Maurice H.T. Ling <mauriceling@acm.org>
 Date created: 17th August 2005
 """
 
+import math
 from CopadsExceptions import DistanceInputSizeError
 
 def Jaccard(original = '', test = ''):
@@ -67,14 +70,46 @@ def Sokal_Michener(original = '', test = ''):
 
 def Dice(original = '', test = ''):
     """
-    Given 2 lists (original and test), calculates the Dice Distance based 
-    on the formula,
+    Given 2 lists (original and test), calculates the Dice Distance 
+    (1 - Dice Index) based on the formula,
     
-    number of regions where both species / sum of species in each list
+    1 - (number of regions where both species / sum of species in each list)
     """
     both = float(len([x for x in original if x in test]))
-    return (2 * both) / (float(len(original)) + float(len(test)))
-       
+    return 1 - ((2 * both) / (float(len(original)) + float(len(test))))
+
+def Dice_Sorensen(original = '', test = ''):
+    """
+    Given 2 lists (original and test), calculates the Dice-Sorensen Distance 
+    (1 - Dice-Sorensen Index) based on the formula,
+    
+    1 - [2 x (number of regions where both species are present) /
+        (2 x (number of regions where both species are present) + 
+            (number of regions where at least one species is present))]
+    """
+    original_only = float(len([x for x in original if x not in test]))
+    test_only = float(len([x for x in test if x not in original]))
+    both = float(len([x for x in original if x in test]))
+    return 1 - ((2 * both) / ((2*both) + test_only + original_only))
+
+def Ochiai(original = '', test = ''):
+    """
+    Given 2 lists (original and test), calculates the Dice-Sorensen Distance 
+    (1 - Dice-Sorensen Index) based on the formula,
+    
+    1 - [(number of regions where both species are present) / 
+         (square root of 
+            ((number of regions where both species are present) +
+                 (number of regions found in original only)) * 
+            ((number of regions where both species are present) +
+                 (number of regions found in test only))
+        )]
+    """
+    original_only = float(len([x for x in original if x not in test]))
+    test_only = float(len([x for x in test if x not in original]))
+    both = float(len([x for x in original if x in test]))
+    return 1 - (both / math.sqrt((both + original_only)*(both + test_only)))
+    
 def Kulczynski(original = '', test = ''):
     """
     Given 2 lists (original and test), calculates the Kulczynski Distance 
@@ -133,7 +168,6 @@ def Euclidean(x = '', y = ''):
     # lightly modified from implementation by Thomas Sicheritz-Ponten.
     # This works faster than the Numeric implementation on shorter
     # vectors.
-    import math
     if len(x) != len(y):
         raise DistanceInputSizeError("Size (length) of inputs must be \
             equal for Euclidean distance")
