@@ -5,13 +5,12 @@ Copyright (c) Maurice H.T. Ling <mauriceling@acm.org>
 Date created: 17th August 2005
 """
 
-import string
-from CopadsExceptions import StringDistanceInputSizeError
+from CopadsExceptions import DistanceInputSizeError
 
 def Jaccard(original = '', test = ''):
     """
-    Given 2 space-delimited strings (original and test), calculates the Jaccard
-    Distance based on the formula,
+    Given 2 lists (original and test), calculates the Jaccard Distance based 
+    on the formula,
     
     1 - [(number of regions where both species are present)/
          (number of regions where at least one species is present)]
@@ -19,8 +18,6 @@ def Jaccard(original = '', test = ''):
     Ref: Jaccard P (1908) Nouvelles recherches sur la distribution florale. 
          Bull Soc Vaud Sci Nat 44:223-270
     """
-    original = string.split(original, ' ')
-    test = string.split(test, ' ')
     original_only = float(len([x for x in original if x not in test]))
     test_only = float(len([x for x in test if x not in original]))
     both = float(len([x for x in original if x in test]))
@@ -28,8 +25,8 @@ def Jaccard(original = '', test = ''):
     
 def Nei_Li(original = '', test = ''):
     """
-    Given 2 space-delimited strings (original and test), calculates the Nei and 
-    Li Distance based on the formula,
+    Given 2 lists (original and test), calculates the Nei and Li Distance 
+    based on the formula,
     
     1 - [2 x (number of regions where both species are present)/
          [(2 x (number of regions where both species are present)) + 
@@ -38,8 +35,6 @@ def Nei_Li(original = '', test = ''):
     Ref: Nei M, Li WH (1979) Mathematical models for studying genetic variation 
         in terms of restriction endonucleases. Proc Natl Acad Sci USA 76:5269-5273
     """
-    original = string.split(original, ' ')
-    test = string.split(test, ' ')
     original_only = float(len([x for x in original if x not in test]))
     test_only = float(len([x for x in test if x not in original]))
     both = float(len([x for x in original if x in test]))
@@ -47,8 +42,8 @@ def Nei_Li(original = '', test = ''):
     
 def Sokal_Michener(original = '', test = ''):
     """
-    Given 2 space-delimited strings (original and test), calculates the Sokal 
-    and Michener Distance based on the formula,
+    Given 2 lists (original and test), calculates the Sokal and Michener 
+    Distance based on the formula,
     
     1 - [(number of regions where both species are present or absent)/
          (number of regions where both species are present or absent or only 
@@ -60,7 +55,7 @@ def Sokal_Michener(original = '', test = ''):
     original = string.split(original, ' ')
     test = string.split(test, ' ')
     if len(original) <> len(test): 
-        raise StringDistanceInputSizeError("Size (length) of inputs must be \
+        raise DistanceInputSizeError("Size (length) of inputs must be \
                 equal for Sokal & Michener's distance")
     in_original = 0.0
 #    in_test = 0.0
@@ -69,13 +64,13 @@ def Sokal_Michener(original = '', test = ''):
         if original[index] == test[index]: in_both = in_both + 1
         if original[index] != test[index]: in_original = in_original + 1
 #        if original[index] < test[index]: in_test = in_test + 1
-    print in_original
+#    print in_original
     return 1-(in_both/(in_both+in_original))
     
 def Kulczynski(original = '', test = ''):
     """
-    Given 2 space-delimited strings (original and test), calculates the \
-    Kulczynski Distance based on the formula,
+    Given 2 lists (original and test), calculates the Kulczynski Distance 
+    based on the formula,
     
     1-(mean of (
        ((number of regions where both species are present)/
@@ -84,8 +79,6 @@ def Kulczynski(original = '', test = ''):
        ((number of regions where both species are present)/
         (number of regions where species 2 is present))))
     """
-    original = string.split(original, ' ')
-    test = string.split(test, ' ')
     original_only = float(len([x for x in original if x not in test]))
     test_only = float(len([x for x in test if x not in original]))
     both = float(len([x for x in original if x in test]))
@@ -95,13 +88,11 @@ def Kulczynski(original = '', test = ''):
     
 def Hamming(original = '', test = ''):
     """
-    Given 2 space-delimited strings (original and test), calculates the Hamming
-    Distance by counting the number of ordered differences between the 2 lists.
+    Given 2 lists (original and test), calculates the Hamming Distance by 
+    counting the number of ordered differences between the 2 lists.
     """
-    original = string.split(original, ' ')
-    test = string.split(test, ' ')
     if len(original) <> len(test): 
-        raise StringDistanceInputSizeError("Size (length) of inputs must be \
+        raise DistanceInputSizeError("Size (length) of inputs must be \
             equal for Hamming's distance")
     mismatch = 0
     for index in range(len(original)):
@@ -136,7 +127,7 @@ def Euclidean(x = '', y = ''):
     # vectors.
     import math
     if len(x) != len(y):
-        raise StringDistanceInputSizeError("Size (length) of inputs must be \
+        raise DistanceInputSizeError("Size (length) of inputs must be \
             equal for Euclidean distance")
     sum = 0
     for i in range(len(x)):
