@@ -238,7 +238,8 @@ class CauchyDistribution(Distribution):
         Partial Distribution Function, which gives the probability for the 
         particular value of x, or the area under probability distribution from 
         x-h to x+h for continuous distribution."""
-        return 1 / (PI * self.scale * (1 + (((x - self.location)/self.scale) ** 2)))
+        return 1 / (PI * self.scale * \
+            (1 + (((x - self.location)/self.scale) ** 2)))
     def inverseCDF(self, probability, start = 0.0, step = 0.01): 
         """
         It does the reverse of CDF() method, it takes a probability value and 
@@ -1184,16 +1185,25 @@ class TDistribution(Distribution):
         except KeyError: self.stdev = 1.0
         try: self.df = parameter['shape']
         except KeyError: self.df = 2
-#    def CDF(self, x): 
-#        """
-#       """
-#        raise DistributionFunctionError
-#    def PDF(self, x): 
-#        """
-#        Calculates the density (probability) at x with n-th degrees of freedom as:
-#        f(x) = Gamma((n+1)/2) / (sqrt(n pi) Gamma(n/2)) (1 + x^2/n)^-((n+1)/2)
-#        for all real x. It has mean 0 (for n > 1) and variance n/(n-2) (for n > 2)."""
-#        raise DistributionFunctionError
+    def CDF(self, x): 
+        """
+        Cummulative Distribution Function, which gives the cummulative 
+        probability (area under the probability curve) from -infinity or 0 to 
+        a give x-value on the x-axis where y-axis is the probability.
+        """
+        t = (x - self.mean) / self.stdev
+        a = NRPy.betai(self.df/2, 0.5, self.df / (self.df + (t * t)))
+        if t > 0: return 1 - 0.5 * a
+        else: return 0.5 * a
+    def PDF(self, x): 
+        """
+        Calculates the density (probability) at x with n-th degrees of freedom as:
+        f(x) = Gamma((n+1)/2) / (sqrt(n pi) Gamma(n/2)) (1 + x^2/n)^-((n+1)/2)
+        for all real x. It has mean 0 (for n > 1) and variance n/(n-2) (for n > 2)."""
+        a = NRPy.gammln((self.df + 1)/2)
+        b = math.sqrt(PI * self.df) * NRPy.gammln(self.df / 2) * self.stdev
+        c = 1 + ((((x - self.mean) / self.stdev) ** 2) / self.df)
+        return (a / b) * (c ** ((-1 - self.df)/2)))
     def inverseCDF(self, probability, start = 0.0, step = 0.01): 
         """
         It does the reverse of CDF() method, it takes a probability value and 
@@ -1208,12 +1218,13 @@ class TDistribution(Distribution):
     def mean(self): 
         """Gives the arithmetic mean of the sample."""
         return self.mean
-#    def mode(self): 
-#        """Gives the mode of the sample."""
-#        raise DistributionFunctionError
-#    def kurtosis(self): 
-#        """Gives the kurtosis of the sample."""
-#        raise DistributionFunctionError
+    def mode(self): 
+        """Gives the mode of the sample."""
+        return self.mean
+    def kurtosis(self): 
+        """Gives the kurtosis of the sample."""
+        a = ((self.df - 2) ** 2) * NRPy.gammln((self.df/2) - 2)
+        return 3 * ((a / (4 * NRPy.gammln(self.df/2))) - 1)
     def skew(self): 
         """Gives the skew of the sample."""
         return 0.0
@@ -1627,10 +1638,20 @@ def AntiLogNormalDistribution(**parameters):
     Anti-Lognormal distribution is an alias of Lognormal distribution."""
     return LogNormalDistribution(**parameters)
 
+def BilateralExponentialDistribution(**parameters):
+    """
+    Bilateral Exponential distribution is an alias of Laplace distribution."""
+    return LaplaceDistribution(**parameters)
+
 def CobbDouglasDistribution(**parameters):
     """
     Cobb-Douglas distribution is an alias of Lognormal distribution."""
     return LogNormalDistribution(**parameters)
+
+def DoubleExponentialDistribution(**parameters):
+    """
+    Double Exponential distribution is an alias of Laplace distribution."""
+    return LaplaceDistribution(**parameters)
 
 def ErlangDistribution(**parameters):
     """
@@ -1647,6 +1668,11 @@ def FisherTippettDistribution(**parameters):
     Fisher-Tippett distribution is an alias of Gumbel distribution."""
     return GumbelDistribution(**parameters)
 
+def FrechetDistribution(**parameters):
+    """
+    Frechet distribution is an alias of Weibull distribution."""
+    return WeibullDistribution(**parameters)
+
 def FurryDistribution(**parameters):
     """
     Furry distribution is an alias of Gamma distribution."""
@@ -1656,6 +1682,11 @@ def GompertzDistribution(**parameters):
     """
     Gompertz distribution is an alias of Gumbel distribution."""
     return GumbelDistribution(**parameters)
+
+def LogLogisticDistribution(**parameters):
+    """
+    Log-Logistic distribution is an alias of Fisk distribution."""
+    return FiskDistribution(**parameters)
 
 def LogWeibullDistribution(**parameters):
     """
@@ -1681,6 +1712,16 @@ def RectangularDistribution(**parameters):
     """
     Rectangular distribution is an alias of Uniform distribution."""
     return UniformDistribution(**parameters)
+
+def SechSquaredDistribution(**parameters):
+    """
+    Sech-squared distribution is an alias of Logistic distribution."""
+    return LogisticDistribution(**parameters)
+
+def WaldDistribution(**parameters):
+    """
+    Wald distribution is an alias of Inverse Normal distribution."""
+    return InverseNormalDistribution(**parameters)
         
 #class DummyDistribution(Distribution):
 #    def __init__(self, **parameters): 
