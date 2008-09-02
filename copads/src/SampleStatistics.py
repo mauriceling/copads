@@ -14,270 +14,151 @@ input):
     8. variation
     9. skew
     10. kurtosis
-    11. describe
     """
-    
+
+import math
+from Matrix import Matrix
 from StatisticsDistribution import Distribution
 import NRPy
 
-def geometricMean (inlist):
-    """
-    Calculates the geometric mean of the values in the passed list. That is:  
-    n-th root of (x1 * x2 * ... * xn).  Assumes a '1D' list.
+class SampleData:
+    def __init__(self, **kwargs):
+        self.data = Matrix(kwargs['data'])
+        self.rowcount = self.data.rows()
+        self.colcount = self.data.cols()
+        self.summary = [{} for x in range(self.colcount)]
+        
+    def geometricMean (self, inlist):
+        """
+        Calculates the geometric mean of the values in the passed list. That is:  
+        n-th root of (x1 * x2 * ... * xn).  Assumes a '1D' list.
 
-    Usage:   geometricMean(inlist)
-    """
-    mult = 1.0
-    one_over_n = 1.0/len(inlist)
-    for item in inlist: mult = mult * pow(item,one_over_n)
-    return mult
-
-
-def harmonicMean (inlist):
-    """
-Calculates the harmonic mean of the values in the passed list.
-That is:  n / (1/x1 + 1/x2 + ... + 1/xn).  Assumes a '1D' list.
-
-Usage:   harmonicMean(inlist)
-"""
-    sum = 0
-    for item in inlist: sum = sum + 1.0/item
-    return len(inlist) / sum
-
-
-def arithmeticMean (inlist):
-    """
-Returns the arithematic mean of the values in the passed list.
-Assumes a '1D' list, but will function on the 1st dim of an array(!).
-
-Usage:   arithmeticMean(inlist)
-"""
-    sum = 0
-    for item in inlist: sum = sum + item
-    return sum/float(len(inlist))
-
-
-def median (inlist,numbins=1000):
-    """
-Returns the computed median value of a list of numbers, given the
-number of bins to use for the histogram (more bins brings the computed value
-closer to the median score, default number of bins = 1000).  See G.W.
-Heiman's Basic Stats (1st Edition), or CRC Probability & Statistics.
-
-Usage:   median (inlist, numbins=1000)
-"""
-    (hist, smallest, binsize, extras) = histogram(inlist,numbins) # make histog
-    cumhist = cumsum(hist)              # make cumulative histogram
-    for i in range(len(cumhist)):        # get 1st(!) index holding 50%ile score
-        if cumhist[i]>=len(inlist)/2.0:
-            cfbin = i
-            break
-    LRL = smallest + binsize*cfbin        # get lower read limit of that bin
-    cfbelow = cumhist[cfbin-1]
-    freq = float(hist[cfbin])                # frequency IN the 50%ile bin
-    median = LRL + ((len(inlist)/2.0 - cfbelow)/float(freq))*binsize  # median formula
-    return median
-
-
-def medianScore (inlist):
-    """
-Returns the 'middle' score of the passed list.  If there is an even
-number of scores, the mean of the 2 middle scores is returned.
-
-Usage:   medianScore(inlist)
-"""
-
-    newlist = copy.deepcopy(inlist)
-    newlist.sort()
-    if len(newlist) % 2 == 0:   # if even number of scores, average middle 2
-        index = len(newlist)/2  # integer division correct
-        median = float(newlist[index] + newlist[index-1]) /2
-    else:
-        index = len(newlist)/2  # int divsion gives mid value when count from 0
-        median = newlist[index]
-    return median
-
-
-def mode(inlist):
-    """
-Returns a list of the modal (most common) score(s) in the passed
-list.  If there is more than one such score, all are returned.  The
-bin-count for the mode(s) is also returned.
-
-Usage:   mode(inlist)
-Returns: bin-count for mode(s), a list of modal value(s)
-"""
-
-    scores = pstat.unique(inlist)
-    scores.sort()
-    freq = []
-    for item in scores:
-        freq.append(inlist.count(item))
-    maxfreq = max(freq)
-    mode = []
-    stillmore = 1
-    while stillmore:
-        try:
-            indx = freq.index(maxfreq)
-            mode.append(scores[indx])
-            del freq[indx]
-            del scores[indx]
-        except ValueError:
-            stillmore=0
-    return maxfreq, mode
-
-
-
-def moment(inlist,moment=1):
-    """
-Calculates the nth moment about the mean for a sample (defaults to
-the 1st moment).  Used to calculate coefficients of skewness and kurtosis.
-
-Usage:   moment(inlist,moment=1)
-Returns: appropriate moment (r) from ... 1/n * SUM((inlist(i)-mean)**r)
-"""
-    if moment == 1:
-        return 0.0
-    else:
-        mn = mean(inlist)
-        n = len(inlist)
-        s = 0
-        for x in inlist:
-            s = s + (x-mn)**moment
-        return s/float(n)
-
-
-def variation(inlist):
-    """
-Returns the coefficient of variation, as defined in CRC Standard
-Probability and Statistics, p.6.
-Ref: http://en.wikipedia.org/wiki/Coefficient_of_variation
-
-Usage:   variation(inlist)
-"""
-    return 100.0*stdev(inlist)/float(mean(inlist))
-
-
-def skew(inlist):
-    """
-Returns the skewness of a distribution, as defined in Numerical
-Recipies (alternate defn in CRC Standard Probability and Statistics, p.6.)
-
-Usage:   skew(inlist)
-"""
-    return moment(inlist,3)/pow(moment(inlist,2),1.5)
-
-
-def kurtosis(inlist):
-    """
-Returns the kurtosis of a distribution, as defined in Numerical
-Recipies (alternate defn in CRC Standard Probability and Statistics, p.6.)
-
-Usage:   kurtosis(inlist)
-"""
-    return moment(inlist,4)/pow(moment(inlist,2),2.0)
-
-
-def range(inlist):
-    inlist.sort()
-    return float(inlist[-1])-float(inlist[0])
-
-def midrange(inlist):
-    inlist.sort()
-    return float(inlist[int(round(len(inlist)*0.75))]) - \
-            float(inlist[int(round(len(inlist)*0.75))])
-
-def variance(inlist, mean):
-    sum = 0.0
-    for item in inlist:
-        sum = sum + (float(item)-float(mean))**2
-    return sum/float(len(inlist)-1)
-
-def stdev(inlist):
-    return math.sqrt(variance(inlist, arithmeticMean(inlist)))
-
-def covariance(inlist1, inlist2):
-    """
-    Calculates covariance using the formula: Cov(xy)  =  E{xy}  -  E{x}E{y}
-    """
-    mean_xy = arithmeticMean([inlist1[i]*inlist1[i] for i in range(inlist1)])
-    mean_x = arithmeticMean(inlist1)
-    mean_y = arithmeticMean(inlist2)
-    return mean_xy - (mean_x * mean_y)
+        Usage:   geometricMean(inlist)
+        """
+        mult = 1.0
+        one_over_n = 1.0/len(inlist)
+        for item in inlist: mult = mult * pow(item,one_over_n)
+        return mult
     
-def describe(inlist):
-    """
-Returns some descriptive statistics of the passed list (assumed to be 1D).
+    def harmonicMean (self, inlist):
+        """
+        Calculates the harmonic mean of the values in the passed list.
+        That is:  n / (1/x1 + 1/x2 + ... + 1/xn).  Assumes a '1D' list.
 
-Usage:   describe(inlist)
-Returns: n, mean, standard deviation, skew, kurtosis
-"""
-    n = len(inlist)
-    mm = (min(inlist),max(inlist))
-    m = mean(inlist)
-    sd = stdev(inlist)
-    sk = skew(inlist)
-    kurt = kurtosis(inlist)
-    return n, mm, m, sd, sk, kurt
+        Usage:   harmonicMean(inlist)
+        """
+        sum = 0
+        for item in inlist: sum = sum + 1.0/item
+        return len(inlist) / sum
+    
+    def arithmeticMean (self, inlist):
+        """
+        Returns the arithematic mean of the values in the passed list.
+        Assumes a '1D' list, but will function on the 1st dim of an array(!).
 
+        Usage:   arithmeticMean(inlist)
+        """
+        sum = 0
+        for item in inlist: sum = sum + item
+        return sum/float(len(inlist))
+    
+    def moment(self, inlist,moment=1):
+        """
+        Calculates the nth moment about the mean for a sample (defaults to
+        the 1st moment).  Used to calculate coefficients of skewness and 
+        kurtosis.
+
+        Usage:   moment(inlist,moment=1)
+        Returns: appropriate moment (r) from ... 1/n * SUM((inlist(i)-mean)**r)
+        """
+        if moment == 1:
+            return 0.0
+        else:
+            mn = self.arithmeticMean(inlist)
+            n = len(inlist)
+            s = 0
+            for x in inlist:
+                s = s + (x-mn)**moment
+            return s/float(n)
+        
+    def skew(self, inlist):
+        """
+        Returns the skewness of a distribution, as defined in Numerical
+        Recipies (alternate defn in CRC Standard Probability and Statistics, 
+        p.6.)
+
+        Usage:   skew(inlist)
+        """
+        return self.moment(inlist,3)/pow(self.moment(inlist,2),1.5)
+
+    def kurtosis(self, inlist):
+        """
+        Returns the kurtosis of a distribution, as defined in Numerical
+        Recipies (alternate defn in CRC Standard Probability and Statistics, 
+        p.6.)
+
+        Usage:   kurtosis(inlist)
+        """
+        return self.moment(inlist,4)/pow(self.moment(inlist,2),2.0)
+    
+    def variation(self, inlist):
+        """
+        Returns the coefficient of variation, as defined in CRC Standard
+        Probability and Statistics, p.6.
+        Ref: http://en.wikipedia.org/wiki/Coefficient_of_variation
+
+        Usage:   variation(inlist)
+        """
+        return 100.0*self.stdev(inlist)/float(self.arithmeticMean(inlist))
+
+    def range(self, inlist):
+        inlist.sort()
+        return float(inlist[-1])-float(inlist[0])
+
+    def midrange(self, inlist):
+        inlist.sort()
+        return float(inlist[int(round(len(inlist)*0.75))]) - \
+                float(inlist[int(round(len(inlist)*0.75))])
+
+    def variance(self, inlist, mean):
+        sum = 0.0
+        for item in inlist:
+            sum = sum + (float(item)-float(mean))**2
+        return sum/float(len(inlist)-1)
+
+    def stdev(self, inlist):
+        return math.sqrt(variance(inlist, arithmeticMean(inlist)))
+    
+    def fullSummary(self):
+        for x in range(self.colcount):
+            data = self.data.col(x)
+            self.summary[x]['gMean'] = self.geometricMean(data)
+            self.summary[x]['hMean'] = self.harmonicMean(data)
+            self.summary[x]['aMean'] = self.arithmeticMean(data)
+            self.summary[x]['skew'] = self.skew(data)
+            self.summary[x]['kurtosis'] = self.kurtosis(data)
+            self.summary[x]['variation'] = self.variation(data)
+            self.summary[x]['range'] = self.range(data)
+            self.summary[x]['median'] = NRPy.mdian1(data)
+            self.summary[x]['midrange'] = self.midrange(data)
+            self.summary[x]['variance'] = self.variance(data,
+                                            self.summary[x]['aMean'])
+            self.summary[x]['stdev'] = self.summary[x]['variance'] ** 0.5
+            
+    def covariance(self, index1, index2):
+        """
+        Calculates covariance using the formula: Cov(xy)  =  E{xy}  -  E{x}E{y}
+        """
+        if self.colcount == 1: return 1.0
+        inlist1 = self.data.col(index1)
+        inlist2 = self.data.col(index2)
+        mean_xy = self.arithmeticMean([inlist1[i]*inlist1[i] 
+                                        for i in range(inlist1)])
+        mean_x = self.arithmeticMean(inlist1)
+        mean_y = self.arithmeticMean(inlist2)
+        return mean_xy - (mean_x * mean_y)
+    
+    
 class SampleDistribution(Distribution):
-    def __init__(self, **parameters): 
-        """Constructor method. The parameters are used to construct the 
-        probability distribution."""
-        try: 
-            self.data = list(parameters['data'])
-            self.n = len(self.data)
-            summary = NRPy.moment(self.data) # summary = (ave, adev, sdev, 
-                                              #             var, skew, kurt)
-            self.mean = summary[0]
-            self.variance = summary[3]
-            self.skew = summary[4]
-            self.kurtosis = summary[5]
-        except KeyError: 
-            self.data = []
-            self.n = 0
-            self.mean = None
-            self.variance = None
-            self.skew = None
-            self.kurtosis = None
-#    def CDF(self, x): 
-#        """
-#        Cummulative Distribution Function, which gives the cummulative 
-#        probability (area under the probability curve) from -infinity or 0 
-#        to a give x-value on the x-axis where y-axis is the probability."""
-#        raise DistributionFunctionError
-#    def PDF(self, x): 
-#        """
-#        Partial Distribution Function, which gives the probability for the 
-#        particular value of x, or the area under probability distribution 
-#        from x-h to x+h for continuous distribution."""
-#        raise DistributionFunctionError
-#    def inverseCDF(self, probability, start = 0.0, step =0.01): 
-#        """
-#        It does the reverse of CDF() method, it takes a probability value and returns the corresponding 
-#        value on the x-axis."""
-#        raise DistributionFunctionError
-    def mean(self): 
-        """Gives the arithmetic mean of the sample."""
-        return self.mean
-#    def mode(self): 
-#        """Gives the mode of the sample."""
-#        raise DistributionFunctionError
-    def kurtosis(self): 
-        """Gives the kurtosis of the sample."""
-        return self.kurtosis
-    def skew(self): 
-        """Gives the skew of the sample."""
-        return self.skew
-    def variance(self): 
-        """Gives the variance of the sample."""
-        return self.variance
-    def update(self, datalist):
-        self.data.append(datalist)
-        self.n = len(self.data)
-        summary = NRPy.moment(self.data) # summary = (ave, adev, sdev, var, 
-                                          #             skew, kurt)
-        self.mean = summary[0]
-        self.variance = summary[3]
-        self.skew = summary[4]
-        self.kurtosis = summary[5]
+    def __init__(self, sampleData):
+        self.sample = sampleData
