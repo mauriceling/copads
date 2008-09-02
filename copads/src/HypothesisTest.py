@@ -365,7 +365,7 @@ def ZPearsonCorrelation(**kwargs):
     
     Use Test 59 when these conditions cannot be met
     
-     Parameters:
+    Parameters:
     sr = calculated sample Pearson's product-moment correlation coefficient
     pr = specified Pearson's product-moment correlation coefficient to test
     ssize = sample size"""
