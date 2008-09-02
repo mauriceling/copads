@@ -596,7 +596,8 @@ def gser(a, x, itmax=700, eps=3.e-7):
     raise max_iters, str((abs(delta), abs(sum)*eps))
         
 def mdian1(data):
-    """Calculates the median of a list of numerical values using sorting. Ref: NRP 13.2
+    """Calculates the median of a list of numerical values using sorting. 
+    Ref: NRP 13.2
     
     @param data: a 1-dimensional list of numerical data
     @return: value of median
