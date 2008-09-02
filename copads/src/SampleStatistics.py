@@ -19,6 +19,8 @@ input):
 import math
 from Matrix import Matrix
 from StatisticsDistribution import Distribution
+from CopadsException import FunctionParameterTypeError
+from CopadsException import FunctionParameterValueError
 import NRPy
 
 class SampleData:
@@ -27,6 +29,21 @@ class SampleData:
         self.rowcount = self.data.rows()
         self.colcount = self.data.cols()
         self.summary = [{} for x in range(self.colcount)]
+        
+    def append(self, data, summarize = 'all'):
+        if not (type(data) == list or type(data) == tuple):
+            raise FunctionParameterTypeError('Input must be either \
+                    list or tuple, % given ' % str(type(data)))
+        for x in data:
+            if not (type(data) == list or type(data) == tuple):
+                raise FunctionParameterTypeError('Input must be either \
+                    list or tuple, % found' % str(type(data)))
+            if len(x) <> self.colcount:
+                raise FunctionParameterValueError('%d data elements required \
+                    for each data, %d elements given' % \
+                    (str(self.colcount), str(len(x))))
+        for x in data: self.data.m.append(x)
+        if summarize == 'all': self.fullSummary()
         
     def geometricMean (self, inlist):
         """
@@ -145,13 +162,11 @@ class SampleData:
                                             self.summary[x]['aMean'])
             self.summary[x]['stdev'] = self.summary[x]['variance'] ** 0.5
             
-    def covariance(self, index1, index2):
+    def covariance(self, inlist1, inlist2):
         """
         Calculates covariance using the formula: Cov(xy)  =  E{xy}  -  E{x}E{y}
         """
-        if self.colcount == 1: return 1.0
-        inlist1 = self.data.col(index1)
-        inlist2 = self.data.col(index2)
+        if inlist1 == inlist2: return 1.0
         mean_xy = self.arithmeticMean([inlist1[i]*inlist1[i] 
                                         for i in range(inlist1)])
         mean_x = self.arithmeticMean(inlist1)
