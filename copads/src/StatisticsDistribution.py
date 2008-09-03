@@ -155,7 +155,7 @@ def AntiLogNormalDistribution(**parameters):
     return LogNormalDistribution(**parameters)
 
 
-class BernoulliDistribution(Distribution):
+class BernoulliDistribution(BinomialDistribution):
     def __init__(self, **parameters): 
         """Constructor method. The parameters are used to construct the 
         probability distribution."""
