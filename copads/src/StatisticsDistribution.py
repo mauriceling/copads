@@ -628,7 +628,9 @@ class ChiSquareDistribution(Distribution):
         
         Parameters:
         1. df = degrees of freedom"""
-        try: self.distribution = GammaDistribution(0, 2, parameters['df']/2)
+        try: self.distribution = GammaDistribution(location = 0, 
+                                                    scale = 2, 
+                                                    shape = parameters['df']/2)
         except KeyError: 
             raise DistributionParameterError('Chi-square distribution \
             requires scale (df) parameter')
