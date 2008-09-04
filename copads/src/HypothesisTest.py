@@ -463,6 +463,9 @@ def ZCorrProportion(**kwargs):
     yn = number answered 'yes' in first poll and 'no' in second poll
     alpha = confidence level
     """    
+    ssize = kwargs['ssize']
+    ny = kwargs['ny']
+    yn = kwargs['yn']
     sigma = ((ny + yn) - ((ny - yn) ** 2)) / ssize
     sigma = sqrt(sigma / (ssize * (ssize - 1)))
     statistic = (ny - yn) / (sigma * ssize)
@@ -483,14 +486,46 @@ def Chisq2Variance(**kwargs):
     svar = sample variance
     pvar = population variance (assumed)
     alpha = confidence level"""
+    ssize = kwargs['ssize']
+    svar = kwargs['svar']
+    pvar = kwargs['pvar']
     statistic = (svar / pvar) * (ssize - 1)
     return test(statistic, ChiSquareDistribution(df = ssize - 1), 
                 kwargs['alpha'])
 
-def t25(**kwargs):
-	"""
-	"""
-	return test(statistic, Distribution(), kwargs['alpha'])
+def F2Count(**kwargs):
+    """
+	Test 25: F-test for two counts (Poisson distribution)
+    
+    To investigate the significance of the difference between two counted
+    results (based on a Poisson distribution).
+    
+    Limitations:
+    1. Counts must satisfy a Poisson distribution
+    2. Samples obtained under same conditions.
+    
+    Parameters:
+    count1 = count of first sample
+    count2 = count of second sample
+    repeat = flag for repeated sampling (default = False)
+    time1 = time at which first sample is taken (only needed if repeat = True)
+    time2 = time at which second sample is taken (only needed if repeat = True)
+    """
+    count1 = kwargs['count1']
+    count2 = kwargs['count2']
+    if not kwargs.has_key('repeat'): kwargs['repeat'] = False
+    if kwargs['repeat'] == False:
+        statistic = count1 / (count2 + 1)
+        numerator = 2 * (count2 + 1)
+        denominator = 2 * count1
+    else:
+        time1 = kwargs['time1']
+        time2 = kwargs['time2']
+        statistic = ((count1 + 0.5) / time1) / ((count2 + 0.5) / time2)
+        numerator = 2 * count1 + 1
+        denominator = 2 * count2 + 1
+    return test(statistic, FDistribution(numerator = numerator,
+                                denominator = denominator), kwargs['alpha'])
 
 def t26(**kwargs):
 	"""
