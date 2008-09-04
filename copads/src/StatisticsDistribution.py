@@ -156,11 +156,19 @@ def AntiLogNormalDistribution(**parameters):
 
 
 class BernoulliDistribution(BinomialDistribution):
+    """
+    Bernoulli distribution is a special case of Binomial distribution where
+    where number of trials = 1
+    """
     def __init__(self, **parameters): 
         """Constructor method. The parameters are used to construct the 
-        probability distribution."""
-        try: self.distribution = BinomialDistribution(parameters['success'], 
-                                                        1)
+        probability distribution.
+        
+        Parameters:
+        1. success (probability of success; 0 <= success <= 1)"""
+        try: self.distribution = BinomialDistribution(succcess = 
+                                                        parameters['success'], 
+                                                        trial = 1)
         except KeyError: 
             raise DistributionParameterError('Bernoulli distribution \
             requires success parameter')
@@ -209,8 +217,9 @@ class BetaDistribution(Distribution):
         Parameters:
         1. location
         2. scale (upper bound)
-        3. p (shape parameter)
-        4. q (shape parameter)"""
+        3. p (shape parameter. Although no upper bound but seldom exceed 10.)
+        4. q (shape parameter. Although no upper bound but seldom exceed 10.)
+        """
         try:
             self.location = parameters['location']
             self.scale = parameters['scale']
@@ -413,6 +422,10 @@ class BradfordDistribution(Distribution):
 
 
 class BurrDistribution(Distribution):
+    """
+    Burr distribution is the generalization of Fisk distribution. Burr 
+    distribution with D = 1 becomes Fisk distribution.
+    """
 #    def __init__(self, **parameters): 
 #        """Constructor method. The parameters are used to construct the 
 #            probability distribution."""
@@ -605,9 +618,16 @@ class ChiDistribution(Distribution):
 
 
 class ChiSquareDistribution(Distribution):
+    """
+    Chi-square distribution is a special case of Gamma distribution where
+    location = 0, scale = 2 and shape is twice that of the degrees of freedom.
+    """
     def __init__(self, **parameters): 
         """Constructor method. The parameters are used to construct the 
-        probability distribution."""
+        probability distribution.
+        
+        Parameters:
+        1. df = degrees of freedom"""
         try: self.distribution = GammaDistribution(0, 2, parameters['df']/2)
         except KeyError: 
             raise DistributionParameterError('Chi-square distribution \
@@ -656,6 +676,10 @@ def CobbDouglasDistribution(**parameters):
 
 
 class CosineDistribution(Distribution):
+    """
+    Cosine distribution is sometimes used as a simple approximation to 
+    Normal distribution.
+    """
     def __init__(self, **parameters): 
         """Constructor method. The parameters are used to construct the 
         probability distribution.
@@ -735,6 +759,9 @@ def DoubleExponentialDistribution(**parameters):
 
 
 class DoubleGammaDistribution(Distribution):
+    """
+    Double Gamma distribution is the signed version of Gamma distribution.
+    """
 #    def __init__(self, **parameters): 
 #        """Constructor method. The parameters are used to construct the 
 #            probability distribution."""
@@ -795,6 +822,9 @@ class DoubleGammaDistribution(Distribution):
 
 
 class DoubleWeibullDistribution(Distribution):
+    """
+    Double Weibull distribution is the signed version of Weibull distribution.
+    """
 #    def __init__(self, **parameters): 
 #        """Constructor method. The parameters are used to construct the 
 #            probability distribution."""
@@ -926,6 +956,11 @@ class ExtremeLBDistribution(Distribution):
 
 
 class ExponentialDistribution(Distribution):
+    """
+    Exponential distribution is the continuous version of Geometric 
+    distribution. It is also a special case of Gamma distribution where 
+    shape = 1
+    """
     def __init__(self, **parameters): 
         """Constructor method. The parameters are used to construct the 
         probability distribution.
@@ -1242,6 +1277,10 @@ class GammaDistribution(Distribution):
 
 
 class GenLogisticDistribution(Distribution):
+    """
+    Generalized Logistic distribution is a generalization of Logistic 
+    distribution. It becomes Logistic distribution when shape = 1
+    """
 #    def __init__(self, **parameters): 
 #        """Constructor method. The parameters are used to construct the 
 #            probability distribution."""
@@ -1302,7 +1341,9 @@ class GenLogisticDistribution(Distribution):
 
 
 class GeometricDistribution(Distribution):
-    pass
+    """
+    Geometric distribution is the discrete version of Exponential distribution.
+    """
     def __init__(self, **parameters): 
         """Constructor method. The parameters are used to construct the 
         probability distribution.
@@ -1436,12 +1477,18 @@ class GumbelDistribution(Distribution):
 
 
 class HalfNormalDistribution(Distribution):
+    """
+    Half Normal distribution is a special case of Chi distribution where 
+    shape (also degrees of freedom) = 1, and Folded Normal distribution
+    where location = 0
+    """
     def __init__(self, **parameters): 
         """Constructor method. The parameters are used to construct the 
         probability distribution."""
-        try: self.distribution = ChiDistribution(parameters['location'],
-                                                 parameters['scale'],
-                                                 1)
+        try: self.distribution = ChiDistribution(location = 
+                                                    parameters['location'],
+                                                 scale = parameters['scale'],
+                                                 shape = 1)
         except KeyError: 
             raise DistributionParameterError('Halfnormal distribution \
             requires location and scale parameters')
@@ -1921,10 +1968,16 @@ def LorentzDistribution(**parameters):
 
 
 class MaxwellDistribution(Distribution):
+    """
+    Maxwell distribution is a special case of Chi distribution where 
+    location = 0 and shape (degrees of freedom) = 3
+    """
     def __init__(self, **parameters): 
         """Constructor method. The parameters are used to construct the 
         probability distribution."""
-        try: self.distribution = ChiDistribution(0, parameters['scale'], 3)
+        try: self.distribution = ChiDistribution(location = 0, 
+                                                scale = parameters['scale'], 
+                                                shape = 3)
         except KeyError: 
             raise DistributionParameterError('Maxwell distribution requires \
             scale parameter')
@@ -2439,10 +2492,16 @@ class RademacherDistribution(Distribution):
 
 
 class RayleighDistribution(Distribution):
+    """
+    Rayleigh distribution is a special case of Chi distribution where 
+    location = 0 and shape (degrees of freedom) = 2
+    """
     def __init__(self, **parameters): 
         """Constructor method. The parameters are used to construct the 
         probability distribution."""
-        try: self.distribution = ChiDistribution(0, parameters['scale'], 2)
+        try: self.distribution = ChiDistribution(location = 0, 
+                                                scale = parameters['scale'], 
+                                                shape = 2)
         except KeyError: 
             raise DistributionParameterError('Rayleigh distribution requires \
             scale parameter')
