@@ -378,23 +378,512 @@ def ZPearsonCorrelation(**kwargs):
     statistic = (Z1 - meanZ1) / sigmaZ1
     return test(statistic, NormalDistribution(), kwargs['alpha'])
     
+def t14(**kwargs):    
     """
     Test 14: Z-test for two correlation coefficients
     
     To investigate the significance of the difference between the correlation
     coefficients for a pair variables occurring from two difference 
     populations."""
-    
+    return test(statistic, Distribution(), kwargs['alpha'])
+
+def t15(**kwargs):    
     """
     Test 15: Chi-square test for a population variance
     
     To investigate the difference between a sample variance and an assumed
     population variance."""
-    
+    return test(statistic, Distribution(), kwargs['alpha'])
+
+def t16(**kwargs):    
     """
     Test 16: F-test for two population variances (variance ratio test)
     
     To investigate the significance of the difference between two population
     variances."""
+    return test(statistic, Distribution(), kwargs['alpha'])
     
+def t17(**kwargs):
+	"""
+	Test 17: F-test for two population variances (with correlated observations)
     
+    To investigate the difference between two population variances when there 
+    is correlation between the pairs of observations."""
+	return test(statistic, Distribution(), kwargs['alpha'])
+
+def t18(**kwargs):
+	"""
+	Test 18: Hotelling's T-square test for two series of population means
+    
+    To compare the results of two experiments, each of which yields a
+    multivariate result. In another words, we wish to know if the mean pattern
+    obtained from the first experiment agrees with the mean pattern obtained
+    for the second."""
+	return test(statistic, Distribution(), kwargs['alpha'])
+
+def t19(**kwargs):
+	"""
+	Test 19: Discriminant test for the origin of a p-fold sample
+    
+    To investigate the origin of one species of values for p random variates,
+    when one of two markedly different populations may have produced that
+    particular series."""
+	return test(statistic, Distribution(), kwargs['alpha'])
+
+def t20(**kwargs):
+	"""
+	"""
+	return test(statistic, Distribution(), kwargs['alpha'])
+
+def t21(**kwargs):
+	"""
+	"""
+	return test(statistic, Distribution(), kwargs['alpha'])
+
+def t22(**kwargs):
+	"""
+	"""
+	return test(statistic, Distribution(), kwargs['alpha'])
+
+def ZCorrProportion(**kwargs):
+    """
+    Test 23: Z-test for correlated proportions
+    
+    To investigate the significance of the difference between two correlated 
+    proportions in opinion surveys. It can also be used for more general
+    applications.
+    
+    Limitations:
+    1. The same people are questioned both times (correlated property).
+    2. Sample size must be quite large.
+    
+    Parameters:
+    ssize = sample size
+    ny = number answered 'no' in first poll and 'yes' in second poll
+    yn = number answered 'yes' in first poll and 'no' in second poll
+    alpha = confidence level
+    """    
+    sigma = ((ny + yn) - ((ny - yn) ** 2)) / ssize
+    sigma = sqrt(sigma / (ssize * (ssize - 1)))
+    statistic = (ny - yn) / (sigma * ssize)
+    return test(statistic, NormalDistribution(), kwargs['alpha'])
+
+def Chisq2Variance(**kwargs):
+    """
+	Test 24: Chi-square test for an assumed population variance
+    
+    To investigate the significance of the difference between a population
+    variance and an assumed variance value.
+    
+    Limitations:
+    1. Sample from normal distribution
+    
+    Parameters:
+    ssize = sample size
+    svar = sample variance
+    pvar = population variance (assumed)
+    alpha = confidence level"""
+    statistic = (svar / pvar) * (ssize - 1)
+    return test(statistic, ChiSquareDistribution(df = ssize - 1), 
+                kwargs['alpha'])
+
+def t25(**kwargs):
+	"""
+	"""
+	return test(statistic, Distribution(), kwargs['alpha'])
+
+def t26(**kwargs):
+	"""
+	"""
+	return test(statistic, Distribution(), kwargs['alpha'])
+
+def t27(**kwargs):
+	"""
+	"""
+	return test(statistic, Distribution(), kwargs['alpha'])
+
+def t28(**kwargs):
+	"""
+	"""
+	return test(statistic, Distribution(), kwargs['alpha'])
+
+def t29(**kwargs):
+	"""
+	"""
+	return test(statistic, Distribution(), kwargs['alpha'])
+
+def t30(**kwargs):
+	"""
+	"""
+	return test(statistic, Distribution(), kwargs['alpha'])
+
+def t31(**kwargs):
+	"""
+	"""
+	return test(statistic, Distribution(), kwargs['alpha'])
+
+def t32(**kwargs):
+	"""
+	"""
+	return test(statistic, Distribution(), kwargs['alpha'])
+
+def t33(**kwargs):
+	"""
+	"""
+	return test(statistic, Distribution(), kwargs['alpha'])
+
+def t34(**kwargs):
+	"""
+	"""
+	return test(statistic, Distribution(), kwargs['alpha'])
+
+def t35(**kwargs):
+	"""
+	"""
+	return test(statistic, Distribution(), kwargs['alpha'])
+
+def t36(**kwargs):
+	"""
+	"""
+	return test(statistic, Distribution(), kwargs['alpha'])
+
+def ChisqFit(**kwargs):
+    """
+	Test 37: Chi-square test for goodness of fit
+    
+    To investigate the significance of the differences between observed data
+    arranged in K classes, and the theoretical expected frequencies in the
+    K classes.
+    
+    Limitations:
+    1. Observed and theoretical distributions should have same number of 
+    elements
+    2. Same class division for both distributions
+    3. Expected frequency of each class should be at least 5
+    
+    Parameters:
+    observed = list of observed frequencies (index matched with expected)
+    expected = list of expected frequencies (index matched with observed)
+    alpha = confidence level""" 
+    freq = [float(((observed[i] - expected[i]) ** 2) / expected[i])
+            for i in range(len(observed))]
+    statistic = 0.0
+    for x in freq: statistic = statistic + x
+    return test(statistic, ChiSqDistribution(df = len(observed) - 1), 
+                kwargs['alpha'])
+
+def t38(**kwargs):
+	"""
+	"""
+	return test(statistic, Distribution(), kwargs['alpha'])
+
+def t39(**kwargs):
+	"""
+	"""
+	return test(statistic, Distribution(), kwargs['alpha'])
+
+def t40(**kwargs):
+	"""
+	"""
+	return test(statistic, Distribution(), kwargs['alpha'])
+
+def t41(**kwargs):
+	"""
+	"""
+	return test(statistic, Distribution(), kwargs['alpha'])
+
+def t42(**kwargs):
+	"""
+	"""
+	return test(statistic, Distribution(), kwargs['alpha'])
+
+def t43(**kwargs):
+	"""
+	"""
+	return test(statistic, Distribution(), kwargs['alpha'])
+
+def t44(**kwargs):
+	"""
+	"""
+	return test(statistic, Distribution(), kwargs['alpha'])
+
+def t45(**kwargs):
+	"""
+	"""
+	return test(statistic, Distribution(), kwargs['alpha'])
+
+def t46(**kwargs):
+	"""
+	"""
+	return test(statistic, Distribution(), kwargs['alpha'])
+
+def t47(**kwargs):
+	"""
+	"""
+	return test(statistic, Distribution(), kwargs['alpha'])
+
+def t48(**kwargs):
+	"""
+	"""
+	return test(statistic, Distribution(), kwargs['alpha'])
+
+def t49(**kwargs):
+	"""
+	"""
+	return test(statistic, Distribution(), kwargs['alpha'])
+
+def t50(**kwargs):
+	"""
+	"""
+	return test(statistic, Distribution(), kwargs['alpha'])
+
+def t51(**kwargs):
+	"""
+	"""
+	return test(statistic, Distribution(), kwargs['alpha'])
+
+def t52(**kwargs):
+	"""
+	"""
+	return test(statistic, Distribution(), kwargs['alpha'])
+
+def t53(**kwargs):
+	"""
+	"""
+	return test(statistic, Distribution(), kwargs['alpha'])
+
+def t54(**kwargs):
+	"""
+	"""
+	return test(statistic, Distribution(), kwargs['alpha'])
+
+def t55(**kwargs):
+	"""
+	"""
+	return test(statistic, Distribution(), kwargs['alpha'])
+
+def t56(**kwargs):
+	"""
+	"""
+	return test(statistic, Distribution(), kwargs['alpha'])
+
+def t57(**kwargs):
+	"""
+	"""
+	return test(statistic, Distribution(), kwargs['alpha'])
+
+def t58(**kwargs):
+	"""
+	"""
+	return test(statistic, Distribution(), kwargs['alpha'])
+
+def t59(**kwargs):
+	"""
+	"""
+	return test(statistic, Distribution(), kwargs['alpha'])
+
+def t60(**kwargs):
+	"""
+	"""
+	return test(statistic, Distribution(), kwargs['alpha'])
+
+def t61(**kwargs):
+	"""
+	"""
+	return test(statistic, Distribution(), kwargs['alpha'])
+
+def t62(**kwargs):
+	"""
+	"""
+	return test(statistic, Distribution(), kwargs['alpha'])
+
+def t63(**kwargs):
+	"""
+	"""
+	return test(statistic, Distribution(), kwargs['alpha'])
+
+def t64(**kwargs):
+	"""
+	"""
+	return test(statistic, Distribution(), kwargs['alpha'])
+
+def t65(**kwargs):
+	"""
+	"""
+	return test(statistic, Distribution(), kwargs['alpha'])
+
+def t66(**kwargs):
+	"""
+	"""
+	return test(statistic, Distribution(), kwargs['alpha'])
+
+def t67(**kwargs):
+	"""
+	"""
+	return test(statistic, Distribution(), kwargs['alpha'])
+
+def t68(**kwargs):
+	"""
+	"""
+	return test(statistic, Distribution(), kwargs['alpha'])
+
+def t69(**kwargs):
+	"""
+	"""
+	return test(statistic, Distribution(), kwargs['alpha'])
+
+def t70(**kwargs):
+	"""
+	"""
+	return test(statistic, Distribution(), kwargs['alpha'])
+
+def t71(**kwargs):
+	"""
+	"""
+	return test(statistic, Distribution(), kwargs['alpha'])
+
+def t72(**kwargs):
+	"""
+	"""
+	return test(statistic, Distribution(), kwargs['alpha'])
+
+def t73(**kwargs):
+	"""
+	"""
+	return test(statistic, Distribution(), kwargs['alpha'])
+
+def t74(**kwargs):
+	"""
+	"""
+	return test(statistic, Distribution(), kwargs['alpha'])
+
+def t75(**kwargs):
+	"""
+	"""
+	return test(statistic, Distribution(), kwargs['alpha'])
+
+def t76(**kwargs):
+	"""
+	"""
+	return test(statistic, Distribution(), kwargs['alpha'])
+
+def t77(**kwargs):
+	"""
+	"""
+	return test(statistic, Distribution(), kwargs['alpha'])
+
+def t78(**kwargs):
+	"""
+	"""
+	return test(statistic, Distribution(), kwargs['alpha'])
+
+def t79(**kwargs):
+	"""
+	"""
+	return test(statistic, Distribution(), kwargs['alpha'])
+
+def t80(**kwargs):
+	"""
+	"""
+	return test(statistic, Distribution(), kwargs['alpha'])
+
+def t81(**kwargs):
+	"""
+	"""
+	return test(statistic, Distribution(), kwargs['alpha'])
+
+def t82(**kwargs):
+	"""
+	"""
+	return test(statistic, Distribution(), kwargs['alpha'])
+
+def t83(**kwargs):
+	"""
+	"""
+	return test(statistic, Distribution(), kwargs['alpha'])
+
+def t84(**kwargs):
+	"""
+	"""
+	return test(statistic, Distribution(), kwargs['alpha'])
+
+def t85(**kwargs):
+	"""
+	"""
+	return test(statistic, Distribution(), kwargs['alpha'])
+
+def t86(**kwargs):
+	"""
+	"""
+	return test(statistic, Distribution(), kwargs['alpha'])
+
+def t87(**kwargs):
+	"""
+	"""
+	return test(statistic, Distribution(), kwargs['alpha'])
+
+def t88(**kwargs):
+	"""
+	"""
+	return test(statistic, Distribution(), kwargs['alpha'])
+
+def t89(**kwargs):
+	"""
+	"""
+	return test(statistic, Distribution(), kwargs['alpha'])
+
+def t90(**kwargs):
+	"""
+	"""
+	return test(statistic, Distribution(), kwargs['alpha'])
+
+def t91(**kwargs):
+	"""
+	"""
+	return test(statistic, Distribution(), kwargs['alpha'])
+
+def t92(**kwargs):
+	"""
+	"""
+	return test(statistic, Distribution(), kwargs['alpha'])
+
+def t93(**kwargs):
+	"""
+	"""
+	return test(statistic, Distribution(), kwargs['alpha'])
+
+def t94(**kwargs):
+	"""
+	"""
+	return test(statistic, Distribution(), kwargs['alpha'])
+
+def t95(**kwargs):
+	"""
+	"""
+	return test(statistic, Distribution(), kwargs['alpha'])
+
+def t96(**kwargs):
+	"""
+	"""
+	return test(statistic, Distribution(), kwargs['alpha'])
+
+def t97(**kwargs):
+	"""
+	"""
+	return test(statistic, Distribution(), kwargs['alpha'])
+
+def t98(**kwargs):
+	"""
+	"""
+	return test(statistic, Distribution(), kwargs['alpha'])
+
+def t99(**kwargs):
+	"""
+	"""
+	return test(statistic, Distribution(), kwargs['alpha'])
+
+def t100(**kwargs):
+	"""
+	"""
+	return test(statistic, Distribution(), kwargs['alpha'])
+
