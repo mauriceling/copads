@@ -462,22 +462,39 @@ class BurrDistribution(Distribution):
     Burr distribution is the generalization of Fisk distribution. Burr 
     distribution with D = 1 becomes Fisk distribution.
     """
-#    def __init__(self, **parameters): 
-#        """Constructor method. The parameters are used to construct the 
-#            probability distribution."""
-#        raise DistributionFunctionError
-#    def CDF(self, x): 
-#       """
-#        Cummulative Distribution Function, which gives the cummulative 
-#        probability (area under the probability curve) from -infinity or 0 to 
-#        a give x-value on the x-axis where y-axis is the probability."""
-#        raise DistributionFunctionError
-#    def PDF(self, x): 
-#        """
-#        Partial Distribution Function, which gives the probability for the 
-#        particular value of x, or the area under probability distribution 
-#        from x-h to x+h for continuous distribution."""
-#        raise DistributionFunctionError
+    def __init__(self, **parameters): 
+        """
+        Constructor method. The parameters are used to construct the 
+        probability distribution.
+        
+        Parameters:
+        1. location
+        2. scale
+        3. C (shape)
+        4. D (shape)"""
+        self.location = kwargs['location']
+        self.scale = kwargs['scale']
+        self.C = kwargs['C']
+        self.D = kwargs['D']
+        self.k = (NRPy.gammln(self.D) * \
+                    NRPy.gammln(1 - (2/self.C)) * \
+                    NRPy.gammln((2/self.C) + self.D)) - \
+                ((NRPy.gammln(1 - (1/self.C)) ** 2) * \
+                    (NRPy.gammln((1/self.C) + self.D) ** 2))
+    def CDF(self, x): 
+        """
+        Cummulative Distribution Function, which gives the cummulative 
+        probability (area under the probability curve) from -infinity or 0 to 
+        a give x-value on the x-axis where y-axis is the probability."""
+        return (1+(((x - self.location)/self.scale)**(-self.C)))**(-self.D)
+    def PDF(self, x): 
+        """
+        Partial Distribution Function, which gives the probability for the 
+        particular value of x, or the area under probability distribution 
+        from x-h to x+h for continuous distribution."""
+        r = (1+(((x - self.location)/self.scale)**(-self.C)))**(-self.D - 1)
+        r = r * ((self.C * self.D)/self.scale)
+        return r * (((x - self.location)/self.scale)**(-self.C - 1))
     def inverseCDF(self, probability, start = 0.0, step = 0.01): 
         """
         It does the reverse of CDF() method, it takes a probability value 
@@ -489,21 +506,25 @@ class BurrDistribution(Distribution):
             cprob = self.CDF(start)
             # print start, cprob
         return (start, cprob)
-#    def mean(self): 
-#        """Gives the arithmetic mean of the sample."""
-#        raise DistributionFunctionError
-#    def mode(self): 
-#        """Gives the mode of the sample."""
-#        raise DistributionFunctionError
+    def mean(self): 
+        """Gives the arithmetic mean of the sample."""
+        r = NRPy.gammln(1 - (1/self.C)) * NRPy.gammln((1/self.C) + self.D)
+        return self.location + ((r * self.scale) / NRPy.gammln(self.D))
+    def mode(self): 
+        """Gives the mode of the sample."""
+        if ((self.C * self.D) < 1): return self.location
+        else:
+            r = (((self.C * self.D)-1)/(self.C + 1)) ** (1/self.C)
+            return self.location + (self.scale * r)
 #    def kurtosis(self): 
 #        """Gives the kurtosis of the sample."""
 #        raise DistributionFunctionError
 #    def skew(self): 
 #        """Gives the skew of the sample."""
 #        raise DistributionFunctionError
-#    def variance(self): 
-#        """Gives the variance of the sample."""
-#        raise DistributionFunctionError
+    def variance(self): 
+        """Gives the variance of the sample."""
+        return (self.k * (self.scale ** 2)) / (NRPy.gammln(self.D) ** 2)
 #    def quantile1(self): 
 #        """Gives the 1st quantile of the sample."""
 #        raise DistributionFunctionError
@@ -513,12 +534,17 @@ class BurrDistribution(Distribution):
 #    def qmean(self): 
 #        """Gives the quantile of the arithmetic mean of the sample."""
 #        raise DistributionFunctionError
-#    def qmode(self): 
-#        """Gives the quantile of the mode of the sample."""
-#        raise DistributionFunctionError
-#    def random(self):
-#        """Gives a random number based on the distribution."""
-#        raise DistributionFunctionError
+    def qmode(self): 
+        """Gives the quantile of the mode of the sample."""
+        if ((self.C * self.D) < 1): return 0.0
+        else:
+            return (1 + ((self.C+1)/((self.C*self.D) - 1))) ** (-1*self.D)
+    def random(self, seed):
+        """Gives a random number based on the distribution."""
+        while 1:
+            r = ((1/(seed ** (1/self.D))) - 1) ** (-1/self.C)
+            seed = self.location + self.scale * r
+            yield seed
 
 
 class CauchyDistribution(Distribution):
@@ -576,9 +602,11 @@ class CauchyDistribution(Distribution):
     def qmode(self): 
         """Gives the quantile of the mode of the sample."""
         return 0.5
-#    def random(self):
-#        """Gives a random number based on the distribution."""
-#        raise DistributionFunctionError
+    def random(self, seed):
+        """Gives a random number based on the distribution."""
+        while 1:
+            seed = self.loaction + (self.scale * math.tan(PI * (seed - 0.5)))
+            yield seed
 
 
 class ChiDistribution(Distribution):
