@@ -617,10 +617,30 @@ def t39(**kwargs):
 	"""
 	return test(statistic, Distribution(), kwargs['alpha'])
 
-def t40(**kwargs):
-	"""
-	"""
-	return test(statistic, Distribution(), kwargs['alpha'])
+def Chisq2x2(**kwargs):
+    """
+	Test 40: Chi-square test for consistency in 2x2 table
+    
+    To investigate the significance of the differences between observed
+    frequencies for two dichotomous distributions.
+    
+    Limitations:
+    1. Total sample size (sample 1 + sample 2) must be more than 20
+    2. Each cell frequency more than 3
+    
+    Parameters:
+    s1 = 2-element list or tuple of frequencies for sample #1
+    s2 = 2-element list or tuple of frequencies for sample #2
+    alpha = confidence level"""
+    s1c1 = kwargs['s1'][0]
+    s1c2 = kwargs['s1'][1]
+    s2c1 = kwargs['s2'][0]
+    s2c2 = kwargs['s2'][1]
+    statistic = (s1c1 + s1c2 + s2c1 + s2c2 - 1)
+    statistic = statistic * (((s1c1 * s2c2) - (s1c2 * s2c1)) ** 2)
+    statistic = statistic / ((s1c1 + s1c2)*(s2c1 + s2c2)* \
+                            (s1c1 + s2c1)*(s1c2 + s2c2))
+    return test(statistic, ChisqDistribution(df = 1), kwargs['alpha'])
 
 def t41(**kwargs):
 	"""
