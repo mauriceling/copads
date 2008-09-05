@@ -440,17 +440,20 @@ def chebev(a, b, c, m , x):
     
 def erf(x): 
     """
-    Error function (a special incomplete gamma function) equivalent to gammp(0.5, x^2) 
-    for x => 0. 
-    Depend: gammp, gser. gcf, gammln
+    Error function (a special incomplete gamma function) equivalent to 
+    gammp(0.5, x^2) for x => 0. In this routine, gammp is by-passed and gser
+    and gcf are used directly.
+    Depend: gser. gcf, gammln
     Ref: NRP 6.2
     
     @param x: float number
     @return: float number
     """
-    if x < 0.0: return -1*gammp(0.5, x*x)
-    else: return gammp(0.5, x*x)
-    
+    if x < 1.5: 
+        return -1*gser(0.5 ,x)
+    else:        
+        return 1.0-gcf(0.5 ,x)[0]
+
 def erfc(x):
     """
     Complementary error function (a special incomplete gamma function) equivalent to 
@@ -483,6 +486,11 @@ def erfcc(x):
         return r
     else:
         return 2.0 - r
+
+def expdev(x):
+    """Depends: ran3
+    Ref: NRP 7.2"""
+    return -1.0 * math.log(ran3(x))
 
 def factln(n):
     """Natural logarithm of factorial: ln(n!)
@@ -645,7 +653,7 @@ def moment(data):
 
 def qgaus(a, b, func):
     """
-    Ref: NRP 4"""
+    Ref: NRP 4.5"""
     x = [0.1488743389, 0.4333953941, 0.6794095682, 0.8650633666, 0.97390652]
     w = [0.2955242247, 0.2692667193, 0.2190863625, 0.1494513491, 0.06667134]
     xm = 0.5 * (b + a)
@@ -693,7 +701,6 @@ def el2(): raise NotImplementedError
 def elmhes(): raise NotImplementedError    
 def eulsum(): raise NotImplementedError
 def evlmem(): raise NotImplementedError
-def expdev(): raise NotImplementedError
 def f1dim(): raise NotImplementedError
 def fgauss(): raise NotImplementedError
 def fit(): raise NotImplementedError
