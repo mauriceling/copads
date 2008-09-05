@@ -540,18 +540,6 @@ class CauchyDistribution(Distribution):
     def qmode(self): 
         """Gives the quantile of the mode of the sample."""
         return 0.5
-    def kurtosis(self): 
-        """Gives the kurtosis of the sample."""
-        raise DistributionFunctionError('Kurtosis for Cauchy Distribution is \
-            undefined')
-    def skew(self): 
-        """Gives the skew of the sample."""
-        raise DistributionFunctionError('Skew for Cauchy Distribution is \
-            undefined')
-    def variance(self): 
-        """Gives the variance of the sample."""
-        raise DistributionFunctionError('Variance for Cauchy Distribution is \
-            undefined')
 #    def random(self):
 #        """Gives a random number based on the distribution."""
 #        raise DistributionFunctionError
@@ -1878,30 +1866,12 @@ class LogarithmicDistribution(Distribution):
     def mode(self): 
         """Gives the mode of the sample."""
         return 1.0
-#    def kurtosis(self): 
-#        """Gives the kurtosis of the sample."""
-#        raise DistributionFunctionError
-#    def skew(self): 
-#        """Gives the skew of the sample."""
-#        raise DistributionFunctionError
     def variance(self): 
         """Gives the variance of the sample."""
         n = (-1 * self.shape) * (self.shape + math.log10(1 - self.shape))
         d = ((1 - self.shape) ** 2) * math.log10(1 - self.shape) * \
             math.log10(1 - self.shape)
         return n / d
-#    def quantile1(self): 
-#        """Gives the 1st quantile of the sample."""
-#        raise DistributionFunctionError
-#    def quantile3(self): 
-#        """Gives the 3rd quantile of the sample."""
-#        raise DistributionFunctionError
-#    def qmean(self): 
-#        """Gives the quantile of the arithmetic mean of the sample."""
-#        raise DistributionFunctionError
-#    def qmode(self): 
-#        """Gives the quantile of the mode of the sample."""
-#        raise DistributionFunctionError
 #    def random(self):
 #        """Gives a random number based on the distribution."""
 #        raise DistributionFunctionError
@@ -2131,27 +2101,6 @@ class NegativeBinomialDistribution(Distribution):
     def mode(self): 
         """Gives the mode of the sample."""
         return int((self.success + self.target - 1)/self.success)
-#    def kurtosis(self): 
-#        """Gives the kurtosis of the sample."""
-#        raise DistributionFunctionError
-#    def skew(self): 
-#        """Gives the skew of the sample."""
-#        raise DistributionFunctionError
-#    def variance(self): 
-#        """Gives the variance of the sample."""
-#        raise DistributionFunctionError
-#    def quantile1(self): 
-#        """Gives the 1st quantile of the sample."""
-#        raise DistributionFunctionError
-#    def quantile3(self): 
-#        """Gives the 3rd quantile of the sample."""
-#        raise DistributionFunctionError
-#    def qmean(self): 
-#        """Gives the quantile of the arithmetic mean of the sample."""
-#        raise DistributionFunctionError
-#    def qmode(self): 
-#        """Gives the quantile of the mode of the sample."""
-#        raise DistributionFunctionError
 #    def random(self):
 #        """Gives a random number based on the distribution."""
 #        raise DistributionFunctionError
@@ -2280,8 +2229,6 @@ class ParetoDistribution(Distribution):
         return random.paretovariate(self.shape)   
 
     
-
-
 class PascalDistribution(Distribution):
     def __init__(self, **parameters): 
         """Constructor method. The parameters are used to construct the 
@@ -2370,12 +2317,6 @@ class PoissonDistribution(Distribution):
     def mode(self): 
         """Gives the mode of the sample."""
         return int(self.mean)
-#    def kurtosis(self): 
-#        """Gives the kurtosis of the sample."""
-#        raise DistributionFunctionError
-#    def skew(self): 
-#        """Gives the skew of the sample."""
-#        raise DistributionFunctionError
     def variance(self): 
         """Gives the variance of the sample."""
         return self.mean
@@ -2468,30 +2409,12 @@ class RademacherDistribution(Distribution):
     def mean(self): 
         """Gives the arithmetic mean of the sample."""
         return 0
-#    def mode(self): 
-#        """Gives the mode of the sample."""
-#        raise DistributionFunctionError
-#    def kurtosis(self): 
-#        """Gives the kurtosis of the sample."""
-#        raise DistributionFunctionError
     def skew(self): 
         """Gives the skew of the sample."""
         return 0
     def variance(self): 
         """Gives the variance of the sample."""
         return 1
-#    def quantile1(self): 
-#        """Gives the 1st quantile of the sample."""
-#        raise DistributionFunctionError
-#    def quantile3(self): 
-#        """Gives the 3rd quantile of the sample."""
-#        raise DistributionFunctionError
-#    def qmean(self): 
-#        """Gives the quantile of the arithmetic mean of the sample."""
-#        raise DistributionFunctionError
-#    def qmode(self): 
-#        """Gives the quantile of the mode of the sample."""
-#        raise DistributionFunctionError
 #    def random(self):
 #        """Gives a random number based on the distribution."""
 #        raise DistributionFunctionError
@@ -2877,9 +2800,6 @@ class UniformDistribution(Distribution):
     def qmean(self): 
         """Gives the quantile of the arithmetic mean of the sample."""
         return 0.5
-#    def qmode(self): 
-#        """Gives the quantile of the mode of the sample."""
-#        raise DistributionFunctionError
     def random(self, lower, upper):
         """Gives a random number based on the distribution."""
         return random.uniform(lower, upper)
