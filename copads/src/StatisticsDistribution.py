@@ -362,22 +362,33 @@ class BinomialDistribution(Distribution):
 
 
 class BradfordDistribution(Distribution):
-#    def __init__(self, **parameters): 
-#        """Constructor method. The parameters are used to construct the 
-#            probability distribution."""
-#        raise DistributionFunctionError
-#    def CDF(self, x): 
-#       """
-#        Cummulative Distribution Function, which gives the cummulative 
-#        probability (area under the probability curve) from -infinity or 0 to 
-#        a give x-value on the x-axis where y-axis is the probability."""
-#        raise DistributionFunctionError
-#    def PDF(self, x): 
-#        """
-#        Partial Distribution Function, which gives the probability for the 
-#        particular value of x, or the area under probability distribution 
-#        from x-h to x+h for continuous distribution."""
-#        raise DistributionFunctionError
+    def __init__(self, **parameters): 
+        """
+        Constructor method. The parameters are used to construct the 
+        probability distribution.
+        
+        Parameters:
+        1. location
+        2. scale (upper bound)
+        3. shape"""
+        self.location = kwargs['locatiopn']
+        self.scale = kwargs['scale']
+        self.shape = kwargs['shape']
+        self.k = math.log10(self.shape + 1)
+    def CDF(self, x): 
+        """
+        Cummulative Distribution Function, which gives the cummulative 
+        probability (area under the probability curve) from -infinity or 0 to 
+        a give x-value on the x-axis where y-axis is the probability."""
+        r = ((self.shape*(x - self.location)) / (self.scale - self.location))
+        return math.log10(1 + r) / self.k
+    def PDF(self, x): 
+        """
+        Partial Distribution Function, which gives the probability for the 
+        particular value of x, or the area under probability distribution 
+        from x-h to x+h for continuous distribution."""
+        r = (self.shape * (x - self.location)) + self.scale - self.location
+        return self.shape / (self.k * r)
     def inverseCDF(self, probability, start = 0.0, step = 0.01): 
         """
         It does the reverse of CDF() method, it takes a probability value 
@@ -389,36 +400,61 @@ class BradfordDistribution(Distribution):
             cprob = self.CDF(start)
             # print start, cprob
         return (start, cprob)
-#    def mean(self): 
-#        """Gives the arithmetic mean of the sample."""
-#        raise DistributionFunctionError
-#    def mode(self): 
-#        """Gives the mode of the sample."""
-#        raise DistributionFunctionError
-#    def kurtosis(self): 
-#        """Gives the kurtosis of the sample."""
-#        raise DistributionFunctionError
-#    def skew(self): 
-#        """Gives the skew of the sample."""
-#        raise DistributionFunctionError
-#    def variance(self): 
-#        """Gives the variance of the sample."""
-#        raise DistributionFunctionError
-#    def quantile1(self): 
-#        """Gives the 1st quantile of the sample."""
-#        raise DistributionFunctionError
-#    def quantile3(self): 
-#        """Gives the 3rd quantile of the sample."""
-#        raise DistributionFunctionError
-#    def qmean(self): 
-#        """Gives the quantile of the arithmetic mean of the sample."""
-#        raise DistributionFunctionError
-#    def qmode(self): 
-#        """Gives the quantile of the mode of the sample."""
-#        raise DistributionFunctionError
-#    def random(self):
-#        """Gives a random number based on the distribution."""
-#        raise DistributionFunctionError
+    def mean(self): 
+        """Gives the arithmetic mean of the sample."""
+        r = self.shape * (self.scale - self.location)
+        r = r + (((self.shape + 1) * self.location - self.scale) * self.k)
+        return r / (self.shape * self.k)
+    def mode(self): 
+        """Gives the mode of the sample."""
+        return self.location
+    def kurtosis(self): 
+        """Gives the kurtosis of the sample."""
+        d = ((self.shape * (self.k - 2)) + (2 * self.k)) ** 2
+        d = 3 * self.shape * d
+        n = ((self.k * ((3 * self.k) - 16)) + 24)
+        n = (self.shape ** 3) * (self.k - 3) * n
+        n = n + ((self.k - 4) * (self.k - 3) * (12 * self.k * (self.k **2)))
+        n = n + (6 * self.k * (self.k **2)) * ((3 * self.k) - 14)
+        return (n + (12 * (self.k ** 3))) / d
+    def skew(self): 
+        """Gives the skew of the sample."""
+        r = 12 * (self.shape ** 2)
+        r = r - (9 * self.k * self.shape * (self.shape + 2))
+        r = r + ((2 * k * k) * ((self.shape * (self.shape + 3)) + 3))
+        d = self.shape * (((self.k - 2) * self.shape) + (2 * self.k))
+        d = math.sqrt(d)
+        d = d * ((3 * self.shape * (self.k - 2)) + (6 * self.k))
+        return r / d
+    def variance(self): 
+        """Gives the variance of the sample."""
+        r = (self.scale - self.location) ** 2
+        r = r * (self.shape * (self.k - 2) +  (2 * self.k))
+        return r / (2 * self.shape * self.k * self.k)
+    def quantile1(self): 
+        """Gives the 1st quantile of the sample."""
+        r = (self.location * (self.shape + 1)) - self.scale
+        r = r + ((self.scale - self.location) * ((self.shape + 1)** 0.25))
+        return r / self.shape
+    def quantile3(self): 
+        """Gives the 3rd quantile of the sample."""
+        r = (self.location * (self.shape + 1)) - self.scale
+        r = r + ((self.scale - self.location) * ((self.shape + 1)** 0.75))
+        return r / self.shape
+    def qmean(self): 
+        """Gives the quantile of the arithmetic mean of the sample."""
+        r = math.log10(self.shape / math.log10(self.shape + 1))
+        return r / math.log10(self.shape + 1)
+    def qmode(self): 
+        """Gives the quantile of the mode of the sample."""
+        return 0.0
+    def random(self, seed):
+        """Gives a random number based on the distribution."""
+        while 1:
+            r = self.location * (self.shape + 1) - self.scale
+            r = r + ((self.scale - self.location)*((self.shape + 1) ** seed))
+            seed = r / self.shape
+            yield seed
 
 
 class BurrDistribution(Distribution):
@@ -2671,7 +2707,7 @@ class TDistribution(Distribution):
     def skew(self): 
         """Gives the skew of the sample."""
         return 0.0
-    def variance(self): 
+    def variance(self):
         """Gives the variance of the sample."""
         return (self.df / (self.df - 2)) * self.stdev * self.stdev
 #    def random(self):
@@ -2914,7 +2950,8 @@ class WeiBullDistribution(Distribution):
 #    def qmode(self): 
 #        """Gives the quantile of the mode of the sample."""
 #        raise DistributionFunctionError
-#    def random(self):
-#        """Gives a random number based on the distribution."""
-#        raise DistributionFunctionError
-        
+##    def random(self, seed):
+##        """Gives a random number based on the distribution."""
+##        while 1:
+##            func
+##            yield seed
