@@ -816,22 +816,34 @@ class DoubleGammaDistribution(Distribution):
     """
     Double Gamma distribution is the signed version of Gamma distribution.
     """
-#    def __init__(self, **parameters): 
-#        """Constructor method. The parameters are used to construct the 
-#            probability distribution."""
-#        raise DistributionFunctionError
-#    def CDF(self, x): 
-#       """
-#        Cummulative Distribution Function, which gives the cummulative 
-#        probability (area under the probability curve) from -infinity or 0 to 
-#        a give x-value on the x-axis where y-axis is the probability."""
-#        raise DistributionFunctionError
-#    def PDF(self, x): 
-#        """
-#        Partial Distribution Function, which gives the probability for the 
-#        particular value of x, or the area under probability distribution 
-#        from x-h to x+h for continuous distribution."""
-#        raise DistributionFunctionError
+    def __init__(self, **parameters): 
+        """
+        Constructor method. The parameters are used to construct the 
+        probability distribution.
+        
+        Parameters:
+        1. location
+        2. scale
+        3. shape"""
+        self.location = kwargs['location']
+        self.scale = kwargs['scale']
+        self.shape = kwargs['shape']
+    def CDF(self, x): 
+        """
+        Cummulative Distribution Function, which gives the cummulative 
+        probability (area under the probability curve) from -infinity or 0 to 
+        a give x-value on the x-axis where y-axis is the probability."""
+        r = NRPy.gammp(self.shape ,abs((x - self.location)/self.scale))
+        if x > self.location: return 0.5 + (0.5 * r)
+        else: return 0.5 - (0.5 * r)
+    def PDF(self, x): 
+        """
+        Partial Distribution Function, which gives the probability for the 
+        particular value of x, or the area under probability distribution 
+        from x-h to x+h for continuous distribution."""
+        r = math.exp(-1 * abs((x - self.location)/self.scale))
+        r = r * (abs((x - self.location)/self.scale) ** (self.shape -1))
+        return r / (2* self.scale * NRPy.gammln(self.shape))
     def inverseCDF(self, probability, start = 0.0, step = 0.01): 
         """
         It does the reverse of CDF() method, it takes a probability value 
@@ -843,33 +855,18 @@ class DoubleGammaDistribution(Distribution):
             cprob = self.CDF(start)
             # print start, cprob
         return (start, cprob)
-#    def mean(self): 
-#        """Gives the arithmetic mean of the sample."""
-#        raise DistributionFunctionError
-#    def mode(self): 
-#        """Gives the mode of the sample."""
-#        raise DistributionFunctionError
-#    def kurtosis(self): 
-#        """Gives the kurtosis of the sample."""
-#        raise DistributionFunctionError
-#    def skew(self): 
-#        """Gives the skew of the sample."""
-#        raise DistributionFunctionError
-#    def variance(self): 
-#        """Gives the variance of the sample."""
-#        raise DistributionFunctionError
-#    def quantile1(self): 
-#        """Gives the 1st quantile of the sample."""
-#        raise DistributionFunctionError
-#    def quantile3(self): 
-#        """Gives the 3rd quantile of the sample."""
-#        raise DistributionFunctionError
-#    def qmean(self): 
-#        """Gives the quantile of the arithmetic mean of the sample."""
-#        raise DistributionFunctionError
-#    def qmode(self): 
-#        """Gives the quantile of the mode of the sample."""
-#        raise DistributionFunctionError
+    def mean(self): 
+        """Gives the arithmetic mean of the sample."""
+        return self.location
+    def skew(self): 
+        """Gives the skew of the sample."""
+        return 0.0
+    def variance(self): 
+        """Gives the variance of the sample."""
+        return self.shape * (self.shape + 1) * (self.scale ** 2)
+    def qmean(self): 
+        """Gives the quantile of the arithmetic mean of the sample."""
+        return 0.5
 #    def random(self):
 #        """Gives a random number based on the distribution."""
 #        raise DistributionFunctionError
