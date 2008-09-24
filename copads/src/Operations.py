@@ -212,3 +212,40 @@ def fibonacci(n):
     if n == 1: return 1
     return fibonacci(n - 1) + fibonacci(n - 2)
     
+def permutation(items, n=None):
+    """
+    Generates permutation of n-elements from the list of input items. 
+    For example, if n = 2, this function will generate permutations
+    of 2-elements.
+    
+    Adapted from Raymond Hettinger's comment to 
+    http://code.activestate.com/recipes/474124/"""
+    if n is None:
+        n = len(items)
+    for i in range(len(items)):
+        v = items[i:i+1]
+        if n == 1:
+            yield v
+        else:
+            rest = items[:i] + items[i+1:]
+            for p in perm(rest, n-1):
+                yield v + p
+
+def combination(items, n=None):
+    """
+    Generates combination of n-elements from the list of input items. 
+    For example, if n = 2, this function will generate combinations
+    of 2-elements.
+    
+    Adapted from Raymond Hettinger's comment to 
+    http://code.activestate.com/recipes/474124/"""
+    if n is None:
+        n = len(items)
+    for i in range(len(items)):
+        v = items[i:i+1]
+        if n == 1:
+            yield v
+        else:
+            rest = items[i+1:]
+            for c in comb(rest, n-1):
+                yield v + c
