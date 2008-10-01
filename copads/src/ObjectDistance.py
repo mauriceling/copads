@@ -10,23 +10,49 @@ Date created: 17th August 2005
 import math
 from CopadsExceptions import DistanceInputSizeError
 
-def Jaccard(original = '', test = ''):
+def setCompare(original, test, absent):
+    original_only = float(len([x for x in original if x not in test]))
+    test_only = float(len([x for x in test if x not in original]))
+    both = float(len([x for x in original if x in test]))
+    return (original_only, test_only, both)
+
+def listCompare(original, test, absent):
+    original = list(original)
+    test = list(test)
+    original_only = 0.0
+    test_only = 0.0
+    both = 0.0
+    for i in range(len(original)):
+        if original[i] == absent and test[i] == absent: pass
+        elif original[i] == test[i]: both = both + 1
+        elif original[i] <> absent and test[i] == absent:
+            original_only = original_only + 1
+        elif original[i] == absent and test[i] <> absent: 
+            test_only = test_only + 1
+        else: pass
+        
+def Jaccard(original = '', test = '', absent = 0, type = 'Set'):
     """
     Given 2 lists (original and test), calculates the Jaccard Distance 
     (1 - Jaccard Index) based on the formula,
     
     1 - [(number of regions where both species are present)/
          (number of regions where at least one species is present)]
+    
+    absent: user-defined identifier for absent of region, default = 0
+    type: {Set | List}, define whether use Set comparison (unordered) or
+          list comparison (ordered), default = Set
          
     Ref: Jaccard P (1908) Nouvelles recherches sur la distribution florale. 
          Bull Soc Vaud Sci Nat 44:223-270
     """
-    original_only = float(len([x for x in original if x not in test]))
-    test_only = float(len([x for x in test if x not in original]))
-    both = float(len([x for x in original if x in test]))
+    if type == 'Set':
+        (original_only, test_only, both) = setCompare(original, test, absent)
+    else:
+        (original_only, test_only, both) = listCompare(original, test, absent)
     return 1-(both/(both+original_only+test_only))
     
-def Nei_Li(original = '', test = ''):
+def Nei_Li(original = '', test = '', absent = 0, type = 'Set'):
     """
     Given 2 lists (original and test), calculates the Nei and Li Distance 
     based on the formula,
@@ -34,13 +60,18 @@ def Nei_Li(original = '', test = ''):
     1 - [2 x (number of regions where both species are present)/
          [(2 x (number of regions where both species are present)) + 
           (number of regions where only one species is present)]]
-          
+    
+    absent: user-defined identifier for absent of region, default = 0
+    type: {Set | List}, define whether use Set comparison (unordered) or
+          list comparison (ordered), default = Set
+                
     Ref: Nei M, Li WH (1979) Mathematical models for studying genetic variation 
         in terms of restriction endonucleases. Proc Natl Acad Sci USA 76:5269-5273
     """
-    original_only = float(len([x for x in original if x not in test]))
-    test_only = float(len([x for x in test if x not in original]))
-    both = float(len([x for x in original if x in test]))
+    if type == 'Set':
+        (original_only, test_only, both) = setCompare(original, test, absent)
+    else:
+        (original_only, test_only, both) = listCompare(original, test, absent)
     return 1-((2*both)/((2*both)+original_only+test_only))
     
 def Sokal_Michener(original = '', test = ''):
@@ -49,8 +80,7 @@ def Sokal_Michener(original = '', test = ''):
     Distance based on the formula,
     
     1 - [(number of regions where both species are present or absent)/
-         (number of regions where both species are present or absent or only 
-         present in one species)]
+         (number of regions where both species are absent different)]
          
     Ref: Sokal RR, Michener CD (1958) A statistical method for evaluating 
         systematic relationships. Univ Kansas Sci Bull 38:1409-1438
@@ -68,17 +98,23 @@ def Sokal_Michener(original = '', test = ''):
 #    print in_original
     return 1-(in_both/(in_both+in_original))
 
-def Dice(original = '', test = ''):
+def Dice(original = '', test = '', type = 'Set'):
     """
     Given 2 lists (original and test), calculates the Dice Distance 
     (1 - Dice Index) based on the formula,
     
     1 - (number of regions where both species / sum of species in each list)
+    
+    type: {Set | List}, define whether use Set comparison (unordered) or
+          list comparison (ordered), default = Set
     """
-    both = float(len([x for x in original if x in test]))
+    if type == 'Set':
+        (original_only, test_only, both) = setCompare(original, test, absent = 0)
+    else:
+        (original_only, test_only, both) = listCompare(original, test, absent = 0)
     return 1 - ((2 * both) / (float(len(original)) + float(len(test))))
 
-def Dice_Sorensen(original = '', test = ''):
+def Dice_Sorensen(original = '', test = '', absent = 0, type = 'Set'):
     """
     Given 2 lists (original and test), calculates the Dice-Sorensen Distance 
     (1 - Dice-Sorensen Index) based on the formula,
@@ -86,13 +122,18 @@ def Dice_Sorensen(original = '', test = ''):
     1 - [2 x (number of regions where both species are present) /
         (2 x (number of regions where both species are present) + 
             (number of regions where at least one species is present))]
+    
+    absent: user-defined identifier for absent of region, default = 0
+    type: {Set | List}, define whether use Set comparison (unordered) or
+          list comparison (ordered), default = Set
     """
-    original_only = float(len([x for x in original if x not in test]))
-    test_only = float(len([x for x in test if x not in original]))
-    both = float(len([x for x in original if x in test]))
+    if type == 'Set':
+        (original_only, test_only, both) = setCompare(original, test, absent)
+    else:
+        (original_only, test_only, both) = listCompare(original, test, absent)
     return 1 - ((2 * both) / ((2*both) + test_only + original_only))
 
-def Ochiai(original = '', test = ''):
+def Ochiai(original = '', test = '', absent = 0, type = 'Set'):
     """
     Given 2 lists (original and test), calculates the Dice-Sorensen Distance 
     (1 - Dice-Sorensen Index) based on the formula,
@@ -104,13 +145,18 @@ def Ochiai(original = '', test = ''):
             ((number of regions where both species are present) +
                  (number of regions found in test only))
         )]
+    
+    absent: user-defined identifier for absent of region, default = 0
+    type: {Set | List}, define whether use Set comparison (unordered) or
+          list comparison (ordered), default = Set
     """
-    original_only = float(len([x for x in original if x not in test]))
-    test_only = float(len([x for x in test if x not in original]))
-    both = float(len([x for x in original if x in test]))
+    if type == 'Set':
+        (original_only, test_only, both) = setCompare(original, test, absent)
+    else:
+        (original_only, test_only, both) = listCompare(original, test, absent)
     return 1 - (both / math.sqrt((both + original_only)*(both + test_only)))
     
-def Kulczynski(original = '', test = ''):
+def Kulczynski(original = '', test = '', absent = 0 , type = 'Set'):
     """
     Given 2 lists (original and test), calculates the Kulczynski Distance 
     based on the formula,
@@ -121,10 +167,15 @@ def Kulczynski(original = '', test = ''):
        and 
        ((number of regions where both species are present)/
         (number of regions where species 2 is present))))
+        
+    absent: user-defined identifier for absent of region, default = 0
+    type: {Set | List}, define whether use Set comparison (unordered) or
+          list comparison (ordered), default = Set
     """
-    original_only = float(len([x for x in original if x not in test]))
-    test_only = float(len([x for x in test if x not in original]))
-    both = float(len([x for x in original if x in test]))
+    if type == 'Set':
+        (original_only, test_only, both) = setCompare(original, test, absent)
+    else:
+        (original_only, test_only, both) = listCompare(original, test, absent)
     x1 = both/original_only
     x2 = both/test_only
     return 1-((x1+x2)/2)
