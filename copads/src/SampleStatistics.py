@@ -23,11 +23,12 @@ from CopadsException import FunctionParameterTypeError
 from CopadsException import FunctionParameterValueError
 import NRPy
 
-class SampleData:
+class SingleSample:
     def __init__(self, **kwargs):
         self.data = Matrix(kwargs['data'])
         self.rowcount = self.data.rows()
         self.colcount = self.data.cols()
+        self.name = kwargs['name']
         self.summary = [{} for x in range(self.colcount)]
         
     def append(self, data, summarize = 'all'):
@@ -161,19 +162,32 @@ class SampleData:
             self.summary[x]['variance'] = self.variance(data,
                                             self.summary[x]['aMean'])
             self.summary[x]['stdev'] = self.summary[x]['variance'] ** 0.5
-            
+    
     def covariance(self, inlist1, inlist2):
         """
         Calculates covariance using the formula: Cov(xy)  =  E{xy}  -  E{x}E{y}
         """
-        if inlist1 == inlist2: return 1.0
+        if inlist1 == inlist: return 1.0
         mean_xy = self.arithmeticMean([inlist1[i]*inlist1[i] 
-                                        for i in range(inlist1)])
+                                                     for i in range(inlist1)])
         mean_x = self.arithmeticMean(inlist1)
         mean_y = self.arithmeticMean(inlist2)
         return mean_xy - (mean_x * mean_y)
     
+    def pearson(self, inlist1, inlist2):
+        """
+        Calculates the Pearson's product-moment coefficient by dividing the
+        covariance by the product of the 2 standard deviations.
+        """
+        return self.covariance(inlist1, inlist2) / \
+            (self.stdev(inlist1) * self.stdev(inlist2))
     
 class SampleDistribution(Distribution):
     def __init__(self, sampleData):
         self.sample = sampleData
+        
+class MultiSample:
+    sample = {}
+    def __init__(self): pass
+    
+    
