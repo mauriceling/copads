@@ -273,3 +273,19 @@ def sample(population, k):
         print t[i]
         population.remove(t[i])
     return t
+
+def summation(x):
+    """
+    Sum of all the elements of x"""
+    x = list(x)
+    sum = 0.0
+    for i in range(len(x)): sum = sum + x[i]
+    return sum
+
+def product(x):
+    """
+    Product of all the elements of x, also known as series product"""
+    x = list(x)
+    sum = 0.0
+    for i in range(len(x)): sum = sum * x[i]
+    return sum
