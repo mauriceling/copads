@@ -1,4 +1,6 @@
 import math
+import itertool
+import random
 import Constants
 
 class Modulus2:
@@ -249,3 +251,25 @@ def combination(items, n=None):
             rest = items[i+1:]
             for c in comb(rest, n-1):
                 yield v + c
+          
+def sample_wr(population, k):
+    """
+    Chooses k random elements (with replacement) from a population.
+    Adapted from Raymond Hettinger's comment to 
+    http://code.activestate.com/recipes/273085/"""
+    n = len(population)
+    _random, _int = random.random, int  # speed hack
+    return [_int(_random() * n) for i in itertools.repeat(None, k)]
+
+def sample(population, k):
+    """
+    Chooses k random elements (without replacement) from a population."""
+    _random, _int = random.random, int
+    if len(population) < k: return False
+    t = range(k)
+    for i in range(k):
+        t[i] = population[_int(_random() * len(population))]
+        print population
+        print t[i]
+        population.remove(t[i])
+    return t
