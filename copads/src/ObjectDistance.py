@@ -36,6 +36,7 @@ def listCompare(original, test, absent):
         elif original[i] == absent and test[i] <> absent: 
             test_only = test_only + 1
         else: pass
+    return (original_only, test_only, both)
         
 def Jaccard(original = '', test = '', absent = 0, type = 'Set'):
     """
