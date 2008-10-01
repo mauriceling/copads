@@ -1,5 +1,5 @@
 import math
-import itertool
+import itertools
 import random
 import Constants
 
@@ -230,7 +230,7 @@ def permutation(items, n=None):
             yield v
         else:
             rest = items[:i] + items[i+1:]
-            for p in perm(rest, n-1):
+            for p in permutation(rest, n-1):
                 yield v + p
 
 def combination(items, n=None):
@@ -249,7 +249,7 @@ def combination(items, n=None):
             yield v
         else:
             rest = items[i+1:]
-            for c in comb(rest, n-1):
+            for c in combination(rest, n-1):
                 yield v + c
           
 def sample_wr(population, k):
