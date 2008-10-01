@@ -98,20 +98,42 @@ def Sokal_Michener(original = '', test = ''):
 #    print in_original
     return 1-(in_both/(in_both+in_original))
 
-def Dice(original = '', test = '', type = 'Set'):
+def Matching(original = '', test = '', absent = 0, type = 'Set'):
     """
-    Given 2 lists (original and test), calculates the Dice Distance 
-    (1 - Dice Index) based on the formula,
+    Given 2 lists (original and test), calculates the Matching Distance 
+    (1 - Matching Coefficient) based on the formula,
     
-    1 - (number of regions where both species / sum of species in each list)
+    1 - (number of regions where both species are present or absent
+        / sum of species in each list)
     
+    absent: user-defined identifier for absent of region, default = 0
     type: {Set | List}, define whether use Set comparison (unordered) or
           list comparison (ordered), default = Set
     """
     if type == 'Set':
-        (original_only, test_only, both) = setCompare(original, test, absent = 0)
+        (original_only, test_only, both) = setCompare(original, test, absent)
     else:
-        (original_only, test_only, both) = listCompare(original, test, absent = 0)
+        (original_only, test_only, both) = listCompare(original, test, absent)
+    all_region = float(len(original)) + float(len(test))
+    absent_region = all_region - original_only - test_only - both
+    return 1 - ((2 * (both + absent_region)) / (all_region))
+
+def Dice(original = '', test = '', absent = 0, type = 'Set'):
+    """
+    Given 2 lists (original and test), calculates the Dice Distance 
+    (1 - Dice Index) based on the formula,
+    
+    1 - (number of regions where both species are present
+        / sum of species in each list)
+    
+    absent: user-defined identifier for absent of region, default = 0
+    type: {Set | List}, define whether use Set comparison (unordered) or
+          list comparison (ordered), default = Set
+    """
+    if type == 'Set':
+        (original_only, test_only, both) = setCompare(original, test, absent)
+    else:
+        (original_only, test_only, both) = listCompare(original, test, absent)
     return 1 - ((2 * both) / (float(len(original)) + float(len(test))))
 
 def Dice_Sorensen(original = '', test = '', absent = 0, type = 'Set'):
@@ -224,7 +246,38 @@ def Euclidean(x = '', y = ''):
             equal for Euclidean distance")
     sum = 0
     for i in range(len(x)):
-        sum += (x[i]-y[i])**2
+        sum = sum + (x[i]-y[i])**2
     return math.sqrt(sum)
 
+def Minkowski(x = '', y = '', power = 3):
+    """
+    Minkowski Distance is a generalized absolute form of Euclidean Distance.
+    Minkowski Distance = Euclidean Distance when power = 2"""
+    if len(x) != len(y):
+        raise DistanceInputSizeError("Size (length) of inputs must be \
+            equal for Minkowski distance")
+    sum = 0
+    for i in range(len(x)):
+        sum = sum + abs(x[i]-y[i])**power
+    return sum**(1/float(power))
 
+def Manhattan(x = '', y = ''):
+    """
+    Manhattan Distance is also known as City Block Distance. It is essentially
+    summation of the absolute difference between each element."""
+    if len(x) != len(y):
+        raise DistanceInputSizeError("Size (length) of inputs must be \
+            equal for Manhattan distance")
+    sum = 0
+    for i in range(len(x)):
+        sum = sum + abs(x[i]-y[i])
+    return sum
+
+def Canberra(x = '', y = ''):
+    if len(x) != len(y):
+        raise DistanceInputSizeError("Size (length) of inputs must be \
+            equal for Canberra distance")
+    sum = 0
+    for i in range(len(x)):
+        sum = sum + (abs(x[i]-y[i]) / abs(x[i]+y[i]))
+    return sum
