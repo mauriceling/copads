@@ -9,14 +9,20 @@ Date created: 17th August 2005
 
 import math
 from CopadsExceptions import DistanceInputSizeError
+from Operations import summation
 
 def setCompare(original, test, absent):
+    """Used for processing set-based (unordered or nominal) distance of 
+    categorical data."""
     original_only = float(len([x for x in original if x not in test]))
     test_only = float(len([x for x in test if x not in original]))
     both = float(len([x for x in original if x in test]))
     return (original_only, test_only, both)
 
 def listCompare(original, test, absent):
+    """
+    Used for processing list-based (ordered or ordinal) distance of categorical 
+    data."""
     original = list(original)
     test = list(test)
     original_only = 0.0
@@ -33,6 +39,8 @@ def listCompare(original, test, absent):
         
 def Jaccard(original = '', test = '', absent = 0, type = 'Set'):
     """
+    Jaccard Distance is distance measure for nominal or ordinal data.
+    
     Given 2 lists (original and test), calculates the Jaccard Distance 
     (1 - Jaccard Index) based on the formula,
     
@@ -54,6 +62,8 @@ def Jaccard(original = '', test = '', absent = 0, type = 'Set'):
     
 def Nei_Li(original = '', test = '', absent = 0, type = 'Set'):
     """
+    Nei and Li Distance is distance measure for nominal or ordinal data.
+    
     Given 2 lists (original and test), calculates the Nei and Li Distance 
     based on the formula,
     
@@ -76,6 +86,8 @@ def Nei_Li(original = '', test = '', absent = 0, type = 'Set'):
     
 def Sokal_Michener(original = '', test = ''):
     """
+    Sokal and Michener Distance is distance measure for nominal or ordinal data.
+    
     Given 2 lists (original and test), calculates the Sokal and Michener 
     Distance based on the formula,
     
@@ -100,6 +112,8 @@ def Sokal_Michener(original = '', test = ''):
 
 def Matching(original = '', test = '', absent = 0, type = 'Set'):
     """
+    Matching Distance is distance measure for nominal or ordinal data.
+    
     Given 2 lists (original and test), calculates the Matching Distance 
     (1 - Matching Coefficient) based on the formula,
     
@@ -120,6 +134,8 @@ def Matching(original = '', test = '', absent = 0, type = 'Set'):
 
 def Dice(original = '', test = '', absent = 0, type = 'Set'):
     """
+    Dice Distance is distance measure for nominal or ordinal data.
+    
     Given 2 lists (original and test), calculates the Dice Distance 
     (1 - Dice Index) based on the formula,
     
@@ -138,6 +154,8 @@ def Dice(original = '', test = '', absent = 0, type = 'Set'):
 
 def Dice_Sorensen(original = '', test = '', absent = 0, type = 'Set'):
     """
+    Dice and Sorensen Distance is distance measure for nominal or ordinal data.
+    
     Given 2 lists (original and test), calculates the Dice-Sorensen Distance 
     (1 - Dice-Sorensen Index) based on the formula,
     
@@ -157,8 +175,10 @@ def Dice_Sorensen(original = '', test = '', absent = 0, type = 'Set'):
 
 def Ochiai(original = '', test = '', absent = 0, type = 'Set'):
     """
-    Given 2 lists (original and test), calculates the Dice-Sorensen Distance 
-    (1 - Dice-Sorensen Index) based on the formula,
+    Ochiai Distance is distance measure for nominal or ordinal data.
+    
+    Given 2 lists (original and test), calculates the Ochiai Distance 
+    based on the formula,
     
     1 - [(number of regions where both species are present) / 
          (square root of 
@@ -180,6 +200,8 @@ def Ochiai(original = '', test = '', absent = 0, type = 'Set'):
     
 def Kulczynski(original = '', test = '', absent = 0 , type = 'Set'):
     """
+    Kulczynski Distance is distance measure for nominal or ordinal data.
+    
     Given 2 lists (original and test), calculates the Kulczynski Distance 
     based on the formula,
     
@@ -204,6 +226,9 @@ def Kulczynski(original = '', test = '', absent = 0 , type = 'Set'):
     
 def Hamming(original = '', test = ''):
     """
+    Hamming Distance is distance measure for ordinal data - only for ordered
+    data.
+    
     Given 2 lists (original and test), calculates the Hamming Distance by 
     counting the number of ordered differences between the 2 lists.
     """
@@ -217,6 +242,7 @@ def Hamming(original = '', test = ''):
     
 def Levenshtein(a = '', b = ''):
     """
+    Levenshtein Distance is distance measure for interval or ratio data.
     Calculates the Levenshtein distance between a and b. This routine is 
     implemented by Magnus Lie Hetland (http://www.hetland.org/python/distance.py)"""
     n, m = len(a), len(b)
@@ -236,7 +262,10 @@ def Levenshtein(a = '', b = ''):
             current[j] = min(add, delete, change)
             
 def Euclidean(x = '', y = ''):
-    """euclidean_py(x, y) -> euclidean distance between x and y
+    """
+    Euclidean Distance is distance measure for interval or ratio data.
+    
+    euclidean_py(x, y) -> euclidean distance between x and y
     Adapted from BioPython"""
     # lightly modified from implementation by Thomas Sicheritz-Ponten.
     # This works faster than the Numeric implementation on shorter
@@ -251,6 +280,8 @@ def Euclidean(x = '', y = ''):
 
 def Minkowski(x = '', y = '', power = 3):
     """
+    Minkowski Distance is distance measure for interval or ratio data.
+    
     Minkowski Distance is a generalized absolute form of Euclidean Distance.
     Minkowski Distance = Euclidean Distance when power = 2"""
     if len(x) != len(y):
@@ -263,6 +294,8 @@ def Minkowski(x = '', y = '', power = 3):
 
 def Manhattan(x = '', y = ''):
     """
+    Manhattan Distance is distance measure for interval or ratio data.
+    
     Manhattan Distance is also known as City Block Distance. It is essentially
     summation of the absolute difference between each element."""
     if len(x) != len(y):
@@ -274,6 +307,11 @@ def Manhattan(x = '', y = ''):
     return sum
 
 def Canberra(x = '', y = ''):
+    """
+    Canberra Distance is distance measure for interval or ratio data.
+    
+    Ref: Lance GN and Williams WT. 1966 Computer programs for hierarchical 
+    polythetic classification. Computer Journal 9: 60-64."""
     if len(x) != len(y):
         raise DistanceInputSizeError("Size (length) of inputs must be \
             equal for Canberra distance")
@@ -281,3 +319,14 @@ def Canberra(x = '', y = ''):
     for i in range(len(x)):
         sum = sum + (abs(x[i]-y[i]) / abs(x[i]+y[i]))
     return sum
+
+def Bray_Curtis(x = '', y = ''):
+    """
+    Bray-Curtis Distance is distance measure for interval or ratio data.
+    
+    Ref: Bray JR and Curtis JT. 1957. An ordination of the upland forest
+    communities of S. Winconsin. Ecological Monographs27: 325-349."""
+    if len(x) != len(y):
+        raise DistanceInputSizeError("Size (length) of inputs must be \
+            equal for Bray-Curtis distance")
+    return Manhattan(x, y) / (summation(x) + summation(y))
