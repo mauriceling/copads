@@ -27,8 +27,8 @@ class RBNode(object):
         raise IndexError('only key and value as sequence')
     
 class BinaryNode:
-    def __init__(self, data, colour = None):
+    def __init__(self, data):
         self.left = None
         self.right = None
         self.data = data 
-        self.colour = None  
+        
