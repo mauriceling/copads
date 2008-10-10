@@ -3,16 +3,22 @@ from heapq import nlargest
 
 class Bag(object):
     """
+    Bag is also known as multi-set, or a set that can have duplicate elements
+    
     Adapted from: http://aspn.activestate.com/ASPN/Cookbook/Python/Recipe/259174 
     Original author: Raymond Hettinger
     """
 
-    def __init__(self, iterable=()):
+    def __init__(self, iterable={}):
+        """Constructor.
+        @param iterable: dictionary of elements to add"""
         self._data = {}
         self._len = 0
         self.update(iterable)
 
     def update(self, iterable):
+        """Update the bag
+        @param iterable: dictionary if elements to add"""
         if isinstance(iterable, dict):
             for elem, n in iterable.iteritems():
                 self[elem] += n
@@ -78,6 +84,7 @@ class Bag(object):
         self._len = data[1]
 
     def clear(self):
+        """Remove all data elements in the bag"""
         self._data.clear()
         self._len = 0
 
@@ -93,6 +100,9 @@ class Bag(object):
         return self._data.iteritems()     
 
     def mostcommon(self, n=None):
+        """Lists the most common elements of the bag and its counts
+        
+        @return: list of (element, count of the element)"""
         if n is None:
             return sorted(self.itercounts(), key=itemgetter(1), reverse=True)
         it = enumerate(self.itercounts())

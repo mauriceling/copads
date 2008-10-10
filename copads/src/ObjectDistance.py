@@ -13,7 +13,11 @@ from Operations import summation
 
 def setCompare(original, test, absent):
     """Used for processing set-based (unordered or nominal) distance of 
-    categorical data."""
+    categorical data.
+    
+    @param original: list of original data
+    @param test: list of data to test against original
+    @param absent: indicator to define absent data"""
     original_only = float(len([x for x in original if x not in test]))
     test_only = float(len([x for x in test if x not in original]))
     both = float(len([x for x in original if x in test]))
@@ -22,7 +26,11 @@ def setCompare(original, test, absent):
 def listCompare(original, test, absent):
     """
     Used for processing list-based (ordered or ordinal) distance of categorical 
-    data."""
+    data.
+    
+    @param original: list of original data
+    @param test: list of data to test against original
+    @param absent: indicator to define absent data"""
     original = list(original)
     test = list(test)
     original_only = 0.0
@@ -46,14 +54,16 @@ def Jaccard(original = '', test = '', absent = 0, type = 'Set'):
     (1 - Jaccard Index) based on the formula,
     
     1 - [(number of regions where both species are present)/
-         (number of regions where at least one species is present)]
+    (number of regions where at least one species is present)]
+        
+    @see: Jaccard P (1908) Nouvelles recherches sur la distribution florale. 
+    Bull Soc Vaud Sci Nat 44:223-270
     
-    absent: user-defined identifier for absent of region, default = 0
-    type: {Set | List}, define whether use Set comparison (unordered) or
-          list comparison (ordered), default = Set
-         
-    Ref: Jaccard P (1908) Nouvelles recherches sur la distribution florale. 
-         Bull Soc Vaud Sci Nat 44:223-270
+    @param original: list of original data
+    @param test: list of data to test against original
+    @param absent: user-defined identifier for absent of region, default = 0
+    @param type: {Set | List}, define whether use Set comparison (unordered) or 
+    list comparison (ordered), default = Set
     """
     if type == 'Set':
         (original_only, test_only, both) = setCompare(original, test, absent)
@@ -69,15 +79,17 @@ def Nei_Li(original = '', test = '', absent = 0, type = 'Set'):
     based on the formula,
     
     1 - [2 x (number of regions where both species are present)/
-         [(2 x (number of regions where both species are present)) + 
-          (number of regions where only one species is present)]]
+    [(2 x (number of regions where both species are present)) + 
+    (number of regions where only one species is present)]]
+        
+    @see: Nei M, Li WH (1979) Mathematical models for studying genetic variation 
+    in terms of restriction endonucleases. Proc Natl Acad Sci USA 76:5269-5273
     
-    absent: user-defined identifier for absent of region, default = 0
-    type: {Set | List}, define whether use Set comparison (unordered) or
-          list comparison (ordered), default = Set
-                
-    Ref: Nei M, Li WH (1979) Mathematical models for studying genetic variation 
-        in terms of restriction endonucleases. Proc Natl Acad Sci USA 76:5269-5273
+    @param original: list of original data
+    @param test: list of data to test against original
+    @param absent: user-defined identifier for absent of region, default = 0
+    @param type: {Set | List}, define whether use Set comparison (unordered) or
+        list comparison (ordered), default = Set
     """
     if type == 'Set':
         (original_only, test_only, both) = setCompare(original, test, absent)
@@ -93,10 +105,13 @@ def Sokal_Michener(original = '', test = ''):
     Distance based on the formula,
     
     1 - [(number of regions where both species are present or absent)/
-         (number of regions where both species are absent different)]
+    (number of regions where both species are absent different)]
          
-    Ref: Sokal RR, Michener CD (1958) A statistical method for evaluating 
-        systematic relationships. Univ Kansas Sci Bull 38:1409-1438
+    @see: Sokal RR, Michener CD (1958) A statistical method for evaluating 
+    systematic relationships. Univ Kansas Sci Bull 38:1409-1438
+        
+    @param original: list of original data
+    @param test: list of data to test against original
     """
     if len(original) <> len(test): 
         raise DistanceInputSizeError("Size (length) of inputs must be \
@@ -119,11 +134,13 @@ def Matching(original = '', test = '', absent = 0, type = 'Set'):
     (1 - Matching Coefficient) based on the formula,
     
     1 - (number of regions where both species are present or absent
-        / sum of species in each list)
+    / sum of species in each list)
     
-    absent: user-defined identifier for absent of region, default = 0
-    type: {Set | List}, define whether use Set comparison (unordered) or
-          list comparison (ordered), default = Set
+    @param original: list of original data
+    @param test: list of data to test against original
+    @param absent: user-defined identifier for absent of region, default = 0
+    @param type: {Set | List}, define whether use Set comparison (unordered) or
+        list comparison (ordered), default = Set
     """
     if type == 'Set':
         (original_only, test_only, both) = setCompare(original, test, absent)
@@ -141,11 +158,13 @@ def Dice(original = '', test = '', absent = 0, type = 'Set'):
     (1 - Dice Index) based on the formula,
     
     1 - (number of regions where both species are present
-        / sum of species in each list)
+    / sum of species in each list)
     
-    absent: user-defined identifier for absent of region, default = 0
-    type: {Set | List}, define whether use Set comparison (unordered) or
-          list comparison (ordered), default = Set
+    @param original: list of original data
+    @param test: list of data to test against original
+    @param absent: user-defined identifier for absent of region, default = 0
+    @param type: {Set | List}, define whether use Set comparison (unordered) or
+        list comparison (ordered), default = Set
     """
     if type == 'Set':
         (original_only, test_only, both) = setCompare(original, test, absent)
@@ -161,12 +180,14 @@ def Dice_Sorensen(original = '', test = '', absent = 0, type = 'Set'):
     (1 - Dice-Sorensen Index) based on the formula,
     
     1 - [2 x (number of regions where both species are present) /
-        (2 x (number of regions where both species are present) + 
-            (number of regions where at least one species is present))]
+    (2 x (number of regions where both species are present) + 
+    (number of regions where at least one species is present))]
     
-    absent: user-defined identifier for absent of region, default = 0
-    type: {Set | List}, define whether use Set comparison (unordered) or
-          list comparison (ordered), default = Set
+    @param original: list of original data
+    @param test: list of data to test against original
+    @param absent: user-defined identifier for absent of region, default = 0
+    @param type: {Set | List}, define whether use Set comparison (unordered) or
+        list comparison (ordered), default = Set
     """
     if type == 'Set':
         (original_only, test_only, both) = setCompare(original, test, absent)
@@ -181,17 +202,17 @@ def Ochiai(original = '', test = '', absent = 0, type = 'Set'):
     Given 2 lists (original and test), calculates the Ochiai Distance 
     based on the formula,
     
-    1 - [(number of regions where both species are present) / 
-         (square root of 
-            ((number of regions where both species are present) +
-                 (number of regions found in original only)) * 
-            ((number of regions where both species are present) +
-                 (number of regions found in test only))
-        )]
+    1 - [(number of regions where both species are present) / (square root of 
+    ((number of regions where both species are present) +
+    (number of regions found in original only)) * 
+    ((number of regions where both species are present) +
+    (number of regions found in test only)))]
     
-    absent: user-defined identifier for absent of region, default = 0
-    type: {Set | List}, define whether use Set comparison (unordered) or
-          list comparison (ordered), default = Set
+    @param original: list of original data
+    @param test: list of data to test against original
+    @param absent: user-defined identifier for absent of region, default = 0
+    @param type: {Set | List}, define whether use Set comparison (unordered) or
+        list comparison (ordered), default = Set
     """
     if type == 'Set':
         (original_only, test_only, both) = setCompare(original, test, absent)
@@ -206,16 +227,16 @@ def Kulczynski(original = '', test = '', absent = 0 , type = 'Set'):
     Given 2 lists (original and test), calculates the Kulczynski Distance 
     based on the formula,
     
-    1-(mean of (
-       ((number of regions where both species are present)/
-        (number of regions where species 1 is present)) 
-       and 
-       ((number of regions where both species are present)/
-        (number of regions where species 2 is present))))
+    1-(mean of (((number of regions where both species are present)/
+    (number of regions where species 1 is present)) and 
+    ((number of regions where both species are present)/
+    (number of regions where species 2 is present))))
         
-    absent: user-defined identifier for absent of region, default = 0
-    type: {Set | List}, define whether use Set comparison (unordered) or
-          list comparison (ordered), default = Set
+    @param original: list of original data
+    @param test: list of data to test against original
+    @param absent: user-defined identifier for absent of region, default = 0
+    @param type: {Set | List}, define whether use Set comparison (unordered) or
+        list comparison (ordered), default = Set
     """
     if type == 'Set':
         (original_only, test_only, both) = setCompare(original, test, absent)
@@ -232,6 +253,9 @@ def Hamming(original = '', test = ''):
     
     Given 2 lists (original and test), calculates the Hamming Distance by 
     counting the number of ordered differences between the 2 lists.
+    
+    @param original: list of original data
+    @param test: list of data to test against original
     """
     if len(original) <> len(test): 
         raise DistanceInputSizeError("Size (length) of inputs must be \
@@ -245,7 +269,10 @@ def Levenshtein(a = '', b = ''):
     """
     Levenshtein Distance is distance measure for interval or ratio data.
     Calculates the Levenshtein distance between a and b. This routine is 
-    implemented by Magnus Lie Hetland (http://www.hetland.org/python/distance.py)"""
+    implemented by Magnus Lie Hetland (http://www.hetland.org/python/distance.py)
+    
+    @param a: list of original data
+    @param b: list of data to test against original"""
     n, m = len(a), len(b)
     if n > m:
         # Make sure n <= m, to use O(min(n,m)) space
@@ -267,7 +294,10 @@ def Euclidean(x = '', y = ''):
     Euclidean Distance is distance measure for interval or ratio data.
     
     euclidean_py(x, y) -> euclidean distance between x and y
-    Adapted from BioPython"""
+    Adapted from BioPython
+    
+    @param x: list of original data
+    @param y: list of data to test against original"""
     # lightly modified from implementation by Thomas Sicheritz-Ponten.
     # This works faster than the Numeric implementation on shorter
     # vectors.
@@ -284,7 +314,12 @@ def Minkowski(x = '', y = '', power = 3):
     Minkowski Distance is distance measure for interval or ratio data.
     
     Minkowski Distance is a generalized absolute form of Euclidean Distance.
-    Minkowski Distance = Euclidean Distance when power = 2"""
+    Minkowski Distance = Euclidean Distance when power = 2
+    
+    @param x: list of original data
+    @param y: list of data to test against original
+    @param power: expontential variable
+    @type power: integer"""
     if len(x) != len(y):
         raise DistanceInputSizeError("Size (length) of inputs must be \
             equal for Minkowski distance")
@@ -298,7 +333,10 @@ def Manhattan(x = '', y = ''):
     Manhattan Distance is distance measure for interval or ratio data.
     
     Manhattan Distance is also known as City Block Distance. It is essentially
-    summation of the absolute difference between each element."""
+    summation of the absolute difference between each element.
+    
+    @param x: list of original data
+    @param y: list of data to test against original"""
     if len(x) != len(y):
         raise DistanceInputSizeError("Size (length) of inputs must be \
             equal for Manhattan distance")
@@ -311,8 +349,11 @@ def Canberra(x = '', y = ''):
     """
     Canberra Distance is distance measure for interval or ratio data.
     
-    Ref: Lance GN and Williams WT. 1966 Computer programs for hierarchical 
-    polythetic classification. Computer Journal 9: 60-64."""
+    @see: Lance GN and Williams WT. 1966 Computer programs for hierarchical 
+    polythetic classification. Computer Journal 9: 60-64.
+    
+    @param x: list of original data
+    @param y: list of data to test against original"""
     if len(x) != len(y):
         raise DistanceInputSizeError("Size (length) of inputs must be \
             equal for Canberra distance")
@@ -325,8 +366,11 @@ def Bray_Curtis(x = '', y = ''):
     """
     Bray-Curtis Distance is distance measure for interval or ratio data.
     
-    Ref: Bray JR and Curtis JT. 1957. An ordination of the upland forest
-    communities of S. Winconsin. Ecological Monographs27: 325-349."""
+    @see: Bray JR and Curtis JT. 1957. An ordination of the upland forest
+    communities of S. Winconsin. Ecological Monographs27: 325-349.
+    
+    @param x: list of original data
+    @param y: list of data to test against original"""
     if len(x) != len(y):
         raise DistanceInputSizeError("Size (length) of inputs must be \
             equal for Bray-Curtis distance")

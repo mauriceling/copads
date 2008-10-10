@@ -1,5 +1,4 @@
-"""
-Collection of hypothesis testing routines.
+"""Collection of hypothesis testing routines.
 Each routine will return a 3-element tuple: (result, statistic, critical)
 where
 result = True (reject null hypothesis; statistic > critical) or False (accept 
@@ -9,51 +8,52 @@ critical = value of critical region for statistical test
 
 References:
 Test 1-100: Gopal K. Kanji. 2006. 100 Statistical Tests, 3rd edition.
-            Sage Publications.
+Sage Publications.
 """
 
 from StatisticsDistribution import *
 from math import sqrt, log
 
-def test(statistic, distribution, alpha):
-    """
-    Generates the critcal region from distribution and alpha value using
+def test(statistic, distribution, confidence):
+    """Generates the critcal region from distribution and confidence value using
     the distribution's inverseCDF method. 
     
-    Return a 3-element tuple: (result, statistic, critical)
-    where
-        result = True (reject null hypothesis; statistic > critical) or 
-                    False (accept null hypothesis; statistic <= critical)
-        statistic = calculated statistic value
-        critical = value of critical region for statistical test"""
-    critical = distribution.inverseCDF(alpha)
+    @param statistic: calculated statistic (float)
+    @param distribution: distribution to calculate critical value
+    @type distribution: instance of a statistics distribution
+    @param confidence: confidence level (usually 0.95 or 0.99)
+    @type confidence: float of less than 1.0
+    @return: 3-element tuple (result, statistic, critical)
+    result = True (reject null hypothesis; statistic > critical) or 
+    False (accept null hypothesis; statistic <= critical).
+    statistic = calculated statistic value.
+    critical = value of critical region for statistical test."""
+    critical = distribution.inverseCDF(confidence)
     if statistic < critical: return (False, statistic, critical)
     else: return (True, statistic, critical)
     
 def Z1Mean1Variance(**kwargs):
-    """
-    Test 1: Z-test for a population mean (variance known)
+    """Test 1: Z-test for a population mean (variance known)
     
     To investigate the significance of the difference between an assumed 
     population mean and sample mean when the population variance is
     known.
     
-    Limitations:
-    1. Requires population variance (use Test 7 if population variance unknown)
+    Limitations    
+    - Requires population variance (use Test 7 if population variance unknown)
     
-    Parameters:
-    smean = sample mean
-    pmean = population mean
-    pvar = population variance
-    ssize = sample size
-    alpha = confidence level"""
+    @param smean: sample mean
+    @param pmean: population mean
+    @param pvar: population variance
+    @param ssize: sample size
+    @param confidence: confidence level"""
     smean = kwargs['smean']
     pmean = kwargs['pmean']
     pvar = kwargs['pvar']
     ssize = kwargs['ssize']
     statistic = (smean - pmean)/ \
                 (pvar / sqrt(ssize))
-    return test(statistic, NormalDistribution(), kwargs['alpha'])
+    return test(statistic, NormalDistribution(), kwargs['confidence'])
 
 def Z2Mean1Variance(**kwargs):
     """
@@ -66,15 +66,14 @@ def Z2Mean1Variance(**kwargs):
     1. Population variances must be known and equal (use Test 8 if population
     variances unknown
     
-    Parameters:
-    smean1 = sample mean of sample #1
-    smean2 = sample mean of sample #2
-    pvar = variances of both populations (variances are equal)
-    ssize1 = sample size of sample #1
-    ssize2 = sample size of sample #2
-    alpha = confidence level
-    pmean1 = population mean of population #1 (optional)
-    pmean2 = population mean of population #2 (optional)"""
+    @param smean1: sample mean of sample #1
+    @param smean2: sample mean of sample #2
+    @param pvar: variances of both populations (variances are equal)
+    @param ssize1: sample size of sample #1
+    @param ssize2: sample size of sample #2
+    @param confidence: confidence level
+    @param pmean1: population mean of population #1 (optional)
+    @param pmean2: population mean of population #2 (optional)"""
     if not kwargs.has_key('pmean1'): 
         pmean1 = 0.0
     else: pmean1 = kwargs['pmean1']
@@ -88,7 +87,7 @@ def Z2Mean1Variance(**kwargs):
     ssize2 = kwargs['ssize2']
     statistic = ((smean1 - smean2) - (pmean1 - pmean2))/ \
                 (pvar * sqrt((1 / ssize1) + (1 / ssize2)))
-    return test(statistic, NormalDistribution(), kwargs['alpha'])    
+    return test(statistic, NormalDistribution(), kwargs['confidence'])    
 
 def Z2Mean2Variance(**kwargs):    
     """
@@ -101,16 +100,15 @@ def Z2Mean2Variance(**kwargs):
     1. Population variances must be known(use Test 9 if population variances 
     unknown
     
-    Parameters:
-    smean1 = sample mean of sample #1
-    smean2 = sample mean of sample #2
-    pvar1 = variance of population #1
-    pvar2 = variance of population #2
-    ssize1 = sample size of sample #1
-    ssize2 = sample size of sample #2
-    alpha = confidence level
-    pmean1 = population mean of population #1 (optional)
-    pmean2 = population mean of population #2 (optional)"""
+    @param smean1: sample mean of sample #1
+    @param smean2: sample mean of sample #2
+    @param pvar1: variance of population #1
+    @param pvar2: variance of population #2
+    @param ssize1: sample size of sample #1
+    @param ssize2: sample size of sample #2
+    @param confidence: confidence level
+    @param pmean1: population mean of population #1 (optional)
+    @param pmean2: population mean of population #2 (optional)"""
     if not kwargs.has_key('pmean1'): 
         pmean1 = 0.0
     else: pmean1 = kwargs['pmean1']
@@ -125,7 +123,7 @@ def Z2Mean2Variance(**kwargs):
     ssize2 = kwargs['ssize2']
     statistic = ((smean1 - smean2) - (pmean1 - pmean2))/ \
                 sqrt((pvar1 / ssize1) + (pvar2 / ssize2))
-    return test(statistic, NormalDistribution(), kwargs['alpha'])
+    return test(statistic, NormalDistribution(), kwargs['confidence'])
 
 def Z1Proportion(**kwargs):    
     """
@@ -138,17 +136,16 @@ def Z1Proportion(**kwargs):
     1. Requires sufficiently large sample size to use Normal approximation to
     binomial
     
-    Parameters:
-    spro = sample proportion
-    ppro = population proportion
-    ssize = sample size
-    alpha = confidence level"""
+    @param spro: sample proportion
+    @param ppro: population proportion
+    @param ssize: sample size
+    @param confidence: confidence level"""
     spro = kwargs['spro']
     ppro = kwargs['ppro']
     ssize = kwargs['ssize']
     statistic = (abs(ppro - spro) - (1 / (2 * ssize)))/ \
                 sqrt((ppro * (1 - spro)) / ssize)
-    return test(statistic, NormalDistribution(), kwargs['alpha'])
+    return test(statistic, NormalDistribution(), kwargs['confidence'])
 
 def Z2Proportion(**kwargs):    
     """
@@ -160,12 +157,11 @@ def Z2Proportion(**kwargs):
     1. Requires sufficiently large sample size to use Normal approximation to
     binomial
     
-    Parameters:
-    spro1 = sample proportion #1
-    spro2 = sample proportion #2
-    ssize1 = sample size #1
-    ssize2 = sample size #2
-    alpha = confidence level"""
+    @param spro1: sample proportion #1
+    @param spro2: sample proportion #2
+    @param ssize1: sample size #1
+    @param ssize2: sample size #2
+    @param confidence: confidence level"""
     spro1 = kwargs['spro1']
     spro2 = kwargs['spro2']
     ssize1 = kwargs['ssize1']
@@ -173,7 +169,7 @@ def Z2Proportion(**kwargs):
     P = ((spro1 * ssize1) + (spro2 * ssize2)) / (ssize1 + ssize2)
     statistic = (spro1 - spro2) / \
                 sqrt((P * (1 - P)) * ((1 / ssize1) * (1 / ssize2)))
-    return test(statistic, NormalDistribution(), kwargs['alpha'])
+    return test(statistic, NormalDistribution(), kwargs['confidence'])
 
 def Z2Count(**kwargs):    
     """
@@ -185,18 +181,17 @@ def Z2Count(**kwargs):
     1. Requires sufficiently large sample size to use Normal approximation to
     binomial
     
-    Parameters:
-    time1 = first measurement time
-    time2 = second measurement time
-    count1 = counts at first measurement time
-    count2 = counts at second measurement time
-    alpha = confidence level"""
+    @param time1: first measurement time
+    @param time2: second measurement time
+    @param count1: counts at first measurement time
+    @param count2: counts at second measurement time
+    @param confidence: confidence level"""
     time1 = kwargs['time1']
     time2 = kwargs['time2']
     R1 = kwargs['count1'] / time1
     R2 = kwargs['count2'] / time2
     statistic = (R1 - R2) / sqrt((R1 / time1) + (R2 / time2))
-    return test(statistic, NormalDistribution(), kwargs['alpha'])
+    return test(statistic, NormalDistribution(), kwargs['confidence'])
 
 def t1Mean(**kwargs):
     """
@@ -209,17 +204,16 @@ def t1Mean(**kwargs):
     Limitations:
     1. Weaker form of Test 1
     
-    Parameters:
-    smean = sample mean
-    pmean = population mean
-    svar = sample variance
-    ssize = sample size"""
+    @param smean: sample mean
+    @param pmean: population mean
+    @param svar: sample variance
+    @param ssize: sample size"""
     smean = kwargs['smean']
     pmean = kwargs['pmean']
     svar = kwargs['svar']
     ssize = kwargs['ssize']
     statistic = (smean - pmean) / (svar / sqrt(ssize))
-    return test(statistic, TDistribution(df = ssize - 1), kwargs['alpha'])
+    return test(statistic, TDistribution(df = ssize - 1), kwargs['confidence'])
 
 def t2Mean2EqualVariance(**kwargs):    
     """
@@ -233,16 +227,15 @@ def t2Mean2EqualVariance(**kwargs):
     Limitations:
     1. Weaker form of Test 2
     
-    Parameters:
-    smean1 = sample mean of sample #1
-    smean2 = sample mean of sample #2
-    svar1 = variances of sample #1
-    svar2 = variances of sample #2
-    ssize1 = sample size of sample #1
-    ssize2 = sample size of sample #2
-    alpha = confidence level
-    pmean1 = population mean of population #1 (optional)
-    pmean2 = population mean of population #2 (optional)"""
+    @param smean1: sample mean of sample #1
+    @param smean2: sample mean of sample #2
+    @param svar1: variances of sample #1
+    @param svar2: variances of sample #2
+    @param ssize1: sample size of sample #1
+    @param ssize2: sample size of sample #2
+    @param confidence: confidence level
+    @param pmean1: population mean of population #1 (optional)
+    @param pmean2: population mean of population #2 (optional)"""
     if not kwargs.has_key('pmean1'): 
         pmean1 = 0.0
     else: pmean1 = kwargs['pmean1']
@@ -259,7 +252,7 @@ def t2Mean2EqualVariance(**kwargs):
     pvar = (((ssize1 - 1) * svar1) + ((ssize2 - 1) * svar2)) / df
     statistic = ((smean1 - smean2) - (pmean1 - pmean2)) / \
                 (pvar * sqrt((1 / ssize1) + (1 / ssize2)))
-    return test(statistic, TDistribution(df = df), kwargs['alpha'])
+    return test(statistic, TDistribution(df = df), kwargs['confidence'])
 
 def t2Mean2UnequalVariance(**kwargs):
     """
@@ -272,16 +265,15 @@ def t2Mean2UnequalVariance(**kwargs):
     Limitations:
     1. Weaker form of Test 3
     
-    Parameters:
-    smean1 = sample mean of sample #1
-    smean2 = sample mean of sample #2
-    svar1 = variances of sample #1
-    svar2 = variances of sample #2
-    ssize1 = sample size of sample #1
-    ssize2 = sample size of sample #2
-    alpha = confidence level
-    pmean1 = population mean of population #1 (optional)
-    pmean2 = population mean of population #2 (optional)"""
+    @param smean1: sample mean of sample #1
+    @param smean2: sample mean of sample #2
+    @param svar1: variances of sample #1
+    @param svar2: variances of sample #2
+    @param ssize1: sample size of sample #1
+    @param ssize2: sample size of sample #2
+    @param confidence: confidence level
+    @param pmean1: population mean of population #1 (optional)
+    @param pmean2: population mean of population #2 (optional)"""
     if not kwargs.has_key('pmean1'): 
         pmean1 = 0.0
     else: pmean1 = kwargs['pmean1']
@@ -299,7 +291,7 @@ def t2Mean2UnequalVariance(**kwargs):
     df = (((svar1 / ssize1) + (svar2 / ssize2)) ** 2) / \
         (((svar1 ** 2) / ((ssize1 ** 2) * (ssize1 - 1))) + \
             ((svar2 ** 2) / ((ssize2 ** 2) * (ssize2 - 1))))
-    return test(statistic, TDistribution(df = df), kwargs['alpha'])
+    return test(statistic, TDistribution(df = df), kwargs['confidence'])
 
 def tPaired(**kwargs):    
     """
@@ -308,18 +300,17 @@ def tPaired(**kwargs):
     To investigate the significance of the difference between two population
     means when no assumption is made about the population variances.
     
-    Parameters:
-    smean1 = sample mean of sample #1
-    smean2 = sample mean of sample #2
-    svar = variance of differences between pairs
-    ssize = sample size
-    alpha = confidence level"""
+    @param smean1: sample mean of sample #1
+    @param smean2: sample mean of sample #2
+    @param svar: variance of differences between pairs
+    @param ssize: sample size
+    @param confidence: confidence level"""
     smean1 = kwargs['smean1']
     smean2 = kwargs['smean2']
     svar = kwargs['svar']
     ssize = kwargs['ssize']
     statistic = (smean1 - smean2) / sqrt(svar / ssize)
-    return test(statistic, TDistribution(df = ssize - 1), kwargs['alpha'])
+    return test(statistic, TDistribution(df = ssize - 1), kwargs['confidence'])
     
     """
     Test 11: t-test of a regression coefficient
@@ -344,13 +335,12 @@ def tPearsonCorrelation(**kwargs):
     
     Use Test 59 when these conditions cannot be met
     
-    Parameters:
-    r = calculated Pearson's product-moment correlation coefficient
-    ssize = sample size"""
+    @param r: calculated Pearson's product-moment correlation coefficient
+    @param ssize: sample size"""
     ssize = kwargs['ssize']
     r = kwargs['r']
     statistic = (r * sqrt(ssize - 2)) / sqrt(1 - (r **2))
-    return test(statistic, TDistribution(df = ssize - 2), kwargs['alpha'])
+    return test(statistic, TDistribution(df = ssize - 2), kwargs['confidence'])
 
 def ZPearsonCorrelation(**kwargs):    
     """
@@ -365,10 +355,9 @@ def ZPearsonCorrelation(**kwargs):
     
     Use Test 59 when these conditions cannot be met
     
-    Parameters:
-    sr = calculated sample Pearson's product-moment correlation coefficient
-    pr = specified Pearson's product-moment correlation coefficient to test
-    ssize = sample size"""
+    @param sr: calculated sample Pearson's product-moment correlation coefficient
+    @param pr: specified Pearson's product-moment correlation coefficient to test
+    @param ssize: sample size"""
     ssize = kwargs['ssize']
     sr = kwargs['sr']
     pr = kwargs['pr']
@@ -376,7 +365,7 @@ def ZPearsonCorrelation(**kwargs):
     meanZ1 = 0.5 * log((1 + pr) / (1 - pr))
     sigmaZ1 = 1 / sqrt(ssize - 3)
     statistic = (Z1 - meanZ1) / sigmaZ1
-    return test(statistic, NormalDistribution(), kwargs['alpha'])
+    return test(statistic, NormalDistribution(), kwargs['confidence'])
     
 def t14(**kwargs):    
     """
@@ -385,7 +374,7 @@ def t14(**kwargs):
     To investigate the significance of the difference between the correlation
     coefficients for a pair variables occurring from two difference 
     populations."""
-    return test(statistic, Distribution(), kwargs['alpha'])
+    return test(statistic, Distribution(), kwargs['confidence'])
 
 def t15(**kwargs):    
     """
@@ -393,7 +382,7 @@ def t15(**kwargs):
     
     To investigate the difference between a sample variance and an assumed
     population variance."""
-    return test(statistic, Distribution(), kwargs['alpha'])
+    return test(statistic, Distribution(), kwargs['confidence'])
 
 def t16(**kwargs):    
     """
@@ -401,7 +390,7 @@ def t16(**kwargs):
     
     To investigate the significance of the difference between two population
     variances."""
-    return test(statistic, Distribution(), kwargs['alpha'])
+    return test(statistic, Distribution(), kwargs['confidence'])
     
 def t17(**kwargs):
 	"""
@@ -409,7 +398,7 @@ def t17(**kwargs):
     
     To investigate the difference between two population variances when there 
     is correlation between the pairs of observations."""
-	return test(statistic, Distribution(), kwargs['alpha'])
+	return test(statistic, Distribution(), kwargs['confidence'])
 
 def t18(**kwargs):
 	"""
@@ -419,7 +408,7 @@ def t18(**kwargs):
     multivariate result. In another words, we wish to know if the mean pattern
     obtained from the first experiment agrees with the mean pattern obtained
     for the second."""
-	return test(statistic, Distribution(), kwargs['alpha'])
+	return test(statistic, Distribution(), kwargs['confidence'])
 
 def t19(**kwargs):
 	"""
@@ -428,22 +417,22 @@ def t19(**kwargs):
     To investigate the origin of one species of values for p random variates,
     when one of two markedly different populations may have produced that
     particular series."""
-	return test(statistic, Distribution(), kwargs['alpha'])
+	return test(statistic, Distribution(), kwargs['confidence'])
 
 def t20(**kwargs):
 	"""
 	"""
-	return test(statistic, Distribution(), kwargs['alpha'])
+	return test(statistic, Distribution(), kwargs['confidence'])
 
 def t21(**kwargs):
 	"""
 	"""
-	return test(statistic, Distribution(), kwargs['alpha'])
+	return test(statistic, Distribution(), kwargs['confidence'])
 
 def t22(**kwargs):
 	"""
 	"""
-	return test(statistic, Distribution(), kwargs['alpha'])
+	return test(statistic, Distribution(), kwargs['confidence'])
 
 def ZCorrProportion(**kwargs):
     """
@@ -457,11 +446,10 @@ def ZCorrProportion(**kwargs):
     1. The same people are questioned both times (correlated property).
     2. Sample size must be quite large.
     
-    Parameters:
-    ssize = sample size
-    ny = number answered 'no' in first poll and 'yes' in second poll
-    yn = number answered 'yes' in first poll and 'no' in second poll
-    alpha = confidence level
+    @param ssize: sample size
+    @param ny: number answered 'no' in first poll and 'yes' in second poll
+    @param yn: number answered 'yes' in first poll and 'no' in second poll
+    @param confidence: confidence level
     """    
     ssize = kwargs['ssize']
     ny = kwargs['ny']
@@ -469,7 +457,7 @@ def ZCorrProportion(**kwargs):
     sigma = ((ny + yn) - ((ny - yn) ** 2)) / ssize
     sigma = sqrt(sigma / (ssize * (ssize - 1)))
     statistic = (ny - yn) / (sigma * ssize)
-    return test(statistic, NormalDistribution(), kwargs['alpha'])
+    return test(statistic, NormalDistribution(), kwargs['confidence'])
 
 def Chisq2Variance(**kwargs):
     """
@@ -481,17 +469,16 @@ def Chisq2Variance(**kwargs):
     Limitations:
     1. Sample from normal distribution
     
-    Parameters:
-    ssize = sample size
-    svar = sample variance
-    pvar = population variance (assumed)
-    alpha = confidence level"""
+    @param ssize: sample size
+    @param svar: sample variance
+    @param pvar: population variance (assumed)
+    @param confidence: confidence level"""
     ssize = kwargs['ssize']
     svar = kwargs['svar']
     pvar = kwargs['pvar']
     statistic = (svar / pvar) * (ssize - 1)
     return test(statistic, ChiSquareDistribution(df = ssize - 1), 
-                kwargs['alpha'])
+                kwargs['confidence'])
 
 def F2Count(**kwargs):
     """
@@ -503,13 +490,14 @@ def F2Count(**kwargs):
     Limitations:
     1. Counts must satisfy a Poisson distribution
     2. Samples obtained under same conditions.
-    
-    Parameters:
-    count1 = count of first sample
-    count2 = count of second sample
-    repeat = flag for repeated sampling (default = False)
-    time1 = time at which first sample is taken (only needed if repeat = True)
-    time2 = time at which second sample is taken (only needed if repeat = True)
+
+    @param count1: count of first sample
+    @param count2: count of second sample
+    @param repeat: flag for repeated sampling (default = False)
+    @param time1: time at which first sample is taken 
+        (only needed if repeat = True)
+    @param time2:time at which second sample is taken 
+        (only needed if repeat = True)
     """
     count1 = kwargs['count1']
     count2 = kwargs['count2']
@@ -525,62 +513,62 @@ def F2Count(**kwargs):
         numerator = 2 * count1 + 1
         denominator = 2 * count2 + 1
     return test(statistic, FDistribution(numerator = numerator,
-                                denominator = denominator), kwargs['alpha'])
+                                denominator = denominator), kwargs['confidence'])
 
 def t26(**kwargs):
 	"""
 	"""
-	return test(statistic, Distribution(), kwargs['alpha'])
+	return test(statistic, Distribution(), kwargs['confidence'])
 
 def t27(**kwargs):
 	"""
 	"""
-	return test(statistic, Distribution(), kwargs['alpha'])
+	return test(statistic, Distribution(), kwargs['confidence'])
 
 def t28(**kwargs):
 	"""
 	"""
-	return test(statistic, Distribution(), kwargs['alpha'])
+	return test(statistic, Distribution(), kwargs['confidence'])
 
 def t29(**kwargs):
 	"""
 	"""
-	return test(statistic, Distribution(), kwargs['alpha'])
+	return test(statistic, Distribution(), kwargs['confidence'])
 
 def t30(**kwargs):
 	"""
 	"""
-	return test(statistic, Distribution(), kwargs['alpha'])
+	return test(statistic, Distribution(), kwargs['confidence'])
 
 def t31(**kwargs):
 	"""
 	"""
-	return test(statistic, Distribution(), kwargs['alpha'])
+	return test(statistic, Distribution(), kwargs['confidence'])
 
 def t32(**kwargs):
 	"""
 	"""
-	return test(statistic, Distribution(), kwargs['alpha'])
+	return test(statistic, Distribution(), kwargs['confidence'])
 
 def t33(**kwargs):
 	"""
 	"""
-	return test(statistic, Distribution(), kwargs['alpha'])
+	return test(statistic, Distribution(), kwargs['confidence'])
 
 def t34(**kwargs):
 	"""
 	"""
-	return test(statistic, Distribution(), kwargs['alpha'])
+	return test(statistic, Distribution(), kwargs['confidence'])
 
 def t35(**kwargs):
 	"""
 	"""
-	return test(statistic, Distribution(), kwargs['alpha'])
+	return test(statistic, Distribution(), kwargs['confidence'])
 
 def t36(**kwargs):
 	"""
 	"""
-	return test(statistic, Distribution(), kwargs['alpha'])
+	return test(statistic, Distribution(), kwargs['confidence'])
 
 def ChisqFit(**kwargs):
     """
@@ -596,26 +584,25 @@ def ChisqFit(**kwargs):
     2. Same class division for both distributions
     3. Expected frequency of each class should be at least 5
     
-    Parameters:
-    observed = list of observed frequencies (index matched with expected)
-    expected = list of expected frequencies (index matched with observed)
-    alpha = confidence level""" 
+    @param observed: list of observed frequencies (index matched with expected)
+    @param expected: list of expected frequencies (index matched with observed)
+    @param confidence: confidence level""" 
     freq = [float(((observed[i] - expected[i]) ** 2) / expected[i])
             for i in range(len(observed))]
     statistic = 0.0
     for x in freq: statistic = statistic + x
     return test(statistic, ChiSqDistribution(df = len(observed) - 1), 
-                kwargs['alpha'])
+                kwargs['confidence'])
 
 def t38(**kwargs):
 	"""
 	"""
-	return test(statistic, Distribution(), kwargs['alpha'])
+	return test(statistic, Distribution(), kwargs['confidence'])
 
 def t39(**kwargs):
 	"""
 	"""
-	return test(statistic, Distribution(), kwargs['alpha'])
+	return test(statistic, Distribution(), kwargs['confidence'])
 
 def Chisq2x2(**kwargs):
     """
@@ -628,10 +615,9 @@ def Chisq2x2(**kwargs):
     1. Total sample size (sample 1 + sample 2) must be more than 20
     2. Each cell frequency more than 3
     
-    Parameters:
-    s1 = 2-element list or tuple of frequencies for sample #1
-    s2 = 2-element list or tuple of frequencies for sample #2
-    alpha = confidence level"""
+    @param s1: 2-element list or tuple of frequencies for sample #1
+    @param s2: 2-element list or tuple of frequencies for sample #2
+    @param confidence: confidence level"""
     s1c1 = kwargs['s1'][0]
     s1c2 = kwargs['s1'][1]
     s2c1 = kwargs['s2'][0]
@@ -640,305 +626,305 @@ def Chisq2x2(**kwargs):
     statistic = statistic * (((s1c1 * s2c2) - (s1c2 * s2c1)) ** 2)
     statistic = statistic / ((s1c1 + s1c2)*(s2c1 + s2c2)* \
                             (s1c1 + s2c1)*(s1c2 + s2c2))
-    return test(statistic, ChisqDistribution(df = 1), kwargs['alpha'])
+    return test(statistic, ChisqDistribution(df = 1), kwargs['confidence'])
 
 def t41(**kwargs):
 	"""
 	"""
-	return test(statistic, Distribution(), kwargs['alpha'])
+	return test(statistic, Distribution(), kwargs['confidence'])
 
 def t42(**kwargs):
 	"""
 	"""
-	return test(statistic, Distribution(), kwargs['alpha'])
+	return test(statistic, Distribution(), kwargs['confidence'])
 
 def t43(**kwargs):
 	"""
 	"""
-	return test(statistic, Distribution(), kwargs['alpha'])
+	return test(statistic, Distribution(), kwargs['confidence'])
 
 def t44(**kwargs):
 	"""
 	"""
-	return test(statistic, Distribution(), kwargs['alpha'])
+	return test(statistic, Distribution(), kwargs['confidence'])
 
 def t45(**kwargs):
 	"""
 	"""
-	return test(statistic, Distribution(), kwargs['alpha'])
+	return test(statistic, Distribution(), kwargs['confidence'])
 
 def t46(**kwargs):
 	"""
 	"""
-	return test(statistic, Distribution(), kwargs['alpha'])
+	return test(statistic, Distribution(), kwargs['confidence'])
 
 def t47(**kwargs):
 	"""
 	"""
-	return test(statistic, Distribution(), kwargs['alpha'])
+	return test(statistic, Distribution(), kwargs['confidence'])
 
 def t48(**kwargs):
 	"""
 	"""
-	return test(statistic, Distribution(), kwargs['alpha'])
+	return test(statistic, Distribution(), kwargs['confidence'])
 
 def t49(**kwargs):
 	"""
 	"""
-	return test(statistic, Distribution(), kwargs['alpha'])
+	return test(statistic, Distribution(), kwargs['confidence'])
 
 def t50(**kwargs):
 	"""
 	"""
-	return test(statistic, Distribution(), kwargs['alpha'])
+	return test(statistic, Distribution(), kwargs['confidence'])
 
 def t51(**kwargs):
 	"""
 	"""
-	return test(statistic, Distribution(), kwargs['alpha'])
+	return test(statistic, Distribution(), kwargs['confidence'])
 
 def t52(**kwargs):
 	"""
 	"""
-	return test(statistic, Distribution(), kwargs['alpha'])
+	return test(statistic, Distribution(), kwargs['confidence'])
 
 def t53(**kwargs):
 	"""
 	"""
-	return test(statistic, Distribution(), kwargs['alpha'])
+	return test(statistic, Distribution(), kwargs['confidence'])
 
 def t54(**kwargs):
 	"""
 	"""
-	return test(statistic, Distribution(), kwargs['alpha'])
+	return test(statistic, Distribution(), kwargs['confidence'])
 
 def t55(**kwargs):
 	"""
 	"""
-	return test(statistic, Distribution(), kwargs['alpha'])
+	return test(statistic, Distribution(), kwargs['confidence'])
 
 def t56(**kwargs):
 	"""
 	"""
-	return test(statistic, Distribution(), kwargs['alpha'])
+	return test(statistic, Distribution(), kwargs['confidence'])
 
 def t57(**kwargs):
 	"""
 	"""
-	return test(statistic, Distribution(), kwargs['alpha'])
+	return test(statistic, Distribution(), kwargs['confidence'])
 
 def t58(**kwargs):
 	"""
 	"""
-	return test(statistic, Distribution(), kwargs['alpha'])
+	return test(statistic, Distribution(), kwargs['confidence'])
 
 def t59(**kwargs):
 	"""
 	"""
-	return test(statistic, Distribution(), kwargs['alpha'])
+	return test(statistic, Distribution(), kwargs['confidence'])
 
 def t60(**kwargs):
 	"""
 	"""
-	return test(statistic, Distribution(), kwargs['alpha'])
+	return test(statistic, Distribution(), kwargs['confidence'])
 
 def t61(**kwargs):
 	"""
 	"""
-	return test(statistic, Distribution(), kwargs['alpha'])
+	return test(statistic, Distribution(), kwargs['confidence'])
 
 def t62(**kwargs):
 	"""
 	"""
-	return test(statistic, Distribution(), kwargs['alpha'])
+	return test(statistic, Distribution(), kwargs['confidence'])
 
 def t63(**kwargs):
 	"""
 	"""
-	return test(statistic, Distribution(), kwargs['alpha'])
+	return test(statistic, Distribution(), kwargs['confidence'])
 
 def t64(**kwargs):
 	"""
 	"""
-	return test(statistic, Distribution(), kwargs['alpha'])
+	return test(statistic, Distribution(), kwargs['confidence'])
 
 def t65(**kwargs):
 	"""
 	"""
-	return test(statistic, Distribution(), kwargs['alpha'])
+	return test(statistic, Distribution(), kwargs['confidence'])
 
 def t66(**kwargs):
 	"""
 	"""
-	return test(statistic, Distribution(), kwargs['alpha'])
+	return test(statistic, Distribution(), kwargs['confidence'])
 
 def t67(**kwargs):
 	"""
 	"""
-	return test(statistic, Distribution(), kwargs['alpha'])
+	return test(statistic, Distribution(), kwargs['confidence'])
 
 def t68(**kwargs):
 	"""
 	"""
-	return test(statistic, Distribution(), kwargs['alpha'])
+	return test(statistic, Distribution(), kwargs['confidence'])
 
 def t69(**kwargs):
 	"""
 	"""
-	return test(statistic, Distribution(), kwargs['alpha'])
+	return test(statistic, Distribution(), kwargs['confidence'])
 
 def t70(**kwargs):
 	"""
 	"""
-	return test(statistic, Distribution(), kwargs['alpha'])
+	return test(statistic, Distribution(), kwargs['confidence'])
 
 def t71(**kwargs):
 	"""
 	"""
-	return test(statistic, Distribution(), kwargs['alpha'])
+	return test(statistic, Distribution(), kwargs['confidence'])
 
 def t72(**kwargs):
 	"""
 	"""
-	return test(statistic, Distribution(), kwargs['alpha'])
+	return test(statistic, Distribution(), kwargs['confidence'])
 
 def t73(**kwargs):
 	"""
 	"""
-	return test(statistic, Distribution(), kwargs['alpha'])
+	return test(statistic, Distribution(), kwargs['confidence'])
 
 def t74(**kwargs):
 	"""
 	"""
-	return test(statistic, Distribution(), kwargs['alpha'])
+	return test(statistic, Distribution(), kwargs['confidence'])
 
 def t75(**kwargs):
 	"""
 	"""
-	return test(statistic, Distribution(), kwargs['alpha'])
+	return test(statistic, Distribution(), kwargs['confidence'])
 
 def t76(**kwargs):
 	"""
 	"""
-	return test(statistic, Distribution(), kwargs['alpha'])
+	return test(statistic, Distribution(), kwargs['confidence'])
 
 def t77(**kwargs):
 	"""
 	"""
-	return test(statistic, Distribution(), kwargs['alpha'])
+	return test(statistic, Distribution(), kwargs['confidence'])
 
 def t78(**kwargs):
 	"""
 	"""
-	return test(statistic, Distribution(), kwargs['alpha'])
+	return test(statistic, Distribution(), kwargs['confidence'])
 
 def t79(**kwargs):
 	"""
 	"""
-	return test(statistic, Distribution(), kwargs['alpha'])
+	return test(statistic, Distribution(), kwargs['confidence'])
 
 def t80(**kwargs):
 	"""
 	"""
-	return test(statistic, Distribution(), kwargs['alpha'])
+	return test(statistic, Distribution(), kwargs['confidence'])
 
 def t81(**kwargs):
 	"""
 	"""
-	return test(statistic, Distribution(), kwargs['alpha'])
+	return test(statistic, Distribution(), kwargs['confidence'])
 
 def t82(**kwargs):
 	"""
 	"""
-	return test(statistic, Distribution(), kwargs['alpha'])
+	return test(statistic, Distribution(), kwargs['confidence'])
 
 def t83(**kwargs):
 	"""
 	"""
-	return test(statistic, Distribution(), kwargs['alpha'])
+	return test(statistic, Distribution(), kwargs['confidence'])
 
 def t84(**kwargs):
 	"""
 	"""
-	return test(statistic, Distribution(), kwargs['alpha'])
+	return test(statistic, Distribution(), kwargs['confidence'])
 
 def t85(**kwargs):
 	"""
 	"""
-	return test(statistic, Distribution(), kwargs['alpha'])
+	return test(statistic, Distribution(), kwargs['confidence'])
 
 def t86(**kwargs):
 	"""
 	"""
-	return test(statistic, Distribution(), kwargs['alpha'])
+	return test(statistic, Distribution(), kwargs['confidence'])
 
 def t87(**kwargs):
 	"""
 	"""
-	return test(statistic, Distribution(), kwargs['alpha'])
+	return test(statistic, Distribution(), kwargs['confidence'])
 
 def t88(**kwargs):
 	"""
 	"""
-	return test(statistic, Distribution(), kwargs['alpha'])
+	return test(statistic, Distribution(), kwargs['confidence'])
 
 def t89(**kwargs):
 	"""
 	"""
-	return test(statistic, Distribution(), kwargs['alpha'])
+	return test(statistic, Distribution(), kwargs['confidence'])
 
 def t90(**kwargs):
 	"""
 	"""
-	return test(statistic, Distribution(), kwargs['alpha'])
+	return test(statistic, Distribution(), kwargs['confidence'])
 
 def t91(**kwargs):
 	"""
 	"""
-	return test(statistic, Distribution(), kwargs['alpha'])
+	return test(statistic, Distribution(), kwargs['confidence'])
 
 def t92(**kwargs):
 	"""
 	"""
-	return test(statistic, Distribution(), kwargs['alpha'])
+	return test(statistic, Distribution(), kwargs['confidence'])
 
 def t93(**kwargs):
 	"""
 	"""
-	return test(statistic, Distribution(), kwargs['alpha'])
+	return test(statistic, Distribution(), kwargs['confidence'])
 
 def t94(**kwargs):
 	"""
 	"""
-	return test(statistic, Distribution(), kwargs['alpha'])
+	return test(statistic, Distribution(), kwargs['confidence'])
 
 def t95(**kwargs):
 	"""
 	"""
-	return test(statistic, Distribution(), kwargs['alpha'])
+	return test(statistic, Distribution(), kwargs['confidence'])
 
 def t96(**kwargs):
 	"""
 	"""
-	return test(statistic, Distribution(), kwargs['alpha'])
+	return test(statistic, Distribution(), kwargs['confidence'])
 
 def t97(**kwargs):
 	"""
 	"""
-	return test(statistic, Distribution(), kwargs['alpha'])
+	return test(statistic, Distribution(), kwargs['confidence'])
 
 def t98(**kwargs):
 	"""
 	"""
-	return test(statistic, Distribution(), kwargs['alpha'])
+	return test(statistic, Distribution(), kwargs['confidence'])
 
 def t99(**kwargs):
 	"""
 	"""
-	return test(statistic, Distribution(), kwargs['alpha'])
+	return test(statistic, Distribution(), kwargs['confidence'])
 
 def t100(**kwargs):
 	"""
 	"""
-	return test(statistic, Distribution(), kwargs['alpha'])
+	return test(statistic, Distribution(), kwargs['confidence'])
 

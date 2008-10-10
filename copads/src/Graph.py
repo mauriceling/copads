@@ -13,23 +13,27 @@ from CopadsExceptions import FunctionParameterTypeError
 
 
 class Graph:
+    """Graph data structure"""
     graph = {}
     
     def __init__(self, **kwarg):
         """
         Initialization method. It can accept the following keyword parameters:
         
-        adjacency (Matrix - list of list) - an adjacency matrix, with vertices 
-            as the first row - row count is 1 more than column count
-        digraph (boolean) - state whether the input values is to construct a 
+        @keyword adjacency: adjacency matrix, with vertices as the first row - 
+            row count is 1 more than column count
+        @type adjacency: list of list
+        @keyword digraph: state whether the input values is to construct a 
             graph (True for directional graph). Default = False.
-        edges (list of 2-element tuples) - defines a list of edges where each 
-            tuple is (<source>, <destination>). Uses digraph parameter.
-        graph (dictionary of dictionary) - graph as 
-            {<source> : <destination dictionary>} 
-            where
-            <destination dictionary> ::= {<destination> : <attribute>}.
-        vertices (list) - list of vertices (nodes).
+        @type digraph: boolean
+        @keyword edges: list of edges where each tuple is 
+            (<source>, <destination>). Uses digraph parameter.
+        @type edges: list of 2-element tuples
+        @keyword graph: graph as {<source> : <destination dictionary>} 
+            where <destination dictionary> ::= {<destination> : <attribute>}.
+        @type graph: dictionary of dictionary
+        @keyword vertices: vertices (nodes).
+        @type vertices: list
         """
         if not kwarg.has_key('digraph'): kwarg['digraph'] = False
         if kwarg.has_key('graph'): 
@@ -50,6 +54,10 @@ class Graph:
         as a list of list (rows). 
         The first row of the matrix contains a list of the vertices; hence,
         there will be n+1 rows and n-columns in the given matrix.
+        
+        @param adj: adjacency matrix, with vertices as the first row - 
+            row count is 1 more than column count
+        @type adj: list of list
         """
         vertices = adj.pop(0)
         for l in adj:
@@ -64,6 +72,8 @@ class Graph:
     def makeGraphFromVertices(self, vertices):
         """
         Initialize a list of nodes (vertices) without edges.
+        
+        @param vertices: list of vertices
         """
         if type(vertices) != list: raise GraphParameterError('Vertices must \
                                     be a list')
@@ -73,7 +83,10 @@ class Graph:
         """
         Constructs a directional graph from edges (a list of tuple).
         Each tuple contains 2 vertices. 
-        For example, P -> Q is written as ('P', 'Q')."""
+        For example, P -> Q is written as ('P', 'Q').
+        
+        @param edges: edges
+        @type edges: list of 2-element tuple"""
         if type(edges) != list: raise GraphParameterError('Edges must be a \
                                 list of tuples')
         from Set import Set
@@ -95,7 +108,9 @@ class Graph:
         Each tuple contains 2 vertices.
         An un-directional graph is implemented as a directional graph where
         each edges runs both directions.
-        """
+        
+        @param edges: list of edges
+        @type edges: list of 2-element tuples"""
         if type(edges) != list: raise GraphParameterError('Edges must be a \
                                 list of tuples')
         from Set import Set
@@ -116,8 +131,10 @@ class Graph:
     def isVertices(self, vlist):
         """
         Checks whether each element in vlist is a vertex (node) of
-        the graph. It returns a dictionary of 
-        <element of vlist> : <True | False>
+        the graph.
+        
+        @param: list of vertices
+        @return: dictionary of <element of vlist> : <True | False>
         """
         result = {}
         from Set import Set
@@ -166,7 +183,9 @@ class Graph:
         Find a single shortest path from the given start vertex
         to the given end vertex. The output is a list of the vertices 
         in order along the shortest path.
-        """
+        
+        @param start: vertex of starting point
+        @param end: vertex of ending point"""
     
         D,P = self.Dijkstra(start,end)
         Path = []
@@ -181,10 +200,11 @@ class Graph:
         """
         Generates a graph of random edges.
         
-        nodes (list or integer) - list of nodes or number of nodes in the 
-            random graph
-        edges (integer) - number of edges to generate in the random graph
-        maxweight (float) - maximum weight of each edge
+        @param nodes: list of nodes or number of nodes in the random graph
+        @param edges: number of edges to generate in the random graph
+        @type edges: integer
+        @param maxweight: maximum weight of each edge. default = 100.0
+        @type maxweight: float
         """
         import random
         nodes_size = 0
