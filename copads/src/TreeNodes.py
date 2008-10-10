@@ -1,3 +1,7 @@
+# RBTree colour code
+BLACK = 0
+RED = 1
+
 class RBNode(object):
 
     def __init__(self, key = None, value = None, color = RED):

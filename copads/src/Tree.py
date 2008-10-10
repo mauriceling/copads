@@ -1,10 +1,6 @@
 import string
 from TreeNodes import *
 
-# RBTree colour code
-BLACK = 0
-RED = 1
-
 class RBTreeIter(object):
 
     def __init__ (self, tree):

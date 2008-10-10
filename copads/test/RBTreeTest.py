@@ -37,12 +37,6 @@
 #        changed RBTree.deleteNode : same changes as for RBList.remove()
 #        finally I've changed the __version__ string to '1.6'
 
-__version__ = "1.6"
-
-
-""" ----------------------------------------------------------------------------
-    TEST ROUTINES
-"""
 def testRBlist():
     import random
     print "--- Testing RBList ---"
