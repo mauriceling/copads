@@ -32,3 +32,17 @@ class BinaryNode:
         self.right = None
         self.data = data 
         
+class ThreeNode:
+    def __init__(self, data):
+        self.left = None
+        self.centre = None
+        self.right = None
+        self.data = data
+        
+class FourNode:
+    def __init__(self, data):
+        self.left = None
+        self.centre = None
+        self.centre2 = None
+        self.right = None
+        self.data = data
