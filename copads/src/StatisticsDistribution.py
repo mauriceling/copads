@@ -164,8 +164,7 @@ class BernoulliDistribution(BinomialDistribution):
         """Constructor method. The parameters are used to construct the 
         probability distribution.
         
-        Parameters:
-        1. success (probability of success; 0 <= success <= 1)"""
+        @param success: probability of success; 0 <= success <= 1"""
         try: self.distribution = BinomialDistribution(succcess = 
                                                         parameters['success'], 
                                                         trial = 1)
@@ -173,20 +172,17 @@ class BernoulliDistribution(BinomialDistribution):
             raise DistributionParameterError('Bernoulli distribution \
             requires success parameter')
     def CDF(self, x): 
-        """
-        Cummulative Distribution Function, which gives the cummulative 
+        """Cummulative Distribution Function, which gives the cummulative 
         probability (area under the probability curve) from -infinity or 0 to 
         a give x-value on the x-axis where y-axis is the probability."""
         return self.distribution.CDF(x)
     def PDF(self, x): 
-        """
-        Partial Distribution Function, which gives the probability for the 
+        """Partial Distribution Function, which gives the probability for the 
         particular value of x, or the area under probability distribution from 
         x-h to x+h for continuous distribution."""
         return self.distribution.PDF(x)
     def inverseCDF(self, probability, start = 0, step = 1): 
-        """
-        It does the reverse of CDF() method, it takes a probability value and 
+        """It does the reverse of CDF() method, it takes a probability value and 
         returns the corresponding value on the x-axis."""
         return self.distribution.inverseCDF(probability, start, step)
     def mean(self): 
