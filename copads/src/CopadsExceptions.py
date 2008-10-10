@@ -27,6 +27,7 @@ CopadsError
 |  |- TreeNodeTypeError
 |- FunctionParameterTypeError
 |- FunctionParameterValueError
+|- ArrayError
 
 Credits:
     MatrixError subclasses 
@@ -216,5 +217,10 @@ class FunctionParameterTypeError(CopadsError):
 class FunctionParameterValueError(CopadsError):
     """Exception to be thrown when trying a function parameter is of wrong 
     value"""
+    def __init__(self, msg): self.msg = msg
+    def __str__(self): return self.msg
+    
+class ArrayError(CopadsError):
+    """Exception to be thrown when encountered error in Array type"""
     def __init__(self, msg): self.msg = msg
     def __str__(self): return self.msg
