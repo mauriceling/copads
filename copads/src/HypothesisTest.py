@@ -21,14 +21,15 @@ def test(statistic, distribution, confidence):
     @param statistic: calculated statistic (float)
     @param distribution: distribution to calculate critical value
     @type distribution: instance of a statistics distribution
-    @param confidence: confidence level (usually 0.95 or 0.99)
+    @param confidence: confidence level of a one-tail
+        test (usually 0.95 or 0.99), use 0.975 or 0.995 for 2-tail test
     @type confidence: float of less than 1.0
     @return: 3-element tuple (result, statistic, critical)
     result = True (reject null hypothesis; statistic > critical) or 
     False (accept null hypothesis; statistic <= critical).
     statistic = calculated statistic value.
     critical = value of critical region for statistical test."""
-    critical = distribution.inverseCDF(confidence)
+    critical = distribution.inverseCDF(confidence)[0]
     if statistic < critical: return (False, statistic, critical)
     else: return (True, statistic, critical)
     
@@ -51,7 +52,7 @@ def Z1Mean1Variance(**kwargs):
     pmean = kwargs['pmean']
     pvar = kwargs['pvar']
     ssize = kwargs['ssize']
-    statistic = (smean - pmean)/ \
+    statistic = abs(smean - pmean)/ \
                 (pvar / sqrt(ssize))
     return test(statistic, NormalDistribution(), kwargs['confidence'])
 
@@ -86,7 +87,7 @@ def Z2Mean1Variance(**kwargs):
     ssize1 = kwargs['ssize1']
     ssize2 = kwargs['ssize2']
     statistic = ((smean1 - smean2) - (pmean1 - pmean2))/ \
-                (pvar * sqrt((1 / ssize1) + (1 / ssize2)))
+                (pvar * sqrt((1.0 / ssize1) + (1.0 / ssize2)))
     return test(statistic, NormalDistribution(), kwargs['confidence'])    
 
 def Z2Mean2Variance(**kwargs):    
@@ -168,7 +169,7 @@ def Z2Proportion(**kwargs):
     ssize2 = kwargs['ssize2']
     P = ((spro1 * ssize1) + (spro2 * ssize2)) / (ssize1 + ssize2)
     statistic = (spro1 - spro2) / \
-                sqrt((P * (1 - P)) * ((1 / ssize1) * (1 / ssize2)))
+                (P * (1.0 - P) * ((1.0 / ssize1) + (1.0 / ssize2))) ** 0.5
     return test(statistic, NormalDistribution(), kwargs['confidence'])
 
 def Z2Count(**kwargs):    
