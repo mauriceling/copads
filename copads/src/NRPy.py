@@ -39,7 +39,8 @@ from CopadsExceptions import FunctionParameterValueError
 
 
 def bessi(n, x):
-    """Modified Bessel function I-sub-n(x). Ref: NRP 6.5
+    """Modified Bessel function I-sub-n(x). 
+    @see: NRP 6.5
     
     @param n: integer, more than 1 - modified n-th Bessel function 
     @param x: positive integer
@@ -72,7 +73,8 @@ def bessi(n, x):
             return ans*bessi0(x)/bi
     
 def bessi0(x):
-    """Modified Bessel function I-sub-0(x). Ref: NRP 6.5
+    """Modified Bessel function I-sub-0(x). 
+    @see: NRP 6.5
     
     @param x: float number
     @return: modified Bessel function base 0 of x"""
@@ -90,7 +92,7 @@ def bessi0(x):
                0.392377e-2))))))))
     
 def bessi1(x):
-    """Bessel function I-sub-1(x). Ref: NRP 6.5
+    """Bessel function I-sub-1(x). @see: NRP 6.5
     
     @param x: float number
     @return: float number 
@@ -112,7 +114,8 @@ def bessi1(x):
         else: return ans
         
 def bessj(n, x): 
-    """Bessel function J-sub-n(x). Ref: NRP 6.5
+    """Bessel function J-sub-n(x). 
+    @see: NRP 6.5
     
     @param x: float number
     @return: float number 
@@ -160,7 +163,8 @@ def bessj(n, x):
         return ans
 
 def bessj0(x):
-    """Bessel function J-sub-0(x). Ref: NRP 6.4
+    """Bessel function J-sub-0(x). 
+    @see: NRP 6.4
     
     @param x: float number
     @return: float number 
@@ -184,7 +188,8 @@ def bessj0(x):
                math.sin(xx) * ans2)
         
 def bessj1(x):
-    """Bessel function J-sub-1(x). Ref: NRP 6.4
+    """Bessel function J-sub-1(x). 
+    @see: NRP 6.4
     
     @param x: float number
     @return: float number 
@@ -211,7 +216,7 @@ def bessj1(x):
                   z * math.sin(xx) * ans2)
         
 def bessk(n, x):
-    """Bessel function K-sub-n(x). Ref: NRP 6.5
+    """Bessel function K-sub-n(x). @see: NRP 6.5
     
     @param n: integer, more than 1 - modified n-th Bessel function 
     @param x: positive integer
@@ -231,7 +236,7 @@ def bessk(n, x):
         return bk
         
 def bessk0(x):
-    """Bessel function K-sub-0(x). Ref: NRP 6.5
+    """Bessel function K-sub-0(x). @see: NRP 6.5
     
     @param n: integer, more than 1 - n-th Bessel function 
     @param x: positive integer
@@ -248,7 +253,7 @@ def bessk0(x):
                   (-0.25154e-2 + y * 0.53208e-3))))))
     
 def bessk1():
-    """Bessel function K-sub-1(x). Ref: NRP 6.5
+    """Bessel function K-sub-1(x). @see: NRP 6.5
     
     @param n: integer, more than 1 - n-th Bessel function 
     @param x: positive integer
@@ -265,7 +270,7 @@ def bessk1():
                  (0.325614e-2 + y * (-0.68245e-3)))))))
         
 def bessy(n, x):
-    """Bessel function Y-sub-n(x). Ref: NRP 6.4
+    """Bessel function Y-sub-n(x). @see: NRP 6.4
     
     @param n: integer, more than 1 - n-th Bessel function 
     @param x: positive integer
@@ -285,7 +290,7 @@ def bessy(n, x):
         return by
     
 def bessy0(x):
-    """Bessel function Y-sub-0(x). Ref: NRP 6.4
+    """Bessel function Y-sub-0(x). @see: NRP 6.4
     Depend: bessj0
     
     @param x: float number
@@ -310,7 +315,7 @@ def bessy0(x):
         return math.sqrt(0.636619772 / x) * ans
     
 def bessy1(x):
-    """Bessel function Y-sub-1(x). Ref: NRP 6.4
+    """Bessel function Y-sub-1(x). @see: NRP 6.4
     Depend: bessj1
     
     @param x: float number
@@ -340,7 +345,7 @@ def bessy1(x):
 def beta(z, w): 
     """Beta function. 
     Depend: gammln
-    Ref: NRP 6.1
+    @see: NRP 6.1
     
     @param z: float number
     @param w: float number
@@ -389,7 +394,7 @@ def betai(a,b,x):
     
     Adapted from salstat_stats.py of SalStat (www.sf.net/projects/salstat)
     Depend: betacf, gammln
-    Ref: NRP 6.3
+    @see: NRP 6.3
     """
     if (x<0.0 or x>1.0):
         raise FunctionParameterValueError('Bad x in lbetai')
@@ -406,7 +411,7 @@ def betai(a,b,x):
 def bico(n, k):
     """Binomial coefficient. Returns n!/(k!(n-k)!)
     Depend: factln, gammln
-    Ref: NRP 6.1
+    @see: NRP 6.1
     
     @param n: total number of items
     @param k: required number of items
@@ -416,7 +421,7 @@ def bico(n, k):
 
 def chebev(a, b, c, m , x):
     """Chebyshev evaluation.
-    Ref: NRP 5.6
+    @see: NRP 5.6
     
     @param a: float number
     @param b: float number
@@ -444,7 +449,7 @@ def erf(x):
     gammp(0.5, x^2) for x => 0. In this routine, gammp is by-passed and gser
     and gcf are used directly.
     Depend: gser. gcf, gammln
-    Ref: NRP 6.2
+    @see: NRP 6.2
     
     @param x: float number
     @return: float number
@@ -459,7 +464,7 @@ def erfc(x):
     Complementary error function (a special incomplete gamma function) equivalent to 
     gammq(0.5, x^2) which is equivalent to 1 - gammp(0.5, x^2) for x => 0. 
     Depend: gammp, gammq, gser, gcf, gammln
-    Ref: NRP 6.2
+    @see: NRP 6.2
     
     @param x: float number
     @return: float number
@@ -469,9 +474,9 @@ def erfc(x):
     
 def erfcc(x):
     """
-    Complementart error function similar to erfc(x) but with fractional error lesser than
-    1.2e-7. 
-    Ref: NRP 6.2
+    Complementart error function similar to erfc(x) but with fractional error 
+    lesser than 1.2e-7. 
+    @see: NRP 6.2
     
     @param x: float number
     @return: float number
@@ -489,12 +494,12 @@ def erfcc(x):
 
 def expdev(x):
     """Depends: ran3
-    Ref: NRP 7.2"""
+    @see: NRP 7.2"""
     return -1.0 * math.log(ran3(x))
 
 def factln(n):
     """Natural logarithm of factorial: ln(n!)
-    Ref: NRP 6.1
+    @see: NRP 6.1
     
     @param n: positive integer
     @return: natural logarithm of factorial of n """
@@ -502,7 +507,7 @@ def factln(n):
 
 def factrl(n):
     """Factorial: n!
-    Ref: NRP 6.1
+    @see: NRP 6.1
     
     @param n: positive integer
     @return: factorial of n """
@@ -510,7 +515,7 @@ def factrl(n):
 
 def gammln(n):
     """Complete Gamma function. 
-    Ref: NRP 6.1 and http://mail.python.org/pipermail/python-list/2000-June/039873.html
+    @see: NRP 6.1 and http://mail.python.org/pipermail/python-list/2000-June/039873.html
     
     @param n: float number
     @return: float number"""
@@ -519,7 +524,7 @@ def gammln(n):
     x = n - 1.0
     tmp = x + 5.5
     tmp = (x + 0.5)*math.log(tmp) - tmp
-    ser = 1.
+    ser = 1.0
     for j in range(6):
         x = x + 1.
         ser = ser + gammln_cof[j]/x
@@ -529,7 +534,7 @@ def gammp(a, x):
     """Gamma incomplete function, P(a,x). 
     P(a,x) = (1/gammln(a)) * integral(0, x, (e^-t)*(t^(a-1)), dt)
     Depend: gser, gcf, gammln
-    Ref: NRP 6.2
+    @see: NRP 6.2
     
     @param a: float number
     @param x: float number
@@ -545,7 +550,7 @@ def gammp(a, x):
 def gammq(a, x):
     """Incomplete gamma function: Q(a, x) = 1 - P(a, x) = 1 - gammp(a, x)
     Also commonly known as Q-equation.
-    Ref: http://mail.python.org/pipermail/python-list/2000-June/039873.html"""
+    @see: http://mail.python.org/pipermail/python-list/2000-June/039873.html"""
     if (x < 0. or a <= 0.):
         raise ValueError, repr((a, x))
     if (x < a+1.):
@@ -556,7 +561,7 @@ def gammq(a, x):
 
 def gcf(a, x, itmax=200, eps=3.e-7):
     """Continued fraction approx'n of the incomplete gamma function.
-    Ref: http://mail.python.org/pipermail/python-list/2000-June/039873.html"""
+    @see: http://mail.python.org/pipermail/python-list/2000-June/039873.html"""
     gln = gammln(a)
     gold = 0.0
     a0 = 1.0
@@ -584,7 +589,7 @@ def gcf(a, x, itmax=200, eps=3.e-7):
 
 def gser(a, x, itmax=700, eps=3.e-7):
     """Series approximation to the incomplete gamma function.
-    Ref: http://mail.python.org/pipermail/python-list/2000-June/039873.html"""
+    @see: http://mail.python.org/pipermail/python-list/2000-June/039873.html"""
     gln = gammln(a)
     if (x < 0.0):
         raise bad_arg, x
@@ -605,7 +610,7 @@ def gser(a, x, itmax=700, eps=3.e-7):
         
 def mdian1(data):
     """Calculates the median of a list of numerical values using sorting. 
-    Ref: NRP 13.2
+    @see: NRP 13.2
     
     @param data: a 1-dimensional list of numerical data
     @return: value of median
@@ -616,7 +621,7 @@ def mdian1(data):
     else: return 0.5*(x[n2] + x[n2+1])
 
 def moment(data):
-    """Calculates moment from a list of numerical data. Ref: NRP 13.1
+    """Calculates moment from a list of numerical data. @see: NRP 13.1
     
     @param data: a 1-dimensional list of numerical values
     @return: (ave, adev, sdev, var, skew, kurt) where 
@@ -653,7 +658,7 @@ def moment(data):
 
 def qgaus(a, b, func):
     """
-    Ref: NRP 4.5"""
+    @see: NRP 4.5"""
     x = [0.1488743389, 0.4333953941, 0.6794095682, 0.8650633666, 0.97390652]
     w = [0.2955242247, 0.2692667193, 0.2190863625, 0.1494513491, 0.06667134]
     xm = 0.5 * (b + a)
@@ -945,7 +950,7 @@ def cdf_poisson(k, x):
     Cummulative density function of Poisson distribution from 0 to k - 1 
     inclusive. No reference implementation. 
     Depend: gammq, gser, gcf, gammln
-    Ref: NRP 6.2
+    @see: NRP 6.2
     
     @param k: number of times of event occurrence
     @param x: mean of Poisson distribution
@@ -959,7 +964,7 @@ def cdf_binomial(k, n, p):
     Cummulative density function of Binomial distribution. No reference
     implementation. 
     Depend: betai, betacf, gammln
-    Ref: NRP 6.3
+    @see: NRP 6.3
     
     @param k: number of times of event occurrence in n trials
     @param n: total number of trials

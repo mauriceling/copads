@@ -155,7 +155,7 @@ def AntiLogNormalDistribution(**parameters):
     return LogNormalDistribution(**parameters)
 
 
-class BernoulliDistribution(BinomialDistribution):
+class BernoulliDistribution(Distribution):
     """
     Bernoulli distribution is a special case of Binomial distribution where
     where number of trials = 1
@@ -2187,9 +2187,9 @@ class NormalDistribution(Distribution):
         Calculates the density (probability) at x by the formula:
         f(x) = 1/(sqrt(2 pi) sigma) e^-((x - mu)^2/(2 sigma^2))
         where mu is the mean of the distribution and sigma the standard 
-        deviation."""        
+        deviation."""
         return (1/(math.sqrt(PI2) * self.stdev)) * \
-                math.exp(-((x - self.stdev)**2/(2 * self.stdev**2)))
+            math.exp(-((x - self.stdev)**2/(2 * self.stdev**2)))
     def inverseCDF(self, probability, start = -10.0, step = 0.01): 
         """
         It does the reverse of CDF() method, it takes a probability value and 
@@ -2199,7 +2199,7 @@ class NormalDistribution(Distribution):
         while (probability > cprob):
             start = start + step
             cprob = self.CDF(start)
-#            print start, cprob
+##            print start, cprob
         return (start, cprob)
     def mean(self): 
         return self.mean
