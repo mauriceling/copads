@@ -16,24 +16,40 @@ from Operations import summation
 from math import sqrt, log
 
 def test(statistic, distribution, confidence):
-    """Generates the critcal value from distribution and confidence value using
-    the distribution's inverseCDF method and performs 1-tailed test by 
-    comparing the calculated statistic with the critical value. 
+    """Generates the critical value from distribution and confidence value using
+    the distribution's inverseCDF method and performs 1-tailed and 2-tailed test 
+    by comparing the calculated statistic with the critical value. 
+    
+    Returns a 5-element list:
+    (left result, left critical, statistic, right critical, right result)
+    where
+    left result = True (statistic in lower critical region) or 
+        False (statistic not in lower critical region)
+    left critical = lower critical value generated from 1 - confidence
+    statistic = calculated statistic value
+    right critical = upper critical value generated from confidence
+    right result = True (statistic in upper critical region) or
+        False (statistic not in upper critical region)
+        
+    Therefore, null hypothesis is accepted if left result and right result are 
+    both False in a 2-tailed test.
     
     @param statistic: calculated statistic (float)
     @param distribution: distribution to calculate critical value
     @type distribution: instance of a statistics distribution
     @param confidence: confidence level of a one-tail
         test (usually 0.95 or 0.99), use 0.975 or 0.995 for 2-tail test
-    @type confidence: float of less than 1.0
-    @return: 3-element tuple (result, statistic, critical)
-    result = True (reject null hypothesis; statistic > critical) or 
-    False (accept null hypothesis; statistic <= critical).
-    statistic = calculated statistic value.
-    critical = value of critical region for statistical test."""
-    critical = distribution.inverseCDF(confidence)[0]
-    if statistic < critical: return (False, statistic, critical)
-    else: return (True, statistic, critical)
+    @type confidence: float of less than 1.0"""
+    data = [None, None, statistic, None, None]
+    data[1] = distribution.inverseCDF(1.0 - confidence)[0]
+    if data[1] < statistic: data[0] = False
+    else: data[0] = True
+    data[3] = distribution.inverseCDF(confidence)[0]
+    if statistic < data[3]: data[4] = False
+    else: data[4] = True
+    return data
+#    if statistic < critical: return (False, statistic, critical)
+#    else: return (True, statistic, critical)
     
 def Z1Mean1Variance(**kwargs):
     """Test 1: Z-test for a population mean (variance known)
