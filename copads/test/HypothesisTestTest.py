@@ -3,7 +3,7 @@ import os
 import unittest
 
 
-class testHypothesisTest(unittest.TestCase):
+class testNormalDistribution(unittest.TestCase):
     
     def testZ1Mean1Variance(self): 
         """Test 1: Z-test for a population mean (variance known)"""
@@ -47,6 +47,34 @@ class testHypothesisTest(unittest.TestCase):
             ssize1 = 952, ssize2 = 1168, confidence = 0.025)[1], -6.9265418)
         self.assertFalse(N.Z2Proportion(spro1 = 0.00325, spro2 = 0.0573, 
             ssize1 = 952, ssize2 = 1168, confidence = 0.025)[0])
+            
+    def testZ2Count(self): 
+        """Test 6: Z-test for comparing two counts (Poisson distribution)"""
+        self.assertAlmostEqual(N.Z2Count(time1 = 22, time2 = 30, count1 = 952,
+            count2 = 1168, confidence = 0.975)[1], 2.401630072)
+        self.assertTrue(N.Z2Count(time1 = 22, time2 = 30, count1 = 952,
+            count2 = 1168, confidence = 0.975)[0])
+            
+    def testZPearsonCorrelation(self): 
+        """Test 13: Z-test of a correlation coefficient"""
+        self.assertAlmostEqual(N.ZPearsonCorrelation(sr = 0.75, pr = 0.5, 
+            ssize = 24, confidence = 0.95)[1], 1.94140329)
+        self.assertTrue(N.ZPearsonCorrelation(sr = 0.75, pr = 0.5, 
+            ssize = 24, confidence = 0.95)[0])
+            
+    def testZ2PearsonCorrelation(self): 
+        """Test 14: Z-test for two correlation coefficients"""
+        self.assertAlmostEqual(N.Z2PearsonCorrelation(r1 = 0.5, r2 = 0.3, 
+            ssize1 = 28, ssize2 = 35, confidence = 0.975)[1], 0.89832268)
+        self.assertFalse(N.Z2PearsonCorrelation(r1 = 0.5, r2 = 0.3, 
+            ssize1 = 28, ssize2 = 35, confidence = 0.975)[0])
+            
+    def testZCorrProportion(self): 
+        """Test 23: Z-test for correlated proportions"""
+        self.assertAlmostEqual(N.ZCorrProportion(ny = 15, yn = 9, 
+            ssize = 105, confidence = 0.975)[1], 1.22769962)
+        self.assertFalse(N.ZCorrProportion(ny = 15, yn = 9, 
+            ssize = 105, confidence = 0.975)[0])
             
 if __name__ == '__main__':
     sys.path.append(os.path.join(os.path.dirname(os.getcwd()), 'src'))

@@ -15,8 +15,9 @@ from StatisticsDistribution import *
 from math import sqrt, log
 
 def test(statistic, distribution, confidence):
-    """Generates the critcal region from distribution and confidence value using
-    the distribution's inverseCDF method. 
+    """Generates the critcal value from distribution and confidence value using
+    the distribution's inverseCDF method and compares the calculared statistic 
+    with the critical value. 
     
     @param statistic: calculated statistic (float)
     @param distribution: distribution to calculate critical value
@@ -189,8 +190,8 @@ def Z2Count(**kwargs):
     @param confidence: confidence level"""
     time1 = kwargs['time1']
     time2 = kwargs['time2']
-    R1 = kwargs['count1'] / time1
-    R2 = kwargs['count2'] / time2
+    R1 = kwargs['count1'] / float(time1)
+    R2 = kwargs['count2'] / float(time2)
     statistic = (R1 - R2) / sqrt((R1 / time1) + (R2 / time2))
     return test(statistic, NormalDistribution(), kwargs['confidence'])
 
@@ -337,7 +338,8 @@ def tPearsonCorrelation(**kwargs):
     Use Test 59 when these conditions cannot be met
     
     @param r: calculated Pearson's product-moment correlation coefficient
-    @param ssize: sample size"""
+    @param ssize: sample size
+    @param confidence: confidence level"""
     ssize = kwargs['ssize']
     r = kwargs['r']
     statistic = (r * sqrt(ssize - 2)) / sqrt(1 - (r **2))
@@ -358,24 +360,37 @@ def ZPearsonCorrelation(**kwargs):
     
     @param sr: calculated sample Pearson's product-moment correlation coefficient
     @param pr: specified Pearson's product-moment correlation coefficient to test
-    @param ssize: sample size"""
+    @param ssize: sample size
+    @param confidence: confidence level"""
     ssize = kwargs['ssize']
     sr = kwargs['sr']
     pr = kwargs['pr']
     Z1 = 0.5 * log((1 + sr) / (1 - sr))
     meanZ1 = 0.5 * log((1 + pr) / (1 - pr))
-    sigmaZ1 = 1 / sqrt(ssize - 3)
+    sigmaZ1 = 1.0 / sqrt(ssize - 3)
     statistic = (Z1 - meanZ1) / sigmaZ1
     return test(statistic, NormalDistribution(), kwargs['confidence'])
     
-def t14(**kwargs):    
+def Z2PearsonCorrelation(**kwargs):    
     """
     Test 14: Z-test for two correlation coefficients
     
     To investigate the significance of the difference between the correlation
     coefficients for a pair variables occurring from two difference 
-    populations."""
-    return test(statistic, Distribution(), kwargs['confidence'])
+    populations.
+    
+    @param r1: Pearson correlation coefficient of sample #1
+    @param r2: Pearson correlation coefficient of sample #2
+    @param ssize1: Sample size #1
+    @param ssize2: Sample size #2
+    @param confidence: confidence level"""
+    z1 = 0.5 * log((1.0 + kwargs['r1']) /(1.0 - kwargs['r1']))
+    z2 = 0.5 * log((1.0 + kwargs['r2']) /(1.0 - kwargs['r2']))
+    sigma1 = 1.0 / sqrt(kwargs['ssize1'] - 3)
+    sigma2 = 1.0 / sqrt(kwargs['ssize2'] - 3)
+    sigma = sqrt((sigma1 ** 2) + (sigma2 ** 2))
+    statistic = abs(z1 - z2) / sigma
+    return test(statistic, NormalDistribution(), kwargs['confidence'])
 
 def t15(**kwargs):    
     """
@@ -455,8 +470,8 @@ def ZCorrProportion(**kwargs):
     ssize = kwargs['ssize']
     ny = kwargs['ny']
     yn = kwargs['yn']
-    sigma = ((ny + yn) - ((ny - yn) ** 2)) / ssize
-    sigma = sqrt(sigma / (ssize * (ssize - 1)))
+    sigma = (ny + yn) - (((ny - yn) ** 2.0) / ssize)
+    sigma = sqrt(sigma / (ssize * (ssize - 1.0)))
     statistic = (ny - yn) / (sigma * ssize)
     return test(statistic, NormalDistribution(), kwargs['confidence'])
 
