@@ -12,12 +12,13 @@ Sage Publications.
 """
 
 from StatisticsDistribution import *
+from Operations import summation
 from math import sqrt, log
 
 def test(statistic, distribution, confidence):
     """Generates the critcal value from distribution and confidence value using
-    the distribution's inverseCDF method and compares the calculared statistic 
-    with the critical value. 
+    the distribution's inverseCDF method and performs 1-tailed test by 
+    comparing the calculated statistic with the critical value. 
     
     @param statistic: calculated statistic (float)
     @param distribution: distribution to calculate critical value
@@ -729,10 +730,31 @@ def t57(**kwargs):
 	"""
 	return test(statistic, Distribution(), kwargs['confidence'])
 
-def t58(**kwargs):
-	"""
-	"""
-	return test(statistic, Distribution(), kwargs['confidence'])
+def SpearmanCorrelation(**kwargs):
+    """Test 58: Spearman rank correlation test (paired observations)
+    To investigate the significance of the correlation between two series of 
+    observations obtained in pairs.
+    
+    Limitations:
+    1. Assumes the two population distributions to be continuous
+    2. Sample size must be more than 10
+    
+    @param R: sum of squared ranks differences
+    @param ssize: sample size
+    @param series1: ranks of series #1 (not used if R is given)
+    @param series2: ranks of series #2 (not used if R is given)
+    @param confidence: confidence level"""
+    ssize = kwargs['ssize']
+    if not kwargs.has_key('R'):
+        series1 = kwargs['series1']
+        series2 = kwargs['series2']
+        R = [((series1[i] - series2[i]) ** 2) for i in range(len(series1))]
+        R = summation(R)
+    else:
+        R = kwargs['R']
+    statistic = (6.0 * R) - (ssize * ((ssize ** 2) - 1.0))
+    statistic = statistic / (ssize * (ssize + 1.0) * sqrt(ssize - 1.0))
+    return test(statistic, NormalDistribution(), kwargs['confidence'])
 
 def t59(**kwargs):
 	"""

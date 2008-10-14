@@ -40,8 +40,7 @@ class testNormalDistribution(unittest.TestCase):
             ssize = 100, confidence = 0.975)[0])
             
     def testZ2Proportion(self): 
-        """
-        Test 5: Z-test for the equality of two proportions (binomial 
+        """Test 5: Z-test for the equality of two proportions (binomial 
         distribution)"""
         self.assertAlmostEqual(N.Z2Proportion(spro1 = 0.00325, spro2 = 0.0573, 
             ssize1 = 952, ssize2 = 1168, confidence = 0.025)[1], -6.9265418)
@@ -75,6 +74,13 @@ class testNormalDistribution(unittest.TestCase):
             ssize = 105, confidence = 0.975)[1], 1.22769962)
         self.assertFalse(N.ZCorrProportion(ny = 15, yn = 9, 
             ssize = 105, confidence = 0.975)[0])
+            
+    def testSpearmanCorrelation(self): 
+        """Test 58: Spearman rank correlation test (paired observations)"""
+        self.assertAlmostEqual(N.SpearmanCorrelation(R = 24, ssize = 11, 
+            confidence = 0.975)[1], -2.8173019)
+        self.assertFalse(N.SpearmanCorrelation(R = 24, ssize = 11, 
+            confidence = 0.975)[0])
             
 if __name__ == '__main__':
     sys.path.append(os.path.join(os.path.dirname(os.getcwd()), 'src'))
