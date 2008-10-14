@@ -48,8 +48,6 @@ def test(statistic, distribution, confidence):
     if statistic < data[3]: data[4] = False
     else: data[4] = True
     return data
-#    if statistic < critical: return (False, statistic, critical)
-#    else: return (True, statistic, critical)
     
 def Z1Mean1Variance(**kwargs):
     """Test 1: Z-test for a population mean (variance known)
