@@ -2185,11 +2185,11 @@ class NormalDistribution(Distribution):
     def PDF(self, x): 
         """
         Calculates the density (probability) at x by the formula:
-        f(x) = 1/(sqrt(2 pi) sigma) e^-((x - mu)^2/(2 sigma^2))
+        f(x) = 1/(sqrt(2 pi) sigma) e^-((x^2/(2 sigma^2))
         where mu is the mean of the distribution and sigma the standard 
         deviation."""
         return (1/(math.sqrt(PI2) * self.stdev)) * \
-            math.exp(-((x - self.stdev)**2/(2 * self.stdev**2)))
+            math.exp(-(x ** 2/(2 * self.stdev**2)))
     def inverseCDF(self, probability, start = -10.0, step = 0.01): 
         """
         It does the reverse of CDF() method, it takes a probability value and 
