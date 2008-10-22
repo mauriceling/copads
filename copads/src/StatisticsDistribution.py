@@ -678,7 +678,7 @@ class ChiSquareDistribution(Distribution):
         1. df = degrees of freedom"""
         try: self.distribution = GammaDistribution(location = 0, 
                                                     scale = 2, 
-                                                    shape = parameters['df']/2)
+                                                    shape = parameters['df']/2.0)
         except KeyError: 
             raise DistributionParameterError('Chi-square distribution \
             requires scale (df) parameter')
@@ -2686,11 +2686,11 @@ class TDistribution(Distribution):
         1. location (default = 0.0)
         2. scale (default = 1.0)
         3. shape (degrees of freedom; default = 2)"""
-        try: self.mean = parameter['location']
+        try: self.mean = parameters['location']
         except KeyError: self.mean = 0.0
-        try: self.stdev = parameter['scale']
+        try: self.stdev = parameters['scale']
         except KeyError: self.stdev = 1.0
-        try: self.df = parameter['shape']
+        try: self.df = parameters['shape']
         except KeyError: self.df = 2
     def CDF(self, x): 
         """
@@ -2699,7 +2699,7 @@ class TDistribution(Distribution):
         a give x-value on the x-axis where y-axis is the probability.
         """
         t = (x - self.mean) / self.stdev
-        a = NRPy.betai(self.df/2, 0.5, self.df / (self.df + (t * t)))
+        a = NRPy.betai(self.df/2.0, 0.5, self.df / (self.df + (t * t)))
         if t > 0: return 1 - 0.5 * a
         else: return 0.5 * a
     def PDF(self, x): 
