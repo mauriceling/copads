@@ -81,7 +81,18 @@ class testNormalDistribution(unittest.TestCase):
             confidence = 0.975)[2], -2.8173019)
         self.assertFalse(N.SpearmanCorrelation(R = 24, ssize = 11, 
             confidence = 0.975)[4])
-            
+
+class testTDistribution(unittest.TestCase):
+    
+    def testt1Mean(self): 
+        """Test 7: t-test for a population mean (population variance unknown)"""
+        print N.t1Mean(smean = 3.1, pmean = 4.0, svar = 1.0,
+            ssize = 9, confidence = 0.975)
+        self.assertAlmostEqual(N.t1Mean(smean = 3.1, pmean = 4.0, svar = 1.0,
+            ssize = 9, confidence = 0.975)[2], -2.8173019)
+        self.assertFalse(N.t1Mean(smean = 3.1, pmean = 4.0, svar = 1.0,
+            ssize = 9, confidence = 0.975)[4]) 
+
 if __name__ == '__main__':
     sys.path.append(os.path.join(os.path.dirname(os.getcwd()), 'src'))
     import HypothesisTest as N
