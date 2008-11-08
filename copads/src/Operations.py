@@ -286,6 +286,6 @@ def product(x):
     """
     Product of all the elements of x, also known as series product"""
     x = list(x)
-    sum = 0.0
+    sum = 1.0
     for i in range(len(x)): sum = sum * x[i]
     return sum
