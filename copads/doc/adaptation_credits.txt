@@ -1,67 +1,46 @@
-CoPADS adapted numerous codes available from other sources. 
-Wherever possible, specific credits are given within individual source files. 
-The original sources can be found in doc/adaptation_source directory. 
-A summary of credits to acknowledge the works of various authors/developers is 
-as follows:
+As a collection, COPADS adapted numerous codes available from other sources. Wherever possible, specific credits are given within individual source files. The original sources can be found in doc/adaptation_source directory. 
+A summary of credits to acknowledge the works of various authors/developers is as follows:
 
-1. MatrixError subclasses (MatrixError, MatrixArithmeticError, 
-MatrixMultiplicationError, MatrixAdditionError, MatrixSquareError, 
-MatrixTraceError, MatrixMinorError, MatrixDeterminantError) 
-http://http://aspn.activestate.com/ASPN/Cookbook/Python/Recipe/189971 
+MatrixError subclasses (MatrixError, MatrixArithmeticError, MatrixMultiplicationError, MatrixAdditionError, MatrixSquareError, MatrixTraceError, MatrixMinorError, MatrixDeterminantError)
 (file: doc/adaptation_source/189971.py)
-
-2. Matrix class 
 http://http://aspn.activestate.com/ASPN/Cookbook/Python/Recipe/189971 
-(file: doc/adaptation_source/189971.py)
 
-3. Bag class
+Matrix class (file: doc/adaptation_source/189971.py)
+http://http://aspn.activestate.com/ASPN/Cookbook/Python/Recipe/189971 
+
+Bag class (file: doc/adaptation_source/259174.py)
 http://aspn.activestate.com/ASPN/Cookbook/Python/Recipe/259174 
-(file: doc/adaptation_source/259174.py)
 
-4. GeometricMean, HarmonicMean, ArithmeticMean, Median, MedianScore, Mode, 
-Moment, Variation, Skew, Kurtosis, Describe 
+GeometricMean, HarmonicMean, ArithmeticMean, Median, MedianScore, Mode, Moment, Variation, Skew, Kurtosis, Describe (file: doc/adapation_source/harvard_gary_stat.py)
 http://www.nmr.mgh.harvard.edu/Neural_Systems_Group/gary/python/stats.py 
-(file: doc/adapation_source/harvard_gary_stat.py)
 
-5. asdict, items, count, contents, intersection, difference, itemindex, 
-indexesof, take, take_byfn, fcmp, intd, safe_log, safe_log2, safe_exp, Euclidean 
-BioPython project.
+asdict, items, count, contents, intersection, difference, itemindex, indexesof, take, take_byfn, fcmp, intd, safe_log, safe_log2, safe_exp, Euclidean. BioPython project.
 
-6. PriorityDictionary class 
+PriorityDictionary class (file: doc/adaptation_source/117228.py)
 http://aspn.activestate.com/ASPN/Cookbook/Python/Recipe/117228 
-(file: doc/adaptation_source/117228.py)
 
-7. RingList class
+RingList class (file: doc/adaptation_source/435902.py)
 http://aspn.activestate.com/ASPN/Cookbook/Python/Recipe/435902 
-(file: doc/adaptation_source/435902.py)
 
-8. Levenshtein
-http://www.hetland.org/python/distance.py
+Levenshtein distance (http://www.hetland.org/python/distance.py)
 
-9. Vector class
+Vector class (file: doc/adaptation_source/52272.py)
 http://aspn.activestate.com/ASPN/Cookbook/Python/Recipe/52272 
-(file: doc/adaptation_source/52272.py)
 
-10. SparseMatrix class
+SparseMatrix class (file: doc/adaptation_source/52275.py)
 http://aspn.activestate.com/ASPN/Cookbook/Python/Recipe/52275 
-(file: doc/adaptation_source/52275.py)
 
-11. floatRgb, strRgb, rgc, htmlRgb 
+floatRgb, strRgb, rgc, htmlRgb (file: doc/adaptation_source/52275.py)
 http://aspn.activestate.com/ASPN/Cookbook/Python/Recipe/52275 
-(file: doc/adaptation_source/52275.py)
 
-12. Red-Black Tree
+Red-Black Tree (file: doc/adaptation_source/RBTree.py)
 http://newcenturycomputers.net/projects/rbtree.html
-(file: doc/adaptation_source/RBTree.py)
 
-13. Dijkstra
+Dijkstra (file: doc/adaptation_source/119466.py)
 http://aspn.activestate.com/ASPN/Cookbook/Python/Recipe/119466
-(file: doc/adaptation_source/119466.py)
 
-14. Numerical algorithms by Tom Loredo
+Numerical algorithms by Tom Loredo (file: doc/adaptation_source/2000_June_039873.py)
 http://mail.python.org/pipermail/python-list/2000-June/039873.html
-(file: doc/adaptation_source/2000_June_039873.py)
 
-15. Digamma, trigamma unctions by Gavin E Crooks
+Digamma, trigamma unctions by Gavin E Crooks (file: doc/adaptation_source/moremaths.py)
 http://www.koders.com/python/fidA1F143F7BBA4CFACA5F3442265D17800581A493F.aspx
-(file: doc/adaptation_source/moremaths.py)
