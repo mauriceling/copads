@@ -1,8 +1,12 @@
-from distutils.core import setup
+from ez_setup import use_setuptools
+use_setuptools()
+
+from setuptools import setup, find_packages
 
 setup(name='copads',
       version='0.1',
       description='Collection of Python Algorithms and Data Structures',
+      long_description='Collection of Python Algorithms and Data Structures',
       author='Maurice HT Ling',
       author_email='mauriceling@acm.org',
       url='http://www.sourceforge.net/projects/copads',
@@ -11,12 +15,13 @@ setup(name='copads',
       package_dir = {'copads' : 'src',
                      'copads.test' : 'test'},
       packages = ['copads', 'copads.test'],
-      classifiers=['Development Status :: Experimental',
+      classifiers=['Development Status :: 3 - Alpha',
                    'Intended Audience :: Developers',
-                   'License :: GNU General Public Licence 2',
+                   'License :: OSI Approved :: GNU General Public License (GPL)',
+                   'Operating System :: OS Independent',
                    'Programming Language :: Python',
-                   'Topic :: Mathematics ',
-                   'Topic :: Statistics',
-                   'Topic :: Software Development :: Libraries :: Application Frameworks',
+                   'Topic :: Scientific/Engineering :: Artificial Intelligence',
+                   'Topic :: Scientific/Engineering :: Mathematics',
+                   'Topic :: Software Development :: Libraries :: Python Modules'
                    ],
      )
