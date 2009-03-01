@@ -1,3 +1,10 @@
+"""
+File containing node classes for tree data structures.
+
+Copyright (c) Maurice H.T. Ling <mauriceling@acm.org>
+Date created: 19th March 2008
+"""
+
 # RBTree colour code
 BLACK = 0
 RED = 1

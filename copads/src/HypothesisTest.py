@@ -9,6 +9,9 @@ critical = value of critical region for statistical test
 References:
 Test 1-100: Gopal K. Kanji. 2006. 100 Statistical Tests, 3rd edition.
 Sage Publications.
+
+Copyright (c) Maurice H.T. Ling <mauriceling@acm.org>
+Date created: 1st September 2008
 """
 
 from StatisticsDistribution import *

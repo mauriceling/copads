@@ -19,6 +19,9 @@ PI180           PI divided by 180
 PIDIV2          PI divided by 2
 SQRT2           square root of 2
 SQRT2PI         square root of 2xPI
+
+Copyright (c) Maurice H.T. Ling <mauriceling@acm.org>
+Date created: 19th March 2008
 """
 
 CGOLD = 0.38196601125010515179

@@ -1,3 +1,10 @@
+"""
+File containing classes for use in priority dictionary algorithms.
+
+Copyright (c) Maurice H.T. Ling <mauriceling@acm.org>
+Date created: 19th March 2008
+"""
+
 from __future__ import generators
 
 class PriorityDictionary(dict):

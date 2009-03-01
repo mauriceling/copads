@@ -1,3 +1,10 @@
+"""
+File containing ring structure classes.
+
+Copyright (c) Maurice H.T. Ling <mauriceling@acm.org>
+Date created: 19th March 2008
+"""
+
 class RingList:
     """
     The RingList is a class implementing a circular list. The ring have a 

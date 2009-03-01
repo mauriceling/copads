@@ -1,3 +1,10 @@
+"""
+File containing set classes. 
+
+Copyright (c) Maurice H.T. Ling <mauriceling@acm.org>
+Date created: 19th March 2008
+"""
+
 class Set:
     """The set class. It can contain mutable objects.
     

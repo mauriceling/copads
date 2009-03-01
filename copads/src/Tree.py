@@ -1,3 +1,10 @@
+"""
+File containing classes for use in tree algorithms.
+
+Copyright (c) Maurice H.T. Ling <mauriceling@acm.org>
+Date created: 19th March 2008
+"""
+
 import string
 from TreeNodes import *
 

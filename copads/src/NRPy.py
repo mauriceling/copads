@@ -30,6 +30,9 @@ that the source codes are not distributed. As such, the codes in this file
 will be called by other functions in COPADS but not for direct use by users
 of COPADS - if you intend to call these functions directly, the simplest way
 is to own a copy of both NRP and NRC2.
+
+Copyright (c) Maurice H.T. Ling <mauriceling@acm.org>
+Date created: 19th March 2008
 """
 
 import math

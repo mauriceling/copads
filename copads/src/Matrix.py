@@ -1,3 +1,10 @@
+"""
+File containing classes for use in matrix algorithms.
+
+Copyright (c) Maurice H.T. Ling <mauriceling@acm.org>
+Date created: 19th March 2008
+"""
+
 import types
 import operator
 import math
