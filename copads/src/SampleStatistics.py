@@ -162,6 +162,14 @@ class MultiSample:
     sample = {}
     def __init__(self): pass
     
+    def addSample(self, sample, name = None):
+        if type(sample) == list or type(sample) == tuple:
+            sample = SingleSample(data = list(sample), name = name)
+            self.sample[name] = sample
+        else:
+            self.sample[sample.name] = sample
+            
+    
     def covariance(self, inlist1, inlist2):
         """
         Calculates covariance using the formula: Cov(xy)  =  E{xy}  -  E{x}E{y}
