@@ -278,6 +278,55 @@ class NormalDistribution(Distribution):
         return random.gauss(self.mean, self.stdev)
 
 
+class PoissonDistribution(Distribution):
+    def __init__(self, **parameters): 
+        """Constructor method. The parameters are used to construct the 
+        probability distribution.
+        
+        Parameters:
+        1. expectation (mean success probability; lambda)"""
+        try: self.mean = parameters['expectation']
+        except KeyError: 
+            raise DistributionParameterError('Poisson distribution requires \
+            expectation (lambda)')
+    def CDF(self, x): 
+        """
+        Cummulative Distribution Function, which gives the cummulative 
+        probability (area under the probability curve) from -infinity or 0 to 
+        a give x-value on the x-axis where y-axis is the probability."""
+        return NRPy.cdf_poisson(x + 1, self.mean)
+    def PDF(self, x): 
+        """
+        Partial Distribution Function, which gives the probability for the 
+        particular value of x, or the area under probability distribution from 
+        x-h to x+h for continuous distribution."""
+        return (math.exp(-1 ** self.mean) * \
+                (self.mean ** x)) / NRPy.factrl(x)
+    def inverseCDF(self, probability, start = 0.1, step = 0.01): 
+        """
+        It does the reverse of CDF() method, it takes a probability value and 
+        returns the corresponding value on the x-axis."""
+        cprob = self.CDF(start)
+        if probability < cprob: return (start, cprob)
+        while (probability > cprob):
+            start = start + step
+            cprob = self.CDF(start)
+            # print start, cprob
+        return (start, cprob)
+    def mean(self): 
+        """Gives the arithmetic mean of the sample."""
+        return self.mean
+    def mode(self): 
+        """Gives the mode of the sample."""
+        return int(self.mean)
+    def variance(self): 
+        """Gives the variance of the sample."""
+        return self.mean
+#    def random(self):
+#        """Gives a random number based on the distribution."""
+#        raise DistributionFunctionError    
+
+
 class TDistribution(Distribution):
     def __init__(self, **parameters): 
         """Constructor method. The parameters are used to construct the 
@@ -2411,55 +2460,6 @@ class PascalDistribution(Distribution):
 #    def random(self):
 #        """Gives a random number based on the distribution."""
 #        return self.distribution.random()
-
-
-class PoissonDistribution(Distribution):
-    def __init__(self, **parameters): 
-        """Constructor method. The parameters are used to construct the 
-        probability distribution.
-        
-        Parameters:
-        1. expectation (mean success probability; lambda)"""
-        try: self.mean = parameters['expectation']
-        except KeyError: 
-            raise DistributionParameterError('Poisson distribution requires \
-            expectation (lambda)')
-    def CDF(self, x): 
-        """
-        Cummulative Distribution Function, which gives the cummulative 
-        probability (area under the probability curve) from -infinity or 0 to 
-        a give x-value on the x-axis where y-axis is the probability."""
-        return NRPy.cdf_poisson(x, self.mean)
-    def PDF(self, x): 
-        """
-        Partial Distribution Function, which gives the probability for the 
-        particular value of x, or the area under probability distribution from 
-        x-h to x+h for continuous distribution."""
-        return (math.exp(-1 ** self.mean) * \
-                (self.mean ** x)) / NRPy.factrl(x)
-    def inverseCDF(self, probability, start = 0.0, step = 0.01): 
-        """
-        It does the reverse of CDF() method, it takes a probability value and 
-        returns the corresponding value on the x-axis."""
-        cprob = self.CDF(start)
-        if probability < cprob: return (start, cprob)
-        while (probability > cprob):
-            start = start + step
-            cprob = self.CDF(start)
-            # print start, cprob
-        return (start, cprob)
-    def mean(self): 
-        """Gives the arithmetic mean of the sample."""
-        return self.mean
-    def mode(self): 
-        """Gives the mode of the sample."""
-        return int(self.mean)
-    def variance(self): 
-        """Gives the variance of the sample."""
-        return self.mean
-#    def random(self):
-#        """Gives a random number based on the distribution."""
-#        raise DistributionFunctionError    
 
 
 def PolyaDistribution(**parameters):

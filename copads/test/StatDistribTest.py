@@ -121,15 +121,22 @@ class testNormal(unittest.TestCase):
 ##        pass
 ##    def testinverseCDF(self):
 ##        pass
-##
-##class testPoisson(unittest.TestCase):
-##    def testCDF(self):
-##        pass
-##    def testPDF(self):
-##        pass
-##    def testinverseCDF(self):
-##        pass
-##
+
+class testPoisson(unittest.TestCase):
+    def testCDF5_1(self):
+        p = N.PoissonDistribution(expectation = 5).CDF(1)
+        self.assertTrue(abs(p/0.04 - 1) < 0.05)
+    def testCDF5_2(self):
+        p = N.PoissonDistribution(expectation = 5).CDF(10)
+        self.assertTrue(abs(p/0.986 - 1) < 0.01)
+    def testCDF7_1(self):
+        p = N.PoissonDistribution(expectation = 7).CDF(10)
+        self.assertTrue(abs(p/0.901 - 1) < 0.01)
+    def testPDF(self):
+        pass
+    def testinverseCDF(self):
+        pass
+
 ##class testSemicircular(unittest.TestCase):
 ##    def testCDF(self):
 ##        pass
@@ -146,35 +153,36 @@ class testT(unittest.TestCase):
     def testinverseCDF1_1(self):
         x = N.TDistribution(location = 0.0, scale = 1.0, 
                             shape = 2).inverseCDF(0.9)[0]
-        self.assertTrue((x/1.886)-1 < 0.005)
+        self.assertTrue(abs(x/1.886 - 1) < 0.01)
     def testinverseCDF1_2(self):
         x = N.TDistribution(location = 0.0, scale = 1.0, 
                             shape = 2).inverseCDF(0.95)[0]
-        self.assertTrue((x/2.920)-1 <0.001)
+        self.assertTrue(abs(x/2.920 - 1) <0.01)
     def testinverseCDF1_3(self):
         x = N.TDistribution(location = 0.0, scale = 1.0, 
                             shape = 2).inverseCDF(0.99)[0]
-        self.assertTrue((x/6.965)-1 <0.001)
+        self.assertTrue(abs(x/6.965 - 1) <0.01)
     def testinverseCDF1_4(self):
         x = N.TDistribution(location = 0.0, scale = 1.0, 
-                            shape = 2).inverseCDF(0.990)[0]
-        self.assertTrue((x/22.328)-1 <0.001)
+                            shape = 2).inverseCDF(0.999)[0]
+        self.assertTrue(abs(x/22.328 - 1) <0.01)
     def testinverseCDF5_1(self):
         x = N.TDistribution(location = 0.0, scale = 1.0, 
                             shape = 5).inverseCDF(0.9)[0]
-        self.assertTrue((x/1.476)-1 < 0.005)
+        self.assertTrue(abs(x/1.476 - 1) < 0.01)
     def testinverseCDF5_2(self):
         x = N.TDistribution(location = 0.0, scale = 1.0, 
                             shape = 5).inverseCDF(0.95)[0]
-        self.assertTrue((x/2.015)-1 <0.005)
+        self.assertTrue(abs(x/2.015 - 1) <0.01)
     def testinverseCDF5_3(self):
         x = N.TDistribution(location = 0.0, scale = 1.0, 
                             shape = 5).inverseCDF(0.99)[0]
-        self.assertTrue((x/3.365)-1 <0.005)
+        self.assertTrue(abs(x/3.365 - 1) <0.01)
     def testinverseCDF5_4(self):
         x = N.TDistribution(location = 0.0, scale = 1.0, 
-                            shape = 5).inverseCDF(0.990)[0]
-        self.assertTrue((x/5.894)-1 <0.001)
+                            shape = 5).inverseCDF(0.999)[0]
+        self.assertTrue(abs(x/5.894 - 1) <0.01)
+        
     
 ##class testUniform(unittest.TestCase):
 ##    def testCDF(self):
