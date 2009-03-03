@@ -6,13 +6,11 @@ import unittest
 
 class testBeta(unittest.TestCase):
     def testCDF1(self):
-        self.assertAlmostEqual(N.BetaDistribution(location = 0,
-                                                  scale = 1,
-                                                  p = 1, q = 2).CDF(1.0), 1.0)
+        p = N.BetaDistribution(location = 0, scale = 1, p = 1, q = 2).CDF(1.0)
+        self.assertTrue(abs(p/1.0 - 1) < 0.01)
     def testCDF2(self):
-        self.assertAlmostEqual(N.BetaDistribution(location = 0,
-                                                  scale = 1,
-                                                  p = 6, q = 2).CDF(1.0), 1.0)  
+        p = N.BetaDistribution(location = 0, scale = 1, p = 6, q = 2).CDF(1.0)
+        self.assertTrue(abs(p/1.0 - 1) < 0.01)  
     def testPDF(self):
         pass
     def testinverseCDF(self):
@@ -120,11 +118,14 @@ class testBinomial(unittest.TestCase):
 
 class testNormal(unittest.TestCase):
     def testCDF1(self):
-        self.assertAlmostEqual(N.NormalDistribution().CDF(0), 0.5)
+        p = N.NormalDistribution().CDF(0)
+        self.assertTrue(abs(p/0.5 - 1) < 0.01)
     def testPDF1(self):
-        self.assertAlmostEqual(N.NormalDistribution().PDF(0), 0.3989423)
+        p = N.NormalDistribution().PDF(0)
+        self.assertTrue(abs(p/0.3989423 - 1) < 0.01)
     def testinverseCDF1(self):
-        self.assertAlmostEqual(N.NormalDistribution().inverseCDF(0.5)[0], 0)
+        p = N.NormalDistribution().inverseCDF(0.5)[0]
+        self.assertTrue(abs(p) < 0.01)
   
 ##class testPareto(unittest.TestCase):
 ##    def testCDF(self):
