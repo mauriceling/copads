@@ -352,6 +352,12 @@ class ChiSquareDistribution(Distribution):
 #        return self.distribution.random()
 
 
+def FurryDistribution(**parameters):
+    """
+    Furry distribution is an alias of Gamma distribution."""
+    return GammaDistribution(**parameters)
+
+
 class GammaDistribution(Distribution):
     def __init__(self, **parameters): 
         """
@@ -1481,12 +1487,6 @@ def FrechetDistribution(**parameters):
     """
     Frechet distribution is an alias of Weibull distribution."""
     return WeibullDistribution(**parameters)
-
-
-def FurryDistribution(**parameters):
-    """
-    Furry distribution is an alias of Gamma distribution."""
-    return GammaDistribution(**parameters)
 
 
 class GenLogisticDistribution(Distribution):
