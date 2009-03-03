@@ -597,7 +597,7 @@ def gser(a, x, itmax=700, eps=3.e-7):
     if (x < 0.0):
         raise bad_arg, x
     if (x == 0.0):
-        return(0.0)
+        return(0.0,0.0)
     ap = a
     sum = 1.0 / a
     delta = sum
