@@ -352,6 +352,17 @@ class ChiSquareDistribution(Distribution):
 #        return self.distribution.random()
 
 
+def ErlangDistribution(**parameters):
+    """
+    Erlang distribution is an alias of Gamma distribution where the shape
+    parameter is an integer."""
+    try: parameters['shape'] = int(parameters['shape'])
+    except KeyError: 
+            raise DistributionParameterError('Erlang distribution requires \
+            shape parameter')
+    return GammaDistribution(**parameters)
+
+
 def FurryDistribution(**parameters):
     """
     Furry distribution is an alias of Gamma distribution."""
@@ -1161,17 +1172,6 @@ class DoubleWeibullDistribution(Distribution):
 #    def random(self):
 #        """Gives a random number based on the distribution."""
 #        raise DistributionFunctionError
-
-
-def ErlangDistribution(**parameters):
-    """
-    Erlang distribution is an alias of Gamma distribution where the shape
-    parameter is an integer."""
-    try: parameters['shape'] = int(parameters['shape'])
-    except KeyError: 
-            raise DistributionParameterError('Erlang distribution requires \
-            shape parameter')
-    return GammaDistribution(**parameters)
 
 
 class ExponentialDistribution(Distribution):
