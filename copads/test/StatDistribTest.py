@@ -306,14 +306,26 @@ class testT(unittest.TestCase):
         self.assertTrue(abs(x/5.894 - 1) <0.01)
         
     
-##class testUniform(unittest.TestCase):
-##    def testCDF(self):
-##        pass
-##    def testPDF(self):
-##        pass
-##    def testinverseCDF(self):
-##        pass
-##
+class testUniform(unittest.TestCase):
+    def testCDF1(self):
+        p = N.UniformDistribution(location = 1.0, scale = 3.0).CDF(1.5)
+        self.assertTrue(abs(p/0.25 - 1) <0.01)
+    def testCDF2(self):
+        p = N.UniformDistribution(location = 1.0, scale = 3.0).CDF(2.5)
+        self.assertTrue(abs(p/0.75 - 1) <0.01)
+    def testPDF1(self):
+        p = N.UniformDistribution(location = 1.0, scale = 3.0).PDF(1.5)
+        self.assertTrue(p == 0.5)
+    def testPDF2(self):
+        p = N.UniformDistribution(location = 1.0, scale = 3.0).PDF(2.5)
+        self.assertTrue(p == 0.5)
+    def testinverseCDF1(self):
+        p = N.UniformDistribution(location = 1.0, scale = 3.0).inverseCDF(0.25)[0]
+        self.assertTrue(abs(p/1.5 - 1) <0.01)
+    def testinverseCDF2(self):
+        p = N.UniformDistribution(location = 1.0, scale = 3.0).inverseCDF(0.75)[0]
+        self.assertTrue(abs(p/2.5 - 1) <0.01)
+
 ##class testWeibull(unittest.TestCase):
 ##    def testCDF(self):
 ##        pass

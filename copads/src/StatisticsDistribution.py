@@ -707,6 +707,72 @@ class TDistribution(Distribution):
 #        raise DistributionFunctionError
 
 
+class UniformDistribution(Distribution):
+    def __init__(self, **parameters): 
+        """Constructor method. The parameters are used to construct the 
+        probability distribution.
+        
+        Parameter:
+        1. location (lower bound)
+        2. scale (upper bound)"""
+        try: 
+            self.location = parameters['location']
+            self.scale = parameters['scale']
+        except KeyError: 
+            raise DistributionParameterError('Uniform distribution requires \
+            location and scale parameters')
+    def CDF(self, x): 
+        """
+        Cummulative Distribution Function, which gives the cummulative 
+        probability (area under the probability curve) from -infinity or 0 to 
+        a give x-value on the x-axis where y-axis is the probability."""
+        return (x - self.location)/(self.scale - self.location)
+    def PDF(self, x): 
+        """
+        Partial Distribution Function, which gives the probability for the 
+        particular value of x, or the area under probability distribution from 
+        x-h to x+h for continuous distribution."""
+        return 1.0/(self.scale - self.location)
+    def inverseCDF(self, probability, start = 0.0, step = 0.01): 
+        """
+        It does the reverse of CDF() method, it takes a probability value and 
+        returns the corresponding value on the x-axis."""
+        cprob = self.CDF(start)
+        if probability < cprob: return (start, cprob)
+        while (probability > cprob):
+            start = start + step
+            cprob = self.CDF(start)
+            # print start, cprob
+        return (start, cprob)
+    def mean(self): 
+        """Gives the arithmetic mean of the sample."""
+        return (self.location + self.scale)/2
+    def median(self): 
+        """Gives the median of the sample."""
+        return (self.location + self.scale)/2
+    def kurtosis(self): 
+        """Gives the kurtosis of the sample."""
+        return -1.2
+    def skew(self): 
+        """Gives the skew of the sample."""
+        return 0.0
+    def variance(self): 
+        """Gives the variance of the sample."""
+        return ((self.scale - self.location) ** 2)/12
+    def quantile1(self): 
+        """Gives the 1st quantile of the sample."""
+        return ((3 * self.location) + self.scale)/4
+    def quantile3(self): 
+        """Gives the 3rd quantile of the sample."""
+        return (self.location + (3 * self.scale))/4
+    def qmean(self): 
+        """Gives the quantile of the arithmetic mean of the sample."""
+        return 0.5
+    def random(self, lower, upper):
+        """Gives a random number based on the distribution."""
+        return random.uniform(lower, upper)
+    
+    
 # ----------------------------------------------------------
 # Untested Distributions
 # ----------------------------------------------------------
@@ -2811,72 +2877,6 @@ class TriangularDistribution(Distribution):
 #    def random(self):
 #        """Gives a random number based on the distribution."""
 #        raise DistributionFunctionError
-
-
-class UniformDistribution(Distribution):
-    def __init__(self, **parameters): 
-        """Constructor method. The parameters are used to construct the 
-        probability distribution.
-        
-        Parameter:
-        1. location
-        2. scale (upper bound)"""
-        try: 
-            self.location = parameters['location']
-            self.scale = parameters['scale']
-        except KeyError: 
-            raise DistributionParameterError('Uniform distribution requires \
-            location and scale parameters')
-    def CDF(self, x): 
-        """
-        Cummulative Distribution Function, which gives the cummulative 
-        probability (area under the probability curve) from -infinity or 0 to 
-        a give x-value on the x-axis where y-axis is the probability."""
-        return (x - self.location)/(self.scale - self.location)
-    def PDF(self, x): 
-        """
-        Partial Distribution Function, which gives the probability for the 
-        particular value of x, or the area under probability distribution from 
-        x-h to x+h for continuous distribution."""
-        return 1/(self.scale - self.location)
-    def inverseCDF(self, probability, start = 0.0, step = 0.01): 
-        """
-        It does the reverse of CDF() method, it takes a probability value and 
-        returns the corresponding value on the x-axis."""
-        cprob = self.CDF(start)
-        if probability < cprob: return (start, cprob)
-        while (probability > cprob):
-            start = start + step
-            cprob = self.CDF(start)
-            # print start, cprob
-        return (start, cprob)
-    def mean(self): 
-        """Gives the arithmetic mean of the sample."""
-        return (self.location + self.scale)/2
-    def median(self): 
-        """Gives the median of the sample."""
-        return (self.location + self.scale)/2
-    def kurtosis(self): 
-        """Gives the kurtosis of the sample."""
-        return -1.2
-    def skew(self): 
-        """Gives the skew of the sample."""
-        return 0.0
-    def variance(self): 
-        """Gives the variance of the sample."""
-        return ((self.scale - self.location) ** 2)/12
-    def quantile1(self): 
-        """Gives the 1st quantile of the sample."""
-        return ((3 * self.location) + self.scale)/4
-    def quantile3(self): 
-        """Gives the 3rd quantile of the sample."""
-        return (self.location + (3 * self.scale))/4
-    def qmean(self): 
-        """Gives the quantile of the arithmetic mean of the sample."""
-        return 0.5
-    def random(self, lower, upper):
-        """Gives a random number based on the distribution."""
-        return random.uniform(lower, upper)
 
 
 def WaldDistribution(**parameters):
