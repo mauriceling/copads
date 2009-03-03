@@ -237,6 +237,66 @@ class BetaDistribution(Distribution):
         """Gives a random number based on the distribution."""
         return random.betavariate(self.p. self.q)
     
+
+class BinomialDistribution(Distribution):
+    def __init__(self, **parameters): 
+        """Constructor method. The parameters are used to construct the 
+        probability distribution.
+        
+        Parameters:
+        1. success (probability of success; 0 <= success <= 1)
+        2. trial (number of Bernoulli trials)"""
+        try: self.success = float(parameters['success'])
+        except KeyError: self.success = 0.5
+        try: self.trial = int(parameters['trial'])
+        except KeyError: self.trial = 1000
+    def CDF(self, x): 
+        """
+        Cummulative Distribution Function, which gives the cummulative 
+        probability (area under the probability curve) from -infinity or 0 to 
+        a give x-value on the x-axis where y-axis is the probability."""
+        return NRPy.cdf_binomial(x, self.trial, self.success)
+    def PDF(self, x): 
+        """
+        Partial Distribution Function, which gives the probability for the 
+        particular value of x, or the area under probability distribution from 
+        x-h to x+h for continuous distribution."""
+        x = int(x)
+        return NRPy.bico(self.trial, x) * \
+            (self.success ** x) * \
+            ((1 - self.success) ** (self.trial - x))
+    def inverseCDF(self, probability, start = 0, step = 0.01): 
+        """
+        It does the reverse of CDF() method, it takes a probability value and 
+        returns the corresponding value on the x-axis."""
+        cprob = self.CDF(start)
+        if probability < cprob: return (start, cprob)
+        while (probability > cprob):
+            start = start + step
+            cprob = self.CDF(start)
+            # print start, cprob
+        return (start, cprob)
+    def mean(self): 
+        """Gives the arithmetic mean of the sample."""
+        return self.success * self.trial
+    def mode(self): 
+        """Gives the mode of the sample."""
+        return int(self.success * (self.trial + 1))
+    def kurtosis(self): 
+        """Gives the kurtosis of the sample."""
+        return 1 - ((6 * self.success * (1 - self.success)))/ \
+            (self.trial * self.success * (1 - self.success))
+    def skew(self): 
+        """Gives the skew of the sample."""
+        return (1 - self.success - self.success)/ \
+            ((self.trial * self.success * (1 - self.success)) **0.5)
+    def variance(self): 
+        """Gives the variance of the sample."""
+        return self.mean() * (1 - self.success)
+#    def random(self):
+#        """Gives a random number based on the distribution."""
+#        raise DistributionFunctionError
+
     
 class NormalDistribution(Distribution):
     def __init__(self, **kwargs):
@@ -302,7 +362,7 @@ class PoissonDistribution(Distribution):
         x-h to x+h for continuous distribution."""
         return (math.exp(-1 ** self.mean) * \
                 (self.mean ** x)) / NRPy.factrl(x)
-    def inverseCDF(self, probability, start = 0.1, step = 0.01): 
+    def inverseCDF(self, probability, start = 0.001, step = 1): 
         """
         It does the reverse of CDF() method, it takes a probability value and 
         returns the corresponding value on the x-axis."""
@@ -457,66 +517,6 @@ def BilateralExponentialDistribution(**parameters):
     """
     Bilateral Exponential distribution is an alias of Laplace distribution."""
     return LaplaceDistribution(**parameters)
-
-
-class BinomialDistribution(Distribution):
-    def __init__(self, **parameters): 
-        """Constructor method. The parameters are used to construct the 
-        probability distribution.
-        
-        Parameters:
-        1. success (probability of success; 0 <= success <= 1)
-        2. trial (number of Bernoulli trials)"""
-        try: self.success = float(parameters['success'])
-        except KeyError: self.success = 0.5
-        try: self.trial = int(parameters['trial'])
-        except KeyError: self.trial = 1000
-    def CDF(self, x): 
-        """
-        Cummulative Distribution Function, which gives the cummulative 
-        probability (area under the probability curve) from -infinity or 0 to 
-        a give x-value on the x-axis where y-axis is the probability."""
-        return NRPy.cdf_binomial(x, self.trial, self.success)
-    def PDF(self, x): 
-        """
-        Partial Distribution Function, which gives the probability for the 
-        particular value of x, or the area under probability distribution from 
-        x-h to x+h for continuous distribution."""
-        x = int(x)
-        return NRPy.bico(self.trial, x) * \
-            (self.success ** x) * \
-            ((1 - self.success) ** (self.trial - x))
-    def inverseCDF(self, probability, start = 0, step = 1): 
-        """
-        It does the reverse of CDF() method, it takes a probability value and 
-        returns the corresponding value on the x-axis."""
-        cprob = self.CDF(start)
-        if probability < cprob: return (start, cprob)
-        while (probability > cprob):
-            start = start + step
-            cprob = self.CDF(start)
-            # print start, cprob
-        return (start, cprob)
-    def mean(self): 
-        """Gives the arithmetic mean of the sample."""
-        return self.success * self.trial
-    def mode(self): 
-        """Gives the mode of the sample."""
-        return int(self.success * (self.trial + 1))
-    def kurtosis(self): 
-        """Gives the kurtosis of the sample."""
-        return 1 - ((6 * self.success * (1 - self.success)))/ \
-            (self.trial * self.success * (1 - self.success))
-    def skew(self): 
-        """Gives the skew of the sample."""
-        return (1 - self.success - self.success)/ \
-            ((self.trial * self.success * (1 - self.success)) **0.5)
-    def variance(self): 
-        """Gives the variance of the sample."""
-        return self.mean() * (1 - self.success)
-#    def random(self):
-#        """Gives a random number based on the distribution."""
-#        raise DistributionFunctionError
 
 
 class BradfordDistribution(Distribution):

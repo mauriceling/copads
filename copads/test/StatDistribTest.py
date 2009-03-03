@@ -18,14 +18,26 @@ class testBeta(unittest.TestCase):
     def testinverseCDF(self):
         pass
 
-##class testBinomial(unittest.TestCase):
-##    def testCDF1(self):
-##        self.assertAlmostEqual(N.BinomialDistribution().CDF(500), 0.5126125) 
-##    def testPDF(self):
+class testBinomial(unittest.TestCase):
+    def testCDF1(self):
+        p = N.BinomialDistribution(trial = 1000, success = 0.5).CDF(500)
+        self.assertTrue(abs(p/0.5126125 - 1) < 0.01) 
+    def testPDF1(self):
+        p = N.BinomialDistribution(trial = 20, success = 0.5).PDF(10)
+        self.assertTrue(abs(p/0.1762 - 1) < 0.01)
+    def testPDF2(self):
+        p = N.BinomialDistribution(trial = 20, success = 0.1).PDF(1)
+        self.assertTrue(abs(p/0.27017 - 1) < 0.01)
+    def testPDF3(self):
+        p = N.BinomialDistribution(trial = 20, success = 0.1).PDF(3)
+        self.assertTrue(abs(p/0.19012 - 1) < 0.01)
+    def testPDF4(self):
+        p = N.BinomialDistribution(trial = 20, success = 0.1).PDF(4)
+        self.assertTrue(abs(p/0.08978 - 1) < 0.01)
+##    def testinverseCDF1(self):
 ##        pass
-##    def testinverseCDF(self):
-##        pass
-##        
+        
+        
 ##class testCauchy(unittest.TestCase):
 ##    def testCDF(self):
 ##        pass
@@ -132,10 +144,20 @@ class testPoisson(unittest.TestCase):
     def testCDF7_1(self):
         p = N.PoissonDistribution(expectation = 7).CDF(10)
         self.assertTrue(abs(p/0.901 - 1) < 0.01)
+    def testCDF7_2(self):
+        p = N.PoissonDistribution(expectation = 7).CDF(13)
+        self.assertTrue(abs(p/0.987 - 1) < 0.01)
     def testPDF(self):
         pass
-    def testinverseCDF(self):
-        pass
+    def testinverseCDF5_1(self):
+        x = N.PoissonDistribution(expectation = 5).inverseCDF(0.04)[0]
+        self.assertTrue(abs(x - 1)/1 < 0.01)
+    def testinverseCDF5_2(self):
+        x = N.PoissonDistribution(expectation = 5).inverseCDF(0.986)[0]
+        self.assertTrue(abs(x - 10)/10 < 0.01)
+    def testinverseCDF7_1(self):
+        x = N.PoissonDistribution(expectation = 7).inverseCDF(0.901)[0]
+        self.assertTrue(abs(x - 10)/10 < 0.01)
 
 ##class testSemicircular(unittest.TestCase):
 ##    def testCDF(self):
