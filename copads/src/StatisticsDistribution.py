@@ -298,6 +298,68 @@ class BinomialDistribution(Distribution):
 #        raise DistributionFunctionError
 
 
+class CauchyDistribution(Distribution):
+    def __init__(self, **parameters): 
+        """Constructor method. The parameters are used to construct the 
+        probability distribution.
+        
+        Parameter:
+        1. location (default = 0.0)
+        2. scale (lambda; default = 1.0)"""
+        try: self.location = parameters['location']
+        except KeyError: self.location = 0.0
+        try: self.scale = parameters['scale']
+        except KeyError: self.scale = 1.0
+    def CDF(self, x): 
+        """
+        Cummulative Distribution Function, which gives the cummulative 
+        probability (area under the probability curve) from -infinity or 0 to 
+        a give x-value on the x-axis where y-axis is the probability."""
+        return 0.5 + 1/PI * math.atan((x-self.location)/self.scale)
+    def PDF(self, x): 
+        """
+        Partial Distribution Function, which gives the probability for the 
+        particular value of x, or the area under probability distribution from 
+        x-h to x+h for continuous distribution."""
+        return 1 / (PI * self.scale * \
+            (1 + (((x - self.location)/self.scale) ** 2)))
+    def inverseCDF(self, probability, start = 0.0, step = 0.01): 
+        """
+        It does the reverse of CDF() method, it takes a probability value and 
+        returns the corresponding value on the x-axis."""
+        cprob = self.CDF(start)
+        if probability < cprob: return (start, cprob)
+        while (probability > cprob):
+            start = start + step
+            cprob = self.CDF(start)
+            # print start, cprob
+        return (start, cprob)
+    def mean(self): 
+        """Gives the arithmetic mean of the sample."""
+        raise DistributionFunctionError('Mean for Cauchy Distribution is \
+            undefined')
+    def mode(self): 
+        """Gives the mode of the sample."""
+        return self.location
+    def median(self): 
+        """Gives the median of the sample."""
+        return self.location
+    def quantile1(self): 
+        """Gives the 1st quantile of the sample."""
+        return self.location - self.scale
+    def quantile3(self): 
+        """Gives the 3rd quantile of the sample."""
+        return self.location + self.scale
+    def qmode(self): 
+        """Gives the quantile of the mode of the sample."""
+        return 0.5
+    def random(self, seed):
+        """Gives a random number based on the distribution."""
+        while 1:
+            seed = self.loaction + (self.scale * math.tan(PI * (seed - 0.5)))
+            yield seed
+
+
 class ChiSquareDistribution(Distribution):
     """
     Chi-square distribution is a special case of Gamma distribution where
@@ -897,66 +959,6 @@ class BurrDistribution(Distribution):
             yield seed
 
 
-class CauchyDistribution(Distribution):
-    def __init__(self, **parameters): 
-        """Constructor method. The parameters are used to construct the 
-        probability distribution.
-        
-        Parameter:
-        1. location (default = 0.0)
-        2. scale (lambda; default = 1.0)"""
-        try: self.location = parameter['location']
-        except KeyError: self.location = 0.0
-        try: self.scale = parameter['scale']
-        except KeyError: self.scale = 1.0
-    def CDF(self, x): 
-        """
-        Cummulative Distribution Function, which gives the cummulative 
-        probability (area under the probability curve) from -infinity or 0 to 
-        a give x-value on the x-axis where y-axis is the probability."""
-        return 0.5 + 1/PI * atan((x-self.location)/self.scale)
-    def PDF(self, x): 
-        """
-        Partial Distribution Function, which gives the probability for the 
-        particular value of x, or the area under probability distribution from 
-        x-h to x+h for continuous distribution."""
-        return 1 / (PI * self.scale * \
-            (1 + (((x - self.location)/self.scale) ** 2)))
-    def inverseCDF(self, probability, start = 0.0, step = 0.01): 
-        """
-        It does the reverse of CDF() method, it takes a probability value and 
-        returns the corresponding value on the x-axis."""
-        cprob = self.CDF(start)
-        if probability < cprob: return (start, cprob)
-        while (probability > cprob):
-            start = start + step
-            cprob = self.CDF(start)
-            # print start, cprob
-        return (start, cprob)
-    def mean(self): 
-        """Gives the arithmetic mean of the sample."""
-        raise DistributionFunctionError('Mean for Cauchy Distribution is \
-            undefined')
-    def mode(self): 
-        """Gives the mode of the sample."""
-        return self.location
-    def median(self): 
-        """Gives the median of the sample."""
-        return self.location
-    def quantile1(self): 
-        """Gives the 1st quantile of the sample."""
-        return self.location - self.scale
-    def quantile3(self): 
-        """Gives the 3rd quantile of the sample."""
-        return self.location + self.scale
-    def qmode(self): 
-        """Gives the quantile of the mode of the sample."""
-        return 0.5
-    def random(self, seed):
-        """Gives a random number based on the distribution."""
-        while 1:
-            seed = self.loaction + (self.scale * math.tan(PI * (seed - 0.5)))
-            yield seed
 
 
 class ChiDistribution(Distribution):
