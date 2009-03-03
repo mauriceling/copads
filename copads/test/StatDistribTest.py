@@ -164,6 +164,35 @@ class testGamma(unittest.TestCase):
 ##    def testinverseCDF(self):
 ##        pass
 
+class testGeometric(unittest.TestCase):
+    def testCDF1(self):
+        p = N.GeometricDistribution(success = 0.4).CDF(1)
+        self.assertTrue(abs(p/0.4 - 1) < 0.01)
+    def testCDF2(self):
+        p = N.GeometricDistribution(success = 0.4).CDF(4)
+        self.assertTrue(abs(p/0.8704 - 1) < 0.01)
+    def testCDF3(self):
+        p = N.GeometricDistribution(success = 0.4).CDF(6)
+        self.assertTrue(abs(p/0.953344 - 1) < 0.01)
+    def testPDF1(self):
+        p = N.GeometricDistribution(success = 0.4).PDF(1)
+        self.assertTrue(abs(p/0.4 - 1) < 0.01)
+    def testPDF2(self):
+        p = N.GeometricDistribution(success = 0.4).PDF(4)
+        self.assertTrue(abs(p/0.0864 - 1) < 0.01)
+    def testPDF3(self):
+        p = N.GeometricDistribution(success = 0.4).PDF(6)
+        self.assertTrue(abs(p/0.031104 - 1) < 0.01)
+    def testinverseCDF1(self):
+        p = N.GeometricDistribution(success = 0.4).inverseCDF(0.4)[0]
+        self.assertTrue(abs(p/1.0 - 1) < 0.01)
+    def testinverseCDF2(self):
+        p = N.GeometricDistribution(success = 0.4).inverseCDF(0.8704)[0]
+        self.assertTrue(abs(p/4.0 - 1) < 0.01)
+    def testinverseCDF3(self):
+        p = N.GeometricDistribution(success = 0.4).inverseCDF(0.953344)[0]
+        self.assertTrue(abs(p/6.0 - 1) < 0.01)
+
 class testNormal(unittest.TestCase):
     def testCDF1(self):
         p = N.NormalDistribution().CDF(0)
