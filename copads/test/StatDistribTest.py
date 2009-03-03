@@ -112,15 +112,36 @@ class testChiSquare(unittest.TestCase):
 ##        pass
 ##    def testinverseCDF(self):
 ##        pass
-##
-##class testF(unittest.TestCase):
-##    def testCDF(self):
-##        pass
-##    def testPDF(self):
-##        pass
-##    def testinverseCDF(self):
-##        pass
-##
+
+class testF(unittest.TestCase):
+    def testCDF1(self):
+        p = N.FDistribution(df1 = 3, df2 = 5).CDF(1.0)
+        self.assertTrue(abs(p/0.535145 - 1) < 0.01)
+    def testCDF2(self):
+        p = N.FDistribution(df1 = 3, df2 = 5).CDF(2.0)
+        self.assertTrue(abs(p/0.767376 - 1) < 0.01)
+    def testCDF3(self):
+        p = N.FDistribution(df1 = 3, df2 = 5).CDF(3.0)
+        self.assertTrue(abs(p/0.866145 - 1) < 0.01)
+    def testPDF1(self):
+        p = N.FDistribution(df1 = 3, df2 = 5).PDF(1.0)
+        self.assertTrue(abs(p/0.361174 - 1) < 0.01)
+    def testPDF2(self):
+        p = N.FDistribution(df1 = 3, df2 = 5).PDF(2.0)
+        self.assertTrue(abs(p/0.1428963 - 1) < 0.01)
+    def testPDF3(self):
+        p = N.FDistribution(df1 = 3, df2 = 5).PDF(3.0)
+        self.assertTrue(abs(p/0.066699 - 1) < 0.01)
+    def testinverseCDF1(self):
+        p = N.FDistribution(df1 = 3, df2 = 5).inverseCDF(0.535145)[0]
+        self.assertTrue(abs(p/1.0 - 1) < 0.01)
+    def testinverseCDF2(self):
+        p = N.FDistribution(df1 = 3, df2 = 5).inverseCDF(0.767376)[0]
+        self.assertTrue(abs(p/2.0 - 1) < 0.01)
+    def testinverseCDF3(self):
+        p = N.FDistribution(df1 = 3, df2 = 5).inverseCDF(0.866145)[0]
+        self.assertTrue(abs(p/3.0 - 1) < 0.01)
+
 class testGamma(unittest.TestCase):
     def testCDF1(self):
         p = N.GammaDistribution(location = 0, scale = 4, shape = 4).CDF(7.0)
