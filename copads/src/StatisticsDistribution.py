@@ -298,6 +298,60 @@ class BinomialDistribution(Distribution):
 #        raise DistributionFunctionError
 
 
+class ChiSquareDistribution(Distribution):
+    """
+    Chi-square distribution is a special case of Gamma distribution where
+    location = 0, scale = 2 and shape is twice that of the degrees of freedom.
+    """
+    def __init__(self, **parameters): 
+        """Constructor method. The parameters are used to construct the 
+        probability distribution.
+        
+        Parameters:
+        1. df = degrees of freedom"""
+        try: self.distribution = GammaDistribution(location = 0, 
+                                                    scale = 2, 
+                                                    shape = parameters['df']/2.0)
+        except KeyError: 
+            raise DistributionParameterError('Chi-square distribution \
+            requires scale (df) parameter')
+    def CDF(self, x): 
+        """
+        Cummulative Distribution Function, which gives the cummulative 
+        probability (area under the probability curve) from -infinity or 0 to 
+        a give x-value on the x-axis where y-axis is the probability."""
+        return self.distribution.CDF(x)
+##    def PDF(self, x): 
+##        """
+##        Partial Distribution Function, which gives the probability for the 
+##        particular value of x, or the area under probability distribution from 
+##        x-h to x+h for continuous distribution."""
+##        return self.distribution.PDF(x)
+    def inverseCDF(self, probability, start = 0.0, step = 0.01): 
+        """
+        It does the reverse of CDF() method, it takes a probability value and
+        the corresponding value on the x-axis."""
+        return self.distribution.inverseCDF(probability, start, step)
+    def mean(self): 
+        """Gives the arithmetic mean of the sample."""
+        return self.distribution.mean()
+    def mode(self): 
+        """Gives the mode of the sample."""
+        return self.distribution.mode()
+    def kurtosis(self): 
+        """Gives the kurtosis of the sample."""
+        return self.distribution.kurtosis()
+    def skew(self): 
+        """Gives the skew of the sample."""
+        return self.distribution.skew()
+    def variance(self): 
+        """Gives the variance of the sample."""
+        return self.distribution.variance()
+#    def random(self):
+#        """Gives a random number based on the distribution."""
+#        return self.distribution.random()
+
+
 class GammaDistribution(Distribution):
     def __init__(self, **parameters): 
         """
@@ -889,60 +943,6 @@ class ChiDistribution(Distribution):
 #    def random(self):
 #        """Gives a random number based on the distribution."""
 #        raise DistributionFunctionError
-
-
-class ChiSquareDistribution(Distribution):
-    """
-    Chi-square distribution is a special case of Gamma distribution where
-    location = 0, scale = 2 and shape is twice that of the degrees of freedom.
-    """
-    def __init__(self, **parameters): 
-        """Constructor method. The parameters are used to construct the 
-        probability distribution.
-        
-        Parameters:
-        1. df = degrees of freedom"""
-        try: self.distribution = GammaDistribution(location = 0, 
-                                                    scale = 2, 
-                                                    shape = parameters['df']/2.0)
-        except KeyError: 
-            raise DistributionParameterError('Chi-square distribution \
-            requires scale (df) parameter')
-    def CDF(self, x): 
-        """
-        Cummulative Distribution Function, which gives the cummulative 
-        probability (area under the probability curve) from -infinity or 0 to 
-        a give x-value on the x-axis where y-axis is the probability."""
-        return self.distribution.CDF(x)
-    def PDF(self, x): 
-        """
-        Partial Distribution Function, which gives the probability for the 
-        particular value of x, or the area under probability distribution from 
-        x-h to x+h for continuous distribution."""
-        return self.distribution.PDF(x)
-    def inverseCDF(self, probability, start = 0.0, step = 0.01): 
-        """
-        It does the reverse of CDF() method, it takes a probability value and
-        the corresponding value on the x-axis."""
-        return self.distribution.inverseCDF(probability, start, step)
-    def mean(self): 
-        """Gives the arithmetic mean of the sample."""
-        return self.distribution.mean()
-    def mode(self): 
-        """Gives the mode of the sample."""
-        return self.distribution.mode()
-    def kurtosis(self): 
-        """Gives the kurtosis of the sample."""
-        return self.distribution.kurtosis()
-    def skew(self): 
-        """Gives the skew of the sample."""
-        return self.distribution.skew()
-    def variance(self): 
-        """Gives the variance of the sample."""
-        return self.distribution.variance()
-#    def random(self):
-#        """Gives a random number based on the distribution."""
-#        return self.distribution.random()
 
 
 def CobbDouglasDistribution(**parameters):

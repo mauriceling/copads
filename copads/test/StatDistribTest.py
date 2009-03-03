@@ -44,14 +44,37 @@ class testBinomial(unittest.TestCase):
 ##    def testinverseCDF(self):
 ##        pass
 ##
-##class testChiSquare(unittest.TestCase):
-##    def testCDF(self):
-##        pass
-##    def testPDF(self):
-##        pass
-##    def testinverseCDF(self):
-##        pass
-##
+class testChiSquare(unittest.TestCase):
+    def testCDF0_1(self):
+        p = N.ChiSquareDistribution(df = 1).CDF(2.706)
+        self.assertTrue(abs(p/0.9 - 1) < 0.01)
+    def testCDF0_2(self):
+        p = N.ChiSquareDistribution(df = 1).CDF(3.841)
+        self.assertTrue(abs(p/0.95 - 1) < 0.01)
+    def testCDF0_3(self):
+        p = N.ChiSquareDistribution(df = 1).CDF(10.828)
+        self.assertTrue(abs(p/0.999 - 1) < 0.01)
+    def testCDF10_1(self):
+        p = N.ChiSquareDistribution(df = 10).CDF(15.987)
+        self.assertTrue(abs(p/0.9 - 1) < 0.01)
+    def testCDF10_2(self):
+        p = N.ChiSquareDistribution(df = 10).CDF(18.307)
+        self.assertTrue(abs(p/0.95 - 1) < 0.01)
+    def testCDF10_3(self):
+        p = N.ChiSquareDistribution(df = 10).CDF(29.588)
+        self.assertTrue(abs(p/0.999 - 1) < 0.01)
+    def testPDF(self):
+        pass
+    def testinverseCDF1(self):
+        p = N.ChiSquareDistribution(df = 10).inverseCDF(0.9)[0]
+        self.assertTrue(abs(p/15.987 - 1) < 0.01)
+    def testinverseCDF2(self):
+        p = N.ChiSquareDistribution(df = 10).inverseCDF(0.95)[0]
+        self.assertTrue(abs(p/18.307 - 1) < 0.01)
+    def testinverseCDF3(self):
+        p = N.ChiSquareDistribution(df = 10).inverseCDF(0.999)[0]
+        self.assertTrue(abs(p/29.588 - 1) < 0.01)
+
 ##class testCosine(unittest.TestCase):
 ##    def testCDF(self):
 ##        pass
