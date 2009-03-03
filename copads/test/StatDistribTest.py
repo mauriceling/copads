@@ -76,6 +76,31 @@ class testBinomial(unittest.TestCase):
 ##    def testinverseCDF(self):
 ##        pass
 ##
+class testGamma(unittest.TestCase):
+    def testCDF1(self):
+        p = N.GammaDistribution(location = 0, scale = 4, shape = 4).CDF(7.0)
+        self.assertTrue(abs(p/0.1008103 - 1) < 0.01)
+    def testCDF2(self):
+        p = N.GammaDistribution(location = 0, scale = 4, shape = 4).CDF(7.5)
+        self.assertTrue(abs(p/0.1210543 - 1) < 0.01)
+    def testCDF3(self):
+        p = N.GammaDistribution(location = 0, scale = 4, shape = 4).CDF(8.0)
+        self.assertTrue(abs(p/0.1428765 - 1) < 0.01)
+    def testPDF(self):
+        pass
+    def testinverseCDF1(self):
+        p = N.GammaDistribution(location = 0, scale = 4, 
+                                shape = 4).inverseCDF(0.1008103)[0]
+        self.assertTrue(abs(p/7.0 - 1) < 0.01)
+    def testinverseCDF2(self):
+        p = N.GammaDistribution(location = 0, scale = 4, 
+                                shape = 4).inverseCDF(0.1210543)[0]
+        self.assertTrue(abs(p/7.5 - 1) < 0.01)
+    def testinverseCDF3(self):
+        p = N.GammaDistribution(location = 0, scale = 4, 
+                                shape = 4).inverseCDF(0.1428765)[0]
+        self.assertTrue(abs(p/8.0 - 1) < 0.01)
+##
 ##class testGeometric(unittest.TestCase):
 ##    def testCDF(self):
 ##        pass

@@ -297,6 +297,70 @@ class BinomialDistribution(Distribution):
 #        """Gives a random number based on the distribution."""
 #        raise DistributionFunctionError
 
+
+class GammaDistribution(Distribution):
+    def __init__(self, **parameters): 
+        """
+        Constructor method. The parameters are used to construct the 
+        probability distribution.
+        
+        Parameters:
+        1. location
+        2. scale
+        3. shape"""
+        self.location = parameters['location']
+        self.scale = parameters['scale']
+        self.shape = parameters['shape']
+    def CDF(self, x): 
+        """
+        Cummulative Distribution Function, which gives the cummulative 
+        probability (area under the probability curve) from -infinity or 0 to 
+        a give x-value on the x-axis where y-axis is the probability."""
+        return NRPy.gammp(self.shape, (x - self.location)/self.scale)
+##    def PDF(self, x): 
+##        """
+##        Partial Distribution Function, which gives the probability for the 
+##        particular value of x, or the area under probability distribution 
+##        from x-h to x+h for continuous distribution."""
+##        r = 1 / (self.scale * NRPy.gammln(self.shape))
+##        r = r * (((x - self.location)/self.scale) ** (self.shape - 1))
+##        return r * math.exp((self.location - x)/self.scale)
+    def inverseCDF(self, probability, start = 0.0, step = 0.01): 
+        """
+        It does the reverse of CDF() method, it takes a probability value 
+        and returns the corresponding value on the x-axis."""
+        cprob = self.CDF(start)
+        if probability < cprob: return (start, cprob)
+        while (probability > cprob):
+            start = start + step
+            cprob = self.CDF(start)
+            # print start, cprob
+        return (start, cprob)
+    def mean(self): 
+        """Gives the arithmetic mean of the sample."""
+        return self.location + (self.scale * self.shape)
+    def mode(self): 
+        """Gives the mode of the sample."""
+        self.location + (self.scale * (self.shape - 1))
+    def kurtosis(self): 
+        """Gives the kurtosis of the sample."""
+        return 6 / self.shape
+    def skew(self): 
+        """Gives the skew of the sample."""
+        return 2 / math.sqrt(self.shape)
+    def variance(self): 
+        """Gives the variance of the sample."""
+        return self.scale * self.scale * self.shape
+    def qmean(self): 
+        """Gives the quantile of the arithmetic mean of the sample."""
+        return NRPy.gammp(self.shape, self.shape)
+    def qmode(self): 
+        """Gives the quantile of the mode of the sample."""
+        return NRPy.gammp(self.shape, self.shape - 1)
+#    def random(self):
+#        """Gives a random number based on the distribution."""
+#        raise DistributionFunctionError
+
     
 class NormalDistribution(Distribution):
     def __init__(self, **kwargs):
@@ -1423,70 +1487,6 @@ def FurryDistribution(**parameters):
     """
     Furry distribution is an alias of Gamma distribution."""
     return GammaDistribution(**parameters)
-
-
-class GammaDistribution(Distribution):
-    def __init__(self, **parameters): 
-        """
-        Constructor method. The parameters are used to construct the 
-        probability distribution.
-        
-        Parameters:
-        1. location
-        2. scale
-        3. shape"""
-        self.location = parameters['location']
-        self.scale = parameters['scale']
-        self.shape = parameters['shape']
-    def CDF(self, x): 
-        """
-        Cummulative Distribution Function, which gives the cummulative 
-        probability (area under the probability curve) from -infinity or 0 to 
-        a give x-value on the x-axis where y-axis is the probability."""
-        return NRPy.gammp(self.shape, (x - self.location)/self.scale)
-    def PDF(self, x): 
-        """
-        Partial Distribution Function, which gives the probability for the 
-        particular value of x, or the area under probability distribution 
-        from x-h to x+h for continuous distribution."""
-        r = 1 / (self.scale * NRPy.gammln(self.shape))
-        r = r * (((x - self.location)/self.scale) ** (self.shape - 1))
-        return r * math.exp((self.location - x)/self.scale)
-    def inverseCDF(self, probability, start = 0.0, step = 0.01): 
-        """
-        It does the reverse of CDF() method, it takes a probability value 
-        and returns the corresponding value on the x-axis."""
-        cprob = self.CDF(start)
-        if probability < cprob: return (start, cprob)
-        while (probability > cprob):
-            start = start + step
-            cprob = self.CDF(start)
-            # print start, cprob
-        return (start, cprob)
-    def mean(self): 
-        """Gives the arithmetic mean of the sample."""
-        return self.location + (self.scale * self.shape)
-    def mode(self): 
-        """Gives the mode of the sample."""
-        self.location + (self.scale * (self.shape - 1))
-    def kurtosis(self): 
-        """Gives the kurtosis of the sample."""
-        return 6 / self.shape
-    def skew(self): 
-        """Gives the skew of the sample."""
-        return 2 / math.sqrt(self.shape)
-    def variance(self): 
-        """Gives the variance of the sample."""
-        return self.scale * self.scale * self.shape
-    def qmean(self): 
-        """Gives the quantile of the arithmetic mean of the sample."""
-        return NRPy.gammp(self.shape, self.shape)
-    def qmode(self): 
-        """Gives the quantile of the mode of the sample."""
-        return NRPy.gammp(self.shape, self.shape - 1)
-#    def random(self):
-#        """Gives a random number based on the distribution."""
-#        raise DistributionFunctionError
 
 
 class GenLogisticDistribution(Distribution):
