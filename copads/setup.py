@@ -4,13 +4,13 @@ use_setuptools()
 from setuptools import setup, find_packages
 
 setup(name='copads',
-      version='0.1',
+      version='0.2',
       description='Collection of Python Algorithms and Data Structures',
       long_description='Collection of Python Algorithms and Data Structures',
       author='Maurice HT Ling',
       author_email='mauriceling@acm.org',
       url='http://copads.sourceforge.net',
-      license = 'GNU General Public License version 2',
+      license = 'GNU Lesser General Public License version 3',
       platform = 'OS independent',
       package_dir = {'copads' : 'copads',
                      'copads.test' : 'test'},
