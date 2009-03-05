@@ -356,6 +356,6 @@ class testUniform(unittest.TestCase):
 ##        pass
     
 if __name__ == '__main__':
-    sys.path.append(os.path.join(os.path.dirname(os.getcwd()), 'src'))
+    sys.path.append(os.path.join(os.path.dirname(os.getcwd()), 'copads'))
     import StatisticsDistribution as N
     unittest.main()
