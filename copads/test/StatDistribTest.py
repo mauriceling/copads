@@ -167,14 +167,6 @@ class testGamma(unittest.TestCase):
                                 shape = 4).inverseCDF(0.1428765)[0]
         self.assertTrue(abs(p/8.0 - 1) < 0.01)
 ##
-##class testGeometric(unittest.TestCase):
-##    def testCDF(self):
-##        pass
-##    def testPDF(self):
-##        pass
-##    def testinverseCDF(self):
-##        pass
-##
 ##class testGumbel(unittest.TestCase):
 ##    def testCDF(self):
 ##        pass
