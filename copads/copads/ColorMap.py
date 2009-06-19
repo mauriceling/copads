@@ -24,8 +24,8 @@ def floatRgb(mag, cmin, cmax):
               # cmax = cmin
               x = 0.5
        blue = min((max((4*(0.75-x), 0.)), 1.))
-       red  = min((max((4*(x-0.25), 0.)), 1.))
-       green= min((max((4*math.fabs(x-0.5)-1., 0.)), 1.))
+       red = min((max((4*(x-0.25), 0.)), 1.))
+       green = min((max((4*math.fabs(x-0.5)-1., 0.)), 1.))
        return (red, green, blue)
 
 def strRgb(mag, cmin, cmax):

@@ -28,43 +28,41 @@ Original author: A. Pletzer
         try:
             # use the list __getslice__ method and convert
             # result to vector
-            return Vector(super(Vector, self).__getslice__(i,j))
+            return Vector(super(Vector, self).__getslice__(i, j))
         except: raise TypeError, 'vector::FAILURE in __getslice__'
         
     def __add__(self, other): 
-        return Vector(map(lambda x,y: x+y, self, other))
+        return Vector(map(lambda x, y: x+y, self, other))
 
     def __neg__(self): return Vector([-x for x in self])
     
     def __sub__(self, other): 
-        return Vector(map(lambda x,y: x-y, self, other))
+        return Vector(map(lambda x, y: x-y, self, other))
 
     def __mul__(self, other):
         """
         Element by element multiplication
         """
-        try: return Vector(map(lambda x,y: x*y, self,other))
+        try: return Vector(map(lambda x, y: x*y, self, other))
         except:
             # other is a const
             return Vector(map(lambda x: x*other, self))
 
-
     def __rmul__(self, other):
         return (self*other)
-
 
     def __div__(self, other):
         """
         Element by element division.
         """
-        try: return Vector(map(lambda x,y: x/y, self, other))
+        try: return Vector(map(lambda x, y: x/y, self, other))
         except: return Vector(map(lambda x: x/other, self))
 
     def __rdiv__(self, other):
         """
         The same as __div__
         """
-        try: return Vector(map(lambda x,y: x/y, other, self))
+        try: return Vector(map(lambda x, y: x/y, other, self))
         except:
             # other is a const
             return Vector(map(lambda x: other/x, self))
@@ -88,7 +86,7 @@ Original author: A. Pletzer
         """
         return [
             Vector([abs(x) for x in self]),
-            Vector([math.atan2(x.imag,x.real) for x in self]),
+            Vector([math.atan2(x.imag, x.real) for x in self]),
             ]
 
     def out(self):
@@ -400,7 +398,7 @@ Date: 1st May 2005
             raise MatrixTraceError()
         t = 0
         for i in xrange(self.rows()):
-            t += self[(i,i)]
+            t += self[(i, i)]
         return t
 
     def determinant(self):
@@ -507,7 +505,6 @@ Original author: Alexander Pletzer
            """
 
     # no c'tor
-
     def size(self):
         " returns # of rows and columns "
         nrow = 0
@@ -520,7 +517,7 @@ Original author: Alexander Pletzer
     def __add__(self, other):
         res = SparseMatrix(self.copy())
         for ij in other:
-            res[ij] = self.get(ij,0.) + other[ij]
+            res[ij] = self.get(ij, 0.) + other[ij]
         return res
         
     def __neg__(self):
@@ -530,7 +527,7 @@ Original author: Alexander Pletzer
     def __sub__(self, other):
         res = SparseMatrix(self.copy())
         for ij in other:
-            res[ij] = self.get(ij,0.) - other[ij]
+            res[ij] = self.get(ij, 0.) - other[ij]
         return res
         
     def __mul__(self, other):
@@ -541,18 +538,18 @@ Original author: Alexander Pletzer
             res = SparseMatrix()
             if nval < len(self):
                 for ij in other:
-                    res[ij] = self.get(ij,0.)*other[ij]
+                    res[ij] = self.get(ij, 0.)*other[ij]
             else:
                 for ij in self:
-                    res[ij] = self[ij]*other.get(ij,0j)
+                    res[ij] = self[ij]*other.get(ij, 0j)
             return res
         except:
             # other is scalar
             return SparseMatrix(zip(self.keys(), 
                                 map(lambda x: x*other, self.values())))
 
-
-    def __rmul__(self, other): return self.__mul__(other)
+    def __rmul__(self, other):
+        return self.__mul__(other)
 
     def __div__(self, other):
         " element by element division self/other: other is scalar"
@@ -581,9 +578,9 @@ Original author: Alexander Pletzer
         cmax = max(self.values())
         cmin = min(self.values())
         
-        offset =  0.05*min(width_in, height_in)
-        xmin, ymin, xmax, ymax = 0,0,self.size()[0], self.size()[1]
-        scale =  min(0.9*width_in, 0.9*height_in)/max(xmax-xmin, ymax-ymin)
+        offset = 0.05*min(width_in, height_in)
+        xmin, ymin, xmax, ymax = 0, 0, self.size()[0], self.size()[1]
+        scale = min(0.9*width_in, 0.9*height_in)/max(xmax-xmin, ymax-ymin)
 
         root = Tkinter.Tk()
         frame = Tkinter.Frame(root)
@@ -596,15 +593,16 @@ Original author: Alexander Pletzer
         canvas = Tkinter.Canvas(bg="black", width=width_in, height=height_in)
         canvas.pack()
 
-        button = Tkinter.Button(frame, text="OK?", fg="red", command=frame.quit)
+        button = Tkinter.Button(frame, text="OK?", fg="red",
+                                command=frame.quit)
         button.pack()
 
         for index in self.keys():
             ix, iy = index[0], ymax-index[1]-1
-            ya, xa = offset+scale*(ix  ), height_in -offset-scale*(iy  )
-            yb, xb = offset+scale*(ix+1), height_in -offset-scale*(iy  )
+            ya, xa = offset+scale*(ix), height_in -offset-scale*(iy)
+            yb, xb = offset+scale*(ix+1), height_in -offset-scale*(iy)
             yc, xc = offset+scale*(ix+1), height_in -offset-scale*(iy+1)
-            yd, xd = offset+scale*(ix  ), height_in -offset-scale*(iy+1)
+            yd, xd = offset+scale*(ix), height_in -offset-scale*(iy+1)
             color = ColorMap.strRgb(self[index], cmin, cmax)
             canvas.create_polygon(xa, ya, xb, yb, xc, yc, xd, yd, fill=color)
         
@@ -615,7 +613,7 @@ Original author: Alexander Pletzer
         Solve self*x = b and return x using the conjugate gradient method
         """
         if not isVector(b):
-            raise TypeError, self.__class__,' in solve '
+            raise TypeError, self.__class__, ' in solve '
         else:
             if self.size()[0] != len(b) or self.size()[1] != len(b):
                 print '**Incompatible sizes in solve'
@@ -625,33 +623,32 @@ Original author: Alexander Pletzer
                 kvec = diag(self) # preconditionner
                 n = len(b)
                 x = x0 # initial guess
-                r =  b - sm_dot(self, x)
+                r = b - sm_dot(self, x)
                 try:
                     w = r/kvec
                 except: print '***singular kvec'
-                p = v_zeros(n);
-                beta =v_dot(r, w);
-                err = v_norm(dot(self,x) - b);
+                p = v_zeros(n)
+                beta = v_dot(r, w)
+                err = v_norm(dot(self, x) - b)
                 k = 0
                 if verbose: print " conjugate gradient convergence (log error)"
                 while abs(err) > tol and k < nmax:
-                    p = w + beta*p;
-                    z = sm_dot(self, p);
-                    alpha = rho/v_dot(p, z);
-                    r = r - alpha*z;
-                    w = r/kvec;
-                    rhoold = rho;
-                    rho = v_dot(r, w);
-                    x = x + alpha*p;
-                    beta = rho/rhoold;
-                    err = v_norm(dot(self, x) - b);
-                    if verbose: print k,' %5.1f ' % math.log10(err)
+                    p = w + beta*p
+                    z = sm_dot(self, p)
+                    alpha = rho/v_dot(p, z)
+                    r = r - alpha*z
+                    w = r/kvec
+                    rhoold = rho
+                    rho = v_dot(r, w)
+                    x = x + alpha*p
+                    beta = rho/rhoold
+                    err = v_norm(dot(self, x) - b)
+                    if verbose:
+                        print k, ' %5.1f ' % math.log10(err)
                     k = k+1
                 return x
                 
-        
-                
-    def biCGsolve(self,x0, b, tol=1.0e-10, nmax = 1000):
+    def biCGsolve(self, x0, b, tol=1.0e-10, nmax = 1000):
         
         """
         Solve self*x = b and return x using the bi-conjugate gradient method
@@ -659,7 +656,7 @@ Original author: Alexander Pletzer
 
         try:
             if not isVector(b):
-                raise TypeError, self.__class__,' in solve '
+                raise TypeError, self.__class__, ' in solve '
             else:
                 if self.size()[0] != len(b) or self.size()[1] != len(b):
                     print '**Incompatible sizes in solve'
@@ -669,37 +666,36 @@ Original author: Alexander Pletzer
                     kvec = sm_diag(self) # preconditionner 
                     n = len(b)
                     x = x0 # initial guess
-                    r =  b - sm_dot(self, x)
-                    rbar =  r
-                    w = r/kvec;
-                    wbar = rbar/kvec;
-                    p = v_zeros(n);
-                    pbar = v_zeros(n);
-                    beta = 0.0;
-                    rho = v_dot(rbar, w);
-                    err = v_norm(dot(self,x) - b);
+                    r = b - sm_dot(self, x)
+                    rbar = r
+                    w = r/kvec
+                    wbar = rbar/kvec
+                    p = v_zeros(n)
+                    pbar = v_zeros(n)
+                    beta = 0.0
+                    rho = v_dot(rbar, w)
+                    err = v_norm(dot(self, x) - b)
                     k = 0
                     print " bi-conjugate gradient convergence (log error)"
                     while abs(err) > tol and k < nmax:
-                        p = w + beta*p;
-                        pbar = wbar + beta*pbar;
-                        z = dot(self, p);
-                        alpha = rho/v_dot(pbar, z);
-                        r = r - alpha*z;
-                        rbar = rbar - alpha* sm_dot(pbar, self);
-                        w = r/kvec;
-                        wbar = rbar/kvec;
-                        rhoold = rho;
-                        rho = v_dot(rbar, w);
-                        x = x + alpha*p;
-                        beta = rho/rhoold;
-                        err = v_norm(sm_dot(self, x) - b);
-                        print k,' %5.1f ' % math.log10(err)
+                        p = w + beta*p
+                        pbar = wbar + beta*pbar
+                        z = dot(self, p)
+                        alpha = rho/v_dot(pbar, z)
+                        r = r - alpha*z
+                        rbar = rbar - alpha* sm_dot(pbar, self)
+                        w = r/kvec
+                        wbar = rbar/kvec
+                        rhoold = rho
+                        rho = v_dot(rbar, w)
+                        x = x + alpha*p
+                        beta = rho/rhoold
+                        err = v_norm(sm_dot(self, x) - b)
+                        print k, ' %5.1f ' % math.log10(err)
                         k = k+1
                     return x
-            
-        except: print 'ERROR ',self.__class__,'::biCGsolve'
-
+        except:
+            print 'ERROR ', self.__class__, '::biCGsolve'
 
     def save(self, filename, OneBased=0):
         """
@@ -714,17 +710,17 @@ Original author: Alexander Pletzer
             m = max(ij[0], m)
             n = max(ij[1], n)
 
-        f = open(filename,'w')
-        f.write('%d %d %d %d\n' % (OneBased, m+1,n+1,nnz))
+        f = open(filename, 'w')
+        f.write('%d %d %d %d\n' % (OneBased, m+1, n+1, nnz))
         for ij in self.keys():
-            i,j = ij
+            i, j = ij
             f.write('%d %d %20.17f \n'% \
-                (i+OneBased,j+OneBased,self[ij]))
+                (i+OneBased, j+OneBased, self[ij]))
         f.close()
                 
 def isVector(x):
     """Determines if the argument is a vector class object."""
-    return hasattr(x,'__class__') and x.__class__ is Vector
+    return hasattr(x, '__class__') and x.__class__ is Vector
 
 def v_zeros(n): 
     """Returns a vector of length n with all ones."""
@@ -745,11 +741,11 @@ def v_random(n, lmin=0.0, lmax=1.0):
 def v_dot(a, b):
     """dot product of two vectors."""
     try: return reduce(lambda x, y: x+y, a*b, 0.)
-    except:raise TypeError, 'Vector::FAILURE in dot'
+    except: raise TypeError, 'Vector::FAILURE in dot'
     
 def v_norm(a):
     """Computes the norm of vector a."""
-    try: return math.sqrt(abs(dot(a,a)))
+    try: return math.sqrt(abs(dot(a, a)))
     except: raise TypeError, 'vector::FAILURE in norm'
 
 def v_sum(a):
@@ -824,20 +820,20 @@ def v_cosh(a):
     try: return Vector([math.cosh(x) for x in a])
     except: raise TypeError, 'vector::FAILURE in cosh'
 
-def v_pow(a,b):
+def v_pow(a, b):
     """Takes the elements of a and raises them to the b-th power"""
     try: return Vector(map(lambda x: x**b, a))
     except: 
-        try: return Vector(map(lambda x,y: x**y, a, b))
+        try: return Vector(map(lambda x, y: x**y, a, b))
         except: raise TypeError, 'vector::FAILURE in pow'
     
-def v_atan2(a,b):    
+def v_atan2(a, b):    
     """Arc tangent"""
     try: return Vector([math.atan2(x) for x in a])
     except: raise TypeError, 'vector::FAILURE in atan2'
     
 def isSparse(x):
-    return hasattr(x,'__class__') and x.__class__ is SparseMatrix
+    return hasattr(x, '__class__') and x.__class__ is SparseMatrix
 
 def sm_transpose(a):
     " transpose "
@@ -846,12 +842,12 @@ def sm_transpose(a):
         new[(ij[1], ij[0])] = a[ij]
     return new
 
-def sm_dotDot(y,a,x):
+def sm_dotDot(y, a, x):
     " double dot product y^+ *A*x "
     if Vector.isVector(y) and isSparse(a) and Vector.isVector(x):
         res = 0.
         for ij in a.keys():
-            i,j = ij
+            i, j = ij
             res += y[i]*a[ij]*x[j]
         return res
     else:
@@ -878,9 +874,9 @@ def sm_dot(a, b):
             for j in range(b.size()[1]):
                 sum = 0.
                 for k in range(n):
-                    sum += a.get((i,k),0.)*b.get((k,j),0.)
+                    sum += a.get((i, k), 0.)*b.get((k, j), 0.)
                 if sum != 0.:
-                    new[(i,j)] = sum
+                    new[(i, j)] = sum
         return new
     else:
         raise TypeError, 'in dot'
@@ -889,7 +885,7 @@ def sm_diag(b):
     # given a sparse matrix b return its diagonal
     res = Vector.zeros(b.size()[0])
     for i in range(b.size()[0]):
-        res[i] = b.get((i,i), 0.)
+        res[i] = b.get((i, i), 0.)
     return res
         
 def sm_identity(n):
@@ -898,6 +894,6 @@ def sm_identity(n):
     else:
         new = SparseMatrix({})
         for i in range(n):
-            new[(i,i)] = 1+0.
+            new[(i, i)] = 1+0.
         return new
  

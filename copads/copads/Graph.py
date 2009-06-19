@@ -144,7 +144,7 @@ class Graph:
             else: result[v] = False
         return result
 
-    def Dijkstra(self, start,end=None):
+    def Dijkstra(self, start, end=None):
         """
         Find shortest paths from the start vertex to all vertices nearer than 
         or equal to the end.
@@ -170,15 +170,14 @@ class Graph:
                 vwLength = D[v] + self.graph[v][w]
                 if w in D:
                     if vwLength < D[w]:
-                        raise ValueError, \
-      "Dijkstra: found better path to already-final vertex"
+                        raise ValueError("Dijkstra: found better path to \
+                        already-final vertex")
                 elif w not in Q or vwLength < Q[w]:
                     Q[w] = vwLength
                     P[w] = v
-        
-        return (D,P)
+        return (D, P)
                 
-    def shortestPath(self,start,end):
+    def shortestPath(self, start, end):
         """
         Find a single shortest path from the given start vertex
         to the given end vertex. The output is a list of the vertices 
@@ -187,7 +186,7 @@ class Graph:
         @param start: vertex of starting point
         @param end: vertex of ending point"""
     
-        D,P = self.Dijkstra(start,end)
+        D, P = self.Dijkstra(start, end)
         Path = []
         while 1:
             Path.append(end)
@@ -229,3 +228,4 @@ class Graph:
                 adjacency[edge[0]][edge[1]] = edge[2]
                 count = count + 1
         self.makeGraphFromAdjacency(adjacency)
+        

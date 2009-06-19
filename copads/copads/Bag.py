@@ -5,7 +5,8 @@ class Bag(object):
     """
     Bag is also known as multi-set, or a set that can have duplicate elements
     
-    Adapted from: http://aspn.activestate.com/ASPN/Cookbook/Python/Recipe/259174 
+    Adapted from: http://aspn.activestate.com/ASPN/Cookbook/
+    Python/Recipe/259174 
     Original author: Raymond Hettinger
     """
 
@@ -108,3 +109,4 @@ class Bag(object):
         it = enumerate(self.itercounts())
         nl = nlargest(n, ((cnt, i, elem) for (i, (elem, cnt)) in it))
         return [(elem, cnt) for cnt, i, elem in nl]
+    

@@ -12,35 +12,43 @@ import Constants
 
 class Modulus2:
     """Class for Modulus 2 arithmetics"""
+
     def __init__(self, input = 0):
         self.datum = input
+
     def __add__(self, other):
         if self.datum == 0 and other == 0: return 0
         if self.datum == 1 and other == 0: return 1
         if self.datum == 0 and other == 1: return 1
         if self.datum == 1 and other == 1: return 0
+
     def __mul__(self, other):
         if self.datum == 0 and other == 0: return 0
         if self.datum == 1 and other == 0: return 0
         if self.datum == 0 and other == 1: return 0
         if self.datum == 1 and other == 1: return 1
+
     def __str__(self): return str(self.datum)
         
 
 class Boolean:
     """Class for Boolean arithmetics"""
+
     def __init__(self, input = 0):
         self.datum = input
+
     def __add__(self, other):
         if self.datum == 0 and other == 0: return 0
         if self.datum == 1 and other == 0: return 1
         if self.datum == 0 and other == 1: return 1
         if self.datum == 1 and other == 1: return 1
+
     def __mul__(self, other):
         if self.datum == 0 and other == 0: return 0
         if self.datum == 1 and other == 0: return 0
         if self.datum == 0 and other == 1: return 0
         if self.datum == 1 and other == 1: return 1
+
     def __str__(self): return str(self.datum)
    
 def asdict(l):
@@ -209,7 +217,8 @@ def safe_exp(n, under=None, over=None):
     raise "How did I get here?"
 
 def factorial(n):
-    """Calculates and return n! where n is an integer, or will be casted as an integer."""
+    """Calculates and return n! where n is an integer, or will be casted
+    as an integer."""
     n = int(n)
     if n == 0: return 1
     else: return n * factorial(n - 1)

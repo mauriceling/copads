@@ -19,9 +19,10 @@ from Operations import summation
 from math import sqrt, log
 
 def test(statistic, distribution, confidence):
-    """Generates the critical value from distribution and confidence value using
-    the distribution's inverseCDF method and performs 1-tailed and 2-tailed test 
-    by comparing the calculated statistic with the critical value. 
+    """Generates the critical value from distribution and confidence value
+    using the distribution's inverseCDF method and performs 1-tailed and
+    2-tailed test by comparing the calculated statistic with the critical
+    value. 
     
     Returns a 5-element list:
     (left result, left critical, statistic, right critical, right result)
@@ -376,8 +377,10 @@ def ZPearsonCorrelation(**kwargs):
     
     Use Test 59 when these conditions cannot be met
     
-    @param sr: calculated sample Pearson's product-moment correlation coefficient
-    @param pr: specified Pearson's product-moment correlation coefficient to test
+    @param sr: calculated sample Pearson's product-moment correlation
+        coefficient
+    @param pr: specified Pearson's product-moment correlation coefficient
+        to test
     @param ssize: sample size
     @param confidence: confidence level"""
     ssize = kwargs['ssize']
@@ -427,46 +430,46 @@ def t16(**kwargs):
     return test(statistic, Distribution(), kwargs['confidence'])
     
 def t17(**kwargs):
-	"""
-	Test 17: F-test for two population variances (with correlated observations)
+    """
+    Test 17: F-test for two population variances (with correlated observations)
     
     To investigate the difference between two population variances when there 
     is correlation between the pairs of observations."""
-	return test(statistic, Distribution(), kwargs['confidence'])
+    return test(statistic, Distribution(), kwargs['confidence'])
 
 def t18(**kwargs):
-	"""
-	Test 18: Hotelling's T-square test for two series of population means
+    """
+    Test 18: Hotelling's T-square test for two series of population means
     
     To compare the results of two experiments, each of which yields a
     multivariate result. In another words, we wish to know if the mean pattern
     obtained from the first experiment agrees with the mean pattern obtained
     for the second."""
-	return test(statistic, Distribution(), kwargs['confidence'])
+    return test(statistic, Distribution(), kwargs['confidence'])
 
 def t19(**kwargs):
-	"""
-	Test 19: Discriminant test for the origin of a p-fold sample
+    """
+    Test 19: Discriminant test for the origin of a p-fold sample
     
     To investigate the origin of one species of values for p random variates,
     when one of two markedly different populations may have produced that
     particular series."""
-	return test(statistic, Distribution(), kwargs['confidence'])
+    return test(statistic, Distribution(), kwargs['confidence'])
 
 def t20(**kwargs):
-	"""
-	"""
-	return test(statistic, Distribution(), kwargs['confidence'])
+    """
+    """
+    return test(statistic, Distribution(), kwargs['confidence'])
 
 def t21(**kwargs):
-	"""
-	"""
-	return test(statistic, Distribution(), kwargs['confidence'])
+    """
+    """
+    return test(statistic, Distribution(), kwargs['confidence'])
 
 def t22(**kwargs):
-	"""
-	"""
-	return test(statistic, Distribution(), kwargs['confidence'])
+    """
+    """
+    return test(statistic, Distribution(), kwargs['confidence'])
 
 def ZCorrProportion(**kwargs):
     """
@@ -495,7 +498,7 @@ def ZCorrProportion(**kwargs):
 
 def Chisq2Variance(**kwargs):
     """
-	Test 24: Chi-square test for an assumed population variance
+    Test 24: Chi-square test for an assumed population variance
     
     To investigate the significance of the difference between a population
     variance and an assumed variance value.
@@ -516,7 +519,7 @@ def Chisq2Variance(**kwargs):
 
 def F2Count(**kwargs):
     """
-	Test 25: F-test for two counts (Poisson distribution)
+    Test 25: F-test for two counts (Poisson distribution)
     
     To investigate the significance of the difference between two counted
     results (based on a Poisson distribution).
@@ -547,66 +550,67 @@ def F2Count(**kwargs):
         numerator = 2 * count1 + 1
         denominator = 2 * count2 + 1
     return test(statistic, FDistribution(numerator = numerator,
-                                denominator = denominator), kwargs['confidence'])
+                                denominator = denominator),
+                kwargs['confidence'])
 
 def t26(**kwargs):
-	"""
-	"""
-	return test(statistic, Distribution(), kwargs['confidence'])
+    """
+    """
+    return test(statistic, Distribution(), kwargs['confidence'])
 
 def t27(**kwargs):
-	"""
-	"""
-	return test(statistic, Distribution(), kwargs['confidence'])
+    """
+    """
+    return test(statistic, Distribution(), kwargs['confidence'])
 
 def t28(**kwargs):
-	"""
-	"""
-	return test(statistic, Distribution(), kwargs['confidence'])
+    """
+    """
+    return test(statistic, Distribution(), kwargs['confidence'])
 
 def t29(**kwargs):
-	"""
-	"""
-	return test(statistic, Distribution(), kwargs['confidence'])
+    """
+    """
+    return test(statistic, Distribution(), kwargs['confidence'])
 
 def t30(**kwargs):
-	"""
-	"""
-	return test(statistic, Distribution(), kwargs['confidence'])
+    """
+    """
+    return test(statistic, Distribution(), kwargs['confidence'])
 
 def t31(**kwargs):
-	"""
-	"""
-	return test(statistic, Distribution(), kwargs['confidence'])
+    """
+    """
+    return test(statistic, Distribution(), kwargs['confidence'])
 
 def t32(**kwargs):
-	"""
-	"""
-	return test(statistic, Distribution(), kwargs['confidence'])
+    """
+    """
+    return test(statistic, Distribution(), kwargs['confidence'])
 
 def t33(**kwargs):
-	"""
-	"""
-	return test(statistic, Distribution(), kwargs['confidence'])
+    """
+    """
+    return test(statistic, Distribution(), kwargs['confidence'])
 
 def t34(**kwargs):
-	"""
-	"""
-	return test(statistic, Distribution(), kwargs['confidence'])
+    """
+    """
+    return test(statistic, Distribution(), kwargs['confidence'])
 
 def t35(**kwargs):
-	"""
-	"""
-	return test(statistic, Distribution(), kwargs['confidence'])
+    """
+    """
+    return test(statistic, Distribution(), kwargs['confidence'])
 
 def t36(**kwargs):
-	"""
-	"""
-	return test(statistic, Distribution(), kwargs['confidence'])
+    """
+    """
+    return test(statistic, Distribution(), kwargs['confidence'])
 
 def ChisqFit(**kwargs):
     """
-	Test 37: Chi-square test for goodness of fit
+    Test 37: Chi-square test for goodness of fit
     
     To investigate the significance of the differences between observed data
     arranged in K classes, and the theoretical expected frequencies in the
@@ -629,18 +633,18 @@ def ChisqFit(**kwargs):
                 kwargs['confidence'])
 
 def t38(**kwargs):
-	"""
-	"""
-	return test(statistic, Distribution(), kwargs['confidence'])
+    """
+    """
+    return test(statistic, Distribution(), kwargs['confidence'])
 
 def t39(**kwargs):
-	"""
-	"""
-	return test(statistic, Distribution(), kwargs['confidence'])
+    """
+    """
+    return test(statistic, Distribution(), kwargs['confidence'])
 
 def Chisq2x2(**kwargs):
     """
-	Test 40: Chi-square test for consistency in 2x2 table
+    Test 40: Chi-square test for consistency in 2x2 table
     
     To investigate the significance of the differences between observed
     frequencies for two dichotomous distributions.
@@ -663,89 +667,89 @@ def Chisq2x2(**kwargs):
     return test(statistic, ChisqDistribution(df = 1), kwargs['confidence'])
 
 def t41(**kwargs):
-	"""
-	"""
-	return test(statistic, Distribution(), kwargs['confidence'])
+    """
+    """
+    return test(statistic, Distribution(), kwargs['confidence'])
 
 def t42(**kwargs):
-	"""
-	"""
-	return test(statistic, Distribution(), kwargs['confidence'])
+    """
+    """
+    return test(statistic, Distribution(), kwargs['confidence'])
 
 def t43(**kwargs):
-	"""
-	"""
-	return test(statistic, Distribution(), kwargs['confidence'])
+    """
+    """
+    return test(statistic, Distribution(), kwargs['confidence'])
 
 def t44(**kwargs):
-	"""
-	"""
-	return test(statistic, Distribution(), kwargs['confidence'])
+    """
+    """
+    return test(statistic, Distribution(), kwargs['confidence'])
 
 def t45(**kwargs):
-	"""
-	"""
-	return test(statistic, Distribution(), kwargs['confidence'])
+    """
+    """
+    return test(statistic, Distribution(), kwargs['confidence'])
 
 def t46(**kwargs):
-	"""
-	"""
-	return test(statistic, Distribution(), kwargs['confidence'])
+    """
+    """
+    return test(statistic, Distribution(), kwargs['confidence'])
 
 def t47(**kwargs):
-	"""
-	"""
-	return test(statistic, Distribution(), kwargs['confidence'])
+    """
+    """
+    return test(statistic, Distribution(), kwargs['confidence'])
 
 def t48(**kwargs):
-	"""
-	"""
-	return test(statistic, Distribution(), kwargs['confidence'])
+    """
+    """
+    return test(statistic, Distribution(), kwargs['confidence'])
 
 def t49(**kwargs):
-	"""
-	"""
-	return test(statistic, Distribution(), kwargs['confidence'])
+    """
+    """
+    return test(statistic, Distribution(), kwargs['confidence'])
 
 def t50(**kwargs):
-	"""
-	"""
-	return test(statistic, Distribution(), kwargs['confidence'])
+    """
+    """
+    return test(statistic, Distribution(), kwargs['confidence'])
 
 def t51(**kwargs):
-	"""
-	"""
-	return test(statistic, Distribution(), kwargs['confidence'])
+    """
+    """
+    return test(statistic, Distribution(), kwargs['confidence'])
 
 def t52(**kwargs):
-	"""
-	"""
-	return test(statistic, Distribution(), kwargs['confidence'])
+    """
+    """
+    return test(statistic, Distribution(), kwargs['confidence'])
 
 def t53(**kwargs):
-	"""
-	"""
-	return test(statistic, Distribution(), kwargs['confidence'])
+    """
+    """
+    return test(statistic, Distribution(), kwargs['confidence'])
 
 def t54(**kwargs):
-	"""
-	"""
-	return test(statistic, Distribution(), kwargs['confidence'])
+    """
+    """
+    return test(statistic, Distribution(), kwargs['confidence'])
 
 def t55(**kwargs):
-	"""
-	"""
-	return test(statistic, Distribution(), kwargs['confidence'])
+    """
+    """
+    return test(statistic, Distribution(), kwargs['confidence'])
 
 def t56(**kwargs):
-	"""
-	"""
-	return test(statistic, Distribution(), kwargs['confidence'])
+    """
+    """
+    return test(statistic, Distribution(), kwargs['confidence'])
 
 def t57(**kwargs):
-	"""
-	"""
-	return test(statistic, Distribution(), kwargs['confidence'])
+    """
+    """
+    return test(statistic, Distribution(), kwargs['confidence'])
 
 def SpearmanCorrelation(**kwargs):
     """Test 58: Spearman rank correlation test (paired observations)
@@ -774,212 +778,212 @@ def SpearmanCorrelation(**kwargs):
     return test(statistic, NormalDistribution(), kwargs['confidence'])
 
 def t59(**kwargs):
-	"""
-	"""
-	return test(statistic, Distribution(), kwargs['confidence'])
+    """
+    """
+    return test(statistic, Distribution(), kwargs['confidence'])
 
 def t60(**kwargs):
-	"""
-	"""
-	return test(statistic, Distribution(), kwargs['confidence'])
+    """
+    """
+    return test(statistic, Distribution(), kwargs['confidence'])
 
 def t61(**kwargs):
-	"""
-	"""
-	return test(statistic, Distribution(), kwargs['confidence'])
+    """
+    """
+    return test(statistic, Distribution(), kwargs['confidence'])
 
 def t62(**kwargs):
-	"""
-	"""
-	return test(statistic, Distribution(), kwargs['confidence'])
+    """
+    """
+    return test(statistic, Distribution(), kwargs['confidence'])
 
 def t63(**kwargs):
-	"""
-	"""
-	return test(statistic, Distribution(), kwargs['confidence'])
+    """
+    """
+    return test(statistic, Distribution(), kwargs['confidence'])
 
 def t64(**kwargs):
-	"""
-	"""
-	return test(statistic, Distribution(), kwargs['confidence'])
+    """
+    """
+    return test(statistic, Distribution(), kwargs['confidence'])
 
 def t65(**kwargs):
-	"""
-	"""
-	return test(statistic, Distribution(), kwargs['confidence'])
+    """
+    """
+    return test(statistic, Distribution(), kwargs['confidence'])
 
 def t66(**kwargs):
-	"""
-	"""
-	return test(statistic, Distribution(), kwargs['confidence'])
+    """
+    """
+    return test(statistic, Distribution(), kwargs['confidence'])
 
 def t67(**kwargs):
-	"""
-	"""
-	return test(statistic, Distribution(), kwargs['confidence'])
+    """
+    """
+    return test(statistic, Distribution(), kwargs['confidence'])
 
 def t68(**kwargs):
-	"""
-	"""
-	return test(statistic, Distribution(), kwargs['confidence'])
+    """
+    """
+    return test(statistic, Distribution(), kwargs['confidence'])
 
 def t69(**kwargs):
-	"""
-	"""
-	return test(statistic, Distribution(), kwargs['confidence'])
+    """
+    """
+    return test(statistic, Distribution(), kwargs['confidence'])
 
 def t70(**kwargs):
-	"""
-	"""
-	return test(statistic, Distribution(), kwargs['confidence'])
+    """
+    """
+    return test(statistic, Distribution(), kwargs['confidence'])
 
 def t71(**kwargs):
-	"""
-	"""
-	return test(statistic, Distribution(), kwargs['confidence'])
+    """
+    """
+    return test(statistic, Distribution(), kwargs['confidence'])
 
 def t72(**kwargs):
-	"""
-	"""
-	return test(statistic, Distribution(), kwargs['confidence'])
+    """
+    """
+    return test(statistic, Distribution(), kwargs['confidence'])
 
 def t73(**kwargs):
-	"""
-	"""
-	return test(statistic, Distribution(), kwargs['confidence'])
+    """
+    """
+    return test(statistic, Distribution(), kwargs['confidence'])
 
 def t74(**kwargs):
-	"""
-	"""
-	return test(statistic, Distribution(), kwargs['confidence'])
+    """
+    """
+    return test(statistic, Distribution(), kwargs['confidence'])
 
 def t75(**kwargs):
-	"""
-	"""
-	return test(statistic, Distribution(), kwargs['confidence'])
+    """
+    """
+    return test(statistic, Distribution(), kwargs['confidence'])
 
 def t76(**kwargs):
-	"""
-	"""
-	return test(statistic, Distribution(), kwargs['confidence'])
+    """
+    """
+    return test(statistic, Distribution(), kwargs['confidence'])
 
 def t77(**kwargs):
-	"""
-	"""
-	return test(statistic, Distribution(), kwargs['confidence'])
+    """
+    """
+    return test(statistic, Distribution(), kwargs['confidence'])
 
 def t78(**kwargs):
-	"""
-	"""
-	return test(statistic, Distribution(), kwargs['confidence'])
+    """
+    """
+    return test(statistic, Distribution(), kwargs['confidence'])
 
 def t79(**kwargs):
-	"""
-	"""
-	return test(statistic, Distribution(), kwargs['confidence'])
+    """
+    """
+    return test(statistic, Distribution(), kwargs['confidence'])
 
 def t80(**kwargs):
-	"""
-	"""
-	return test(statistic, Distribution(), kwargs['confidence'])
+    """
+    """
+    return test(statistic, Distribution(), kwargs['confidence'])
 
 def t81(**kwargs):
-	"""
-	"""
-	return test(statistic, Distribution(), kwargs['confidence'])
+    """
+    """
+    return test(statistic, Distribution(), kwargs['confidence'])
 
 def t82(**kwargs):
-	"""
-	"""
-	return test(statistic, Distribution(), kwargs['confidence'])
+    """
+    """
+    return test(statistic, Distribution(), kwargs['confidence'])
 
 def t83(**kwargs):
-	"""
-	"""
-	return test(statistic, Distribution(), kwargs['confidence'])
+    """
+    """
+    return test(statistic, Distribution(), kwargs['confidence'])
 
 def t84(**kwargs):
-	"""
-	"""
-	return test(statistic, Distribution(), kwargs['confidence'])
+    """
+    """
+    return test(statistic, Distribution(), kwargs['confidence'])
 
 def t85(**kwargs):
-	"""
-	"""
-	return test(statistic, Distribution(), kwargs['confidence'])
+    """
+    """
+    return test(statistic, Distribution(), kwargs['confidence'])
 
 def t86(**kwargs):
-	"""
-	"""
-	return test(statistic, Distribution(), kwargs['confidence'])
+    """
+    """
+    return test(statistic, Distribution(), kwargs['confidence'])
 
 def t87(**kwargs):
-	"""
-	"""
-	return test(statistic, Distribution(), kwargs['confidence'])
+    """
+    """
+    return test(statistic, Distribution(), kwargs['confidence'])
 
 def t88(**kwargs):
-	"""
-	"""
-	return test(statistic, Distribution(), kwargs['confidence'])
+    """
+    """
+    return test(statistic, Distribution(), kwargs['confidence'])
 
 def t89(**kwargs):
-	"""
-	"""
-	return test(statistic, Distribution(), kwargs['confidence'])
+    """
+    """
+    return test(statistic, Distribution(), kwargs['confidence'])
 
 def t90(**kwargs):
-	"""
-	"""
-	return test(statistic, Distribution(), kwargs['confidence'])
+    """
+    """
+    return test(statistic, Distribution(), kwargs['confidence'])
 
 def t91(**kwargs):
-	"""
-	"""
-	return test(statistic, Distribution(), kwargs['confidence'])
+    """
+    """
+    return test(statistic, Distribution(), kwargs['confidence'])
 
 def t92(**kwargs):
-	"""
-	"""
-	return test(statistic, Distribution(), kwargs['confidence'])
+    """
+    """
+    return test(statistic, Distribution(), kwargs['confidence'])
 
 def t93(**kwargs):
-	"""
-	"""
-	return test(statistic, Distribution(), kwargs['confidence'])
+    """
+    """
+    return test(statistic, Distribution(), kwargs['confidence'])
 
 def t94(**kwargs):
-	"""
-	"""
-	return test(statistic, Distribution(), kwargs['confidence'])
+    """
+    """
+    return test(statistic, Distribution(), kwargs['confidence'])
 
 def t95(**kwargs):
-	"""
-	"""
-	return test(statistic, Distribution(), kwargs['confidence'])
+    """
+    """
+    return test(statistic, Distribution(), kwargs['confidence'])
 
 def t96(**kwargs):
-	"""
-	"""
-	return test(statistic, Distribution(), kwargs['confidence'])
+    """
+    """
+    return test(statistic, Distribution(), kwargs['confidence'])
 
 def t97(**kwargs):
-	"""
-	"""
-	return test(statistic, Distribution(), kwargs['confidence'])
+    """
+    """
+    return test(statistic, Distribution(), kwargs['confidence'])
 
 def t98(**kwargs):
-	"""
-	"""
-	return test(statistic, Distribution(), kwargs['confidence'])
+    """
+    """
+    return test(statistic, Distribution(), kwargs['confidence'])
 
 def t99(**kwargs):
-	"""
-	"""
-	return test(statistic, Distribution(), kwargs['confidence'])
+    """
+    """
+    return test(statistic, Distribution(), kwargs['confidence'])
 
 def t100(**kwargs):
-	"""
-	"""
-	return test(statistic, Distribution(), kwargs['confidence'])
+    """
+    """
+    return test(statistic, Distribution(), kwargs['confidence'])
 

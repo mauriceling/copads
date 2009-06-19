@@ -8,18 +8,21 @@ Date created: 19th March 2008
 from CopadsExceptions import ArrayError
 
 class ParallelArray(object):
+
+    
     """
     Parallel Array is an array whereby each data list in the array is of the
     same size.
     Ref: http://en.wikipedia.org/wiki/Parallel_array
     """
+
     def __init__(self, fields = None):
-        """Constructor. Able to initiate the array with a list of fields names
-        
+        """Constructor. Able to initiate the array with a list of fields names        
         @param fields: list of field names to initiate. Default = None"""
         self.data = {}
         self.fields = []
-        if fields: self.initFields(kwargs['fields'])  
+        if fields:
+            self.initFields(kwargs['fields'])  
           
     def initFields(self, fields):
         """Initiates a list of fields into the array.
@@ -36,7 +39,7 @@ class ParallelArray(object):
         
         @param field: name of field
         @type field: string"""
-        if self.data.has_key(field):
+        if field in self.data:
             raise ArrayError(str(field) + ' existed.')
         if type(field) <> type('string'):
             raise ArrayError('field must be a string')
@@ -86,5 +89,4 @@ class ParallelArray(object):
                 raise ArrayError(str(x) + ' field not found')
         for i in range(len(fields)):
             self.data[fields[i]].append(data[i])
-    
     

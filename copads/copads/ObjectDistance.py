@@ -82,8 +82,9 @@ def Nei_Li(original = '', test = '', absent = 0, type = 'Set'):
     [(2 x (number of regions where both species are present)) + 
     (number of regions where only one species is present)]]
         
-    @see: Nei M, Li WH (1979) Mathematical models for studying genetic variation 
-    in terms of restriction endonucleases. Proc Natl Acad Sci USA 76:5269-5273
+    @see: Nei M, Li WH (1979) Mathematical models for studying genetic
+    variation in terms of restriction endonucleases.
+    Proc Natl Acad Sci USA 76:5269-5273
     
     @param original: list of original data
     @param test: list of data to test against original
@@ -99,7 +100,8 @@ def Nei_Li(original = '', test = '', absent = 0, type = 'Set'):
     
 def Sokal_Michener(original = '', test = ''):
     """
-    Sokal and Michener Distance is distance measure for nominal or ordinal data.
+    Sokal and Michener Distance is distance measure for nominal or ordinal
+    data.
     
     Given 2 lists (original and test), calculates the Sokal and Michener 
     Distance based on the formula,
@@ -220,7 +222,7 @@ def Ochiai(original = '', test = '', absent = 0, type = 'Set'):
         (original_only, test_only, both) = listCompare(original, test, absent)
     return 1 - (both / math.sqrt((both + original_only)*(both + test_only)))
     
-def Kulczynski(original = '', test = '', absent = 0 , type = 'Set'):
+def Kulczynski(original = '', test = '', absent = 0, type = 'Set'):
     """
     Kulczynski Distance is distance measure for nominal or ordinal data.
     
@@ -269,20 +271,21 @@ def Levenshtein(a = '', b = ''):
     """
     Levenshtein Distance is distance measure for interval or ratio data.
     Calculates the Levenshtein distance between a and b. This routine is 
-    implemented by Magnus Lie Hetland (http://www.hetland.org/python/distance.py)
+    implemented by Magnus Lie Hetland (http://www.hetland.org/
+    python/distance.py)
     
     @param a: list of original data
     @param b: list of data to test against original"""
     n, m = len(a), len(b)
     if n > m:
-        # Make sure n <= m, to use O(min(n,m)) space
-        a,b = b,a
-        n,m = m,n
+        # Make sure n <= m, to use O(min(n, m)) space
+        a, b = b, a
+        n, m = m, n
         
     current = range(n+1)
-    for i in range(1,m+1):
+    for i in range(1, m+1):
         previous, current = current, [i]+[0]*m
-        for j in range(1,n+1):
+        for j in range(1, n+1):
             add, delete = previous[j]+1, current[j-1]+1
             change = previous[j-1]
             if a[j-1] != b[i-1]:

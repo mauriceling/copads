@@ -84,7 +84,7 @@ def bessi0(x):
     if abs(x) < 3.75:
         y = (x/3.75)*(x/3.75)
         return 1.0 + y * (3.5156229 + y * (3.0899424 + y * (1.2067492 + y * \
-                (0.2659732 + y * (0.360768e-1 + y  * 0.45813e-2)))))
+                (0.2659732 + y * (0.360768e-1 + y * 0.45813e-2)))))
     else:
         ax = abs(x)
         y = 3.75/ax
@@ -175,7 +175,8 @@ def bessj0(x):
     if abs(x) < 8.0:
         y = x*x
         return (57568490574.0 + y * (-13362590354.0 + y * (651619640.7 + \
-               y * (-11214424.18 + y * (77392.33017 + y * (-184.9052456))))))/ \
+               y * (-11214424.18 + y * (77392.33017 + y * \
+                                        (-184.9052456))))))/ \
                (57568490411.0 + y * (1029532985.0 + y * (9494680.718 + y * \
                (59272.64853 + y * (267.8532712 + y * 1.0)))))
     else: 
@@ -185,9 +186,10 @@ def bessj0(x):
         xx = ax - 0.785398164
         ans1 = 1.0 + y * (-0.1098628627e-2 + y * (0.2734510407e-4 + y * \
               (-0.2073370639e-5 + y * 0.2093887211e-6)))
-        ans2 = -0.156249995e-1 + y * (0.1430488765e-3 + y * (-0.6911147651e-5 + \
+        ans2 = -0.156249995e-1 + y * (0.1430488765e-3 + y * \
+                                      (-0.6911147651e-5 + \
              y * (0.7621095161e-6 - y * 0.934945152e-7)))
-        return math.sqrt(0.636619772 / ax ) * (math.cos(xx) * ans1 - z * \
+        return math.sqrt(0.636619772 / ax) * (math.cos(xx) * ans1 - z * \
                math.sin(xx) * ans2)
         
 def bessj1(x):
@@ -199,7 +201,8 @@ def bessj1(x):
     """
     if abs(x) < 8.0:
         y = x*x
-        ans1 = x * (72362614232.0 + y * (-7895059235.0 + y * (242396853.1 + y * \
+        ans1 = x * (72362614232.0 + y * (-7895059235.0 + y * \
+                                         (242396853.1 + y * \
               (-2972611.439 + y * (15704.4826 + y * (-30.16036606))))))
         ans2 = 144725228442.0 + y * (2300535178.0 + y * (18583304.74 + y * \
              (99447.43394 + y * (376.9991397 + y))))
@@ -211,11 +214,16 @@ def bessj1(x):
         xx = ax - 2.356194491
         ans1 = 1.0 + y * (0.183105e-2 + y * (-0.3516396496e-4 + y * \
              (0.2457520174e-5 + y * (-0.240337019e-6))))
-        ans2 = 0.04687499995 + y * (-0.2002690873e-3 + y * (0.8449199096e-5 + y * \
+        ans2 = 0.04687499995 + y * (-0.2002690873e-3 + y * \
+                                    (0.8449199096e-5 + y * \
             (-0.88228987e-6 + y * 0.105787412e-6)))
-        if x < 0.0: return math.sqrt(0.636619772 / ax ) * (math.cos(xx) * ans1 - z * \
-                           math.sin(xx) * ans2)
-        else: return -1 * math.sqrt(0.636619772 / ax ) * (math.cos(xx) * ans1 - \
+        if x < 0.0:
+            return math.sqrt(0.636619772 / ax) * \
+                   (math.cos(xx) * ans1 - z * \
+                    math.sin(xx) * ans2)
+        else:
+            return -1 * math.sqrt(0.636619772 / ax) * \
+                   (math.cos(xx) * ans1 - \
                   z * math.sin(xx) * ans2)
         
 def bessk(n, x):
@@ -226,8 +234,8 @@ def bessk(n, x):
     @return: modified n-th Bessel function of x
     """
     if n < 2: 
-        raise FunctionParameterValueError('n must be more than 1 - use bessk0 or bessk1 \
-            for n = 0 or 1 respectively')
+        raise FunctionParameterValueError('n must be more than 1 - \
+            use bessk0 or bessk1 for n = 0 or 1 respectively')
     else:
         tox = 2.0/x
         bkm = bessk0(x)
@@ -246,14 +254,14 @@ def bessk0(x):
     @return: n-th Bessel function of x"""
     if x <= 2.0:
         y = x * x/4.0
-        return (-math.log(x/2.0) * bessi0(x)) + (-0.57721566 + y * (0.4227842 + y * \
-                (0.23069756 + y * (0.348859e-1 + y * (0.262698e-2 + y * (0.1075e-3 + \
-                 y * 0.74e-5))))))
+        return (-math.log(x/2.0) * bessi0(x)) + (-0.57721566 + y * \
+                (0.4227842 + y * (0.23069756 + y * (0.348859e-1 + y * \
+                (0.262698e-2 + y * (0.1075e-3 + y * 0.74e-5))))))
     else:
         y = 2.0/x
-        return (math.exp(-x)/math.sqrt(x)) * (1.25331414 + y * (-0.7832358e-1 + y * \
-                (0.2189568e-1 + y * (-0.1062446e-1 + y * (0.587872e-2 + y * \
-                  (-0.25154e-2 + y * 0.53208e-3))))))
+        return (math.exp(-x)/math.sqrt(x)) * (1.25331414 + y * \
+                (-0.7832358e-1 + y * (0.2189568e-1 + y * (-0.1062446e-1 + \
+                y * (0.587872e-2 + y * (-0.25154e-2 + y * 0.53208e-3))))))
     
 def bessk1():
     """Bessel function K-sub-1(x). @see: NRP 6.5
@@ -263,14 +271,14 @@ def bessk1():
     @return: n-th Bessel function of x"""
     if x <= 2.0:
         y = x*x/4.0
-        return (math.log(x/2.0) * bessi1(x)) + (1.0/x) * (1.0 + y * (0.15443144 + y * \
-                 (-0.67278579 + y * (-0.18156897 + y * (-0.1919402e-2 + y * \
-                (-0.110404e-2 + y * (-0.4686e-4)))))))
+        return (math.log(x/2.0) * bessi1(x)) + (1.0/x) * (1.0 + y * \
+                (0.15443144 + y * (-0.67278579 + y * (-0.18156897 + y * \
+                (-0.1919402e-2 + y * (-0.110404e-2 + y * (-0.4686e-4)))))))
     else:
         y = 2.0/x
-        return (math.exp(-x)/math.sqrt(x)) * (1.25331414 + y * (0.23498619 + y * \
-                (-0.365562e-1 + y * (0.1504268e-1 + y * (-0.780353e-2 + y * \
-                 (0.325614e-2 + y * (-0.68245e-3)))))))
+        return (math.exp(-x)/math.sqrt(x)) * (1.25331414 + y * \
+                (0.23498619 + y * (-0.365562e-1 + y * (0.1504268e-1 + y * \
+                (-0.780353e-2 + y * (0.325614e-2 + y * (-0.68245e-3)))))))
         
 def bessy(n, x):
     """Bessel function Y-sub-n(x). @see: NRP 6.4
@@ -280,8 +288,8 @@ def bessy(n, x):
     @return: n-th Bessel function of x
     """
     if n < 2: 
-        raise FunctionParameterValueError('n must be more than 1 - use bessy0 or bessy1 \
-            for n = 0 or 1 respectively')
+        raise FunctionParameterValueError('n must be more than 1 - \
+            use bessy0 or bessy1 for n = 0 or 1 respectively')
     else:
         tox = 2.0/x
         by = bessy1(x)
@@ -312,8 +320,9 @@ def bessy0(x):
         xx = x - 0.785398164
         ans1 = 1.0 + y * (-0.1098628627e-2 + y * (0.2734510407e-4 + y * \
               (-0.2073370639e-5 + y * 0.2093887211e-6)))
-        ans2 = -0.1562499995e-1 + y * (0.1430488765e-3 + y * (-0.6911147651e-5 + \
-              y * (0.7621095161e-6 + y * (-0.934945152e-7))))
+        ans2 = -0.1562499995e-1 + y * (0.1430488765e-3 + y * \
+                (-0.6911147651e-5 + y * (0.7621095161e-6 + y * \
+                (-0.934945152e-7))))
         ans = math.sin(xx) * ans1 + z * math.cos(xx) * ans2
         return math.sqrt(0.636619772 / x) * ans
     
@@ -326,10 +335,12 @@ def bessy1(x):
     """
     if abs(x) < 8.0:
         y = x*x
-        ans1 = x * (-0.4900604943e13 + y * (0.127527439e13 + y * (-0.5153438139e11 + \
-              y * (0.7349264551e9 + y * (-0.4237922726e7 + y * 0.8511937935e4)))))
-        ans2 = 0.249958057e14 + y * (0.4244419664e12 + y * (0.3733650367e10 + y * \
-                (0.2245904002e8 + y * (0.102042605e6 + y * (0.3549632885e3 + y)))))
+        ans1 = x * (-0.4900604943e13 + y * (0.127527439e13 + y * \
+                (-0.5153438139e11 + y * (0.7349264551e9 + y * \
+                (-0.4237922726e7 + y * 0.8511937935e4)))))
+        ans2 = 0.249958057e14 + y * (0.4244419664e12 + y * (0.3733650367e10 + \
+                y * (0.2245904002e8 + y * (0.102042605e6 + y * \
+                (0.3549632885e3 + y)))))
         return (ans1/ans2) + 0.626619772 * (bessj1(x) * math.log(x) - (1.0/x))
     else:
         ax = abs(x)
@@ -338,12 +349,12 @@ def bessy1(x):
         xx = ax - 2.356194491
         ans1 = 1.0 + y * (0.183105e-2 + y * (-0.3516396496e-4 + y * \
              (0.2457520174e-5 + y * (-0.240337019e-6))))
-        ans2 = 0.04687499995 + y * (-0.2002690873e-3 + y * (0.8449199096e-5 + y * \
-            (-0.88228987e-6 + y * 0.105787412e-6)))
-        if x < 0.0: return math.sqrt(0.636619772 / ax ) * (math.cos(xx) * ans1 - z * \
-                           math.sin(xx) * ans2)
-        else: return -1 * math.sqrt(0.636619772 / ax ) * (math.cos(xx) * ans1 - \
-                  z * math.sin(xx) * ans2)
+        ans2 = 0.04687499995 + y * (-0.2002690873e-3 + y * (0.8449199096e-5 + \
+                y * (-0.88228987e-6 + y * 0.105787412e-6)))
+        if x < 0.0: return math.sqrt(0.636619772 / ax) * (math.cos(xx) * \
+                            ans1 - z * math.sin(xx) * ans2)
+        else: return -1 * math.sqrt(0.636619772 / ax) * (math.cos(xx) * \
+                    ans1 - z * math.sin(xx) * ans2)
 
 def beta(z, w): 
     """Beta function. 
@@ -386,7 +397,7 @@ def betacf(a, b, x):
         if (abs(az-aold)<(EPS*abs(az))):
             return az
 
-def betai(a,b,x):
+def betai(a, b, x):
     """
     Incomplete beta function
 
@@ -407,9 +418,9 @@ def betai(a,b,x):
         bt = math.exp(gammln(a+b)-gammln(a)-gammln(b)+a*math.log(x)+b*
                         math.log(1.0-x))
     if (x<(a+1.0)/(a+b+2.0)):
-        return bt*betacf(a,b,x)/float(a)
+        return bt*betacf(a, b, x)/float(a)
     else:
-        return 1.0-bt*betacf(b,a,1.0-x)/float(b)
+        return 1.0-bt*betacf(b, a, 1.0-x)/float(b)
 
 def bico(n, k):
     """Binomial coefficient. Returns n!/(k!(n-k)!)
@@ -422,7 +433,7 @@ def bico(n, k):
     """ 
     return math.floor(math.exp(factln(n) - factln(k) - factln(n-k)))
 
-def chebev(a, b, c, m , x):
+def chebev(a, b, c, m, x):
     """Chebyshev evaluation.
     @see: NRP 5.6
     
@@ -458,14 +469,15 @@ def erf(x):
     @return: float number
     """
     if x < 1.5: 
-        return -1*gser(0.5 ,x)
+        return -1*gser(0.5, x)
     else:        
-        return 1.0-gcf(0.5 ,x)[0]
+        return 1.0-gcf(0.5, x)[0]
 
 def erfc(x):
     """
-    Complementary error function (a special incomplete gamma function) equivalent to 
-    gammq(0.5, x^2) which is equivalent to 1 - gammp(0.5, x^2) for x => 0. 
+    Complementary error function (a special incomplete gamma function)
+    equivalent to gammq(0.5, x^2) which is equivalent to 1 - gammp(0.5, x^2)
+    for x => 0.0
     Depend: gammp, gammq, gser, gcf, gammln
     @see: NRP 6.2
     
@@ -518,7 +530,8 @@ def factrl(n):
 
 def gammln(n):
     """Complete Gamma function. 
-    @see: NRP 6.1 and http://mail.python.org/pipermail/python-list/2000-June/039873.html
+    @see: NRP 6.1 and http://mail.python.org/pipermail/python-list/
+    2000-June/039873.html
     
     @param n: float number
     @return: float number"""
@@ -546,9 +559,9 @@ def gammp(a, x):
     if (x < 0. or a <= 0.):
         raise ValueError, (a, x)
     if (x < a+1.0):
-        return gser(a,x)[0]
+        return gser(a, x)[0]
     else:
-        return 1.0-gcf(a,x)[0]
+        return 1.0-gcf(a, x)[0]
     
 def gammq(a, x):
     """Incomplete gamma function: Q(a, x) = 1 - P(a, x) = 1 - gammp(a, x)
@@ -557,10 +570,10 @@ def gammq(a, x):
     if (x < 0. or a <= 0.):
         raise ValueError, repr((a, x))
     if (x < a+1.):
-        a = gser(a,x)[0]
+        a = gser(a, x)[0]
         return 1.0 - a
     else:
-        return gcf(a,x)[0]
+        return gcf(a, x)[0]
 
 def gcf(a, x, itmax=200, eps=3.e-7):
     """Continued fraction approx'n of the incomplete gamma function.
@@ -597,7 +610,7 @@ def gser(a, x, itmax=700, eps=3.e-7):
     if (x < 0.0):
         raise bad_arg, x
     if (x == 0.0):
-        return(0.0,0.0)
+        return(0.0, 0.0)
     ap = a
     sum = 1.0 / a
     delta = sum

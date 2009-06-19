@@ -137,11 +137,11 @@ class RBTree(object):
         self.elements = 0
         
         #SF: If self.unique is True, all elements in the tree have 
-       	#SF  to be unique and an exception is raised for multiple 
-       	#SF insertions of a node
-       	#SF If self.unique is set to False, nodes can be added multiple 
-       	#SF times. There is still only one node, but all insertions are
-       	#SF counted in the variable node.count
+        #SF  to be unique and an exception is raised for multiple 
+        #SF insertions of a node
+        #SF If self.unique is set to False, nodes can be added multiple 
+        #SF times. There is still only one node, but all insertions are
+        #SF counted in the variable node.count
         self.unique = unique
         # changing the comparison function for an existing tree is dangerous!
         self.__cmp = cmpfn
@@ -152,7 +152,7 @@ class RBTree(object):
     def __del__(self):
         # unlink the whole tree
 
-        s = [ self.root ]
+        s = [self.root]
 
         if self.root is not self.sentinel:
             while s:
@@ -486,7 +486,7 @@ class RBTree(object):
     def traverseTree(self, f):
         if self.root == self.sentinel:
             return
-        s = [ None ]
+        s = [None]
         cur = self.root
         while s:
             if cur.left:
@@ -632,7 +632,7 @@ class RBList(RBTree):
     #SF we now can use the function count as used in 
     #SF common python lists
     def count(self, item):
-    	node = self.findNode (item)
+        node = self.findNode (item)
         return node.count
 
     def index (self, item):
@@ -775,7 +775,6 @@ class RBDict(RBTree):
             return self[key]
         self[key] = value
         return value
-
 
 
 if __name__ == "__main__":
