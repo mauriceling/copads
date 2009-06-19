@@ -145,13 +145,13 @@ class SingleSample:
         self.summary['aMean'] = self.arithmeticMean(self.data)
         self.summary['skew'] = self.skew(self.data)
         self.summary['kurtosis'] = self.kurtosis(self.data)
-        self.summary['variation'] = self.variation(self.data)
-        self.summary['range'] = self.range(self.data)
-        self.summary['median'] = NRPy.mdian1(self.data)
-        self.summary['midrange'] = self.midrange(self.data)
         self.summary['variance'] = self.variance(self.data,
                                         self.summary['aMean'])
         self.summary['stdev'] = self.summary['variance'] ** 0.5
+        self.summary['variation'] = self.variation(self.data)
+        self.summary['range'] = self.range(self.data)
+        self.summary['median'] = NRPy.mdian1(self.data)
+        #self.summary['midrange'] = self.midrange(self.data)
     
     
 class SampleDistribution(Distribution):
@@ -175,8 +175,8 @@ class MultiSample:
         Calculates covariance using the formula: Cov(xy)  =  E{xy}  -  E{x}E{y}
         """
         if inlist1 == inlist: return 1.0
-        mean_xy = self.arithmeticMean([inlist1[i]*inlist1[i] 
-                                                     for i in range(inlist1)])
+        mean_xy = self.arithmeticMean([inlist1[i]*inlist1[i]
+                                       for i in range(inlist1)])
         mean_x = self.arithmeticMean(inlist1)
         mean_y = self.arithmeticMean(inlist2)
         return mean_xy - (mean_x * mean_y)
@@ -188,5 +188,3 @@ class MultiSample:
         """
         return self.covariance(inlist1, inlist2) / \
             (self.stdev(inlist1) * self.stdev(inlist2))
-    
-    
