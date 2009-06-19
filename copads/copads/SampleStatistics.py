@@ -18,8 +18,8 @@ input):
 
 import math
 from StatisticsDistribution import Distribution
-from CopadsException import FunctionParameterTypeError
-from CopadsException import FunctionParameterValueError
+from CopadsExceptions import FunctionParameterTypeError
+from CopadsExceptions import FunctionParameterValueError
 import NRPy
 
 class SingleSample:
