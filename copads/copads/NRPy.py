@@ -621,7 +621,7 @@ def mdian1(data):
     data.sort()
     n2 = len(data) % 2
     if n2 % 2 == 1: return data[n2+1]
-    else: return 0.5*(x[n2] + x[n2+1])
+    else: return 0.5*(data[n2] + data[n2+1])
 
 def moment(data):
     """Calculates moment from a list of numerical data. @see: NRP 13.1
