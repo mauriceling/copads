@@ -32,7 +32,7 @@ class SingleSample:
         self.data = kwargs['data']
         self.rowcount = len(self.data)
         self.name = kwargs['name']
-        self.summary = self.fullSummary()
+        self.fullSummary()
         
     def append(self, data):
         if not (type(data) == list or type(data) == tuple):
@@ -139,6 +139,9 @@ class SingleSample:
             sum = sum + (float(item)-float(mean))**2
         return sum/float(len(inlist)-1)
     
+    def __str__(self):
+        return str(self.summary)
+        
     def fullSummary(self):
         self.summary['gMean'] = self.geometricMean(self.data)
         self.summary['hMean'] = self.harmonicMean(self.data)
