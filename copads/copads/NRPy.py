@@ -372,32 +372,32 @@ def betacf(a, b, x):
     Adapted from salstat_stats.py of SalStat (www.sf.net/projects/salstat)
     Ref; NRP 6.3
     """
-    ITMAX = 200
-    EPS = 3.0e-7
+    iter_max = 200
+    eps = 3.0e-7
 
     bm = az = am = 1.0
-    qab = a+b
-    qap = a+1.0
-    qam = a-1.0
-    bz = 1.0-qab*x/qap
-    for i in range(ITMAX+1):
-        em = float(i+1)
+    qab = a + b
+    qap = a + 1.0
+    qam = a - 1.0
+    bz = 1.0 - qab * x / qap
+    for i in range(iter_max + 1):
+        em = float(i + 1)
         tem = em + em
-        d = em*(b-em)*x/((qam+tem)*(a+tem))
-        ap = az + d*am
-        bp = bz+d*bm
-        d = -(a+em)*(qab+em)*x/((qap+tem)*(a+tem))
-        app = ap+d*az
-        bpp = bp+d*bz
+        d = em * (b - em) * x / ((qam + tem) * (a + tem))
+        ap = az + d * am
+        bp = bz + d * bm
+        d = -(a + em) * (qab + em) * x / ((qap + tem) * (a + tem))
+        app = ap + d * az
+        bpp = bp + d * bz
         aold = az
-        am = ap/bpp
-        bm = bp/bpp
-        az = app/bpp
+        am = ap / bpp
+        bm = bp / bpp
+        az = app / bpp
         bz = 1.0
-        if (abs(az-aold)<(EPS*abs(az))):
+        if (abs(az - aold) < (eps * abs(az))):
             return az
-
-def betai(a, b, x):
+        
+def betai(a,b,x):
     """
     Incomplete beta function
 
@@ -410,17 +410,17 @@ def betai(a, b, x):
     Depend: betacf, gammln
     @see: NRP 6.3
     """
-    if (x<0.0 or x>1.0):
+    if (x < 0.0 or x > 1.0):
         raise FunctionParameterValueError('Bad x in lbetai')
-    if (x==0.0 or x==1.0):
+    if (x == 0.0 or x == 1.0):
         bt = 0.0
     else:
-        bt = math.exp(gammln(a+b)-gammln(a)-gammln(b)+a*math.log(x)+b*
-                        math.log(1.0-x))
-    if (x<(a+1.0)/(a+b+2.0)):
-        return bt*betacf(a, b, x)/float(a)
+        bt = math.exp(gammln(a+b) - gammln(a) - gammln(b) + a *
+                      math.log(x) + b * math.log(1.0-x))
+    if (x < (a + 1.0) / (a + b + 2.0)):
+        return bt * betacf(a,b,x) / float(a)
     else:
-        return 1.0-bt*betacf(b, a, 1.0-x)/float(b)
+        return 1.0 - bt * betacf(b,a,1.0-x) / float(b)
 
 def bico(n, k):
     """Binomial coefficient. Returns n!/(k!(n-k)!)
@@ -556,24 +556,24 @@ def gammp(a, x):
     @param x: float number
     @return: float number
     """
-    if (x < 0. or a <= 0.):
+    if (x < 0.0 or a <= 0.0):
         raise ValueError, (a, x)
     if (x < a+1.0):
-        return gser(a, x)[0]
+        return gser(a,x)[0]
     else:
-        return 1.0-gcf(a, x)[0]
-    
+        return 1.0 - gcf(a,x)[0]
+        
 def gammq(a, x):
     """Incomplete gamma function: Q(a, x) = 1 - P(a, x) = 1 - gammp(a, x)
     Also commonly known as Q-equation.
     @see: http://mail.python.org/pipermail/python-list/2000-June/039873.html"""
-    if (x < 0. or a <= 0.):
+    if (x < 0.0 or a <= 0.0):
         raise ValueError, repr((a, x))
-    if (x < a+1.):
-        a = gser(a, x)[0]
+    if (x < a+1.0):
+        a = gser(a,x)[0]
         return 1.0 - a
     else:
-        return gcf(a, x)[0]
+        return gcf(a,x)[0]
 
 def gcf(a, x, itmax=200, eps=3.e-7):
     """Continued fraction approx'n of the incomplete gamma function.
@@ -589,20 +589,20 @@ def gcf(a, x, itmax=200, eps=3.e-7):
     while n <= itmax:
         an = n
         ana = an - a
-        a0 = (a1 + a0*ana)*fac
-        b0 = (b1 + b0*ana)*fac
-        anf = an*fac
-        a1 = x*a0 + anf*a1
-        b1 = x*b0 + anf*b1
+        a0 = (a1 + a0 * ana) * fac
+        b0 = (b1 + b0 * ana) * fac
+        anf = an * fac
+        a1 = x * a0 + anf * a1
+        b1 = x * b0 + anf * b1
         if (a1 != 0.0):
             fac = 1.0 / a1
-            g = b1*fac
-            if (abs((g-gold)/g) < eps):
-                return (g*math.exp(-x+a*math.log(x)-gln), gln)
+            g = b1 * fac
+            if (abs((g - gold) / g) < eps):
+                return (g * math.exp(-x + a * math.log(x) - gln), gln)
             gold = g
         n = n + 1
-    raise max_iters, str(abs((g-gold)/g))
-
+    raise max_iters, str(abs((g - gold) / g))
+            
 def gser(a, x, itmax=700, eps=3.e-7):
     """Series approximation to the incomplete gamma function.
     @see: http://mail.python.org/pipermail/python-list/2000-June/039873.html"""
@@ -619,8 +619,8 @@ def gser(a, x, itmax=700, eps=3.e-7):
         ap = ap + 1.0
         delta = delta * x / ap
         sum = sum + delta
-        if (abs(delta) < abs(sum)*eps):
-            return (sum * math.exp(-x + a*math.log(x) - gln), gln)
+        if (abs(delta) < abs(sum) * eps):
+            return (sum * math.exp(-x + a * math.log(x) - gln), gln)
         n = n + 1
     raise max_iters, str((abs(delta), abs(sum)*eps))
         
