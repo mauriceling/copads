@@ -179,7 +179,7 @@ class MultiSample:
         """
         if inlist1 == inlist: return 1.0
         mean_xy = self.arithmeticMean([inlist1[i]*inlist1[i]
-                                       for i in range(inlist1)])
+                                       for i in range(len(inlist1))])
         mean_x = self.arithmeticMean(inlist1)
         mean_y = self.arithmeticMean(inlist2)
         return mean_xy - (mean_x * mean_y)
