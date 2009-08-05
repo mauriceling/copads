@@ -28,6 +28,7 @@ CopadsError
 |- FunctionParameterTypeError
 |- FunctionParameterValueError
 |- ArrayError
+|- MaxIterationException
 
 Credits:
     MatrixError subclasses 
@@ -262,3 +263,8 @@ class ArrayError(CopadsError):
 
     def __str__(self): return self.msg
     
+class MaxIterationsException(CopadsError):
+    """
+    Exception to catch maximum looping.
+    """
+    pass

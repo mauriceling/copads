@@ -39,6 +39,7 @@ import math
 import Constants
 from CopadsExceptions import FunctionParameterTypeError
 from CopadsExceptions import FunctionParameterValueError
+from CopadsExceptions import MaxIterationsException
 
 
 def bessi(n, x):
@@ -356,21 +357,29 @@ def bessy1(x):
         else: return -1 * math.sqrt(0.636619772 / ax) * (math.cos(xx) * \
                     ans1 - z * math.sin(xx) * ans2)
 
-def beta(z, w): 
-    """Beta function. 
+def beta(z, w):
+    """Beta function.
     Depend: gammln
     @see: NRP 6.1
     
+    @see: Ling, MHT. 2009. Compendium of Distributions, I: Beta, Binomial, Chi-
+    Square, F, Gamma, Geometric, Poisson, Student's t, and Uniform. The Python 
+    Papers Source Codes 1:4
+
     @param z: float number
     @param w: float number
-    @return: float number""" 
+    @return: float number"""
     return math.exp(gammln(z) + gammln(w) - gammln(z+w))
 
 def betacf(a, b, x):
     """
-    Continued fraction for incomplete beta function. 
+    Continued fraction for incomplete beta function.
     Adapted from salstat_stats.py of SalStat (www.sf.net/projects/salstat)
-    Ref; NRP 6.3
+    @see: NRP 6.3
+    
+    @see: Ling, MHT. 2009. Compendium of Distributions, I: Beta, Binomial, Chi-
+    Square, F, Gamma, Geometric, Poisson, Student's t, and Uniform. The Python 
+    Papers Source Codes 1:4
     """
     iter_max = 200
     eps = 3.0e-7
@@ -397,40 +406,49 @@ def betacf(a, b, x):
         if (abs(az - aold) < (eps * abs(az))):
             return az
         
-def betai(a,b,x):
+def betai(a, b, x):
     """
     Incomplete beta function
 
     I-sub-x(a,b) = 1/B(a,b)*(Integral(0,x) of t^(a-1)(1-t)^(b-1) dt)
 
     where a,b>0 and B(a,b) = G(a)*G(b)/(G(a+b)) where G(a) is the gamma
-    function of a. 
-    
+    function of a.
+
     Adapted from salstat_stats.py of SalStat (www.sf.net/projects/salstat)
     Depend: betacf, gammln
     @see: NRP 6.3
+    
+    @see: Ling, MHT. 2009. Compendium of Distributions, I: Beta, Binomial, Chi-
+    Square, F, Gamma, Geometric, Poisson, Student's t, and Uniform. The Python 
+    Papers Source Codes 1:4
     """
     if (x < 0.0 or x > 1.0):
-        raise FunctionParameterValueError('Bad x in lbetai')
+        raise ValueError('Bad value for x: %s' % x)
     if (x == 0.0 or x == 1.0):
         bt = 0.0
     else:
         bt = math.exp(gammln(a+b) - gammln(a) - gammln(b) + a *
                       math.log(x) + b * math.log(1.0-x))
     if (x < (a + 1.0) / (a + b + 2.0)):
-        return bt * betacf(a,b,x) / float(a)
+        return bt * betacf(a, b, x) / float(a)
     else:
-        return 1.0 - bt * betacf(b,a,1.0-x) / float(b)
+        return 1.0 - bt * betacf(b, a, 1.0 - x) / float(b)
 
 def bico(n, k):
-    """Binomial coefficient. Returns n!/(k!(n-k)!)
+    """
+    Binomial coefficient. Returns n!/(k!(n-k)!)
     Depend: factln, gammln
     @see: NRP 6.1
     
+    @see: Ling, MHT. 2009. Compendium of Distributions, I: Beta, Binomial, Chi-
+    Square, F, Gamma, Geometric, Poisson, Student's t, and Uniform. The Python 
+    Papers Source Codes 1:4
+
     @param n: total number of items
     @param k: required number of items
-    @return: floating point number  
-    """ 
+    @return: floating point number
+    """
     return math.floor(math.exp(factln(n) - factln(k) - factln(n-k)))
 
 def chebev(a, b, c, m, x):
@@ -520,64 +538,93 @@ def factln(n):
     @return: natural logarithm of factorial of n """
     return gammln(n + 1.0)
 
-def factrl(n):
-    """Factorial: n!
+def factln(n):
+    """
+    Natural logarithm of factorial: ln(n!)
     @see: NRP 6.1
     
+    @see: Ling, MHT. 2009. Compendium of Distributions, I: Beta, Binomial, Chi-
+    Square, F, Gamma, Geometric, Poisson, Student's t, and Uniform. The Python 
+    Papers Source Codes 1:4
+
     @param n: positive integer
-    @return: factorial of n """
-    return math.exp(gammln(n + 1.0))
+    @return: natural logarithm of factorial of n
+    """
+    return gammln(n + 1.0)
 
 def gammln(n):
-    """Complete Gamma function. 
-    @see: NRP 6.1 and http://mail.python.org/pipermail/python-list/
-    2000-June/039873.html
-    
+    """
+    Complete Gamma function.
+    @see: NRP 6.1 and
+        http://mail.python.org/pipermail/python-list/2000-June/039873.html
+        
+    @see: Ling, MHT. 2009. Compendium of Distributions, I: Beta, Binomial, Chi-
+    Square, F, Gamma, Geometric, Poisson, Student's t, and Uniform. The Python 
+    Papers Source Codes 1:4
+
     @param n: float number
-    @return: float number"""
+    @return: float number
+    """
     gammln_cof = [76.18009173, -86.50532033, 24.01409822,
                   -1.231739516e0, 0.120858003e-2, -0.536382e-5]
     x = n - 1.0
     tmp = x + 5.5
-    tmp = (x + 0.5)*math.log(tmp) - tmp
+    tmp = (x + 0.5) * math.log(tmp) - tmp
     ser = 1.0
     for j in range(6):
         x = x + 1.
-        ser = ser + gammln_cof[j]/x
-    return tmp + math.log(2.50662827465*ser)
+        ser = ser + gammln_cof[j] / x
+    return tmp + math.log(2.50662827465 * ser)
 
-def gammp(a, x): 
-    """Gamma incomplete function, P(a,x). 
+def gammp(a, x):
+    """
+    Gamma incomplete function, P(a,x).
     P(a,x) = (1/gammln(a)) * integral(0, x, (e^-t)*(t^(a-1)), dt)
     Depend: gser, gcf, gammln
     @see: NRP 6.2
     
+    @see: Ling, MHT. 2009. Compendium of Distributions, I: Beta, Binomial, Chi-
+    Square, F, Gamma, Geometric, Poisson, Student's t, and Uniform. The Python 
+    Papers Source Codes 1:4
+
     @param a: float number
     @param x: float number
     @return: float number
     """
     if (x < 0.0 or a <= 0.0):
-        raise ValueError, (a, x)
-    if (x < a+1.0):
-        return gser(a,x)[0]
+        raise ValueError('Bad value for a or x: %s, %s' % (a, x))
+    if (x < a + 1.0):
+        return gser(a, x)[0]
     else:
-        return 1.0 - gcf(a,x)[0]
-        
+        return 1.0 - gcf(a, x)[0]
+
 def gammq(a, x):
-    """Incomplete gamma function: Q(a, x) = 1 - P(a, x) = 1 - gammp(a, x)
+    """
+    Incomplete gamma function: Q(a, x) = 1 - P(a, x) = 1 - gammp(a, x)
     Also commonly known as Q-equation.
-    @see: http://mail.python.org/pipermail/python-list/2000-June/039873.html"""
+    @see: http://mail.python.org/pipermail/python-list/2000-June/039873.html
+    
+    @see: Ling, MHT. 2009. Compendium of Distributions, I: Beta, Binomial, Chi-
+    Square, F, Gamma, Geometric, Poisson, Student's t, and Uniform. The Python 
+    Papers Source Codes 1:4
+    """
     if (x < 0.0 or a <= 0.0):
-        raise ValueError, repr((a, x))
-    if (x < a+1.0):
-        a = gser(a,x)[0]
+        raise ValueError('Bad value for a or x: %s, %s' % (a, x))
+    if (x < a + 1.0):
+        a = gser(a, x)[0]
         return 1.0 - a
     else:
-        return gcf(a,x)[0]
+        return gcf(a, x)[0]
 
 def gcf(a, x, itmax=200, eps=3.e-7):
-    """Continued fraction approx'n of the incomplete gamma function.
-    @see: http://mail.python.org/pipermail/python-list/2000-June/039873.html"""
+    """
+    Continued fraction approx'n of the incomplete gamma function.
+    @see: http://mail.python.org/pipermail/python-list/2000-June/039873.html
+    
+    @see: Ling, MHT. 2009. Compendium of Distributions, I: Beta, Binomial, Chi-
+    Square, F, Gamma, Geometric, Poisson, Student's t, and Uniform. The Python 
+    Papers Source Codes 1:4
+    """
     gln = gammln(a)
     gold = 0.0
     a0 = 1.0
@@ -601,28 +648,37 @@ def gcf(a, x, itmax=200, eps=3.e-7):
                 return (g * math.exp(-x + a * math.log(x) - gln), gln)
             gold = g
         n = n + 1
-    raise max_iters, str(abs((g - gold) / g))
+    raise MaxIterationsException('Maximum iterations reached: %s'
+                                 % abs((g - gold) / g))
             
 def gser(a, x, itmax=700, eps=3.e-7):
-    """Series approximation to the incomplete gamma function.
-    @see: http://mail.python.org/pipermail/python-list/2000-June/039873.html"""
+    """
+    Series approximation to the incomplete gamma function.
+    @see: http://mail.python.org/pipermail/python-list/2000-June/039873.html
+    
+    @see: Ling, MHT. 2009. Compendium of Distributions, I: Beta, Binomial, Chi-
+    Square, F, Gamma, Geometric, Poisson, Student's t, and Uniform. The Python 
+    Papers Source Codes 1:4
+    """
     gln = gammln(a)
     if (x < 0.0):
-        raise bad_arg, x
+        raise ValueError('Bad value for x: %s' % a)
+
     if (x == 0.0):
         return(0.0, 0.0)
     ap = a
-    sum = 1.0 / a
-    delta = sum
+    total = 1.0 / a
+    delta = total
     n = 1
     while n <= itmax:
         ap = ap + 1.0
         delta = delta * x / ap
-        sum = sum + delta
-        if (abs(delta) < abs(sum) * eps):
-            return (sum * math.exp(-x + a * math.log(x) - gln), gln)
+        total = total + delta
+        if (abs(delta) < abs(total) * eps):
+            return (total * math.exp(-x + a * math.log(x) - gln), gln)
         n = n + 1
-    raise max_iters, str((abs(delta), abs(sum)*eps))
+    raise MaxIterationsException('Maximum iterations reached: %s, %s'
+                                 % (abs(delta), abs(total) * eps))
         
 def mdian1(data):
     """Calculates the median of a list of numerical values using sorting. 
@@ -961,30 +1017,39 @@ def wtn(): raise NotImplementedError
 def wwghts(): raise NotImplementedError
 def zrhqr(): raise NotImplementedError
 def zriddr(): raise NotImplementedError
+
+def cdf_binomial(k, n, p):
+    """
+    Cummulative density function of Binomial distribution. No reference
+    implementation.
+    Depend: betai, betacf, gammln
+    @see: NRP 6.3
+    
+    @see: Ling, MHT. 2009. Compendium of Distributions, I: Beta, Binomial, Chi-
+    Square, F, Gamma, Geometric, Poisson, Student's t, and Uniform. The Python 
+    Papers Source Codes 1:4
+
+    @param k: number of times of event occurrence in n trials
+    @param n: total number of trials
+    @param p: probability of event occurrence per trial
+    @return: float number - Binomial probability
+    """
+    return betai(k, n - k + 1, p)
+
 def cdf_poisson(k, x):
     """
-    Cummulative density function of Poisson distribution from 0 to k - 1 
-    inclusive. No reference implementation. 
+    Cummulative density function of Poisson distribution from 0 to k - 1
+    inclusive. No reference implementation.
     Depend: gammq, gser, gcf, gammln
     @see: NRP 6.2
     
+    @see: Ling, MHT. 2009. Compendium of Distributions, I: Beta, Binomial, Chi-
+    Square, F, Gamma, Geometric, Poisson, Student's t, and Uniform. The Python 
+    Papers Source Codes 1:4
+
     @param k: number of times of event occurrence
     @param x: mean of Poisson distribution
     @return: float number - Poisson probability of k - 1 times of occurrence
     with the mean of x
     """
     return gammq(k, x)
-
-def cdf_binomial(k, n, p):
-    """
-    Cummulative density function of Binomial distribution. No reference
-    implementation. 
-    Depend: betai, betacf, gammln
-    @see: NRP 6.3
-    
-    @param k: number of times of event occurrence in n trials
-    @param n: total number of trials
-    @param p: probability of event occurrence per trial
-    @return: float number - Binomial probability  
-    """
-    return betai(k, n-k+1, p)
