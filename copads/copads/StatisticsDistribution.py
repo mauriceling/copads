@@ -433,27 +433,6 @@ class CauchyDistribution(Distribution):
             yield seed
 
 
-class ChiSquareDistribution(GammaDistribution):
-    """
-    Chi-square distribution is a special case of Gamma distribution where
-    location = 0, scale = 2 and shape is twice that of the degrees of freedom.
-    
-    @see: Ling, MHT. 2009. Compendium of Distributions, I: Beta, Binomial, Chi-
-    Square, F, Gamma, Geometric, Poisson, Student's t, and Uniform. The Python 
-    Papers Source Codes 1:4
-    """
-
-    def __init__(self, df=2):
-        """
-        Constructor method. The parameters are used to construct
-        the probability distribution.
-
-        Parameters:
-        1. df = degrees of freedom"""
-        GammaDistribution.__init__(self, location=0, scale=2,
-                                   shape=float(df) / 2.0)
-
-
 def ErlangDistribution(**parameters):
     """
     Erlang distribution is an alias of Gamma distribution where the shape
@@ -620,6 +599,27 @@ class GammaDistribution(Distribution):
         return NRPy.gammp(self.shape, self.shape - 1)
 
 
+class ChiSquareDistribution(GammaDistribution):
+    """
+    Chi-square distribution is a special case of Gamma distribution where
+    location = 0, scale = 2 and shape is twice that of the degrees of freedom.
+    
+    @see: Ling, MHT. 2009. Compendium of Distributions, I: Beta, Binomial, Chi-
+    Square, F, Gamma, Geometric, Poisson, Student's t, and Uniform. The Python 
+    Papers Source Codes 1:4
+    """
+
+    def __init__(self, df=2):
+        """
+        Constructor method. The parameters are used to construct
+        the probability distribution.
+
+        Parameters:
+        1. df = degrees of freedom"""
+        GammaDistribution.__init__(self, location=0, scale=2,
+                                   shape=float(df) / 2.0)
+                                   
+                                   
 class GeometricDistribution(Distribution):
     """
     Geometric distribution is the discrete version of Exponential
