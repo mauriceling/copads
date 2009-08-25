@@ -156,18 +156,18 @@ class Graph:
         negative edges, and will raise an exception if it discovers that a 
         negative edge has caused it to make a mistake.
         """
-    
         D = {}    # dictionary of final distances
         P = {}    # dictionary of predecessors
         Q = PriorityDictionary()   # est.dist. of non-final vert.
         Q[start] = 0
-        
         for v in Q:
             D[v] = Q[v]
             if v == end: break
-            
+            try: self.graph[v]
+            except KeyError: continue
             for w in self.graph[v]:
-                vwLength = D[v] + self.graph[v][w]
+                if self.graph[v][w] > 0: 
+                    vwLength = D[v] + self.graph[v][w]
                 if w in D:
                     if vwLength < D[w]:
                         raise ValueError("Dijkstra: found better path to \
@@ -184,8 +184,8 @@ class Graph:
         in order along the shortest path.
         
         @param start: vertex of starting point
-        @param end: vertex of ending point"""
-    
+        @param end: vertex of ending point
+        """
         D, P = self.Dijkstra(start, end)
         Path = []
         while 1:
