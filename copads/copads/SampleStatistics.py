@@ -174,6 +174,12 @@ class MultiSample:
         else:
             self.sample[sample.name] = sample
             
+    def getSample(self, name):
+        try: return self.sample[name].data
+        except KeyError: return []
+
+    def listSamples(self):
+        return self.sample.keys()
     
     def covariance(self, inlist1, inlist2):
         """
