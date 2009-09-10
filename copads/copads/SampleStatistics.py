@@ -49,8 +49,8 @@ class SingleSample:
         Usage:   geometricMean(inlist)
         """
         mult = 1.0
-        one_over_n = 1.0/len(inlist)
-        for item in inlist: mult = mult * math.pow(item,one_over_n)
+        one_over_n = 1.0 / len(inlist)
+        for item in inlist: mult = mult * math.pow(item, one_over_n)
         return mult
     
     def harmonicMean(self, inlist):
@@ -60,10 +60,10 @@ class SingleSample:
 
         Usage:   harmonicMean(inlist)
         """
-        sum = 0
+        sum = 0.000001
         for item in inlist:
-            if item == 0: item = 0.000001
-            sum = sum + 1.0/item
+            if item != 0: sum = sum + 1.0/item
+            else: sum = sum + 1.0/0.001
         return len(inlist) / sum
     
     def arithmeticMean(self, inlist):
@@ -77,7 +77,7 @@ class SingleSample:
         for item in inlist: sum = sum + item
         return sum/float(len(inlist))
     
-    def moment(self, inlist,moment=1):
+    def moment(self, inlist, moment=1):
         """
         Calculates the nth moment about the mean for a sample (defaults to
         the 1st moment).  Used to calculate coefficients of skewness and 
