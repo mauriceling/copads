@@ -61,7 +61,9 @@ class SingleSample:
         Usage:   harmonicMean(inlist)
         """
         sum = 0
-        for item in inlist: sum = sum + 1.0/item
+        for item in inlist:
+            if item == 0: item = 0.000001
+            sum = sum + 1.0/item
         return len(inlist) / sum
     
     def arithmeticMean(self, inlist):
