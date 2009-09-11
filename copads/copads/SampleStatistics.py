@@ -26,11 +26,13 @@ class SingleSample:
     data = None
     rowcount = 0
     name = None
+    summary = {}
     
     def __init__(self, data, name):
         self.data = data
         self.rowcount = len(self.data)
         self.name = name
+        self.fullSummary()
         
     def geometricMean(self, inlist):
         """
@@ -135,19 +137,19 @@ class SingleSample:
     def __str__(self):
         return str(self.summary)
         
-    def summary(self):
-        result = {}
-        result['gMean'] = self.geometricMean(self.data)
-        result['hMean'] = self.harmonicMean(self.data)
-        result['aMean'] = self.arithmeticMean(self.data)
-        result['skew'] = self.skew(self.data)
-        result['kurtosis'] = self.kurtosis(self.data)
-        result['variance'] = self.variance(self.data, result['aMean'])
-        result['stdev'] = result['variance'] ** 0.5
-        result['variation'] = self.variation(self.data)
-        result['range'] = self.range(self.data)
-        result['median'] = NRPy.mdian1(self.data)
-        return result
+    def fullSummary(self):
+        self.summary['gMean'] = self.geometricMean(self.data)
+        self.summary['hMean'] = self.harmonicMean(self.data)
+        self.summary['aMean'] = self.arithmeticMean(self.data)
+        self.summary['skew'] = self.skew(self.data)
+        self.summary['kurtosis'] = self.kurtosis(self.data)
+        self.summary['variance'] = self.variance(self.data,
+                                        self.summary['aMean'])
+        self.summary['stdev'] = self.summary['variance'] ** 0.5
+        self.summary['variation'] = self.variation(self.data)
+        self.summary['range'] = self.range(self.data)
+        self.summary['median'] = NRPy.mdian1(self.data)
+        #self.summary['midrange'] = self.midrange(self.data)
     
     
 class SampleDistribution(Distribution):
