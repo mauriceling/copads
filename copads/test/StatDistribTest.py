@@ -2,6 +2,7 @@ import sys
 import os
 import unittest
 
+sys.path.append(os.path.join(os.path.dirname(os.getcwd()), 'copads'))
 import StatisticsDistribution as N
 
 class testBeta(unittest.TestCase):
@@ -416,5 +417,4 @@ class testUniform(unittest.TestCase):
 ##        pass
     
 if __name__ == '__main__':
-    sys.path.append(os.path.join(os.path.dirname(os.getcwd()), 'copads'))
     unittest.main()

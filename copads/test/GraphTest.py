@@ -2,6 +2,11 @@ import unittest
 import os
 import sys
 
+sys.path.append(os.path.join(os.path.dirname(os.getcwd()), 'copads'))
+from Graph import Graph
+from CopadsExceptions import *
+    
+
 G = {'s':{'u':10, 'x':5},
      'u':{'v':1, 'x':2},
      'v':{'y':4},
@@ -39,7 +44,4 @@ class testGraph(unittest.TestCase):
     
         
 if __name__ == "__main__":
-    sys.path.append(os.path.join(os.path.dirname(os.getcwd()), 'copads'))
-    from Graph import Graph
-    from CopadsExceptions import *
     unittest.main()

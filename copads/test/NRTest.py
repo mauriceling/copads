@@ -2,6 +2,9 @@ import sys
 import os
 import unittest
 
+sys.path.append(os.path.join(os.path.dirname(os.getcwd()), 'copads'))
+import NRPy as N
+    
 
 class testNR(unittest.TestCase):
 #    def testadi(self): self.assertAlmostEqual(N.<something>( ), testdata)
@@ -318,6 +321,4 @@ class testNR(unittest.TestCase):
 
         
 if __name__ == '__main__':
-    sys.path.append(os.path.join(os.path.dirname(os.getcwd()), 'copads'))
-    import NRPy as N
     unittest.main()

@@ -2,6 +2,9 @@ import sys
 import os
 import unittest
 
+sys.path.append(os.path.join(os.path.dirname(os.getcwd()), 'copads'))
+import ObjectDistance as D
+
 o1 = 'the man is a dumb ass'.split(' ')
 t1 = 'that man is a dumb ass'.split(' ')
 
@@ -38,6 +41,4 @@ class testD(unittest.TestCase):
 
 
 if __name__ == '__main__':
-    sys.path.append(os.path.join(os.path.dirname(os.getcwd()), 'copads'))
-    import ObjectDistance as D
     unittest.main()

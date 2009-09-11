@@ -37,6 +37,12 @@
 #        changed RBTree.deleteNode : same changes as for RBList.remove()
 #        finally I've changed the __version__ string to '1.6'
 
+import sys
+import os
+
+sys.path.append(os.path.join(os.path.dirname(os.getcwd()), 'copads'))
+from Tree import RBList, RBDict
+    
 def testRBlist():
     import random
     print "--- Testing RBList ---"
@@ -125,13 +131,6 @@ def testRBdict():
 
 
 if __name__ == "__main__":
-
-    import sys
-    import os
-
-    sys.path.append(os.path.join(os.path.dirname(os.getcwd()), 'copads'))
-    from Tree import RBList, RBDict
-    
     if len(sys.argv) <= 1:
         testRBlist()
         testRBdict()

@@ -2,6 +2,9 @@ import unittest
 import os
 import sys
 
+sys.path.append(os.path.join(os.path.dirname(os.getcwd()), 'copads'))
+import Operations
+
 class testModulus2(unittest.TestCase):
     """Unit test cases for Operations.Modulus2 class"""
     def testInitNothing(self):
@@ -65,6 +68,4 @@ class testBoolean(unittest.TestCase):
         
 
 if __name__ == "__main__":
-    sys.path.append(os.path.join(os.path.dirname(os.getcwd()), 'copads'))
-    import Operations
     unittest.main()

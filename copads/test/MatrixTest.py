@@ -1,3 +1,9 @@
+import sys
+import os
+
+sys.path.append(os.path.join(os.path.dirname(os.getcwd()), 'copads'))
+from Matrix import *
+
 def Vector_test():
     print 'a = zeros(4)'
     a = v_zeros(4)
@@ -203,12 +209,5 @@ def SparseMatrix_test():
 
 
 if __name__ == "__main__":
-
-    import sys
-    import os
-
-    sys.path.append(os.path.join(os.path.dirname(os.getcwd()), 'copads'))
-    from Matrix import *
-    
     Vector_test()
     SparseMatrix_test()
