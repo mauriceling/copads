@@ -234,7 +234,7 @@ def t1Mean(**kwargs):
     svar = kwargs['svar']
     ssize = kwargs['ssize']
     statistic = (smean - pmean) / (svar / sqrt(ssize))
-    return test(statistic, TDistribution(df = ssize - 1), kwargs['confidence'])
+    return test(statistic, TDistribution(shape = ssize - 1), kwargs['confidence'])
 
 def t2Mean2EqualVariance(**kwargs):    
     """
@@ -273,7 +273,7 @@ def t2Mean2EqualVariance(**kwargs):
     pvar = (((ssize1 - 1) * svar1) + ((ssize2 - 1) * svar2)) / df
     statistic = ((smean1 - smean2) - (pmean1 - pmean2)) / \
                 (pvar * sqrt((1 / ssize1) + (1 / ssize2)))
-    return test(statistic, TDistribution(df = df), kwargs['confidence'])
+    return test(statistic, TDistribution(shape = df), kwargs['confidence'])
 
 def t2Mean2UnequalVariance(**kwargs):
     """
@@ -312,7 +312,7 @@ def t2Mean2UnequalVariance(**kwargs):
     df = (((svar1 / ssize1) + (svar2 / ssize2)) ** 2) / \
         (((svar1 ** 2) / ((ssize1 ** 2) * (ssize1 - 1))) + \
             ((svar2 ** 2) / ((ssize2 ** 2) * (ssize2 - 1))))
-    return test(statistic, TDistribution(df = df), kwargs['confidence'])
+    return test(statistic, TDistribution(shape = df), kwargs['confidence'])
 
 def tPaired(**kwargs):    
     """
@@ -331,7 +331,7 @@ def tPaired(**kwargs):
     svar = kwargs['svar']
     ssize = kwargs['ssize']
     statistic = (smean1 - smean2) / sqrt(svar / ssize)
-    return test(statistic, TDistribution(df = ssize - 1), kwargs['confidence'])
+    return test(statistic, TDistribution(shape = ssize - 1), kwargs['confidence'])
     
     """
     Test 11: t-test of a regression coefficient
@@ -362,7 +362,7 @@ def tPearsonCorrelation(**kwargs):
     ssize = kwargs['ssize']
     r = kwargs['r']
     statistic = (r * sqrt(ssize - 2)) / sqrt(1 - (r **2))
-    return test(statistic, TDistribution(df = ssize - 2), kwargs['confidence'])
+    return test(statistic, TDistribution(shape = ssize - 2), kwargs['confidence'])
 
 def ZPearsonCorrelation(**kwargs):    
     """
