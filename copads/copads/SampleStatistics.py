@@ -28,10 +28,10 @@ class SingleSample:
     name = None
     summary = {}
     
-    def __init__(self, **kwargs):
-        self.data = kwargs['data']
+    def __init__(self, data, name):
+        self.data = data
         self.rowcount = len(self.data)
-        self.name = kwargs['name']
+        self.name = name
         self.fullSummary()
         
     def append(self, data):
@@ -162,25 +162,23 @@ class SingleSample:
 class SampleDistribution(Distribution):
     def __init__(self, sampleData):
         self.sample = sampleData
+
         
-class MultiSample:
+class TwoSample:
     sample = {}
-    def __init__(self): pass
-    
-    def addSample(self, sample, name = None):
-        if type(sample) == list or type(sample) == tuple:
-            sample = SingleSample(data = list(sample), name = name)
-            self.sample[name] = sample
-        else:
-            self.sample[sample.name] = sample
-            
+    def __init__(self, data1, name1, data2, name2):
+        if name1 == '': name1 = 'Sample 1'
+        if name2 == '': name2 = 'Sample 2'
+        sample[name1] = SingleSample(list(data1), name1)
+        sample[name2] = SingleSample(list(data1), name2)
+
     def getSample(self, name):
         try: return self.sample[name].data
         except KeyError: return []
 
     def listSamples(self):
         return self.sample.keys()
-    
+
     def covariance(self, inlist1, inlist2):
         """
         Calculates covariance using the formula: Cov(xy)  =  E{xy}  -  E{x}E{y}
@@ -199,3 +197,31 @@ class MultiSample:
         """
         return self.covariance(inlist1, inlist2) / \
             (self.stdev(inlist1) * self.stdev(inlist2))
+    
+        
+class MultiSample:
+    sample = {}
+    def __init__(self): pass
+    
+    def addSample(self, data, name):
+        if name == '':
+            try:
+                temp = self.sample['Sample ' + str(len(self.sample))]
+                import random
+                name = 'Sample ' + str(int(random.random() * 1000000))
+            except KeyError:
+                name = 'Sample ' + str(len(self.sample) + 1)
+        if type(sample) == list or type(sample) == tuple:
+            sample = SingleSample(list(sample), name)
+            self.sample[name] = sample
+        else:
+            self.sample[sample.name] = sample
+            
+    def getSample(self, name):
+        try: return self.sample[name].data
+        except KeyError: return []
+
+    def listSamples(self):
+        return self.sample.keys()
+    
+    
