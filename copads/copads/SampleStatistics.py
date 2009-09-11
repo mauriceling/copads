@@ -32,7 +32,7 @@ class SingleSample:
         self.data = data
         self.rowcount = len(self.data)
         self.name = name
-        self.fullSummary()
+        #self.fullSummary()
         
     def geometricMean(self, inlist):
         """
