@@ -26,20 +26,11 @@ class SingleSample:
     data = None
     rowcount = 0
     name = None
-    summary = {}
     
     def __init__(self, data, name):
         self.data = data
         self.rowcount = len(self.data)
         self.name = name
-        self.fullSummary()
-        
-    def append(self, data):
-        if not (type(data) == list or type(data) == tuple):
-            raise FunctionParameterTypeError('Input must be either \
-                    list or tuple, % given ' % str(type(data)))
-        self.data = self.data + list(data)
-        self.summary = self.fullSummary()
         
     def geometricMean(self, inlist):
         """
@@ -144,19 +135,19 @@ class SingleSample:
     def __str__(self):
         return str(self.summary)
         
-    def fullSummary(self):
-        self.summary['gMean'] = self.geometricMean(self.data)
-        self.summary['hMean'] = self.harmonicMean(self.data)
-        self.summary['aMean'] = self.arithmeticMean(self.data)
-        self.summary['skew'] = self.skew(self.data)
-        self.summary['kurtosis'] = self.kurtosis(self.data)
-        self.summary['variance'] = self.variance(self.data,
-                                        self.summary['aMean'])
-        self.summary['stdev'] = self.summary['variance'] ** 0.5
-        self.summary['variation'] = self.variation(self.data)
-        self.summary['range'] = self.range(self.data)
-        self.summary['median'] = NRPy.mdian1(self.data)
-        #self.summary['midrange'] = self.midrange(self.data)
+    def summary(self):
+        result = {}
+        result['gMean'] = self.geometricMean(self.data)
+        result['hMean'] = self.harmonicMean(self.data)
+        result['aMean'] = self.arithmeticMean(self.data)
+        result['skew'] = self.skew(self.data)
+        result['kurtosis'] = self.kurtosis(self.data)
+        result['variance'] = self.variance(self.data, result['aMean'])
+        result['stdev'] = result['variance'] ** 0.5
+        result['variation'] = self.variation(self.data)
+        result['range'] = self.range(self.data)
+        result['median'] = NRPy.mdian1(self.data)
+        return result
     
     
 class SampleDistribution(Distribution):
@@ -169,8 +160,8 @@ class TwoSample:
     def __init__(self, data1, name1, data2, name2):
         if name1 == '': name1 = 'Sample 1'
         if name2 == '': name2 = 'Sample 2'
-        sample[name1] = SingleSample(list(data1), name1)
-        sample[name2] = SingleSample(list(data1), name2)
+        self.sample[name1] = SingleSample(list(data1), name1)
+        self.sample[name2] = SingleSample(list(data2), name2)
 
     def getSample(self, name):
         try: return self.sample[name].data
@@ -179,24 +170,37 @@ class TwoSample:
     def listSamples(self):
         return self.sample.keys()
 
-    def covariance(self, inlist1, inlist2):
+    def covariance(self):
         """
         Calculates covariance using the formula: Cov(xy)  =  E{xy}  -  E{x}E{y}
         """
-        if inlist1 == inlist: return 1.0
-        mean_xy = self.arithmeticMean([inlist1[i]*inlist1[i]
-                                       for i in range(len(inlist1))])
-        mean_x = self.arithmeticMean(inlist1)
-        mean_y = self.arithmeticMean(inlist2)
+        sname = self.listSamples()
+        if self.sample[sname[0]].data == self.sample[sname[1]].data: return 1.0
+        if self.sample[sname[0]].rowcount == self.sample[sname[1]].rowcount:
+            slen = self.sample[sname[0]].rowcount
+        elif self.sample[sname[0]].rowcount > self.sample[sname[1]].rowcount:
+            slen = self.sample[sname[1]].rowcount
+        else: slen = self.sample[sname[0]].rowcount
+        xy = SingleSample([self.sample[sname[0]].data[i] * \
+                            self.sample[sname[1]].data[i]
+                            for i in range(slen)], 'temporary')
+        mean_xy = xy.summary['aMean']
+        mean_x = self.sample[sname[0]]. \
+                    arithmeticMean(self.sample[sname[0]].data)
+        mean_y = self.sample[sname[1]]. \
+                    arithmeticMean(self.sample[sname[1]].data)
         return mean_xy - (mean_x * mean_y)
     
-    def pearson(self, inlist1, inlist2):
+    def pearson(self):
         """
         Calculates the Pearson's product-moment coefficient by dividing the
         covariance by the product of the 2 standard deviations.
         """
-        return self.covariance(inlist1, inlist2) / \
-            (self.stdev(inlist1) * self.stdev(inlist2))
+        sname = self.listSamples()
+        sd_x = self.sample[sname[0]].summary['stdev']
+        sd_y = self.sample[sname[1]].summary['stdev']
+        print sd_x, sd_y
+        return self.covariance() / (sd_x * sd_y)
     
         
 class MultiSample:
