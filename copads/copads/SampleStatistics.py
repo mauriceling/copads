@@ -20,6 +20,7 @@ import math
 from StatisticsDistribution import Distribution
 from CopadsExceptions import FunctionParameterTypeError
 from CopadsExceptions import FunctionParameterValueError
+from Operations import summation
 import NRPy
 
 class SingleSample:
@@ -195,19 +196,35 @@ class TwoSample:
     
     def pearson(self):
         """
-        Calculates the Pearson's product-moment coefficient by dividing the
-        covariance by the product of the 2 standard deviations.
+        Calculates the Pearson's product-moment coefficient by the formula:
+        
+                    (N * sum_xy) - (sum_x * sum_y)
+        --------------------------------------------------------------
+        ((N * sum_x2 - (sum_x)**2) * (N * sum_y2 - (sum_y)**2)) ** 0.5
         """
         sname = self.listSamples()
-        mean_x = self.sample[sname[0]]. \
-                    arithmeticMean(self.sample[sname[0]].data)
-        mean_y = self.sample[sname[1]]. \
-                    arithmeticMean(self.sample[sname[1]].data)
-        sd_x = self.sample[sname[0]].variance(self.sample[sname[0]].data,
-                                                mean_x) ** 0.5
-        sd_y = self.sample[sname[1]].variance(self.sample[sname[1]].data,
-                                                mean_y) ** 0.5
-        return self.covariance() / (sd_x * sd_y)
+        if self.sample[sname[0]].rowcount == self.sample[sname[1]].rowcount:
+            slen = self.sample[sname[0]].rowcount
+        elif self.sample[sname[0]].rowcount > self.sample[sname[1]].rowcount:
+            slen = self.sample[sname[1]].rowcount
+        else: slen = self.sample[sname[0]].rowcount
+        sum_x = summation([self.sample[sname[0]].data[i] 
+                            for i in range(slen)])
+        sum_x2 = summation([self.sample[sname[0]].data[i] * \
+                            self.sample[sname[0]].data[i] 
+                            for i in range(slen)])
+        sum_y = summation([self.sample[sname[1]].data[i] 
+                            for i in range(slen)])
+        sum_y2 = summation([self.sample[sname[1]].data[i] * \
+                            self.sample[sname[1]].data[i]
+                            for i in range(slen)])
+        sum_xy = summation([self.sample[sname[0]].data[i] * \
+                            self.sample[sname[1]].data[i]
+                            for i in range(slen)])
+        numerator = (slen * sum_xy) - (sum_x * sum_y)
+        denominator_x = (slen * sum_x2) - (sum_x * sum_x)
+        denominator_y = (slen * sum_y2) - (sum_y * sum_y)
+        return numerator / ((denominator_x * denominator_y) ** 0.5)
     
         
 class MultiSample:

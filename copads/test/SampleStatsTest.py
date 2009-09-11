@@ -13,6 +13,7 @@ name2 = 'data2'
 class testSingleSample(unittest.TestCase):
     def setUp(self):
         self.data = S.SingleSample(data1, name1)
+        self.data.fullSummary()
     def testInit(self):
         self.assertEqual(self.data.data, data1)
         self.assertEqual(self.data.name, name1)
@@ -49,8 +50,8 @@ class testTwoSample(unittest.TestCase):
         self.assertEqual(self.data.getSample('nodata'), [])
     def testCovariance(self):
         self.assertAlmostEqual(self.data.covariance(), 2.00000, places=4)
-    def testPearson(self):
-        self.assertAlmostEqual(self.data.pearson(), 0.80000, places=4)
+    def testPearson1(self):
+        self.assertAlmostEqual(self.data.pearson(), 1.00000, places=4)
         
 if __name__ == '__main__':
     unittest.main()
