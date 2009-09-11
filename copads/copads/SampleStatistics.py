@@ -68,7 +68,7 @@ class SingleSample:
         """
         sum = 0
         for item in inlist: sum = sum + item
-        return sum/float(len(inlist))
+        return sum / float(len(inlist))
     
     def moment(self, inlist, moment=1):
         """
@@ -86,8 +86,8 @@ class SingleSample:
             n = len(inlist)
             s = 0
             for x in inlist:
-                s = s + (x-mn)**moment
-            return s/float(n)
+                s = s + (x - mn) ** moment
+            return s / float(n)
         
     def skew(self, inlist):
         """
@@ -97,7 +97,7 @@ class SingleSample:
 
         Usage:   skew(inlist)
         """
-        return self.moment(inlist,3)/math.pow(self.moment(inlist,2),1.5)
+        return self.moment(inlist, 3) / math.pow(self.moment(inlist, 2), 1.5)
 
     def kurtosis(self, inlist):
         """
@@ -107,7 +107,7 @@ class SingleSample:
 
         Usage:   kurtosis(inlist)
         """
-        return self.moment(inlist,4)/math.pow(self.moment(inlist,2),2.0)
+        return self.moment(inlist, 4) / math.pow(self.moment(inlist, 2), 2.0)
     
     def variation(self, inlist):
         """
@@ -117,22 +117,22 @@ class SingleSample:
 
         Usage:   variation(inlist)
         """
-        return 100.0*self.summary['stdev']/self.summary['aMean']
+        return 100.0 * self.summary['stdev'] / self.summary['aMean']
 
     def range(self, inlist):
         inlist.sort()
-        return float(inlist[-1])-float(inlist[0])
+        return float(inlist[-1]) - float(inlist[0])
 
     def midrange(self, inlist):
         inlist.sort()
-        return float(inlist[int(round(len(inlist)*0.75))]) - \
-                float(inlist[int(round(len(inlist)*0.75))])
+        return float(inlist[int(round(len(inlist) * 0.75))]) - \
+                float(inlist[int(round(len(inlist) * 0.75))])
 
     def variance(self, inlist, mean):
         sum = 0.0
         for item in inlist:
-            sum = sum + (float(item)-float(mean))**2
-        return sum/float(len(inlist)-1)
+            sum = sum + (float(item) - float(mean)) ** 2
+        return sum / float(len(inlist) - 1)
     
     def __str__(self):
         return str(self.summary)
@@ -186,7 +186,7 @@ class TwoSample:
         xy = SingleSample([self.sample[sname[0]].data[i] * \
                             self.sample[sname[1]].data[i]
                             for i in range(slen)], 'temporary')
-        mean_xy = xy.summary['aMean']
+        mean_xy = xy.arithmeticMean(xy.data)
         mean_x = self.sample[sname[0]]. \
                     arithmeticMean(self.sample[sname[0]].data)
         mean_y = self.sample[sname[1]]. \
@@ -199,9 +199,14 @@ class TwoSample:
         covariance by the product of the 2 standard deviations.
         """
         sname = self.listSamples()
-        sd_x = self.sample[sname[0]].summary['stdev']
-        sd_y = self.sample[sname[1]].summary['stdev']
-        print sd_x, sd_y
+        mean_x = self.sample[sname[0]]. \
+                    arithmeticMean(self.sample[sname[0]].data)
+        mean_y = self.sample[sname[1]]. \
+                    arithmeticMean(self.sample[sname[1]].data)
+        sd_x = self.sample[sname[0]].variance(self.sample[sname[0]].data,
+                                                mean_x) ** 0.5
+        sd_y = self.sample[sname[1]].variance(self.sample[sname[1]].data,
+                                                mean_y) ** 0.5
         return self.covariance() / (sd_x * sd_y)
     
         
