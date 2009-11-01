@@ -25,7 +25,7 @@ def test(statistic, distribution, confidence):
     value. 
     
     Returns a 5-element list:
-    (left result, left critical, statistic, right critical, right result)
+    [left result, left critical, statistic, right critical, right result]
     where
     left result = True (statistic in lower critical region) or 
         False (statistic not in lower critical region)
@@ -54,7 +54,8 @@ def test(statistic, distribution, confidence):
     return data
     
 def Z1Mean1Variance(**kwargs):
-    """Test 1: Z-test for a population mean (variance known)
+    """
+    Test 1: Z-test for a population mean (variance known)
     
     To investigate the significance of the difference between an assumed 
     population mean and sample mean when the population variance is
@@ -67,7 +68,11 @@ def Z1Mean1Variance(**kwargs):
     @param pmean: population mean
     @param pvar: population variance
     @param ssize: sample size
-    @param confidence: confidence level"""
+    @param confidence: confidence level
+    
+    @see: Ling, MHT. 2009. Ten Z-Test Routines from Gopal Kanji's 100 
+    Statistical Tests. The Python Papers Source Codes 1:5
+    """
     smean = kwargs['smean']
     pmean = kwargs['pmean']
     pvar = kwargs['pvar']
@@ -94,7 +99,11 @@ def Z2Mean1Variance(**kwargs):
     @param ssize2: sample size of sample #2
     @param confidence: confidence level
     @param pmean1: population mean of population #1 (optional)
-    @param pmean2: population mean of population #2 (optional)"""
+    @param pmean2: population mean of population #2 (optional)
+    
+    @see: Ling, MHT. 2009. Ten Z-Test Routines from Gopal Kanji's 100 
+    Statistical Tests. The Python Papers Source Codes 1:5
+    """
     if not kwargs.has_key('pmean1'): 
         pmean1 = 0.0
     else: pmean1 = kwargs['pmean1']
@@ -129,7 +138,11 @@ def Z2Mean2Variance(**kwargs):
     @param ssize2: sample size of sample #2
     @param confidence: confidence level
     @param pmean1: population mean of population #1 (optional)
-    @param pmean2: population mean of population #2 (optional)"""
+    @param pmean2: population mean of population #2 (optional)
+    
+    @see: Ling, MHT. 2009. Ten Z-Test Routines from Gopal Kanji's 100 
+    Statistical Tests. The Python Papers Source Codes 1:5
+    """
     if not kwargs.has_key('pmean1'): 
         pmean1 = 0.0
     else: pmean1 = kwargs['pmean1']
@@ -160,7 +173,11 @@ def Z1Proportion(**kwargs):
     @param spro: sample proportion
     @param ppro: population proportion
     @param ssize: sample size
-    @param confidence: confidence level"""
+    @param confidence: confidence level
+    
+    @see: Ling, MHT. 2009. Ten Z-Test Routines from Gopal Kanji's 100 
+    Statistical Tests. The Python Papers Source Codes 1:5
+    """
     spro = kwargs['spro']
     ppro = kwargs['ppro']
     ssize = kwargs['ssize']
@@ -182,7 +199,11 @@ def Z2Proportion(**kwargs):
     @param spro2: sample proportion #2
     @param ssize1: sample size #1
     @param ssize2: sample size #2
-    @param confidence: confidence level"""
+    @param confidence: confidence level
+    
+    @see: Ling, MHT. 2009. Ten Z-Test Routines from Gopal Kanji's 100 
+    Statistical Tests. The Python Papers Source Codes 1:5
+    """
     spro1 = kwargs['spro1']
     spro2 = kwargs['spro2']
     ssize1 = kwargs['ssize1']
@@ -206,7 +227,11 @@ def Z2Count(**kwargs):
     @param time2: second measurement time
     @param count1: counts at first measurement time
     @param count2: counts at second measurement time
-    @param confidence: confidence level"""
+    @param confidence: confidence level
+    
+    @see: Ling, MHT. 2009. Ten Z-Test Routines from Gopal Kanji's 100 
+    Statistical Tests. The Python Papers Source Codes 1:5
+    """
     time1 = kwargs['time1']
     time2 = kwargs['time2']
     R1 = kwargs['count1'] / float(time1)
@@ -382,7 +407,10 @@ def ZPearsonCorrelation(**kwargs):
     @param pr: specified Pearson's product-moment correlation coefficient
         to test
     @param ssize: sample size
-    @param confidence: confidence level"""
+    @param confidence: confidence level
+    @see: Ling, MHT. 2009. Ten Z-Test Routines from Gopal Kanji's 100 
+    Statistical Tests. The Python Papers Source Codes 1:5
+    """
     ssize = kwargs['ssize']
     sr = kwargs['sr']
     pr = kwargs['pr']
@@ -404,7 +432,11 @@ def Z2PearsonCorrelation(**kwargs):
     @param r2: Pearson correlation coefficient of sample #2
     @param ssize1: Sample size #1
     @param ssize2: Sample size #2
-    @param confidence: confidence level"""
+    @param confidence: confidence level
+    
+    @see: Ling, MHT. 2009. Ten Z-Test Routines from Gopal Kanji's 100 
+    Statistical Tests. The Python Papers Source Codes 1:5
+    """
     z1 = 0.5 * log((1.0 + kwargs['r1']) /(1.0 - kwargs['r1']))
     z2 = 0.5 * log((1.0 + kwargs['r2']) /(1.0 - kwargs['r2']))
     sigma1 = 1.0 / sqrt(kwargs['ssize1'] - 3)
@@ -487,6 +519,9 @@ def ZCorrProportion(**kwargs):
     @param ny: number answered 'no' in first poll and 'yes' in second poll
     @param yn: number answered 'yes' in first poll and 'no' in second poll
     @param confidence: confidence level
+    
+    @see: Ling, MHT. 2009. Ten Z-Test Routines from Gopal Kanji's 100 
+    Statistical Tests. The Python Papers Source Codes 1:5
     """    
     ssize = kwargs['ssize']
     ny = kwargs['ny']
@@ -752,7 +787,8 @@ def t57(**kwargs):
     return test(statistic, Distribution(), kwargs['confidence'])
 
 def SpearmanCorrelation(**kwargs):
-    """Test 58: Spearman rank correlation test (paired observations)
+    """
+    Test 58: Spearman rank correlation test (paired observations)
     To investigate the significance of the correlation between two series of 
     observations obtained in pairs.
     
@@ -764,7 +800,11 @@ def SpearmanCorrelation(**kwargs):
     @param ssize: sample size
     @param series1: ranks of series #1 (not used if R is given)
     @param series2: ranks of series #2 (not used if R is given)
-    @param confidence: confidence level"""
+    @param confidence: confidence level
+    
+    @see: Ling, MHT. 2009. Ten Z-Test Routines from Gopal Kanji's 100 
+    Statistical Tests. The Python Papers Source Codes 1:5
+    """
     ssize = kwargs['ssize']
     if not kwargs.has_key('R'):
         series1 = kwargs['series1']

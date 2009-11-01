@@ -270,6 +270,10 @@ class testGeometric(unittest.TestCase):
 
 
 class testNormal(unittest.TestCase):
+    """
+    @see: Ling, MHT. 2009. Ten Z-Test Routines from Gopal Kanji's 100 
+    Statistical Tests. The Python Papers Source Codes 1:5
+    """
     def testCDF1(self):
         p = N.NormalDistribution().CDF(0)
         self.assertTrue(abs(p/0.5 - 1) < 0.01)

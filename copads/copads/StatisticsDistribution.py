@@ -693,6 +693,12 @@ class GeometricDistribution(Distribution):
 
     
 class NormalDistribution(Distribution):
+    """
+    Class for standardized normal distribution (area under the curve = 1)
+    
+    @see: Ling, MHT. 2009. Ten Z-Test Routines from Gopal Kanji's 100 
+    Statistical Tests. The Python Papers Source Codes 1:5
+    """
     def __init__(self, **kwargs):
         self.mean = 0.0
         self.stdev = 1.0
@@ -703,20 +709,45 @@ class NormalDistribution(Distribution):
         Calculates the density (probability) at x by the formula:
         f(x) = 1/(sqrt(2 pi) sigma) e^-((x^2/(2 sigma^2))
         where mu is the mean of the distribution and sigma the standard 
-        deviation."""
+        deviation.
+        
+        @param x: probability at x
+        """
         return (1/(math.sqrt(PI2) * self.stdev)) * \
             math.exp(-(x ** 2/(2 * self.stdev**2)))
-    def inverseCDF(self, probability, start = -10.0, step = 0.01): 
+    def inverseCDF(self, probability, start = -10.0, 
+                   end = 10.0, error = 10e-8): 
         """
         It does the reverse of CDF() method, it takes a probability value and 
-        returns the corresponding value on the x-axis."""
-        cprob = self.CDF(start)
-        if probability < cprob: return (start, cprob)
-        while (probability > cprob):
-            start = start + step
-            cprob = self.CDF(start)
-##            print start, cprob
-        return (start, cprob)
+        returns the corresponding value on the x-axis, together with the 
+        cumulative probability.
+        
+        @param probability: probability under the curve from -infinity
+        @param start: lower boundary of calculation (default = -10)
+        @param end: upper boundary of calculation (default = 10)
+        @param error: error between the given and calculated probabilities 
+        (default = 10e-8)
+        @return (start, cprob): 'start' is the standard deviation for the area 
+        under the curve from -infinity to the given 'probability' (+/- step). 
+        'cprob' is the calculated area under the curve from -infinity to the 
+        returned 'start'.
+        """
+        # check for tolerance
+        if abs(self.CDF(start)-probability) < error:
+            return (start, self.CDF(start))
+        # case 1: lower than -10 standard deviations
+        if probability < self.CDF(start):
+            return self.inverseCDF(probability, start-5, start, error)
+        # case 2: between -10 to 10 standard deviations (bisection method)
+        if probability > self.CDF(start) and \
+        probability < self.CDF((start+end)/2):
+            return self.inverseCDF(probability, start, (start+end)/2, error)
+        if probability > self.CDF((start+end)/2) and \
+        probability < self.CDF(end):
+            return self.inverseCDF(probability, (start+end)/2, end, error)
+        # case 3: higher than 10 standard deviations
+        if probability > self.CDF(end):
+            return self.inverseCDF(probability, end, end+5, error)
     def mean(self): 
         return self.mean
     def mode(self):

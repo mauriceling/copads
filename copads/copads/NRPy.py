@@ -531,14 +531,6 @@ def expdev(x):
     return -1.0 * math.log(ran3(x))
 
 def factln(n):
-    """Natural logarithm of factorial: ln(n!)
-    @see: NRP 6.1
-    
-    @param n: positive integer
-    @return: natural logarithm of factorial of n """
-    return gammln(n + 1.0)
-
-def factln(n):
     """
     Natural logarithm of factorial: ln(n!)
     @see: NRP 6.1
