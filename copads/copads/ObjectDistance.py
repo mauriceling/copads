@@ -46,7 +46,7 @@ def listCompare(original, test, absent):
         else: pass
     return (original_only, test_only, both)
         
-def Jaccard(original = '', test = '', absent = 0, type = 'Set'):
+def Jaccard(original, test, absent=0, type='Set'):
     """
     Jaccard Distance is distance measure for nominal or ordinal data.
     
@@ -71,7 +71,7 @@ def Jaccard(original = '', test = '', absent = 0, type = 'Set'):
         (original_only, test_only, both) = listCompare(original, test, absent)
     return 1-(both/(both+original_only+test_only))
     
-def Nei_Li(original = '', test = '', absent = 0, type = 'Set'):
+def Nei_Li(original, test, absent=0, type='Set'):
     """
     Nei and Li Distance is distance measure for nominal or ordinal data.
     
@@ -98,7 +98,7 @@ def Nei_Li(original = '', test = '', absent = 0, type = 'Set'):
         (original_only, test_only, both) = listCompare(original, test, absent)
     return 1-((2*both)/((2*both)+original_only+test_only))
     
-def Sokal_Michener(original = '', test = ''):
+def Sokal_Michener(original, test):
     """
     Sokal and Michener Distance is distance measure for nominal or ordinal
     data.
@@ -128,7 +128,7 @@ def Sokal_Michener(original = '', test = ''):
 #    print in_original
     return 1-(in_both/(in_both+in_original))
 
-def Matching(original = '', test = '', absent = 0, type = 'Set'):
+def Matching(original, test, absent=0, type='Set'):
     """
     Matching Distance is distance measure for nominal or ordinal data.
     
@@ -152,7 +152,7 @@ def Matching(original = '', test = '', absent = 0, type = 'Set'):
     absent_region = all_region - original_only - test_only - both
     return 1 - ((2 * (both + absent_region)) / (all_region))
 
-def Dice(original = '', test = '', absent = 0, type = 'Set'):
+def Dice(original, test, absent=0, type='Set'):
     """
     Dice Distance is distance measure for nominal or ordinal data.
     
@@ -174,7 +174,7 @@ def Dice(original = '', test = '', absent = 0, type = 'Set'):
         (original_only, test_only, both) = listCompare(original, test, absent)
     return 1 - ((2 * both) / (float(len(original)) + float(len(test))))
 
-def Dice_Sorensen(original = '', test = '', absent = 0, type = 'Set'):
+def Dice_Sorensen(original, test, absent=0, type='Set'):
     """
     Dice and Sorensen Distance is distance measure for nominal or ordinal data.
     
@@ -197,7 +197,7 @@ def Dice_Sorensen(original = '', test = '', absent = 0, type = 'Set'):
         (original_only, test_only, both) = listCompare(original, test, absent)
     return 1 - ((2 * both) / ((2*both) + test_only + original_only))
 
-def Ochiai(original = '', test = '', absent = 0, type = 'Set'):
+def Ochiai(original, test, absent=0, type='Set'):
     """
     Ochiai Distance is distance measure for nominal or ordinal data.
     
@@ -222,7 +222,7 @@ def Ochiai(original = '', test = '', absent = 0, type = 'Set'):
         (original_only, test_only, both) = listCompare(original, test, absent)
     return 1 - (both / math.sqrt((both + original_only)*(both + test_only)))
     
-def Kulczynski(original = '', test = '', absent = 0, type = 'Set'):
+def Kulczynski(original, test, absent=0, type='Set'):
     """
     Kulczynski Distance is distance measure for nominal or ordinal data.
     
@@ -248,7 +248,7 @@ def Kulczynski(original = '', test = '', absent = 0, type = 'Set'):
     x2 = both/test_only
     return 1-((x1+x2)/2)
     
-def Hamming(original = '', test = ''):
+def Hamming(original, test):
     """
     Hamming Distance is distance measure for ordinal data - only for ordered
     data.
@@ -267,19 +267,19 @@ def Hamming(original = '', test = ''):
         if original[index] <> test[index]: mismatch = mismatch + 1
     return mismatch
     
-def Levenshtein(a = '', b = ''):
+def Levenshtein(original, test):
     """
     Levenshtein Distance is distance measure for interval or ratio data.
-    Calculates the Levenshtein distance between a and b. This routine is 
-    implemented by Magnus Lie Hetland (http://www.hetland.org/
+    Calculates the Levenshtein distance between original and test. This routine 
+    is implemented by Magnus Lie Hetland (http://www.hetland.org/
     python/distance.py)
     
     @param a: list of original data
     @param b: list of data to test against original"""
-    n, m = len(a), len(b)
+    n, m = len(original), len(test)
     if n > m:
         # Make sure n <= m, to use O(min(n, m)) space
-        a, b = b, a
+        original, test = test, original
         n, m = m, n
         
     current = range(n+1)
@@ -288,93 +288,93 @@ def Levenshtein(a = '', b = ''):
         for j in range(1, n+1):
             add, delete = previous[j]+1, current[j-1]+1
             change = previous[j-1]
-            if a[j-1] != b[i-1]:
+            if original[j-1] != test[i-1]:
                 change = change + 1
             current[j] = min(add, delete, change)
             
-def Euclidean(x = '', y = ''):
+def Euclidean(original, test):
     """
     Euclidean Distance is distance measure for interval or ratio data.
     
-    euclidean_py(x, y) -> euclidean distance between x and y
+    euclidean(original, test) -> euclidean distance between original and test
     Adapted from BioPython
     
-    @param x: list of original data
-    @param y: list of data to test against original"""
+    @param original: list of original data
+    @param test: list of data to test against original"""
     # lightly modified from implementation by Thomas Sicheritz-Ponten.
     # This works faster than the Numeric implementation on shorter
     # vectors.
-    if len(x) != len(y):
+    if len(original) != len(tst):
         raise DistanceInputSizeError("Size (length) of inputs must be \
             equal for Euclidean distance")
     sum = 0
-    for i in range(len(x)):
-        sum = sum + (x[i]-y[i])**2
+    for i in range(len(original)):
+        sum = sum + (original[i]-test[i])**2
     return math.sqrt(sum)
 
-def Minkowski(x = '', y = '', power = 3):
+def Minkowski(original, test, power=3):
     """
     Minkowski Distance is distance measure for interval or ratio data.
     
     Minkowski Distance is a generalized absolute form of Euclidean Distance.
     Minkowski Distance = Euclidean Distance when power = 2
     
-    @param x: list of original data
-    @param y: list of data to test against original
+    @param original: list of original data
+    @param test: list of data to test against original
     @param power: expontential variable
     @type power: integer"""
-    if len(x) != len(y):
+    if len(original) != len(test):
         raise DistanceInputSizeError("Size (length) of inputs must be \
             equal for Minkowski distance")
     sum = 0
-    for i in range(len(x)):
-        sum = sum + abs(x[i]-y[i])**power
+    for i in range(len(original)):
+        sum = sum + abs(original[i]-test[i])**power
     return sum**(1/float(power))
 
-def Manhattan(x = '', y = ''):
+def Manhattan(original, test):
     """
     Manhattan Distance is distance measure for interval or ratio data.
     
     Manhattan Distance is also known as City Block Distance. It is essentially
     summation of the absolute difference between each element.
     
-    @param x: list of original data
-    @param y: list of data to test against original"""
-    if len(x) != len(y):
+    @param original: list of original data
+    @param test: list of data to test against original"""
+    if len(original) != len(test):
         raise DistanceInputSizeError("Size (length) of inputs must be \
             equal for Manhattan distance")
     sum = 0
-    for i in range(len(x)):
-        sum = sum + abs(x[i]-y[i])
+    for i in range(len(original)):
+        sum = sum + abs(original[i]-test[i])
     return sum
 
-def Canberra(x = '', y = ''):
+def Canberra(original, test):
     """
     Canberra Distance is distance measure for interval or ratio data.
     
-    @see: Lance GN and Williams WT. 1966 Computer programs for hierarchical 
+    @see: Lance GN and Williams WT. 1966. Computer programs for hierarchical 
     polythetic classification. Computer Journal 9: 60-64.
     
-    @param x: list of original data
-    @param y: list of data to test against original"""
-    if len(x) != len(y):
+    @param original: list of original data
+    @param test: list of data to test against original"""
+    if len(original) != len(test):
         raise DistanceInputSizeError("Size (length) of inputs must be \
             equal for Canberra distance")
     sum = 0
-    for i in range(len(x)):
-        sum = sum + (abs(x[i]-y[i]) / abs(x[i]+y[i]))
+    for i in range(len(original)):
+        sum = sum + (abs(original[i]-test[i]) / abs(original[i]+test[i]))
     return sum
 
-def Bray_Curtis(x = '', y = ''):
+def Bray_Curtis(original, test):
     """
     Bray-Curtis Distance is distance measure for interval or ratio data.
     
     @see: Bray JR and Curtis JT. 1957. An ordination of the upland forest
     communities of S. Winconsin. Ecological Monographs27: 325-349.
     
-    @param x: list of original data
-    @param y: list of data to test against original"""
-    if len(x) != len(y):
+    @param original: list of original data
+    @param test: list of data to test against original"""
+    if len(original) != len(test):
         raise DistanceInputSizeError("Size (length) of inputs must be \
             equal for Bray-Curtis distance")
-    return Manhattan(x, y) / (summation(x) + summation(y))
+    return Manhattan(original, test) / (summation(original) + summation(test))
