@@ -275,7 +275,8 @@ def sample_wr(population, k):
     http://code.activestate.com/recipes/273085/"""
     n = len(population)
     _random, _int = random.random, int  # speed hack
-    return [_int(_random() * n) for i in itertools.repeat(None, k)]
+    selection = [_int(_random() * n) for i in itertools.repeat(None, k)]
+    return [population[index] for index in selection]
 
 def sample(population, k):
     """
@@ -285,8 +286,8 @@ def sample(population, k):
     t = range(k)
     for i in range(k):
         t[i] = population[_int(_random() * len(population))]
-        print population
-        print t[i]
+        #print population
+        #print t[i]
         population.remove(t[i])
     return t
 
