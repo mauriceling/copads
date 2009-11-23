@@ -52,6 +52,11 @@ class testTwoSample(unittest.TestCase):
         self.assertAlmostEqual(self.data.covariance(), 2.00000, places=4)
     def testPearson1(self):
         self.assertAlmostEqual(self.data.pearson(), 1.00000, places=4)
+    def testLM1(self):
+        self.assertAlmostEqual(self.data.linear_regression()[0], 
+                                1.00000, places=4)
+        self.assertAlmostEqual(self.data.linear_regression()[1], 
+                                1.00000, places=4)
         
 if __name__ == '__main__':
     unittest.main()

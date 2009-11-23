@@ -175,7 +175,7 @@ class TwoSample:
 
     def covariance(self):
         """
-        Calculates covariance using the formula: Cov(xy)  =  E{xy}  -  E{x}E{y}
+        Calculates covariance using the formula: Cov(xy) = E{xy} - E{x}E{y}
         """
         sname = self.listSamples()
         if self.sample[sname[0]].data == self.sample[sname[1]].data: return 1.0
@@ -193,6 +193,28 @@ class TwoSample:
         mean_y = self.sample[sname[1]]. \
                     arithmeticMean(self.sample[sname[1]].data)
         return mean_xy - (mean_x * mean_y)
+    
+    def linear_regression(self):
+        sname = self.listSamples()
+        if self.sample[sname[0]].rowcount == self.sample[sname[1]].rowcount:
+            slen = self.sample[sname[0]].rowcount
+        elif self.sample[sname[0]].rowcount > self.sample[sname[1]].rowcount:
+            slen = self.sample[sname[1]].rowcount
+        else: slen = self.sample[sname[0]].rowcount
+        mean_x = self.sample[sname[0]]. \
+                    arithmeticMean(self.sample[sname[0]].data)
+        mean_y = self.sample[sname[1]]. \
+                    arithmeticMean(self.sample[sname[1]].data)
+        error_x = [self.sample[sname[0]].data[i] - mean_x 
+                   for i in range(slen)]
+        error_y = [self.sample[sname[1]].data[i] - mean_y 
+                   for i in range(slen)]
+        gradient = sum([error_x[index] * error_y[index]
+                        for index in range(len(error_x))]) / \
+                   sum([error_x[index] * error_x[index]
+                        for index in range(len(error_x))])
+        intercept = mean_y - (gradient * mean_x)
+        return (gradient, intercept)
     
     def pearson(self):
         """
