@@ -412,10 +412,10 @@ def ZPearsonCorrelation(**kwargs):
     Statistical Tests. The Python Papers Source Codes 1:5
     """
     ssize = kwargs['ssize']
-    if kwargs['sr'] == 1.0: sr = kwargs['sr'] - 0.00000001
-    else: sr = kwargs['sr']
-    if kwargs['pr'] == 1.0: pr = kwargs['pr'] - 0.00000001
-    else: pr = kwargs['pr']
+    sr = kwargs['sr']
+    pr = kwargs['pr']
+    if sr == 1.0: sr = 0.9999999999
+    if pr == 1.0: pr = 0.9999999999
     Z1 = 0.5 * log((1 + sr) / (1 - sr))
     meanZ1 = 0.5 * log((1 + pr) / (1 - pr))
     sigmaZ1 = 1.0 / sqrt(ssize - 3)
