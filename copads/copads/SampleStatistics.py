@@ -246,7 +246,7 @@ class TwoSample:
         numerator = (slen * sum_xy) - (sum_x * sum_y)
         denominator_x = (slen * sum_x2) - (sum_x * sum_x)
         denominator_y = (slen * sum_y2) - (sum_y * sum_y)
-        return numerator / ((denominator_x * denominator_y) ** 0.5)
+        return float(numerator / ((denominator_x * denominator_y) ** 0.5))
     
         
 class MultiSample:
