@@ -337,6 +337,8 @@ def Manhattan(original, test):
     
     Manhattan Distance is also known as City Block Distance. It is essentially
     summation of the absolute difference between each element.
+
+    @see: Krause, Eugene F. 1987. Taxicab Geometry. Dover. ISBN 0-486-25202-7. 
     
     @param original: list of original data
     @param test: list of data to test against original"""
@@ -370,7 +372,7 @@ def Bray_Curtis(original, test):
     Bray-Curtis Distance is distance measure for interval or ratio data.
     
     @see: Bray JR and Curtis JT. 1957. An ordination of the upland forest
-    communities of S. Winconsin. Ecological Monographs27: 325-349.
+    communities of S. Winconsin. Ecological Monographs 27: 325-349.
     
     @param original: list of original data
     @param test: list of data to test against original"""
