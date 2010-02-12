@@ -9,7 +9,6 @@ Date created: 17th August 2005
 
 import math
 from CopadsExceptions import DistanceInputSizeError
-from Operations import summation
 
 def setCompare(original, test, absent):
     """Used for processing set-based (unordered or nominal) distance of 
@@ -125,7 +124,7 @@ def Sokal_Michener(original, test):
         if original[index] == test[index]: in_both = in_both + 1
         if original[index] != test[index]: in_original = in_original + 1
 #        if original[index] < test[index]: in_test = in_test + 1
-#    print in_original
+    print in_both, in_original
     return 1-(in_both/(in_both+in_original))
 
 def Matching(original, test, absent=0, type='Set'):
@@ -379,4 +378,4 @@ def Bray_Curtis(original, test):
     if len(original) != len(test):
         raise DistanceInputSizeError("Size (length) of inputs must be \
             equal for Bray-Curtis distance")
-    return Manhattan(original, test) / (summation(original) + summation(test))
+    return Manhattan(original, test) / (sum(original) + sum(test))
