@@ -4,7 +4,7 @@ use_setuptools()
 from setuptools import setup, find_packages
 
 setup(name='copads',
-      version='0.2',
+      version='0.3',
       description='Collection of Python Algorithms and Data Structures',
       long_description='Collection of Python Algorithms and Data Structures',
       author='Maurice HT Ling',
