@@ -1,7 +1,14 @@
 """
-File containing functions for use in calculating distances between 2 objects.
-Distances are common measures of differences (dissimilarity) rather than 
-similarity. That is, 2 identical objects will have 0 distance.
+File containing functions for use in calculating similarity coefficients
+between 2 objects. Generally, the lower boundary of similar coefficient 
+signifies complete difference (no similarity) while the upper boundary 
+(if any) signifies complete similarity (no difference).
+
+In the following formulae, the following notations will be used:
+A = found in both 'original' and 'test'
+B = found in 'original' only
+C = found in 'test' only
+D = not found in either 'original' or 'test'
 
 Copyright (c) Maurice H.T. Ling <mauriceling@acm.org>
 Date created: 17th August 2005
@@ -10,250 +17,543 @@ Date created: 17th August 2005
 import math
 from CopadsExceptions import DistanceInputSizeError
 
-def setCompare(original, test, absent):
-    """Used for processing set-based (unordered or nominal) distance of 
-    categorical data.
-    
-    @param original: list of original data
-    @param test: list of data to test against original
-    @param absent: indicator to define absent data"""
-    original_only = float(len([x for x in original if x not in test]))
-    test_only = float(len([x for x in test if x not in original]))
-    both = float(len([x for x in original if x in test]))
-    return (original_only, test_only, both)
 
-def listCompare(original, test, absent):
+def binarize(data, absent=0):
     """
-    Used for processing list-based (ordered or ordinal) distance of categorical 
-    data.
+    Converts input data in a list of presence or absence of values.
+    For example,
+    binarize([1, 2, 0, 3, 4, 0], 0) --> [1, 1, 0, 1, 1, 0]
+    binarize([1, 2, 0, 3, 4, 0], 2) --> [1, 0, 1, 1, 1, 1]
+    """
+    return [{absent: 0}.get(x, 1) for x in data]
+    
+def compare(original, test, absent, type='Set'):
+    """
+    Used for processing list-based (positional) or set-based 
+    (non-positional) distance of categorical data.
     
     @param original: list of original data
     @param test: list of data to test against original
-    @param absent: indicator to define absent data"""
-    original = list(original)
-    test = list(test)
-    original_only = 0.0
-    test_only = 0.0
-    both = 0.0
-    for i in range(len(original)):
-        if original[i] == absent and test[i] == absent: pass
-        elif original[i] == test[i]: both = both + 1
-        elif original[i] <> absent and test[i] == absent:
-            original_only = original_only + 1
-        elif original[i] == absent and test[i] <> absent: 
-            test_only = test_only + 1
-        else: pass
-    return (original_only, test_only, both)
-        
+    @param absent: indicator to define absent data
+    @param type: {List | Set}
+    """
+    if type == 'Set':
+        original_only = float(len([x for x in original if x not in test]))
+        test_only = float(len([x for x in test if x not in original]))
+        both = float(len([x for x in original if x in test]))
+        return (original_only, test_only, both, 0.0)
+    if type == 'List':
+        original, test = list(original), list(test)
+        original_only, test_only, both, none = 0.0, 0.0, 0.0, 0.0
+        for i in range(len(original)):
+            if original[i] == absent and test[i] == absent:
+                none = none + 1
+            elif original[i] == test[i]: 
+                both = both + 1
+            elif original[i] <> absent and test[i] == absent:
+                original_only = original_only + 1
+            elif original[i] == absent and test[i] <> absent: 
+                test_only = test_only + 1
+            else: pass
+        return (original_only, test_only, both, none)
+               
 def Jaccard(original, test, absent=0, type='Set'):
     """
-    Jaccard Distance is distance measure for nominal or ordinal data.
+    Jaccard coefficient for nominal or ordinal data.
     
-    Given 2 lists (original and test), calculates the Jaccard Distance 
-    (1 - Jaccard Index) based on the formula,
-    
-    1 - [(number of regions where both species are present)/
-    (number of regions where at least one species is present)]
-        
-    @see: Jaccard P (1908) Nouvelles recherches sur la distribution florale. 
-    Bull Soc Vaud Sci Nat 44:223-270
+    Coefficient: A / (A + B + C)
     
     @param original: list of original data
     @param test: list of data to test against original
-    @param absent: user-defined identifier for absent of region, default = 0
-    @param type: {Set | List}, define whether use Set comparison (unordered) or 
-    list comparison (ordered), default = Set
+    @param absent: user-defined identifier for absent of region, 
+        default = 0
+    @param type: {Set | List}, define whether use Set comparison 
+        (non-positional) or list comparison (positional), default = Set
     """
-    if type == 'Set':
-        (original_only, test_only, both) = setCompare(original, test, absent)
-    else:
-        (original_only, test_only, both) = listCompare(original, test, absent)
-    return 1-(both/(both+original_only+test_only))
+    (original, test, both, none) = compare(original, test, absent, type)
+    return both / (both + original + test)
     
-def Nei_Li(original, test, absent=0, type='Set'):
+def Sokal_Michener(original, test, absent=0, type='Set'):
     """
-    Nei and Li Distance is distance measure for nominal or ordinal data.
-    
-    Given 2 lists (original and test), calculates the Nei and Li Distance 
-    based on the formula,
-    
-    1 - [2 x (number of regions where both species are present)/
-    [(2 x (number of regions where both species are present)) + 
-    (number of regions where only one species is present)]]
-        
-    @see: Nei M, Li WH (1979) Mathematical models for studying genetic
-    variation in terms of restriction endonucleases.
-    Proc Natl Acad Sci USA 76:5269-5273
-    
-    @param original: list of original data
-    @param test: list of data to test against original
-    @param absent: user-defined identifier for absent of region, default = 0
-    @param type: {Set | List}, define whether use Set comparison (unordered) or
-        list comparison (ordered), default = Set
-    """
-    if type == 'Set':
-        (original_only, test_only, both) = setCompare(original, test, absent)
-    else:
-        (original_only, test_only, both) = listCompare(original, test, absent)
-    return 1-((2*both)/((2*both)+original_only+test_only))
-    
-def Sokal_Michener(original, test):
-    """
-    Sokal and Michener Distance is distance measure for nominal or ordinal
-    data.
-    
-    Given 2 lists (original and test), calculates the Sokal and Michener 
-    Distance based on the formula,
-    
-    1 - [(number of regions where both species are present or absent)/
-    (number of regions where both species are absent different)]
+    Sokal and Michener coefficient for nominal or ordinal data.
          
-    @see: Sokal RR, Michener CD (1958) A statistical method for evaluating 
-    systematic relationships. Univ Kansas Sci Bull 38:1409-1438
+    Coefficient: (A + D) / (A + B + C + D)
         
     @param original: list of original data
     @param test: list of data to test against original
+    @param absent: user-defined identifier for absent of region, 
+        default = 0
+    @param type: {Set | List}, define whether use Set comparison 
+        (non-positional) or list comparison (positional), default = Set
     """
     if len(original) <> len(test): 
         raise DistanceInputSizeError("Size (length) of inputs must be \
                 equal for Sokal & Michener's distance")
-    in_original = 0.0
-#    in_test = 0.0
-    in_both = 0.0
-    for index in range(len(original)):
-        if original[index] == test[index]: in_both = in_both + 1
-        if original[index] != test[index]: in_original = in_original + 1
-#        if original[index] < test[index]: in_test = in_test + 1
-    print in_both, in_original
-    return 1-(in_both/(in_both+in_original))
+    (original, test, both, none) = compare(original, test, absent, type)
+    return (both + none) / (original + test + both + none)
 
 def Matching(original, test, absent=0, type='Set'):
     """
-    Matching Distance is distance measure for nominal or ordinal data.
-    
-    Given 2 lists (original and test), calculates the Matching Distance 
-    (1 - Matching Coefficient) based on the formula,
-    
-    1 - (number of regions where both species are present or absent
-    / sum of species in each list)
+    Matching coefficient for nominal or ordinal data
+
+    coefficient: (A + D) / (2A + B + C)
     
     @param original: list of original data
     @param test: list of data to test against original
-    @param absent: user-defined identifier for absent of region, default = 0
-    @param type: {Set | List}, define whether use Set comparison (unordered) or
-        list comparison (ordered), default = Set
+    @param absent: user-defined identifier for absent of region, 
+        default = 0
+    @param type: {Set | List}, define whether use Set comparison 
+        (non-positional) or list comparison (positional), default = Set
     """
-    if type == 'Set':
-        (original_only, test_only, both) = setCompare(original, test, absent)
-    else:
-        (original_only, test_only, both) = listCompare(original, test, absent)
-    all_region = float(len(original)) + float(len(test))
-    absent_region = all_region - original_only - test_only - both
-    return 1 - ((2 * (both + absent_region)) / (all_region))
+    (original, test, both, none) = compare(original, test, absent, type)
+    return (both + none) / (original + both + test + both)
 
 def Dice(original, test, absent=0, type='Set'):
     """
-    Dice Distance is distance measure for nominal or ordinal data.
+    Dice coefficient for nominal or ordinal data.
     
-    Given 2 lists (original and test), calculates the Dice Distance 
-    (1 - Dice Index) based on the formula,
-    
-    1 - (number of regions where both species are present
-    / sum of species in each list)
+    Coefficient: 2A / (2A + B + C)
     
     @param original: list of original data
     @param test: list of data to test against original
-    @param absent: user-defined identifier for absent of region, default = 0
-    @param type: {Set | List}, define whether use Set comparison (unordered) or
-        list comparison (ordered), default = Set
+    @param absent: user-defined identifier for absent of region, 
+        default = 0
+    @param type: {Set | List}, define whether use Set comparison 
+        (non-positional) or list comparison (positional), default = Set
     """
-    if type == 'Set':
-        (original_only, test_only, both) = setCompare(original, test, absent)
-    else:
-        (original_only, test_only, both) = listCompare(original, test, absent)
-    return 1 - ((2 * both) / (float(len(original)) + float(len(test))))
-
-def Dice_Sorensen(original, test, absent=0, type='Set'):
-    """
-    Dice and Sorensen Distance is distance measure for nominal or ordinal data.
-    
-    Given 2 lists (original and test), calculates the Dice-Sorensen Distance 
-    (1 - Dice-Sorensen Index) based on the formula,
-    
-    1 - [2 x (number of regions where both species are present) /
-    (2 x (number of regions where both species are present) + 
-    (number of regions where at least one species is present))]
-    
-    @param original: list of original data
-    @param test: list of data to test against original
-    @param absent: user-defined identifier for absent of region, default = 0
-    @param type: {Set | List}, define whether use Set comparison (unordered) or
-        list comparison (ordered), default = Set
-    """
-    if type == 'Set':
-        (original_only, test_only, both) = setCompare(original, test, absent)
-    else:
-        (original_only, test_only, both) = listCompare(original, test, absent)
-    return 1 - ((2 * both) / ((2*both) + test_only + original_only))
+    all_region = float(len(original)) + float(len(test))
+    (original, test, both, none) = compare(original, test, absent, type)
+    return (2 * both) / all_region
 
 def Ochiai(original, test, absent=0, type='Set'):
     """
-    Ochiai Distance is distance measure for nominal or ordinal data.
+    Ochiai coefficient for nominal or ordinal data.
     
-    Given 2 lists (original and test), calculates the Ochiai Distance 
-    based on the formula,
-    
-    1 - [(number of regions where both species are present) / (square root of 
-    ((number of regions where both species are present) +
-    (number of regions found in original only)) * 
-    ((number of regions where both species are present) +
-    (number of regions found in test only)))]
+    Coefficient: 2A / sqrt((A + B)(A + C)))
     
     @param original: list of original data
     @param test: list of data to test against original
-    @param absent: user-defined identifier for absent of region, default = 0
-    @param type: {Set | List}, define whether use Set comparison (unordered) or
-        list comparison (ordered), default = Set
+    @param absent: user-defined identifier for absent of region, 
+        default = 0
+    @param type: {Set | List}, define whether use Set comparison 
+        (non-positional) or list comparison (positional), default = Set
     """
-    if type == 'Set':
-        (original_only, test_only, both) = setCompare(original, test, absent)
-    else:
-        (original_only, test_only, both) = listCompare(original, test, absent)
-    return 1 - (both / math.sqrt((both + original_only)*(both + test_only)))
+    (original, test, both, none) = compare(original, test, absent, type)
+    return both / ((both + original) * (both + test)) ** 0.5
     
-def Kulczynski(original, test, absent=0, type='Set'):
+def Ochiai2(original, test, absent=0, type='Set'):
     """
-    Kulczynski Distance is distance measure for nominal or ordinal data.
+    Ochiai 2 coefficient for nominal or ordinal data, and requires 
+    the presence of regions whereby both original and test are not 
+    present.
     
-    Given 2 lists (original and test), calculates the Kulczynski Distance 
-    based on the formula,
+    Coefficient: (A * D) / sqrt((A + B)(A + C)(D + B)(D + C))
     
-    1-(mean of (((number of regions where both species are present)/
-    (number of regions where species 1 is present)) and 
-    ((number of regions where both species are present)/
-    (number of regions where species 2 is present))))
+    @param original: list of original data
+    @param test: list of data to test against original
+    @param absent: user-defined identifier for absent of region, 
+        default = 0
+    @param type: {Set | List}, define whether use Set comparison 
+        (non-positional) or list comparison (positional), default = Set
+    """
+    (original, test, both, none) = compare(original, test, absent, type)
+    denominator = ((both + original) * (both + test) * \
+                  (none + original) * (none + test)) ** 0.5
+    return (both * none) / denominator
+    
+def Anderberg(original, test, absent=0, type='Set'):
+    """
+    Anderberg coefficient for nominal or ordinal data.
+    
+    Distance: A / (A + 2(B + C)
+    
+    @param original: list of original data
+    @param test: list of data to test against original
+    @param absent: user-defined identifier for absent of region, 
+        default = 0
+    @param type: {Set | List}, define whether use Set comparison 
+        (non-positional) or list comparison (positional), default = Set
+    """
+    (original, test, both, none) = compare(original, test, absent, type)
+    return both / (both + 2 * (original + test))
+    
+def Kulczynski2(original, test, absent=0, type='Set'):
+    """
+    Second Kulczynski coefficient for nominal or ordinal data.
+    
+    Coefficient: ((A / (A + B)) + (A / (A + C))) / 2
         
     @param original: list of original data
     @param test: list of data to test against original
-    @param absent: user-defined identifier for absent of region, default = 0
-    @param type: {Set | List}, define whether use Set comparison (unordered) or
-        list comparison (ordered), default = Set
+    @param absent: user-defined identifier for absent of region, 
+        default = 0
+    @param type: {Set | List}, define whether use Set comparison 
+        (non-positional) or list comparison (positional), default = Set
     """
-    if type == 'Set':
-        (original_only, test_only, both) = setCompare(original, test, absent)
-    else:
-        (original_only, test_only, both) = listCompare(original, test, absent)
-    x1 = both/original_only
-    x2 = both/test_only
-    return 1-((x1+x2)/2)
+    (original, test, both, none) = compare(original, test, absent, type)
+    x1 = both / (original + both)
+    x2 = both / (test + both)
+    return (x1 + x2) / 2
+
+def Kulczynski(original, test, absent=0, type='Set'):
+    """
+    First Kulczyski coefficient for nominal or ordinal data.
+    
+    Coefficient: A / (B + C)
+    
+    @param original: list of original data
+    @param test: list of data to test against original
+    @param absent: user-defined identifier for absent of region, 
+        default = 0
+    @param type: {Set | List}, define whether use Set comparison 
+        (non-positional) or list comparison (positional), default = Set
+    """
+    (original, test, both, none) = compare(original, test, absent, type)
+    return both / (original + test)
+    
+def Forbes(original, test, absent=0, type='Set'):
+    """
+    Forbes coefficient for nominal or ordinal data.
+    
+    Coefficient: A(A + B + C + D) / ((A + B)(A + C))
+        
+    @param original: list of original data
+    @param test: list of data to test against original
+    @param absent: user-defined identifier for absent of region, 
+        default = 0
+    @param type: {Set | List}, define whether use Set comparison 
+        (non-positional) or list comparison (positional), default = Set
+    """
+    (original, test, both, none) = compare(original, test, absent, type)
+    numerator = both * (both + original + test + none)
+    denominator = (original + both) * (test + both)
+    return numerator / denominator
+    
+def Hamann(original, test, absent=0, type='Set'):
+    """
+    Hamann coefficient for nominal or ordinal data.
+    
+    Coefficient: ((A + D) - (B + C)) / (A + B + C + D)
+        
+    @param original: list of original data
+    @param test: list of data to test against original
+    @param absent: user-defined identifier for absent of region, 
+        default = 0
+    @param type: {Set | List}, define whether use Set comparison 
+        (non-positional) or list comparison (positional), default = Set
+    """
+    (original, test, both, none) = compare(original, test, absent, type)
+    numerator = (both + none) - (test + original)
+    return numerator / (original + test + both + none)
+
+def Simpson(original, test, absent=0, type='Set'):
+    """
+    Simpson coefficient for nominal or ordinal data.
+    
+    Coefficient: A / min(A + B, A + C)
+        
+    @param original: list of original data
+    @param test: list of data to test against original
+    @param absent: user-defined identifier for absent of region, 
+        default = 0
+    @param type: {Set | List}, define whether use Set comparison 
+        (non-positional) or list comparison (positional), default = Set
+    """
+    (original, test, both, none) = compare(original, test, absent, type)
+    return both / min(both + test, both + original)
+
+def Russel_Rao(original, test, absent=0, type='Set'):
+    """
+    Russel and Rao coefficient for nominal or ordinal data.
+    
+    Coefficient: A / (A + B + C + D)
+        
+    @param original: list of original data
+    @param test: list of data to test against original
+    @param absent: user-defined identifier for absent of region, 
+        default = 0
+    @param type: {Set | List}, define whether use Set comparison 
+        (non-positional) or list comparison (positional), default = Set
+    """
+    (original, test, both, none) = compare(original, test, absent, type)
+    return both / (original + test + both + none)
+
+def Roger_Tanimoto(original, test, absent=0, type='Set'):
+    """
+    Roger and Tanimoto coefficient for nominal or ordinal data.
+    
+    Coefficient: (A + D) / (A + 2B + 2C + D)
+        
+    @param original: list of original data
+    @param test: list of data to test against original
+    @param absent: user-defined identifier for absent of region, 
+        default = 0
+    @param type: {Set | List}, define whether use Set comparison 
+        (non-positional) or list comparison (positional), default = Set
+    """
+    (original, test, both, none) = compare(original, test, absent, type)
+    denominator = (2 * original) + (2 * test) + both + none
+    return (both + none) / denominator
+    
+def Sokal_Sneath(original, test, absent=0, type='Set'):
+    """
+    Sokal and Sneath coefficient for nominal or ordinal data.
+    
+    Coefficient: A / (A + 2B + 2C)
+        
+    @param original: list of original data
+    @param test: list of data to test against original
+    @param absent: user-defined identifier for absent of region, 
+        default = 0
+    @param type: {Set | List}, define whether use Set comparison 
+        (non-positional) or list comparison (positional), default = Set
+    """
+    (original, test, both, none) = compare(original, test, absent, type)
+    denominator = (2 * original) + (2 * test) + both
+    return both / denominator
+    
+def Sokal_Sneath2(original, test, absent=0, type='Set'):
+    """
+    Sokal and Sneath 2 coefficient for nominal or ordinal data.
+    
+    Coefficient: (2A + 2D) / (2A + B + C + 2D)
+        
+    @param original: list of original data
+    @param test: list of data to test against original
+    @param absent: user-defined identifier for absent of region, 
+        default = 0
+    @param type: {Set | List}, define whether use Set comparison 
+        (non-positional) or list comparison (positional), default = Set
+    """
+    (original, test, both, none) = compare(original, test, absent, type)
+    numerator = (2 * both) + (2 * none)
+    denominator = (2 * both) + original + test + (2 * none)
+    return numerator / denominator
+    
+def Sokal_Sneath3(original, test, absent=0, type='Set'):
+    """
+    Sokal and Sneath 3 coefficient for nominal or ordinal data.
+    
+    Coefficient: (A + D) / (B + C)
+        
+    @param original: list of original data
+    @param test: list of data to test against original
+    @param absent: user-defined identifier for absent of region, 
+        default = 0
+    @param type: {Set | List}, define whether use Set comparison 
+        (non-positional) or list comparison (positional), default = Set
+    """
+    (original, test, both, none) = compare(original, test, absent, type)
+    return (both + none) / (test + original)
+
+def Buser(original, test, absent=0, type='Set'):
+    """
+    Buser coefficient (also known as Baroni-Urbani coefficient) 
+    for nominal or ordinal data.
+    
+    Coefficient: (sqrt(A * D) + A) / (sqrt(A * D) + A + B + C)
+        
+    @param original: list of original data
+    @param test: list of data to test against original
+    @param absent: user-defined identifier for absent of region, 
+        default = 0
+    @param type: {Set | List}, define whether use Set comparison 
+        (non-positional) or list comparison (positional), default = Set
+    """
+    (original, test, both, none) = compare(original, test, absent, type)
+    t = (both + none) ** 0.5
+    return (t + both) / (t + both + test + original)
+
+def Fossum(original, test, absent=0, type='Set'):
+    """
+    Fossum coefficient for nominal or ordinal data.
+    
+    Coefficient: ((A + B + C + D)(A - 0.5)^2) /
+                 ((A + B)(A + C))
+        
+    @param original: list of original data
+    @param test: list of data to test against original
+    @param absent: user-defined identifier for absent of region, 
+        default = 0
+    @param type: {Set | List}, define whether use Set comparison 
+        (non-positional) or list comparison (positional), default = Set
+    """
+    (original, test, both, none) = compare(original, test, absent, type)
+    numerator = original + test + both + none
+    numerator = numerator * (both - 0.5) ** 2
+    return numerator / ((both + test) * (both + original))
+    
+def YuleQ(original, test, absent=0, type='Set'):
+    """
+    Yule Q coefficient (also known as First Yule coefficient) for 
+    nominal or ordinal data.
+    
+    Coefficient: ((A * D) - (B * C)) / ((A * D) + (B * C))
+        
+    @param original: list of original data
+    @param test: list of data to test against original
+    @param absent: user-defined identifier for absent of region, 
+        default = 0
+    @param type: {Set | List}, define whether use Set comparison 
+        (non-positional) or list comparison (positional), default = Set
+    """
+    (original, test, both, none) = compare(original, test, absent, type)
+    numerator = (both * none) - (test * original)
+    denominator = (both * none) + (test * original)
+    return numerator / denominator
+    
+def YuleY(original, test, absent=0, type='Set'):
+    """
+    Yule Y coefficient (also known as Second Yule coefficient) for 
+    nominal or ordinal data.
+    
+    Coefficient: (sqrt(A * D) - sqrt(B * C)) / 
+                 (sqrt(A * D) + sqrt(B * C))
+        
+    @param original: list of original data
+    @param test: list of data to test against original
+    @param absent: user-defined identifier for absent of region, 
+        default = 0
+    @param type: {Set | List}, define whether use Set comparison 
+        (non-positional) or list comparison (positional), default = Set
+    """
+    (original, test, both, none) = compare(original, test, absent, type)
+    numerator = ((both * none) ** 0.5) - ((test * original) ** 0.5)
+    denominator = ((both * none) ** 0.5) + ((test * original) ** 0.5)
+    return numerator / denominator
+    
+def Mcconnaughey(original, test, absent=0, type='Set'):
+    """
+    McConnaughey coefficient for nominal or ordinal data.
+    
+    Coefficient: (A^2 - (B * C)) / (A + B)(A + C)
+        
+    @param original: list of original data
+    @param test: list of data to test against original
+    @param absent: user-defined identifier for absent of region, 
+        default = 0
+    @param type: {Set | List}, define whether use Set comparison 
+        (non-positional) or list comparison (positional), default = Set
+    """
+    (original, test, both, none) = compare(original, test, absent, type)
+    numerator = (both * both) - (original * test)
+    denominator = (both + original) * (both + test)
+    return numerator / denominator
+    
+def Stiles(original, test, absent=0, type='Set'):
+    """
+    Stiles coefficient for nominal or ordinal data.
+    
+    Coefficient: log10(((A + B + C + D)
+                        (|(A * D) - (B * C)| - 
+                            ((A + B + C + D) / 2)) ^ 2) /
+                       (A + B)(A + C)(B + D)(C + D))
+        
+    @param original: list of original data
+    @param test: list of data to test against original
+    @param absent: user-defined identifier for absent of region, 
+        default = 0
+    @param type: {Set | List}, define whether use Set comparison 
+        (non-positional) or list comparison (positional), default = Set
+    """
+    (original, test, both, none) = compare(original, test, absent, type)
+    n = original + test + both + none
+    t = abs((both * none) - (test * original))
+    numerator = n * ((t - (0.5 * n)) ** 2)
+    denominator = (both + original) * (both + test) * \
+                  (none + original) * (none + test)
+    return math.log10(numerator / denominator)
+    
+def Pearson(original, test, absent=0, type='Set'):
+    """
+    Pearson coefficient for nominal or ordinal data.
+    
+    Coefficient: ((A * D) - (B * C)) /
+                 (A + B)(A + C)(B + D)(C + D)
+        
+    @param original: list of original data
+    @param test: list of data to test against original
+    @param absent: user-defined identifier for absent of region, 
+        default = 0
+    @param type: {Set | List}, define whether use Set comparison 
+        (non-positional) or list comparison (positional), default = Set
+    """
+    (original, test, both, none) = compare(original, test, absent, type)
+    numerator = (both * none) - (test * original)
+    denominator = ((both + original) * (both + test) * \
+                   (none + original) * (none + test)) ** 0.5
+    return numerator / denominator
+    
+def Dennis(original, test, absent=0, type='Set'):
+    """
+    Dennis coefficient for nominal or ordinal data.
+    
+    Coefficient: ((A * D) - (B * C)) /
+                 (A + B + C + D)(A + B)(A + C)
+        
+    @param original: list of original data
+    @param test: list of data to test against original
+    @param absent: user-defined identifier for absent of region, 
+        default = 0
+    @param type: {Set | List}, define whether use Set comparison 
+        (non-positional) or list comparison (positional), default = Set
+    """
+    (original, test, both, none) = compare(original, test, absent, type)
+    n = original + test + both + none
+    numerator = (both * none) - (test * original)
+    denominator = (n * (both + original) * (both + test)) ** 0.5
+    return numerator / denominator
+
+def Gower_Legendre(original, test, absent=0, type='Set'):
+    """
+    Gower and Legendre coefficient for nominal or ordinal data.
+    
+    Coefficient: (A + D) / ((0.5 * (B + C)) + A + D)
+        
+    @param original: list of original data
+    @param test: list of data to test against original
+    @param absent: user-defined identifier for absent of region, 
+        default = 0
+    @param type: {Set | List}, define whether use Set comparison 
+        (non-positional) or list comparison (positional), default = Set
+    """
+    (original, test, both, none) = compare(original, test, absent, type)
+    n = original + test + both + none
+    numerator = both + none
+    denominator = (0.5 * (test + original)) + numerator
+    return numerator / denominator
+    
+def Tulloss(original, test, absent=0, type='Set'):
+    """
+    Tulloss coefficient for nominal or ordinal data.
+    
+    Coefficient: sqrt(U * S * R)
+        U = log(1 + ((min(B, C) + A) / (max(B, C) + A))) / log2
+        S = 1 / sqrt(log(2 + (min(B, C) / (A + 1))) / log2)
+        R = log(1 + A / (A + B))log(1 + A / (A + C)) / log2log2
+        
+    @param original: list of original data
+    @param test: list of data to test against original
+    @param absent: user-defined identifier for absent of region, 
+        default = 0
+    @param type: {Set | List}, define whether use Set comparison 
+        (non-positional) or list comparison (positional), default = Set
+    """
+    (original, test, both, none) = compare(original, test, absent, type)
+    U = (min(test, original) + both) / (max(test, original) + both)
+    U = math.log10(1 + U) / math.log10(2)
+    S = math.log10(2 + (min(test, original) / (both + 1)))
+    S = 1 / ((S / math.log10(2)) ** 0.5)
+    R = math.log10(1 + (both / (both + original)))
+    R = R * math.log10(1 + (both / (both + test)))
+    R = R / (math.log10(2) * math.log10(2))
+    return (U * S * R) ** 0.5
     
 def Hamming(original, test):
     """
-    Hamming Distance is distance measure for ordinal data - only for ordered
-    data.
+    Hamming coefficient for ordinal data - only for positional data.
     
-    Given 2 lists (original and test), calculates the Hamming Distance by 
-    counting the number of ordered differences between the 2 lists.
+    Coefficient: number of mismatches with respect to position
     
     @param original: list of original data
     @param test: list of data to test against original
@@ -265,58 +565,37 @@ def Hamming(original, test):
     for index in range(len(original)):
         if original[index] <> test[index]: mismatch = mismatch + 1
     return mismatch
-    
-def Levenshtein(original, test):
-    """
-    Levenshtein Distance is distance measure for interval or ratio data.
-    Calculates the Levenshtein distance between original and test. This routine 
-    is implemented by Magnus Lie Hetland (http://www.hetland.org/
-    python/distance.py)
-    
-    @param a: list of original data
-    @param b: list of data to test against original"""
-    n, m = len(original), len(test)
-    if n > m:
-        # Make sure n <= m, to use O(min(n, m)) space
-        original, test = test, original
-        n, m = m, n
-        
-    current = range(n+1)
-    for i in range(1, m+1):
-        previous, current = current, [i]+[0]*m
-        for j in range(1, n+1):
-            add, delete = previous[j]+1, current[j-1]+1
-            change = previous[j-1]
-            if original[j-1] != test[i-1]:
-                change = change + 1
-            current[j] = min(add, delete, change)
             
 def Euclidean(original, test):
     """
-    Euclidean Distance is distance measure for interval or ratio data.
+    Euclidean coefficient for interval or ratio data.
     
-    euclidean(original, test) -> euclidean distance between original and test
-    Adapted from BioPython
+    Coefficient: sqrt(sum(((A + B)(i) - (A + C)(i)) ^ 2))
+    
+    euclidean(original, test) -> euclidean distance between original 
+    and test. Adapted from BioPython
     
     @param original: list of original data
     @param test: list of data to test against original"""
     # lightly modified from implementation by Thomas Sicheritz-Ponten.
     # This works faster than the Numeric implementation on shorter
     # vectors.
-    if len(original) != len(tst):
+    if len(original) != len(test):
         raise DistanceInputSizeError("Size (length) of inputs must be \
             equal for Euclidean distance")
     sum = 0
     for i in range(len(original)):
-        sum = sum + (original[i]-test[i])**2
+        sum = sum + (original[i] - test[i]) ** 2
     return math.sqrt(sum)
 
 def Minkowski(original, test, power=3):
     """
-    Minkowski Distance is distance measure for interval or ratio data.
+    Minkowski coefficient for interval or ratio data.
     
-    Minkowski Distance is a generalized absolute form of Euclidean Distance.
-    Minkowski Distance = Euclidean Distance when power = 2
+    Coefficient: power-th root(sum(((A + B)(i) - (A + C)(i)) ^ power))
+    
+    Minkowski Distance is a generalized absolute form of Euclidean 
+    Distance. Minkowski Distance = Euclidean Distance when power = 2
     
     @param original: list of original data
     @param test: list of data to test against original
@@ -327,17 +606,21 @@ def Minkowski(original, test, power=3):
             equal for Minkowski distance")
     sum = 0
     for i in range(len(original)):
-        sum = sum + abs(original[i]-test[i])**power
-    return sum**(1/float(power))
+        sum = sum + abs(original[i] - test[i]) ** power
+    return sum ** (1 / float(power))
 
 def Manhattan(original, test):
     """
-    Manhattan Distance is distance measure for interval or ratio data.
+    Manhattan coefficient for interval or ratio data.
     
-    Manhattan Distance is also known as City Block Distance. It is essentially
-    summation of the absolute difference between each element.
+    Coefficient: sum(abs((A + B)(i) - (A + C)(i)))
+    
+    Manhattan Distance is also known as City Block Distance. It is 
+    essentially summation of the absolute difference between each 
+    element.
 
-    @see: Krause, Eugene F. 1987. Taxicab Geometry. Dover. ISBN 0-486-25202-7. 
+    @see: Krause, Eugene F. 1987. Taxicab Geometry. Dover. ISBN 0-486-
+    25202-7. 
     
     @param original: list of original data
     @param test: list of data to test against original"""
@@ -346,15 +629,18 @@ def Manhattan(original, test):
             equal for Manhattan distance")
     sum = 0
     for i in range(len(original)):
-        sum = sum + abs(original[i]-test[i])
-    return sum
+        sum = sum + abs(original[i] - test[i])
+    return float(sum)
 
 def Canberra(original, test):
     """
-    Canberra Distance is distance measure for interval or ratio data.
+    Canberra coefficient for interval or ratio data.
     
-    @see: Lance GN and Williams WT. 1966. Computer programs for hierarchical 
-    polythetic classification. Computer Journal 9: 60-64.
+    Coefficient: sum(abs((A + B)(i) - (A + C)(i)) / 
+                     abs((A + B)(i) + (A + C)(i)))
+    
+    @see: Lance GN and Williams WT. 1966. Computer programs for 
+    hierarchical polythetic classification. Computer Journal 9: 60-64.
     
     @param original: list of original data
     @param test: list of data to test against original"""
@@ -363,19 +649,66 @@ def Canberra(original, test):
             equal for Canberra distance")
     sum = 0
     for i in range(len(original)):
-        sum = sum + (abs(original[i]-test[i]) / abs(original[i]+test[i]))
+        sum = sum + (abs(original[i] - test[i]) / abs(original[i] + \
+            test[i]))
     return sum
 
 def Bray_Curtis(original, test):
     """
-    Bray-Curtis Distance is distance measure for interval or ratio data.
+    Complement Bray and Curtis coefficient for interval or ratio data.
+    Lower boundary of Bray and Curtis coefficient represents complete
+    similarity (no difference).
     
-    @see: Bray JR and Curtis JT. 1957. An ordination of the upland forest
-    communities of S. Winconsin. Ecological Monographs 27: 325-349.
+    Coefficient: 1- sum(abs((A + B)(i) - (A + C)(i))) /
+                    (sum((A + B)(i)) + sum((A + C)(i)))
+    
+    @see: Bray JR and Curtis JT. 1957. An ordination of the upland 
+    forest communities of S. Winconsin. Ecological Monographs 27: 
+    325-349.
     
     @param original: list of original data
     @param test: list of data to test against original"""
     if len(original) != len(test):
         raise DistanceInputSizeError("Size (length) of inputs must be \
             equal for Bray-Curtis distance")
-    return Manhattan(original, test) / (sum(original) + sum(test))
+    return 1 - (Manhattan(original, test) / \
+            float(sum(original) + sum(test)))
+
+def Cosine(original, test):
+    """
+    Cosine coefficient for interval or ratio data.
+    
+    Coefficient: sum(abs((A + B)(i) * (A + C)(i))) /
+                 (sum((A + B) ^ 2) * sum((A + C) ^ 2))
+    
+    @param original: list of original data
+    @param test: list of data to test against original"""
+    if len(original) != len(test):
+        raise DistanceInputSizeError("Size (length) of inputs must be \
+            equal for Cosine distance")
+    original = [float(x) for x in original]
+    test = [float(x) for x in test]
+    numerator = sum([original[x] * test[x] for x in range(len(original))])
+    denominator = sum([x * x for x in original]) ** 0.5    
+    denominator = denominator * (sum([x * x for x in test]) ** 0.5)
+    return numerator / denominator
+    
+def Tanimoto(original, test):
+    """
+    Tanimoto coefficient for interval or ratio data.
+    
+    Coefficient: sum(abs((A + B)(i) * (A + C)(i))) /
+                 (sum((A + B) ^ 2) + sum((A + C) ^ 2) - 
+                 sum(abs((A + B)(i) * (A + C)(i))))
+    
+    @param original: list of original data
+    @param test: list of data to test against original"""
+    if len(original) != len(test):
+        raise DistanceInputSizeError("Size (length) of inputs must be \
+            equal for Cosine distance")
+    original = [float(x) for x in original]
+    test = [float(x) for x in test]
+    numerator = sum([original[x] * test[x] for x in range(len(original))])
+    denominator = sum([x * x for x in original])    
+    denominator = denominator + (sum([x * x for x in test])) - numerator
+    return numerator / denominator
