@@ -24,7 +24,7 @@ def test(statistic, distribution, confidence):
     2-tailed test by comparing the calculated statistic with the critical
     value. 
     
-    Returns a 5-element list:
+    Returns a 5-element list
     [left result, left critical, statistic, right critical, right result]
     where
     left result = True (statistic in lower critical region) or 
@@ -62,7 +62,8 @@ def Z1Mean1Variance(**kwargs):
     known.
     
     Limitations    
-    - Requires population variance (use Test 7 if population variance unknown)
+        1. Requires population variance (use Test 7 if population variance 
+        unknown)
     
     @param smean: sample mean
     @param pmean: population mean
@@ -89,8 +90,8 @@ def Z2Mean1Variance(**kwargs):
     samples when the variances are known and equal.
     
     Limitations:
-    1. Population variances must be known and equal (use Test 8 if population
-    variances unknown
+        1. Population variances must be known and equal (use Test 8 if 
+        population variances unknown
     
     @param smean1: sample mean of sample #1
     @param smean2: sample mean of sample #2
@@ -127,8 +128,8 @@ def Z2Mean2Variance(**kwargs):
     samples when the variances are known and unequal.
     
     Limitations:
-    1. Population variances must be known(use Test 9 if population variances 
-    unknown
+        1. Population variances must be known(use Test 9 if population variances 
+        unknown
     
     @param smean1: sample mean of sample #1
     @param smean2: sample mean of sample #2
@@ -167,8 +168,8 @@ def Z1Proportion(**kwargs):
     proportion and an observed proportion.
     
     Limitations:
-    1. Requires sufficiently large sample size to use Normal approximation to
-    binomial
+        1. Requires sufficiently large sample size to use Normal approximation 
+        to binomial
     
     @param spro: sample proportion
     @param ppro: population proportion
@@ -192,9 +193,9 @@ def Z2Proportion(**kwargs):
     populations are equal, based on two samples, one from each population.
     
     Limitations:
-    1. Requires sufficiently large sample size to use Normal approximation to
-    binomial
-    
+        1. Requires sufficiently large sample size to use Normal approximation 
+        to binomial
+        
     @param spro1: sample proportion #1
     @param spro2: sample proportion #2
     @param ssize1: sample size #1
@@ -220,8 +221,8 @@ def Z2Count(**kwargs):
     To investigate the significance of the differences between two counts.
     
     Limitations:
-    1. Requires sufficiently large sample size to use Normal approximation to
-    binomial
+        1. Requires sufficiently large sample size to use Normal approximation 
+        to binomial
     
     @param time1: first measurement time
     @param time2: second measurement time
@@ -248,7 +249,7 @@ def t1Mean(**kwargs):
     unknown and cannot be assumed equal or not equal.
     
     Limitations:
-    1. Weaker form of Test 1
+        1. Weaker form of Test 1
     
     @param smean: sample mean
     @param pmean: population mean
@@ -271,7 +272,7 @@ def t2Mean2EqualVariance(**kwargs):
     equal.
     
     Limitations:
-    1. Weaker form of Test 2
+        1. Weaker form of Test 2
     
     @param smean1: sample mean of sample #1
     @param smean2: sample mean of sample #2
@@ -309,7 +310,7 @@ def t2Mean2UnequalVariance(**kwargs):
     two populations when the population variances are unknown and unequal.
     
     Limitations:
-    1. Weaker form of Test 3
+        1. Weaker form of Test 3
     
     @param smean1: sample mean of sample #1
     @param smean2: sample mean of sample #2
@@ -374,10 +375,10 @@ def tPearsonCorrelation(**kwargs):
     coefficient and zero is statistically significant.
     
     Limitations:
-    1. Assumes population correlation coefficient to be zero (use Test 13 for 
-    testing other population correlation coefficient
-    2. Assumes a linear relationship (regression line as Y = MX + C)
-    3. Independence of x-values and y-values
+        1. Assumes population correlation coefficient to be zero (use Test 13 
+        for testing other population correlation coefficient
+        2. Assumes a linear relationship (regression line as Y = MX + C)
+        3. Independence of x-values and y-values
     
     Use Test 59 when these conditions cannot be met
     
@@ -397,8 +398,8 @@ def ZPearsonCorrelation(**kwargs):
     coefficient and a specified value.
     
     Limitations:
-    1. Assumes a linear relationship (regression line as Y = MX + C)
-    2. Independence of x-values and y-values
+        1. Assumes a linear relationship (regression line as Y = MX + C)
+        2. Independence of x-values and y-values
     
     Use Test 59 when these conditions cannot be met
     
@@ -452,7 +453,8 @@ def t15(**kwargs):
     Test 15: Chi-square test for a population variance
     
     To investigate the difference between a sample variance and an assumed
-    population variance."""
+    population variance.
+    """
     return test(statistic, Distribution(), kwargs['confidence'])
 
 def t16(**kwargs):    
@@ -514,9 +516,9 @@ def ZCorrProportion(**kwargs):
     applications.
     
     Limitations:
-    1. The same people are questioned both times (correlated property).
-    2. Sample size must be quite large.
-    
+        1. The same people are questioned both times (correlated property).
+        2. Sample size must be quite large.
+        
     @param ssize: sample size
     @param ny: number answered 'no' in first poll and 'yes' in second poll
     @param yn: number answered 'yes' in first poll and 'no' in second poll
@@ -541,7 +543,7 @@ def Chisq2Variance(**kwargs):
     variance and an assumed variance value.
     
     Limitations:
-    1. Sample from normal distribution
+        1. Sample from normal distribution
     
     @param ssize: sample size
     @param svar: sample variance
@@ -562,8 +564,8 @@ def F2Count(**kwargs):
     results (based on a Poisson distribution).
     
     Limitations:
-    1. Counts must satisfy a Poisson distribution
-    2. Samples obtained under same conditions.
+        1. Counts must satisfy a Poisson distribution
+        2. Samples obtained under same conditions.
 
     @param count1: count of first sample
     @param count2: count of second sample
@@ -654,10 +656,10 @@ def ChisqFit(**kwargs):
     K classes.
     
     Limitations:
-    1. Observed and theoretical distributions should have same number of 
-    elements
-    2. Same class division for both distributions
-    3. Expected frequency of each class should be at least 5
+        1. Observed and theoretical distributions should have same number of 
+        elements
+        2. Same class division for both distributions
+        3. Expected frequency of each class should be at least 5
     
     @param observed: list of observed frequencies (index matched with expected)
     @param expected: list of expected frequencies (index matched with observed)
@@ -687,8 +689,8 @@ def Chisq2x2(**kwargs):
     frequencies for two dichotomous distributions.
     
     Limitations:
-    1. Total sample size (sample 1 + sample 2) must be more than 20
-    2. Each cell frequency more than 3
+        1. Total sample size (sample 1 + sample 2) must be more than 20
+        2. Each cell frequency more than 3
     
     @param s1: 2-element list or tuple of frequencies for sample #1
     @param s2: 2-element list or tuple of frequencies for sample #2
@@ -795,8 +797,8 @@ def SpearmanCorrelation(**kwargs):
     observations obtained in pairs.
     
     Limitations:
-    1. Assumes the two population distributions to be continuous
-    2. Sample size must be more than 10
+        1. Assumes the two population distributions to be continuous
+        2. Sample size must be more than 10
     
     @param R: sum of squared ranks differences
     @param ssize: sample size

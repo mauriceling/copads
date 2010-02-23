@@ -368,8 +368,8 @@ def Fossum(original, test, absent=0, type='Set'):
     """
     Fossum coefficient for nominal or ordinal data.
     
-    Coefficient: ((A + B + C + D)(A - 0.5)^2) /
-                 ((A + B)(A + C))
+    Coefficient: 
+    ((A + B + C + D)(A - 0.5)^2) / ((A + B)(A + C))
         
     @param original: list of original data
     @param test: list of data to test against original
@@ -407,8 +407,8 @@ def YuleY(original, test, absent=0, type='Set'):
     Yule Y coefficient (also known as Second Yule coefficient) for 
     nominal or ordinal data.
     
-    Coefficient: (sqrt(A * D) - sqrt(B * C)) / 
-                 (sqrt(A * D) + sqrt(B * C))
+    Coefficient: 
+    (sqrt(A * D) - sqrt(B * C)) / (sqrt(A * D) + sqrt(B * C))
         
     @param original: list of original data
     @param test: list of data to test against original
@@ -444,10 +444,9 @@ def Stiles(original, test, absent=0, type='Set'):
     """
     Stiles coefficient for nominal or ordinal data.
     
-    Coefficient: log10(((A + B + C + D)
-                        (|(A * D) - (B * C)| - 
-                            ((A + B + C + D) / 2)) ^ 2) /
-                       (A + B)(A + C)(B + D)(C + D))
+    Coefficient: 
+    log10(((A + B + C + D)(|(A * D) - (B * C)| - ((A + B + C + D) / 2)) ^ 2) /
+    (A + B)(A + C)(B + D)(C + D))
         
     @param original: list of original data
     @param test: list of data to test against original
@@ -468,8 +467,8 @@ def Pearson(original, test, absent=0, type='Set'):
     """
     Pearson coefficient for nominal or ordinal data.
     
-    Coefficient: ((A * D) - (B * C)) /
-                 (A + B)(A + C)(B + D)(C + D)
+    Coefficient: 
+    ((A * D) - (B * C)) / (A + B)(A + C)(B + D)(C + D)
         
     @param original: list of original data
     @param test: list of data to test against original
@@ -488,8 +487,8 @@ def Dennis(original, test, absent=0, type='Set'):
     """
     Dennis coefficient for nominal or ordinal data.
     
-    Coefficient: ((A * D) - (B * C)) /
-                 (A + B + C + D)(A + B)(A + C)
+    Coefficient: 
+    ((A * D) - (B * C)) / (A + B + C + D)(A + B)(A + C)
         
     @param original: list of original data
     @param test: list of data to test against original
@@ -527,10 +526,11 @@ def Tulloss(original, test, absent=0, type='Set'):
     """
     Tulloss coefficient for nominal or ordinal data.
     
-    Coefficient: sqrt(U * S * R)
-        U = log(1 + ((min(B, C) + A) / (max(B, C) + A))) / log2
-        S = 1 / sqrt(log(2 + (min(B, C) / (A + 1))) / log2)
-        R = log(1 + A / (A + B))log(1 + A / (A + C)) / log2log2
+    Coefficient: 
+    sqrt(U * S * R)
+    U = log(1 + ((min(B, C) + A) / (max(B, C) + A))) / log2
+    S = 1 / sqrt(log(2 + (min(B, C) / (A + 1))) / log2)
+    R = log(1 + A / (A + B))log(1 + A / (A + C)) / log2log2
         
     @param original: list of original data
     @param test: list of data to test against original
@@ -636,8 +636,8 @@ def Canberra(original, test):
     """
     Canberra coefficient for interval or ratio data.
     
-    Coefficient: sum(abs((A + B)(i) - (A + C)(i)) / 
-                     abs((A + B)(i) + (A + C)(i)))
+    Coefficient: 
+    sum(abs((A + B)(i) - (A + C)(i)) / abs((A + B)(i) + (A + C)(i)))
     
     @see: Lance GN and Williams WT. 1966. Computer programs for 
     hierarchical polythetic classification. Computer Journal 9: 60-64.
@@ -659,8 +659,8 @@ def Bray_Curtis(original, test):
     Lower boundary of Bray and Curtis coefficient represents complete
     similarity (no difference).
     
-    Coefficient: 1- sum(abs((A + B)(i) - (A + C)(i))) /
-                    (sum((A + B)(i)) + sum((A + C)(i)))
+    Coefficient:
+    1 - sum(abs((A + B)(i) - (A + C)(i))) / (sum((A + B)(i)) + sum((A + C)(i)))
     
     @see: Bray JR and Curtis JT. 1957. An ordination of the upland 
     forest communities of S. Winconsin. Ecological Monographs 27: 
@@ -678,8 +678,8 @@ def Cosine(original, test):
     """
     Cosine coefficient for interval or ratio data.
     
-    Coefficient: sum(abs((A + B)(i) * (A + C)(i))) /
-                 (sum((A + B) ^ 2) * sum((A + C) ^ 2))
+    Coefficient: 
+    sum(abs((A + B)(i) * (A + C)(i))) / (sum((A + B) ^ 2) * sum((A + C) ^ 2))
     
     @param original: list of original data
     @param test: list of data to test against original"""
@@ -697,9 +697,9 @@ def Tanimoto(original, test):
     """
     Tanimoto coefficient for interval or ratio data.
     
-    Coefficient: sum(abs((A + B)(i) * (A + C)(i))) /
-                 (sum((A + B) ^ 2) + sum((A + C) ^ 2) - 
-                 sum(abs((A + B)(i) * (A + C)(i))))
+    Coefficient: 
+    sum(abs((A + B)(i) * (A + C)(i))) /
+    (sum((A + B) ^ 2) + sum((A + C) ^ 2) - sum(abs((A + B)(i) * (A + C)(i))))
     
     @param original: list of original data
     @param test: list of data to test against original"""
