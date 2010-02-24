@@ -36,10 +36,10 @@ Date created: 19th March 2008
 """
 
 import math
-import Constants
-from CopadsExceptions import FunctionParameterTypeError
-from CopadsExceptions import FunctionParameterValueError
-from CopadsExceptions import MaxIterationsException
+import constants
+from copadsexceptions import FunctionParameterTypeError
+from copadsexceptions import FunctionParameterValueError
+from copadsexceptions import MaxIterationsException
 
 
 def bessi(n, x):

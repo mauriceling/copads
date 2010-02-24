@@ -50,7 +50,7 @@ class RingList:
         """Returns the current size of the ring."""
         return self.__cur__
 
-    def maxsize(self):
+    def maxSize(self):
         """Returns the maximum allowed size of the ring."""
         return self.__max__
 

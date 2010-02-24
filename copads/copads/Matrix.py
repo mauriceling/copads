@@ -8,10 +8,10 @@ Date created: 19th March 2008
 import types
 import operator
 import math
-from CopadsExceptions import MatrixError, MatrixMultiplicationError
-from CopadsExceptions import MatrixAdditionError, MatrixSquareError
-from CopadsExceptions import MatrixTraceError, MatrixMinorError
-from CopadsExceptions import MatrixDeterminantError
+from copadsexceptions import MatrixError, MatrixMultiplicationError
+from copadsexceptions import MatrixAdditionError, MatrixSquareError
+from copadsexceptions import MatrixTraceError, MatrixMinorError
+from copadsexceptions import MatrixDeterminantError
 
 class Vector(list):
     """
@@ -217,7 +217,7 @@ Date: 1st May 2005
                     if self.rows() == 1 and self.cols() == 1:
                         raise ValueError("Cannot create 1x1 matrix")
 
-    def create_null_matrix(self, row, col):
+    def createNullMatrix(self, row, col):
         """ Create a matrix using the null value
 
         This is a private function called by __init__.
@@ -336,7 +336,7 @@ Date: 1st May 2005
             raise TypeError("Cannot right-multiply by %s" % type(other))
         return self.scalar_multiply(other)
 
-    def scalar_multiply(self, scalar):
+    def scalarMultiply(self, scalar):
         """Multiply the matrix by a scalar value.
 
         This is a private function called by __mul__ and __rmul__.
@@ -346,7 +346,7 @@ Date: 1st May 2005
             r.append(map(lambda x: x*scalar, row))
         return Matrix(r)
 
-    def matrix_multiply(self, other):
+    def matrixMultiply(self, other):
         """Multiply the matrix by another matrix.
 
         This is a private function called by __mul__.
@@ -368,17 +368,17 @@ Date: 1st May 2005
             # The result is a matrix.
             return Matrix(r)
 
-    def is_row_vector(self):
+    def isRowVector(self):
         """Is the matrix a row vector?
         """
         return self.rows() == 1 and self.cols() > 1
 
-    def is_column_vector(self):
+    def isColumnVector(self):
         """Is the matrix a column vector?
         """
         return self.cols() == 1 and self.rows() > 1
 
-    def is_square(self):
+    def isSquare(self):
         """Is the matrix square?
         """
         return self.rows() == self.cols()
@@ -412,7 +412,7 @@ Date: 1st May 2005
         # Expand by minors for larger matricies.
         return self.expand_by_minors_on_row(0)
 
-    def expand_by_minors_on_row(self, row):
+    def expandByMinorsOnRow(self, row):
         """Calculates the determinant by expansion of minors
 
         This function returns the determinant of the matrix by doing an
@@ -426,7 +426,7 @@ Date: 1st May 2005
                 self[(row, col)]*self.minor(row, col).determinant()
         return d
 
-    def expand_by_minors_on_column(self, col):
+    def expandByMinorsOnColumn(self, col):
         """Calculates the determinant by expansion of minors
 
         This function returns the determinant of the matrix by doing an
@@ -468,7 +468,7 @@ Date: 1st May 2005
                 minor_row += 1
         return m
 
-    def vector_inner_product(self, a, b):
+    def vectorInnerProduct(self, a, b):
         """Takes the inner product of vectors a and b
 
         a and b are lists.
@@ -478,7 +478,7 @@ Date: 1st May 2005
         assert(isinstance(b, types.ListType))
         return reduce(operator.add, map(operator.mul, a, b))
 
-    def is_scalar_element(self, x):
+    def isScalarElement(self, x):
         """Is x a scalar
 
         By default a scalar is an element in the complex number field.
@@ -722,15 +722,15 @@ def isVector(x):
     """Determines if the argument is a vector class object."""
     return hasattr(x, '__class__') and x.__class__ is Vector
 
-def v_zeros(n): 
+def vZeros(n): 
     """Returns a vector of length n with all ones."""
     return Vector([0 for x in range(n)])
     
-def v_ones(n):
+def vOnes(n):
     """Returns a vector of length n with all ones."""
     return Vector([1 for x in range(n)])
 
-def v_random(n, lmin=0.0, lmax=1.0):
+def vRandom(n, lmin=0.0, lmax=1.0):
     """Returns a random vector of length n."""
     import random
     new = Vector([])
@@ -738,34 +738,34 @@ def v_random(n, lmin=0.0, lmax=1.0):
     dl = lmax-lmin
     return Vector([dl.gen.random() for x in range(n)])
     
-def v_dot(a, b):
+def vDot(a, b):
     """dot product of two vectors."""
     try: return reduce(lambda x, y: x+y, a*b, 0.)
     except: raise TypeError, 'Vector::FAILURE in dot'
     
-def v_norm(a):
+def vNorm(a):
     """Computes the norm of vector a."""
     try: return math.sqrt(abs(dot(a, a)))
     except: raise TypeError, 'vector::FAILURE in norm'
 
-def v_sum(a):
+def vSum(a):
     """Returns the sum of the elements of a."""
     try: return reduce(lambda x, y: x+y, a, 0)
     except: raise TypeError, 'vector::FAILURE in sum'
 
 # elementwise operations
     
-def v_log10(a):
+def vLog10(a):
     """log10 of each element of a."""
     try: return Vector([math.log10(x) for x in a])
     except: raise TypeError, 'vector::FAILURE in log10'
 
-def v_log(a):
+def vLog(a):
     """log of each element of a."""
     try: return Vector([math.log10(x) for x in a])
     except: raise TypeError, 'vector::FAILURE in log'
         
-def v_exp(a):
+def vExp(a):
     """Elementwise exponential."""
     try: return Vector([math.exp(x) for x in a])
     except: raise TypeError, 'vector::FAILURE in exp'
@@ -835,14 +835,14 @@ def v_atan2(a, b):
 def isSparse(x):
     return hasattr(x, '__class__') and x.__class__ is SparseMatrix
 
-def sm_transpose(a):
+def smTranspose(a):
     " transpose "
     new = SparseMatrix({})
     for ij in a:
         new[(ij[1], ij[0])] = a[ij]
     return new
 
-def sm_dotDot(y, a, x):
+def smDotDot(y, a, x):
     " double dot product y^+ *A*x "
     if Vector.isVector(y) and isSparse(a) and Vector.isVector(x):
         res = 0.
@@ -853,7 +853,7 @@ def sm_dotDot(y, a, x):
     else:
         print 'sparse::Error: dotDot takes vector, sparse , vector as args'
 
-def sm_dot(a, b):
+def smDot(a, b):
     " vector-matrix, matrix-vector or matrix-matrix product "
     if isSparse(a) and isVector(b):
         new = v_zeros(a.size()[0])
@@ -881,14 +881,14 @@ def sm_dot(a, b):
     else:
         raise TypeError, 'in dot'
 
-def sm_diag(b):
+def smDiag(b):
     # given a sparse matrix b return its diagonal
     res = Vector.zeros(b.size()[0])
     for i in range(b.size()[0]):
         res[i] = b.get((i, i), 0.)
     return res
         
-def sm_identity(n):
+def smIdentity(n):
     if type(n) != types.IntType:
         raise TypeError, ' in identity: # must be integer'
     else:

@@ -3,7 +3,7 @@ import os
 import unittest
 
 sys.path.append(os.path.join(os.path.dirname(os.getcwd()), 'copads'))
-import StatisticsDistribution as N
+import statisticsdistribution as N
 
 class testBeta(unittest.TestCase):
     """

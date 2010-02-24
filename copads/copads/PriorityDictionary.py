@@ -79,7 +79,7 @@ class PriorityDictionary(dict):
                 insertionPoint = (insertionPoint-1)//2
             heap[insertionPoint] = newPair
     
-    def setdefault(self,key,val):
+    def setDefault(self,key,val):
         """Reimplement setdefault to call our customized __setitem__."""
         if key not in self:
             self[key] = val

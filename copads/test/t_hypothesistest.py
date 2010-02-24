@@ -3,7 +3,7 @@ import os
 import unittest
 
 sys.path.append(os.path.join(os.path.dirname(os.getcwd()), 'copads'))
-import HypothesisTest as N
+import hypothesistest as N
     
 class testNormalDistribution(unittest.TestCase):
     

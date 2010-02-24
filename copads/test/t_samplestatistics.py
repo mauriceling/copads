@@ -3,7 +3,7 @@ import os
 import unittest
 
 sys.path.append(os.path.join(os.path.dirname(os.getcwd()), 'copads'))
-import SampleStatistics as S
+import samplestatistics as S
 
 data1 = [1, 2, 3, 4, 5]
 name1 = 'data1'

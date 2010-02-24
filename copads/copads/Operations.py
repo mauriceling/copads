@@ -8,7 +8,7 @@ Date created: 19th March 2008
 import math
 import itertools
 import random
-import Constants
+import constants
 
 class Modulus2:
     """Class for Modulus 2 arithmetics"""

@@ -17,10 +17,10 @@ input):
     """
 
 import math
-from StatisticsDistribution import Distribution
-from CopadsExceptions import FunctionParameterTypeError
-from CopadsExceptions import FunctionParameterValueError
-from Operations import summation
+from statisticsdistribution import Distribution
+from copadsexceptions import FunctionParameterTypeError
+from eopadsexceptions import FunctionParameterValueError
+from operations import summation
 import NRPy
 
 class SingleSample:

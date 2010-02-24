@@ -14,8 +14,8 @@ Copyright (c) Maurice H.T. Ling <mauriceling@acm.org>
 Date created: 1st September 2008
 """
 
-from StatisticsDistribution import *
-from Operations import summation
+from statisticsdistribution import *
+from operations import summation
 from math import sqrt, log
 
 def test(statistic, distribution, confidence):

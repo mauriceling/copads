@@ -5,7 +5,7 @@ Copyright (c) Maurice H.T. Ling <mauriceling@acm.org>
 Date created: 19th March 2008
 """
 
-from CopadsExceptions import ArrayError
+from copadsexceptions import ArrayError
 
 class ParallelArray(object):
 

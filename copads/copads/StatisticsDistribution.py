@@ -79,11 +79,11 @@ Date created: 17th August 2005
 
 import math
 import random
-from CopadsExceptions import DistributionParameterError
-from CopadsExceptions import DistributionFunctionError
-from CopadsExceptions import NormalDistributionTypeError
-import NRPy
-from Constants import *
+from copadsexceptions import DistributionParameterError
+from copadsexceptions import DistributionFunctionError
+from copadsexceptions import NormalDistributionTypeError
+import nrpy
+from constants import *
 
 class Distribution:
     """

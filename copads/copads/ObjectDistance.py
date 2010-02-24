@@ -15,7 +15,7 @@ Date created: 17th August 2005
 """
 
 import math
-from CopadsExceptions import DistanceInputSizeError
+from copadsexceptions import DistanceInputSizeError
 
 
 def binarize(data, absent=0):

@@ -3,8 +3,8 @@ import os
 import sys
 
 sys.path.append(os.path.join(os.path.dirname(os.getcwd()), 'copads'))
-from Graph import Graph
-from CopadsExceptions import *
+from graph import Graph
+from copadsexceptions import *
     
 
 G = {'s':{'u':10, 'x':5},

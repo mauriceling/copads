@@ -2,7 +2,7 @@ import sys
 import os
 
 sys.path.append(os.path.join(os.path.dirname(os.getcwd()), 'copads'))
-from Matrix import *
+from matrix import *
 
 def Vector_test():
     print 'a = zeros(4)'
@@ -49,8 +49,8 @@ def Vector_test():
     c.out()
     print 'a=', a
 
-    print 'dot(a,b) = ', v_dot(a,b)
-    print 'dot(b,a) = ', v_dot(b,a)
+    print 'dot(a,b) = ', vDot(a,b)
+    print 'dot(b,a) = ', vDot(b,a)
 
     print 'a*b'
     c = a*b
@@ -69,22 +69,22 @@ def Vector_test():
     a.out()
 
     print 'sqrt(a)=',v_sqrt(a)
-    print 'pow(a, 2*ones(len(a)))=',v_pow(a, 2*v_ones(len(a)))
-    print 'pow(a, 2)=',v_pow(a, 2*v_ones(len(a)))
+    print 'pow(a, 2*ones(len(a)))=',vPow(a, 2*v_ones(len(a)))
+    print 'pow(a, 2)=',v_pow(a, 2*vOnes(len(a)))
 
     print 'ones(10)'
-    c = v_ones(10)
+    c = vOnes(10)
     c.out()
 
     print 'zeros(10)'
-    c = v_zeros(10)
+    c = vZeros(10)
     c.out()    
 
     print 'del a'
     del a
 
     try:
-        a = v_random(11, 0., 2.)
+        a = vRandom(11, 0., 2.)
         a.out()
 
     except: pass
@@ -146,11 +146,11 @@ def SparseMatrix_test():
 
     try:
         print 'dot(b, vector.vector([1,2,3]))'
-        c = sm_dot(b, Vector([1,2,3]))
+        c = smDot(b, Vector([1,2,3]))
         c.out()
     
         print 'dot(vector.vector([1,2,3]), b)'
-        c = sm_dot(Vector([1,2,3]), b)
+        c = smDot(Vector([1,2,3]), b)
         c.out()
 
         print 'b.size()=', b.size()
@@ -169,7 +169,7 @@ def SparseMatrix_test():
     c.out()
 
     print 'c = identity(4)'
-    c = sm_identity(4)
+    c = smIdentity(4)
     c.out()
 
     print 'c = transpose(a)'
@@ -191,7 +191,7 @@ def SparseMatrix_test():
         x.out()
 
         print 'check validity of CG'
-        c = sm_dot(b, x) - s
+        c = smDot(b, x) - s
         c.out()
     except: pass
 

@@ -6,7 +6,7 @@ Date created: 19th March 2008
 """
 
 import string
-from TreeNodes import *
+from treenodes import *
 
 class RBTreeIter(object):
 

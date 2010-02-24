@@ -3,7 +3,7 @@ import os
 import unittest
 
 sys.path.append(os.path.join(os.path.dirname(os.getcwd()), 'copads'))
-import NRPy as N
+import nrpy as N
     
 
 class testNR(unittest.TestCase):

@@ -3,7 +3,7 @@ import os
 import unittest
 
 sys.path.append(os.path.join(os.path.dirname(os.getcwd()), 'copads'))
-import ObjectDistance as D
+import objectdistance as D
 
 # for set comparison
 # 5 elements in both
