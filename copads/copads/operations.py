@@ -2,6 +2,7 @@
 File containing mathematical operation routines.
 
 Copyright (c) Maurice H.T. Ling <mauriceling@acm.org>
+
 Date created: 19th March 2008
 """
 

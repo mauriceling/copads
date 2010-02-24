@@ -2,6 +2,7 @@
 File containing set classes. 
 
 Copyright (c) Maurice H.T. Ling <mauriceling@acm.org>
+
 Date created: 19th March 2008
 """
 

@@ -4,17 +4,19 @@ This file hold the functions to calculate descriptive statistics of a data set.
 The following functions were adapted from http://www.nmr.mgh.harvard.edu/
 Neural_Systems_Group/gary/python/stats.py (assumes 1-dimensional list as 
 input):
-    1. geometricMean
-    2. harmonicMean
-    3. arithmeticMean
-    4. median
-    5. medianScore
-    6. mode
-    7. moment
-    8. variation
-    9. skew
-    10. kurtosis
-    """
+    - geometricMean
+    - harmonicMean
+    - arithmeticMean
+    - median
+    - medianScore
+    - mode
+    - moment
+    - variation
+    - skew
+    - kurtosis
+
+Copyright (c) Maurice H.T. Ling <mauriceling@acm.org>
+"""
 
 import math
 from statisticsdistribution import Distribution
@@ -175,7 +177,7 @@ class TwoSample:
 
     def covariance(self):
         """
-        Calculates covariance using the formula: Cov(xy) = E{xy} - E{x}E{y}
+        Calculates covariance using the formula: Cov(xy) = E(xy) - E(x)E(y)
         """
         sname = self.listSamples()
         if self.sample[sname[0]].data == self.sample[sname[1]].data: return 1.0
@@ -218,9 +220,9 @@ class TwoSample:
     
     def pearson(self):
         """
-        Calculates the Pearson's product-moment coefficient by the formula:
+        Calculates the Pearson's product-moment coefficient by the formula
         
-                    (N * sum_xy) - (sum_x * sum_y)
+        (N * sum_xy) - (sum_x * sum_y)
         --------------------------------------------------------------
         ((N * sum_x2 - (sum_x)**2) * (N * sum_y2 - (sum_y)**2)) ** 0.5
         """

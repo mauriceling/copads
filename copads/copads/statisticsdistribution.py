@@ -1,79 +1,81 @@
 """
 File containing the functions for various statistical distributions.
+
 References:
-1. Regress+ A compendium of common probability distributions (version 2.3)
-by Michael P. McLaughlin (mpmcl@mitre.org)
-http://www.causascientia.org/math_stat/Dists/Compendium.pdf
-2. Hand-book on statistical distributions for experimentalists
-Internal report SUF-PFY/96-01. University of Stockholms
-by Christian Walck (walck@physto.se)
+    - Regress+ A compendium of common probability distributions (version 2.3)
+    by Michael P. McLaughlin (mpmcl@mitre.org)
+    http://www.causascientia.org/math_stat/Dists/Compendium.pdf
+    - Hand-book on statistical distributions for experimentalists
+    Internal report SUF-PFY/96-01. University of Stockholms
+    by Christian Walck (walck@physto.se)
 
 
-Distribution
-|- BetaDistribution(location, scale, p, q)
-|  |- PowerFunctionDistribution(shape)
-|- BinomialDistribution(success, trial)
-|  |- BernoulliDistribution(success)  
-|- BradfordDistribution
-|- BurrDistribution
-|- CauchyDistribution(location = 0.0, scale = 1.0)
-|  |- LorentzDistribution (alias of CauchyDistribution)
-|- ChiDistribution
-|  |- HalfNormalDistribution(location, scale)
-|  |- MaxwellDistribution(scale)
-|  |- RayleighDistribution(scale)
-|- CosineDistribution(location = 0.0, scale = 1.0)
-|- DoubleGammaDistribution
-|- DoubleWeibullDistribution
-|- ExponentialDistribution(location = 0.0, scale = 1.0)
-|  |- NegativeExponentialDistribution (alias of ExponentialDistribution)
-|- ExtremeLBDistribution
-|- FDistribution
-|- FiskDistribution
-|  |- LogLogisticDistribution (alias of FiskDistribution)
-|- FoldedNormalDistribution
-|- GammaDistribution
-|  |- ChiSquareDistribution(df)
-|  |- ErlangDistribution(shape)
-|  |- FurryDistribution (alias of GammaDistribution)
-|- GenLogisticDistribution
-|- GeometricDistribution(success = 0.5)
-|- GumbelDistribution(location, scale)
-|  |- FisherTippettDistribution (alias of GumbelDistribution)
-|  |- GompertzDistribution  (alias of GumbelDistribution)
-|  |- LogWeibullDistribution (alias of GumbelDistribution)
-|- HyperbolicSecantDistribution
-|- HypergeometricDistribution
-|- InverseNormalDistribution
-|  |- WaldDistribution (alias of InverseNormalDistribution)
-|- LaplaceDistribution
-|  |- BilateralExponentialDistribution (alias of LaplaceDistribution)
-|  |- DoubleExponentialDistribution (alias of LaplaceDistribution)
-|- LogarithmicDistribution(shape)
-|- LogisticDistribution
-|  |- SechSquaredDistribution (alias of LogisticDistribution)
-|- LogNormalDistribution
-|  |- AntiLogNormalDistribution (alias of LogNormalDistribution)
-|  |- CobbDouglasDistribution (alias of LogNormalDistribution)
-|- NakagamiDistribution
-|- NegativeBinomialDistribution(success, target)
-|  |- PascalDistribution(success, target)
-|  |- PolyaDistribution (alias of NegativeBinomialDistribution)
-|- NormalDistribution()
-|- ParetoDistribution(location = 1.0, shape = 1.0)
-|- PoissonDistribution(expectation)
-|- RademacherDistribution()
-|- ReciprocalDistribution
-|- SemicircularDistribution(location = 0.0, scale = 1.0)
-|- TDistribution(location = 0.0, scale = 1.0, shape = 2)
-|- TriangularDistribution
-|- UniformDistribution(location, scale)
-|  |- RectangularDistribution (alias of UniformDistribution)
-|- WeibullDistribution
-   |- FrechetDistribution (alias of WeibullDistribution)
+Distributions:
+    - BetaDistribution(location, scale, p, q)
+        - PowerFunctionDistribution(shape)
+    - BinomialDistribution(success, trial)
+        - BernoulliDistribution(success)  
+    - BradfordDistribution
+    - BurrDistribution
+    - CauchyDistribution(location=0.0, scale=1.0)
+        - LorentzDistribution (alias of CauchyDistribution)
+    - ChiDistribution
+        - HalfNormalDistribution(location, scale)
+        - MaxwellDistribution(scale)
+        - RayleighDistribution(scale)
+    - CosineDistribution(location=0.0, scale=1.0)
+    - DoubleGammaDistribution
+    - DoubleWeibullDistribution
+    - ExponentialDistribution(location=0.0, scale=1.0)
+        - NegativeExponentialDistribution (alias of ExponentialDistribution)
+    - ExtremeLBDistribution
+    - FDistribution
+    - FiskDistribution
+        - LogLogisticDistribution (alias of FiskDistribution)
+    - FoldedNormalDistribution
+    - GammaDistribution
+        - ChiSquareDistribution(df)
+        - ErlangDistribution(shape)
+        - FurryDistribution (alias of GammaDistribution)
+    - GenLogisticDistribution
+    - GeometricDistribution(success=0.5)
+    - GumbelDistribution(location, scale)
+        - FisherTippettDistribution (alias of GumbelDistribution)
+        - GompertzDistribution  (alias of GumbelDistribution)
+        - LogWeibullDistribution (alias of GumbelDistribution)
+    - HyperbolicSecantDistribution
+    - HypergeometricDistribution
+    - InverseNormalDistribution
+        - WaldDistribution (alias of InverseNormalDistribution)
+    - LaplaceDistribution
+        - BilateralExponentialDistribution (alias of LaplaceDistribution)
+        - DoubleExponentialDistribution (alias of LaplaceDistribution)
+    - LogarithmicDistribution(shape)
+    - LogisticDistribution 
+        - SechSquaredDistribution (alias of LogisticDistribution)
+    - LogNormalDistribution
+        - AntiLogNormalDistribution (alias of LogNormalDistribution)
+        - CobbDouglasDistribution (alias of LogNormalDistribution)
+    - NakagamiDistribution
+    - NegativeBinomialDistribution(success, target)
+        - PascalDistribution(success, target)
+        - PolyaDistribution (alias of NegativeBinomialDistribution)
+    - NormalDistribution()
+    - ParetoDistribution(location=1.0, shape=1.0)
+    - PoissonDistribution(expectation)
+    - RademacherDistribution()
+    - ReciprocalDistribution
+    - SemicircularDistribution(location=0.0, scale=1.0)
+    - TDistribution(location=0.0, scale=1.0, shape=2)
+    - TriangularDistribution
+    - UniformDistribution(location, scale)
+        - RectangularDistribution (alias of UniformDistribution)
+    - WeibullDistribution
+        - FrechetDistribution (alias of WeibullDistribution)
 
 
 Copyright (c) Maurice H.T. Ling <mauriceling@acm.org>
+
 Date created: 17th August 2005
 """
 
@@ -177,13 +179,10 @@ class BetaDistribution(Distribution):
         Constructor method. The parameters are used to construct the
         probability distribution.
 
-        Parameters:
-        1. location
-        2. scale (upper bound)
-        3. p (shape parameter. Although no upper bound but seldom
-           exceed 10.)
-        4. q (shape parameter. Although no upper bound but seldom
-           exceed 10.)
+        @param location:
+        @param scale: upper bound
+        @param p: shape parameter. Although no upper bound but seldom exceed 10.
+        @param q: shape parameter. Although no upper bound but seldom exceed 10.
         """
         self.location = float(location)
         self.scale = float(scale)
@@ -299,9 +298,8 @@ class BinomialDistribution(Distribution):
         Constructor method. The parameters are used to construct
         the probability distribution.
 
-        Parameters:
-        1. success (probability of success; 0 <= success <= 1)
-        2. trial (number of Bernoulli trials)
+        @param success: probability of success; 0 <= success <= 1
+        @param trial: number of Bernoulli trials
         """
         self.success = float(success)
         self.trial = int(trial)
@@ -372,17 +370,14 @@ class BinomialDistribution(Distribution):
 
 
 class CauchyDistribution(Distribution):
-    def __init__(self, **parameters): 
+    def __init__(self, location=0.0, scale=1.0): 
         """Constructor method. The parameters are used to construct the 
         probability distribution.
         
-        Parameter:
-        1. location (default = 0.0)
-        2. scale (lambda; default = 1.0)"""
-        try: self.location = parameters['location']
-        except KeyError: self.location = 0.0
-        try: self.scale = parameters['scale']
-        except KeyError: self.scale = 1.0
+        @param location: default = 0.0
+        @param scale: lambda; default = 1.0"""
+        self.location = location
+        self.scale = scale
     def CDF(self, x): 
         """
         Cummulative Distribution Function, which gives the cummulative 
@@ -396,7 +391,7 @@ class CauchyDistribution(Distribution):
         x-h to x+h for continuous distribution."""
         return 1 / (PI * self.scale * \
             (1 + (((x - self.location)/self.scale) ** 2)))
-    def inverseCDF(self, probability, start = 0.0, step = 0.01): 
+    def inverseCDF(self, probability, start=0.0, step=0.01): 
         """
         It does the reverse of CDF() method, it takes a probability value and 
         returns the corresponding value on the x-axis."""
@@ -458,9 +453,8 @@ class FDistribution(Distribution):
         Constructor method. The parameters are used to construct the
         probability distribution.
 
-        Parameters:
-        1. df1 (degrees of freedom for numerator)
-        2. df2 (degrees of freedom for denorminator)
+        @param df1: degrees of freedom for numerator
+        @param df2: degrees of freedom for denorminator
         """
         self.df1 = float(df1)
         self.df2 = float(df2)
@@ -526,10 +520,9 @@ class GammaDistribution(Distribution):
         Constructor method. The parameters are used to construct the
         probability distribution.
 
-        Parameters:
-        1. location
-        2. scale
-        3. shape"""
+        @param location:
+        @param scale:
+        @param shape:"""
         self.location = float(location)
         self.scale = float(scale)
         self.shape = float(shape)
@@ -614,8 +607,7 @@ class ChiSquareDistribution(GammaDistribution):
         Constructor method. The parameters are used to construct
         the probability distribution.
 
-        Parameters:
-        1. df = degrees of freedom"""
+        @param df: degrees of freedom"""
         GammaDistribution.__init__(self, location=0, scale=2,
                                    shape=float(df) / 2.0)
                                    
@@ -635,9 +627,8 @@ class GeometricDistribution(Distribution):
         Constructor method. The parameters are used to construct the
         probability distribution.
 
-        Parameters:
-        1. success (probability of success; 0 <= success <= 1;
-           default = 0.5)
+        @param success: probability of success; 0 <= success <= 1;
+               default = 0.5
            """
         self.prob = float(success)
 
@@ -706,7 +697,7 @@ class NormalDistribution(Distribution):
         return 1.0 - 0.5 * NRPy.erfcc(x/SQRT2)
     def PDF(self, x): 
         """
-        Calculates the density (probability) at x by the formula:
+        Calculates the density (probability) at x by the formula
         f(x) = 1/(sqrt(2 pi) sigma) e^-((x^2/(2 sigma^2))
         where mu is the mean of the distribution and sigma the standard 
         deviation.
@@ -727,10 +718,10 @@ class NormalDistribution(Distribution):
         @param end: upper boundary of calculation (default = 10)
         @param error: error between the given and calculated probabilities 
         (default = 10e-8)
-        @return (start, cprob): 'start' is the standard deviation for the area 
-        under the curve from -infinity to the given 'probability' (+/- step). 
-        'cprob' is the calculated area under the curve from -infinity to the 
-        returned 'start'.
+        @return: Returns a tuple (start, cprob) where 'start' is the standard 
+        deviation for the area under the curve from -infinity to the given 
+        'probability' (+/- step). 'cprob' is the calculated area under the 
+        curve from -infinity to the returned 'start'.
         """
         # check for tolerance
         if abs(self.CDF(start)-probability) < error:
@@ -778,8 +769,7 @@ class PoissonDistribution(Distribution):
         Constructor method. The parameters are used to construct the
         probability distribution.
 
-        Parameters:
-        1. expectation (mean success probability; lambda)
+        @param expectation: mean success probability; lambda
         """
         self._mean = float(expectation)
 
@@ -845,10 +835,9 @@ class TDistribution(Distribution):
         """Constructor method. The parameters are used to construct
         the probability distribution.
 
-        Parameter:
-        1. location (default = 0.0)
-        2. scale (default = 1.0)
-        3. shape (degrees of freedom; default = 2)"""
+        @param location: default = 0.0
+        @param scale: default = 1.0
+        @param shape: degrees of freedom; default = 2"""
         self._mean = float(location)
         self.stdev = float(scale)
         self.df = float(shape)
@@ -869,11 +858,12 @@ class TDistribution(Distribution):
     def PDF(self, x):
         """
         Calculates the density (probability) at x with n-th degrees of freedom
-        as:
-        f(x) = Gamma((n+1)/2) / (sqrt(n * pi) Gamma(n/2)) (1 +
-                                 x^2/n)^-((n+1)/2)
-        for all real x. It has mean 0 (for n > 1) and variance
-        n/(n-2) (for n > 2)."""
+        as
+        f(x) = 
+        Gamma((n+1)/2) / (sqrt(n * pi) Gamma(n/2)) (1 + x^2/n)^-((n+1)/2)
+        
+        for all real x. It has mean 0 (for n > 1) and variance n/(n-2) 
+        (for n > 2)."""
         a = NRPy.gammln((self.df + 1) / 2)
         b = math.sqrt(math.pi * self.df) * NRPy.gammln(self.df / 2) * \
             self.stdev
@@ -939,9 +929,8 @@ class UniformDistribution(Distribution):
         Constructor method. The parameters are used to construct the
         probability distribution.
 
-        Parameter:
-        1. location
-        2. scale
+        @param location:
+        @param scale:
         """
         self.location = float(location)
         self.scale = float(scale)
@@ -1045,14 +1034,14 @@ class BernoulliDistribution(Distribution):
     Bernoulli distribution is a special case of Binomial distribution where
     where number of trials = 1
     """
-    def __init__(self, **parameters): 
+    def __init__(self, success): 
         """Constructor method. The parameters are used to construct the 
         probability distribution.
         
         @param success: probability of success; 0 <= success <= 1"""
         try: self.distribution = BinomialDistribution(succcess = 
-                                                        parameters['success'], 
-                                                        trial = 1)
+                                                      parameters['success'], 
+                                                      trial = 1)
         except KeyError: 
             raise DistributionParameterError('Bernoulli distribution \
             requires success parameter')
@@ -1097,18 +1086,17 @@ def BilateralExponentialDistribution(**parameters):
 
 
 class BradfordDistribution(Distribution):
-    def __init__(self, **parameters): 
+    def __init__(self, location, scale, shape): 
         """
         Constructor method. The parameters are used to construct the 
         probability distribution.
         
-        Parameters:
-        1. location
-        2. scale (upper bound)
-        3. shape"""
-        self.location = kwargs['locatiopn']
-        self.scale = kwargs['scale']
-        self.shape = kwargs['shape']
+        @param location:
+        @param scale: upper bound
+        @param shape:"""
+        self.location = location
+        self.scale = scale
+        self.shape = shape
         self.k = math.log10(self.shape + 1)
     def CDF(self, x): 
         """
@@ -1124,7 +1112,7 @@ class BradfordDistribution(Distribution):
         from x-h to x+h for continuous distribution."""
         r = (self.shape * (x - self.location)) + self.scale - self.location
         return self.shape / (self.k * r)
-    def inverseCDF(self, probability, start = 0.0, step = 0.01): 
+    def inverseCDF(self, probability, start=0.0, step=0.01): 
         """
         It does the reverse of CDF() method, it takes a probability value 
         and returns the corresponding value on the x-axis."""
@@ -1197,20 +1185,19 @@ class BurrDistribution(Distribution):
     Burr distribution is the generalization of Fisk distribution. Burr 
     distribution with D = 1 becomes Fisk distribution.
     """
-    def __init__(self, **parameters): 
+    def __init__(self, location, scale, C, D): 
         """
         Constructor method. The parameters are used to construct the 
         probability distribution.
         
-        Parameters:
-        1. location
-        2. scale
-        3. C (shape)
-        4. D (shape)"""
-        self.location = kwargs['location']
-        self.scale = kwargs['scale']
-        self.C = kwargs['C']
-        self.D = kwargs['D']
+        @param location:
+        @param scale:
+        @param C: shape
+        @param D: shape"""
+        self.location = location
+        self.scale = scale
+        self.C = C
+        self.D = D
         self.k = (NRPy.gammln(self.D) * \
                     NRPy.gammln(1 - (2/self.C)) * \
                     NRPy.gammln((2/self.C) + self.D)) - \
@@ -1230,7 +1217,7 @@ class BurrDistribution(Distribution):
         r = (1+(((x - self.location)/self.scale)**(-self.C)))**(-self.D - 1)
         r = r * ((self.C * self.D)/self.scale)
         return r * (((x - self.location)/self.scale)**(-self.C - 1))
-    def inverseCDF(self, probability, start = 0.0, step = 0.01): 
+    def inverseCDF(self, probability, start=0.0, step=0.01): 
         """
         It does the reverse of CDF() method, it takes a probability value 
         and returns the corresponding value on the x-axis."""
@@ -1301,7 +1288,7 @@ class ChiDistribution(Distribution):
 #        particular value of x, or the area under probability distribution 
 #        from x-h to x+h for continuous distribution."""
 #        raise DistributionFunctionError
-    def inverseCDF(self, probability, start = 0.0, step = 0.01): 
+    def inverseCDF(self, probability, start=0.0, step=0.01): 
         """
         It does the reverse of CDF() method, it takes a probability value 
         and returns the corresponding value on the x-axis."""
@@ -1355,17 +1342,14 @@ class CosineDistribution(Distribution):
     Cosine distribution is sometimes used as a simple approximation to 
     Normal distribution.
     """
-    def __init__(self, **parameters): 
+    def __init__(self, location=0.0, scale=1.0): 
         """Constructor method. The parameters are used to construct the 
         probability distribution.
         
-        Parameter:
-        1. location (default = 0.0)
-        2. scale (lambda; default = 1.0)"""
-        try: self.location = parameters['location']
-        except KeyError: self.location = 0.0
-        try: self.scale = parameters['scale']
-        except KeyError: self.scale = 1.0
+        @param location:default = 0.0
+        @param scale:lambda; default = 1.0"""
+        self.location = location
+        self.scale = scale
     def CDF(self, x): 
         """
         Cummulative Distribution Function, which gives the cummulative 
@@ -1381,7 +1365,7 @@ class CosineDistribution(Distribution):
         x-h to x+h for continuous distribution."""
         return (1/(PI2 * self.scale)) * \
                 (1 + math.cos((x - self.location)/self.scale))
-    def inverseCDF(self, probability, start = 0.0, step = 0.01): 
+    def inverseCDF(self, probability, start=0.0, step=0.01): 
         """
         It does the reverse of CDF() method, it takes a probability value and 
         returns the corresponding value on the x-axis."""
@@ -1437,18 +1421,17 @@ class DoubleGammaDistribution(Distribution):
     """
     Double Gamma distribution is the signed version of Gamma distribution.
     """
-    def __init__(self, **parameters): 
+    def __init__(self, location, scale, shape): 
         """
         Constructor method. The parameters are used to construct the 
         probability distribution.
         
-        Parameters:
-        1. location
-        2. scale
-        3. shape"""
-        self.location = kwargs['location']
-        self.scale = kwargs['scale']
-        self.shape = kwargs['shape']
+        @param location:
+        @param scale:
+        @param shape:"""
+        self.location = location
+        self.scale = scale
+        self.shape = shape
     def CDF(self, x): 
         """
         Cummulative Distribution Function, which gives the cummulative 
@@ -1465,7 +1448,7 @@ class DoubleGammaDistribution(Distribution):
         r = math.exp(-1 * abs((x - self.location)/self.scale))
         r = r * (abs((x - self.location)/self.scale) ** (self.shape -1))
         return r / (2* self.scale * NRPy.gammln(self.shape))
-    def inverseCDF(self, probability, start = 0.0, step = 0.01): 
+    def inverseCDF(self, probability, start=0.0, step=0.01): 
         """
         It does the reverse of CDF() method, it takes a probability value 
         and returns the corresponding value on the x-axis."""
@@ -1513,7 +1496,7 @@ class DoubleWeibullDistribution(Distribution):
 #        particular value of x, or the area under probability distribution 
 #        from x-h to x+h for continuous distribution."""
 #        raise DistributionFunctionError
-    def inverseCDF(self, probability, start = 0.0, step = 0.01): 
+    def inverseCDF(self, probability, start=0.0, step=0.01): 
         """
         It does the reverse of CDF() method, it takes a probability value 
         and returns the corresponding value on the x-axis."""
@@ -1562,17 +1545,14 @@ class ExponentialDistribution(Distribution):
     distribution. It is also a special case of Gamma distribution where 
     shape = 1
     """
-    def __init__(self, **parameters): 
+    def __init__(self, location=0.0, scale=1.0): 
         """Constructor method. The parameters are used to construct the 
         probability distribution.
         
-        Parameter:
-        1. location (default = 0.0)
-        2. scale (lambda; default = 1.0)"""
-        try: self.location = parameters['location']
-        except KeyError: self.location = 0.0
-        try: self.scale = parameters['scale']
-        except KeyError: self.scale = 1.0
+        @param location: default = 0.0
+        @param scale: lambda; default = 1.0"""
+        self.location = location
+        self.scale = scale
     def CDF(self, x): 
         """
         Cummulative Distribution Function, which gives the cummulative 
@@ -1585,7 +1565,7 @@ class ExponentialDistribution(Distribution):
         particular value of x, or the area under probability distribution from 
         x-h to x+h for continuous distribution."""
         return (1/self.scale) * math.exp((self.location - x)/self.scale)
-    def inverseCDF(self, probability, start = 0.0, step = 0.01): 
+    def inverseCDF(self, probability, start=0.0, step=0.01): 
         """
         It does the reverse of CDF() method, it takes a probability value and 
         returns the corresponding value on the x-axis."""
@@ -1648,7 +1628,7 @@ class ExtremeLBDistribution(Distribution):
 #        particular value of x, or the area under probability distribution 
 #        from x-h to x+h for continuous distribution."""
 #        raise DistributionFunctionError
-    def inverseCDF(self, probability, start = 0.0, step = 0.01): 
+    def inverseCDF(self, probability, start=0.0, step=0.01): 
         """
         It does the reverse of CDF() method, it takes a probability value 
         and returns the corresponding value on the x-axis."""
@@ -1708,7 +1688,7 @@ class FiskDistribution(Distribution):
 #        particular value of x, or the area under probability distribution 
 #        from x-h to x+h for continuous distribution."""
 #        raise DistributionFunctionError
-    def inverseCDF(self, probability, start = 0.0, step = 0.01): 
+    def inverseCDF(self, probability, start=0.0, step=0.01): 
         """
         It does the reverse of CDF() method, it takes a probability value 
         and returns the corresponding value on the x-axis."""
@@ -1774,7 +1754,7 @@ class FoldedNormalDistribution(Distribution):
 #        particular value of x, or the area under probability distribution 
 #        from x-h to x+h for continuous distribution."""
 #        raise DistributionFunctionError
-    def inverseCDF(self, probability, start = 0.0, step = 0.01): 
+    def inverseCDF(self, probability, start=0.0, step=0.01): 
         """
         It does the reverse of CDF() method, it takes a probability value 
         and returns the corresponding value on the x-axis."""
@@ -1844,7 +1824,7 @@ class GenLogisticDistribution(Distribution):
 #        particular value of x, or the area under probability distribution 
 #        from x-h to x+h for continuous distribution."""
 #        raise DistributionFunctionError
-    def inverseCDF(self, probability, start = 0.0, step = 0.01): 
+    def inverseCDF(self, probability, start=0.0, step=0.01): 
         """
         It does the reverse of CDF() method, it takes a probability value 
         and returns the corresponding value on the x-axis."""
@@ -1894,19 +1874,14 @@ def GompertzDistribution(**parameters):
 
 
 class GumbelDistribution(Distribution):
-    def __init__(self, **parameters): 
+    def __init__(self, location, scale): 
         """Constructor method. The parameters are used to construct the 
         probability distribution.
         
-        Parameter:
-        1. location (eta)
-        2. scale (theta)"""
-        try:
-            self.location = parameters['location']
-            self.scale = parameters['scale']
-        except KeyError: 
-            raise DistributionParameterError('Gumbel distribution requires \
-                location and scale.')
+        @param location: eta
+        @param scale: theta"""
+        self.location = location
+        self.scale = scale
     def CDF(self, x): 
         """
         Cummulative Distribution Function, which gives the cummulative 
@@ -1920,7 +1895,7 @@ class GumbelDistribution(Distribution):
         x-h to x+h for continuous distribution."""
         return (1/self.scale) * math.exp((self.location - x)/self.scale) * \
             self.CDF(x)
-    def inverseCDF(self, probability, start = 0.0, step = 0.01): 
+    def inverseCDF(self, probability, start=0.0, step=0.01): 
         """
         It does the reverse of CDF() method, it takes a probability value and 
         returns the corresponding value on the x-axis."""
@@ -1997,7 +1972,7 @@ class HalfNormalDistribution(Distribution):
         particular value of x, or the area under probability distribution from 
         x-h to x+h for continuous distribution."""
         return self.distribution.PDF(x)
-    def inverseCDF(self, probability, start = 0.0, step =0.01): 
+    def inverseCDF(self, probability, start=0.0, step=0.01): 
         """
         It does the reverse of CDF() method, it takes a probability value and 
         returns the corresponding value on the x-axis."""
@@ -2020,16 +1995,15 @@ class HalfNormalDistribution(Distribution):
 
 
 class HyperbolicSecantDistribution(Distribution):
-    def __init__(self, **parameters): 
+    def __init__(self, location, scale): 
         """
         Constructor method. The parameters are used to construct the 
         probability distribution.
         
-        Parameters:
-        1. location
-        2. scale"""
-        self.location = kwargs['location']
-        self.scale = kwargs['scale']
+        @param location:
+        @param scale:"""
+        self.location = location
+        self.scale = scale
     def CDF(self, x): 
         """
         Cummulative Distribution Function, which gives the cummulative 
@@ -2043,7 +2017,7 @@ class HyperbolicSecantDistribution(Distribution):
         from x-h to x+h for continuous distribution."""
         return (1 / math.cosh((x - self.location)/self.scale)) / \
                 (PI * math.scale)
-    def inverseCDF(self, probability, start = 0.0, step = 0.01): 
+    def inverseCDF(self, probability, start=0.0, step=0.01): 
         """
         It does the reverse of CDF() method, it takes a probability value 
         and returns the corresponding value on the x-axis."""
@@ -2103,7 +2077,7 @@ class HypergeometricDistribution(Distribution):
 #        particular value of x, or the area under probability distribution 
 #        from x-h to x+h for continuous distribution."""
 #        raise DistributionFunctionError
-#    def inverseCDF(self, probability, start = 0.0, step = 0.01): 
+#    def inverseCDF(self, probability, start=0.0, step=0.01): 
 #        """
 #        It does the reverse of CDF() method, it takes a probability value 
 #        and returns the corresponding value on the x-axis."""
@@ -2163,7 +2137,7 @@ class InverseNormalDistribution(Distribution):
 #        particular value of x, or the area under probability distribution 
 #        from x-h to x+h for continuous distribution."""
 #        raise DistributionFunctionError
-    def inverseCDF(self, probability, start = 0.0, step = 0.01): 
+    def inverseCDF(self, probability, start=0.0, step=0.01): 
         """
         It does the reverse of CDF() method, it takes a probability value 
         and returns the corresponding value on the x-axis."""
@@ -2223,7 +2197,7 @@ class LaplaceDistribution(Distribution):
 #        particular value of x, or the area under probability distribution 
 #        from x-h to x+h for continuous distribution."""
 #        raise DistributionFunctionError
-    def inverseCDF(self, probability, start = 0.0, step = 0.01): 
+    def inverseCDF(self, probability, start=0.0, step=0.01): 
         """
         It does the reverse of CDF() method, it takes a probability value 
         and returns the corresponding value on the x-axis."""
@@ -2283,7 +2257,7 @@ class LogisticDistribution(Distribution):
 #        particular value of x, or the area under probability distribution 
 #        from x-h to x+h for continuous distribution."""
 #        raise DistributionFunctionError
-    def inverseCDF(self, probability, start = 0.0, step = 0.01): 
+    def inverseCDF(self, probability, start=0.0, step=0.01): 
         """
         It does the reverse of CDF() method, it takes a probability value 
         and returns the corresponding value on the x-axis."""
@@ -2327,16 +2301,12 @@ class LogisticDistribution(Distribution):
 
 
 class LogarithmicDistribution(Distribution):
-    def __init__(self, **parameters): 
+    def __init__(self, shape): 
         """Constructor method. The parameters are used to construct the 
         probability distribution.
         
-        Parameters:
-        1. shape"""
-        try: self.shape = parameters['shape']
-        except KeyError: 
-            raise DistributionParameterError('Logarithmic distribution \
-                requires share parameter')
+        @param shape:"""
+        self.shape = shape
     def CDF(self, x): 
         """
         Cummulative Distribution Function, which gives the cummulative 
@@ -2351,7 +2321,7 @@ class LogarithmicDistribution(Distribution):
         particular value of x, or the area under probability distribution from 
         x-h to x+h for continuous distribution."""
         return (-1 * (self.shape ** x)) / (math.log10(1 - self.shape) * x)
-    def inverseCDF(self, probability, start = 0.0, step = 0.01): 
+    def inverseCDF(self, probability, start=0.0, step=0.01): 
         """
         It does the reverse of CDF() method, it takes a probability value and 
         returns the corresponding value on the x-axis."""
@@ -2403,7 +2373,7 @@ class LogNormalDistribution(Distribution):
 #        particular value of x, or the area under probability distribution 
 #        from x-h to x+h for continuous distribution."""
 #        raise DistributionFunctionError
-    def inverseCDF(self, probability, start = 0.0, step = 0.01): 
+    def inverseCDF(self, probability, start=0.0, step=0.01): 
         """
         It does the reverse of CDF() method, it takes a probability value and 
         returns the corresponding value on the x-axis."""
@@ -2472,7 +2442,7 @@ class MaxwellDistribution(Distribution):
         particular value of x, or the area under probability distribution from 
         x-h to x+h for continuous distribution."""
         return self.distribution.PDF(x)
-    def inverseCDF(self, probability, start = 0.0, step = 0.01): 
+    def inverseCDF(self, probability, start=0.0, step=0.01): 
         """
         It does the reverse of CDF() method, it takes a probability value and
         the corresponding value on the x-axis."""
@@ -2514,7 +2484,7 @@ class NakagamiDistribution(Distribution):
 #        particular value of x, or the area under probability distribution 
 #        from x-h to x+h for continuous distribution."""
 #        raise DistributionFunctionError
-    def inverseCDF(self, probability, start = 0.0, step = 0.01): 
+    def inverseCDF(self, probability, start=0.0, step=0.01): 
         """
         It does the reverse of CDF() method, it takes a probability value 
         and returns the corresponding value on the x-axis."""
@@ -2558,19 +2528,14 @@ class NakagamiDistribution(Distribution):
 
 
 class NegativeBinomialDistribution(Distribution):
-    def __init__(self, **parameters): 
+    def __init__(self, success, target): 
         """Constructor method. The parameters are used to construct the 
         probability distribution.
         
-        Parameter:
-        1. success (probability of success; 0 <= success <= 1)
-        2. target (a constant, target number of successes)"""
-        try:
-            self.success = parameters['success']
-            self.target = parameters['target']
-        except KeyError: 
-            raise DistributionParameterError('Negative Binomial distribution \
-            requires success and target parameters')
+        @param success: probability of success; 0 <= success <= 1
+        @param target: a constant, target number of successes"""
+        self.success = success
+        self.target = target
     def CDF(self, x): 
         """
         Cummulative Distribution Function, which gives the cummulative 
@@ -2616,31 +2581,28 @@ def NegativeExponentialDistribution(**parameters):
 
 
 class ParetoDistribution(Distribution):
-    def __init__(self, **parameters): 
+    def __init__(self, location=1.0, scale=1.0): 
         """Constructor method. The parameters are used to construct the 
         probability distribution.
         
-        Parameter:
-        1. location (also the scale; default = 1.0)
-        2. scale (lambda; default = 1.0)"""
-        try: self.location = parameters['location']
-        except KeyError: self.location = 1.0
-        try: self.shape = parameters['shape']
-        except KeyError: self.shape = 1.0
+        @param location: also the scale; default = 1.0
+        @param scale: lambda; default = 1.0"""
+        self.location = location
+        self.scale = scale
     def CDF(self, x): 
         """
         Cummulative Distribution Function, which gives the cummulative 
         probability (area under the probability curve) from -infinity or 0 to 
         a give x-value on the x-axis where y-axis is the probability."""
-        return 1 - (self.location/x) ** self.shape
+        return 1 - (self.location/x) ** self.scale
     def PDF(self, x): 
         """
         Partial Distribution Function, which gives the probability for the 
         particular value of x, or the area under probability distribution from 
         x-h to x+h for continuous distribution."""
-        return (self.shape * (self.location ** self.shape)) / \
-                (x ** (self.shape + 1))
-    def inverseCDF(self, probability, start = 0.0, step = 0.01): 
+        return (self.shape * (self.location ** self.scale)) / \
+                (x ** (self.scale + 1))
+    def inverseCDF(self, probability, start=0.0, step=0.01): 
         """
         It does the reverse of CDF() method, it takes a probability value and 
         returns the corresponding value on the x-axis."""
@@ -2653,43 +2615,43 @@ class ParetoDistribution(Distribution):
         return (start, cprob)
     def mean(self): 
         """Gives the arithmetic mean of the sample."""
-        return (self.location * self.shape) / (self.shape - 1)
+        return (self.location * self.scale) / (self.scale - 1)
     def mode(self): 
         """Gives the mode of the sample."""
         return self.location
     def median(self): 
         """Gives the median of the sample."""
-        return self.location * (2 ** (1/self.shape))
+        return self.location * (2 ** (1/self.scale))
     def kurtosis(self): 
         """Gives the kurtosis of the sample."""
-        n = 6 * (self.shape ** 3 + self.shape ** 2 + 6 * self.shape - 2)
-        d = self.shape * (self.shape ** 2 - 7 * self.shape + 12)
+        n = 6 * (self.scale ** 3 + self.scale ** 2 + 6 * self.scale - 2)
+        d = self.scale * (self.scale ** 2 - 7 * self.scale + 12)
         return n/d
     def skew(self): 
         """Gives the skew of the sample."""
-        n = 2 * (self.shape + 1) * math.sqrt(self.shape - 2)
-        d = (self.shape - 3) * math.sqrt(self.shape)
+        n = 2 * (self.scale + 1) * math.sqrt(self.scale - 2)
+        d = (self.scale - 3) * math.sqrt(self.scale)
         return n/d
     def variance(self): 
         """Gives the variance of the sample."""
-        n = (self.location ** 2) * self.shape
-        d = (self.shape - 2) * ((self.shape - 1) ** 2)
+        n = (self.location ** 2) * self.scale
+        d = (self.scale - 2) * ((self.scale - 1) ** 2)
         return n/d
     def quantile1(self): 
         """Gives the 1st quantile of the sample."""
-        return self.location * (1.333 ** (1/self.shape))
+        return self.location * (1.333 ** (1/self.scale))
     def quantile3(self): 
         """Gives the 3rd quantile of the sample."""
-        return self.location * (4 ** (1/self.shape))
+        return self.location * (4 ** (1/self.scale))
     def qmean(self): 
         """Gives the quantile of the arithmetic mean of the sample."""
-        return 1 - (((self.shape - 1)/self.shape) ** self.shape)
+        return 1 - (((self.scale - 1) / self.scale) ** self.scale)
     def qmode(self): 
         """Gives the quantile of the mode of the sample."""
         return 0.0
     def random(self):
         """Gives a random number based on the distribution."""
-        return random.paretovariate(self.shape)   
+        return random.paretovariate(self.scale)   
 
     
 class PascalDistribution(Distribution):
@@ -2792,7 +2754,7 @@ class PowerFunctionDistribution(Distribution):
 
 
 class RademacherDistribution(Distribution):
-    def __init__(self, **parameters): 
+    def __init__(self): 
         """Constructor method. The parameters are used to construct the 
             probability distribution."""
         pass
@@ -2813,7 +2775,7 @@ class RademacherDistribution(Distribution):
         from x-h to x+h for continuous distribution."""
         if x == -1 or x == 1: return 0.5
         else: return 0.0
-    def inverseCDF(self, probability, start = 0.0, step = 0.01): 
+    def inverseCDF(self, probability, start=0.0, step=0.01): 
         """
         It does the reverse of CDF() method, it takes a probability value 
         and returns the corresponding value on the x-axis."""
@@ -2902,7 +2864,7 @@ class ReciprocalDistribution(Distribution):
 #        particular value of x, or the area under probability distribution 
 #        from x-h to x+h for continuous distribution."""
 #        raise DistributionFunctionError
-    def inverseCDF(self, probability, start = 0.0, step = 0.01): 
+    def inverseCDF(self, probability, start=0.0, step=0.01): 
         """
         It does the reverse of CDF() method, it takes a probability value 
         and returns the corresponding value on the x-axis."""
@@ -2958,19 +2920,14 @@ def SechSquaredDistribution(**parameters):
 
 
 class SemicircularDistribution(Distribution):
-    def __init__(self, **parameters): 
+    def __init__(self, location=0.0, scale=1.0): 
         """Constructor method. The parameters are used to construct the 
         probability distribution.
         
-        Parameter:
-        1. location (default = 0.0)
-        2. scale (default = 1.0)"""
-        try:
-            self.scale = parameters['scale']
-        except KeyError: self.scale = 1.0
-        try:
-            self.location = parameters['location']
-        except KeyError: self.location = 0.0
+        @param location: default = 0.0
+        @param scale: default = 1.0"""
+        self.location = location
+        self.scale = scale
     def CDF(self, x): 
         """
         Cummulative Distribution Function, which gives the cummulative 
@@ -2985,7 +2942,7 @@ class SemicircularDistribution(Distribution):
         x-h to x+h for continuous distribution."""
         return (2/(self.scale * PI)) * \
                 math.sqrt(1 - ((x - self.location)/self.scale)**2)
-    def inverseCDF(self, probability, start = 0.0, step = 0.01): 
+    def inverseCDF(self, probability, start=0.0, step=0.01): 
         """
         It does the reverse of CDF() method, it takes a probability value and 
         returns the corresponding value on the x-axis."""
@@ -3045,7 +3002,7 @@ class TriangularDistribution(Distribution):
 #        particular value of x, or the area under probability distribution 
 #        from x-h to x+h for continuous distribution."""
 #        raise DistributionFunctionError
-    def inverseCDF(self, probability, start = 0.0, step = 0.01): 
+    def inverseCDF(self, probability, start=0.0, step=0.01): 
         """
         It does the reverse of CDF() method, it takes a probability value 
         and returns the corresponding value on the x-axis."""
@@ -3111,7 +3068,7 @@ class WeiBullDistribution(Distribution):
 #        particular value of x, or the area under probability distribution 
 #        from x-h to x+h for continuous distribution."""
 #        raise DistributionFunctionError
-    def inverseCDF(self, probability, start = 0.0, step = 0.01): 
+    def inverseCDF(self, probability, start=0.0, step=0.01): 
         """
         It does the reverse of CDF() method, it takes a probability value and 
         returns the corresponding value on the x-axis."""
@@ -3159,7 +3116,7 @@ class WeiBullDistribution(Distribution):
 #        particular value of x, or the area under probability distribution 
 #        from x-h to x+h for continuous distribution."""
 #        raise DistributionFunctionError
-#    def inverseCDF(self, probability, start = 0.0, step = 0.01): 
+#    def inverseCDF(self, probability, start=0.0, step=0.01): 
 #        """
 #        It does the reverse of CDF() method, it takes a probability value 
 #        and returns the corresponding value on the x-axis."""

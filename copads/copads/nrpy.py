@@ -2,12 +2,12 @@
 This file contains Python implementations of the numerical functions 
 which are mainly (not entirely) derived from 
 
-Press, William H., Flannery, Brian P., Teukolsky, Saul A., and Vetterling, 
-William T. 1989. Numerical Recipes in Pascal. Cambridge University Press,
-Cambridge (ISBN 978-0521375160);
-Press, William H., Flannery, Brian P., Teukolsky, Saul A., and Vetterling, 
-William T. 1992. Numerical Recipes in C, 2nd edition. Cambridge University 
-Press, Cambridge (ISBN 978-0521431088)
+    - Press, William H., Flannery, Brian P., Teukolsky, Saul A., and Vetterling, 
+    William T. 1989. Numerical Recipes in Pascal. Cambridge University Press,
+    Cambridge (ISBN 978-0521375160)
+    - Press, William H., Flannery, Brian P., Teukolsky, Saul A., and Vetterling, 
+    William T. 1992. Numerical Recipes in C, 2nd edition. Cambridge University 
+    Press, Cambridge (ISBN 978-0521431088)
 
 Numerical Recipes in C, 2nd edition is freely browsable online at 
 http://www.nrbook.com/a/bookcpdf.php but is not intended as a substitution
@@ -32,6 +32,7 @@ of COPADS - if you intend to call these functions directly, the simplest way
 is to own a copy of both NRP and NRC2.
 
 Copyright (c) Maurice H.T. Ling <mauriceling@acm.org>
+
 Date created: 19th March 2008
 """
 
@@ -250,7 +251,6 @@ def bessk(n, x):
 def bessk0(x):
     """Bessel function K-sub-0(x). @see: NRP 6.5
     
-    @param n: integer, more than 1 - n-th Bessel function 
     @param x: positive integer
     @return: n-th Bessel function of x"""
     if x <= 2.0:
@@ -264,10 +264,9 @@ def bessk0(x):
                 (-0.7832358e-1 + y * (0.2189568e-1 + y * (-0.1062446e-1 + \
                 y * (0.587872e-2 + y * (-0.25154e-2 + y * 0.53208e-3))))))
     
-def bessk1():
+def bessk1(x):
     """Bessel function K-sub-1(x). @see: NRP 6.5
     
-    @param n: integer, more than 1 - n-th Bessel function 
     @param x: positive integer
     @return: n-th Bessel function of x"""
     if x <= 2.0:
@@ -689,12 +688,12 @@ def moment(data):
     
     @param data: a 1-dimensional list of numerical values
     @return: (ave, adev, sdev, var, skew, kurt) where 
-            ave = mean
-            adev = average deviation
-            sdev = standard deviation
-            var = variance
-            skew = skew
-            kurt = kurtosis
+        - ave = mean
+        - adev = average deviation
+        - sdev = standard deviation
+        - var = variance
+        - skew = skew
+        - kurt = kurtosis
     """
     s = 0.0
     for d in data: s = s + d

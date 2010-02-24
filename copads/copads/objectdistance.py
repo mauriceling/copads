@@ -4,13 +4,14 @@ between 2 objects. Generally, the lower boundary of similar coefficient
 signifies complete difference (no similarity) while the upper boundary 
 (if any) signifies complete similarity (no difference).
 
-In the following formulae, the following notations will be used:
-A = found in both 'original' and 'test'
-B = found in 'original' only
-C = found in 'test' only
-D = not found in either 'original' or 'test'
+In the following formulae, the following notations will be used
+    - A = found in both 'original' and 'test'
+    - B = found in 'original' only
+    - C = found in 'test' only
+    - D = not found in either 'original' or 'test'
 
 Copyright (c) Maurice H.T. Ling <mauriceling@acm.org>
+
 Date created: 17th August 2005
 """
 
@@ -61,7 +62,7 @@ def Jaccard(original, test, absent=0, type='Set'):
     """
     Jaccard coefficient for nominal or ordinal data.
     
-    Coefficient: A / (A + B + C)
+    Coefficient: M{A / (A + B + C)}
     
     @param original: list of original data
     @param test: list of data to test against original
@@ -77,7 +78,7 @@ def Sokal_Michener(original, test, absent=0, type='Set'):
     """
     Sokal and Michener coefficient for nominal or ordinal data.
          
-    Coefficient: (A + D) / (A + B + C + D)
+    Coefficient: M{(A + D) / (A + B + C + D)}
         
     @param original: list of original data
     @param test: list of data to test against original
@@ -96,7 +97,7 @@ def Matching(original, test, absent=0, type='Set'):
     """
     Matching coefficient for nominal or ordinal data
 
-    coefficient: (A + D) / (2A + B + C)
+    Coefficient: M{(A + D) / (2A + B + C)}
     
     @param original: list of original data
     @param test: list of data to test against original
@@ -112,7 +113,7 @@ def Dice(original, test, absent=0, type='Set'):
     """
     Dice coefficient for nominal or ordinal data.
     
-    Coefficient: 2A / (2A + B + C)
+    Coefficient: M{2A / (2A + B + C)}
     
     @param original: list of original data
     @param test: list of data to test against original
@@ -129,7 +130,7 @@ def Ochiai(original, test, absent=0, type='Set'):
     """
     Ochiai coefficient for nominal or ordinal data.
     
-    Coefficient: 2A / sqrt((A + B)(A + C)))
+    Coefficient: M{2A / sqrt((A + B)(A + C)))}
     
     @param original: list of original data
     @param test: list of data to test against original
@@ -147,7 +148,7 @@ def Ochiai2(original, test, absent=0, type='Set'):
     the presence of regions whereby both original and test are not 
     present.
     
-    Coefficient: (A * D) / sqrt((A + B)(A + C)(D + B)(D + C))
+    Coefficient: M{(A * D) / sqrt((A + B)(A + C)(D + B)(D + C))}
     
     @param original: list of original data
     @param test: list of data to test against original
@@ -165,7 +166,7 @@ def Anderberg(original, test, absent=0, type='Set'):
     """
     Anderberg coefficient for nominal or ordinal data.
     
-    Distance: A / (A + 2(B + C)
+    Coefficient: M{A / (A + 2(B + C)}
     
     @param original: list of original data
     @param test: list of data to test against original
@@ -181,7 +182,7 @@ def Kulczynski2(original, test, absent=0, type='Set'):
     """
     Second Kulczynski coefficient for nominal or ordinal data.
     
-    Coefficient: ((A / (A + B)) + (A / (A + C))) / 2
+    Coefficient: M{((A / (A + B)) + (A / (A + C))) / 2}
         
     @param original: list of original data
     @param test: list of data to test against original
@@ -199,7 +200,7 @@ def Kulczynski(original, test, absent=0, type='Set'):
     """
     First Kulczyski coefficient for nominal or ordinal data.
     
-    Coefficient: A / (B + C)
+    Coefficient: M{A / (B + C)}
     
     @param original: list of original data
     @param test: list of data to test against original
@@ -215,7 +216,7 @@ def Forbes(original, test, absent=0, type='Set'):
     """
     Forbes coefficient for nominal or ordinal data.
     
-    Coefficient: A(A + B + C + D) / ((A + B)(A + C))
+    Coefficient: M{A(A + B + C + D) / ((A + B)(A + C))}
         
     @param original: list of original data
     @param test: list of data to test against original
@@ -233,7 +234,7 @@ def Hamann(original, test, absent=0, type='Set'):
     """
     Hamann coefficient for nominal or ordinal data.
     
-    Coefficient: ((A + D) - (B + C)) / (A + B + C + D)
+    Coefficient: M{((A + D) - (B + C)) / (A + B + C + D)}
         
     @param original: list of original data
     @param test: list of data to test against original
@@ -250,7 +251,7 @@ def Simpson(original, test, absent=0, type='Set'):
     """
     Simpson coefficient for nominal or ordinal data.
     
-    Coefficient: A / min(A + B, A + C)
+    Coefficient: M{A / min(A + B, A + C)}
         
     @param original: list of original data
     @param test: list of data to test against original
@@ -266,7 +267,7 @@ def Russel_Rao(original, test, absent=0, type='Set'):
     """
     Russel and Rao coefficient for nominal or ordinal data.
     
-    Coefficient: A / (A + B + C + D)
+    Coefficient: M{A / (A + B + C + D)}
         
     @param original: list of original data
     @param test: list of data to test against original
@@ -282,7 +283,7 @@ def Roger_Tanimoto(original, test, absent=0, type='Set'):
     """
     Roger and Tanimoto coefficient for nominal or ordinal data.
     
-    Coefficient: (A + D) / (A + 2B + 2C + D)
+    Coefficient: M{(A + D) / (A + 2B + 2C + D)}
         
     @param original: list of original data
     @param test: list of data to test against original
@@ -299,7 +300,7 @@ def Sokal_Sneath(original, test, absent=0, type='Set'):
     """
     Sokal and Sneath coefficient for nominal or ordinal data.
     
-    Coefficient: A / (A + 2B + 2C)
+    Coefficient: M{A / (A + 2B + 2C)}
         
     @param original: list of original data
     @param test: list of data to test against original
@@ -316,7 +317,7 @@ def Sokal_Sneath2(original, test, absent=0, type='Set'):
     """
     Sokal and Sneath 2 coefficient for nominal or ordinal data.
     
-    Coefficient: (2A + 2D) / (2A + B + C + 2D)
+    Coefficient: M{(2A + 2D) / (2A + B + C + 2D)}
         
     @param original: list of original data
     @param test: list of data to test against original
@@ -334,7 +335,7 @@ def Sokal_Sneath3(original, test, absent=0, type='Set'):
     """
     Sokal and Sneath 3 coefficient for nominal or ordinal data.
     
-    Coefficient: (A + D) / (B + C)
+    Coefficient: M{(A + D) / (B + C)}
         
     @param original: list of original data
     @param test: list of data to test against original
@@ -351,7 +352,7 @@ def Buser(original, test, absent=0, type='Set'):
     Buser coefficient (also known as Baroni-Urbani coefficient) 
     for nominal or ordinal data.
     
-    Coefficient: (sqrt(A * D) + A) / (sqrt(A * D) + A + B + C)
+    Coefficient: M{(sqrt(A * D) + A) / (sqrt(A * D) + A + B + C)}
         
     @param original: list of original data
     @param test: list of data to test against original
@@ -369,7 +370,7 @@ def Fossum(original, test, absent=0, type='Set'):
     Fossum coefficient for nominal or ordinal data.
     
     Coefficient: 
-    ((A + B + C + D)(A - 0.5)^2) / ((A + B)(A + C))
+    M{((A + B + C + D)(A - 0.5)^2) / ((A + B)(A + C))}
         
     @param original: list of original data
     @param test: list of data to test against original
@@ -388,7 +389,7 @@ def YuleQ(original, test, absent=0, type='Set'):
     Yule Q coefficient (also known as First Yule coefficient) for 
     nominal or ordinal data.
     
-    Coefficient: ((A * D) - (B * C)) / ((A * D) + (B * C))
+    Coefficient: M{((A * D) - (B * C)) / ((A * D) + (B * C))}
         
     @param original: list of original data
     @param test: list of data to test against original
@@ -408,7 +409,7 @@ def YuleY(original, test, absent=0, type='Set'):
     nominal or ordinal data.
     
     Coefficient: 
-    (sqrt(A * D) - sqrt(B * C)) / (sqrt(A * D) + sqrt(B * C))
+    M{(sqrt(A * D) - sqrt(B * C)) / (sqrt(A * D) + sqrt(B * C))}
         
     @param original: list of original data
     @param test: list of data to test against original
@@ -426,8 +427,8 @@ def Mcconnaughey(original, test, absent=0, type='Set'):
     """
     McConnaughey coefficient for nominal or ordinal data.
     
-    Coefficient: (A^2 - (B * C)) / (A + B)(A + C)
-        
+    Coefficient: M{(A^2 - (B * C)) / (A + B)(A + C)}
+    
     @param original: list of original data
     @param test: list of data to test against original
     @param absent: user-defined identifier for absent of region, 
@@ -445,8 +446,8 @@ def Stiles(original, test, absent=0, type='Set'):
     Stiles coefficient for nominal or ordinal data.
     
     Coefficient: 
-    log10(((A + B + C + D)(|(A * D) - (B * C)| - ((A + B + C + D) / 2)) ^ 2) /
-    (A + B)(A + C)(B + D)(C + D))
+    M{log10(((A + B + C + D)(|(A * D) - (B * C)| - ((A + B + C + D) / 2)) ^ 2) /
+    (A + B)(A + C)(B + D)(C + D))}
         
     @param original: list of original data
     @param test: list of data to test against original
@@ -468,7 +469,7 @@ def Pearson(original, test, absent=0, type='Set'):
     Pearson coefficient for nominal or ordinal data.
     
     Coefficient: 
-    ((A * D) - (B * C)) / (A + B)(A + C)(B + D)(C + D)
+    M{((A * D) - (B * C)) / (A + B)(A + C)(B + D)(C + D)}
         
     @param original: list of original data
     @param test: list of data to test against original
@@ -488,7 +489,7 @@ def Dennis(original, test, absent=0, type='Set'):
     Dennis coefficient for nominal or ordinal data.
     
     Coefficient: 
-    ((A * D) - (B * C)) / (A + B + C + D)(A + B)(A + C)
+    M{((A * D) - (B * C)) / (A + B + C + D)(A + B)(A + C)}
         
     @param original: list of original data
     @param test: list of data to test against original
@@ -507,7 +508,7 @@ def Gower_Legendre(original, test, absent=0, type='Set'):
     """
     Gower and Legendre coefficient for nominal or ordinal data.
     
-    Coefficient: (A + D) / ((0.5 * (B + C)) + A + D)
+    Coefficient: M{(A + D) / ((0.5 * (B + C)) + A + D)}
         
     @param original: list of original data
     @param test: list of data to test against original
@@ -527,10 +528,10 @@ def Tulloss(original, test, absent=0, type='Set'):
     Tulloss coefficient for nominal or ordinal data.
     
     Coefficient: 
-    sqrt(U * S * R)
-    U = log(1 + ((min(B, C) + A) / (max(B, C) + A))) / log2
-    S = 1 / sqrt(log(2 + (min(B, C) / (A + 1))) / log2)
-    R = log(1 + A / (A + B))log(1 + A / (A + C)) / log2log2
+    M{sqrt(U * S * R)}
+        - M{U = log(1 + ((min(B, C) + A) / (max(B, C) + A))) / log2}
+        - M{S = 1 / sqrt(log(2 + (min(B, C) / (A + 1))) / log2)}
+        - M{R = log(1 + A / (A + B))log(1 + A / (A + C)) / log2log2}
         
     @param original: list of original data
     @param test: list of data to test against original
@@ -570,7 +571,7 @@ def Euclidean(original, test):
     """
     Euclidean coefficient for interval or ratio data.
     
-    Coefficient: sqrt(sum(((A + B)(i) - (A + C)(i)) ^ 2))
+    Coefficient: M{sqrt(S{sum}(((A + B)(i) - (A + C)(i)) ^ 2))}
     
     euclidean(original, test) -> euclidean distance between original 
     and test. Adapted from BioPython
@@ -592,7 +593,7 @@ def Minkowski(original, test, power=3):
     """
     Minkowski coefficient for interval or ratio data.
     
-    Coefficient: power-th root(sum(((A + B)(i) - (A + C)(i)) ^ power))
+    Coefficient: M{power-th root(S{sum}(((A + B)(i) - (A + C)(i)) ^ power))}
     
     Minkowski Distance is a generalized absolute form of Euclidean 
     Distance. Minkowski Distance = Euclidean Distance when power = 2
@@ -613,7 +614,7 @@ def Manhattan(original, test):
     """
     Manhattan coefficient for interval or ratio data.
     
-    Coefficient: sum(abs((A + B)(i) - (A + C)(i)))
+    Coefficient: M{S{sum}(abs((A + B)(i) - (A + C)(i)))}
     
     Manhattan Distance is also known as City Block Distance. It is 
     essentially summation of the absolute difference between each 
@@ -637,7 +638,7 @@ def Canberra(original, test):
     Canberra coefficient for interval or ratio data.
     
     Coefficient: 
-    sum(abs((A + B)(i) - (A + C)(i)) / abs((A + B)(i) + (A + C)(i)))
+    M{S{sum}(abs((A + B)(i) - (A + C)(i)) / abs((A + B)(i) + (A + C)(i)))}
     
     @see: Lance GN and Williams WT. 1966. Computer programs for 
     hierarchical polythetic classification. Computer Journal 9: 60-64.
@@ -660,7 +661,8 @@ def Bray_Curtis(original, test):
     similarity (no difference).
     
     Coefficient:
-    1 - sum(abs((A + B)(i) - (A + C)(i))) / (sum((A + B)(i)) + sum((A + C)(i)))
+    M{1 - S{sum}(abs((A + B)(i) - (A + C)(i))) / 
+    (S{sum}((A + B)(i)) + S{sum}((A + C)(i)))}
     
     @see: Bray JR and Curtis JT. 1957. An ordination of the upland 
     forest communities of S. Winconsin. Ecological Monographs 27: 
@@ -679,7 +681,8 @@ def Cosine(original, test):
     Cosine coefficient for interval or ratio data.
     
     Coefficient: 
-    sum(abs((A + B)(i) * (A + C)(i))) / (sum((A + B) ^ 2) * sum((A + C) ^ 2))
+    M{S{sum}(abs((A + B)(i) * (A + C)(i))) / 
+    (S{sum}((A + B) ^ 2) * S{sum}((A + C) ^ 2))}
     
     @param original: list of original data
     @param test: list of data to test against original"""
@@ -698,8 +701,9 @@ def Tanimoto(original, test):
     Tanimoto coefficient for interval or ratio data.
     
     Coefficient: 
-    sum(abs((A + B)(i) * (A + C)(i))) /
-    (sum((A + B) ^ 2) + sum((A + C) ^ 2) - sum(abs((A + B)(i) * (A + C)(i))))
+    M{S{sum}(abs((A + B)(i) * (A + C)(i))) /
+    (S{sum}((A + B) ^ 2) + S{sum}((A + C) ^ 2) - 
+    S{sum}(abs((A + B)(i) * (A + C)(i))))}
     
     @param original: list of original data
     @param test: list of data to test against original"""

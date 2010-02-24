@@ -2,6 +2,7 @@
 File containing classes for use in matrix algorithms.
 
 Copyright (c) Maurice H.T. Ling <mauriceling@acm.org>
+
 Date created: 19th March 2008
 """
 
@@ -15,14 +16,14 @@ from copadsexceptions import MatrixDeterminantError
 
 class Vector(list):
     """
-A list based vector class that supports elementwise mathematical operations
+    A list based vector class that supports elementwise mathematical operations
 
-In this version, the vector call inherits from list; this 
-requires Python 2.2 or later.
+    In this version, the vector call inherits from list; this 
+    requires Python 2.2 or later.
 
-Adapted from http://aspn.activestate.com/ASPN/Cookbook/Python/Recipe/52272
-Original author: A. Pletzer
-"""
+    Adapted from http://aspn.activestate.com/ASPN/Cookbook/Python/Recipe/52272
+    Original author: A. Pletzer
+    """
 
     def __getslice__(self, i, j):
         try:
@@ -33,7 +34,7 @@ Original author: A. Pletzer
         
     def __add__(self, other): 
         return Vector(map(lambda x, y: x+y, self, other))
-
+        
     def __neg__(self): return Vector([-x for x in self])
     
     def __sub__(self, other): 
@@ -97,53 +98,54 @@ Original author: A. Pletzer
     
 
 class Matrix:
-    """A linear algebra matrix
+    """
+    A linear algebra matrix
 
     This class defines a generic matrix and the basic matrix operations from
     linear algebra.  An instance of this class is a single matrix with
     particular values.
     
-Arithmetic operations, trace, determinant, and minors are defined. This is a 
-lightweight alternative to a numerical Python package for people who need to do 
-basic linear algebra.
+    Arithmetic operations, trace, determinant, and minors are defined. This is a 
+    lightweight alternative to a numerical Python package for people who need to do 
+    basic linear algebra.
 
-Vectors are implemented as 1xN and Nx1 matricies.  There is no separate vector
-class.  This implementation enforces the distinction between row and column
-vectors.
+    Vectors are implemented as 1xN and Nx1 matricies.  There is no separate vector
+    class.  This implementation enforces the distinction between row and column
+    vectors.
 
-Indexing is zero-based, i.e. the upper left-hand corner of a matrix is element
-(0,0), not element (1,1).
+    Indexing is zero-based, i.e. the upper left-hand corner of a matrix is element
+    (0,0), not element (1,1).
 
-Matricies are stored as a list of lists, where the top level lists are the rows
-and the sub-lists are the columns.  Because of the way Python handles list
-references, you have be careful when copying matrix objects.  If you have a
-matrix a, assign b=a, and then change values in b, you will change values in a
-as well.  Matrix copying should be done with copy.deepcopy.
+    Matricies are stored as a list of lists, where the top level lists are the rows
+    and the sub-lists are the columns.  Because of the way Python handles list
+    references, you have be careful when copying matrix objects.  If you have a
+    matrix a, assign b=a, and then change values in b, you will change values in a
+    as well.  Matrix copying should be done with copy.deepcopy.
 
-This implementation has no memory-saving optimization for sparse matricies.  A
-derived class may implement a more sophisticated storage method by overriding 
-the __getitem__ and __setitem__ functions.
+    This implementation has no memory-saving optimization for sparse matricies.  A
+    derived class may implement a more sophisticated storage method by overriding 
+    the __getitem__ and __setitem__ functions.
 
-Determinants are taken by expanding by minors on the top row.  The private 
-functions supplied for expansion by minors are more generic than what is needed
-by this implementation.  They may be used by a derived class that wishes to do
-more efficient expansion of sparse matricies.
+    Determinants are taken by expanding by minors on the top row.  The private 
+    functions supplied for expansion by minors are more generic than what is needed
+    by this implementation.  They may be used by a derived class that wishes to do
+    more efficient expansion of sparse matricies.
 
-By default, Matrix elements are members of the complex field, but if you want
-to perform linear algebra on something other than numbers you may redefine
-Matrix.null_element, Matrix.identity_element, and Matrix.inverse_element and 
-override the is_scalar_element function.
+    By default, Matrix elements are members of the complex field, but if you want
+    to perform linear algebra on something other than numbers you may redefine
+    Matrix.null_element, Matrix.identity_element, and Matrix.inverse_element and 
+    override the is_scalar_element function.
 
-References:
-    George Arfken, "Mathematical Methods for Physicists", 3rd ed. San Diego:
-Academic Press Inc. (1985)
+    References
+    George Arfken, "Mathematical Methods for Physicists", 3rd ed. San Diego.
+    Academic Press Inc. (1985)
 
-Adapted from: http://aspn.activestate.com/ASPN/Cookbook/Python/Recipe/189971
-Original author: Bill McNeill <billmcn@speakeasy.net>
+    Adapted from: http://aspn.activestate.com/ASPN/Cookbook/Python/Recipe/189971
+    Original author: Bill McNeill <billmcn@speakeasy.net>
 
-Maintainer: Maurice H.T. Ling <mauriceling@acm.org>
-Copyright (c) 2005 Maurice H.T. Ling <mauriceling@acm.org>
-Date: 1st May 2005
+    Maintainer: Maurice H.T. Ling <mauriceling@acm.org>
+    Copyright (c) 2005 Maurice H.T. Ling <mauriceling@acm.org>
+    Date: 1st May 2005
     """
     null_element = 0
     identity_element = 1
@@ -154,38 +156,37 @@ Date: 1st May 2005
 
         A matrix can be created in three ways.
 
-        1. A single integer argument is supplied.  The constructor creates a
-        null square matrix of that size.  For example 
+            1. A single integer argument is supplied. The constructor creates a
+            null square matrix of that size.  For example 
 
             Matrix(2)
 
-        creates the following matrix
+            creates the following matrix
 
             0    0
             0    0
 
-        2. Two integer arguments are supplied.  The constructor creates a null
-        matrix of size first argument x second argument.  For example
+            2. Two integer arguments are supplied.  The constructor creates a null
+            matrix of size first argument x second argument.  For example
 
             Matrix(2, 3)
 
-        creates the following matrix
+            creates the following matrix
 
             0    0    0
             0    0    0
 
-        3. A list of lists is supplied.  It represents a set of initial matrix
-        values.  Each element is a row and each sub-list is a column.
-        For example
+            3. A list of lists is supplied.  It represents a set of initial matrix
+            values.  Each element is a row and each sub-list is a column.
+            For example
 
             Matrix([[1,2,3], [4,5,6], [7,8,9]])
 
-        creates the following matrix
+            creates the following matrix
 
             1    2    3
             4    5    6
             7    8    9
-
         """
         if not (len(args) == 1 or len(args) == 2):
             raise TypeError("Matrix() takes 1 or 2 arguments (%d given)") % \
@@ -253,7 +254,7 @@ Date: 1st May 2005
 
         For example, to get the value of element 1,3 say
 
-            m[(1,3)]
+        m[(1,3)]
         """
         return self.m[row][col]
 
@@ -262,36 +263,31 @@ Date: 1st May 2005
 
         For example, to set the value of element 1,3 to 5 say
 
-            m[(1,3)] = 5
+        m[(1,3)] = 5
         """
         self.m[row][col] = value
 
     def rows(self):
-        """The number of rows in the matrix
-        """
+        """The number of rows in the matrix"""
         return len(self.m)
 
     def cols(self):
-        """The number of columns in the matrix
-        """
+        """The number of columns in the matrix"""
         return len(self.m[0])
 
     def row(self, i):
-        """The ith row of the matrix
-        """
+        """The ith row of the matrix"""
         return self.m[i]
 
     def col(self, j):
-        """The jth row of the matrix
-        """
+        """The jth row of the matrix"""
         r = []
         for row in self.m:
             r.append(row[j])
         return r
 
     def __add__(self, other):
-        """Add matrix self+other
-        """
+        """Add matrix self + other"""
         if not isinstance(other, Matrix):
             raise TypeError("Cannot add a matrix to type %s" % type(other))
         if not (self.cols() == other.cols() and self.rows() == other.rows()):
@@ -304,13 +300,11 @@ Date: 1st May 2005
         return Matrix(r)
 
     def __neg__(self):
-        """Negate the current matrix
-        """
+        """Negate the current matrix"""
         return self.inverse_element*self
 
     def __sub__(self, other):
-        """Subtract matrix self-other
-        """
+        """Subtract matrix self - other"""
         return self + -other
 
     def __mul__(self, other):
@@ -369,31 +363,26 @@ Date: 1st May 2005
             return Matrix(r)
 
     def isRowVector(self):
-        """Is the matrix a row vector?
-        """
+        """Is the matrix a row vector?"""
         return self.rows() == 1 and self.cols() > 1
 
     def isColumnVector(self):
-        """Is the matrix a column vector?
-        """
+        """Is the matrix a column vector?"""
         return self.cols() == 1 and self.rows() > 1
 
     def isSquare(self):
-        """Is the matrix square?
-        """
+        """Is the matrix square?"""
         return self.rows() == self.cols()
 
     def transpose(self):
-        """The transpose of the matrix
-        """
+        """The transpose of the matrix"""
         r = []
         for col in xrange(self.cols()):
             r.append(self.col(col))
         return Matrix(r)
 
     def trace(self):
-        """The trace of the matrix
-        """
+        """The trace of the matrix"""
         if not self.is_square():
             raise MatrixTraceError()
         t = 0
@@ -402,8 +391,7 @@ Date: 1st May 2005
         return t
 
     def determinant(self):
-        """The determinant of the matrix
-        """
+        """The determinant of the matrix"""
         if not self.is_square():
             raise MatrixDeterminantError()
         # Calculate 2x2 determinants directly.
@@ -492,13 +480,13 @@ Date: 1st May 2005
 class SparseMatrix(dict):
     """
     A sparse matrix class based on a dictionary, supporting matrix (dot)
-product and a conjugate gradient solver. 
+    product and a conjugate gradient solver. 
 
-In this version, the sparse class inherits from the dictionary; this
-requires Python 2.2 or later.
+    In this version, the sparse class inherits from the dictionary; this
+    requires Python 2.2 or later.
 
-Adapted from http://aspn.activestate.com/ASPN/Cookbook/Python/Recipe/52275
-Original author: Alexander Pletzer
+    Adapted from http://aspn.activestate.com/ASPN/Cookbook/Python/Recipe/52275
+    Original author: Alexander Pletzer
 
     Dictionary storage format { (i,j): value, ... }
     where (i,j) are the matrix indices
@@ -649,7 +637,6 @@ Original author: Alexander Pletzer
                 return x
                 
     def biCGsolve(self, x0, b, tol=1.0e-10, nmax = 1000):
-        
         """
         Solve self*x = b and return x using the bi-conjugate gradient method
         """
@@ -699,10 +686,9 @@ Original author: Alexander Pletzer
 
     def save(self, filename, OneBased=0):
         """
-        Save matrix in file <filaname> using format:
+        Save matrix in file <filaname> using format
         OneBased, nrow, ncol, nnonzeros
         [ii, jj, data]
-
         """
         m = n = 0
         nnz = len(self)
@@ -836,14 +822,14 @@ def isSparse(x):
     return hasattr(x, '__class__') and x.__class__ is SparseMatrix
 
 def smTranspose(a):
-    " transpose "
+    """transpose"""
     new = SparseMatrix({})
     for ij in a:
         new[(ij[1], ij[0])] = a[ij]
     return new
 
 def smDotDot(y, a, x):
-    " double dot product y^+ *A*x "
+    """double dot product y^+ *A*x """
     if Vector.isVector(y) and isSparse(a) and Vector.isVector(x):
         res = 0.
         for ij in a.keys():
@@ -854,7 +840,7 @@ def smDotDot(y, a, x):
         print 'sparse::Error: dotDot takes vector, sparse , vector as args'
 
 def smDot(a, b):
-    " vector-matrix, matrix-vector or matrix-matrix product "
+    """vector-matrix, matrix-vector or matrix-matrix product"""
     if isSparse(a) and isVector(b):
         new = v_zeros(a.size()[0])
         for ij in a.keys():

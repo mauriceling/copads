@@ -19,18 +19,15 @@ ActiveState had provided an online platform for Python Recipes which I found to
 be useful and can see how some of these recipes can be merged. Thus, COPADS is 
 borned.
 
-Project website: http://copads.sf.net
+Project website: U{http://copads.sf.net}
+
+Licence: Unless specified otherwise, all parts of this package, except those 
+adapted, are covered under the Lesser General Public License, version 3. 
+U{http://www.gnu.org/copyleft/lesser.html}
 """
 
 __version__ = '0.3'
 
-__author__ = "\
-Maurice H.T. Ling <mauriceling@acm.org>"
+__author__ = 'Maurice H.T. Ling <mauriceling@acm.org>'
 
-__copyright__ = "\
-(c) 2007-2010, Maurice H.T. Ling."
-
-__licence__ = "\
-Unless specified otherwise, all parts of this package, except those adapted, \
-are covered under the Lesser General Public License, version 3. \
-http://www.gnu.org/copyleft/lesser.html"
+__copyright__ = '(c) 2007-2010, Maurice H.T. Ling.'

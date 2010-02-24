@@ -1,40 +1,41 @@
 """
-File containing all the exceptions defined for CoPADS. 
+File containing all the exceptions defined for COPADS. 
 
-CopadsError
-|- MatrixError
-|  |- MatrixArithmeticError
-|  |  |- MatrixMultiplicationError
-|  |  |- MatrixAdditionError
-|  |- MatrixSquareError
-|     |- MatrixTraceError
-|     |- MatrixMinorError
-|     |- MatrixDeterminantError  
-|- GraphError
-|  |- EdgeNotFoundError
-|  |- VertexNotFoundError
-|  |- UnknownGraphMatrixError
-|  |  |- NotAdjacencyGraphMatrixError
-|  |- GraphEdgeSizeMismatchError
-|- StatisticsError
-|  |- DistributionError
-|  |  |- NormalDistributionTypeError
-|  |- DistributionParameterError
-|  |- DistributionFunctionError
-|- DistanceError
-|  |- DistanceInputSizeError
-|- TreeError
-|  |- TreeNodeTypeError
-|- FunctionParameterTypeError
-|- FunctionParameterValueError
-|- ArrayError
-|- MaxIterationException
+    - CopadsError
+        - MatrixError
+            - MatrixArithmeticError
+                - MatrixMultiplicationError
+            - MatrixAdditionError
+            - MatrixSquareError
+            - MatrixTraceError
+            - MatrixMinorError
+            - MatrixDeterminantError  
+        - GraphError
+            - EdgeNotFoundError
+            - VertexNotFoundError
+            - UnknownGraphMatrixError
+                - NotAdjacencyGraphMatrixError
+            - GraphEdgeSizeMismatchError
+        - StatisticsError
+            - DistributionError
+                - NormalDistributionTypeError
+            - DistributionParameterError
+            - DistributionFunctionError
+        - DistanceError
+            - DistanceInputSizeError
+        - TreeError
+            - TreeNodeTypeError
+        - FunctionParameterTypeError
+        - FunctionParameterValueError
+        - ArrayError
+        - MaxIterationException
 
-Credits:
-    MatrixError subclasses 
+Credits
+    - MatrixError subclasses 
     (http://aspn.activestate.com/ASPN/Cookbook/Python/Recipe/189971)
 
 Copyright (c) Maurice H.T. Ling <mauriceling@acm.org>
+
 Date created: 1st May 2005
 """
 

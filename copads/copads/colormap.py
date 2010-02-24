@@ -6,9 +6,7 @@ a colour tuple (red, green, blue). Light blue is cold (low magnitude)
 and yellow is hot (high magnitude).
 
 Adapted from http://aspn.activestate.com/ASPN/Cookbook/Python/Recipe/52273
-Original author: Alexander Pletzer
-
-"""
+Original author: Alexander Pletzer"""
 import math
 
 def floatRgb(mag, cmin, cmax):

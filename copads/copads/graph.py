@@ -2,6 +2,7 @@
 File containing classes for use in graph algorithms.
 
 Copyright (c) Maurice H.T. Ling <mauriceling@acm.org>
+
 Date created: 17th August 2005
 """
 
@@ -133,7 +134,7 @@ class Graph:
         Checks whether each element in vlist is a vertex (node) of
         the graph.
         
-        @param: list of vertices
+        @param vlist: list of vertices
         @return: dictionary of <element of vlist> : <True | False>
         """
         result = {}
