@@ -21,7 +21,7 @@ from statisticsdistribution import Distribution
 from copadsexceptions import FunctionParameterTypeError
 from copadsexceptions import FunctionParameterValueError
 from operations import summation
-import NRPy
+import nrpy
 
 class SingleSample:
     data = None
@@ -149,7 +149,7 @@ class SingleSample:
         self.summary['stdev'] = self.summary['variance'] ** 0.5
         self.summary['variation'] = self.variation(self.data)
         self.summary['range'] = self.range(self.data)
-        self.summary['median'] = NRPy.mdian1(self.data)
+        self.summary['median'] = nrpy.mdian1(self.data)
         #self.summary['midrange'] = self.midrange(self.data)
     
     
