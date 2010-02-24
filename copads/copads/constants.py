@@ -3,21 +3,21 @@ List of constant numbers
 
     - CGOLD: 2 - GOLD
     - GAMMA: Euler's gamma constant
-    - GOLD: golden mean, also known as golden ratio ((1 + Sqrt(5))/2)
+    - GOLD: golden mean, also known as golden ratio ((1 + sqrt(5))/2)
     - INVLN10: inverse of natural logarithm of ten (1/ln(10))
-    - INVLN2: inverse of natural logarithm of t20 (1/ln(2))
-    - INVPI180: inverse of PI180, also means 180 divide by PI
-    - INVSQRT2PI: inverse of SQRT2PI (1/(SQRT(2PI)))
-    - INV2PI: inverse of 2xPI
+    - INVLN2: inverse of natural logarithm of 2 (1/ln(2))
+    - INVPI180: inverse of PI180, also means 180 divide by S{pi}
+    - INVSQRT2PI: inverse of SQRT2PI (1/(SQRT(2S{pi})))
+    - INV2PI: inverse of 2S{pi}
     - LN10: natural logarithm of 10
     - LN2: natural logarithm of 2
-    - LNPI: natural logarithm of PI
-    - PI: ratio of circumference of a circle to its diameter (pi)
-    - PI2: 2xPI
-    - PI180: PI divided by 180
-    - PIDIV2: PI divided by 2
+    - LNPI: natural logarithm of S{pi}
+    - PI: ratio of circumference of a circle to its diameter (S{pi})
+    - PI2: 2S{pi}
+    - PI180: S{pi} divided by 180
+    - PIDIV2: S{pi} divided by 2
     - SQRT2: square root of 2
-    - SQRT2PI: square root of 2xPI
+    - SQRT2PI: square root of 2S{pi}
 
 Copyright (c) Maurice H.T. Ling <mauriceling@acm.org>
 
