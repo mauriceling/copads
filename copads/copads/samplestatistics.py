@@ -19,7 +19,7 @@ input):
 import math
 from statisticsdistribution import Distribution
 from copadsexceptions import FunctionParameterTypeError
-from eopadsexceptions import FunctionParameterValueError
+from copadsexceptions import FunctionParameterValueError
 from operations import summation
 import NRPy
 
