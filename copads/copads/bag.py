@@ -1,3 +1,7 @@
+"""
+Bag Data Structures and Algorithms.
+"""
+
 from operator import itemgetter
 from heapq import nlargest
 

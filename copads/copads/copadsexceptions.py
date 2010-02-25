@@ -1,5 +1,5 @@
 """
-File containing all the exceptions defined for COPADS. 
+Exceptions Defined for COPADS. 
 
     - CopadsError
         - MatrixError

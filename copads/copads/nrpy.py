@@ -1,7 +1,7 @@
 """
-This file contains Python implementations of the numerical functions 
-which are mainly (not entirely) derived from 
+Numerical Recipes in Python.
 
+References
     - Press, William H., Flannery, Brian P., Teukolsky, Saul A., and Vetterling, 
     William T. 1989. Numerical Recipes in Pascal. Cambridge University Press,
     Cambridge (ISBN 978-0521375160)

@@ -1,5 +1,5 @@
 """
-Collection of hypothesis testing routines.
+Statistical Hypothesis Testing Routines.
 
 Each routine will return a 3-element tuple: (result, statistic, critical)
 where

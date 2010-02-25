@@ -1,5 +1,5 @@
 """
-File containing the functions for various statistical distributions.
+Classes for Various Statistical Distributions.
 
 References:
     - Regress+ A compendium of common probability distributions (version 2.3)
@@ -346,6 +346,8 @@ class BinomialDistribution(Distribution):
 
 
 class CauchyDistribution(Distribution):
+    """Class for Cauchy Distribution."""
+    
     def __init__(self, location=0.0, scale=1.0): 
         """Constructor method. The parameters are used to construct the 
         probability distribution.
@@ -354,19 +356,22 @@ class CauchyDistribution(Distribution):
         @param scale: S{lambda}; default = 1.0"""
         self.location = location
         self.scale = scale
+    
     def CDF(self, x): 
         """
         Cummulative Distribution Function, which gives the cummulative 
         probability (area under the probability curve) from -infinity or 0 to 
         a give x-value on the x-axis where y-axis is the probability."""
-        return 0.5 + 1/PI * math.atan((x-self.location)/self.scale)
+        return 0.5 + 1 / PI * math.atan((x - self.location) / self.scale)
+    
     def PDF(self, x): 
         """
         Partial Distribution Function, which gives the probability for the 
         particular value of x, or the area under probability distribution from 
         x-h to x+h for continuous distribution."""
         return 1 / (PI * self.scale * \
-            (1 + (((x - self.location)/self.scale) ** 2)))
+            (1 + (((x - self.location) / self.scale) ** 2)))
+    
     def inverseCDF(self, probability, start=0.0, step=0.01): 
         """
         It does the reverse of CDF() method, it takes a probability value and 
@@ -378,25 +383,32 @@ class CauchyDistribution(Distribution):
             cprob = self.CDF(start)
             # print start, cprob
         return (start, cprob)
+    
     def mean(self): 
         """Gives the arithmetic mean of the sample."""
         raise DistributionFunctionError('Mean for Cauchy Distribution is \
             undefined')
+    
     def mode(self): 
         """Gives the mode of the sample."""
         return self.location
+    
     def median(self): 
         """Gives the median of the sample."""
         return self.location
+    
     def quantile1(self): 
         """Gives the 1st quantile of the sample."""
         return self.location - self.scale
+    
     def quantile3(self): 
         """Gives the 3rd quantile of the sample."""
         return self.location + self.scale
+    
     def qmode(self): 
         """Gives the quantile of the mode of the sample."""
         return 0.5
+    
     def random(self, seed):
         """Gives a random number based on the distribution."""
         while 1:

@@ -1,5 +1,5 @@
 """
-File containing set classes. 
+Sets Data Structure and Algorithms. 
 
 Copyright (c) Maurice H.T. Ling <mauriceling@acm.org>
 

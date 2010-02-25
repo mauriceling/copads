@@ -1,5 +1,5 @@
 """
-List of constant numbers
+List of Constant Numbers
 
     - CGOLD: 2 - GOLD
     - GAMMA: Euler's gamma constant

@@ -1,5 +1,5 @@
 """
-File containing node classes for tree data structures.
+Node Classes for Tree Data Structures.
 
 Copyright (c) Maurice H.T. Ling <mauriceling@acm.org>
 

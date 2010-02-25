@@ -1,5 +1,5 @@
 """
-File containing classes for use in array algorithms.
+Array Data Structures and Algorithms.
 
 Copyright (c) Maurice H.T. Ling <mauriceling@acm.org>
 

@@ -1,5 +1,5 @@
 """
-This file hold the functions to calculate descriptive statistics of a data set.
+Data Structures and Algorithms for Data Collected from One or More Samples.
 
 The following functions were adapted from http://www.nmr.mgh.harvard.edu/
 Neural_Systems_Group/gary/python/stats.py (assumes 1-dimensional list as 

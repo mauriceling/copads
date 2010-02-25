@@ -1,5 +1,5 @@
 """
-File containing classes for use in tree algorithms.
+Tree Data Structures and Algorithms.
 
 Copyright (c) Maurice H.T. Ling <mauriceling@acm.org>
 

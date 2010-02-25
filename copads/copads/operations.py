@@ -1,5 +1,5 @@
 """
-File containing mathematical operation routines.
+Mathematical Operation Routines.
 
 Copyright (c) Maurice H.T. Ling <mauriceling@acm.org>
 

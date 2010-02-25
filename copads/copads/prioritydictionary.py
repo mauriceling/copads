@@ -1,5 +1,5 @@
 """
-File containing classes for use in priority dictionary algorithms.
+Priority Dictionary and Algorithms.
 
 Copyright (c) Maurice H.T. Ling <mauriceling@acm.org>
 

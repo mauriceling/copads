@@ -1,6 +1,7 @@
 """
-File containing functions for use in calculating similarity coefficients
-between 2 objects. Generally, the lower boundary of similar coefficient 
+Functions for Calculating Similarity Coefficients between 2 Objects. 
+
+Generally, the lower boundary of similar coefficient 
 signifies complete difference (no similarity) while the upper boundary 
 (if any) signifies complete similarity (no difference).
 
