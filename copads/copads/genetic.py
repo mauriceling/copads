@@ -146,27 +146,7 @@ class Chromosome(object):
         @return: a copy of current chromosome.
         """
         return Chromosome(self.sequence, self.base, self.background_mutation)
-
-        
-class Genome(object):
-    """
-    Represents the genome (collection of chromosomes) for use by an organism.
-    """
-    
-    def __init__(self, type=None):
-        """
-        Sets up a genome for an organism. 
-        
-        @param type: initialization type of the genome. Accepts 'dummy' 
-        chromosome which is basically a chromosome with only one base or a 
-        'default' chromosome. Default = None, an empty genome.
-        """
-        if type == 'dummy':
-            self.data = {1: Chromosome([0])}
-        elif type == 'default':
-            self.data = {1: Chromosome()}
-        else: self.data = {}
-        
+ 
         
 class Organism(object):
     """
@@ -197,20 +177,19 @@ class Organism(object):
         Sets up a new organism with default status (age = 0, vitality = 100,
         lifespan = 100, fitness = 100, alive = True)
         
-        @param genome: Genome object to inherit. Default = 'default', which will
-            set up the genome as one default chromosome. It also allows a 
-            'dummy' chromosome which is basically a chromosome with only one 
-            base - this is for applications which does not utilize the 
-            chromosome.
+        @param genome: list of chromosomes to inherit. Default = 'default', 
+            which will set up one default chromosome. It also allows a 
+            'dummy' chromosome which is basically a one-base chromosome - this 
+            is for applications which does not utilize the chromosome.
         @param gender: establishes the gender of the organism which may be used
             for mating routines.
         """
         if genome == 'default': 
-            self.genome = Genome('default')
+            self.genome = Chromosome()
         elif genome == 'dummy':
-            self.genome = Genome('dummy')
+            self.genome = Chromosome([0])
         else: 
-            self.genome = genome
+            self.genome = list(genome)
         self.gender = gender
     
     def setStatus(self, variable, value):
