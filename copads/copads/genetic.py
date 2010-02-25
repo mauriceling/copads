@@ -150,7 +150,14 @@ class Chromosome(object):
         
 class Organism(object):
     """
-    An organism represented by a list of chromosomes and a status table.
+    An organism represented by a list of chromosomes and a status table. This 
+    class should almost never be instantiated on its own but acts as an ancestor
+    class as some functions need to be over-ridden in the inherited class for 
+    the desired use.
+    
+    Methods to be over-ridden in the inherited class are
+        - fitness
+        - mutation_scheme
     
     Pre-defined status are
         1. alive - is the organism alive? True or False.
@@ -192,6 +199,34 @@ class Organism(object):
             self.genome = list(genome)
         self.gender = gender
     
+    def fitness(self):
+        """
+        Function to calculate the fitness of the current organism. 
+        B{This function MUST be over-ridden by the inherited class as fitness 
+        function is highly  dependent on utility.} The only requirement is that 
+        a fitness score must be returned.
+        
+        Here, the sample implementation calculates fitness as proportion of the
+        genome with '1's.
+        
+        @return: fitness score or fitness list
+        """
+        one_count = sum([sum(chromosome) for chromosome in self.genome])
+        length_of_genome = sum([len(chromosome) for chromosome in self.genome])
+        return float(one_count) / float(length_of_genome)
+    
+    def mutation_scheme(self):
+        """
+        Function to trigger mutation events in each chromosome. B{This function
+        may be over-ridden by the inherited class to cater for specific mutation
+        schemes but not an absolute requirement to do so.}
+        
+        Here, the sample implementation uses only random point mutation 
+        throughout the entire genome at the rate of 1% above background 
+        mutation.
+        """
+        for chromosome in genome: chromosome.rmutate(0.01)
+        
     def setStatus(self, variable, value):
         """
         Sets new status or change status of the organism. However, the following
@@ -243,11 +278,69 @@ class Organism(object):
         
         
 class Population(object):
-    """Representation of a population."""
-    def __init__(self, size=0):
-        self.agents = [0] * size
+    """
+    Representation of a population as a list of organisms. This class should 
+    almost never be instantiated on its own but acts as an ancestor class as 
+    some functions need to be over-ridden in the inherited class for the desired
+    use.
+    
+    Methods to be over-ridden in the inherited class are
+        - mating
+        - generation_events
+        - report
+    """
+    
+    def __init__(self, goal, maxgenerations='infinite', agents=[]):
+        self.agents = agents
+        self.goal = goal
+        self.maxgeneration = maxgeneration
         self.generation = 0
+    
+    def mating(self):
+        """
+        Function to trigger mating events in each generation. B{This function
+        may be over-ridden by the inherited class to cater for specific mating
+        schemes but not an absolute requirement to do so.}
+        """
+        pass
+    
+    def generation_events(self):
+        """
+        Function to trigger other defined events in each generation. B{This 
+        function may be over-ridden by the inherited class to cater for specific
+        events (such as disaster, increased in mutation, etc) but not an 
+        absolute requirement to do so.}
+        """
+        pass
+    
+    def report(self):
+        """
+        Function to report the status of each generation. B{This function may 
+        be over-ridden by the inherited class to cater for specific reporting
+        schemes but not an absolute requirement to do so.}
+        
+        @return: dictionary of status describing the current generation
+        """
+        return {}
+        
+    def generation_step(self):
+        """
+        Function to simulate events for one generation. These includes
+            - mating (according to the mating scheme or function)
+            - mutating each organism in the population
+            - other events defined under generation_events function
+            - increment of generation count
+            - reporting the population status
+        
+        @return: information returned from report function.
+        """
+        self.mating()
+        for organism in self.agents: organism.mutation_scheme() 
+        self.generation_events()
+        self.generation = self.generation + 1
+        return self.report()
         
     def add_organism(self, organism):
         self.agents.append(organism)
-        
+    
+    
