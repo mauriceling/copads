@@ -51,7 +51,7 @@ class Chromosome(object):
         if end == -1: end = len(self.sequence) - 1
         if start == end: start = 0
         length = int(end - start)
-        mutation = int((self.background_mutation + mrate) * length)
+        mutation = int((self.background_mutation + rate) * length)
         while mutation > 0:
             position = int(start) + randrange(length)
             new_base = self.base[randrange(len(self.base))]
@@ -178,7 +178,9 @@ class Organism(object):
               'lifespan': 100.0,            # maximum lifespan
               'fitness': 100.0,             # % of fitness
               'death': None}
-             
+              
+    genome = []
+    
     def __init__(self, genome='default', gender=None):
         """
         Sets up a new organism with default status (age = 0, vitality = 100,
@@ -192,11 +194,11 @@ class Organism(object):
             for mating routines.
         """
         if genome == 'default': 
-            self.genome = Chromosome()
+            self.genome = [Chromosome()]
         elif genome == 'dummy':
-            self.genome = Chromosome([0])
+            self.genome = [Chromosome([0])]
         else: 
-            self.genome = list(genome)
+            self.genome = genome
         self.gender = gender
     
     def fitness(self):
@@ -211,21 +213,31 @@ class Organism(object):
         
         @return: fitness score or fitness list
         """
-        one_count = sum([sum(chromosome) for chromosome in self.genome])
-        length_of_genome = sum([len(chromosome) for chromosome in self.genome])
+        one_count = sum([sum(chromosome.sequence) 
+                         for chromosome in self.genome])
+        length_of_genome = sum([len(chromosome.sequence) 
+                                for chromosome in self.genome])
         return float(one_count) / float(length_of_genome)
     
-    def mutation_scheme(self):
+    def mutation_scheme(self, type='point', rate=0.1):
         """
         Function to trigger mutation events in each chromosome. B{This function
         may be over-ridden by the inherited class to cater for specific mutation
         schemes but not an absolute requirement to do so.}
         
-        Here, the sample implementation uses only random point mutation 
-        throughout the entire genome at the rate of 1% above background 
-        mutation.
+        Here, the sample implementation uses a random given mutation 
+        throughout the entire genome at the give rate above background mutation.
+        
+        @param type: type of mutation. Accepts 'point' (point mutation), 
+            'insert' (insert a base), 'delete' (delete a base), 'invert'
+            (invert a stretch of the chromosome), 'duplicate' (duplicate a
+            stretch of the chromosome), 'translocate' (translocate a stretch of
+            chromosome to another random position). Default = point.
+        @param rate: probability of mutation per base above background
+            mutation rate. Default = 0.01 (1%). No mutation event will ever 
+            happen if (rate + background_mutation) is less than zero.
         """
-        for chromosome in genome: chromosome.rmutate(0.01)
+        for chromosome in self.genome: chromosome.rmutate(type, rate)
         
     def setStatus(self, variable, value):
         """
@@ -263,11 +275,21 @@ class Organism(object):
             self.status[variable] = value
         
     def getStatus(self, variable):
+        """
+        Returns a status variable of the current organism
+        
+        @param variable: name of the status variable
+        @return: status or a KeyError if status is not found
+        """
         try:
             return self.status[variable]
         except:
             raise KeyError('%s not found in organism status' % str(variable))
-            
+    
+    def __str__(self):
+        """Returns the genome of the organism"""
+        return str([chromosome.sequence for chromosome in self.genome])
+        
     def clone(self):
         """
         Cloness (deep copy) the organism.
@@ -286,30 +308,94 @@ class Population(object):
     
     Methods to be over-ridden in the inherited class are
         - mating
+        - prepopulation_control
+        - postpopulation_control
         - generation_events
         - report
     """
     
     def __init__(self, goal, maxgenerations='infinite', agents=[]):
+        """
+        Establishes a population of organisms.
+        
+        @param goal: the goal to be reached by the population.
+        @type goal: the return type of Organism.fitness()
+        @param maxgenerations: maximum number of generations to evolve.
+            Default = 'infinite'.
+        @param agents: organisms making up the initial population.
+        @type agents: list of Organism objects
+        """
         self.agents = agents
         self.goal = goal
         self.maxgeneration = maxgeneration
         self.generation = 0
     
+    def crossover(self, chromosome1, chromosome2, position):
+        pass
+        
     def mating(self):
         """
         Function to trigger mating events in each generation. B{This function
         may be over-ridden by the inherited class to cater for specific mating
-        schemes but not an absolute requirement to do so.}
+        schemes but not an absolute requirement to do so.} Matching schemes
+        should include 
+            - selection of mating partners using Organism.fitness() function
+                and/or other status
+            - processes and actions of mating
+            
+        Here, the sample implementation randomly selects any 2 organisms from
+        the culled list and generate a new genome for the progeny organism by
+        single crossover.
+        """
+        size = len(self.agents)
+        for x in xrange(len(self.agents)):
+            organism1 = self.agents[randint(0, size)]
+            organism2 = self.agents[randint(0, size)]
+            crossover_point = randint(0, len(organism1.genome[0]))
+            (g1, g2) = self.crossover(organism1.genome[0], organism2.genome[0],
+                                      crossover_point)
+            self.addOrganism(Organism([g1]))
+    
+    def prepopulation_control(self):
+        """
+        Function to trigger population control events before mating event in 
+        each generation (For example, to simulate pre-puberty death). B{This 
+        function may be over-ridden by the inherited class to cater for specific
+        events.} Although this is not an absolute requirement, it is extremely 
+        encouraged to prevent exhaustion of memory space. Without population 
+        control, it will seems like a reproducing immortal population.
+        
+        Here, the sample implementation eliminates the bottom half of the 
+        population based on fitness score.
+        """
+        size = len(self.agents)
+        sfitness = [self.agents[randint(0, size)].fitness() 
+                    for x in int(size / 20)]
+        sfitness.sort()
+        threshold = int(len(pfitness) / 2)
+        self.agents = [organism 
+                       for organism in self.agents
+                            if organism.fitness() > threshold]
+    
+    def postpopulation_control(self):
+        """
+        Function to trigger population control events after mating event in 
+        each generation(For example, to simulate old-age death). B{This 
+        function may be over-ridden by the inherited class to cater for specific
+        events.} Although this is not an absolute requirement, it is extremely 
+        encouraged to prevent exhaustion of memory space. Without population 
+        control, it will seems like a reproducing immortal population.
         """
         pass
-    
+        
     def generation_events(self):
         """
         Function to trigger other defined events in each generation. B{This 
         function may be over-ridden by the inherited class to cater for specific
-        events (such as disaster, increased in mutation, etc) but not an 
-        absolute requirement to do so.}
+        events but not an absolute requirement to do so.} Events and controls
+        may include
+            - processes simulating disaster or other catastrophic events
+            - changes in mutations            
         """
         pass
     
@@ -317,7 +403,8 @@ class Population(object):
         """
         Function to report the status of each generation. B{This function may 
         be over-ridden by the inherited class to cater for specific reporting
-        schemes but not an absolute requirement to do so.}
+        schemes but not an absolute requirement to do so.} At the very least, 
+        this function should report whether the goal is reached.
         
         @return: dictionary of status describing the current generation
         """
@@ -328,19 +415,25 @@ class Population(object):
         Function to simulate events for one generation. These includes
             - mating (according to the mating scheme or function)
             - mutating each organism in the population
+            - population size control
             - other events defined under generation_events function
             - increment of generation count
             - reporting the population status
         
         @return: information returned from report function.
         """
+        self.prepopulation_control()
         self.mating()
+        self.postpopulation_control()
         for organism in self.agents: organism.mutation_scheme() 
         self.generation_events()
         self.generation = self.generation + 1
         return self.report()
         
     def add_organism(self, organism):
-        self.agents.append(organism)
+        """Add a new organism(s) to the population.
+        
+        @param organism: list of new Organism object(s)"""
+        self.agents = self.agents + organism
     
     
