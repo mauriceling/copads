@@ -1,11 +1,12 @@
 """
-Package for Genetic Algorithm and Programming.
+Framework for Genetic Algorithm Applications.
 
 Copyright (c) Maurice H.T. Ling <mauriceling@acm.org>
 
 Date created: 23rd February 2010
 """
-from random import random, randint, randrange
+import random
+from copy import deepcopy
 
 class Chromosome(object):
     """Representation of a linear chromosome."""
@@ -53,8 +54,8 @@ class Chromosome(object):
         length = int(end - start)
         mutation = int((self.background_mutation + rate) * length)
         while mutation > 0:
-            position = int(start) + randrange(length)
-            new_base = self.base[randrange(len(self.base))]
+            position = int(start) + random.randrange(length)
+            new_base = self.base[random.randrange(len(self.base))]
             if type == 'point': 
                 self.sequence[position] = new_base
             if type == 'delete': 
@@ -62,20 +63,20 @@ class Chromosome(object):
             if type == 'insert': 
                 self.sequence.insert(position, new_base)
             if type == 'duplicate':
-                end_pos = randrange(position + 1, end)
+                end_pos = random.randrange(position + 1, end)
                 fragment = self.sequence[position:end_pos]
                 for i in range(len(fragment)):
                     self.sequence.insert(end_pos + i, fragment[i])
             if type == 'invert':
-                end_pos = randrange(position + 1, end)
+                end_pos = random.randrange(position + 1, end)
                 fragment = self.sequence[position:end_pos]
                 for base in fragment:
                     self.sequence.insert(position, base)
             if type == 'translocate':
-                end_pos = randrange(position + 1, end)
+                end_pos = random.randrange(position + 1, end)
                 fragment = [self.sequence.pop(position) 
                             for i in range(end_pos - position)]
-                insertion_point = randint(len(self.sequence))
+                insertion_point = random.randint(len(self.sequence))
                 for i in range(len(fragment)):
                     self.sequence.insert(insertion_point + i, fragment[i])
             mutation = mutation - 1
@@ -145,7 +146,7 @@ class Chromosome(object):
         
         @return: a copy of current chromosome.
         """
-        return Chromosome(self.sequence, self.base, self.background_mutation)
+        return deepcopy(self)
  
         
 class Organism(object):
@@ -296,7 +297,7 @@ class Organism(object):
         
         @return: a copy of current organism.
         """
-        return Organism(self.genome, self.gender)
+        return deepcopy(self)
         
         
 class Population(object):
@@ -307,8 +308,8 @@ class Population(object):
     use.
     
     Methods to be over-ridden in the inherited class are
-        - mating
         - prepopulation_control
+        - mating
         - postpopulation_control
         - generation_events
         - report
@@ -330,9 +331,27 @@ class Population(object):
         self.maxgeneration = maxgeneration
         self.generation = 0
     
-    def crossover(self, chromosome1, chromosome2, position):
-        pass
+    def prepopulation_control(self):
+        """
+        Function to trigger population control events before mating event in 
+        each generation (For example, to simulate pre-puberty death). B{This 
+        function may be over-ridden by the inherited class to cater for specific
+        events.} Although this is not an absolute requirement, it is extremely 
+        encouraged to prevent exhaustion of memory space. Without population 
+        control, it will seems like a reproducing immortal population.
         
+        Here, the sample implementation eliminates the bottom half of the 
+        population based on fitness score.
+        """
+        size = len(self.agents)
+        sfitness = [self.agents[random.randint(0, size)].fitness() 
+                    for x in range(int(size / 20))]
+        sfitness.sort()
+        threshold = int(len(pfitness) / 2)
+        self.agents = [organism 
+                       for organism in self.agents
+                            if organism.fitness() > threshold]
+    
     def mating(self):
         """
         Function to trigger mating events in each generation. B{This function
@@ -349,34 +368,13 @@ class Population(object):
         """
         size = len(self.agents)
         for x in xrange(len(self.agents)):
-            organism1 = self.agents[randint(0, size)]
-            organism2 = self.agents[randint(0, size)]
-            crossover_point = randint(0, len(organism1.genome[0]))
-            (g1, g2) = self.crossover(organism1.genome[0], organism2.genome[0],
-                                      crossover_point)
+            organism1 = self.agents[random.randint(0, size)]
+            organism2 = self.agents[random.randint(0, size)]
+            crossover_point = random.randint(0, len(organism1.genome[0].sequence))
+            (g1, g2) = crossover(organism1.genome[0], organism2.genome[0],
+                                 crossover_point)
             self.addOrganism(Organism([g1]))
-    
-    def prepopulation_control(self):
-        """
-        Function to trigger population control events before mating event in 
-        each generation (For example, to simulate pre-puberty death). B{This 
-        function may be over-ridden by the inherited class to cater for specific
-        events.} Although this is not an absolute requirement, it is extremely 
-        encouraged to prevent exhaustion of memory space. Without population 
-        control, it will seems like a reproducing immortal population.
-        
-        Here, the sample implementation eliminates the bottom half of the 
-        population based on fitness score.
-        """
-        size = len(self.agents)
-        sfitness = [self.agents[randint(0, size)].fitness() 
-                    for x in int(size / 20)]
-        sfitness.sort()
-        threshold = int(len(pfitness) / 2)
-        self.agents = [organism 
-                       for organism in self.agents
-                            if organism.fitness() > threshold]
-    
+            
     def postpopulation_control(self):
         """
         Function to trigger population control events after mating event in 
@@ -408,7 +406,10 @@ class Population(object):
         
         @return: dictionary of status describing the current generation
         """
-        return {}
+        sfitness = [self.agents[x].fitness() for x in xrange(len(self.agents))]
+        afitness = sum(sfitness) / float(len(self.agents))
+        return {'generation': self.generation,
+                'average fitness': afitness}
         
     def generation_step(self):
         """
@@ -435,5 +436,38 @@ class Population(object):
         
         @param organism: list of new Organism object(s)"""
         self.agents = self.agents + organism
-    
-    
+
+#############################################################   
+# Supporting Functions
+#############################################################        
+def crossover(chromosome1, chromosome2, position):
+        """
+        Cross-over operator - swaps the data on the 2 given chromosomes after 
+        a given position.
+        
+        @param chromosome1: Chromosome object
+        @param chromosome2: Chromosome object
+        @param position: base position of the swap over
+        @type position: integer
+        @return: (resulting chromosome1, resulting chromosome2)
+        """
+        seq1 = chromosome1.sequence
+        seq2 = chromosome2.sequence 
+        position = int(position)
+        if len(seq1) > position and len(seq2) > position:
+            new1 = Chromosome(seq1[:position] + seq2[position:], 
+                              chromosome1.base)
+            new2 = Chromosome(seq2[:position] + seq1[position:],
+                              chromosome2.base)
+            return (new1, new2)
+        if len(seq1) > position:
+            chromosome1.sequence = seq1[:position]
+            chromosome2.sequence = chromosome2.sequence + seq1[position:]
+            return (chromosome1, chromosome2)
+        if len(chromosome2) > position:
+            chromosome1 = chromosome1.sequence + seq2[position:]
+            chromosome2.sequence = seq2[:position]
+            return (chromosome1, chromosome2)
+        if len(seq1) < position and len(seq2) < position:
+            return (chromosome1, chromosome2)    
+            
