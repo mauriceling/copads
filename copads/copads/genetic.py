@@ -54,7 +54,7 @@ class Chromosome(object):
         length = int(end - start)
         mutation = int((self.background_mutation + rate) * length)
         while mutation > 0:
-            position = int(start) + random.randrange(length)
+            position = int(start) + random.randrange(length - 1)
             new_base = self.base[random.randrange(len(self.base))]
             if type == 'point': 
                 self.sequence[position] = new_base
@@ -69,14 +69,16 @@ class Chromosome(object):
                     self.sequence.insert(end_pos + i, fragment[i])
             if type == 'invert':
                 end_pos = random.randrange(position + 1, end)
-                fragment = self.sequence[position:end_pos]
+                fragment = [self.sequence.pop(position) 
+                            for i in range(end_pos - position)]
+                fragment.reverse()
                 for base in fragment:
                     self.sequence.insert(position, base)
             if type == 'translocate':
                 end_pos = random.randrange(position + 1, end)
                 fragment = [self.sequence.pop(position) 
                             for i in range(end_pos - position)]
-                insertion_point = random.randint(len(self.sequence))
+                insertion_point = random.randint(0, len(self.sequence))
                 for i in range(len(fragment)):
                     self.sequence.insert(insertion_point + i, fragment[i])
             mutation = mutation - 1
@@ -328,7 +330,7 @@ class Population(object):
         """
         self.agents = agents
         self.goal = goal
-        self.maxgeneration = maxgeneration
+        self.maxgenerations = maxgenerations
         self.generation = 0
     
     def prepopulation_control(self):
@@ -341,16 +343,24 @@ class Population(object):
         control, it will seems like a reproducing immortal population.
         
         Here, the sample implementation eliminates the bottom half of the 
-        population based on fitness score.
+        population based on fitness score unless the number of organisms is
+        less than 20. This is to prevent extinction. However, if the number of
+        organisms is more than 2000 (more than 100x initial population size, 
+        a random selection of 2000 will be used for the next generation.
         """
         size = len(self.agents)
-        sfitness = [self.agents[random.randint(0, size)].fitness() 
-                    for x in range(int(size / 20))]
+        sfitness = [self.agents[x].fitness() for x in range(size)]
         sfitness.sort()
-        threshold = int(len(pfitness) / 2)
-        self.agents = [organism 
-                       for organism in self.agents
-                            if organism.fitness() > threshold]
+        threshold = self.agents[int(len(sfitness) / 2)].fitness()
+        temp = [organism 
+                for organism in self.agents
+                    if organism.fitness() > threshold]
+        if len(temp) > 2001:
+            size = len(temp)
+            self.agents = [temp[random.randint(0, size - 1)] 
+                           for x in xrange(2000)]
+        if len(temp) > 21: 
+            self.agents = temp
     
     def mating(self):
         """
@@ -367,13 +377,15 @@ class Population(object):
         single crossover.
         """
         size = len(self.agents)
-        for x in xrange(len(self.agents)):
-            organism1 = self.agents[random.randint(0, size)]
-            organism2 = self.agents[random.randint(0, size)]
-            crossover_point = random.randint(0, len(organism1.genome[0].sequence))
+        temp = []
+        for x in xrange(size):
+            organism1 = self.agents[random.randint(0, size - 1)]
+            organism2 = self.agents[random.randint(0, size - 1)]
+            crossover_pt = random.randint(0, len(organism1.genome[0].sequence))
             (g1, g2) = crossover(organism1.genome[0], organism2.genome[0],
-                                 crossover_point)
-            self.addOrganism(Organism([g1]))
+                                 crossover_pt)
+            temp = temp + [Organism([g1])]
+        self.add_organism(temp)
             
     def postpopulation_control(self):
         """
@@ -409,7 +421,8 @@ class Population(object):
         sfitness = [self.agents[x].fitness() for x in xrange(len(self.agents))]
         afitness = sum(sfitness) / float(len(self.agents))
         return {'generation': self.generation,
-                'average fitness': afitness}
+                'average fitness': afitness,
+                '% to goal': float(afitness - self.goal) / self.goal * 100}
         
     def generation_step(self):
         """
@@ -423,7 +436,7 @@ class Population(object):
         
         @return: information returned from report function.
         """
-        self.prepopulation_control()
+        if self.generation > 0: self.prepopulation_control()
         self.mating()
         self.postpopulation_control()
         for organism in self.agents: organism.mutation_scheme() 
@@ -460,14 +473,16 @@ def crossover(chromosome1, chromosome2, position):
             new2 = Chromosome(seq2[:position] + seq1[position:],
                               chromosome2.base)
             return (new1, new2)
-        if len(seq1) > position:
-            chromosome1.sequence = seq1[:position]
-            chromosome2.sequence = chromosome2.sequence + seq1[position:]
-            return (chromosome1, chromosome2)
-        if len(chromosome2) > position:
-            chromosome1 = chromosome1.sequence + seq2[position:]
-            chromosome2.sequence = seq2[:position]
-            return (chromosome1, chromosome2)
-        if len(seq1) < position and len(seq2) < position:
+        elif len(seq1) > position:
+            new1 = Chromosome(seq1[:position], chromosome1.base)
+            new2 = Chromosome(chromosome2.sequence + seq1[position:],
+                              chromosome2.base)
+            return (new1, new2)
+        elif len(seq2) > position:
+            new1 = Chromosome(chromosome1.sequence + seq2[position:],
+                              chromosome1.base)
+            new2= Chromosome(seq2[:position], chromosome2.base)
+            return (new1, new2)
+        else:
             return (chromosome1, chromosome2)    
             
