@@ -449,6 +449,32 @@ class Population(object):
         
         @param organism: list of new Organism object(s)"""
         self.agents = self.agents + organism
+        
+    def freeze(self, prefix='pop', proportion=0.01):
+        """
+        Preserves part or the entire population. If the population size or the
+        preserved proportion is below 100, the entire population will be 
+        preserved. The preserved sample will be written into a file with name in
+        the following format - <prefix><generation count>_<sample size>.gap
+        
+        @param prefix: prefix of file name. Default = 'pop'.
+        @param proportion: proportion of population to be preserved.
+            Default = 0.01, preserves 1% of the population.
+        """
+        import cPickle
+        if proportion > 1.0: proportion = 1.0
+        if len(self.agents) < 101 or len(self.agents) * proportion < 101:
+            sample = self.agents
+        else:
+            size = len(self.agents)
+            sample = [self.agents[random.randint(0, size - 1)]
+                      for x in xrange(int(len(self.agents) * proportion))]
+        name = ''.join([prefix, str(self.generation), '_', 
+                        str(len(sample)), '.gap'])
+        f = open(name, 'w')
+        cPickle.dump(sample, f)
+        f.close()
+                      
 
 #############################################################   
 # Supporting Functions
