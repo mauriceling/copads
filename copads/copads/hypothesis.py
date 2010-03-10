@@ -157,9 +157,6 @@ def Z1Proportion(spro, ppro, ssize, confidence):
     @see: Ling, MHT. 2009. Ten Z-Test Routines from Gopal Kanji's 100 
     Statistical Tests. The Python Papers Source Codes 1:5
     """
-    spro = kwargs['spro']
-    ppro = kwargs['ppro']
-    ssize = kwargs['ssize']
     statistic = (abs(ppro - spro) - (1 / (2 * ssize)))/ \
                 sqrt((ppro * (1 - spro)) / ssize)
     return test(statistic, NormalDistribution(), confidence)

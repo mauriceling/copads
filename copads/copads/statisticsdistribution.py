@@ -195,7 +195,7 @@ class BetaDistribution(Distribution):
         probability (area under the probability curve) from -infinity or 0 to
         a give x-value on the x-axis where y-axis is the probability.
         """
-        return NRPy.betai(self.p, self.q, (x - self.location)/
+        return nrpy.betai(self.p, self.q, (x - self.location)/
                          (self.scale - self.location))
 
     def PDF(self, x):
@@ -205,8 +205,8 @@ class BetaDistribution(Distribution):
         distribution from x-h to x+h for continuous distribution.
         """
         n = (self.scale - self.location) ** (self.p + self.q - 1)
-        n = NRPy.gammln(self.p) * NRPy.gammln(self.q) * n
-        n = NRPy.gammln(self.p + self.q) / n
+        n = nrpy.gammln(self.p) * nrpy.gammln(self.q) * n
+        n = nrpy.gammln(self.p + self.q) / n
         p = (x - self.location) ** (self.p - 1)
         q = (self.scale - x) ** (self.q - 1)
         return n * p * q
@@ -262,8 +262,8 @@ class BetaDistribution(Distribution):
 
     def moment(self, r):
         """Gives the r-th moment of the sample."""
-        return NRPy.beta(self.p + r,
-            self.q)/NRPy.beta(self.p, self.q)
+        return nrpy.beta(self.p + r,
+            self.q)/nrpy.beta(self.p, self.q)
 
     def random(self):
         """Gives a random number based on the distribution."""
@@ -296,7 +296,7 @@ class BinomialDistribution(Distribution):
         probability (area under the probability curve) from -infinity or 0 to
         a give x-value on the x-axis where y-axis is the probability.
         """
-        return NRPy.cdf_binomial(x, self.trial, self.success)
+        return nrpy.cdf_binomial(x, self.trial, self.success)
 
     def PDF(self, x):
         """
@@ -305,7 +305,7 @@ class BinomialDistribution(Distribution):
         x-h to x+h for continuous distribution.
         """
         x = int(x)
-        return NRPy.bico(self.trial, x) * \
+        return nrpy.bico(self.trial, x) * \
             (self.success ** x) * \
             ((1 - self.success) ** (self.trial - x))
 
@@ -454,7 +454,7 @@ class FDistribution(Distribution):
         a give x-value on the x-axis where y-axis is the probability.
         """
         sub_x = (self.df1 * x) / (self.df1 * x + self.df2)
-        return NRPy.betai(self.df1 / 2.0, self.df2 / 2.0, sub_x)
+        return nrpy.betai(self.df1 / 2.0, self.df2 / 2.0, sub_x)
 
     def PDF(self, x):
         """
@@ -465,7 +465,7 @@ class FDistribution(Distribution):
         x = float(x)
         n1 = ((x * self.df1) ** self.df1) * (self.df2 ** self.df2)
         n2 = (x * self.df1 + self.df2) ** (self.df1 + self.df2)
-        d = x * NRPy.beta(self.df1 / 2.0, self.df2 / 2.0)
+        d = x * nrpy.beta(self.df1 / 2.0, self.df2 / 2.0)
         return math.sqrt(n1 / n2) / d
 
     def inverseCDF(self, probability, start=0.0, step=0.01):
@@ -523,7 +523,7 @@ class GammaDistribution(Distribution):
         probability (area under the probability curve) from -infinity or 0 to
         a give x-value on the x-axis where y-axis is the probability.
         """
-        return NRPy.gammp(self.shape, (x - self.location) / self.scale)
+        return nrpy.gammp(self.shape, (x - self.location) / self.scale)
 
     def inverseCDF(self, probability, start=0.0, step=0.01):
         """
@@ -560,11 +560,11 @@ class GammaDistribution(Distribution):
 
     def qmean(self):
         """Gives the quantile of the arithmetic mean of the sample."""
-        return NRPy.gammp(self.shape, self.shape)
+        return nrpy.gammp(self.shape, self.shape)
 
     def qmode(self):
         """Gives the quantile of the mode of the sample."""
-        return NRPy.gammp(self.shape, self.shape - 1)
+        return nrpy.gammp(self.shape, self.shape - 1)
 
 
 class ChiSquareDistribution(GammaDistribution):
@@ -667,7 +667,7 @@ class NormalDistribution(Distribution):
         probability (area under the probability curve) from -infinity or 0 to
         a give x-value on the x-axis where y-axis is the probability.
         """
-        return 1.0 - 0.5 * NRPy.erfcc(x/SQRT2)
+        return 1.0 - 0.5 * nrpy.erfcc(x/SQRT2)
     def PDF(self, x): 
         """
         Calculates the density (probability) at x by the formula
@@ -752,7 +752,7 @@ class PoissonDistribution(Distribution):
         probability (area under the probability curve) from -infinity or 0 to
         a give x-value on the x-axis where y-axis is the probability.
         """
-        return NRPy.cdf_poisson(x + 1, self._mean)
+        return nrpy.cdf_poisson(x + 1, self._mean)
 
     def PDF(self, x):
         """
@@ -761,7 +761,7 @@ class PoissonDistribution(Distribution):
         distribution from x-h to x+h for continuous distribution.
         """
         return (math.exp(-1 ** self._mean) *
-                (self._mean ** x)) / NRPy.factrl(x)
+                (self._mean ** x)) / nrpy.factrl(x)
 
     def inverseCDF(self, probability, start=0.001, step=1):
         """
@@ -816,7 +816,7 @@ class TDistribution(Distribution):
         a give x-value on the x-axis where y-axis is the probability.
         """
         t = (x - self._mean) / self.stdev
-        a = NRPy.betai(self.df / 2.0, 0.5, self.df / (self.df + (t * t)))
+        a = nrpy.betai(self.df / 2.0, 0.5, self.df / (self.df + (t * t)))
         if t > 0:
             return 1 - 0.5 * a
         else:
@@ -831,13 +831,13 @@ class TDistribution(Distribution):
         
         for all real x. It has mean 0 (for n > 1) and variance n/(n-2) 
         (for n > 2)."""
-        a = NRPy.gammln((self.df + 1) / 2)
-        b = math.sqrt(math.pi * self.df) * NRPy.gammln(self.df / 2) * \
+        a = nrpy.gammln((self.df + 1) / 2)
+        b = math.sqrt(math.pi * self.df) * nrpy.gammln(self.df / 2) * \
             self.stdev
         c = 1 + ((((x - self._mean) / self.stdev) ** 2) / self.df)
         return (a / b) * (c ** ((-1 - self.df) / 2))
 
-    def inverseCDF(self, probability, start=0.0, step=0.01):
+    def inverseCDF(self, probability, start=-10.0, step=0.01):
         """
         It does the reverse of CDF() method, it takes a probability value and
         the corresponding value on the x-axis.
@@ -860,8 +860,8 @@ class TDistribution(Distribution):
 
     def kurtosis(self):
         """Gives the kurtosis of the sample."""
-        a = ((self.df - 2) ** 2) * NRPy.gammln((self.df / 2) - 2)
-        return 3 * ((a / (4 * NRPy.gammln(self.df / 2))) - 1)
+        a = ((self.df - 2) ** 2) * nrpy.gammln((self.df / 2) - 2)
+        return 3 * ((a / (4 * nrpy.gammln(self.df / 2))) - 1)
 
     def skew(self):
         """Gives the skew of the sample."""
@@ -1157,11 +1157,11 @@ class BurrDistribution(Distribution):
         self.scale = scale
         self.C = C
         self.D = D
-        self.k = (NRPy.gammln(self.D) * \
-                    NRPy.gammln(1 - (2/self.C)) * \
-                    NRPy.gammln((2/self.C) + self.D)) - \
-                ((NRPy.gammln(1 - (1/self.C)) ** 2) * \
-                    (NRPy.gammln((1/self.C) + self.D) ** 2))
+        self.k = (nrpy.gammln(self.D) * \
+                    nrpy.gammln(1 - (2/self.C)) * \
+                    nrpy.gammln((2/self.C) + self.D)) - \
+                ((nrpy.gammln(1 - (1/self.C)) ** 2) * \
+                    (nrpy.gammln((1/self.C) + self.D) ** 2))
     def CDF(self, x): 
         """
         Cummulative Distribution Function, which gives the cummulative 
@@ -1189,8 +1189,8 @@ class BurrDistribution(Distribution):
         return (start, cprob)
     def mean(self): 
         """Gives the arithmetic mean of the sample."""
-        r = NRPy.gammln(1 - (1/self.C)) * NRPy.gammln((1/self.C) + self.D)
-        return self.location + ((r * self.scale) / NRPy.gammln(self.D))
+        r = nrpy.gammln(1 - (1/self.C)) * nrpy.gammln((1/self.C) + self.D)
+        return self.location + ((r * self.scale) / nrpy.gammln(self.D))
     def mode(self): 
         """Gives the mode of the sample."""
         if ((self.C * self.D) < 1): return self.location
@@ -1205,7 +1205,7 @@ class BurrDistribution(Distribution):
 #        raise DistributionFunctionError
     def variance(self): 
         """Gives the variance of the sample."""
-        return (self.k * (self.scale ** 2)) / (NRPy.gammln(self.D) ** 2)
+        return (self.k * (self.scale ** 2)) / (nrpy.gammln(self.D) ** 2)
 #    def quantile1(self): 
 #        """Gives the 1st quantile of the sample."""
 #        raise DistributionFunctionError
@@ -1417,7 +1417,7 @@ class DoubleGammaDistribution(Distribution):
         Cummulative Distribution Function, which gives the cummulative 
         probability (area under the probability curve) from -infinity or 0 to 
         a give x-value on the x-axis where y-axis is the probability."""
-        r = NRPy.gammp(self.shape ,abs((x - self.location)/self.scale))
+        r = nrpy.gammp(self.shape ,abs((x - self.location)/self.scale))
         if x > self.location: return 0.5 + (0.5 * r)
         else: return 0.5 - (0.5 * r)
     
@@ -1428,7 +1428,7 @@ class DoubleGammaDistribution(Distribution):
         from x-h to x+h for continuous distribution."""
         r = math.exp(-1 * abs((x - self.location)/self.scale))
         r = r * (abs((x - self.location)/self.scale) ** (self.shape -1))
-        return r / (2 * self.scale * NRPy.gammln(self.shape))
+        return r / (2 * self.scale * nrpy.gammln(self.shape))
     
     def inverseCDF(self, probability, start=0.0, step=0.01): 
         """
@@ -2609,7 +2609,7 @@ class NegativeBinomialDistribution(Distribution):
         Partial Distribution Function, which gives the probability for the 
         particular value of x, or the area under probability distribution from 
         x-h to x+h for continuous distribution."""
-        return NRPy.bico(x - 1, self.target - 1) * \
+        return nrpy.bico(x - 1, self.target - 1) * \
                 (self.success ** self.target) * \
                 ((1 - self.success) ** (x - self.target))
     
