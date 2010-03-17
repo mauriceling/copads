@@ -64,7 +64,7 @@ def Z1Mean1Variance(smean, pmean, pvar, ssize, confidence):
     population mean and sample mean when the population variance is
     known.
     
-    Limitations    
+t-te    Limitations    
         1. Requires population variance (use Test 7 if population variance 
         unknown)
     
@@ -300,15 +300,22 @@ def tPaired(smean1, smean2, svar, ssize, confidence):
     statistic = (smean1 - smean2) / sqrt(svar / ssize)
     return test(statistic, TDistribution(shape = ssize - 1), confidence)
 
-def t11():    
-    """
+def tRegressionCoefficient(variancex=15.61, varianceyx=92.4, b=5.029, ssize=12, confidence=97.5):
+	"""
     Test 11: t-test of a regression coefficient
     
     To investigate the significance of the regression coefficient.
     
     Limitations
-        1. Homoedasticity of values"""
-    pass
+        1. Homoedasticity of values
+		
+	@param variancex: variance of xy
+	@param varianceyx: variance of yx
+	@param b: regression coefficient
+	@param ssize: sample size
+	@param confidence: confidence level"""
+	statistic = ((b * sqrt(variancex)) / sqrt(varianceyx)) * sqrt(ssize-1) * -1
+	return test(statistic, TDistribution(shape = ssize-1), confidence)
 
 def tPearsonCorrelation(r, ssize, confidence):    
     """
