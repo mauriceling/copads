@@ -297,25 +297,26 @@ def tPaired(smean1, smean2, svar, ssize, confidence):
     @param svar: variance of differences between pairs
     @param ssize: sample size
     @param confidence: confidence level"""
-    statistic = (smean1 - smean2) / sqrt(svar / ssize)
+    statistic = (smean1 - smean2) / (svar / sqrt(ssize))
     return test(statistic, TDistribution(shape = ssize - 1), confidence)
 
 def tRegressionCoefficient(variancex=15.61, varianceyx=92.4, b=5.029, ssize=12, 
-    confidence=97.5):
+    confidence=0.975):
     """
     Test 11: t-test of a regression coefficient
     
     To investigate the significance of the regression coefficient.
     
     Limitations
-        1. Homoedasticity of values
+    1. Homoedasticity of values
         
-    @param variancex: variance of xy
+    @param variancex: variance of x
     @param varianceyx: variance of yx
-    @param b: regression coefficient
+    @param b: calculated Regression Coefficient
     @param ssize: sample size
     @param confidence: confidence level"""
-    statistic = ((b * sqrt(variancex)) / sqrt(varianceyx)) * sqrt(ssize-1) * -1
+    statistic = ((b * sqrt(variancex)) / sqrt(varianceyx)) * ((ssize-1) ** -0.5)
+    print statistic
     return test(statistic, TDistribution(shape = ssize-1), confidence)
 
 def tPearsonCorrelation(r, ssize, confidence):    
@@ -427,7 +428,12 @@ def t18(**kwargs):
     To compare the results of two experiments, each of which yields a
     multivariate result. In another words, we wish to know if the mean pattern
     obtained from the first experiment agrees with the mean pattern obtained
-    for the second."""
+    for the second.
+	
+	@param 
+	@param 
+	@param 
+	"""
     return test(statistic, Distribution(), confidence)
 
 def t19(**kwargs):

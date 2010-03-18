@@ -99,8 +99,8 @@ class testTDistribution(unittest.TestCase):
         and unequal)"""
         self.assertAlmostEqual(N.t2Mean2UnequalVariance(smean1 = 3166.0, 
             smean2 = 2240.4, svar1 = 6328.67, svar2 = 221661.3, ssize1 = 4, 
-            ssize2 = 9, confidence = 0.975)[2], 2.26)
-        self.assertFalse(N.t2Mean2UnequalVariance(smean1 = 3166.0, 
+            ssize2 = 9, confidence = 0.975)[2], 5.717, places=2)
+        self.assertTrue(N.t2Mean2UnequalVariance(smean1 = 3166.0, 
             smean2 = 2240.4, svar1 = 6328.67, svar2 = 221661.3, ssize1 = 4,
             ssize2 = 9, confidence = 0.975)[4])
             
@@ -109,7 +109,7 @@ class testTDistribution(unittest.TestCase):
         Test 10: t-test for two population means (method of paired comparisons)
         """
         self.assertAlmostEqual(N.tPaired(smean1 = 0.9, smean2 = 1.0, svar = 2.9,
-            ssize = 10, confidence=0.975)[2], 2.26)
+            ssize = 10, confidence=0.975)[2], -0.11, places=2)
         self.assertFalse(N.tPaired(smean1 = 0.9, smean2 = 1.0, svar = 2.9,
             ssize = 10, confidence = 0.975)[4])
             
@@ -117,9 +117,10 @@ class testTDistribution(unittest.TestCase):
         """Test 11: t-test of a regression coefficient"""
         self.assertAlmostEqual(N.tRegressionCoefficient(variancex = 15.61,
             varianceyx = 478.8, b = 5.029, ssize = 12, confidence = 0.975)[2], 
-            6.86)
+            0.6232)
         self.assertFalse(N.tRegressionCoefficient(variancex = 15.61,
             varianceyx = 478.8, b = 5.029, ssize = 12, confidence = 0.975)[4])
+            
     
     
 if __name__ == '__main__':
