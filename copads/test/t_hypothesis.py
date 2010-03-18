@@ -105,9 +105,8 @@ class testTDistribution(unittest.TestCase):
             ssize2 = 9, confidence = 0.975)[4])
             
     def testtPaired(self):
-        """
-        Test 10: t-test for two population means (method of paired comparisons)
-        """
+        """Test 10: t-test for two population means (method of paired 
+        comparisons)"""
         self.assertAlmostEqual(N.tPaired(smean1 = 0.9, smean2 = 1.0, svar = 2.9,
             ssize = 10, confidence=0.975)[2], -0.11, places=2)
         self.assertFalse(N.tPaired(smean1 = 0.9, smean2 = 1.0, svar = 2.9,
@@ -121,7 +120,21 @@ class testTDistribution(unittest.TestCase):
         self.assertFalse(N.tRegressionCoefficient(variancex = 15.61,
             varianceyx = 92.4, b = 5.029, ssize = 12, confidence = 0.975)[4])
             
-    
+    def testFVarianceRatio(self):
+        """Test 16: F-test for two population variances (variance ratio test)"""
+        self.assertAlmostEqual(N.FVarianceRatio(var1 = 0.36, var2 = 0.087, 
+            ssize1 = 6, ssize2 = 4, confidence = 0.95)[2], 4.14, places=2)
+        self.assertFalse(N.FVarianceRatio(var1 = 0.36, var2 = 0.087,
+            ssize1 = 4, ssize2 = 6, confidence = 0.95)[4])
+
+    def testF2CorrelatedObs(self):
+        """Test 17: F-test for two population variances 
+        with correlated observations)"""
+        self.assertAlmostEqual(N.F2CorrelatedObs(var1 = 0.36,
+            var2 = 0.087, ssize1 = 6, ssize2 = 6, r = 0.811, 
+            confidence = 0.95)[2], 0.796, places = 2)
+        self.assertFalse(N.F2CorrelatedObs(var1 = 0.36, var2 = 0.087,
+            ssize1 = 6, ssize2 = 6, r = 0.811, confidence = 0.95)[4])
     
 if __name__ == '__main__':
     unittest.main()

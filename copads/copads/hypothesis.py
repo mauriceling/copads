@@ -315,7 +315,7 @@ def tRegressionCoefficient(variancex, varianceyx, b, ssize, confidence):
     @param ssize: sample size
     @param confidence: confidence level"""
     statistic = ((b * sqrt(variancex)) / sqrt(varianceyx)) * ((ssize-1) ** -0.5)
-    return test(statistic, TDistribution(shape = ssize-1), confidence)
+    return test(statistic, TDistribution(shape = ssize - 2), confidence)
 
 def tPearsonCorrelation(r, ssize, confidence):    
     """
@@ -403,21 +403,37 @@ def t15(**kwargs):
     """
     return test(statistic, Distribution(), confidence)
 
-def t16(**kwargs):    
+def FVarianceRatio(var1, var2, ssize1, ssize2, confidence):
     """
     Test 16: F-test for two population variances (variance ratio test)
     
     To investigate the significance of the difference between two population
-    variances."""
-    return test(statistic, Distribution(), confidence)
+    variances.
     
-def t17(**kwargs):
+    @param var1: variance #1
+    @param var2: variance #2
+    @param ssize1: sample size #1
+    @param ssize2: sample size #2
+    @param confidence: confidence level"""
+    statistic = var1/var2
+    return test(statistic, FDistribution(df1=ssize1-1, df2=ssize2-1), 
+    confidence)
+    
+def F2CorrelatedObs(r, var1, var2, ssize1, ssize2, confidence):
     """
     Test 17: F-test for two population variances (with correlated observations)
     
     To investigate the difference between two population variances when there 
-    is correlation between the pairs of observations."""
-    return test(statistic, Distribution(), confidence)
+    is correlation between the pairs of observations.
+    @param r: Sample correlation value 
+    @param var1: variance #1
+    @param var2: variance #2
+    @param ssize1: sample size #1
+    @param ssize2: sample size #2
+    @param confidence: confidence level"""
+    statistic = ((var1/var2)- 1) / (((((var1/var2) + 1) **2) - \
+        (4 * (r **2) * (var1/var2)))**0.5)
+    return test(statistic, FDistribution(ssize1-1, ssize2-1), confidence)
 
 def t18(**kwargs):
     """
