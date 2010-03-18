@@ -356,7 +356,7 @@ class testT(unittest.TestCase):
     def testinverseCDF5_1(self):
         x = N.TDistribution(location=0.0, scale=1.0,
                             shape=5).inverseCDF(0.9)[0]
-        self.assertAlmostEqual(x, 1.480, places=3)
+        self.assertAlmostEqual(x, 1.476, places=3)
     def testinverseCDF5_2(self):
         x = N.TDistribution(location=0.0, scale=1.0,
                             shape=5).inverseCDF(0.95)[0]
@@ -368,7 +368,7 @@ class testT(unittest.TestCase):
     def testinverseCDF5_4(self):
         x = N.TDistribution(location=0.0, scale=1.0,
                             shape=5).inverseCDF(0.999)[0]
-        self.assertAlmostEqual(x, 5.899, places=2)
+        self.assertAlmostEqual(x, 5.893, places=2)
         
     
 class testUniform(unittest.TestCase):

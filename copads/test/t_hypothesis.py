@@ -83,6 +83,7 @@ class testNormalDistribution(unittest.TestCase):
             confidence = 0.975)[2], -2.8173019)
         self.assertFalse(N.SpearmanCorrelation(R = 24, ssize = 11, 
             confidence = 0.975)[4])
+            
 
 class testTDistribution(unittest.TestCase):
     
@@ -92,38 +93,34 @@ class testTDistribution(unittest.TestCase):
             ssize = 9, confidence = 0.975)[2], -2.69999999)
         self.assertFalse(N.t1Mean(smean = 3.1, pmean = 4.0, svar = 1.0,
             ssize = 9, confidence = 0.975)[4])
-			
-	def testt2Mean2UnequalVariance(self):
-		"""
-		Test 9: t-test for two population means (population variance unknown 
-		and unequal)"""
-		self.assertAlmostEqual(N.t2Mean2UnequalVariance(smean1 = 3166.0, 
-			smean2 = 2240.4, svar1 = 6328.67, svar2 = 221661.3, ssize1 = 4, 
-			ssize2 = 9, confidence = 0.975)[2], 2.26)
-		self.assertFalse(N.t2Mean2UnequalVariance(smean1 = 3166.0, 
-			smean2 = 2240.4, svar1 = 6328.67, svar2 = 221661.3, ssize1 = 4,
-			ssize2 = 9, confidence = 0.975)[4])
-			
-	def testtPaired(self):
-		"""
-		Test 10: t-test for two population means (method of paired comparisons)
-		"""
-		self.assertAlmostEqual(N.tPaired(smean1 = 0.9, smean2 = 1.0, svar = 2.9,
-			ssize = 10, confidence =97.5)[2], 2.26)
-		self.assertFalse(N.tPaired(smean1 = 0.9, smean2 = 1.0, svar = 2.9,
-			ssize = 10, confidence =97.5)[4])
-			
-	def testtRegressionCoefficient(self):
-		"""
-		Test 11: t-test of a regression coefficient"""
-		print N.testtRegressionCoefficient(variancex = 15.61,
-			varianceyx = 478.8, b = 5.029, ssize = 12, confidence = 97.5)
-		self.assertAlmostEqual(N.tRegresionCoefficient(variancex = 15.61,
-			varianceyx = 478.8, b = 5.029, ssize = 12, confidence = 97.5)[2], 
-			6.86)
-		self.assertFalse(N.tRegressionCoefficient(variancex = 15.61,
-			varianceyx = 478.8, b = 5.029, ssize = 12, confidence = 97.5)[4])
-	
-	
+            
+    def testt2Mean2UnequalVariance(self):
+        """Test 9: t-test for two population means (population variance unknown 
+        and unequal)"""
+        self.assertAlmostEqual(N.t2Mean2UnequalVariance(smean1 = 3166.0, 
+            smean2 = 2240.4, svar1 = 6328.67, svar2 = 221661.3, ssize1 = 4, 
+            ssize2 = 9, confidence = 0.975)[2], 2.26)
+        self.assertFalse(N.t2Mean2UnequalVariance(smean1 = 3166.0, 
+            smean2 = 2240.4, svar1 = 6328.67, svar2 = 221661.3, ssize1 = 4,
+            ssize2 = 9, confidence = 0.975)[4])
+            
+    def testtPaired(self):
+        """
+        Test 10: t-test for two population means (method of paired comparisons)
+        """
+        self.assertAlmostEqual(N.tPaired(smean1 = 0.9, smean2 = 1.0, svar = 2.9,
+            ssize = 10, confidence=0.975)[2], 2.26)
+        self.assertFalse(N.tPaired(smean1 = 0.9, smean2 = 1.0, svar = 2.9,
+            ssize = 10, confidence = 0.975)[4])
+            
+    def testtRegressionCoefficient(self):
+        """Test 11: t-test of a regression coefficient"""
+        self.assertAlmostEqual(N.tRegressionCoefficient(variancex = 15.61,
+            varianceyx = 478.8, b = 5.029, ssize = 12, confidence = 0.975)[2], 
+            6.86)
+        self.assertFalse(N.tRegressionCoefficient(variancex = 15.61,
+            varianceyx = 478.8, b = 5.029, ssize = 12, confidence = 0.975)[4])
+    
+    
 if __name__ == '__main__':
     unittest.main()

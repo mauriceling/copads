@@ -300,22 +300,23 @@ def tPaired(smean1, smean2, svar, ssize, confidence):
     statistic = (smean1 - smean2) / sqrt(svar / ssize)
     return test(statistic, TDistribution(shape = ssize - 1), confidence)
 
-def tRegressionCoefficient(variancex=15.61, varianceyx=92.4, b=5.029, ssize=12, confidence=97.5):
-	"""
+def tRegressionCoefficient(variancex=15.61, varianceyx=92.4, b=5.029, ssize=12, 
+    confidence=97.5):
+    """
     Test 11: t-test of a regression coefficient
     
     To investigate the significance of the regression coefficient.
     
     Limitations
         1. Homoedasticity of values
-		
-	@param variancex: variance of xy
-	@param varianceyx: variance of yx
-	@param b: regression coefficient
-	@param ssize: sample size
-	@param confidence: confidence level"""
-	statistic = ((b * sqrt(variancex)) / sqrt(varianceyx)) * sqrt(ssize-1) * -1
-	return test(statistic, TDistribution(shape = ssize-1), confidence)
+        
+    @param variancex: variance of xy
+    @param varianceyx: variance of yx
+    @param b: regression coefficient
+    @param ssize: sample size
+    @param confidence: confidence level"""
+    statistic = ((b * sqrt(variancex)) / sqrt(varianceyx)) * sqrt(ssize-1) * -1
+    return test(statistic, TDistribution(shape = ssize-1), confidence)
 
 def tPearsonCorrelation(r, ssize, confidence):    
     """
@@ -325,8 +326,8 @@ def tPearsonCorrelation(r, ssize, confidence):
     coefficient and zero is statistically significant.
     
     Limitations
-        1. Assumes population correlation coefficient to be zero (use Test 13 for 
-        testing other population correlation coefficient
+        1. Assumes population correlation coefficient to be zero (use Test 13 
+        for testing other population correlation coefficient
         2. Assumes a linear relationship (regression line as Y = MX + C)
         3. Independence of x-values and y-values
     
