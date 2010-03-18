@@ -415,7 +415,7 @@ def FVarianceRatio(var1, var2, ssize1, ssize2, confidence):
     @param ssize1: sample size #1
     @param ssize2: sample size #2
     @param confidence: confidence level"""
-    statistic = var1/var2
+    statistic = var1 / var2
     return test(statistic, FDistribution(df1=ssize1-1, df2=ssize2-1), 
     confidence)
     
@@ -431,8 +431,8 @@ def F2CorrelatedObs(r, var1, var2, ssize1, ssize2, confidence):
     @param ssize1: sample size #1
     @param ssize2: sample size #2
     @param confidence: confidence level"""
-    statistic = ((var1/var2)- 1) / (((((var1/var2) + 1) **2) - \
-        (4 * (r **2) * (var1/var2)))**0.5)
+    statistic = ((var1 / var2)- 1) / (((((var1 / var2) + 1) ** 2) - \
+        (4 * (r ** 2) * (var1 / var2))) ** 0.5)
     return test(statistic, FDistribution(ssize1-1, ssize2-1), confidence)
 
 def t18(**kwargs):
