@@ -300,8 +300,7 @@ def tPaired(smean1, smean2, svar, ssize, confidence):
     statistic = (smean1 - smean2) / (svar / sqrt(ssize))
     return test(statistic, TDistribution(shape = ssize - 1), confidence)
 
-def tRegressionCoefficient(variancex=15.61, varianceyx=92.4, b=5.029, ssize=12, 
-    confidence=0.975):
+def tRegressionCoefficient(variancex, varianceyx, b, ssize, confidence):
     """
     Test 11: t-test of a regression coefficient
     
@@ -316,7 +315,6 @@ def tRegressionCoefficient(variancex=15.61, varianceyx=92.4, b=5.029, ssize=12,
     @param ssize: sample size
     @param confidence: confidence level"""
     statistic = ((b * sqrt(variancex)) / sqrt(varianceyx)) * ((ssize-1) ** -0.5)
-    print statistic
     return test(statistic, TDistribution(shape = ssize-1), confidence)
 
 def tPearsonCorrelation(r, ssize, confidence):    

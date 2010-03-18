@@ -116,10 +116,10 @@ class testTDistribution(unittest.TestCase):
     def testtRegressionCoefficient(self):
         """Test 11: t-test of a regression coefficient"""
         self.assertAlmostEqual(N.tRegressionCoefficient(variancex = 15.61,
-            varianceyx = 478.8, b = 5.029, ssize = 12, confidence = 0.975)[2], 
-            0.6232)
+            varianceyx = 92.4, b = 5.029, ssize = 12, confidence = 0.975)[2], 
+            0.6232, places=3)
         self.assertFalse(N.tRegressionCoefficient(variancex = 15.61,
-            varianceyx = 478.8, b = 5.029, ssize = 12, confidence = 0.975)[4])
+            varianceyx = 92.4, b = 5.029, ssize = 12, confidence = 0.975)[4])
             
     
     
