@@ -254,7 +254,7 @@ def t2Mean2EqualVariance(smean1, smean2, svar1, svar2, ssize1, ssize2,
     df = ssize1 + ssize2 - 2
     pvar = (((ssize1 - 1) * svar1) + ((ssize2 - 1) * svar2)) / df
     statistic = ((smean1 - smean2) - (pmean1 - pmean2)) / \
-                (pvar * sqrt((1 / ssize1) + (1 / ssize2)))
+                ((sqrt(pvar)) * sqrt((1.0 / ssize1) + (1.0 / ssize2)))
     return test(statistic, TDistribution(shape = df), confidence)
 
 def t2Mean2UnequalVariance(smean1, smean2, svar1, svar2, ssize1, ssize2,
@@ -546,9 +546,8 @@ def F2Count(count1, count2, time1=0, time2=0, repeat=False):
         statistic = ((count1 + 0.5) / time1) / ((count2 + 0.5) / time2)
         numerator = 2 * count1 + 1
         denominator = 2 * count2 + 1
-    return test(statistic, FDistribution(numerator=numerator,
-                                         denominator=denominator),
-                confidence)
+    return test(statistic, FDistribution(numerator=numerator, 
+    denominator=denominator), confidence)
 
 def t26(**kwargs):
     """
@@ -600,9 +599,20 @@ def t35(**kwargs):
     """
     return test(statistic, Distribution(), confidence)
 
-def t36(**kwargs):
-    """
-    """
+def tKolmogorovSmirnov():
+    """Test 36: The Kolmogorov-Smirnov test for comparing two populations
+    
+    To investigate the significance of the difference between two population
+    distributions based on the two sample distributions
+    
+    Limitations
+        1. Best results obtained when samples are sufficiently large, 15
+        samples or more
+        
+    @param 
+    @param 
+    @param 
+    @param"""
     return test(statistic, Distribution(), confidence)
 
 def ChisqFit(observed, expected, confidence):
@@ -629,10 +639,23 @@ def ChisqFit(observed, expected, confidence):
     return test(statistic, ChiSqDistribution(df = len(observed) - 1), 
                 confidence)
 
-def t38(**kwargs):
+def tx2testofKcounts(T, V, confidence):
     """
-    """
-    return test(statistic, Distribution(), confidence)
+    Test 38: The x2-test for compatibility of K counts
+    
+    To investigate the significance of the differences between K counts.
+    
+    Limitations:
+        1. The counts must be obtained under comparable conditions
+        
+    @param T: list of time under K counts
+    @param V: list of values of K counts
+    @param confidence: confidence level"""
+    R = sum(V) / sum(T)
+    freq = [((V[i] - (T[i] * R)) ** 2) / (T[i] * R) 
+            for i in range(len(V))]
+    statistic = sum(freq)
+    return test(statistic, ChiSqDistribution(df = len(V) - 1), confidence)
 
 def t39(**kwargs):
     """

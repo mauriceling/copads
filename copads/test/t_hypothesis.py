@@ -94,6 +94,16 @@ class testTDistribution(unittest.TestCase):
         self.assertFalse(N.t1Mean(smean = 3.1, pmean = 4.0, svar = 1.0,
             ssize = 9, confidence = 0.975)[4])
             
+    def testt2Mean2EqualVariance(self):
+        """Test 8: t-test for two population means (population variance unknown 
+        but equal)"""
+        self.assertAlmostEqual(N.t2Mean2EqualVariance(smean1 = 31.75, 
+            smean2 = 28.67, svar1 = 112.25, svar2 = 66.64, ssize1 = 12, 
+            ssize2 = 12, confidence = 0.975)[2], 0.798, places=3)
+        self.assertFalse(N.t2Mean2EqualVariance(smean1 = 31.75, 
+            smean2 = 28.67, svar1 = 112.25, svar2 = 66.64, ssize1 = 12,
+            ssize2 = 12, confidence = 0.975)[4])
+    
     def testt2Mean2UnequalVariance(self):
         """Test 9: t-test for two population means (population variance unknown 
         and unequal)"""
@@ -125,7 +135,7 @@ class testTDistribution(unittest.TestCase):
         self.assertAlmostEqual(N.FVarianceRatio(var1 = 0.36, var2 = 0.087, 
             ssize1 = 6, ssize2 = 4, confidence = 0.95)[2], 4.14, places=2)
         self.assertFalse(N.FVarianceRatio(var1 = 0.36, var2 = 0.087,
-            ssize1 = 4, ssize2 = 6, confidence = 0.95)[4])
+            ssize1 = 6, ssize2 = 4, confidence = 0.95)[4])
 
     def testF2CorrelatedObs(self):
         """Test 17: F-test for two population variances 
@@ -135,6 +145,9 @@ class testTDistribution(unittest.TestCase):
             confidence = 0.95)[2], 0.796, places = 2)
         self.assertFalse(N.F2CorrelatedObs(var1 = 0.36, var2 = 0.087,
             ssize1 = 6, ssize2 = 6, r = 0.811, confidence = 0.95)[4])
+            
+
+
     
 if __name__ == '__main__':
     unittest.main()
