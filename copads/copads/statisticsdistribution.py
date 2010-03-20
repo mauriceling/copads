@@ -309,7 +309,7 @@ class BinomialDistribution(Distribution):
             (self.success ** x) * \
             ((1 - self.success) ** (self.trial - x))
 
-    def inverseCDF(self, probability, start=0, step=0.01):
+    def inverseCDF(self, probability, start=0, step=1):
         """
         It does the reverse of CDF() method, it takes a probability
         value and returns the corresponding value on the x-axis.

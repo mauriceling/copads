@@ -129,7 +129,38 @@ class testTDistribution(unittest.TestCase):
             0.6232, places=3)
         self.assertFalse(N.tRegressionCoefficient(variancex = 15.61,
             varianceyx = 92.4, b = 5.029, ssize = 12, confidence = 0.975)[4])
+    
+    def testtPearsonCorrelation(self):
+        """Test 12: t-test of a correlation coefficient"""
+        self.assertAlmostEqual(N.tPearsonCorrelation(r = 0.32, ssize = 18,
+            confidence = 0.95)[2], 1.35, places=2)
+        self.assertFalse(N.tPearsonCorrelation(r = 0.32, ssize = 18,
+            confidence = 0.95)[4])
+    
+    def testZPearsonCorrelation(self):
+        """Test 13: Z-test of a correlation coefficient"""
+        self.assertAlmostEqual(N.ZPearsonCorrelation(sr = 0.75, pr = 0.50, 
+            ssize = 24, confidence = 0.90)[2], 1.94, places = 2)
+        self.assertTrue(N.ZPearsonCorrelation(sr = 0.75, pr = 0.50,
+            ssize = 24, confidence = 0.90)[4])
             
+    def testZ2PearsonCorrelation(self):
+        """Test 14: Z-test for two correlation coefficients"""
+        self.assertAlmostEqual(N.Z2PearsonCorrelation(r1 = 0.50, r2 = 0.30,
+        ssize1 = 28, ssize2 = 35, confidence =0.95)[2], 0.8985, places = 3)
+        self.assertFalse(N.Z2PearsonCorrelation(r1 = 0.50, r2 = 0.30,
+        ssize1 = 28, ssize2 = 35, confidence =0.95)[4])
+        
+    def testChiSquarePopVar(self):
+        """Test 15: Chi-square test for a population variance"""
+        self.assertAlmostEqual(N.ChiSquarePopVar(values = (70, 71, 71, 69, 69, 
+            72, 72, 68, 68, 67, 67, 73, 73, 74, 74, 66, 66, 65, 65,
+            75, 75, 76, 76, 64, 64), ssize = 25, pv = 9, 
+            confidence = 0.95)[2], 40.4, places = 1)
+        self.assertTrue(N.ChiSquarePopVar(values = (70, 71, 71, 69, 69, 
+            72, 72, 68, 68, 67, 67, 73, 73, 74, 74, 66, 66, 65, 65, 75, 75, 76,
+            76, 64, 64), ssize = 25, pv = 9, confidence = 0.95)[4])
+    
     def testFVarianceRatio(self):
         """Test 16: F-test for two population variances (variance ratio test)"""
         self.assertAlmostEqual(N.FVarianceRatio(var1 = 0.36, var2 = 0.087, 
@@ -146,8 +177,22 @@ class testTDistribution(unittest.TestCase):
         self.assertFalse(N.F2CorrelatedObs(var1 = 0.36, var2 = 0.087,
             ssize1 = 6, ssize2 = 6, r = 0.811, confidence = 0.95)[4])
             
-
-
+    def testt2MediansPairedObs(self):
+        """"Test 46: The sign test for two medians (paired observations)"""
+        # self.assertAlmostEqual(N.t2MediansPairedObs(x=(0.19, 0.22, 0.18, 0.17, 
+            # 1.20, 0.14, 0.09, 0.13, 0.26, 0.66), y=(0.21, 0.27, 0.15, 
+            # 0.18, 0.40, 0.08, 0.14, 0.28, 0.30, 0.68), confidence=0.90)[2], 3)
+        # self.assertFalse(N.t2MediansPairedObs(x=(0.19, 0.22, 0.18, 0.17, 
+            # 1.20, 0.14, 0.09 0.13, 0.26, 0.66), y=(0.21, 0.27, 0.15, 
+            # 0.18, 0.40, 0.08, 0.14, 0.28, 0.30, 0.68), confidence=0.90)[4])
     
+    def testZtestLogOddsRatio(self):
+        """"Test 84: Z-test for comparing sequential contingencies acoss two 
+        groups using the 'log odds ratio' """
+        self.assertAlmostEqual(N.ZtestLogOddsRatio(group1 = (76, 79, 100, 200), 
+            group2 = (80, 43, 63, 39), confidence = 0.95)[2], 1.493, places=3)
+        self.assertFalse(N.ZtestLogOddsRatio(group1 = (76, 79, 100, 200), 
+            group2 = (80, 43, 63, 39), confidence = 0.95)[4])
+            
 if __name__ == '__main__':
     unittest.main()

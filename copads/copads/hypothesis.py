@@ -19,7 +19,7 @@ Date created: 1st September 2008
 
 from statisticsdistribution import *
 from operations import summation
-from math import sqrt, log
+from math import sqrt, log, e
 
 def test(statistic, distribution, confidence):
     """Generates the critical value from distribution and confidence value
@@ -394,14 +394,24 @@ def Z2PearsonCorrelation(r1, r2, ssize1, ssize2, confidence):
     statistic = abs(z1 - z2) / sigma
     return test(statistic, NormalDistribution(), confidence)
 
-def t15(**kwargs):    
+def ChiSquarePopVar(values, ssize, pv, confidence = 0.95):    
     """
     Test 15: Chi-square test for a population variance
     
     To investigate the difference between a sample variance and an assumed
     population variance.
-    """
-    return test(statistic, Distribution(), confidence)
+    
+    @param values: sample values
+    @param ssize: sample size
+    @param pv: population variance
+    @param confidence: confidence level"""
+    mean = sum(values)/ssize
+    freq = [float((values[i] - mean) ** 2) 
+            for i in range(len(values))]
+    sv = (sum(freq)/(ssize-1))
+    statistic = (((ssize - 1) * sv) / pv)
+    print statistic
+    return test(statistic, ChiSquareDistribution(df = ssize-1), confidence)
 
 def FVarianceRatio(var1, var2, ssize1, ssize2, confidence):
     """
@@ -711,31 +721,78 @@ def t45(**kwargs):
     """
     return test(statistic, Distribution(), confidence)
 
-def t46(**kwargs):
-    """
-    """
-    return test(statistic, Distribution(), confidence)
+def t2MediansPairedObs(x, y, confidence):
+    """Test 46: The sign test for two medians (paired observations)
+    
+    To investigate the significance of the difference between the medians of
+    two distributions
+    
+    Limitations:
+        1. The observations in the two samples should be taken in pairs, one
+        from each distribution, taken under similar conditions. It is not
+        necessary that different pairs should be taken under similar conditions
+        
+    @param x: A list of medians #1
+    @param y: A list of medians #2
+    @param confidence: confidence level"""
+    freq = [x[i] > y[i]
+            for i in range(len(x))]
+    statistic = sum(freq)
+    print freq, statistic
+    return test(statistic, BinomialDistribution(), confidence)
 
 def t47(**kwargs):
     """
     """
     return test(statistic, Distribution(), confidence)
 
-def t48(**kwargs):
-    """
+def t2MeansPairedObs(x, y, confidence):
+    """Test 48: The signed rank test fo two means (paired observations)
+    
+    Limitations: 
+        1.Observations in the two samples should be taken in pairs, one
+        from each distribution, taken under similar conditions. It is not
+        necessary that different pairs should be taken under similar conditions
+        
+    @param x: A list of Means
+    @param y: A list of Means
+    @param confidence: confidence level"""
+    # freq = [x[i] - y[i]
+            # for i in range(len(x))]
+    # Rank the difference of means using 0 as the norm
+    # Tabulate the number of minus signs and plus signs
+    # If the number of minus>plus sign, add up the values of the rank of all minus rank values
+    # If the number of plus>minus sign, add up the values of the rank of all plus rank values
+    # return test(statistic, Distribution(), confidence)
+
+def WilcoxonInversion():
+    """Test 49: The Wilcoxon inversion test(U-test)
+    
     """
     return test(statistic, Distribution(), confidence)
 
-def t49(**kwargs):
-    """
-    """
-    return test(statistic, Distribution(), confidence)
-
-def t50(**kwargs):
-    """
-    """
-    return test(statistic, Distribution(), confidence)
-
+def MedianTestfor2Pop(s1=(9, 6), s2=(6, 9), confidence=0.95):
+    """Test 50: The median test of two populations
+    
+    To test if two random samples could have come from two populations with
+    same frequency distribution
+    
+    Limitations:
+        1. The two samples are assumed to be reasonably large
+        
+    @param s1: 2-element list or tuple of frequencies for sample #1
+    @param s2: 2-element list or tuple of frequencies for sample #2
+    @param confidence: confidence level"""
+    ls1 = s1[0]
+    rs1 = s1[1]
+    ls2 = s2[0]
+    rs2 = s2[1]
+    N = ls1+ls2+rs1+rs2
+    statistic = (((abs((ls1*rs2)-(ls2*rs1))-(N * 0.5))**2)*N) / \
+    ((ls1+ls2)*(ls1+rs1)*(ls2+rs2)*(rs1+rs2))
+    print statistic
+    return test(statistic, ChiSquareDistribution(df=1), confidence)
+    
 def t51(**kwargs):
     """
     """
@@ -922,10 +979,42 @@ def t83(**kwargs):
     """
     return test(statistic, Distribution(), confidence)
 
-def t84(**kwargs):
-    """
-    """
-    return test(statistic, Distribution(), confidence)
+def ZtestLogOddsRatio(group1, group2, confidence):
+    """Test 84: Z-test for comparing sequential contingencies acoss two groups
+    using the 'log odds ratio'
+    
+    To test the significance of the difference in sequential connections
+    across groups
+    
+    Limitations:
+        1. This test is applicable when a logit transformation can be used and
+        2 X 2 contingency tables are available
+        
+    
+    @param group1: group #1 values (row = x, y) & (column a, b) Provide values 
+    in xa, xb, ya, yb)
+    @param group2: group #2 values (row = x, y) & (column a, b) Provide values
+    in xa, xb, ya, yb)
+    @param confidence: confidence level"""
+    x1a1 = float(group1[0])
+    x1b1 = float(group1[1])
+    y1a1 = float(group1[2])
+    y1b1 = float(group1[3])
+    x2a2 = float(group2[0])
+    x2b2 = float(group2[1])
+    y2a2 = float(group2[2])
+    y2b2 = float(group2[3])
+    C = x1a1* y1b1
+    D = y1a1 * x1b1
+    G = C/D
+    E = x2a2* y2b2
+    F = y2a2 * x2b2
+    H = E/F
+    A = log(G, e)
+    B = log(H, e)
+    statistic = (A - B)/ (((1/x1a1) + (1/x1b1) + (1/y1a1) + (1/y1b1) + \
+    (1/x2a2) + (1/x2b2) + (1/y2a2) + (1/y2b2)) **0.5)
+    return test(statistic, NormalDistribution(), confidence)
 
 def t85(**kwargs):
     """
@@ -962,9 +1051,17 @@ def t91(**kwargs):
     """
     return test(statistic, Distribution(), confidence)
 
-def t92(**kwargs):
-    """
-    """
+def DubinWatsontest(**kwargs):
+    """Test 92: Dubin-Watson test
+    
+    To test whether the error terms in a regression model are autocorrelated
+    
+    Limitations:
+        This test is applicable if the autocorrelation parameter and error
+        terms are independently normally distributed with mean zero and
+        variance s2. 
+        
+    @param confidence: confidence level"""
     return test(statistic, Distribution(), confidence)
 
 def t93(**kwargs):
