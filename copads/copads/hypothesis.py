@@ -826,24 +826,22 @@ def Chisquare2xKtable(s1, s2, k, confidence):
     statistic = sum([A[i] + B[i] for i in range(len(A))])
     return test(statistic, ChiSquareDistribution(k-1), confidence)
 
-def ChisquarePxQ(d, confidence):
-    """Test 44: The x2-test for independence in a p x q table
+# def ChisquarePxQ(d, confidence):
+    # """Test 44: The x2-test for independence in a p x q table
     
-    To investigate the difference in frequency when classified by one 
-    attribute after classification by a second attribute
+    # To investigate the difference in frequency when classified by one 
+    # attribute after classification by a second attribute
     
-    Limitations:
-        1. Sample should be sufficiently large. This condition will be 
-        satisfied if each cell frequency is greater than 5
+    # Limitations:
+        # 1. Sample should be sufficiently large. This condition will be 
+        # satisfied if each cell frequency is greater than 5
         
-    @param d: data given as rows
-    @param confidence: confidence level"""
-    p = len(d)
-    q = len(d[0])
-    n01 = [sum(d[i]) for i in range(q)
-    for q in range(len(d[0])):
-        for x in p[q]
-    return test(statistic, ChiSquareDistribution((p-1) * (q-1)), confidence)
+    # @param d: data given as rows
+    # @param confidence: confidence level"""
+    # p = len(d)
+    # q = len(d[0])
+    # n01 = [sum(d[i]) for i in range(q)
+    # return test(statistic, ChiSquareDistribution((p-1) * (q-1)), confidence)
 
 def t45(**kwargs):
     """
