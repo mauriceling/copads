@@ -781,12 +781,19 @@ def ChisquareKx2table(c1, c2, k, confidence):
         2. It is usually assumed to be satisfied if the cell frequencies are
         equal to 5
         
-    @param c1: class 1 values of sample k
-    @param c2: class 2 values of sample k
+    @param c1: class #1 values of sample k
+    @param c2: class #2 values of sample k
     @param k: number of samples
-    @param confidence: confidence level
-    """
-    
+    @param confidence: confidence level"""
+    z = sum(c1)
+    nx = sum(c2)
+    n = [c1[i] + c2[i] for i in range(len(c1))]
+    Total = sum(n)
+    A = [x ** 2 for x in c1]
+    B = sum([float(A[i]) / float(n[i]) for i in range(len(A))])
+    C = (B - (float(z ** 2) / (float(Total))))
+    D = float(Total ** 2) / float(z * (Total - z))
+    statistic = D * C
     return test(statistic, ChiSquareDistribution(k-1), confidence)
 
 def t42(**kwargs):
@@ -794,15 +801,49 @@ def t42(**kwargs):
     """
     return test(statistic, Distribution(), confidence)
 
-def t43(**kwargs):
-    """
-    """
-    return test(statistic, Distribution(), confidence)
+def Chisquare2xKtable(s1, s2, k, confidence):
+    """Test 43: The x2-test for consistency in a 2 x K table
+    
+    To investigate the significance of the differences between two
+    distributions based on two samples spread over K classes
+    
+    Limitations:
+        1. The two samples are sufficiently large
+        2. The K classes when put together form a complete series
+        
+    @param s1: sample #1 of class k
+    @param s2: sample #2 of class k
+    @param k: number of classes
+    @param confidence: confidence level"""
+    N1 = sum(s1)
+    N2 = sum(s2)
+    Total = N1 + N2
+    n =[s1[i] + s2[i] for i in range(len(s1))]
+    e1 = [float(N1 * x) / float(N1 + N2) for x in n]
+    e2 = [float(N2 * x) / float(N1 + N2) for x in n]
+    A = [((s1[i] - e1[i]) **2) / e1[i] for i in range(len(s1))]
+    B = [((s2[i] - e2[i]) **2) / e2[i] for i in range(len(s2))]
+    statistic = sum([A[i] + B[i] for i in range(len(A))])
+    return test(statistic, ChiSquareDistribution(k-1), confidence)
 
-def t44(**kwargs):
-    """
-    """
-    return test(statistic, Distribution(), confidence)
+def ChisquarePxQ(d, confidence):
+    """Test 44: The x2-test for independence in a p x q table
+    
+    To investigate the difference in frequency when classified by one 
+    attribute after classification by a second attribute
+    
+    Limitations:
+        1. Sample should be sufficiently large. This condition will be 
+        satisfied if each cell frequency is greater than 5
+        
+    @param d: data given as rows
+    @param confidence: confidence level"""
+    p = len(d)
+    q = len(d[0])
+    n01 = [sum(d[i]) for i in range(q)
+    for q in range(len(d[0])):
+        for x in p[q]
+    return test(statistic, ChiSquareDistribution((p-1) * (q-1)), confidence)
 
 def t45(**kwargs):
     """
@@ -1155,8 +1196,20 @@ def t93(**kwargs):
     """
     return test(statistic, Distribution(), confidence)
 
-def t94(**kwargs):
-    """
+def ChisquareProbModel(**kwargs):
+    """Test 94: x2-test for a suitable probabilistic model
+    
+    Many experiments yield a set of data, say x1, x2, x3, xn and the
+    experimenter often is interested in determining whether the data can be
+    treated as the observed values of the random sample x1, x2, xn from a 
+    given distribution.
+    
+    Limitations:
+        this test is applicable if both distributions have the same interval 
+        classification and the number of elements. The observed data are
+        observed by random sampling.
+        
+    @param confidence: confidence level
     """
     return test(statistic, Distribution(), confidence)
 

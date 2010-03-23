@@ -240,6 +240,27 @@ class testTDistribution(unittest.TestCase):
             ssize = 180, confidence = 0.95)[2], 4.79, places = 1)
         self.assertTrue(N.Chisq2x2(s1 = (15, 85), s2 = (4, 77), ssize = 180, 
             confidence = 0.95),[4])
+            
+    def testChisquareKx2table(self):
+        """Test 41: The x2-test for consistency in a K x 2 table"""
+        self.assertAlmostEqual(N.ChisquareKx2table(c1 = (3, 4, 5),
+            c2 = (7, 2, 4), k = 3, confidence = 0.95)[2], 2.344, places = 2)
+        self.assertFalse(N.ChisquareKx2table(c1 = (3, 4, 5),
+            c2 = (7, 2, 4), k = 3, confidence = 0.95)[4])
+            
+    def testChisquare2xKtable(self):
+        """Test 43: The x2-test for consistency in a 2 x K table"""
+        self.assertAlmostEqual(N.Chisquare2xKtable(s1 = (50, 47, 56),
+            s2 = (5, 14, 8), k = 3, confidence = 0.95)[2], 4.84, places = 2)
+        self.assertFalse(N.Chisquare2xKtable(s1 = (50, 47, 56),
+            s2 = (5, 14, 8), k = 3, confidence = 0.95)[4])
+            
+    # def testChisquarePxQ(self):
+        # """Test 44: The x2-test for independence in a p x q table"""
+        # self.assertAlmostEqual(N.ChisquarePxQ(d = ((32, 13), (14, 22), (6, 9)),
+            # confidence = 0.95)[2], 10.67, places = 2)
+        # self.assertTrue(N.ChisquarePxQ(d = ((32, 13), (14, 22), (6, 9)),
+            # confidence = 0.95)[4])
     
     # def testt2MediansPairedObs(self):
         # """Test 46: The sign test for two medians (paired observations)"""
