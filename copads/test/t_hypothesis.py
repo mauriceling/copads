@@ -177,17 +177,88 @@ class testTDistribution(unittest.TestCase):
         self.assertFalse(N.F2CorrelatedObs(var1 = 0.36, var2 = 0.087,
             ssize1 = 6, ssize2 = 6, r = 0.811, confidence = 0.95)[4])
             
-    def testt2MediansPairedObs(self):
-        """"Test 46: The sign test for two medians (paired observations)"""
-        # self.assertAlmostEqual(N.t2MediansPairedObs(x=(0.19, 0.22, 0.18, 0.17, 
-            # 1.20, 0.14, 0.09, 0.13, 0.26, 0.66), y=(0.21, 0.27, 0.15, 
-            # 0.18, 0.40, 0.08, 0.14, 0.28, 0.30, 0.68), confidence=0.90)[2], 3)
-        # self.assertFalse(N.t2MediansPairedObs(x=(0.19, 0.22, 0.18, 0.17, 
-            # 1.20, 0.14, 0.09 0.13, 0.26, 0.66), y=(0.21, 0.27, 0.15, 
-            # 0.18, 0.40, 0.08, 0.14, 0.28, 0.30, 0.68), confidence=0.90)[4])
+    # def testFishercumulant(self):
+        # """Test 20: Fisher's cumulant test for normality of a population"""
+        # self.assertAlmostEqual(N.Fishercumulant(m1 = 151, m2 = 805, m3 = 1837, 
+            # m4 = 10753, ssize = 190, confidence = 0.95)[2], 0.449, places = 2)
+        # self.assertFalse(N.Fishercumulant(m1 = 151, m2 = 805, m3 = 1837, 
+            # m4 = 10753, ssize = 190, confidence = 0.95)[4])
+            
+    # def testDixonTest(self):
+        # """Test 21: Dixon's test for outliers"""
+        # self.assertAlmostEqual(N.DixonTest(values = (326, 177, 176, 157), 
+            # n = 4, confidence = 0.95)[2], 0.882, places = 2)
+        # self.assertFalse(N.DixonTest(values = (326, 177, 176, 157), 
+            # n = 4, confidence = 0.95)[4])
+            
+    # def testFTestAnalysisofVar(self):
+        # """Test 22: F-test for K population means (analysis of variance)"""
+        # self.assertAlmostEqual(N.FTestAnalysisofVar(s = ((5, 4, 3),
+            # (5, 5, 4, 4, 3, 3), (4, 6, 8, 10)), k = 3,
+            # confidence = 0.95)[2], 0.002433, places = 4)
+        # self.assertTrue(N.FTestAnalysisofVar(s = ((5, 4, 3),
+            # (5, 5, 4, 4, 3, 3), (4, 6, 8, 10)), k = 3, confidence = 0.95)[4])
+            
+    def testZCorrProportion(self):
+        """Test 23: Z-test for correlated proportions"""
+        self.assertAlmostEqual(N.ZCorrProportion(ssize = 105, ny = 15,
+        yn = 9, confidence = 0.95)[2], 1.23, places = 1)
+        self.assertFalse(N.ZCorrProportion(ssize = 105, ny = 15,
+        yn = 9, confidence = 0.95)[4])
+        
+    def testChisq2Variance(self):
+        """Test 24: Chi-square test for an assumed population variance"""
+        self.assertAlmostEqual(N.Chisq2Variance(ssize = 25, svar = 12, 
+        pvar = 9, confidence = 0.95)[2], 32)
+        self.assertFalse(N.Chisq2Variance(ssize = 25, svar = 12, 
+        pvar = 9, confidence = 0.95)[4])
+        
+    def testF2Count(self):
+        """Test 25: F-test for two counts (Poisson distribution)"""
+        self.assertAlmostEqual(N.F2Count(count1 = 13, count2 = 3,
+            confidence = 0.95)[2], 3.25)
+        self.assertTrue(N.F2Count(count1= 13, count2 = 3, 
+            confidence = 0.95)[4])
+            
+    def testChisqFit(self):
+        """Test 37: Chi-square test for goodness of fit"""
+        self.assertAlmostEqual(N.ChisqFit(observed = (25, 17, 15, 23, 24, 16), 
+        expected = (20, 20, 20, 20, 20, 20), confidence = 0.95)[2], 5.0)
+        self.assertFalse(N.ChisqFit(observed = (25, 17, 15, 23, 24, 16), 
+        expected = (20, 20, 20, 20, 20, 20), confidence = 0.95)[4])
+            
+    def testtx2testofKcounts(self):
+        """Test 38: The x2-test for compatibility of K counts"""
+        self.assertAlmostEqual(N.tx2testofKcounts(T = (1, 1, 1, 1),
+            V = (5, 12, 18, 19), confidence = 0.95)[2], 9.259, places = 2)
+        self.assertTrue(N.tx2testofKcounts(T = (1, 1, 1, 1),
+            V = (5, 12, 18, 19), confidence = 0.95)[4])
+    
+    def testChisq2x2(self):
+        """Test 40: Chi-square test for consistency in 2x2 table"""
+        self.assertAlmostEqual(N.Chisq2x2(s1 = (15, 85), s2 = (4, 77),
+            ssize = 180, confidence = 0.95)[2], 4.79, places = 1)
+        self.assertTrue(N.Chisq2x2(s1 = (15, 85), s2 = (4, 77), ssize = 180, 
+            confidence = 0.95),[4])
+    
+    # def testt2MediansPairedObs(self):
+        # """Test 46: The sign test for two medians (paired observations)"""
+        # self.assertAlmostEqual(N.t2MediansPairedObs(x = (0.19, 0.22, 0.18, 0.17, 
+            # 1.20, 0.14, 0.09, 0.13, 0.26, 0.66), y = (0.21, 0.27, 0.15, 
+            # 0.18, 0.40, 0.08, 0.14, 0.28, 0.30, 0.68), confidence = 0.90)[2], 3)
+        # self.assertFalse(N.t2MediansPairedObs(x = (0.19, 0.22, 0.18, 0.17, 
+            # 1.20, 0.14, 0.09, 0.13, 0.26, 0.66), y = (0.21, 0.27, 0.15, 
+            # 0.18, 0.40, 0.08, 0.14, 0.28, 0.30, 0.68), confidence = 0.90)[4])
+    
+    def testMedianTestfor2Pop(self):
+        """Test 50: The median test of two populations"""
+        self.assertAlmostEqual(N.MedianTestfor2Pop(s1 = (9, 6), 
+            s2 = (6, 9), confidence = 0.95)[2], 0.53, places = 1)
+        self.assertFalse(N.MedianTestfor2Pop(s1 = (9, 6), s2 = (6, 9),
+            confidence = 0.95)[4])
     
     def testZtestLogOddsRatio(self):
-        """"Test 84: Z-test for comparing sequential contingencies acoss two 
+        """Test 84: Z-test for comparing sequential contingencies acoss two 
         groups using the 'log odds ratio' """
         self.assertAlmostEqual(N.ZtestLogOddsRatio(group1 = (76, 79, 100, 200), 
             group2 = (80, 43, 63, 39), confidence = 0.95)[2], 1.493, places=3)

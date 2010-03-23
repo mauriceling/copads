@@ -77,8 +77,8 @@ t-te    Limitations
     @see: Ling, MHT. 2009. Ten Z-Test Routines from Gopal Kanji's 100 
     Statistical Tests. The Python Papers Source Codes 1:5
     """
-    statistic = abs(smean - pmean)/ \
-                (pvar / sqrt(ssize))
+    statistic = float(abs(smean - pmean)/ \
+                (pvar / sqrt(ssize)))
     return test(statistic, NormalDistribution(), confidence)
 
 def Z2Mean1Variance(smean1, smean2, pvar, ssize1, ssize2, confidence,
@@ -105,8 +105,8 @@ def Z2Mean1Variance(smean1, smean2, pvar, ssize1, ssize2, confidence,
     @see: Ling, MHT. 2009. Ten Z-Test Routines from Gopal Kanji's 100 
     Statistical Tests. The Python Papers Source Codes 1:5
     """
-    statistic = ((smean1 - smean2) - (pmean1 - pmean2))/ \
-                (pvar * sqrt((1.0 / ssize1) + (1.0 / ssize2)))
+    statistic = float(((smean1 - smean2) - (pmean1 - pmean2))/ \
+                (pvar * sqrt((1.0 / ssize1) + (1.0 / ssize2))))
     return test(statistic, NormalDistribution(), confidence)    
 
 def Z2Mean2Variance(smean1, smean2, pvar1, pvar2, ssize1, ssize2, confidence,
@@ -134,8 +134,8 @@ def Z2Mean2Variance(smean1, smean2, pvar1, pvar2, ssize1, ssize2, confidence,
     @see: Ling, MHT. 2009. Ten Z-Test Routines from Gopal Kanji's 100 
     Statistical Tests. The Python Papers Source Codes 1:5
     """
-    statistic = ((smean1 - smean2) - (pmean1 - pmean2))/ \
-                sqrt((pvar1 / ssize1) + (pvar2 / ssize2))
+    statistic = float(((smean1 - smean2) - (pmean1 - pmean2))/ \
+                sqrt((pvar1 / ssize1) + (pvar2 / ssize2)))
     return test(statistic, NormalDistribution(), confidence)
 
 def Z1Proportion(spro, ppro, ssize, confidence):    
@@ -157,8 +157,8 @@ def Z1Proportion(spro, ppro, ssize, confidence):
     @see: Ling, MHT. 2009. Ten Z-Test Routines from Gopal Kanji's 100 
     Statistical Tests. The Python Papers Source Codes 1:5
     """
-    statistic = (abs(ppro - spro) - (1 / (2 * ssize)))/ \
-                sqrt((ppro * (1 - spro)) / ssize)
+    statistic = float((abs(ppro - spro) - (1 / (2 * ssize)))/ \
+                sqrt((ppro * (1 - spro)) / ssize))
     return test(statistic, NormalDistribution(), confidence)
 
 def Z2Proportion(spro1, spro2, ssize1, ssize2, confidence):    
@@ -180,9 +180,9 @@ def Z2Proportion(spro1, spro2, ssize1, ssize2, confidence):
     @see: Ling, MHT. 2009. Ten Z-Test Routines from Gopal Kanji's 100 
     Statistical Tests. The Python Papers Source Codes 1:5
     """
-    P = ((spro1 * ssize1) + (spro2 * ssize2)) / (ssize1 + ssize2)
-    statistic = (spro1 - spro2) / \
-                (P * (1.0 - P) * ((1.0 / ssize1) + (1.0 / ssize2))) ** 0.5
+    P = float(((spro1 * ssize1) + (spro2 * ssize2)) / (ssize1 + ssize2))
+    statistic = float((spro1 - spro2) / \
+                (P * (1.0 - P) * ((1.0 / ssize1) + (1.0 / ssize2))) ** 0.5)
     return test(statistic, NormalDistribution(), confidence)
 
 def Z2Count(time1, time2, count1, count2, confidence):    
@@ -206,7 +206,7 @@ def Z2Count(time1, time2, count1, count2, confidence):
     """
     R1 = count1 / float(time1)
     R2 = count2 / float(time2)
-    statistic = (R1 - R2) / sqrt((R1 / time1) + (R2 / time2))
+    statistic = float((R1 - R2) / sqrt((R1 / time1) + (R2 / time2)))
     return test(statistic, NormalDistribution(), confidence)
 
 def t1Mean(smean, pmean, svar, ssize, confidence):
@@ -226,7 +226,7 @@ def t1Mean(smean, pmean, svar, ssize, confidence):
     @param ssize: sample size
     @param confidence: confidence level
     """
-    statistic = (smean - pmean) / (svar / sqrt(ssize))
+    statistic = float((smean - pmean) / (svar / sqrt(ssize)))
     return test(statistic, TDistribution(shape = ssize-1), confidence)
 
 def t2Mean2EqualVariance(smean1, smean2, svar1, svar2, ssize1, ssize2,
@@ -252,9 +252,9 @@ def t2Mean2EqualVariance(smean1, smean2, svar1, svar2, ssize1, ssize2,
     @param pmean1: population mean of population #1 (optional)
     @param pmean2: population mean of population #2 (optional)"""
     df = ssize1 + ssize2 - 2
-    pvar = (((ssize1 - 1) * svar1) + ((ssize2 - 1) * svar2)) / df
-    statistic = ((smean1 - smean2) - (pmean1 - pmean2)) / \
-                ((sqrt(pvar)) * sqrt((1.0 / ssize1) + (1.0 / ssize2)))
+    pvar = float((((ssize1 - 1) * svar1) + ((ssize2 - 1) * svar2)) / df)
+    statistic = float(((smean1 - smean2) - (pmean1 - pmean2)) / \
+                ((sqrt(pvar)) * sqrt((1.0 / ssize1) + (1.0 / ssize2))))
     return test(statistic, TDistribution(shape = df), confidence)
 
 def t2Mean2UnequalVariance(smean1, smean2, svar1, svar2, ssize1, ssize2,
@@ -278,11 +278,11 @@ def t2Mean2UnequalVariance(smean1, smean2, svar1, svar2, ssize1, ssize2,
     @param confidence: confidence level
     @param pmean1: population mean of population #1 (optional)
     @param pmean2: population mean of population #2 (optional)"""
-    statistic = ((smean1 - smean2) - (pmean1 - pmean2)) / \
-                sqrt((svar1 / ssize1) + (svar2 / ssize2))
-    df = (((svar1 / ssize1) + (svar2 / ssize2)) ** 2) / \
+    statistic = float(((smean1 - smean2) - (pmean1 - pmean2)) / \
+                sqrt((svar1 / ssize1) + (svar2 / ssize2)))
+    df = float((((svar1 / ssize1) + (svar2 / ssize2)) ** 2) / \
         (((svar1 ** 2) / ((ssize1 ** 2) * (ssize1 - 1))) + \
-            ((svar2 ** 2) / ((ssize2 ** 2) * (ssize2 - 1))))
+            ((svar2 ** 2) / ((ssize2 ** 2) * (ssize2 - 1)))))
     return test(statistic, TDistribution(shape = df), confidence)
 
 def tPaired(smean1, smean2, svar, ssize, confidence):    
@@ -297,7 +297,7 @@ def tPaired(smean1, smean2, svar, ssize, confidence):
     @param svar: variance of differences between pairs
     @param ssize: sample size
     @param confidence: confidence level"""
-    statistic = (smean1 - smean2) / (svar / sqrt(ssize))
+    statistic = float((smean1 - smean2) / (svar / sqrt(ssize)))
     return test(statistic, TDistribution(shape = ssize - 1), confidence)
 
 def tRegressionCoefficient(variancex, varianceyx, b, ssize, confidence):
@@ -314,7 +314,8 @@ def tRegressionCoefficient(variancex, varianceyx, b, ssize, confidence):
     @param b: calculated Regression Coefficient
     @param ssize: sample size
     @param confidence: confidence level"""
-    statistic = ((b * sqrt(variancex)) / sqrt(varianceyx)) * ((ssize-1) ** -0.5)
+    statistic = float(((b * sqrt(variancex)) / \
+        sqrt(varianceyx)) * ((ssize-1) ** -0.5))
     return test(statistic, TDistribution(shape = ssize - 2), confidence)
 
 def tPearsonCorrelation(r, ssize, confidence):    
@@ -335,7 +336,7 @@ def tPearsonCorrelation(r, ssize, confidence):
     @param r: calculated Pearson's product-moment correlation coefficient
     @param ssize: sample size
     @param confidence: confidence level"""
-    statistic = (r * sqrt(ssize - 2)) / sqrt(1 - (r **2))
+    statistic = float((r * sqrt(ssize - 2)) / sqrt(1 - (r **2)))
     return test(statistic, TDistribution(shape = ssize - 2), confidence)
 
 def ZPearsonCorrelation(sr, pr, ssize, confidence):    
@@ -363,10 +364,10 @@ def ZPearsonCorrelation(sr, pr, ssize, confidence):
     """
     if sr == 1.0: sr = 0.9999999999
     if pr == 1.0: pr = 0.9999999999
-    Z1 = 0.5 * log((1 + sr) / (1 - sr))
-    meanZ1 = 0.5 * log((1 + pr) / (1 - pr))
-    sigmaZ1 = 1.0 / sqrt(ssize - 3)
-    statistic = (Z1 - meanZ1) / sigmaZ1
+    Z1 = float(0.5 * log((1 + sr) / (1 - sr)))
+    meanZ1 = float(0.5 * log((1 + pr) / (1 - pr)))
+    sigmaZ1 = float(1.0 / sqrt(ssize - 3))
+    statistic = float((Z1 - meanZ1) / sigmaZ1)
     return test(statistic, NormalDistribution(), confidence)
     
 def Z2PearsonCorrelation(r1, r2, ssize1, ssize2, confidence):    
@@ -386,12 +387,12 @@ def Z2PearsonCorrelation(r1, r2, ssize1, ssize2, confidence):
     @see: Ling, MHT. 2009. Ten Z-Test Routines from Gopal Kanji's 100 
     Statistical Tests. The Python Papers Source Codes 1:5
     """
-    z1 = 0.5 * log((1.0 + r1) / (1.0 - r1))
-    z2 = 0.5 * log((1.0 + r2) / (1.0 - r2))
-    sigma1 = 1.0 / sqrt(ssize1 - 3)
-    sigma2 = 1.0 / sqrt(ssize2 - 3)
-    sigma = sqrt((sigma1 ** 2) + (sigma2 ** 2))
-    statistic = abs(z1 - z2) / sigma
+    z1 = float(0.5 * log((1.0 + r1) / (1.0 - r1)))
+    z2 = float(0.5 * log((1.0 + r2) / (1.0 - r2)))
+    sigma1 = float(1.0 / sqrt(ssize1 - 3))
+    sigma2 = float(1.0 / sqrt(ssize2 - 3))
+    sigma = float(sqrt((sigma1 ** 2) + (sigma2 ** 2)))
+    statistic = float(abs(z1 - z2) / sigma)
     return test(statistic, NormalDistribution(), confidence)
 
 def ChiSquarePopVar(values, ssize, pv, confidence = 0.95):    
@@ -408,9 +409,8 @@ def ChiSquarePopVar(values, ssize, pv, confidence = 0.95):
     mean = sum(values)/ssize
     freq = [float((values[i] - mean) ** 2) 
             for i in range(len(values))]
-    sv = (sum(freq)/(ssize-1))
-    statistic = (((ssize - 1) * sv) / pv)
-    print statistic
+    sv = float((sum(freq)/(ssize-1)))
+    statistic = float((((ssize - 1) * sv) / pv))
     return test(statistic, ChiSquareDistribution(df = ssize-1), confidence)
 
 def FVarianceRatio(var1, var2, ssize1, ssize2, confidence):
@@ -425,7 +425,7 @@ def FVarianceRatio(var1, var2, ssize1, ssize2, confidence):
     @param ssize1: sample size #1
     @param ssize2: sample size #2
     @param confidence: confidence level"""
-    statistic = var1 / var2
+    statistic = float(var1 / var2)
     return test(statistic, FDistribution(df1=ssize1-1, df2=ssize2-1), 
     confidence)
     
@@ -441,8 +441,8 @@ def F2CorrelatedObs(r, var1, var2, ssize1, ssize2, confidence):
     @param ssize1: sample size #1
     @param ssize2: sample size #2
     @param confidence: confidence level"""
-    statistic = ((var1 / var2)- 1) / (((((var1 / var2) + 1) ** 2) - \
-        (4 * (r ** 2) * (var1 / var2))) ** 0.5)
+    statistic = float(((var1 / var2)- 1) / (((((var1 / var2) + 1) ** 2) - \
+        (4 * (r ** 2) * (var1 / var2))) ** 0.5))
     return test(statistic, FDistribution(ssize1-1, ssize2-1), confidence)
 
 def t18(**kwargs):
@@ -453,11 +453,11 @@ def t18(**kwargs):
     multivariate result. In another words, we wish to know if the mean pattern
     obtained from the first experiment agrees with the mean pattern obtained
     for the second.
-	
-	@param 
-	@param 
-	@param 
-	"""
+    
+    @param 
+    @param 
+    @param 
+    """
     return test(statistic, Distribution(), confidence)
 
 def t19(**kwargs):
@@ -469,23 +469,96 @@ def t19(**kwargs):
     particular series."""
     return test(statistic, Distribution(), confidence)
 
-def t20(**kwargs):
-    """
-    Test 20
-    """
-    return test(statistic, Distribution(), confidence)
+# def Fishercumulant(m1, m2, m3, m4, ssize, confidence):
+    # """Test 20: Fisher's cumulant test for normality of a population
+    
+    # To investigate the significance of the difference between frequency
+    # distribution based on a given sample and normal frequency distribution
+    # with same mean and variance
+    
+    # Limitations:
+        # 1. Sample size should be large, >50
+        # 2. Distributions must have same mean and same variance
+        
+    # @param m1: sample moment #1
+    # @param m2: sample moment #2
+    # @param m3: sample moment #3
+    # @param m4: sample moment #4
+    # @param ssize: sample size
+    # @param confidence: confidence level"""
+    # k1 = float(m1 / ssize)
+    # k2 = float((ssize * m2) - (m1 **2)) / (ssize * (ssize - 1))
+    # k3 = float(((ssize **2) * m3) - (3 * ssize * m2 * m1) + (2 * (m1 **3))) / \
+        # (ssize * (ssize-1) * (ssize-2))
+    # A = float(((ssize **3) + ssize **2) * m4)
+    # B = float(-4 * (((ssize **2) + ssize) * m3 * m1))
+    # C = float(-3 * ((ssize **2) * (m2 **2)))
+    # C2 = float(-3 * (-ssize * (m2 **2)))
+    # D = float(12 * m2 * (m1 **2))
+    # E = float(6 * (m1 **4))
+    # F = ssize * (ssize-1) * (ssize - 2) * (ssize - 3)
+    # k4 = float((A + B + C + C2 + D - E) / F)
+    # skewness = (k3 / (k2 * (k2 ** 0.5))) * ((ssize / 6 ) **0.5)
+    # kurtosis = (k4 / (k2 **2)) * ((ssize / 24 ) **0.5)
+    # statistic = (skewness **2) + (kurtosis **2)
+    # print A, B, C, C2, D, E, F, k4, kurtosis, statistic
+    # return test(statistic, ChiSquareDistribution(df = ssize - 1), confidence)
 
-def t21(**kwargs):
-    """
-    Test 21
-    """
-    return test(statistic, Distribution(), confidence)
+# def DixonTest(values, n, confidence):
+    # """
+    # Test 21: Dixon's test for outliers
+    
+    # To investigate the significance of the difference between a suspicious
+    # extreme value and other values in the sample.
+    
+    # Limitations: 
+    # 1. sample size should be greater than 3
+    # 2. Population which is being sampled is assumed normal
+    
+    # @param values: list of values that are arranged in ascending order
+    # @param n: sample size
+    # @param confidence: confidence level"""
+    # if n in range(4, 8):
+        # statistic = float((values[1]) - (values[0])) / \
+        # float((values[n-1]) - (values[0]))
+    # elif n in range(8, 11):
+        # statistic = float(values[1] - values[0]) / \
+        # float(values[n-2] - values[0])
+    # elif n in range(11, 14):
+        # statistic = float(values[2] - values[0]) / \
+        # float(values[n-2] - values[0])
+    # elif n in range(14, 26):
+        # statistic = float(values[2] - values[0]) / \
+        # float(values[n-3] - values[0])
+    # else: print 'Sample size is larger than 25 or smaller than 3'
+    # return test(statistic, NormalDistribution(), confidence)
 
-def t22(**kwargs):
-    """
-    Test 22
-    """
-    return test(statistic, Distribution(), confidence)
+# def FTestAnalysisofVar(s, k, confidence):
+    # """
+    # Test 22: F-test for K population means (analysis of variance)
+    
+    # To test the null hypothesis that K samples are from K populations with
+    # the same mean
+    
+    # Limitations:
+        # 1. It is assumed that the populations are normally distributed
+        # and have equal variances and samples are independent of each other
+        
+    # @param s: sample datas
+    # @param k: number of populations
+    # @param confidence: confidence level"""
+    # Total = sum([sum(x) for x in s])
+    # Mean = [float(sum(x)) / float(len(x)) for x in s]
+    # N = sum([len(x) for x in s])
+    # s0 = [Mean[i] * Mean[i] * len(s[i])
+            # for i in range(len(Mean))]
+    # s1 = sum(s0) - A
+    # s3 = float((1/k)) * Total
+    # s4 = [(len(s[i]) * (Mean[i] - s3))
+        # for i in range(len(Mean))]
+    # s2 = float((sum(s4))) / float((N - k))
+    # statistic = float((s1 - s2)) / float((N - k))
+    # return test(statistic, FDistribution(df1 = k, df2 = len(x)), confidence)
 
 def ZCorrProportion(ssize, ny, yn, confidence):
     """
@@ -507,9 +580,9 @@ def ZCorrProportion(ssize, ny, yn, confidence):
     @see: Ling, MHT. 2009. Ten Z-Test Routines from Gopal Kanji's 100 
     Statistical Tests. The Python Papers Source Codes 1:5
     """    
-    sigma = (ny + yn) - (((ny - yn) ** 2.0) / ssize)
-    sigma = sqrt(sigma / (ssize * (ssize - 1.0)))
-    statistic = (ny - yn) / (sigma * ssize)
+    sigma = float((ny + yn) - (((ny - yn) ** 2.0) / ssize))
+    sigma = float(sqrt(sigma / (ssize * (ssize - 1.0))))
+    statistic = float((ny - yn) / (sigma * ssize))
     return test(statistic, NormalDistribution(), confidence)
 
 def Chisq2Variance(ssize, svar, pvar, confidence):
@@ -526,10 +599,10 @@ def Chisq2Variance(ssize, svar, pvar, confidence):
     @param svar: sample variance
     @param pvar: population variance (assumed)
     @param confidence: confidence level"""
-    statistic = (svar / pvar) * (ssize - 1)
+    statistic = float((ssize-1) * svar/pvar)
     return test(statistic, ChiSquareDistribution(df = ssize - 1), confidence)
 
-def F2Count(count1, count2, time1=0, time2=0, repeat=False):
+def F2Count(count1, count2, confidence, time1=0, time2=0, repeat=False):
     """
     Test 25: F-test for two counts (Poisson distribution)
     
@@ -547,17 +620,18 @@ def F2Count(count1, count2, time1=0, time2=0, repeat=False):
         (only needed if repeat = True)
     @param time2: time at which second sample is taken 
         (only needed if repeat = True)
-    """
+    @param confidence: confidence level"""
     if not repeat:
-        statistic = count1 / (count2 + 1)
+        statistic = float(count1) / float(count2 + 1)
         numerator = 2 * (count2 + 1)
         denominator = 2 * count1
     else:
-        statistic = ((count1 + 0.5) / time1) / ((count2 + 0.5) / time2)
+        statistic = (float(count1 + 0.5) / float(time1)) / \
+                    (float(count2 + 0.5) / float(time2))
         numerator = 2 * count1 + 1
         denominator = 2 * count2 + 1
-    return test(statistic, FDistribution(numerator=numerator, 
-    denominator=denominator), confidence)
+    return test(statistic, FDistribution(df1 = numerator, 
+        df2 = denominator), confidence)
 
 def t26(**kwargs):
     """
@@ -642,11 +716,11 @@ def ChisqFit(observed, expected, confidence):
     @param observed: list of observed frequencies (index matched with expected)
     @param expected: list of expected frequencies (index matched with observed)
     @param confidence: confidence level""" 
-    freq = [float(((observed[i] - expected[i]) ** 2) / expected[i])
+    freq = [float((observed[i] - expected[i]) ** 2) / (float(expected[i]))
             for i in range(len(observed))]
     statistic = 0.0
     for x in freq: statistic = statistic + x
-    return test(statistic, ChiSqDistribution(df = len(observed) - 1), 
+    return test(statistic, ChiSquareDistribution(df = len(observed) - 1), 
                 confidence)
 
 def tx2testofKcounts(T, V, confidence):
@@ -661,18 +735,18 @@ def tx2testofKcounts(T, V, confidence):
     @param T: list of time under K counts
     @param V: list of values of K counts
     @param confidence: confidence level"""
-    R = sum(V) / sum(T)
-    freq = [((V[i] - (T[i] * R)) ** 2) / (T[i] * R) 
+    R = float(sum(V)) / float(sum(T))
+    freq = [((V[i] - (T[i] * R)) ** 2) / float(T[i] * R) 
             for i in range(len(V))]
     statistic = sum(freq)
-    return test(statistic, ChiSqDistribution(df = len(V) - 1), confidence)
+    return test(statistic, ChiSquareDistribution(df = len(V) - 1), confidence)
 
 def t39(**kwargs):
     """
     """
     return test(statistic, Distribution(), confidence)
 
-def Chisq2x2(s1, s2, confidence):
+def Chisq2x2(s1, s2, ssize, confidence):
     """
     Test 40: Chi-square test for consistency in 2x2 table
     
@@ -685,21 +759,35 @@ def Chisq2x2(s1, s2, confidence):
     
     @param s1: 2-element list or tuple of frequencies for sample #1
     @param s2: 2-element list or tuple of frequencies for sample #2
+    @param ssize: sample size
     @param confidence: confidence level"""
     s1c1 = s1[0]
     s1c2 = s1[1]
     s2c1 = s2[0]
     s2c2 = s2[1]
-    statistic = (s1c1 + s1c2 + s2c1 + s2c2 - 1)
-    statistic = statistic * (((s1c1 * s2c2) - (s1c2 * s2c1)) ** 2)
-    statistic = statistic / ((s1c1 + s1c2)*(s2c1 + s2c2)* \
-                            (s1c1 + s2c1)*(s1c2 + s2c2))
-    return test(statistic, ChisqDistribution(df = 1), confidence)
+    statistic = (float(ssize - 1) * ((float(s1c1 * s2c2) - \
+        float(s1c2 * s2c1))**2)) / (float(s1c1 + s1c2) * float(s1c1 + s2c1) * \
+        float(s1c2 + s2c2) * float(s2c1 + s2c2))
+    return test(statistic, ChiSquareDistribution(df = 1), confidence)
 
-def t41(**kwargs):
+def ChisquareKx2table(c1, c2, k, confidence):
+    """Test 41: The x2-test for consistency in a K x 2 table
+    
+    To investigate the significance of the differences between K observed
+    frequency distributions with a dichotomous classification.
+    
+    Limitations:
+        1. K sample sizes must be large enough.
+        2. It is usually assumed to be satisfied if the cell frequencies are
+        equal to 5
+        
+    @param c1: class 1 values of sample k
+    @param c2: class 2 values of sample k
+    @param k: number of samples
+    @param confidence: confidence level
     """
-    """
-    return test(statistic, Distribution(), confidence)
+    
+    return test(statistic, ChiSquareDistribution(k-1), confidence)
 
 def t42(**kwargs):
     """
@@ -721,25 +809,24 @@ def t45(**kwargs):
     """
     return test(statistic, Distribution(), confidence)
 
-def t2MediansPairedObs(x, y, confidence):
-    """Test 46: The sign test for two medians (paired observations)
+# def t2MediansPairedObs(x, y, confidence):
+    # """Test 46: The sign test for two medians (paired observations)
     
-    To investigate the significance of the difference between the medians of
-    two distributions
+    # To investigate the significance of the difference between the medians of
+    # two distributions
     
-    Limitations:
-        1. The observations in the two samples should be taken in pairs, one
-        from each distribution, taken under similar conditions. It is not
-        necessary that different pairs should be taken under similar conditions
+    # Limitations:
+        # 1. The observations in the two samples should be taken in pairs, one
+        # from each distribution, taken under similar conditions. It is not
+        # necessary that different pairs should be taken under similar conditions
         
-    @param x: A list of medians #1
-    @param y: A list of medians #2
-    @param confidence: confidence level"""
-    freq = [x[i] > y[i]
-            for i in range(len(x))]
-    statistic = sum(freq)
-    print freq, statistic
-    return test(statistic, BinomialDistribution(), confidence)
+    # @param x: A list of medians #1
+    # @param y: A list of medians #2
+    # @param confidence: confidence level"""
+    # freq = [x[i] > y[i]
+            # for i in range(len(x))]
+    # statistic = sum(freq)
+    # return test(statistic, Distribution(), confidence)
 
 def t47(**kwargs):
     """
@@ -788,9 +875,8 @@ def MedianTestfor2Pop(s1=(9, 6), s2=(6, 9), confidence=0.95):
     ls2 = s2[0]
     rs2 = s2[1]
     N = ls1+ls2+rs1+rs2
-    statistic = (((abs((ls1*rs2)-(ls2*rs1))-(N * 0.5))**2)*N) / \
+    statistic = float(((abs((ls1*rs2)-(ls2*rs1))-(N * 0.5))**2)*N) / \
     ((ls1+ls2)*(ls1+rs1)*(ls2+rs2)*(rs1+rs2))
-    print statistic
     return test(statistic, ChiSquareDistribution(df=1), confidence)
     
 def t51(**kwargs):
@@ -992,9 +1078,9 @@ def ZtestLogOddsRatio(group1, group2, confidence):
         
     
     @param group1: group #1 values (row = x, y) & (column a, b) Provide values 
-    in xa, xb, ya, yb)
+    in xa, xb, ya, yb format
     @param group2: group #2 values (row = x, y) & (column a, b) Provide values
-    in xa, xb, ya, yb)
+    in xa, xb, ya, yb format
     @param confidence: confidence level"""
     x1a1 = float(group1[0])
     x1b1 = float(group1[1])
@@ -1004,10 +1090,10 @@ def ZtestLogOddsRatio(group1, group2, confidence):
     x2b2 = float(group2[1])
     y2a2 = float(group2[2])
     y2b2 = float(group2[3])
-    C = x1a1* y1b1
+    C = x1a1 * y1b1
     D = y1a1 * x1b1
     G = C/D
-    E = x2a2* y2b2
+    E = x2a2 * y2b2
     F = y2a2 * x2b2
     H = E/F
     A = log(G, e)
