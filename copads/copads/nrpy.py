@@ -1,7 +1,7 @@
 """
 Numerical Recipes in Python.
 
-References
+References:
     - Press, William H., Flannery, Brian P., Teukolsky, Saul A., and Vetterling, 
     William T. 1989. Numerical Recipes in Pascal. Cambridge University Press,
     Cambridge (ISBN 978-0521375160)
@@ -21,7 +21,7 @@ The authors of Numerical Recipes in Pascal (NRP) and Numerical Recipes in
 C, 2nd edition (NRC2) explicitly allows the reader to analyze the mathematical 
 ideas in the codes within the book and owns the re-implemented functions as 
 stated in NRP and NRC2 that "If you analyze the ideas contained in a program, 
-and then express those ideas in your own distinct implemtnation, then that new 
+and then express those ideas in your own distinct implementation, then that new 
 program implementation belongs to you" (page xv of NRP; page xviii of NRC2).
 Not mentioned in NRP, NRC2 allows the reader a "free licence" (page xviii of 
 NRC2) which allows the reader to make one machine-readable copy of the C codes
@@ -97,7 +97,8 @@ def bessi0(x):
                0.392377e-2))))))))
     
 def bessi1(x):
-    """Bessel function I-sub-1(x). @see: NRP 6.5
+    """Bessel function I-sub-1(x). 
+    @see: NRP 6.5
     
     @param x: float number
     @return: float number 
@@ -249,7 +250,8 @@ def bessk(n, x):
         return bk
         
 def bessk0(x):
-    """Bessel function K-sub-0(x). @see: NRP 6.5
+    """Bessel function K-sub-0(x). 
+    @see: NRP 6.5
     
     @param x: positive integer
     @return: n-th Bessel function of x"""
@@ -265,7 +267,8 @@ def bessk0(x):
                 y * (0.587872e-2 + y * (-0.25154e-2 + y * 0.53208e-3))))))
     
 def bessk1(x):
-    """Bessel function K-sub-1(x). @see: NRP 6.5
+    """Bessel function K-sub-1(x). 
+    @see: NRP 6.5
     
     @param x: positive integer
     @return: n-th Bessel function of x"""
@@ -281,7 +284,8 @@ def bessk1(x):
                 (-0.780353e-2 + y * (0.325614e-2 + y * (-0.68245e-3)))))))
         
 def bessy(n, x):
-    """Bessel function Y-sub-n(x). @see: NRP 6.4
+    """Bessel function Y-sub-n(x). 
+    @see: NRP 6.4
     
     @param n: integer, more than 1 - n-th Bessel function 
     @param x: positive integer
@@ -301,7 +305,8 @@ def bessy(n, x):
         return by
     
 def bessy0(x):
-    """Bessel function Y-sub-0(x). @see: NRP 6.4
+    """Bessel function Y-sub-0(x). 
+    @see: NRP 6.4
     Depend: bessj0
     
     @param x: float number
@@ -327,7 +332,8 @@ def bessy0(x):
         return math.sqrt(0.636619772 / x) * ans
     
 def bessy1(x):
-    """Bessel function Y-sub-1(x). @see: NRP 6.4
+    """Bessel function Y-sub-1(x). 
+    @see: NRP 6.4
     Depend: bessj1
     
     @param x: float number
@@ -360,7 +366,6 @@ def beta(z, w):
     """Beta function.
     Depend: gammln
     @see: NRP 6.1
-    
     @see: Ling, MHT. 2009. Compendium of Distributions, I: Beta, Binomial, Chi-
     Square, F, Gamma, Geometric, Poisson, Student's t, and Uniform. The Python 
     Papers Source Codes 1:4
@@ -375,7 +380,6 @@ def betacf(a, b, x):
     Continued fraction for incomplete beta function.
     Adapted from salstat_stats.py of SalStat (www.sf.net/projects/salstat)
     @see: NRP 6.3
-    
     @see: Ling, MHT. 2009. Compendium of Distributions, I: Beta, Binomial, Chi-
     Square, F, Gamma, Geometric, Poisson, Student's t, and Uniform. The Python 
     Papers Source Codes 1:4
@@ -546,9 +550,8 @@ def factln(n):
 def gammln(n):
     """
     Complete Gamma function.
-    @see: NRP 6.1 and
-        http://mail.python.org/pipermail/python-list/2000-June/039873.html
-        
+    @see: NRP 6.1
+    @see: http://mail.python.org/pipermail/python-list/2000-June/671838.html
     @see: Ling, MHT. 2009. Compendium of Distributions, I: Beta, Binomial, Chi-
     Square, F, Gamma, Geometric, Poisson, Student's t, and Uniform. The Python 
     Papers Source Codes 1:4
@@ -593,7 +596,7 @@ def gammq(a, x):
     """
     Incomplete gamma function: Q(a, x) = 1 - P(a, x) = 1 - gammp(a, x)
     Also commonly known as Q-equation.
-    @see: http://mail.python.org/pipermail/python-list/2000-June/039873.html
+    @see: http://mail.python.org/pipermail/python-list/2000-June/671838.html
     
     @see: Ling, MHT. 2009. Compendium of Distributions, I: Beta, Binomial, Chi-
     Square, F, Gamma, Geometric, Poisson, Student's t, and Uniform. The Python 
@@ -610,7 +613,7 @@ def gammq(a, x):
 def gcf(a, x, itmax=200, eps=3.e-7):
     """
     Continued fraction approx'n of the incomplete gamma function.
-    @see: http://mail.python.org/pipermail/python-list/2000-June/039873.html
+    @see: http://mail.python.org/pipermail/python-list/2000-June/671838.html
     
     @see: Ling, MHT. 2009. Compendium of Distributions, I: Beta, Binomial, Chi-
     Square, F, Gamma, Geometric, Poisson, Student's t, and Uniform. The Python 
@@ -645,7 +648,7 @@ def gcf(a, x, itmax=200, eps=3.e-7):
 def gser(a, x, itmax=700, eps=3.e-7):
     """
     Series approximation to the incomplete gamma function.
-    @see: http://mail.python.org/pipermail/python-list/2000-June/039873.html
+    @see: http://mail.python.org/pipermail/python-list/2000-June/671838.html
     
     @see: Ling, MHT. 2009. Compendium of Distributions, I: Beta, Binomial, Chi-
     Square, F, Gamma, Geometric, Poisson, Student's t, and Uniform. The Python 
