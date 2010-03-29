@@ -1,3 +1,7 @@
+"""
+Loredo, Tom. 2000. Where are the math functions? 
+http://mail.python.org/pipermail/python-list/2000-June/671838.html
+"""
 from math import *
 
 # Exceptions:
