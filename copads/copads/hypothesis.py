@@ -18,7 +18,6 @@ Date created: 1st September 2008
 """
 
 from statisticsdistribution import *
-from operations import summation
 from math import sqrt, log, e
 
 def test(statistic, distribution, confidence):
@@ -26,6 +25,7 @@ def test(statistic, distribution, confidence):
     using the distribution's inverseCDF method and performs 1-tailed and
     2-tailed test by comparing the calculated statistic with the critical
     value. 
+    
     
     Returns a 5-element list
     [left result, left critical, statistic, right critical, right result]
@@ -973,8 +973,7 @@ def SpearmanCorrelation(ssize, confidence, R=None, series1=[], series2=[]):
     Statistical Tests. The Python Papers Source Codes 1:5
     """
     if R == None:
-        R = [((series1[i] - series2[i]) ** 2) for i in range(len(series1))]
-        R = summation(R)
+        R = sum([((series1[i] - series2[i]) ** 2) for i in range(len(series1))])
     statistic = (6.0 * R) - (ssize * ((ssize ** 2) - 1.0))
     statistic = statistic / (ssize * (ssize + 1.0) * sqrt(ssize - 1.0))
     return test(statistic, NormalDistribution(), confidence)

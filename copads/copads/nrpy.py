@@ -51,7 +51,7 @@ def bessi(n, x):
     @param x: positive integer
     @return: modified n-th Bessel function of x
     """
-    iacc = 40
+    iacc = 40.0
     bigno = 1.0e10
     bigni = 1.0e-10
     if n < 2: 
@@ -61,7 +61,7 @@ def bessi(n, x):
         if x == 0.0: ans = 0.0
         else:
             ans = 0.0
-            tox = 2.0/abs(x)
+            tox = 2.0/float((x))
             bip = 0.0
             bi = 1.0
             m = 2 * (n + math.floor(math.sqrt(iacc * n)))
@@ -75,7 +75,7 @@ def bessi(n, x):
                     bip = bip*bigni
                 if j == n: ans = bip
             if x < 0.0 and (n % 2) == 1: ans = -ans
-            return ans*bessi0(x)/bi
+            return ans*bessi0(x)/(float(bi))
     
 def bessi0(x):
     """Modified Bessel function I-sub-0(x). 
@@ -126,7 +126,7 @@ def bessj(n, x):
     @param x: float number
     @return: float number 
     """
-    iacc = 40
+    iacc = 40.0
     bigno = 1.0e10
     bigni = 1.0e-10
     if n < 2: 
@@ -145,10 +145,10 @@ def bessj(n, x):
             ans = bj
         else:
             tox=2.0/abs(x)
-            m = 2*((n+math.floor(math.sqrt(1.0*(iacc*n)))) % 2)
+            m = int(2*((n+math.floor(math.sqrt(1.0*(iacc*n)))) % 2))
             ans = 0.0
-            jsum = 0
-            sum = 0
+            jsum = 0.0
+            sum = 0.0
             bjp = 0.0
             bj = 1.0
             for j in range(m, 1, -1):
@@ -164,6 +164,7 @@ def bessj(n, x):
                 jsum = 1-jsum
                 if j == n: ans = bjp
             sum = 2.0*sum-bj
+            print sum, ans
             ans = ans/sum
         if x < 0.0 and (n % 2) == 1: ans = -ans
         return ans
@@ -341,26 +342,25 @@ def bessy1(x):
     """
     if abs(x) < 8.0:
         y = x*x
-        ans1 = x * (-0.4900604943e13 + y * (0.127527439e13 + y * \
+        ans1 = x * (-0.4900604943e13 + y * (0.1275274390e13 + y * \
                 (-0.5153438139e11 + y * (0.7349264551e9 + y * \
                 (-0.4237922726e7 + y * 0.8511937935e4)))))
-        ans2 = 0.249958057e14 + y * (0.4244419664e12 + y * (0.3733650367e10 + \
-                y * (0.2245904002e8 + y * (0.102042605e6 + y * \
+        ans2 = 0.2499580570e14 + y * (0.4244419664e12 + y * (0.3733650367e10 + \
+                y * (0.2245904002e8 + y * (0.1020426050e6 + y * \
                 (0.3549632885e3 + y)))))
-        return (ans1/ans2) + 0.626619772 * (bessj1(x) * math.log(x) - (1.0/x))
+        return (ans1/ans2) + 0.636619772 * (bessj1(x) * math.log(x, math.e) - (1.0/x))
     else:
-        ax = abs(x)
-        x = 8.0 / ax
+        z = 8.0 / x
         y = z*z
-        xx = ax - 2.356194491
+        xx = x - 2.356194491
         ans1 = 1.0 + y * (0.183105e-2 + y * (-0.3516396496e-4 + y * \
              (0.2457520174e-5 + y * (-0.240337019e-6))))
         ans2 = 0.04687499995 + y * (-0.2002690873e-3 + y * (0.8449199096e-5 + \
                 y * (-0.88228987e-6 + y * 0.105787412e-6)))
-        if x < 0.0: return math.sqrt(0.636619772 / ax) * (math.cos(xx) * \
-                            ans1 - z * math.sin(xx) * ans2)
-        else: return -1 * math.sqrt(0.636619772 / ax) * (math.cos(xx) * \
-                    ans1 - z * math.sin(xx) * ans2)
+        if x < 0.0: return math.sqrt(0.636619772 / x) * (math.cos(xx) * \
+                            ans1 + z * math.sin(xx) * ans2)
+        else: return math.sqrt(0.636619772 / x) * (math.sin(xx) * \
+                    ans1 + z * math.cos(xx) * ans2)
 
 def beta(z, w):
     """Beta function.
@@ -490,7 +490,7 @@ def erf(x):
     @return: float number
     """
     if x < 1.5: 
-        return -1*gser(0.5, x)
+        return -1*gser(0.5, x)[0]
     else:        
         return 1.0-gcf(0.5, x)[0]
 
@@ -510,7 +510,7 @@ def erfc(x):
     
 def erfcc(x):
     """
-    Complementart error function similar to erfc(x) but with fractional error 
+    Complementary error function similar to erfc(x) but with fractional error 
     lesser than 1.2e-7. 
     @see: NRP 6.2
     
