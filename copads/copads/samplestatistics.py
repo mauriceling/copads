@@ -162,9 +162,11 @@ class SampleDistribution(Distribution):
         
 class TwoSample:
     sample = {}
+    sample_name = []
     def __init__(self, data1, name1, data2, name2):
         if name1 == '': name1 = 'Sample 1'
         if name2 == '': name2 = 'Sample 2'
+        self.sample_name = [name1, name2]
         self.sample[name1] = SingleSample(list(data1), name1)
         self.sample[name2] = SingleSample(list(data2), name2)
 
@@ -173,7 +175,7 @@ class TwoSample:
         except KeyError: return []
 
     def listSamples(self):
-        return self.sample.keys()
+        return self.sample_name
 
     def covariance(self):
         """
