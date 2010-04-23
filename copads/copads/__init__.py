@@ -22,8 +22,7 @@ borned.
 Project website: U{http://copads.sf.net}
 
 Licence: Unless specified otherwise, all parts of this package, except those 
-adapted, are covered under the Lesser General Public License, version 3. 
-U{http://www.gnu.org/copyleft/lesser.html}
+adapted, are covered under Python Software Foundation License version 2.
 """
 
 __version__ = '0.3'
