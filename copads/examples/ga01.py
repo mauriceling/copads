@@ -1,3 +1,7 @@
+######################################################################
+# GA Program #1: Simulates random point, deletion, insertion, 
+# invertion and translocation mutations.
+######################################################################
 import sys, os
 sys.path.append(os.path.join(os.path.dirname(os.getcwd()), 'copads'))
 

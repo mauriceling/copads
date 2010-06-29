@@ -11,7 +11,7 @@ import genetic as g
 c = g.Chromosome([0]*200, [1,2,3,4])
 o = g.Organism([c])
 oset = [o.clone() for x in range(5)]
-print 'Generation \t\tMutation rate above background rate'
+print 'Generation \tMutation rate above background rate'
 print 'Count \t\t', '\t'.join(['5%', '10%', '15%', '20%', '25%'])
 print '=' * 60
 for x in xrange(100):

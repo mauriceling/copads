@@ -20,5 +20,5 @@ while report['generation'] < 2000 or \
                        str(len(p.agents)),
                        str(report['average fitness']),
                        str(report['% to goal'])])
-    if report['generation'] % 50 == 0: p.freeze()
+    #if report['generation'] % 500 == 0: p.freeze()
     report = p.generation_step()
