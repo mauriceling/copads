@@ -158,7 +158,7 @@ class Organism(object):
     class as some functions need to be over-ridden in the inherited class for 
     the desired use.
     
-    Methods to be over-ridden in the inherited class are
+    Methods to be over-ridden in the inherited class or substituted are
         - fitness
         - mutation_scheme
     
@@ -207,9 +207,9 @@ class Organism(object):
     def fitness(self):
         """
         Function to calculate the fitness of the current organism. 
-        B{This function MUST be over-ridden by the inherited class as fitness 
-        function is highly  dependent on utility.} The only requirement is that 
-        a fitness score must be returned.
+        B{This function MUST be over-ridden by the inherited class or 
+        substituted as fitness function is highly  dependent on utility.} The 
+        only requirement is that a fitness score must be returned.
         
         Here, the sample implementation calculates fitness as proportion of the
         genome with '1's.
@@ -225,8 +225,8 @@ class Organism(object):
     def mutation_scheme(self, type='point', rate=0.1):
         """
         Function to trigger mutation events in each chromosome. B{This function
-        may be over-ridden by the inherited class to cater for specific mutation
-        schemes but not an absolute requirement to do so.}
+        may be over-ridden by the inherited class or substituted to cater for 
+        specific mutation schemes but not an absolute requirement to do so.}
         
         Here, the sample implementation uses a random given mutation 
         throughout the entire genome at the give rate above background mutation.
@@ -309,7 +309,9 @@ class Population(object):
     some functions need to be over-ridden in the inherited class for the desired
     use.
     
-    Methods to be over-ridden in the inherited class are
+    The entire population is in memory.
+    
+    Methods to be over-ridden in the inherited class or substituted are
         - prepopulation_control
         - mating
         - postpopulation_control
@@ -337,10 +339,11 @@ class Population(object):
         """
         Function to trigger population control events before mating event in 
         each generation (For example, to simulate pre-puberty death). B{This 
-        function may be over-ridden by the inherited class to cater for specific
-        events.} Although this is not an absolute requirement, it is extremely 
-        encouraged to prevent exhaustion of memory space. Without population 
-        control, it will seems like a reproducing immortal population.
+        function may be over-ridden by the inherited class or substituted to 
+        cater for specific events.} Although this is not an absolute 
+        requirement, it is extremely encouraged to prevent exhaustion of memory 
+        space. Without population control, it will seems like a reproducing 
+        immortal population.
         
         Here, the sample implementation eliminates the bottom half of the 
         population based on fitness score unless the number of organisms is
@@ -350,11 +353,10 @@ class Population(object):
         """
         size = len(self.agents)
         sfitness = [self.agents[x].fitness() for x in range(size)]
-        sfitness.sort()
-        threshold = self.agents[int(len(sfitness) / 2)].fitness()
-        temp = [organism 
-                for organism in self.agents
-                    if organism.fitness() > threshold]
+        threshold = sum(sfitness) / len(sfitness)
+        temp = [self.agents[x]
+                for x in range(size) 
+                    if sfitness[x] > threshold]
         if len(temp) > 2001:
             size = len(temp)
             self.agents = [temp[random.randint(0, size - 1)] 
@@ -365,9 +367,9 @@ class Population(object):
     def mating(self):
         """
         Function to trigger mating events in each generation. B{This function
-        may be over-ridden by the inherited class to cater for specific mating
-        schemes but not an absolute requirement to do so.} Matching schemes
-        should include 
+        may be over-ridden by the inherited class or substituted to cater for 
+        specific mating schemes but not an absolute requirement to do so.} 
+        Mating schemes should include 
             - selection of mating partners using Organism.fitness() function
                 and/or other status
             - processes and actions of mating
@@ -391,19 +393,20 @@ class Population(object):
         """
         Function to trigger population control events after mating event in 
         each generation(For example, to simulate old-age death). B{This 
-        function may be over-ridden by the inherited class to cater for specific
-        events.} Although this is not an absolute requirement, it is extremely 
-        encouraged to prevent exhaustion of memory space. Without population 
-        control, it will seems like a reproducing immortal population.
+        function may be over-ridden by the inherited class or substituted to 
+        cater for specific events.} Although this is not an absolute 
+        requirement, it is extremely encouraged to prevent exhaustion of memory 
+        space. Without population control, it will seems like a reproducing 
+        immortal population.
         """
         pass
         
     def generation_events(self):
         """
         Function to trigger other defined events in each generation. B{This 
-        function may be over-ridden by the inherited class to cater for specific
-        events but not an absolute requirement to do so.} Events and controls
-        may include
+        function may be over-ridden by the inherited class or substituted to 
+        cater for specific events but not an absolute requirement to do so.} 
+        Events and controls may include
             - processes simulating disaster or other catastrophic events
             - changes in mutations            
         """
@@ -412,9 +415,10 @@ class Population(object):
     def report(self):
         """
         Function to report the status of each generation. B{This function may 
-        be over-ridden by the inherited class to cater for specific reporting
-        schemes but not an absolute requirement to do so.} At the very least, 
-        this function should report whether the goal is reached.
+        be over-ridden by the inherited class or substituted to cater for 
+        specific reporting schemes but not an absolute requirement to do so.} 
+        At the very least, this function should report whether the goal is 
+        reached.
         
         @return: dictionary of status describing the current generation
         """
@@ -491,6 +495,205 @@ class Population(object):
         if type == 'add':
             self.agents = self.agents + cPickle.load(open(filename, 'r'))
 
+class ShelvePopulation(Population):
+    """
+    Representation of a population as a list of organisms. This class should 
+    almost never be instantiated on its own but acts as an ancestor class as 
+    some functions need to be over-ridden in the inherited class for the desired
+    use.
+    
+    The entire population is stored in a Python shelve file. This enables 
+    simulation of a larger number of population and/or larger genome size but
+    at a cost of computational speed.
+    
+    Methods to be over-ridden in the inherited class or substituted are
+        - prepopulation_control
+        - mating
+        - postpopulation_control
+        - generation_events
+        - report
+    """
+    
+    import shelve
+    
+    def __init__(self, goal, filename='pop.shelve', maxgenerations='infinite', 
+                 agents=[]):
+        """
+        Establishes a population of organisms.
+        
+        @param goal: the goal to be reached by the population.
+        @type goal: the return type of Organism.fitness()
+        @param maxgenerations: maximum number of generations to evolve.
+            Default = 'infinite'.
+        @param agents: organisms making up the initial population.
+        @type agents: list of Organism objects
+        """
+        self.agents = shelve.open(filename)
+        for organism in agents:
+            self.agents[random.randint(1, 1e300)] = organism
+        self.goal = goal
+        self.maxgenerations = maxgenerations
+        self.generation = 0
+    
+    def prepopulation_control(self):
+        """
+        Function to trigger population control events before mating event in 
+        each generation (For example, to simulate pre-puberty death). B{This 
+        function may be over-ridden by the inherited class or substituted to 
+        cater for specific events.} Although this is not an absolute 
+        requirement, it is extremely encouraged to prevent exhaustion of memory 
+        space. Without population control, it will seems like a reproducing 
+        immortal population.
+        
+        Here, the sample implementation eliminates the bottom half of the 
+        population based on fitness score unless the number of organisms is
+        less than 20. This is to prevent extinction. However, if the number of
+        organisms is more than 2000 (more than 100x initial population size, 
+        a random selection of 2000 will be used for the next generation.
+        """
+        akeys = self.agents.keys()
+        sfitness = [self.agents[x].fitness() for x in akeys]
+        threshold = sum(fitness) / len(fitness)
+        temp = [self.agent[akeys[x]]
+                for x in range(len(akeys)) 
+                    if sfitness[x] > threshold]
+        if len(temp) > 2001:
+            size = len(temp)
+            self.agents = [temp[random.randint(0, size - 1)] 
+                           for x in xrange(2000)]
+        if len(temp) > 21: 
+            self.agents = temp
+    
+    # def mating(self):
+        # """
+        # Function to trigger mating events in each generation. B{This function
+        # may be over-ridden by the inherited class to cater for specific mating
+        # schemes but not an absolute requirement to do so.} Matching schemes
+        # should include 
+            # - selection of mating partners using Organism.fitness() function
+                # and/or other status
+            # - processes and actions of mating
+            
+        # Here, the sample implementation randomly selects any 2 organisms from
+        # the culled list and generate a new genome for the progeny organism by
+        # single crossover.
+        # """
+        # size = len(self.agents)
+        # temp = []
+        # for x in xrange(size):
+            # organism1 = self.agents[random.randint(0, size - 1)]
+            # organism2 = self.agents[random.randint(0, size - 1)]
+            # crossover_pt = random.randint(0, len(organism1.genome[0].sequence))
+            # (g1, g2) = crossover(organism1.genome[0], organism2.genome[0],
+                                 # crossover_pt)
+            # temp = temp + [Organism([g1])]
+        # self.add_organism(temp)
+            
+    def postpopulation_control(self):
+        """
+        Function to trigger population control events after mating event in 
+        each generation(For example, to simulate old-age death). B{This 
+        function may be over-ridden by the inherited class or substituted to 
+        cater for specific events.} Although this is not an absolute 
+        requirement, it is extremely encouraged to prevent exhaustion of memory 
+        space. Without population control, it will seems like a reproducing 
+        immortal population.
+        """
+        pass
+        
+    def generation_events(self):
+        """
+        Function to trigger other defined events in each generation. B{This 
+        function may be over-ridden by the inherited class or substituted to 
+        cater for specific events but not an absolute requirement to do so.} 
+        Events and controls may include
+            - processes simulating disaster or other catastrophic events
+            - changes in mutations            
+        """
+        pass
+    
+    # def report(self):
+        # """
+        # Function to report the status of each generation. B{This function may 
+        # be over-ridden by the inherited class to cater for specific reporting
+        # schemes but not an absolute requirement to do so.} At the very least, 
+        # this function should report whether the goal is reached.
+        
+        # @return: dictionary of status describing the current generation
+        # """
+        # sfitness = [self.agents[x].fitness() for x in xrange(len(self.agents))]
+        # afitness = sum(sfitness) / float(len(self.agents))
+        # return {'generation': self.generation,
+                # 'average fitness': afitness,
+                # '% to goal': float(afitness - self.goal) / self.goal * 100}
+        
+    # def generation_step(self):
+        # """
+        # Function to simulate events for one generation. These includes
+            # - mating (according to the mating scheme or function)
+            # - mutating each organism in the population
+            # - population size control
+            # - other events defined under generation_events function
+            # - increment of generation count
+            # - reporting the population status
+        
+        # @return: information returned from report function.
+        # """
+        # if self.generation > 0: self.prepopulation_control()
+        # self.mating()
+        # self.postpopulation_control()
+        # for organism in self.agents: organism.mutation_scheme() 
+        # self.generation_events()
+        # self.generation = self.generation + 1
+        # return self.report()
+        
+    # def add_organism(self, organism):
+        # """Add a new organism(s) to the population.
+        
+        # @param organism: list of new Organism object(s)"""
+        # self.agents = self.agents + organism
+        
+    # def freeze(self, prefix='pop', proportion=0.01):
+        # """
+        # Preserves part or the entire population. If the population size or the
+        # preserved proportion is below 100, the entire population will be 
+        # preserved. The preserved sample will be written into a file with name in
+        # the following format - <prefix><generation count>_<sample size>.gap
+        
+        # @param prefix: prefix of file name. Default = 'pop'.
+        # @param proportion: proportion of population to be preserved.
+            # Default = 0.01, preserves 1% of the population.
+        # """
+        # import cPickle
+        # if proportion > 1.0: proportion = 1.0
+        # if len(self.agents) < 101 or len(self.agents) * proportion < 101:
+            # sample = self.agents
+        # else:
+            # size = len(self.agents)
+            # sample = [self.agents[random.randint(0, size - 1)]
+                      # for x in xrange(int(len(self.agents) * proportion))]
+        # name = ''.join([prefix, str(self.generation), '_', 
+                        # str(len(sample)), '.gap'])
+        # f = open(name, 'w')
+        # cPickle.dump(sample, f)
+        # f.close()
+        
+    # def revive(self, filename, type='replace'):
+        # """
+        # Revives a frozen population.
+        
+        # @param filename: file name of frozen population (generated by 
+            # Population.freeze() function)
+        # @param type: type of revival. Allows 'replace' (replace the current 
+            # population with the revived population) or 'add' (add the revived
+            # population to the current population). Default = 'replace'.
+        # """
+        # import cPickle
+        # if type == 'replace':
+            # self.agents = cPickle.load(open(filename, 'r'))
+        # if type == 'add':
+            # self.agents = self.agents + cPickle.load(open(filename, 'r'))
+            
 #############################################################   
 # Supporting Functions
 #############################################################        
