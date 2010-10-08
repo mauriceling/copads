@@ -756,64 +756,64 @@ def vExp(a):
     try: return Vector([math.exp(x) for x in a])
     except: raise TypeError, 'vector::FAILURE in exp'
 
-def v_sin(a):
+def vSin(a):
     """Elementwise sine."""
     try: return Vector([math.sin(x) for x in a])
     except: raise TypeError, 'vector::FAILURE in sin'
         
-def v_tan(a):
+def vTan(a):
     """Elementwise tangent."""
     try: return Vector([math.tan(x) for x in a])
     except: raise TypeError, 'vector::FAILURE in tan'
         
-def v_cos(a):
+def vCos(a):
     """ Elementwise cosine."""
     try: return Vector([math.cos(x) for x in a])
     except: raise TypeError, 'vector::FAILURE in cos'
 
-def v_asin(a):
+def vAsin(a):
     """Elementwise inverse sine."""
     try: return Vector([math.asin(x) for x in a])
     except: raise TypeError, 'vector::FAILURE in asin'
 
-def v_atan(a):
+def vAtan(a):
     """Elementwise inverse tangent."""
     try: return Vector([math.atan(x) for x in a])
     except: raise TypeError, 'vector::FAILURE in atan'
 
-def v_acos(a):
+def vAcos(a):
     """Elementwise inverse cosine."""
     try: return Vector([math.acos(x) for x in a])
     except: raise TypeError, 'vector::FAILURE in acos'
 
-def v_sqrt(a):
+def vSqrt(a):
     """Elementwise sqrt."""
     try: return Vector([math.sqrt(x) for x in a])
     except: raise TypeError, 'vector::FAILURE in sqrt'
 
-def v_sinh(a):
+def vSinh(a):
     """Elementwise hyperbolic sine."""
     try: return Vector([math.sinh(x) for x in a])
     except: raise TypeError, 'vector::FAILURE in sinh'
 
-def v_tanh(a):
+def vTanh(a):
     """Elementwise hyperbolic tangent."""
     try: return Vector([math.tanh(x) for x in a])
     except: raise TypeError, 'vector::FAILURE in tanh'
 
-def v_cosh(a):
+def vCosh(a):
     """Elementwise hyperbolic cosine."""
     try: return Vector([math.cosh(x) for x in a])
     except: raise TypeError, 'vector::FAILURE in cosh'
 
-def v_pow(a, b):
+def vPow(a, b):
     """Takes the elements of a and raises them to the b-th power"""
     try: return Vector(map(lambda x: x**b, a))
     except: 
         try: return Vector(map(lambda x, y: x**y, a, b))
         except: raise TypeError, 'vector::FAILURE in pow'
     
-def v_atan2(a, b):    
+def vAtan2(a, b):    
     """Arc tangent"""
     try: return Vector([math.atan2(x) for x in a])
     except: raise TypeError, 'vector::FAILURE in atan2'

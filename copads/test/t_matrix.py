@@ -6,7 +6,7 @@ from matrix import *
 
 def Vector_test():
     print 'a = zeros(4)'
-    a = v_zeros(4)
+    a = vZeros(4)
 
     print 'a.__doc__=',a.__doc__
 
@@ -68,9 +68,9 @@ def Vector_test():
     a[2:5] = [9.0, 4.0, 5.0]
     a.out()
 
-    print 'sqrt(a)=',v_sqrt(a)
-    print 'pow(a, 2*ones(len(a)))=',vPow(a, 2*v_ones(len(a)))
-    print 'pow(a, 2)=',v_pow(a, 2*vOnes(len(a)))
+    print 'sqrt(a)=', vSqrt(a)
+    print 'pow(a, 2*ones(len(a)))=', vPow(a, 2*vOnes(len(a)))
+    print 'pow(a, 2)=',vPow(a, 2 * vOnes(len(a)))
 
     print 'ones(10)'
     c = vOnes(10)
@@ -136,12 +136,12 @@ def SparseMatrix_test():
 
     print 'dot(a, b)'
     print 'a.size()[1]=',a.size()[1],' b.size()[0]=', b.size()[0]
-    c = sm_dot(a, b)
+    c = smDot(a, b)
     c.out()
 
     print 'dot(b, a)'
     print 'b.size()[1]=',b.size()[1],' a.size()[0]=', a.size()[0]
-    c = sm_dot(b, a)
+    c = smDot(b, a)
     c.out()
 
     try:
@@ -173,7 +173,7 @@ def SparseMatrix_test():
     c.out()
 
     print 'c = transpose(a)'
-    c = sm_transpose(a)
+    c = smTranspose(a)
     c.out()
 
 
