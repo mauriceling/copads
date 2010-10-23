@@ -71,6 +71,9 @@ def Jaccard(original, test, absent=0, type='Set'):
         default = 0
     @param type: {Set | List}, define whether use Set comparison 
         (non-positional) or list comparison (positional), default = Set
+
+    @see: Ling, MHT. 2010. COPADS, I: Distances Measures between Two
+    Lists or Sets. The Python Papers Source Codes 2:2.
     """
     (original, test, both, none) = compare(original, test, absent, type)
     return both / (both + original + test)
@@ -87,6 +90,9 @@ def Sokal_Michener(original, test, absent=0, type='Set'):
         default = 0
     @param type: {Set | List}, define whether use Set comparison 
         (non-positional) or list comparison (positional), default = Set
+
+    @see: Ling, MHT. 2010. COPADS, I: Distances Measures between Two
+    Lists or Sets. The Python Papers Source Codes 2:2.
     """
     if len(original) <> len(test): 
         raise DistanceInputSizeError("Size (length) of inputs must be \
@@ -106,6 +112,9 @@ def Matching(original, test, absent=0, type='Set'):
         default = 0
     @param type: {Set | List}, define whether use Set comparison 
         (non-positional) or list comparison (positional), default = Set
+
+    @see: Ling, MHT. 2010. COPADS, I: Distances Measures between Two
+    Lists or Sets. The Python Papers Source Codes 2:2.
     """
     (original, test, both, none) = compare(original, test, absent, type)
     return (both + none) / (original + both + test + both)
@@ -122,6 +131,9 @@ def Dice(original, test, absent=0, type='Set'):
         default = 0
     @param type: {Set | List}, define whether use Set comparison 
         (non-positional) or list comparison (positional), default = Set
+
+    @see: Ling, MHT. 2010. COPADS, I: Distances Measures between Two
+    Lists or Sets. The Python Papers Source Codes 2:2.
     """
     all_region = float(len(original)) + float(len(test))
     (original, test, both, none) = compare(original, test, absent, type)
@@ -139,6 +151,9 @@ def Ochiai(original, test, absent=0, type='Set'):
         default = 0
     @param type: {Set | List}, define whether use Set comparison 
         (non-positional) or list comparison (positional), default = Set
+
+    @see: Ling, MHT. 2010. COPADS, I: Distances Measures between Two
+    Lists or Sets. The Python Papers Source Codes 2:2.
     """
     (original, test, both, none) = compare(original, test, absent, type)
     return both / ((both + original) * (both + test)) ** 0.5
@@ -157,6 +172,9 @@ def Ochiai2(original, test, absent=0, type='Set'):
         default = 0
     @param type: {Set | List}, define whether use Set comparison 
         (non-positional) or list comparison (positional), default = Set
+
+    @see: Ling, MHT. 2010. COPADS, I: Distances Measures between Two
+    Lists or Sets. The Python Papers Source Codes 2:2.
     """
     (original, test, both, none) = compare(original, test, absent, type)
     denominator = ((both + original) * (both + test) * \
@@ -175,6 +193,9 @@ def Anderberg(original, test, absent=0, type='Set'):
         default = 0
     @param type: {Set | List}, define whether use Set comparison 
         (non-positional) or list comparison (positional), default = Set
+
+    @see: Ling, MHT. 2010. COPADS, I: Distances Measures between Two
+    Lists or Sets. The Python Papers Source Codes 2:2.
     """
     (original, test, both, none) = compare(original, test, absent, type)
     return both / (both + 2 * (original + test))
@@ -191,6 +212,9 @@ def Kulczynski2(original, test, absent=0, type='Set'):
         default = 0
     @param type: {Set | List}, define whether use Set comparison 
         (non-positional) or list comparison (positional), default = Set
+
+    @see: Ling, MHT. 2010. COPADS, I: Distances Measures between Two
+    Lists or Sets. The Python Papers Source Codes 2:2.
     """
     (original, test, both, none) = compare(original, test, absent, type)
     x1 = both / (original + both)
@@ -209,6 +233,9 @@ def Kulczynski(original, test, absent=0, type='Set'):
         default = 0
     @param type: {Set | List}, define whether use Set comparison 
         (non-positional) or list comparison (positional), default = Set
+
+    @see: Ling, MHT. 2010. COPADS, I: Distances Measures between Two
+    Lists or Sets. The Python Papers Source Codes 2:2.
     """
     (original, test, both, none) = compare(original, test, absent, type)
     return both / (original + test)
@@ -225,6 +252,9 @@ def Forbes(original, test, absent=0, type='Set'):
         default = 0
     @param type: {Set | List}, define whether use Set comparison 
         (non-positional) or list comparison (positional), default = Set
+
+    @see: Ling, MHT. 2010. COPADS, I: Distances Measures between Two
+    Lists or Sets. The Python Papers Source Codes 2:2.
     """
     (original, test, both, none) = compare(original, test, absent, type)
     numerator = both * (both + original + test + none)
@@ -243,6 +273,9 @@ def Hamann(original, test, absent=0, type='Set'):
         default = 0
     @param type: {Set | List}, define whether use Set comparison 
         (non-positional) or list comparison (positional), default = Set
+
+    @see: Ling, MHT. 2010. COPADS, I: Distances Measures between Two
+    Lists or Sets. The Python Papers Source Codes 2:2.
     """
     (original, test, both, none) = compare(original, test, absent, type)
     numerator = (both + none) - (test + original)
@@ -260,6 +293,9 @@ def Simpson(original, test, absent=0, type='Set'):
         default = 0
     @param type: {Set | List}, define whether use Set comparison 
         (non-positional) or list comparison (positional), default = Set
+
+    @see: Ling, MHT. 2010. COPADS, I: Distances Measures between Two
+    Lists or Sets. The Python Papers Source Codes 2:2.
     """
     (original, test, both, none) = compare(original, test, absent, type)
     return both / min(both + test, both + original)
@@ -276,6 +312,9 @@ def Russel_Rao(original, test, absent=0, type='Set'):
         default = 0
     @param type: {Set | List}, define whether use Set comparison 
         (non-positional) or list comparison (positional), default = Set
+
+    @see: Ling, MHT. 2010. COPADS, I: Distances Measures between Two
+    Lists or Sets. The Python Papers Source Codes 2:2.
     """
     (original, test, both, none) = compare(original, test, absent, type)
     return both / (original + test + both + none)
@@ -292,6 +331,9 @@ def Roger_Tanimoto(original, test, absent=0, type='Set'):
         default = 0
     @param type: {Set | List}, define whether use Set comparison 
         (non-positional) or list comparison (positional), default = Set
+
+    @see: Ling, MHT. 2010. COPADS, I: Distances Measures between Two
+    Lists or Sets. The Python Papers Source Codes 2:2.
     """
     (original, test, both, none) = compare(original, test, absent, type)
     denominator = (2 * original) + (2 * test) + both + none
@@ -309,6 +351,9 @@ def Sokal_Sneath(original, test, absent=0, type='Set'):
         default = 0
     @param type: {Set | List}, define whether use Set comparison 
         (non-positional) or list comparison (positional), default = Set
+
+    @see: Ling, MHT. 2010. COPADS, I: Distances Measures between Two
+    Lists or Sets. The Python Papers Source Codes 2:2.
     """
     (original, test, both, none) = compare(original, test, absent, type)
     denominator = (2 * original) + (2 * test) + both
@@ -326,6 +371,9 @@ def Sokal_Sneath2(original, test, absent=0, type='Set'):
         default = 0
     @param type: {Set | List}, define whether use Set comparison 
         (non-positional) or list comparison (positional), default = Set
+
+    @see: Ling, MHT. 2010. COPADS, I: Distances Measures between Two
+    Lists or Sets. The Python Papers Source Codes 2:2.
     """
     (original, test, both, none) = compare(original, test, absent, type)
     numerator = (2 * both) + (2 * none)
@@ -344,6 +392,9 @@ def Sokal_Sneath3(original, test, absent=0, type='Set'):
         default = 0
     @param type: {Set | List}, define whether use Set comparison 
         (non-positional) or list comparison (positional), default = Set
+
+    @see: Ling, MHT. 2010. COPADS, I: Distances Measures between Two
+    Lists or Sets. The Python Papers Source Codes 2:2.
     """
     (original, test, both, none) = compare(original, test, absent, type)
     return (both + none) / (test + original)
@@ -361,6 +412,9 @@ def Buser(original, test, absent=0, type='Set'):
         default = 0
     @param type: {Set | List}, define whether use Set comparison 
         (non-positional) or list comparison (positional), default = Set
+
+    @see: Ling, MHT. 2010. COPADS, I: Distances Measures between Two
+    Lists or Sets. The Python Papers Source Codes 2:2.
     """
     (original, test, both, none) = compare(original, test, absent, type)
     t = (both + none) ** 0.5
@@ -379,6 +433,9 @@ def Fossum(original, test, absent=0, type='Set'):
         default = 0
     @param type: {Set | List}, define whether use Set comparison 
         (non-positional) or list comparison (positional), default = Set
+
+    @see: Ling, MHT. 2010. COPADS, I: Distances Measures between Two
+    Lists or Sets. The Python Papers Source Codes 2:2.
     """
     (original, test, both, none) = compare(original, test, absent, type)
     numerator = original + test + both + none
@@ -398,6 +455,9 @@ def YuleQ(original, test, absent=0, type='Set'):
         default = 0
     @param type: {Set | List}, define whether use Set comparison 
         (non-positional) or list comparison (positional), default = Set
+
+    @see: Ling, MHT. 2010. COPADS, I: Distances Measures between Two
+    Lists or Sets. The Python Papers Source Codes 2:2.
     """
     (original, test, both, none) = compare(original, test, absent, type)
     numerator = (both * none) - (test * original)
@@ -418,6 +478,9 @@ def YuleY(original, test, absent=0, type='Set'):
         default = 0
     @param type: {Set | List}, define whether use Set comparison 
         (non-positional) or list comparison (positional), default = Set
+
+    @see: Ling, MHT. 2010. COPADS, I: Distances Measures between Two
+    Lists or Sets. The Python Papers Source Codes 2:2.
     """
     (original, test, both, none) = compare(original, test, absent, type)
     numerator = ((both * none) ** 0.5) - ((test * original) ** 0.5)
@@ -436,6 +499,9 @@ def Mcconnaughey(original, test, absent=0, type='Set'):
         default = 0
     @param type: {Set | List}, define whether use Set comparison 
         (non-positional) or list comparison (positional), default = Set
+
+    @see: Ling, MHT. 2010. COPADS, I: Distances Measures between Two
+    Lists or Sets. The Python Papers Source Codes 2:2.
     """
     (original, test, both, none) = compare(original, test, absent, type)
     numerator = (both * both) - (original * test)
@@ -456,6 +522,9 @@ def Stiles(original, test, absent=0, type='Set'):
         default = 0
     @param type: {Set | List}, define whether use Set comparison 
         (non-positional) or list comparison (positional), default = Set
+
+    @see: Ling, MHT. 2010. COPADS, I: Distances Measures between Two
+    Lists or Sets. The Python Papers Source Codes 2:2.
     """
     (original, test, both, none) = compare(original, test, absent, type)
     n = original + test + both + none
@@ -478,6 +547,9 @@ def Pearson(original, test, absent=0, type='Set'):
         default = 0
     @param type: {Set | List}, define whether use Set comparison 
         (non-positional) or list comparison (positional), default = Set
+
+    @see: Ling, MHT. 2010. COPADS, I: Distances Measures between Two
+    Lists or Sets. The Python Papers Source Codes 2:2.
     """
     (original, test, both, none) = compare(original, test, absent, type)
     numerator = (both * none) - (test * original)
@@ -498,6 +570,9 @@ def Dennis(original, test, absent=0, type='Set'):
         default = 0
     @param type: {Set | List}, define whether use Set comparison 
         (non-positional) or list comparison (positional), default = Set
+
+    @see: Ling, MHT. 2010. COPADS, I: Distances Measures between Two
+    Lists or Sets. The Python Papers Source Codes 2:2.
     """
     (original, test, both, none) = compare(original, test, absent, type)
     n = original + test + both + none
@@ -517,6 +592,9 @@ def Gower_Legendre(original, test, absent=0, type='Set'):
         default = 0
     @param type: {Set | List}, define whether use Set comparison 
         (non-positional) or list comparison (positional), default = Set
+
+    @see: Ling, MHT. 2010. COPADS, I: Distances Measures between Two
+    Lists or Sets. The Python Papers Source Codes 2:2.
     """
     (original, test, both, none) = compare(original, test, absent, type)
     n = original + test + both + none
@@ -540,6 +618,9 @@ def Tulloss(original, test, absent=0, type='Set'):
         default = 0
     @param type: {Set | List}, define whether use Set comparison 
         (non-positional) or list comparison (positional), default = Set
+
+    @see: Ling, MHT. 2010. COPADS, I: Distances Measures between Two
+    Lists or Sets. The Python Papers Source Codes 2:2.
     """
     (original, test, both, none) = compare(original, test, absent, type)
     U = (min(test, original) + both) / (max(test, original) + both)
@@ -559,6 +640,9 @@ def Hamming(original, test):
     
     @param original: list of original data
     @param test: list of data to test against original
+
+    @see: Ling, MHT. 2010. COPADS, I: Distances Measures between Two
+    Lists or Sets. The Python Papers Source Codes 2:2.
     """
     if len(original) <> len(test): 
         raise DistanceInputSizeError("Size (length) of inputs must be \

@@ -1,12 +1,16 @@
 """
 Statistical Hypothesis Testing Routines.
 
-Each routine will return a 3-element tuple: (result, statistic, critical)
-where
-    - result = True (reject null hypothesis; statistic > critical) or 
-    False (accept null hypothesis; statistic <= critical)
-    - statistic = calculated statistic value
-    - critical = value of critical region for statistical test
+Each routine will Returns a 5-element list
+    [left result, left critical, statistic, right critical, right result]
+    where
+        - left result = True (statistic in lower critical region) or 
+        False (statistic not in lower critical region)
+        - left critical = lower critical value generated from 1 - confidence
+        - statistic = calculated statistic value
+        - right critical = upper critical value generated from confidence
+        - right result = True (statistic in upper critical region) or
+        False (statistic not in upper critical region)
 
 References
     - Test 1-100: Gopal K. Kanji. 2006. 100 Statistical Tests, 3rd edition.
@@ -225,6 +229,10 @@ def t1Mean(smean, pmean, svar, ssize, confidence):
     @param svar: sample variance
     @param ssize: sample size
     @param confidence: confidence level
+
+    @see: Chay, ZE, Ling, MHT. 2010. COPADS, II: Chi-Square test, F-Test
+    and t-Test Routines from Gopal Kanji's 100 Statistical Tests. The Python
+    Papers Source Codes 2:3
     """
     statistic = float((smean - pmean) / (svar / sqrt(ssize)))
     return test(statistic, TDistribution(shape = ssize-1), confidence)
@@ -250,7 +258,12 @@ def t2Mean2EqualVariance(smean1, smean2, svar1, svar2, ssize1, ssize2,
     @param ssize2: sample size of sample #2
     @param confidence: confidence level
     @param pmean1: population mean of population #1 (optional)
-    @param pmean2: population mean of population #2 (optional)"""
+    @param pmean2: population mean of population #2 (optional)
+
+    @see: Chay, ZE, Ling, MHT. 2010. COPADS, II: Chi-Square test, F-Test
+    and t-Test Routines from Gopal Kanji's 100 Statistical Tests. The Python
+    Papers Source Codes 2:3
+    """
     df = ssize1 + ssize2 - 2
     pvar = float((((ssize1 - 1) * svar1) + ((ssize2 - 1) * svar2)) / df)
     statistic = float(((smean1 - smean2) - (pmean1 - pmean2)) / \
@@ -277,7 +290,12 @@ def t2Mean2UnequalVariance(smean1, smean2, svar1, svar2, ssize1, ssize2,
     @param ssize2: sample size of sample #2
     @param confidence: confidence level
     @param pmean1: population mean of population #1 (optional)
-    @param pmean2: population mean of population #2 (optional)"""
+    @param pmean2: population mean of population #2 (optional)
+
+    @see: Chay, ZE, Ling, MHT. 2010. COPADS, II: Chi-Square test, F-Test
+    and t-Test Routines from Gopal Kanji's 100 Statistical Tests. The Python
+    Papers Source Codes 2:3
+    """
     statistic = float(((smean1 - smean2) - (pmean1 - pmean2)) / \
                 sqrt((svar1 / ssize1) + (svar2 / ssize2)))
     df = float((((svar1 / ssize1) + (svar2 / ssize2)) ** 2) / \
@@ -296,7 +314,12 @@ def tPaired(smean1, smean2, svar, ssize, confidence):
     @param smean2: sample mean of sample #2
     @param svar: variance of differences between pairs
     @param ssize: sample size
-    @param confidence: confidence level"""
+    @param confidence: confidence level
+
+    @see: Chay, ZE, Ling, MHT. 2010. COPADS, II: Chi-Square test, F-Test
+    and t-Test Routines from Gopal Kanji's 100 Statistical Tests. The Python
+    Papers Source Codes 2:3
+    """
     statistic = float((smean1 - smean2) / (svar / sqrt(ssize)))
     return test(statistic, TDistribution(shape = ssize - 1), confidence)
 
@@ -313,7 +336,12 @@ def tRegressionCoefficient(variancex, varianceyx, b, ssize, confidence):
     @param varianceyx: variance of yx
     @param b: calculated Regression Coefficient
     @param ssize: sample size
-    @param confidence: confidence level"""
+    @param confidence: confidence level
+
+    @see: Chay, ZE, Ling, MHT. 2010. COPADS, II: Chi-Square test, F-Test
+    and t-Test Routines from Gopal Kanji's 100 Statistical Tests. The Python
+    Papers Source Codes 2:3
+    """
     statistic = float(((b * sqrt(variancex)) / \
         sqrt(varianceyx)) * ((ssize-1) ** -0.5))
     return test(statistic, TDistribution(shape = ssize - 2), confidence)
@@ -335,7 +363,12 @@ def tPearsonCorrelation(r, ssize, confidence):
     
     @param r: calculated Pearson's product-moment correlation coefficient
     @param ssize: sample size
-    @param confidence: confidence level"""
+    @param confidence: confidence level
+
+    @see: Chay, ZE, Ling, MHT. 2010. COPADS, II: Chi-Square test, F-Test
+    and t-Test Routines from Gopal Kanji's 100 Statistical Tests. The Python
+    Papers Source Codes 2:3
+    """
     statistic = float((r * sqrt(ssize - 2)) / sqrt(1 - (r **2)))
     return test(statistic, TDistribution(shape = ssize - 2), confidence)
 
@@ -405,7 +438,12 @@ def ChiSquarePopVar(values, ssize, pv, confidence = 0.95):
     @param values: sample values
     @param ssize: sample size
     @param pv: population variance
-    @param confidence: confidence level"""
+    @param confidence: confidence level
+
+    @see: Chay, ZE, Ling, MHT. 2010. COPADS, II: Chi-Square test, F-Test
+    and t-Test Routines from Gopal Kanji's 100 Statistical Tests. The Python
+    Papers Source Codes 2:3
+    """
     mean = sum(values)/ssize
     freq = [float((values[i] - mean) ** 2) 
             for i in range(len(values))]
@@ -424,7 +462,12 @@ def FVarianceRatio(var1, var2, ssize1, ssize2, confidence):
     @param var2: variance #2
     @param ssize1: sample size #1
     @param ssize2: sample size #2
-    @param confidence: confidence level"""
+    @param confidence: confidence level
+
+    @see: Chay, ZE, Ling, MHT. 2010. COPADS, II: Chi-Square test, F-Test
+    and t-Test Routines from Gopal Kanji's 100 Statistical Tests. The Python
+    Papers Source Codes 2:3
+    """
     statistic = float(var1 / var2)
     return test(statistic, FDistribution(df1=ssize1-1, df2=ssize2-1), 
     confidence)
@@ -440,7 +483,12 @@ def F2CorrelatedObs(r, var1, var2, ssize1, ssize2, confidence):
     @param var2: variance #2
     @param ssize1: sample size #1
     @param ssize2: sample size #2
-    @param confidence: confidence level"""
+    @param confidence: confidence level
+
+    @see: Chay, ZE, Ling, MHT. 2010. COPADS, II: Chi-Square test, F-Test
+    and t-Test Routines from Gopal Kanji's 100 Statistical Tests. The Python
+    Papers Source Codes 2:3
+    """
     statistic = float(((var1 / var2)- 1) / (((((var1 / var2) + 1) ** 2) - \
         (4 * (r ** 2) * (var1 / var2))) ** 0.5))
     return test(statistic, FDistribution(ssize1-1, ssize2-1), confidence)
@@ -598,7 +646,12 @@ def Chisq2Variance(ssize, svar, pvar, confidence):
     @param ssize: sample size
     @param svar: sample variance
     @param pvar: population variance (assumed)
-    @param confidence: confidence level"""
+    @param confidence: confidence level
+
+    @see: Chay, ZE, Ling, MHT. 2010. COPADS, II: Chi-Square test, F-Test
+    and t-Test Routines from Gopal Kanji's 100 Statistical Tests. The Python
+    Papers Source Codes 2:3
+    """
     statistic = float((ssize-1) * svar/pvar)
     return test(statistic, ChiSquareDistribution(df = ssize - 1), confidence)
 
@@ -620,7 +673,12 @@ def F2Count(count1, count2, confidence, time1=0, time2=0, repeat=False):
         (only needed if repeat = True)
     @param time2: time at which second sample is taken 
         (only needed if repeat = True)
-    @param confidence: confidence level"""
+    @param confidence: confidence level
+
+    @see: Chay, ZE, Ling, MHT. 2010. COPADS, II: Chi-Square test, F-Test
+    and t-Test Routines from Gopal Kanji's 100 Statistical Tests. The Python
+    Papers Source Codes 2:3
+    """
     if not repeat:
         statistic = float(count1) / float(count2 + 1)
         numerator = 2 * (count2 + 1)
@@ -715,7 +773,12 @@ def ChisqFit(observed, expected, confidence):
     
     @param observed: list of observed frequencies (index matched with expected)
     @param expected: list of expected frequencies (index matched with observed)
-    @param confidence: confidence level""" 
+    @param confidence: confidence level
+
+    @see: Chay, ZE, Ling, MHT. 2010. COPADS, II: Chi-Square test, F-Test
+    and t-Test Routines from Gopal Kanji's 100 Statistical Tests. The Python
+    Papers Source Codes 2:3
+    """ 
     freq = [float((observed[i] - expected[i]) ** 2) / (float(expected[i]))
             for i in range(len(observed))]
     statistic = 0.0
@@ -734,7 +797,12 @@ def tx2testofKcounts(T, V, confidence):
         
     @param T: list of time under K counts
     @param V: list of values of K counts
-    @param confidence: confidence level"""
+    @param confidence: confidence level
+
+    @see: Chay, ZE, Ling, MHT. 2010. COPADS, II: Chi-Square test, F-Test
+    and t-Test Routines from Gopal Kanji's 100 Statistical Tests. The Python
+    Papers Source Codes 2:3
+    """
     R = float(sum(V)) / float(sum(T))
     freq = [((V[i] - (T[i] * R)) ** 2) / float(T[i] * R) 
             for i in range(len(V))]
@@ -760,7 +828,12 @@ def Chisq2x2(s1, s2, ssize, confidence):
     @param s1: 2-element list or tuple of frequencies for sample #1
     @param s2: 2-element list or tuple of frequencies for sample #2
     @param ssize: sample size
-    @param confidence: confidence level"""
+    @param confidence: confidence level
+
+    @see: Chay, ZE, Ling, MHT. 2010. COPADS, II: Chi-Square test, F-Test
+    and t-Test Routines from Gopal Kanji's 100 Statistical Tests. The Python
+    Papers Source Codes 2:3
+    """
     s1c1 = s1[0]
     s1c2 = s1[1]
     s2c1 = s2[0]
@@ -784,7 +857,12 @@ def ChisquareKx2table(c1, c2, k, confidence):
     @param c1: class #1 values of sample k
     @param c2: class #2 values of sample k
     @param k: number of samples
-    @param confidence: confidence level"""
+    @param confidence: confidence level
+
+    @see: Chay, ZE, Ling, MHT. 2010. COPADS, II: Chi-Square test, F-Test
+    and t-Test Routines from Gopal Kanji's 100 Statistical Tests. The Python
+    Papers Source Codes 2:3
+    """
     z = sum(c1)
     nx = sum(c2)
     n = [c1[i] + c2[i] for i in range(len(c1))]
@@ -814,7 +892,12 @@ def Chisquare2xKtable(s1, s2, k, confidence):
     @param s1: sample #1 of class k
     @param s2: sample #2 of class k
     @param k: number of classes
-    @param confidence: confidence level"""
+    @param confidence: confidence level
+
+    @see: Chay, ZE, Ling, MHT. 2010. COPADS, II: Chi-Square test, F-Test
+    and t-Test Routines from Gopal Kanji's 100 Statistical Tests. The Python
+    Papers Source Codes 2:3
+    """
     N1 = sum(s1)
     N2 = sum(s2)
     Total = N1 + N2
@@ -908,7 +991,12 @@ def MedianTestfor2Pop(s1=(9, 6), s2=(6, 9), confidence=0.95):
         
     @param s1: 2-element list or tuple of frequencies for sample #1
     @param s2: 2-element list or tuple of frequencies for sample #2
-    @param confidence: confidence level"""
+    @param confidence: confidence level
+
+    @see: Chay, ZE, Ling, MHT. 2010. COPADS, II: Chi-Square test, F-Test
+    and t-Test Routines from Gopal Kanji's 100 Statistical Tests. The Python
+    Papers Source Codes 2:3
+    """
     ls1 = s1[0]
     rs1 = s1[1]
     ls2 = s2[0]
