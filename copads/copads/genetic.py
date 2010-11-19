@@ -5,7 +5,7 @@ Copyright (c) Maurice H.T. Ling <mauriceling@acm.org>
 
 Date created: 23rd February 2010
 """
-import random
+import random, os
 from copy import deepcopy
 
 class Chromosome(object):
@@ -440,14 +440,16 @@ class Population(object):
         
         @return: information returned from report function.
         """
-        if self.generation > 0: self.prepopulation_control()
+        if self.generation > 0:
+            self.prepopulation_control()
         self.mating()
         self.postpopulation_control()
-        for organism in self.agents: organism.mutation_scheme() 
+        for organism in self.agents:
+            organism.mutation_scheme() 
         self.generation_events()
         self.generation = self.generation + 1
         return self.report()
-        
+    
     def add_organism(self, organism):
         """Add a new organism(s) to the population.
         
@@ -698,35 +700,93 @@ class ShelvePopulation(Population):
 # Supporting Functions
 #############################################################        
 def crossover(chromosome1, chromosome2, position):
-        """
-        Cross-over operator - swaps the data on the 2 given chromosomes after 
-        a given position.
-        
-        @param chromosome1: Chromosome object
-        @param chromosome2: Chromosome object
-        @param position: base position of the swap over
-        @type position: integer
-        @return: (resulting chromosome1, resulting chromosome2)
-        """
-        seq1 = chromosome1.sequence
-        seq2 = chromosome2.sequence 
-        position = int(position)
-        if len(seq1) > position and len(seq2) > position:
-            new1 = Chromosome(seq1[:position] + seq2[position:], 
-                              chromosome1.base)
-            new2 = Chromosome(seq2[:position] + seq1[position:],
-                              chromosome2.base)
-            return (new1, new2)
-        elif len(seq1) > position:
-            new1 = Chromosome(seq1[:position], chromosome1.base)
-            new2 = Chromosome(chromosome2.sequence + seq1[position:],
-                              chromosome2.base)
-            return (new1, new2)
-        elif len(seq2) > position:
-            new1 = Chromosome(chromosome1.sequence + seq2[position:],
-                              chromosome1.base)
-            new2= Chromosome(seq2[:position], chromosome2.base)
-            return (new1, new2)
-        else:
-            return (chromosome1, chromosome2)    
+    """
+    Cross-over operator - swaps the data on the 2 given chromosomes after 
+    a given position.
+    
+    @param chromosome1: Chromosome object
+    @param chromosome2: Chromosome object
+    @param position: base position of the swap over
+    @type position: integer
+    @return: (resulting chromosome1, resulting chromosome2)
+    """
+    seq1 = chromosome1.sequence
+    seq2 = chromosome2.sequence 
+    position = int(position)
+    if len(seq1) > position and len(seq2) > position:
+        new1 = Chromosome(seq1[:position] + seq2[position:], 
+                          chromosome1.base)
+        new2 = Chromosome(seq2[:position] + seq1[position:],
+                          chromosome2.base)
+        return (new1, new2)
+    elif len(seq1) > position:
+        new1 = Chromosome(seq1[:position], chromosome1.base)
+        new2 = Chromosome(chromosome2.sequence + seq1[position:],
+                          chromosome2.base)
+        return (new1, new2)
+    elif len(seq2) > position:
+        new1 = Chromosome(chromosome1.sequence + seq2[position:],
+                          chromosome1.base)
+        new2= Chromosome(seq2[:position], chromosome2.base)
+        return (new1, new2)
+    else:
+        return (chromosome1, chromosome2)    
             
+population_data = \
+{
+    'nucleotide_list' : [1, 2, 3, 4],
+    'chromosome_length' : 200,
+    'chromosome_type' : 'defined',
+    'chromosome' : [1] * 200,
+    'genome_size' : 1,
+    'population_size' : 200,
+    'fitness_function' : 'default',
+    'mutation_scheme' : 'default',
+    'goal' : 4,
+    'maximum_generation' : 'infinite',
+    'prepopulation_control' : 'default',
+    'mating' : 'default',
+    'postpopulation_control' : 'default',
+    'generation_events' : 'default',
+    'report' : 'default'
+}
+
+def population_constructor(data):
+    chr = Chromosome(data['chromosome'], data['nucleotide_list'])
+    org = Organism([chr]*data['genome_size'])
+    if data['fitness_function'] != 'default':
+        Organism.fitness = data['fitness_function']
+    if data['mutation_scheme'] != 'default':
+        Organism.mutation_scheme = data['mutation_scheme']
+    org_set = [org.clone() for x in range(data['population_size'])]
+    pop = Population(data['goal'], data['maximum_generation'], org_set)
+    if data['prepopulation_control'] != 'default':
+        Population.prepopulation_control = data['prepopulation_control']
+    if data['mating'] != 'default':
+        Population.mating = data['mating']
+    if data['postpopulation_control'] != 'default':
+        Population.postpopulation_control = data['postpopulation_control']
+    if data['generation_events'] != 'default':
+        Population.generation_events = data['generation_events']
+    if data['report'] != 'default':
+        Population.report = data['report']
+    return pop
+    
+def population_simulate(population, freezefreq=500, freezefile='pop',
+                        freezeproportion=0.01, resultfile='result.txt'):
+    result = open(resultfile, 'w')
+    report = population.generation_step()
+    reportitems = ['|'.join([str(key), str(report[key])])
+                    for key in report.keys()]
+    result.writelines('|'.join(reportitems))
+    result.writelines(os.linesep)
+    while p.generation < p.maxgenerations:
+        report = population.generation_step()
+        reportitems = ['|'.join([str(key), str(report[key])])
+                       for key in report.keys()]
+        result.writelines('|'.join(reportitems))
+        result.writelines(os.linesep)
+        if p.generation % int(freezefreq) == 0:
+            p.freeze(freezefile, freezeproportion)
+    p.freeze(freezefile, 1.0)
+    result.close()
