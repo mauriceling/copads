@@ -232,15 +232,30 @@ class Organism(object):
                                 for chromosome in self.genome])
         return float(one_count) / float(length_of_genome)
     
-    def mutation_scheme(self):
+    def mutation_scheme(self, type=None, rate=None):
         """
         Function to trigger mutation events in each chromosome. B{This function
         may be over-ridden by the inherited class or substituted to cater for 
         specific mutation schemes but not an absolute requirement to do so.}
+        
+        @param type: type of mutation. Accepts 'point' (point mutation), 
+            'insert' (insert a base), 'delete' (delete a base), 'invert' 
+            (invert a stretch of the chromosome), 'duplicate' (duplicate a 
+            stretch of the chromosome), 'translocate' (translocate a stretch of 
+            chromosome to another random position). Default = None.
+        @param rate: probability of mutation per base above background mutation 
+            rate. Default = None. No mutation event will ever happen if 
+            (rate + background_mutation) is less than zero.
+            
+        Both type and rate must be defined at the same time, otherwise the 
+        initiated mutation_type and additional_mutation_rate will be used.
         """
         for chromosome in self.genome: 
-            chromosome.rmutate(self.mutation_type, 
-                               self.additional_mutation_rate)
+            if not type and not rate:
+                chromosome.rmutate(self.mutation_type, 
+                                   self.additional_mutation_rate)
+            if type and rate:
+                chromosome.rmutate(type, rate)
         
     def setStatus(self, variable, value):
         """
