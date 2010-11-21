@@ -1,8 +1,5 @@
 """
 Framework for Genetic Algorithm Applications.
-
-Copyright (c) Maurice H.T. Ling <mauriceling@acm.org>
-
 Date created: 23rd February 2010
 """
 import random, os
@@ -27,7 +24,7 @@ class Chromosome(object):
         self.base = base
         self.background_mutation = background_mutation
     
-    def rmutate(self, rate=0.0, type='point', start=0, end=-1):
+    def rmutate(self, type='point', rate=0.01, start=0, end=-1):
         """
         Random Mutation operator - to simulate random point, insertion, 
         deletion, inversion, gene translocation and gene duplication events.
@@ -35,15 +32,14 @@ class Chromosome(object):
         The start and end parameters are useful for simulating mutational 
         hotspots in the genome.
         
-        @param rate: probability of mutation per base above background
-            mutation rate. Default = 0.0, only background mutation. No
-            mutation event will ever happen if (rate + background_mutation) is
-            less than zero.
         @param type: type of mutation. Accepts 'point' (point mutation), 
             'insert' (insert a base), 'delete' (delete a base), 'invert'
             (invert a stretch of the chromosome), 'duplicate' (duplicate a
             stretch of the chromosome), 'translocate' (translocate a stretch of
             chromosome to another random position). Default = point.
+        @param rate: probability of mutation per base above background
+            mutation rate. Default = 0.01 (1%). No mutation event will ever 
+            happen if (rate + background_mutation) is less than zero.
         @param start: starting base on the sequence for mutation.
             Default = 0, start of the genome.
         @param end: last base on the sequence for mutation. Default = -1, end of
@@ -154,7 +150,10 @@ class Chromosome(object):
         
 class Organism(object):
     """
-    An organism represented by a list of chromosomes and a status table. 
+    An organism represented by a list of chromosomes and a status table. This 
+    class should almost never be instantiated on its own but acts as an ancestor
+    class as some functions need to be over-ridden in the inherited class for 
+    the desired use.
     
     Methods to be over-ridden in the inherited class or substituted are
         - fitness
@@ -220,7 +219,7 @@ class Organism(object):
                                 for chromosome in self.genome])
         return float(one_count) / float(length_of_genome)
     
-    def mutation_scheme(self, rate=0.0, type='point'):
+    def mutation_scheme(self, type='point', rate=0.01):
         """
         Function to trigger mutation events in each chromosome. B{This function
         may be over-ridden by the inherited class or substituted to cater for 
@@ -229,17 +228,16 @@ class Organism(object):
         Here, the sample implementation uses a random given mutation 
         throughout the entire genome at the give rate above background mutation.
         
-        @param rate: probability of mutation per base above background
-            mutation rate. Default = 0.0, only background mutation. No
-            mutation event will ever happen if (rate + background_mutation) is
-            less than zero.
         @param type: type of mutation. Accepts 'point' (point mutation), 
             'insert' (insert a base), 'delete' (delete a base), 'invert'
             (invert a stretch of the chromosome), 'duplicate' (duplicate a
             stretch of the chromosome), 'translocate' (translocate a stretch of
             chromosome to another random position). Default = point.
+        @param rate: probability of mutation per base above background
+            mutation rate. Default = 0.01 (1%). No mutation event will ever 
+            happen if (rate + background_mutation) is less than zero.
         """
-        for chromosome in self.genome: chromosome.rmutate(rate, type)
+        for chromosome in self.genome: chromosome.rmutate(type, rate)
         
     def setStatus(self, variable, value):
         """
@@ -303,7 +301,7 @@ class Organism(object):
         
 class Population(object):
     """
-    Representation of a population as a list of organisms. The entire
+    Representation of a population as a list of organisms. The entire 
     population is in memory.
     
     Methods to be over-ridden in the inherited class or substituted are
@@ -314,14 +312,12 @@ class Population(object):
         - report
     """
     
-    def __init__(self, goal, population_mutation=0.0,
-                 maxgenerations='infinite', agents=[]):
+    def __init__(self, goal, maxgenerations='infinite', agents=[]):
         """
         Establishes a population of organisms.
         
         @param goal: the goal to be reached by the population.
         @type goal: the return type of Organism.fitness()
-        @param population_mutation:
         @param maxgenerations: maximum number of generations to evolve.
             Default = 'infinite'.
         @param agents: organisms making up the initial population.
@@ -442,7 +438,7 @@ class Population(object):
         self.mating()
         self.postpopulation_control()
         for organism in self.agents:
-            organism.mutation_scheme(self.population_mutation_rate, 'point') 
+            organism.mutation_scheme() 
         self.generation_events()
         self.generation = self.generation + 1
         return self.report()
@@ -494,10 +490,9 @@ class Population(object):
         if type == 'add':
             self.agents = self.agents + cPickle.load(open(filename, 'r'))
 
-
-#############################################################   
+##########################################################################
 # Supporting Functions
-#############################################################        
+##########################################################################
 def crossover(chromosome1, chromosome2, position):
     """
     Cross-over operator - swaps the data on the 2 given chromosomes after 
@@ -529,7 +524,7 @@ def crossover(chromosome1, chromosome2, position):
         new2= Chromosome(seq2[:position], chromosome2.base)
         return (new1, new2)
     else:
-        return (chromosome1, chromosome2)    
+        return (chromosome1, chromosome2)        
             
 population_data = \
 {
@@ -537,12 +532,10 @@ population_data = \
     'chromosome_length' : 200,
     'chromosome_type' : 'defined',
     'chromosome' : [1] * 200,
-    'background_mutation_rate' : 0.0001,
     'genome_size' : 1,
     'population_size' : 200,
     'fitness_function' : 'default',
     'mutation_scheme' : 'default',
-    'population_mutation_rate' : 0.0,
     'goal' : 4,
     'maximum_generation' : 'infinite',
     'prepopulation_control' : 'default',
@@ -553,17 +546,14 @@ population_data = \
 }
 
 def population_constructor(data=population_data):
-    chr = Chromosome(data['chromosome'],
-                     data['nucleotide_list'],
-                     data['background_mutation_rate'])
+    chr = Chromosome(data['chromosome'], data['nucleotide_list'])
     org = Organism([chr]*data['genome_size'])
     if data['fitness_function'] != 'default':
         Organism.fitness = data['fitness_function']
     if data['mutation_scheme'] != 'default':
         Organism.mutation_scheme = data['mutation_scheme']
     org_set = [org.clone() for x in range(data['population_size'])]
-    pop = Population(data['goal'], data['population_mutation_rate'],
-                     data['maximum_generation'], org_set)
+    pop = Population(data['goal'], data['maximum_generation'], org_set)
     if data['prepopulation_control'] != 'default':
         Population.prepopulation_control = data['prepopulation_control']
     if data['mating'] != 'default':
@@ -590,9 +580,9 @@ def population_simulate(population, freezefreq='never', freezefile='pop',
         reportitems = ['|'.join([str(key), str(report[key])])
                        for key in report.keys()]
         result.writelines('|'.join(reportitems))
+        result.writelines(os.linesep)
         if population.generation % 100 == 0:
             print '|'.join(reportitems)
-        result.writelines(os.linesep)
         if population.generation % int(freezefreq) == 0:
             population.freeze(freezefile, freezeproportion)
     population.freeze(freezefile, 1.0)
