@@ -490,9 +490,6 @@ class Population(object):
         if type == 'add':
             self.agents = self.agents + cPickle.load(open(filename, 'r'))
 
-##########################################################################
-# Supporting Functions
-##########################################################################
 def crossover(chromosome1, chromosome2, position):
     """
     Cross-over operator - swaps the data on the 2 given chromosomes after 
@@ -532,7 +529,6 @@ population_data = \
     'chromosome_length' : 200,
     'chromosome_type' : 'defined',
     'chromosome' : [1] * 200,
-    'background_mutation_rate' : 0.0001,
     'genome_size' : 1,
     'population_size' : 200,
     'fitness_function' : 'default',
@@ -547,9 +543,7 @@ population_data = \
 }
 
 def population_constructor(data=population_data):
-    chr = Chromosome(data['chromosome'], 
-                     data['nucleotide_list'],
-                     data['background_mutation_rate'])
+    chr = Chromosome(data['chromosome'], data['nucleotide_list'])
     org = Organism([chr]*data['genome_size'])
     if data['fitness_function'] != 'default':
         Organism.fitness = data['fitness_function']
@@ -569,8 +563,12 @@ def population_constructor(data=population_data):
         Population.report = data['report']
     return pop
     
-def population_simulate(population, freezefreq='never', freezefile='pop',
-                        freezeproportion=0.01, resultfile='result.txt'):
+def population_simulate(population, 
+                        printfreq=100, 
+                        freezefreq='never', 
+                        freezefile='pop',
+                        freezeproportion=0.01, 
+                        resultfile='result.txt'):
     if freezefreq == 'never': freezefreq = int(12e14)
     result = open(resultfile, 'w')
     report = population.generation_step()
@@ -583,9 +581,9 @@ def population_simulate(population, freezefreq='never', freezefile='pop',
         reportitems = ['|'.join([str(key), str(report[key])])
                        for key in report.keys()]
         result.writelines('|'.join(reportitems))
-        result.writelines(os.linesep)
-        if population.generation % 100 == 0:
+        if population.generation % int(printfreq) == 0:
             print '|'.join(reportitems)
+        result.writelines(os.linesep)
         if population.generation % int(freezefreq) == 0:
             population.freeze(freezefile, freezeproportion)
     population.freeze(freezefile, 1.0)
