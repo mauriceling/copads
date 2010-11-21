@@ -153,10 +153,7 @@ class Chromosome(object):
         
 class Organism(object):
     """
-    An organism represented by a list of chromosomes and a status table. This 
-    class should almost never be instantiated on its own but acts as an ancestor
-    class as some functions need to be over-ridden in the inherited class for 
-    the desired use.
+    An organism represented by a list of chromosomes and a status table. 
     
     Methods to be over-ridden in the inherited class or substituted are
         - fitness
@@ -304,12 +301,8 @@ class Organism(object):
         
 class Population(object):
     """
-    Representation of a population as a list of organisms. This class should 
-    almost never be instantiated on its own but acts as an ancestor class as 
-    some functions need to be over-ridden in the inherited class for the desired
-    use.
-    
-    The entire population is in memory.
+    Representation of a population as a list of organisms. The entire
+    population is in memory.
     
     Methods to be over-ridden in the inherited class or substituted are
         - prepopulation_control
@@ -499,10 +492,7 @@ class Population(object):
 
 class ShelvePopulation(Population):
     """
-    Representation of a population as a list of organisms. This class should 
-    almost never be instantiated on its own but acts as an ancestor class as 
-    some functions need to be over-ridden in the inherited class for the desired
-    use.
+    Representation of a population as a list of organisms.
     
     The entire population is stored in a Python shelve file. This enables 
     simulation of a larger number of population and/or larger genome size but
@@ -751,7 +741,7 @@ population_data = \
     'report' : 'default'
 }
 
-def population_constructor(data):
+def population_constructor(data=population_data):
     chr = Chromosome(data['chromosome'], data['nucleotide_list'])
     org = Organism([chr]*data['genome_size'])
     if data['fitness_function'] != 'default':
