@@ -1,3 +1,4 @@
+# -*- coding: cp1252 -*-
 """
 Framework for Genetic Algorithm Applications.
 
@@ -762,21 +763,22 @@ def population_constructor(data=population_data):
         Population.report = data['report']
     return pop
     
-def population_simulate(population, freezefreq=500, freezefile='pop',
+def population_simulate(population, freezefreq='never', freezefile='pop',
                         freezeproportion=0.01, resultfile='result.txt'):
+    if freezefreq == 'never': freezefreq = int(12e14)
     result = open(resultfile, 'w')
     report = population.generation_step()
     reportitems = ['|'.join([str(key), str(report[key])])
                     for key in report.keys()]
     result.writelines('|'.join(reportitems))
     result.writelines(os.linesep)
-    while p.generation < p.maxgenerations:
+    while population.generation < population.maxgenerations:
         report = population.generation_step()
         reportitems = ['|'.join([str(key), str(report[key])])
                        for key in report.keys()]
         result.writelines('|'.join(reportitems))
         result.writelines(os.linesep)
-        if p.generation % int(freezefreq) == 0:
-            p.freeze(freezefile, freezeproportion)
-    p.freeze(freezefile, 1.0)
+        if population.generation % int(freezefreq) == 0:
+            population.freeze(freezefile, freezeproportion)
+    population.freeze(freezefile, 1.0)
     result.close()
