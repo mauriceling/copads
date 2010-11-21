@@ -181,7 +181,9 @@ class Organism(object):
               
     genome = []
     
-    def __init__(self, genome='default', gender=None):
+    def __init__(self, genome='default',
+                 mutation_type='point',
+                 additional_mutation_rate=0.01, gender=None):
         """
         Sets up a new organism with default status (age = 0, vitality = 100,
         lifespan = 100, fitness = 100, alive = True)
@@ -190,6 +192,15 @@ class Organism(object):
             which will set up one default chromosome. It also allows a 
             'dummy' chromosome which is basically a one-base chromosome - this 
             is for applications which does not utilize the chromosome.
+        @param mutation_type: type of mutation. Accepts 'point' (point 
+            mutation), 'insert' (insert a base), 'delete' (delete a base), 
+            'invert' (invert a stretch of the chromosome), 'duplicate' 
+            (duplicate a stretch of the chromosome), 'translocate' (translocate 
+            a stretch of chromosome to another random position). 
+            Default = point.
+        @param additional_mutation_rate: probability of mutation per base above 
+            background mutation rate. Default = 0.01 (1%). No mutation event 
+            will ever happen if (rate + background_mutation) is less than zero.
         @param gender: establishes the gender of the organism which may be used
             for mating routines.
         """
@@ -199,6 +210,8 @@ class Organism(object):
             self.genome = [Chromosome([0])]
         else: 
             self.genome = genome
+        self.mutation_type = mutation_type
+        self.additional_mutation_rate = additional_mutation_rate
         self.gender = gender
     
     def fitness(self):
@@ -219,25 +232,15 @@ class Organism(object):
                                 for chromosome in self.genome])
         return float(one_count) / float(length_of_genome)
     
-    def mutation_scheme(self, type='point', rate=0.01):
+    def mutation_scheme(self):
         """
         Function to trigger mutation events in each chromosome. B{This function
         may be over-ridden by the inherited class or substituted to cater for 
         specific mutation schemes but not an absolute requirement to do so.}
-        
-        Here, the sample implementation uses a random given mutation 
-        throughout the entire genome at the give rate above background mutation.
-        
-        @param type: type of mutation. Accepts 'point' (point mutation), 
-            'insert' (insert a base), 'delete' (delete a base), 'invert'
-            (invert a stretch of the chromosome), 'duplicate' (duplicate a
-            stretch of the chromosome), 'translocate' (translocate a stretch of
-            chromosome to another random position). Default = point.
-        @param rate: probability of mutation per base above background
-            mutation rate. Default = 0.01 (1%). No mutation event will ever 
-            happen if (rate + background_mutation) is less than zero.
         """
-        for chromosome in self.genome: chromosome.rmutate(type, rate)
+        for chromosome in self.genome: 
+            chromosome.rmutate(self.mutation_type, 
+                               self.additional_mutation_rate)
         
     def setStatus(self, variable, value):
         """
@@ -534,6 +537,8 @@ population_data = \
     'population_size' : 200,
     'fitness_function' : 'default',
     'mutation_scheme' : 'default',
+    'additional_mutation_rate' : 0.01,
+    'mutation_type' : 'point',
     'goal' : 4,
     'maximum_generation' : 'infinite',
     'prepopulation_control' : 'default',
@@ -547,7 +552,9 @@ def population_constructor(data=population_data):
     chr = Chromosome(data['chromosome'], 
                      data['nucleotide_list'],
                      data['background_mutation'])
-    org = Organism([chr]*data['genome_size'])
+    org = Organism([chr]*data['genome_size'],
+                   data['mutation_type'],
+                   data['additional_mutation_rate'])
     if data['fitness_function'] != 'default':
         Organism.fitness = data['fitness_function']
     if data['mutation_scheme'] != 'default':
