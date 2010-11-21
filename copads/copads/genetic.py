@@ -28,7 +28,7 @@ class Chromosome(object):
         self.base = base
         self.background_mutation = background_mutation
     
-    def rmutate(self, type='point', rate=0.01, start=0, end=-1):
+    def rmutate(self, rate=0.0, type='point', start=0, end=-1):
         """
         Random Mutation operator - to simulate random point, insertion, 
         deletion, inversion, gene translocation and gene duplication events.
@@ -36,14 +36,15 @@ class Chromosome(object):
         The start and end parameters are useful for simulating mutational 
         hotspots in the genome.
         
+        @param rate: probability of mutation per base above background
+            mutation rate. Default = 0.0, only background mutation. No
+            mutation event will ever happen if (rate + background_mutation) is
+            less than zero.
         @param type: type of mutation. Accepts 'point' (point mutation), 
             'insert' (insert a base), 'delete' (delete a base), 'invert'
             (invert a stretch of the chromosome), 'duplicate' (duplicate a
             stretch of the chromosome), 'translocate' (translocate a stretch of
             chromosome to another random position). Default = point.
-        @param rate: probability of mutation per base above background
-            mutation rate. Default = 0.01 (1%). No mutation event will ever 
-            happen if (rate + background_mutation) is less than zero.
         @param start: starting base on the sequence for mutation.
             Default = 0, start of the genome.
         @param end: last base on the sequence for mutation. Default = -1, end of
@@ -220,7 +221,7 @@ class Organism(object):
                                 for chromosome in self.genome])
         return float(one_count) / float(length_of_genome)
     
-    def mutation_scheme(self, type='point', rate=0.1):
+    def mutation_scheme(self, rate=0.0, type='point'):
         """
         Function to trigger mutation events in each chromosome. B{This function
         may be over-ridden by the inherited class or substituted to cater for 
@@ -229,16 +230,17 @@ class Organism(object):
         Here, the sample implementation uses a random given mutation 
         throughout the entire genome at the give rate above background mutation.
         
+        @param rate: probability of mutation per base above background
+            mutation rate. Default = 0.0, only background mutation. No
+            mutation event will ever happen if (rate + background_mutation) is
+            less than zero.
         @param type: type of mutation. Accepts 'point' (point mutation), 
             'insert' (insert a base), 'delete' (delete a base), 'invert'
             (invert a stretch of the chromosome), 'duplicate' (duplicate a
             stretch of the chromosome), 'translocate' (translocate a stretch of
             chromosome to another random position). Default = point.
-        @param rate: probability of mutation per base above background
-            mutation rate. Default = 0.01 (1%). No mutation event will ever 
-            happen if (rate + background_mutation) is less than zero.
         """
-        for chromosome in self.genome: chromosome.rmutate(type, rate)
+        for chromosome in self.genome: chromosome.rmutate(rate, type)
         
     def setStatus(self, variable, value):
         """
@@ -313,12 +315,14 @@ class Population(object):
         - report
     """
     
-    def __init__(self, goal, maxgenerations='infinite', agents=[]):
+    def __init__(self, goal, population_mutation=0.0,
+                 maxgenerations='infinite', agents=[]):
         """
         Establishes a population of organisms.
         
         @param goal: the goal to be reached by the population.
         @type goal: the return type of Organism.fitness()
+        @param population_mutation:
         @param maxgenerations: maximum number of generations to evolve.
             Default = 'infinite'.
         @param agents: organisms making up the initial population.
@@ -439,7 +443,7 @@ class Population(object):
         self.mating()
         self.postpopulation_control()
         for organism in self.agents:
-            organism.mutation_scheme() 
+            organism.mutation_scheme(self.population_mutation_rate, 'point') 
         self.generation_events()
         self.generation = self.generation + 1
         return self.report()
@@ -491,201 +495,6 @@ class Population(object):
         if type == 'add':
             self.agents = self.agents + cPickle.load(open(filename, 'r'))
 
-class ShelvePopulation(Population):
-    """
-    Representation of a population as a list of organisms.
-    
-    The entire population is stored in a Python shelve file. This enables 
-    simulation of a larger number of population and/or larger genome size but
-    at a cost of computational speed.
-    
-    Methods to be over-ridden in the inherited class or substituted are
-        - prepopulation_control
-        - mating
-        - postpopulation_control
-        - generation_events
-        - report
-    """
-    
-    import shelve
-    
-    def __init__(self, goal, filename='pop.shelve', maxgenerations='infinite', 
-                 agents=[]):
-        """
-        Establishes a population of organisms.
-        
-        @param goal: the goal to be reached by the population.
-        @type goal: the return type of Organism.fitness()
-        @param maxgenerations: maximum number of generations to evolve.
-            Default = 'infinite'.
-        @param agents: organisms making up the initial population.
-        @type agents: list of Organism objects
-        """
-        self.agents = shelve.open(filename)
-        for organism in agents:
-            self.agents[random.randint(1, 1e300)] = organism
-        self.goal = goal
-        self.maxgenerations = maxgenerations
-        self.generation = 0
-    
-    def prepopulation_control(self):
-        """
-        Function to trigger population control events before mating event in 
-        each generation (For example, to simulate pre-puberty death). B{This 
-        function may be over-ridden by the inherited class or substituted to 
-        cater for specific events.} Although this is not an absolute 
-        requirement, it is extremely encouraged to prevent exhaustion of memory 
-        space. Without population control, it will seems like a reproducing 
-        immortal population.
-        
-        Here, the sample implementation eliminates the bottom half of the 
-        population based on fitness score unless the number of organisms is
-        less than 20. This is to prevent extinction. However, if the number of
-        organisms is more than 2000 (more than 100x initial population size, 
-        a random selection of 2000 will be used for the next generation.
-        """
-        akeys = self.agents.keys()
-        sfitness = [self.agents[x].fitness() for x in akeys]
-        threshold = sum(fitness) / len(fitness)
-        temp = [self.agent[akeys[x]]
-                for x in range(len(akeys)) 
-                    if sfitness[x] > threshold]
-        if len(temp) > 2001:
-            size = len(temp)
-            self.agents = [temp[random.randint(0, size - 1)] 
-                           for x in xrange(2000)]
-        if len(temp) > 21: 
-            self.agents = temp
-    
-    # def mating(self):
-        # """
-        # Function to trigger mating events in each generation. B{This function
-        # may be over-ridden by the inherited class to cater for specific mating
-        # schemes but not an absolute requirement to do so.} Matching schemes
-        # should include 
-            # - selection of mating partners using Organism.fitness() function
-                # and/or other status
-            # - processes and actions of mating
-            
-        # Here, the sample implementation randomly selects any 2 organisms from
-        # the culled list and generate a new genome for the progeny organism by
-        # single crossover.
-        # """
-        # size = len(self.agents)
-        # temp = []
-        # for x in xrange(size):
-            # organism1 = self.agents[random.randint(0, size - 1)]
-            # organism2 = self.agents[random.randint(0, size - 1)]
-            # crossover_pt = random.randint(0, len(organism1.genome[0].sequence))
-            # (g1, g2) = crossover(organism1.genome[0], organism2.genome[0],
-                                 # crossover_pt)
-            # temp = temp + [Organism([g1])]
-        # self.add_organism(temp)
-            
-    def postpopulation_control(self):
-        """
-        Function to trigger population control events after mating event in 
-        each generation(For example, to simulate old-age death). B{This 
-        function may be over-ridden by the inherited class or substituted to 
-        cater for specific events.} Although this is not an absolute 
-        requirement, it is extremely encouraged to prevent exhaustion of memory 
-        space. Without population control, it will seems like a reproducing 
-        immortal population.
-        """
-        pass
-        
-    def generation_events(self):
-        """
-        Function to trigger other defined events in each generation. B{This 
-        function may be over-ridden by the inherited class or substituted to 
-        cater for specific events but not an absolute requirement to do so.} 
-        Events and controls may include
-            - processes simulating disaster or other catastrophic events
-            - changes in mutations            
-        """
-        pass
-    
-    # def report(self):
-        # """
-        # Function to report the status of each generation. B{This function may 
-        # be over-ridden by the inherited class to cater for specific reporting
-        # schemes but not an absolute requirement to do so.} At the very least, 
-        # this function should report whether the goal is reached.
-        
-        # @return: dictionary of status describing the current generation
-        # """
-        # sfitness = [self.agents[x].fitness() for x in xrange(len(self.agents))]
-        # afitness = sum(sfitness) / float(len(self.agents))
-        # return {'generation': self.generation,
-                # 'average fitness': afitness,
-                # '% to goal': float(afitness - self.goal) / self.goal * 100}
-        
-    # def generation_step(self):
-        # """
-        # Function to simulate events for one generation. These includes
-            # - mating (according to the mating scheme or function)
-            # - mutating each organism in the population
-            # - population size control
-            # - other events defined under generation_events function
-            # - increment of generation count
-            # - reporting the population status
-        
-        # @return: information returned from report function.
-        # """
-        # if self.generation > 0: self.prepopulation_control()
-        # self.mating()
-        # self.postpopulation_control()
-        # for organism in self.agents: organism.mutation_scheme() 
-        # self.generation_events()
-        # self.generation = self.generation + 1
-        # return self.report()
-        
-    # def add_organism(self, organism):
-        # """Add a new organism(s) to the population.
-        
-        # @param organism: list of new Organism object(s)"""
-        # self.agents = self.agents + organism
-        
-    # def freeze(self, prefix='pop', proportion=0.01):
-        # """
-        # Preserves part or the entire population. If the population size or the
-        # preserved proportion is below 100, the entire population will be 
-        # preserved. The preserved sample will be written into a file with name in
-        # the following format - <prefix><generation count>_<sample size>.gap
-        
-        # @param prefix: prefix of file name. Default = 'pop'.
-        # @param proportion: proportion of population to be preserved.
-            # Default = 0.01, preserves 1% of the population.
-        # """
-        # import cPickle
-        # if proportion > 1.0: proportion = 1.0
-        # if len(self.agents) < 101 or len(self.agents) * proportion < 101:
-            # sample = self.agents
-        # else:
-            # size = len(self.agents)
-            # sample = [self.agents[random.randint(0, size - 1)]
-                      # for x in xrange(int(len(self.agents) * proportion))]
-        # name = ''.join([prefix, str(self.generation), '_', 
-                        # str(len(sample)), '.gap'])
-        # f = open(name, 'w')
-        # cPickle.dump(sample, f)
-        # f.close()
-        
-    # def revive(self, filename, type='replace'):
-        # """
-        # Revives a frozen population.
-        
-        # @param filename: file name of frozen population (generated by 
-            # Population.freeze() function)
-        # @param type: type of revival. Allows 'replace' (replace the current 
-            # population with the revived population) or 'add' (add the revived
-            # population to the current population). Default = 'replace'.
-        # """
-        # import cPickle
-        # if type == 'replace':
-            # self.agents = cPickle.load(open(filename, 'r'))
-        # if type == 'add':
-            # self.agents = self.agents + cPickle.load(open(filename, 'r'))
             
 #############################################################   
 # Supporting Functions
@@ -729,10 +538,12 @@ population_data = \
     'chromosome_length' : 200,
     'chromosome_type' : 'defined',
     'chromosome' : [1] * 200,
+    'background_mutation_rate' : 0.0001,
     'genome_size' : 1,
     'population_size' : 200,
     'fitness_function' : 'default',
     'mutation_scheme' : 'default',
+    'population_mutation_rate' : 0.0
     'goal' : 4,
     'maximum_generation' : 'infinite',
     'prepopulation_control' : 'default',
@@ -743,14 +554,17 @@ population_data = \
 }
 
 def population_constructor(data=population_data):
-    chr = Chromosome(data['chromosome'], data['nucleotide_list'])
+    chr = Chromosome(data['chromosome'],
+                     data['nucleotide_list'],
+                     data['background_mutation_rate'])
     org = Organism([chr]*data['genome_size'])
     if data['fitness_function'] != 'default':
         Organism.fitness = data['fitness_function']
     if data['mutation_scheme'] != 'default':
         Organism.mutation_scheme = data['mutation_scheme']
     org_set = [org.clone() for x in range(data['population_size'])]
-    pop = Population(data['goal'], data['maximum_generation'], org_set)
+    pop = Population(data['goal'], data['population_mutation_rate'],
+                     data['maximum_generation'], org_set)
     if data['prepopulation_control'] != 'default':
         Population.prepopulation_control = data['prepopulation_control']
     if data['mating'] != 'default':
@@ -777,6 +591,8 @@ def population_simulate(population, freezefreq='never', freezefile='pop',
         reportitems = ['|'.join([str(key), str(report[key])])
                        for key in report.keys()]
         result.writelines('|'.join(reportitems))
+        if population.generation % 100 == 0:
+            print '|'.join(reportitems)
         result.writelines(os.linesep)
         if population.generation % int(freezefreq) == 0:
             population.freeze(freezefile, freezeproportion)
