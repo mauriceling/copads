@@ -1,4 +1,3 @@
-# -*- coding: cp1252 -*-
 """
 Framework for Genetic Algorithm Applications.
 
@@ -495,7 +494,7 @@ class Population(object):
         if type == 'add':
             self.agents = self.agents + cPickle.load(open(filename, 'r'))
 
-            
+
 #############################################################   
 # Supporting Functions
 #############################################################        
@@ -543,7 +542,7 @@ population_data = \
     'population_size' : 200,
     'fitness_function' : 'default',
     'mutation_scheme' : 'default',
-    'population_mutation_rate' : 0.0
+    'population_mutation_rate' : 0.0,
     'goal' : 4,
     'maximum_generation' : 'infinite',
     'prepopulation_control' : 'default',
