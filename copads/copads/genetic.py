@@ -532,6 +532,7 @@ population_data = \
     'chromosome_length' : 200,
     'chromosome_type' : 'defined',
     'chromosome' : [1] * 200,
+    'background_mutation_rate' : 0.0001,
     'genome_size' : 1,
     'population_size' : 200,
     'fitness_function' : 'default',
@@ -546,7 +547,9 @@ population_data = \
 }
 
 def population_constructor(data=population_data):
-    chr = Chromosome(data['chromosome'], data['nucleotide_list'])
+    chr = Chromosome(data['chromosome'], 
+                     data['nucleotide_list'],
+                     data['background_mutation_rate'])
     org = Organism([chr]*data['genome_size'])
     if data['fitness_function'] != 'default':
         Organism.fitness = data['fitness_function']
