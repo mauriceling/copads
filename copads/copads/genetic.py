@@ -238,6 +238,9 @@ class Organism(object):
         may be over-ridden by the inherited class or substituted to cater for 
         specific mutation schemes but not an absolute requirement to do so.}
         
+        Both type and rate must be defined at the same time, otherwise the 
+        initiated mutation_type and additional_mutation_rate will be used.
+        
         @param type: type of mutation. Accepts 'point' (point mutation), 
             'insert' (insert a base), 'delete' (delete a base), 'invert' 
             (invert a stretch of the chromosome), 'duplicate' (duplicate a 
@@ -246,9 +249,6 @@ class Organism(object):
         @param rate: probability of mutation per base above background mutation 
             rate. Default = None. No mutation event will ever happen if 
             (rate + background_mutation) is less than zero.
-            
-        Both type and rate must be defined at the same time, otherwise the 
-        initiated mutation_type and additional_mutation_rate will be used.
         """
         for chromosome in self.genome: 
             if not type and not rate:
@@ -567,43 +567,44 @@ def population_constructor(data=population_data):
     """
     Function to construct a population based on a dictionary of population data.
     
+    Population data contains the following keys:
+        - 'nucleotide_list' = List of allowable nucleotides (bases). 
+            Default = [1, 2, 3, 4].
+        - 'chromosome_length' = Length of a chromosome. Default = 200.
+        - 'chromosome_type' = Type of chromosome. Default = 'defined'.
+        - 'chromosome' = Initial chromosome. Default = [1] * 200.
+        - 'background_mutation' = Background mutation rate. 
+            Default = 0.0001 (0.01%).
+        - 'genome_size' = Number of chromosomes per organism. Default = 1.
+        - 'population_size' = Size of initial population (number of organisms).
+            Default = 200.
+        - 'fitness_function' = Fitness evaluation function. Accepts 'default' 
+            or a function. Please refer to Organism. Default = 'default'.
+        - 'mutation_scheme' = Function simulating the mutation scheme of an 
+            organism. Accepts 'default' or a function. Please refer to Organism. 
+            Default = 'default'.
+        - 'additional_mutation_rate' = Mutation rate on top of background 
+            mutation rate. Default = 0.01 (1%).
+        - 'mutation_type' = Type of default mutation. Default = 'point'.
+        - 'goal' = Goal of the population, as evaluated by fitness function.
+            Default = 4.
+        - 'maximum_generation' = Number of generations to simulate. Accepts an 
+            integer or 'infinite'. Default = 'infinite'.
+        - 'prepopulation_control' = Function simulating pre-mating population 
+            control. Please refer to Population. Default = 'default'.
+        - 'mating' = Function simulating mating procedure (mate selection and 
+            act of mating control. Please refer to Population. 
+            Default = 'default'.
+        - 'postpopulation_control' = Function simulating post-mating population 
+            control. Please refer to Population. Default = 'default'.
+        - 'generation_events' = Function simulating other possible (usually 
+            rare or random) events in the generation. Please refer to 
+            Population. Default = 'default'.
+        - 'report' = Function to generate the status report of the generation.
+            Please refer to Population. Default = 'default'.
+        
     @param data: population data
     @type data: dictionary
-    
-    Population data contains the following keys:
-    - 'nucleotide_list' = List of allowable nucleotides (bases). 
-        Default = [1, 2, 3, 4].
-    - 'chromosome_length' = Length of a chromosome. Default = 200.
-    - 'chromosome_type' = Type of chromosome. Default = 'defined'.
-    - 'chromosome' = Initial chromosome. Default = [1] * 200.
-    - 'background_mutation' = Background mutation rate. 
-        Default = 0.0001 (0.01%).
-    - 'genome_size' = Number of chromosomes per organism. Default = 1.
-    - 'population_size' = Size of initial population (number of organisms).
-        Default = 200.
-    - 'fitness_function' = Fitness evaluation function. Accepts 'default' or a 
-        function. Please refer to Organism. Default = 'default'.
-    - 'mutation_scheme' = Function simulating the mutation scheme of an 
-        organism. Accepts 'default' or a function. Please refer to Organism. 
-        Default = 'default'.
-    - 'additional_mutation_rate' = Mutation rate on top of background mutation
-        rate. Default = 0.01 (1%).
-    - 'mutation_type' = Type of default mutation. Default = 'point'.
-    - 'goal' = Goal of the population, as evaluated by fitness function.
-        Default = 4.
-    - 'maximum_generation' = Number of generations to simulate. Accepts an 
-        integer or 'infinite'. Default = 'infinite'.
-    - 'prepopulation_control' = Function simulating pre-mating population 
-        control. Please refer to Population. Default = 'default'.
-    - 'mating' = Function simulating mating procedure (mate selection and act of
-        mating control. Please refer to Population. Default = 'default'.
-    - 'postpopulation_control' = Function simulating post-mating population 
-        control. Please refer to Population. Default = 'default'.
-    - 'generation_events' = Function simulating other possible (usually rare or 
-        random) events in the generation. Please refer to Population. 
-        Default = 'default'.
-    - 'report' = Function to generate the status report of the generation.
-        Please refer to Population. Default = 'default'.
         
     @return: Population object
     """
