@@ -564,6 +564,49 @@ population_data = \
 }
 
 def population_constructor(data=population_data):
+    """
+    Function to construct a population based on a dictionary of population data.
+    
+    @param data: population data
+    @type data: dictionary
+    
+    Population data contains the following keys:
+    - 'nucleotide_list' = List of allowable nucleotides (bases). 
+        Default = [1, 2, 3, 4].
+    - 'chromosome_length' = Length of a chromosome. Default = 200.
+    - 'chromosome_type' = Type of chromosome. Default = 'defined'.
+    - 'chromosome' = Initial chromosome. Default = [1] * 200.
+    - 'background_mutation' = Background mutation rate. 
+        Default = 0.0001 (0.01%).
+    - 'genome_size' = Number of chromosomes per organism. Default = 1.
+    - 'population_size' = Size of initial population (number of organisms).
+        Default = 200.
+    - 'fitness_function' = Fitness evaluation function. Accepts 'default' or a 
+        function. Please refer to Organism. Default = 'default'.
+    - 'mutation_scheme' = Function simulating the mutation scheme of an 
+        organism. Accepts 'default' or a function. Please refer to Organism. 
+        Default = 'default'.
+    - 'additional_mutation_rate' = Mutation rate on top of background mutation
+        rate. Default = 0.01 (1%).
+    - 'mutation_type' = Type of default mutation. Default = 'point'.
+    - 'goal' = Goal of the population, as evaluated by fitness function.
+        Default = 4.
+    - 'maximum_generation' = Number of generations to simulate. Accepts an 
+        integer or 'infinite'. Default = 'infinite'.
+    - 'prepopulation_control' = Function simulating pre-mating population 
+        control. Please refer to Population. Default = 'default'.
+    - 'mating' = Function simulating mating procedure (mate selection and act of
+        mating control. Please refer to Population. Default = 'default'.
+    - 'postpopulation_control' = Function simulating post-mating population 
+        control. Please refer to Population. Default = 'default'.
+    - 'generation_events' = Function simulating other possible (usually rare or 
+        random) events in the generation. Please refer to Population. 
+        Default = 'default'.
+    - 'report' = Function to generate the status report of the generation.
+        Please refer to Population. Default = 'default'.
+        
+    @return: Population object
+    """
     chr = Chromosome(data['chromosome'], 
                      data['nucleotide_list'],
                      data['background_mutation'])
@@ -575,7 +618,9 @@ def population_constructor(data=population_data):
     if data['mutation_scheme'] != 'default':
         Organism.mutation_scheme = data['mutation_scheme']
     org_set = [org.clone() for x in range(data['population_size'])]
-    pop = Population(data['goal'], data['maximum_generation'], org_set)
+    pop = Population(data['goal'], 
+                     int(data['maximum_generation']), 
+                     org_set)
     if data['prepopulation_control'] != 'default':
         Population.prepopulation_control = data['prepopulation_control']
     if data['mating'] != 'default':
@@ -594,6 +639,24 @@ def population_simulate(population,
                         freezefile='pop',
                         freezeproportion=0.01, 
                         resultfile='result.txt'):
+    """
+    Function to simulate the population - start the GA.
+    
+    @param population: Population to run.
+    @type population: Population object
+    @param printfreq: Reporting intervals on screen. Default = 100.
+    @param freezefreq: Generation intervals to freeze population into a file.
+        See Population.freeze method. Accepts an integer or 'never'. 
+        Default = 'never'.
+    @param freezefile: Prefix of file name of frozen population. 
+        See Population.freeze method. Default = 'pop'.
+    @param freezeproportion: Proportion of population to be preserved.
+        See Population.freeze method. Default = 0.01, preserves 1% of the 
+        population.
+    @param resultfile: Name of file to print out results of each generation. 
+        Format of output is dependent on reporting method of the population
+        (Population.report). Default = 'result.txt'.
+    """
     if freezefreq == 'never': freezefreq = int(12e14)
     result = open(resultfile, 'w')
     report = population.generation_step()
