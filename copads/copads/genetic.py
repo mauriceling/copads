@@ -1,21 +1,22 @@
 """
 Framework for Genetic Algorithm Applications.
 Date created: 23rd February 2010
+Licence: Python Software Foundation License version 2
 """
 import random, os
 from copy import deepcopy
 
 class Chromosome(object):
     """Representation of a linear chromosome."""
-    def __init__(self, sequence=[0]*1000, base=[1, 0], 
+    def __init__(self, sequence, base, 
                  background_mutation=0.0001):
         """
         Sets up a chromosome.
         
         @param sequence: a subscriptable object (list or string) representing
-            the sequence of the chromosome. Default = list of 1000 integers.
+            the sequence of the chromosome.
         @param base: a subscriptable object (list or string) representing
-            allowable entities in the sequence. Default = [1, 0].
+            allowable entities in the sequence.
         @param background_mutation: background mutation rate represented as the 
             probability of number of mutations per base. Default = 0.0001 
             (0.01%).
@@ -162,10 +163,10 @@ class Organism(object):
     Pre-defined status are
         1. alive - is the organism alive? True or False.
         2. vitality - percentage of maximum vitality.
-        3. age - the current age of the organism
-        4. lifespan - pre-defined maximum lifespan. Set to 100.
-        5. fitness - how fit the organism is? Set to maximum fitness, 100
-        6. death - reason of death (as death code)
+        3. age - the current age of the organism.
+        4. lifespan - pre-defined maximum lifespan to be set based on scenario. 
+        5. fitness - how fit the organism is? Set to maximum fitness.
+        6. death - reason of death (as death code).
     
     List of defined death codes
         1. death01 - zero vitality
