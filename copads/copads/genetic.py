@@ -2,12 +2,22 @@
 Framework for Genetic Algorithm Applications.
 Date created: 23rd February 2010
 Licence: Python Software Foundation License version 2
+
+@see: Lim, JZR, Aw, ZQ, Goh, DJW, How, JA, Low, SXZ, Loo, BZL,
+Ling, MHT. 2010. A genetic algorithm framework grounded in biology.
+The Python Papers Source Codes 2: 6. 
 """
 import random, os
 from copy import deepcopy
 
 class Chromosome(object):
-    """Representation of a linear chromosome."""
+    """
+    Representation of a linear chromosome.
+
+    @see: Lim, JZR, Aw, ZQ, Goh, DJW, How, JA, Low, SXZ, Loo, BZL,
+    Ling, MHT. 2010. A genetic algorithm framework grounded in biology.
+    The Python Papers Source Codes 2: 6.
+    """
     def __init__(self, sequence, base, 
                  background_mutation=0.0001):
         """
@@ -172,6 +182,10 @@ class Organism(object):
         1. death01 - zero vitality
         2. death02 - maximum age reached
         3. death03 - unknown death cause
+
+    @see: Lim, JZR, Aw, ZQ, Goh, DJW, How, JA, Low, SXZ, Loo, BZL,
+    Ling, MHT. 2010. A genetic algorithm framework grounded in biology.
+    The Python Papers Source Codes 2: 6.
     """
     status = {'alive': True,                # is the organism alive?
               'vitality': 100.0,            # % of vitality
@@ -329,6 +343,10 @@ class Population(object):
         - postpopulation_control
         - generation_events
         - report
+
+    @see: Lim, JZR, Aw, ZQ, Goh, DJW, How, JA, Low, SXZ, Loo, BZL,
+    Ling, MHT. 2010. A genetic algorithm framework grounded in biology.
+    The Python Papers Source Codes 2: 6.
     """
     
     def __init__(self, goal, maxgenerations='infinite', agents=[]):
@@ -608,6 +626,10 @@ def population_constructor(data=population_data):
     @type data: dictionary
         
     @return: Population object
+
+    @see: Lim, JZR, Aw, ZQ, Goh, DJW, How, JA, Low, SXZ, Loo, BZL,
+    Ling, MHT. 2010. A genetic algorithm framework grounded in biology.
+    The Python Papers Source Codes 2: 6.
     """
     chr = Chromosome(data['chromosome'], 
                      data['nucleotide_list'],
@@ -658,6 +680,10 @@ def population_simulate(population,
     @param resultfile: Name of file to print out results of each generation. 
         Format of output is dependent on reporting method of the population
         (Population.report). Default = 'result.txt'.
+
+    @see: Lim, JZR, Aw, ZQ, Goh, DJW, How, JA, Low, SXZ, Loo, BZL,
+    Ling, MHT. 2010. A genetic algorithm framework grounded in biology.
+    The Python Papers Source Codes 2: 6.
     """
     if freezefreq == 'never': freezefreq = int(12e14)
     result = open(resultfile, 'w')
