@@ -2,15 +2,15 @@
 Statistical Hypothesis Testing Routines.
 
 Each routine will Returns a 5-element list
-    [left result, left critical, statistic, right critical, right result]
-    where
-        - left result = True (statistic in lower critical region) or 
-        False (statistic not in lower critical region)
-        - left critical = lower critical value generated from 1 - confidence
-        - statistic = calculated statistic value
-        - right critical = upper critical value generated from confidence
-        - right result = True (statistic in upper critical region) or
-        False (statistic not in upper critical region)
+    - [left result, left critical, statistic, right critical, right result]
+where
+    - left result = True (statistic in lower critical region) or 
+    False (statistic not in lower critical region)
+    - left critical = lower critical value generated from 1 - confidence
+    - statistic = calculated statistic value
+    - right critical = upper critical value generated from confidence
+    - right result = True (statistic in upper critical region) or
+    False (statistic not in upper critical region)
 
 References
     - Test 1-100: Gopal K. Kanji. 2006. 100 Statistical Tests, 3rd edition.
@@ -501,10 +501,6 @@ def t18(**kwargs):
     multivariate result. In another words, we wish to know if the mean pattern
     obtained from the first experiment agrees with the mean pattern obtained
     for the second.
-    
-    @param 
-    @param 
-    @param 
     """
     return test(statistic, Distribution(), confidence)
 
@@ -750,11 +746,7 @@ def tKolmogorovSmirnov():
     Limitations
         1. Best results obtained when samples are sufficiently large, 15
         samples or more
-        
-    @param 
-    @param 
-    @param 
-    @param"""
+    """
     return test(statistic, Distribution(), confidence)
 
 def ChisqFit(observed, expected, confidence):
@@ -956,7 +948,8 @@ def t47(**kwargs):
     return test(statistic, Distribution(), confidence)
 
 def t2MeansPairedObs(x, y, confidence):
-    """Test 48: The signed rank test fo two means (paired observations)
+    """
+    Test 48: The signed rank test fo two means (paired observations)
     
     Limitations: 
         1.Observations in the two samples should be taken in pairs, one
@@ -1264,7 +1257,8 @@ def t91(**kwargs):
     return test(statistic, Distribution(), confidence)
 
 def DubinWatsontest(**kwargs):
-    """Test 92: Dubin-Watson test
+    """
+    Test 92: Dubin-Watson test
     
     To test whether the error terms in a regression model are autocorrelated
     
@@ -1282,7 +1276,8 @@ def t93(**kwargs):
     return test(statistic, Distribution(), confidence)
 
 def ChisquareProbModel(**kwargs):
-    """Test 94: x2-test for a suitable probabilistic model
+    """
+    Test 94: x2-test for a suitable probabilistic model
     
     Many experiments yield a set of data, say x1, x2, x3, xn and the
     experimenter often is interested in determining whether the data can be
