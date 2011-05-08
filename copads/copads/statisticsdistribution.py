@@ -2435,10 +2435,13 @@ def LogLogisticDistribution(**parameters):
 
 
 class LogNormalDistribution(Distribution):
-#    def __init__(self, **parameters): 
-#        """Constructor method. The parameters are used to construct the 
-#        probability distribution."""
-#        raise DistributionFunctionError
+    def __init__(self, a, b): 
+        """Constructor method. The parameters are used to construct the 
+        probability distribution."""
+        self.location = a
+        self. scale = b
+        if (b ** 2) < 0:
+            raise AttributeError 
 #    def CDF(self, x): 
 #        """
 #        Cummulative Distribution Function, which gives the cummulative 
@@ -2462,9 +2465,9 @@ class LogNormalDistribution(Distribution):
             cprob = self.CDF(start)
             # print start, cprob
         return (start, cprob)
-#    def mean(self): 
-#        """Gives the arithmetic mean of the sample."""
-#        raise DistributionFunctionError
+    def mean(self): 
+        """Gives the arithmetic mean of the sample."""
+        return math.exp((self.location + (self.scale ** 2) * self.location*(-1)))
 #    def mode(self): 
 #        """Gives the mode of the sample."""
 #        raise DistributionFunctionError
@@ -3145,6 +3148,45 @@ class SemicircularDistribution(Distribution):
 
 
 class TriangularDistribution(Distribution):
+<<<<<<< .mine
+    def __init__(self, b, c, a=0): 
+        """Constructor method. The parameters are used to construct the 
+        probability distribution."""
+        self.lower_limit = a
+        if b < self.lower_limit:
+            raise AttributeError
+        else:
+            self.upper_limit = b
+        if c > b: 
+            raise AttributeError
+        if c < a + 0.001:
+            raise AttributeError
+        else:
+            self.mode = c
+            
+    def CDF(self, x): 
+        """
+        Cummulative Distribution Function, which gives the cummulative 
+        probability (area under the probability curve) from -infinity or 0 to 
+        a give x-value on the x-axis where y-axis is the probability."""
+        if x < self.lower_limit:
+            raise AttributeError
+        if x > self.mode:
+            raise AttributeError
+        else:
+             return (( x - self.lower_limit) ** 2) / ((self.upper_limit - self.lower_limit) * (self.mode - self.lower_limit))
+    def PDF(self, x): 
+        """
+        Partial Distribution Function, which gives the probability for the 
+        particular value of x, or the area under probability distribution 
+        from x-h to x+h for continuous distribution."""
+        if x < self.lower_limit:
+            raise AttributeError
+        if x > self.mode:
+            raise AttributeError
+        else:
+             return ((2 * (x - self.lower_limit)) / ((self.upper_limit - self.lower_limit) * (self.mode - self.lower_limit)))
+=======
     def __init__(self, b, c, a=0): 
         """Constructor method. The parameters are used to construct the 
         probability distribution."""
@@ -3186,6 +3228,7 @@ class TriangularDistribution(Distribution):
              return ((2 * (x - self.lower_limit)) / \
              ((self.upper_limit - self.lower_limit) * \
              (self.mode - self.lower_limit)))
+>>>>>>> .r263
     def inverseCDF(self, probability, start=0.0, step=0.01): 
         """
         It does the reverse of CDF() method, it takes a probability value 
@@ -3197,6 +3240,64 @@ class TriangularDistribution(Distribution):
             cprob = self.CDF(start)
             # print start, cprob
         return (start, cprob)
+<<<<<<< .mine
+    def mean(self): 
+        """Gives the arithmetic mean of the sample."""
+        return (float(self.lower_limit + self.upper_limit + self.mode) / 3)
+    def mode(self): 
+        """Gives the mode of the sample."""
+        return (self.mode)
+    def kurtosis(self): 
+        """Gives the kurtosis of the sample."""
+        return ((-3)*(5 ** - 1))
+    def skew(self): 
+        """Gives the skew of the sample."""
+        return (math.sqrt(2) * (self.lower_limit + self.upper_limit - 2 * \
+        self.mode) * (2 * self.lower_limit - self.self.upper_limit - self.mode) \
+         * (self.lower_limit - 2 * self.upper_limit + self.mode)) \
+         / (self.lower_limit ** 2 + self.upper_limit ** 2 + self.mode ** 2 - \
+        self.lower_limit * self.upper_limit + self.mode ** 2 - self.lower_limit * \
+        (self.upper_limit - self.mode))
+    def variance(self): 
+        """Gives the variance of the sample."""
+        return (self.lower_limit ** 2 + self.upper_limit ** 2 + self.mode ** 2\
+        - (self.lower_limit * self.upper_limit) - \
+        (self.lower_limit * self.mode) - (self.upper_limit * self.mode))\
+        *(18 ** -1)
+    def quantile1(self): 
+        """Gives the 1st quantile of the sample."""
+        if ((self.mode - self.lower_limit) * \
+        (self.upper_limit - self.lower_limit) ** -1) > 0.25:
+            return self.lower_limit + (0.5 * math.sqrt((self.upper_limit - \
+            self.lower_limit) * (self.mode - self.lower_limit)))
+        else:
+            return self.upper_limit - ((0.5) * math.sqrt (3 * (self.upper_limit -\
+            self.lower_limit) * (self.upper_limit - self.mode)))
+    def quantile3(self): 
+        """Gives the 3rd quantile of the sample."""
+        if ((self.mode - self.lower_limit) * \
+        (self.upper_limit - self.lower_limit) ** -1) > 0.75:
+            return self.lower_limit + (0.5 * math.sqrt(3 * (self.upper_limit - \
+            self.lower_limit) * (self.mode - self.lower_limit)))
+        else:
+            return self.upper_limit - ((0.5) * math.sqrt ((self.upper_limit -\
+            self.lower_limit) * (self.upper_limit - self.mode)))
+    def qmean(self): 
+        """Gives the quantile of the arithmetic mean of the sample."""
+        if self.mode > ((self.lower_limit + self.upper_limit) * 0.5):
+            return ((self.upper_limit + self.mode - 2 * self.lower_limit) ** 2)\
+            * (9 * (self.upper_limit - self.lower_limit) * (self.mode - \
+            self.lower_limit))
+        else:
+            return (self.lower_limit ** 2 + (5 * self.lower_limit * \
+            self.upper_limit) - (5 * (self.upper_limit ** 2)) - \
+            (7 * self.lower_limit * self.mode) + (5 * self. upper_limit * \
+            self.mode) + self.mode ** 2)
+    def qmode(self): 
+        """Gives the quantile of the mode of the sample."""
+        return (self.mode - self.lower_limit) * (self.upper_limit \
+        - self.lower_limit) ** - 1
+=======
     def mean(self): 
         """Gives the arithmetic mean of the sample."""
         return (float(self.lower_limit + self.upper_limit + self.mode) / 3)
@@ -3253,6 +3354,7 @@ class TriangularDistribution(Distribution):
         """Gives the quantile of the mode of the sample."""
         return (self.mode - self.lower_limit) * (self.upper_limit \
         - self.lower_limit) ** - 1
+>>>>>>> .r263
 #    def random(self):
 #        """Gives a random number based on the distribution."""
 #        raise DistributionFunctionError
@@ -3278,7 +3380,7 @@ class WeiBullDistribution(Distribution):
 #    def PDF(self, x): 
 #        """
 #        Partial Distribution Function, which gives the probability for the 
-#        particular value of x, or the area under probability distribution 
+#        particular value of x, or the area under trobability distribution 
 #        from x-h to x+h for continuous distribution."""
 #        raise DistributionFunctionError
     def inverseCDF(self, probability, start=0.0, step=0.01): 
