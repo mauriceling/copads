@@ -371,6 +371,20 @@ class testT(unittest.TestCase):
         self.assertAlmostEqual(x, 5.893, places=2)
         
     
+class testTriangular(unittest.TestCase):
+    def testCDF1(self):
+       p = N.TriangularDistribution(2.0, 1.0).CDF(1.0)
+       self.assertAlmostEqual(p, 0.5000, places=4)
+    def testCDF1(self):
+       p = N.TriangularDistribution(2.0, 1.0).CDF(0.8)
+       self.assertAlmostEqual(p, 0.3200, places=4)
+    def testPDF(self):
+       p = N.TriangularDistribution(2.0, 1.0).PDF(0.08)
+       self.assertAlmostEqual(p, 0.08000, places=4)
+    def testkurtosis(self):
+       p = N.TriangularDistribution(2.0, 1.0).kurtosis()
+       self.assertAlmostEqual(p, -0.6, places=4)
+
 class testUniform(unittest.TestCase):
     """
     @see: Ling, MHT. 2009. Compendium of Distributions, I: Beta, Binomial, Chi-
