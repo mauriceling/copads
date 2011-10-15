@@ -2386,7 +2386,7 @@ class LogarithmicDistribution(Distribution):
         probability (area under the probability curve) from -infinity or 0 to 
         a give x-value on the x-axis where y-axis is the probability."""
         sum = 0.0
-        for i in range(x): sum = sum + self.PDF(i)
+        for i in range(int(x)): sum = sum + self.PDF(i)
         return sum
     
     def PDF(self, x): 
@@ -3084,9 +3084,9 @@ class SemicircularDistribution(Distribution):
         Cummulative Distribution Function, which gives the cummulative 
         probability (area under the probability curve) from -infinity or 0 to 
         a give x-value on the x-axis where y-axis is the probability."""
-        t = ((x - self.location) / self.scale) ** 2
-        return 0.5 + (1 / PI) * (t * math.srqt(1 - (t ** 2)) + math.asin(t))
-	
+        t = (x - self.location) / self.scale
+        return 0.5 + (1 / PI) * (t * math.sqrt(1 - (t ** 2)) + math.asin(t))
+    
     def PDF(self, x): 
         """
         Partial Distribution Function, which gives the probability for the 
@@ -3095,10 +3095,12 @@ class SemicircularDistribution(Distribution):
         return (2 / (self.scale * PI)) * \
                 math.sqrt(1 - ((x - self.location) / self.scale) ** 2)
     
-    def inverseCDF(self, probability, start=0.0, step=0.01): 
+    def inverseCDF(self, probability, start=-10.0, step=0.01): 
         """
         It does the reverse of CDF() method, it takes a probability value and 
         returns the corresponding value on the x-axis."""
+        if start < -1 * self.scale:
+            start = -1 * self.scale
         cprob = self.CDF(start)
         if probability < cprob: return (start, cprob)
         while (probability > cprob):

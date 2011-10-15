@@ -376,13 +376,23 @@ class testPoisson(unittest.TestCase):
                 expectation=7).inverseCDF(0.901)[0]
         self.assertAlmostEqual(x, 10.000, places=2)
 
-##class testSemicircular(unittest.TestCase):
-##    def testCDF(self):
-##        pass
-##    def testPDF(self):
-##        pass
-##    def testinverseCDF(self):
-##        pass
+class testSemicircular(unittest.TestCase):
+    def testPDF1(self):
+        p = N.SemicircularDistribution(location=0.0, scale=1.0).PDF(0.0)
+        self.assertAlmostEqual(p, 0.63662, places=4)
+    def testPDF2(self):
+        p = N.SemicircularDistribution(location=0.0, scale=1.0).PDF(0.5)
+        self.assertAlmostEqual(p, 0.55133, places=4)
+    def testCDF1(self):
+        p = N.SemicircularDistribution(location=0.0, scale=1.0).CDF(0.0)
+        self.assertAlmostEqual(p, 0.5, places=4)
+    def testCDF2(self):
+        p = N.SemicircularDistribution(location=0.0, scale=1.0).CDF(0.5)
+        self.assertAlmostEqual(p, 0.804498, places = 4)
+    def testinverseCDF(self):
+        p = N.SemicircularDistribution(location=0.0,
+                                       scale=1.0).inverseCDF(0.5)[0]
+        self.assertAlmostEqual(p, 0.0, places = 2)
     
 class testT(unittest.TestCase):
     """
