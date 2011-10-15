@@ -3264,29 +3264,22 @@ def WaldDistribution(**parameters):
 
     
 class WeiBullDistribution(Distribution):
-    def __init__(self, scale=1.0, shape=1.0): 
-        """Constructor method. The parameters are used to construct the 
-        probability distribution."""
-        self.scale = scale
-        self.shape = shape
-    def CDF(self, x): 
-        """
-        Cummulative Distribution Function, which gives the cummulative 
-        probability (area under the  probability curve) from -infinity or 0 
-        to a give x-value on the x-axis where y-axis is the probability."""
-        return 1.0 - \
-            (math.e ** ((-1) * ((float(x) / self.scale) ** self.shape)))
-    def PDF(self, x): 
-        """
-        Partial Distribution Function, which gives the probability for the 
-        particular value of x, or the area under trobability distribution 
-        from x-h to x+h for continuous distribution."""
-        if x < 0: 
-            return 0
-        else:
-            return (self.shape / self.scale) * \
-                ((float(x) / self.scale) ** (self.shape - 1)) * \
-                (math.e ** ((-1) * ((float(x) / self.scale) ** self.shape)))
+#    def __init__(self, **parameters): 
+#        """Constructor method. The parameters are used to construct the 
+#        probability distribution."""
+#        raise DistributionFunctionError
+#    def CDF(self, x): 
+#        """
+#        Cummulative Distribution Function, which gives the cummulative 
+#        probability (area under the  probability curve) from -infinity or 0 
+#        to a give x-value on the x-axis where y-axis is the probability."""
+#        raise DistributionFunctionError
+#    def PDF(self, x): 
+#        """
+#        Partial Distribution Function, which gives the probability for the 
+#        particular value of x, or the area under trobability distribution 
+#        from x-h to x+h for continuous distribution."""
+#        raise DistributionFunctionError
     def inverseCDF(self, probability, start=0.0, step=0.01): 
         """
         It does the reverse of CDF() method, it takes a probability value and 
