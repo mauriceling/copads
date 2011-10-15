@@ -108,23 +108,59 @@ class testChiSquare(unittest.TestCase):
     def testinverseCDF3(self):
         p = N.ChiSquareDistribution(df=10).inverseCDF(0.999)[0]
         self.assertAlmostEqual(p, 29.588, places=2)
-
-##class testCosine(unittest.TestCase):
-##    def testCDF(self):
-##        pass
-##    def testPDF(self):
-##        pass
-##    def testinverseCDF(self):
-##        pass
-##          
-##class testExponential(unittest.TestCase):
-##    def testCDF(self):
-##        pass
-##    def testPDF(self):
-##        pass
-##    def testinverseCDF(self):
-##        pass
-
+        
+        
+class testCosine(unittest.TestCase):
+    def testCDF1(self):
+        p = N.CosineDistribution(location = 0.0, scale = 1.0).CDF(0.0)
+        self.assertAlmostEqual(p, 0.5, places=2)
+    def testCDF2(self):
+        p = N.CosineDistribution(location = 0.0, scale = 1.0).CDF(1.0)
+        self.assertAlmostEqual(p, 0.793079, places=4)
+    def testCDF3(self):
+        p = N.CosineDistribution(location = 0.0, scale = 1.0).CDF(10.0)
+        self.assertAlmostEqual(p, 2.00496578, places=4)
+    def testPDF1(self):
+        p = N.CosineDistribution(location = 0.0, scale = 1.0).PDF(0.0)
+        self.assertAlmostEqual(p, 0.318309, places=4)
+    def testPDF2(self):
+        p = N.CosineDistribution(location = 0.0, scale = 1.0).PDF(1.0)
+        self.assertAlmostEqual(p, 0.245147, places=4)
+    def testPDF3(self):
+        p = N.CosineDistribution(location = 0.0, scale = 1.0).PDF(10.0)
+        self.assertAlmostEqual(p, 0.02561256, places=4)
+    def testVariance(self):
+        p = N.CosineDistribution(location = 0.0, scale = 1.0).variance()
+        self.assertAlmostEqual(p, 1.289868, places=4)
+        
+##
+class testExponential(unittest.TestCase):
+    def testCDF1(self):
+        p = N.ExponentialDistribution(location = 0.0, scale = 1.0).CDF(0.0)
+        self.assertAlmostEqual(p, 0.0, places = 2)
+    def testCDF2(self):
+        p = N.ExponentialDistribution(location = 0.0, scale = 1.0).CDF(2.0)
+        self.assertAlmostEqual(p, 0.86466, places = 4)
+    def testCDF3(self):
+        p = N.ExponentialDistribution(location = 1.0, scale = 1.0).CDF(0.0)
+        self.assertAlmostEqual(p, - 1.7182818, places = 4)
+    def testPDF1(self):
+        p = N.ExponentialDistribution(location = 0.0, scale = 1.0).PDF(0.0)
+        self.assertAlmostEqual(p, 1.0, places = 4)
+    def testPDF2(self):
+        p = N.ExponentialDistribution(location = 0.0, scale = 1.0).PDF(1.0)
+        self.assertAlmostEqual(p, 0.3679, places = 4)
+    def testvariance(self):
+        p = N.ExponentialDistribution(location = 0.0, scale = 1.0).variance()
+        self.assertAlmostEqual(p, 1.0, places = 4)
+    def testmean(self):
+        p = N.ExponentialDistribution(location = 0.0, scale = 1.0).mean()
+        self.assertAlmostEqual(p, 1.0, places = 4)
+    def testmedian(self):
+        p = N.ExponentialDistribution(location = 0.0, scale = 1.0).median()
+        self.assertAlmostEqual(p, 0.30103, places = 4)
+        
+##
 class testF(unittest.TestCase):
     """
     @see: Ling, MHT. 2009. Compendium of Distributions, I: Beta, Binomial, Chi-
@@ -207,14 +243,18 @@ class testGamma(unittest.TestCase):
 ##    def testinverseCDF(self):
 ##        pass
 ##      
-##class testLogarithmic(unittest.TestCase):
-##    def testCDF(self):
+class testLogarithmic(unittest.TestCase):
+    def testPDF(self):
+        p = N.LogarithmicDistribution(shape=0.45).PDF(1.0)
+        self.assertAlmostEqual(p, 1.7332, places=4)
+    def testmode(self):
+        p = N.LogarithmicDistribution(shape=0.45).mode()
+        self.assertAlmostEqual(p, 1.0, places=2)
+    def testmean(self):
+        p = N.LogarithmicDistribution(shape=0.45).mean()
+        self.assertAlmostEqual(p, 3.15124, places=4)
 ##        pass
-##    def testPDF(self):
-##        pass
-##    def testinverseCDF(self):
-##        pass
-##
+##      
 ##class testLogNormal(unittest.TestCase):
 ##    def testCDF(self):
 ##        pass
@@ -375,12 +415,18 @@ class testTriangular(unittest.TestCase):
     def testCDF1(self):
        p = N.TriangularDistribution(2.0, 1.0).CDF(1.0)
        self.assertAlmostEqual(p, 0.5000, places=4)
-    def testCDF1(self):
+    def testCDF2(self):
        p = N.TriangularDistribution(2.0, 1.0).CDF(0.8)
        self.assertAlmostEqual(p, 0.3200, places=4)
-    def testPDF(self):
+    def testCDF3(self):
+       p = N.TriangularDistribution(4.0, 2.0, -4).CDF(1.0)
+       self.assertAlmostEqual(p, 0.5208, places=4)
+    def testPDF1(self):
        p = N.TriangularDistribution(2.0, 1.0).PDF(0.08)
        self.assertAlmostEqual(p, 0.08000, places=4)
+    def testPDF2(self):
+       p = N.TriangularDistribution(4.0, 2.0, -4).PDF(1.0)
+       self.assertAlmostEqual(p, 0.20833, places=4)
     def testkurtosis(self):
        p = N.TriangularDistribution(2.0, 1.0).kurtosis()
        self.assertAlmostEqual(p, -0.6, places=4)
