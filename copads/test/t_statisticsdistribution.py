@@ -120,6 +120,14 @@ class testCosine(unittest.TestCase):
     def testCDF3(self):
         p = N.CosineDistribution(location = 0.0, scale = 1.0).CDF(10.0)
         self.assertAlmostEqual(p, 2.00496578, places=4)
+    def testinverseCDF1(self):
+        p = N.CosineDistribution(location = 0.0,
+                                  scale = 1.0).inverseCDF(2.00496578)[0]
+        self.assertAlmostEqual(p, 10.0, places=2)
+    def testinverseCDF2(self):
+        p =  N.CosineDistribution(location = 0.0,
+                                  scale = 1.0).inverseCDF(0.5)[0]
+        self.assertAlmostEqual(p, 0.0, places=2)
     def testPDF1(self):
         p = N.CosineDistribution(location = 0.0, scale = 1.0).PDF(0.0)
         self.assertAlmostEqual(p, 0.318309, places=4)
@@ -247,14 +255,19 @@ class testLogarithmic(unittest.TestCase):
     def testPDF(self):
         p = N.LogarithmicDistribution(shape=0.45).PDF(1.0)
         self.assertAlmostEqual(p, 1.7332, places=4)
+    def testCDF(self):
+        p = N.LogarithmicDistribution(shape=0.45).CDF(0.0)
+        self.assertAlmostEqual(p, 0.0, places=2)
+    def testinverseCDF(self):
+        p = N.LogarithmicDistribution(shape=0.45).CDF(0.0)
+        self.assertAlmostEqual(p,0.0, places=2)
     def testmode(self):
         p = N.LogarithmicDistribution(shape=0.45).mode()
         self.assertAlmostEqual(p, 1.0, places=2)
     def testmean(self):
         p = N.LogarithmicDistribution(shape=0.45).mean()
         self.assertAlmostEqual(p, 3.15124, places=4)
-##        pass
-##      
+
 ##class testLogNormal(unittest.TestCase):
 ##    def testCDF(self):
 ##        pass
