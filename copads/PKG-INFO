@@ -1,18 +1,18 @@
 Metadata-Version: 1.0
 Name: copads
-Version: 0.1
+Version: 0.3.1
 Summary: Collection of Python Algorithms and Data Structures
-Home-page: 
+Home-page: http://copads.sourceforge.net
 Author: Maurice HT Ling
 Author-email: mauriceling@acm.org
-License: GNU General Public License version 2
-Download-URL: 
+License: Python Software Foundation License version 2
 Description: Collection of Python Algorithms and Data Structures
 Platform: UNKNOWN
-Classifier: Development Status :: Experimental
+Classifier: Development Status :: 3 - Alpha
 Classifier: Intended Audience :: Developers
-Classifier: License :: Freely Distributable
+Classifier: License :: OSI Approved :: Python Software Foundation License
+Classifier: Operating System :: OS Independent
 Classifier: Programming Language :: Python
-Classifier: Topic :: Mathematics
-Classifier: Topic :: Statistics
-Classifier: Topic :: Software Development :: Libraries :: Application Frameworks
+Classifier: Topic :: Scientific/Engineering :: Artificial Intelligence
+Classifier: Topic :: Scientific/Engineering :: Mathematics
+Classifier: Topic :: Software Development :: Libraries :: Python Modules
