@@ -2,7 +2,7 @@ import sys
 import os
 import unittest
 
-sys.path.append(os.path.join(os.path.dirname(os.getcwd()), 'copads'))
+sys.path.append(os.path.join(os.path.dirname(os.getcwd()), 'src'))
 import statisticsdistribution as N
 
 class testBeta(unittest.TestCase):
