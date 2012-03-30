@@ -37,7 +37,7 @@ class SingleSample:
         self.name = name
         #self.fullSummary()
         
-    def geometricMean(self, inlist):
+    def geometricMean(self):
         """
         Calculates the geometric mean of the values in the passed list. That is:  
         n-th root of (x1 * x2 * ... * xn).  Assumes a '1D' list.
@@ -45,11 +45,11 @@ class SingleSample:
         Usage:   geometricMean(inlist)
         """
         mult = 1.0
-        one_over_n = 1.0 / len(inlist)
-        for item in inlist: mult = mult * math.pow(item, one_over_n)
+        one_over_n = 1.0 / len(self.data)
+        for item in self.data: mult = mult * math.pow(item, one_over_n)
         return mult
     
-    def harmonicMean(self, inlist):
+    def harmonicMean(self):
         """
         Calculates the harmonic mean of the values in the passed list.
         That is:  n / (1/x1 + 1/x2 + ... + 1/xn).  Assumes a '1D' list.
@@ -57,12 +57,12 @@ class SingleSample:
         Usage:   harmonicMean(inlist)
         """
         sum = 0.000001
-        for item in inlist:
+        for item in self.data:
             if item != 0: sum = sum + 1.0/item
             else: sum = sum + 1.0/0.001
-        return len(inlist) / sum
+        return len(self.data) / sum
     
-    def arithmeticMean(self, inlist):
+    def arithmeticMean(self):
         """
         Returns the arithematic mean of the values in the passed list.
         Assumes a '1D' list, but will function on the 1st dim of an array(!).
@@ -70,10 +70,10 @@ class SingleSample:
         Usage:   arithmeticMean(inlist)
         """
         sum = 0
-        for item in inlist: sum = sum + item
-        return sum / float(len(inlist))
+        for item in self.data: sum = sum + item
+        return sum / float(len(self.data))
     
-    def moment(self, inlist, moment=1):
+    def moment(self, moment=1):
         """
         Calculates the nth moment about the mean for a sample (defaults to
         the 1st moment).  Used to calculate coefficients of skewness and 
@@ -85,14 +85,14 @@ class SingleSample:
         if moment == 1:
             return 0.0
         else:
-            mn = self.arithmeticMean(inlist)
-            n = len(inlist)
+            mn = self.arithmeticMean()
+            n = len(self.data)
             s = 0
-            for x in inlist:
+            for x in self.data:
                 s = s + (x - mn) ** moment
             return s / float(n)
         
-    def skew(self, inlist):
+    def skew(self):
         """
         Returns the skewness of a distribution, as defined in Numerical
         Recipies (alternate defn in CRC Standard Probability and Statistics, 
@@ -100,9 +100,9 @@ class SingleSample:
 
         Usage:   skew(inlist)
         """
-        return self.moment(inlist, 3) / math.pow(self.moment(inlist, 2), 1.5)
+        return self.moment(3) / math.pow(self.moment(2), 1.5)
 
-    def kurtosis(self, inlist):
+    def kurtosis(self):
         """
         Returns the kurtosis of a distribution, as defined in Numerical
         Recipies (alternate defn in CRC Standard Probability and Statistics, 
@@ -110,9 +110,9 @@ class SingleSample:
 
         Usage:   kurtosis(inlist)
         """
-        return self.moment(inlist, 4) / math.pow(self.moment(inlist, 2), 2.0)
+        return self.moment(4) / math.pow(self.moment(2), 2.0)
     
-    def variation(self, inlist):
+    def variation(self):
         """
         Returns the coefficient of variation, as defined in CRC Standard
         Probability and Statistics, p.6.
@@ -122,35 +122,35 @@ class SingleSample:
         """
         return 100.0 * self.summary['stdev'] / self.summary['aMean']
 
-    def range(self, inlist):
-        inlist.sort()
-        return float(inlist[-1]) - float(inlist[0])
+    def range(self):
+        self.data.sort()
+        return float(self.data[-1]) - float(self.data[0])
 
-    def midrange(self, inlist):
-        inlist.sort()
-        return float(inlist[int(round(len(inlist) * 0.75))]) - \
-                float(inlist[int(round(len(inlist) * 0.75))])
+    def midrange(self):
+        self.data.sort()
+        return float(self.data[int(round(len(self.data) * 0.75))]) - \
+                float(self.data[int(round(len(self.data) * 0.75))])
 
-    def variance(self, inlist, mean):
+    def variance(self):
         sum = 0.0
-        for item in inlist:
+        mean = self.arithmeticMean()
+        for item in self.data:
             sum = sum + (float(item) - float(mean)) ** 2
-        return sum / float(len(inlist) - 1)
+        return sum / float(len(self.data) - 1)
     
     def __str__(self):
         return str(self.summary)
         
     def fullSummary(self):
-        self.summary['gMean'] = self.geometricMean(self.data)
-        self.summary['hMean'] = self.harmonicMean(self.data)
-        self.summary['aMean'] = self.arithmeticMean(self.data)
-        self.summary['skew'] = self.skew(self.data)
-        self.summary['kurtosis'] = self.kurtosis(self.data)
-        self.summary['variance'] = self.variance(self.data,
-                                        self.summary['aMean'])
+        self.summary['gMean'] = self.geometricMean()
+        self.summary['hMean'] = self.harmonicMean()
+        self.summary['aMean'] = self.arithmeticMean()
+        self.summary['skew'] = self.skew()
+        self.summary['kurtosis'] = self.kurtosis()
+        self.summary['variance'] = self.variance()
         self.summary['stdev'] = self.summary['variance'] ** 0.5
-        self.summary['variation'] = self.variation(self.data)
-        self.summary['range'] = self.range(self.data)
+        self.summary['variation'] = self.variation()
+        self.summary['range'] = self.range()
         self.summary['median'] = nrpy.mdian1(self.data)
         #self.summary['midrange'] = self.midrange(self.data)
     
@@ -252,7 +252,7 @@ class TwoSample:
         denominator_y = (slen * sum_y2) - (sum_y * sum_y)
         return float(numerator / ((denominator_x * denominator_y) ** 0.5))
     
-        
+"""        
 class MultiSample:
     sample = {}
     def __init__(self): pass
@@ -277,5 +277,5 @@ class MultiSample:
 
     def listSamples(self):
         return self.sample.keys()
-    
+"""    
     
