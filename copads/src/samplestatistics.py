@@ -191,11 +191,9 @@ class TwoSample:
         xy = SingleSample([self.sample[sname[0]].data[i] * \
                             self.sample[sname[1]].data[i]
                             for i in range(slen)], 'temporary')
-        mean_xy = xy.arithmeticMean(xy.data)
-        mean_x = self.sample[sname[0]]. \
-                    arithmeticMean(self.sample[sname[0]].data)
-        mean_y = self.sample[sname[1]]. \
-                    arithmeticMean(self.sample[sname[1]].data)
+        mean_xy = xy.arithmeticMean()
+        mean_x = self.sample[sname[0]].arithmeticMean()
+        mean_y = self.sample[sname[1]].arithmeticMean()
         return mean_xy - (mean_x * mean_y)
     
     def linear_regression(self):
@@ -205,10 +203,8 @@ class TwoSample:
         elif self.sample[sname[0]].rowcount > self.sample[sname[1]].rowcount:
             slen = self.sample[sname[1]].rowcount
         else: slen = self.sample[sname[0]].rowcount
-        mean_x = self.sample[sname[0]]. \
-                    arithmeticMean(self.sample[sname[0]].data)
-        mean_y = self.sample[sname[1]]. \
-                    arithmeticMean(self.sample[sname[1]].data)
+        mean_x = self.sample[sname[0]].arithmeticMean()
+        mean_y = self.sample[sname[1]].arithmeticMean()
         error_x = [self.sample[sname[0]].data[i] - mean_x 
                    for i in range(slen)]
         error_y = [self.sample[sname[1]].data[i] - mean_y 

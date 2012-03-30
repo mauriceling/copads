@@ -39,7 +39,7 @@ class testSingleSample(unittest.TestCase):
         self.assertAlmostEqual(self.data.summary['variance'], 2.50000, places=4)
     def testRange(self):
         self.assertAlmostEqual(self.data.summary['range'], 4.00000, places=4)    
-"""    
+    
 class testTwoSample(unittest.TestCase):
     def setUp(self):
         self.data = S.TwoSample(data1, name1, data2, name2)
@@ -57,6 +57,6 @@ class testTwoSample(unittest.TestCase):
                                 1.00000, places=4)
         self.assertAlmostEqual(self.data.linear_regression()[1], 
                                 1.00000, places=4)
- """       
+      
 if __name__ == '__main__':
     unittest.main()
