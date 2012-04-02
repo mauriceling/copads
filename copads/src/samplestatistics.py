@@ -26,23 +26,22 @@ from operations import summation
 import nrpy
 
 class SingleSample:
+    """
+    Class to hold a single sample, and provides calculations on the sample
+    """
     data = None
     rowcount = 0
     name = None
     summary = {}
     
-    def __init__(self, data, name):
+    def __init__(self, data, name='Sample 1'):
         self.data = data
         self.rowcount = len(self.data)
         self.name = name
-        #self.fullSummary()
         
     def geometricMean(self):
         """
-        Calculates the geometric mean of the values in the passed list. That is:  
-        n-th root of (x1 * x2 * ... * xn).  Assumes a '1D' list.
-
-        Usage:   geometricMean(inlist)
+        Calculates the geometric mean of the data
         """
         mult = 1.0
         one_over_n = 1.0 / len(self.data)
@@ -51,10 +50,7 @@ class SingleSample:
     
     def harmonicMean(self):
         """
-        Calculates the harmonic mean of the values in the passed list.
-        That is:  n / (1/x1 + 1/x2 + ... + 1/xn).  Assumes a '1D' list.
-
-        Usage:   harmonicMean(inlist)
+        Calculates the harmonic mean of the data
         """
         sum = 0.000001
         for item in self.data:
@@ -64,10 +60,7 @@ class SingleSample:
     
     def arithmeticMean(self):
         """
-        Returns the arithematic mean of the values in the passed list.
-        Assumes a '1D' list, but will function on the 1st dim of an array(!).
-
-        Usage:   arithmeticMean(inlist)
+        Returns the arithematic mean of the data
         """
         sum = 0
         for item in self.data: sum = sum + item
@@ -75,12 +68,7 @@ class SingleSample:
     
     def moment(self, moment=1):
         """
-        Calculates the nth moment about the mean for a sample (defaults to
-        the 1st moment).  Used to calculate coefficients of skewness and 
-        kurtosis.
-
-        Usage:   moment(inlist,moment=1)
-        Returns: appropriate moment (r) from ... 1/n * SUM((inlist(i)-mean)**r)
+        Calculates the nth moment about the mean for the data
         """
         if moment == 1:
             return 0.0
@@ -94,44 +82,39 @@ class SingleSample:
         
     def skew(self):
         """
-        Returns the skewness of a distribution, as defined in Numerical
-        Recipies (alternate defn in CRC Standard Probability and Statistics, 
-        p.6.)
-
-        Usage:   skew(inlist)
+        Returns the skewness of the data, as defined in Numerical
+        Recipies (alternate defn in CRC Standard Probability and
+        Statistics, p.6.)
         """
         return self.moment(3) / math.pow(self.moment(2), 1.5)
 
     def kurtosis(self):
         """
-        Returns the kurtosis of a distribution, as defined in Numerical
-        Recipies (alternate defn in CRC Standard Probability and Statistics, 
-        p.6.)
-
-        Usage:   kurtosis(inlist)
+        Returns the kurtosis of the data, as defined in Numerical
+        Recipies (alternate defn in CRC Standard Probability and
+        Statistics, p.6.)
         """
         return self.moment(4) / math.pow(self.moment(2), 2.0)
     
     def variation(self):
         """
-        Returns the coefficient of variation, as defined in CRC Standard
-        Probability and Statistics, p.6.
+        Returns the coefficient of variation in percentage, as
+        defined in CRC Standard Probability and Statistics, p.6.
         Ref: http://en.wikipedia.org/wiki/Coefficient_of_variation
-
-        Usage:   variation(inlist)
         """
         return 100.0 * self.summary['stdev'] / self.summary['aMean']
 
     def range(self):
+        """
+        Returns the range of the data (maximum - minimum)
+        """
         self.data.sort()
         return float(self.data[-1]) - float(self.data[0])
 
-    def midrange(self):
-        self.data.sort()
-        return float(self.data[int(round(len(self.data) * 0.75))]) - \
-                float(self.data[int(round(len(self.data) * 0.75))])
-
     def variance(self):
+        """
+        Returns the variance of the data
+        """
         sum = 0.0
         mean = self.arithmeticMean()
         for item in self.data:
@@ -152,7 +135,6 @@ class SingleSample:
         self.summary['variation'] = self.variation()
         self.summary['range'] = self.range()
         self.summary['median'] = nrpy.mdian1(self.data)
-        #self.summary['midrange'] = self.midrange(self.data)
     
     
 class SampleDistribution(Distribution):
