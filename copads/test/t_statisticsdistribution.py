@@ -140,8 +140,8 @@ class testCosine(unittest.TestCase):
     def testVariance(self):
         p = N.CosineDistribution(location = 0.0, scale = 1.0).variance()
         self.assertAlmostEqual(p, 1.289868, places=4)
+ 
         
-##
 class testExponential(unittest.TestCase):
     def testCDF1(self):
         p = N.ExponentialDistribution(location = 0.0, scale = 1.0).CDF(0.0)
@@ -167,8 +167,8 @@ class testExponential(unittest.TestCase):
     def testmedian(self):
         p = N.ExponentialDistribution(location = 0.0, scale = 1.0).median()
         self.assertAlmostEqual(p, 0.30103, places = 4)
+ 
         
-##
 class testF(unittest.TestCase):
     """
     @see: Ling, MHT. 2009. Compendium of Distributions, I: Beta, Binomial, Chi-
@@ -337,13 +337,13 @@ class testNormal(unittest.TestCase):
         p = N.NormalDistribution().inverseCDF(0.5)[0]
         self.assertTrue(abs(p) < 0.01)
   
-##class testPareto(unittest.TestCase):
-##    def testCDF(self):
-##        pass
+class testHypergeometric(unittest.TestCase):
+    def testmean(self):
+        p = N.HypergeometricDistribution(M=3, n=2, success=1).mean()
+        self.assertAlmostEqual(p, 0.6667,  places = 2)
 ##    def testPDF(self):
 ##        pass
 ##    def testinverseCDF(self):
-##        pass
 
 class testPoisson(unittest.TestCase):
     """
