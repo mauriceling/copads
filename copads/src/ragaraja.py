@@ -724,6 +724,36 @@ def logic(array, apointer, inputdata, output, source, spointer):
         if (not (x or y)) == True: array[apointer] = 1
         else: array[apointer] = 0
     return (array, apointer, inputdata, output, source, spointer)
+
+def flipping(array, apointer, inputdata, output, source, spointer):
+    '''
+    Flipping of execution elements.
+    
+    Instructions handled:
+    046: Flip the tape. The original first cell becomes the last 
+    cell but the tape pointer does not flip in location.
+    047: Flip the output list.
+    048: Flip the instruction list (source) but the source pointer 
+    does not flip in location.
+    '''
+    if source[spointer] == '046': array.reverse()
+    if source[spointer] == '047': output.reverse()
+    if source[spointer] == '048': output.reverse()
+    return (array, apointer, inputdata, output, source, spointer)
+
+def input_IO(array, apointer, inputdata, output, source, spointer):
+    '''
+    Write to and accept values from input list.
+    
+    Instructions handled:
+    064: Writes the first value of the input list into the current 
+    cell and without removing the value from the input list. If 
+    input list is empty, "0" will be written. 
+    '''
+    if source[spointer] == '064':
+        if len(inputdata) == 0: array[apointer] = 0
+        else: array[apointer] = inputdata[0]
+    return (array, apointer, inputdata, output, source, spointer)
     
 def not_used(array, apointer, inputdata, output, source, spointer):
     '''
@@ -756,8 +786,8 @@ ragaraja = {'000': forward, '001': tape_move,
             '040': output_IO, '041': output_IO,
             '042': output_IO, '043': tape_move,
             '044': tape_move, '045': tape_move,
-            '046': not_used, '047': not_used,
-            '048': not_used, '049': not_used,
+            '046': flipping, '047': flipping,
+            '048': flipping, '049': not_used,
             '050': nBF_random_op, '051': nBF_random_op,
             '052': nBF_random_op, '053': nBF_random_op,
             '054': nBF_random_op, '055': nBF_random_op,
@@ -765,7 +795,7 @@ ragaraja = {'000': forward, '001': tape_move,
             '058': nBF_random_op, '059': nBF_random_op,
             '060': nBF_random_op, '061': tape_move,
             '062': tape_move, '063': accept_predefined,
-            '064': not_used, '065': mathematics,
+            '064': input_IO, '065': mathematics,
             '066': mathematics, '067': mathematics,
             '068': mathematics, '069': mathematics,
             '070': mathematics, '071': mathematics,
