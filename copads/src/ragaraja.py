@@ -278,7 +278,10 @@ def tape_size(array, apointer, inputdata, output, source, spointer):
     to the last cell after removal.
     019: Remove 10 cells from the end of the tape. If original tape pointer 
     is at the last cell before removal operation, the tape pointer will point 
-    to the last cell after removal. 
+    to the last cell after removal.
+    034: Insert a cell after the current tape cell. For example, if current 
+    tape cell is 35, a cell initialized to zero will be added as cell 36. As 
+    a result, the tape is 1 cell longer. 
     '''
     if source[spointer] == '016':
         array.append([0])
@@ -290,6 +293,8 @@ def tape_size(array, apointer, inputdata, output, source, spointer):
         array = array[:-10]
     if apointer >= len(array):
         apointer = len(array) - 1
+    if source[spointer] == '034':
+        array.insert(apointer + 1, 0)
     return (array, apointer, inputdata, output, source, spointer)
     
 def source_move(array, apointer, inputdata, output, source, spointer):
@@ -599,6 +604,47 @@ def mathematics(array, apointer, inputdata, output, source, spointer):
         array[apointer] = math.log(array[apointer], array[0])
     return (array, apointer, inputdata, output, source, spointer)
     
+def output_IO(array, apointer, inputdata, output, source, spointer):
+    '''
+    Using output list as output storage or secondary tape, write and 
+    accept values from output list.
+    
+    Instructions handled:
+    021: Output current tape cell location and append to the end of 
+    the output list.
+    022: Output current source location and append to the end of the 
+    output list. 
+    037: Replace the current tape cell value with the last value of 
+    the output list, and delete the last value from the output list.
+    038: Replace the current tape cell value with the last value of 
+    the output list, without deleting the last value from the output 
+    list.
+    039: Replace the current tape cell value with the first value of 
+    the output list, and delete the first value from the output list.
+    040: Replace the current tape cell value with the first value of 
+    the output list, without deleting the first value from the output 
+    list.
+    041: Remove first value from the output list.
+    042: Remove last value from the output list. 
+    '''
+    if source[spointer] == '021':
+        output.append(apointer)
+    if source[spointer] == '022':
+        output.append(spointer)
+    if source[spointer] == '037' and len(output) > 0:
+        array[apointer] = output.pop(-1)
+    if source[spointer] == '038' and len(output) > 0:
+        array[apointer] = output[-1]
+    if source[spointer] == '039' and len(output) > 0:
+        array[apointer] = output.pop(0)
+    if source[spointer] == '040' and len(output) > 0:
+        array[apointer] = output[0]
+    if source[spointer] == '041' and len(output) > 0:
+        output.pop(0)
+    if source[spointer] == '042' and len(output) > 0:
+        output.pop(-1)
+    return (array, apointer, inputdata, output, source, spointer)
+    
 def not_used(array, apointer, inputdata, output, source, spointer):
     '''
     
@@ -617,18 +663,18 @@ ragaraja = {'000': forward, '001': tape_move,
             '014': cbf_start_loop, '015': cbf_end_loop,
             '016': tape_size, '017': tape_size,
             '018': tape_size, '019': tape_size,
-            '020': call_out, '021': not_used,
-            '022': not_used, '023': source_move,
+            '020': call_out, '021': output_IO,
+            '022': output_IO, '023': source_move,
             '024': source_move, '025': source_move,
             '026': source_move, '027': source_move,
             '028': source_move, '029': not_used,
             '030': not_used, '031': not_used,
             '032': accumulations, '033': accumulations,
-            '034': not_used, '035': not_used,
-            '036': not_used, '037': not_used,
-            '038': not_used, '039': not_used,
-            '040': not_used, '041': not_used,
-            '042': not_used, '043': tape_move,
+            '034': tape_size, '035': not_used,
+            '036': not_used, '037': output_IO,
+            '038': output_IO, '039': output_IO,
+            '040': output_IO, '041': output_IO,
+            '042': output_IO, '043': tape_move,
             '044': tape_move, '045': tape_move,
             '046': not_used, '047': not_used,
             '048': not_used, '049': not_used,
