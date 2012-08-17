@@ -31,12 +31,12 @@ def interpret(source, functions,
 	source = ''.join([x for x in source if x in tokens])
     while spointer < len(source):
         try:
-			token = source[spointer:spointer+function_size]
-			#print token
-			(array, apointer, inputdata, output,
-			source, spointer) = functions[token](array, apointer,
-                                                 inputdata, output,
-                                                 source, spointer)
+            token = source[spointer:spointer+function_size]
+            #print token
+            (array, apointer, inputdata, output,
+                source, spointer) = functions[token](array, apointer,
+                                                     inputdata, output,
+                                                     source, spointer)
         except KeyError:
             print ' '.join(['Unknown function: ',
                             source[i:i+function_size],
