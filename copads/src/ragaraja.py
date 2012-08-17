@@ -494,42 +494,47 @@ def mathematics(array, apointer, inputdata, output, source, spointer):
     base of the value of (n+1)th cell, and store the value in the current 
     cell. Array[n] = log(Array[n], base=Array[n+1])
     '''
-    if source[spointer] == '065' and (apointer + 1) < len(array):
-        array[apointer] = array[apointer] + array[apointer+1]
-    else:
-        array[apointer] = array[apointer] + array[0]
+    if source[spointer] == '065':
+        if (apointer + 1) < len(array):
+            array[apointer] = array[apointer] + array[apointer+1]
+        else:
+            array[apointer] = array[apointer] + array[0]
     if source[spointer] == '066' and len(inputdata) > 0:
         array[apointer] = array[apointer] + inputdata[0]
     if source[spointer] == '067' and len(inputdata) > 0:
         array[apointer] = array[apointer] + inputdata[-1]
-    if source[spointer] == '068' and (apointer + 1) < len(array):
-        array[apointer] = array[apointer+1] - array[apointer]
-    else:
-        array[apointer] = array[0] - array[apointer]
+    if source[spointer] == '068':
+        if (apointer + 1) < len(array):
+            array[apointer] = array[apointer+1] - array[apointer]
+        else:
+            array[apointer] = array[0] - array[apointer]
     if source[spointer] == '069' and len(inputdata) > 0:
         array[apointer] = inputdata[0] - array[apointer]
     if source[spointer] == '070' and len(inputdata) > 0:
         array[apointer] = inputdata[-1] - array[apointer]
-    if source[spointer] == '071' and (apointer + 1) < len(array):
-        array[apointer] = array[apointer+1] * array[apointer]
-    else:
-        array[apointer] = array[0] * array[apointer]
+    if source[spointer] == '071': 
+        if (apointer + 1) < len(array):
+            array[apointer] = array[apointer+1] * array[apointer]
+        else:
+            array[apointer] = array[0] * array[apointer]
     if source[spointer] == '072' and len(inputdata) > 0:
         array[apointer] = inputdata[0] * array[apointer]
     if source[spointer] == '073' and len(inputdata) > 0:
         array[apointer] = inputdata[-1] * array[apointer]
-    if source[spointer] == '074' and (apointer + 1) < len(array):
-        array[apointer] = array[apointer+1] / array[apointer]
-    else:
-        array[apointer] = array[0] / array[apointer]
+    if source[spointer] == '074':
+        if (apointer + 1) < len(array):
+            array[apointer] = array[apointer+1] / array[apointer]
+        else:
+            array[apointer] = array[0] / array[apointer]
     if source[spointer] == '075' and len(inputdata) > 0:
         array[apointer] = inputdata[0] / array[apointer]
     if source[spointer] == '076' and len(inputdata) > 0:
         array[apointer] = inputdata[-1] / array[apointer]
-    if source[spointer] == '077' and (apointer + 1) < len(array):
-        array[apointer] = array[apointer+1] % array[apointer]
-    else:
-        array[apointer] = array[0] % array[apointer]
+    if source[spointer] == '077':
+        if (apointer + 1) < len(array):
+            array[apointer] = array[apointer+1] % array[apointer]
+        else:
+            array[apointer] = array[0] % array[apointer]
     if source[spointer] == '078' and len(inputdata) > 0:
         array[apointer] = inputdata[0] % array[apointer]
     if source[spointer] == '079' and len(inputdata) > 0:
@@ -578,14 +583,16 @@ def mathematics(array, apointer, inputdata, output, source, spointer):
         array[apointer] = math.e ** array[apointer]
     if source[spointer] == '109':
         array[apointer] = 10 ** array[apointer]
-    if source[spointer] == '110' and (apointer + 1) < len(array):
-        array[apointer] = array[apointer] ** array[apointer+1]
-    else:
-        array[apointer] = array[apointer] ** array[0]
-    if source[spointer] == '111' and (apointer + 1) < len(array):
-        array[apointer] = array[apointer] ** (1 / array[apointer+1])
-    else:
-        array[apointer] = array[apointer] ** (1 / array[0])
+    if source[spointer] == '110': 
+        if (apointer + 1) < len(array):
+            array[apointer] = array[apointer] ** array[apointer+1]
+        else:
+            array[apointer] = array[apointer] ** array[0]
+    if source[spointer] == '111':
+        if (apointer + 1) < len(array):
+            array[apointer] = array[apointer] ** (1 / array[apointer+1])
+        else:
+            array[apointer] = array[apointer] ** (1 / array[0])
     if source[spointer] == '112':
         array[apointer] = math.erf(array[apointer])
     if source[spointer] == '113':
@@ -594,14 +601,16 @@ def mathematics(array, apointer, inputdata, output, source, spointer):
         array[apointer] = math.factorial(int(array[apointer]))
     if source[spointer] == '115':
         array[apointer] = math.factorial(abs(int(array[apointer])))
-    if source[spointer] == '116' and (apointer + 1) < len(array):
-        array[apointer] = math.hypot(array[apointer], array[apointer+1])
-    else:
-        array[apointer] = math.hypot(array[apointer], array[0])    
-    if source[spointer] == '117' and (apointer + 1) < len(array):
-        array[apointer] = math.log(array[apointer], array[apointer+1])
-    else:
-        array[apointer] = math.log(array[apointer], array[0])
+    if source[spointer] == '116':
+        if (apointer + 1) < len(array):
+            array[apointer] = math.hypot(array[apointer], array[apointer+1])
+        else:
+            array[apointer] = math.hypot(array[apointer], array[0])    
+    if source[spointer] == '117':
+        if (apointer + 1) < len(array):
+            array[apointer] = math.log(array[apointer], array[apointer+1])
+        else:
+            array[apointer] = math.log(array[apointer], array[0])
     return (array, apointer, inputdata, output, source, spointer)
     
 def output_IO(array, apointer, inputdata, output, source, spointer):
@@ -643,6 +652,99 @@ def output_IO(array, apointer, inputdata, output, source, spointer):
         output.pop(0)
     if source[spointer] == '042' and len(output) > 0:
         output.pop(-1)
+    return (array, apointer, inputdata, output, source, spointer)
+
+def logic(array, apointer, inputdata, output, source, spointer):
+    '''
+    Logical operations
+    
+    Instructions handled:
+    120: AND operator: Given positive numbers (>0) as True and zero 
+    or negative numbers (<=0) as False, store Array[current] AND 
+    Array[current+1] in the current cell (Array[current]) where "0" 
+    is False and "1" is True.
+    121: OR operator: Given positive numbers (>0) as True and zero 
+    or negative numbers (<=0) as False, store Array[current] OR 
+    Array[current+1] in the current cell (Array[current]) where "0" 
+    is False and "1" is True.
+    122: NOT operator: Given positive numbers (>0) as True and zero 
+    or negative numbers (<=0) as False, store NOT Array[current] in 
+    the current cell (Array[current]) where "0" is False and "1" is 
+    True.
+    123: LESS-THAN operator: Store Array[current] < Array[current+1] 
+    in the current cell (Array[current]) where "0" is False and "1" 
+    is True.
+    124: MORE-THAN operator: Store Array[current] > Array[current+1] 
+    in the current cell (Array[current]) where "0" is False and "1" 
+    is True.
+    125: EQUAL operator: Store Array[current] = Array[current+1] in 
+    the current cell (Array[current]) where "0" is False and "1" is 
+    True.
+    126: NOT-EQUAL operator: Store Array[current] != Array[current+1] 
+    in the current cell (Array[current]) where "0" is False and "1" 
+    is True.
+    127: LESS-THAN-OR-EQUAL operator: Store Array[current] 
+    <= Array[current+1] in the current cell (Array[current]) where 
+    "0" is False and "1" is True.
+    128: MORE-THAN-OR-EQUAL operator: Store Array[current] => 
+    Array[current+1] in the current cell (Array[current]) where "0" 
+    is False and "1" is True.
+    129: NAND operator: Given positive numbers (>0) as True and 
+    zero or negative numbers (<=0) as False, store Array[current] 
+    NAND Array[current+1] in the current cell (Array[current]) 
+    where "0" is False and "1" is True. Array[current] NAND 
+    Array[current+1] is equivalent to NOT (Array[current] AND 
+    Array[current+1])
+    130: NOR operator: Given positive numbers (>0) as True and 
+    zero or negative numbers (<=0) as False, store Array[current] 
+    NOR Array[current+1] in the current cell (Array[current]) where 
+    "0" is False and "1" is True. Array[current] NOR Array[current+1] 
+    is equivalent to NOT (Array[current] OR Array[current+1])
+    '''
+    xValue = array[apointer]
+    if array[apointer] > 0: x = True
+    else: x = False
+    if (apointer + 1) < len(array):
+        yValue = array[apointer+1]
+        if array[apointer+1] > 0: y = True
+        else: y = False
+    else:
+        yValue = array[0]
+        if array[0] > 0: y = True
+        else: y = False
+    if source[spointer] == '120': 
+        if (x and y) == True: array[apointer] = 1
+        else: array[apointer] = 0
+    if source[spointer] == '121': 
+        if (x or y) == True: array[apointer] = 1
+        else: array[apointer] = 0
+    if source[spointer] == '122': 
+        if not x == True: array[apointer] = 1
+        else: array[apointer] = 0
+    if source[spointer] == '123': 
+        if xValue < yValue: array[apointer] = 1
+        else: array[apointer] = 0
+    if source[spointer] == '124': 
+        if xValue > yValue: array[apointer] = 1
+        else: array[apointer] = 0
+    if source[spointer] == '125': 
+        if xValue == yValue: array[apointer] = 1
+        else: array[apointer] = 0
+    if source[spointer] == '126': 
+        if xValue != yValue: array[apointer] = 1
+        else: array[apointer] = 0
+    if source[spointer] == '127': 
+        if xValue <= yValue: array[apointer] = 1
+        else: array[apointer] = 0
+    if source[spointer] == '128': 
+        if xValue >= yValue: array[apointer] = 1
+        else: array[apointer] = 0
+    if source[spointer] == '129': 
+        if (not (x and y)) == True: array[apointer] = 1
+        else: array[apointer] = 0
+    if source[spointer] == '130': 
+        if (not (x or y)) == True: array[apointer] = 1
+        else: array[apointer] = 0
     return (array, apointer, inputdata, output, source, spointer)
     
 def not_used(array, apointer, inputdata, output, source, spointer):
@@ -713,12 +815,12 @@ ragaraja = {'000': forward, '001': tape_move,
             '114': mathematics, '115': mathematics,
             '116': mathematics, '117': mathematics,
             '118': not_used, '119': not_used,
-            '120': not_used, '121': not_used,
-            '122': not_used, '123': not_used,
-            '124': not_used, '125': not_used,
-            '126': not_used, '127': not_used,
-            '128': not_used, '129': not_used,
-            '130': not_used, '131': not_used,
+            '120': logic, '121': logic,
+            '122': logic, '123': logic,
+            '124': logic, '125': logic,
+            '126': logic, '127': logic,
+            '128': logic, '129': logic,
+            '130': logic, '131': not_used,
             '132': not_used, '133': not_used,
             '134': not_used, '135': not_used,
             '136': not_used, '137': not_used,
