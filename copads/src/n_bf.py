@@ -47,7 +47,7 @@ def random_op(array, apointer, inputdata, output, source, spointer):
     if source[spointer] == 'R' and r < 0.5:
         return increment(array, apointer, inputdata, output, source, spointer)
     elif source[spointer] == 'R' and r >= 0.5:
-        if apointer == len(array): 
+        if (apointer + 1) == len(array): 
             return (array, 0, inputdata, output, source, spointer)
         else:
             return forward(array, apointer, inputdata, output, source, spointer)
@@ -55,17 +55,17 @@ def random_op(array, apointer, inputdata, output, source, spointer):
         return decrement(array, apointer, inputdata, output, source, spointer)
     elif source[spointer] == 'Y' and r >= 0.5:
         if apointer == 0: 
-            return (array, len(array), inputdata, output, source, spointer)
+            return (array, len(array) - 1, inputdata, output, source, spointer)
         else:
             return backward(array, apointer, inputdata, output, source, spointer)
     elif source[spointer] == 'S' and r < 0.5:
-        if apointer == len(array): 
+        if (apointer + 1) == len(array): 
             return (array, 0, inputdata, output, source, spointer)
         else:
             return forward(array, apointer, inputdata, output, source, spointer)
     elif source[spointer] == 'S' and r >= 0.5:
         if apointer == 0:
-            return (array, len(array), inputdata, output, source, spointer)
+            return (array, len(array) - 1, inputdata, output, source, spointer)
         else:
             return backward(array, apointer, inputdata, output, source, spointer)
     elif source[spointer] == 'W' and r < 0.5:
@@ -75,7 +75,7 @@ def random_op(array, apointer, inputdata, output, source, spointer):
     elif source[spointer] == 'K' and r < 0.5:
         return decrement(array, apointer, inputdata, output, source, spointer)
     elif source[spointer] == 'K' and r >= 0.5:
-        if apointer == len(array): 
+        if (apointer + 1) == len(array): 
             return (array, 0, inputdata, output, source, spointer)
         else:
             return forward(array, apointer, inputdata, output, source, spointer)
@@ -83,11 +83,11 @@ def random_op(array, apointer, inputdata, output, source, spointer):
         return increment(array, apointer, inputdata, output, source, spointer)
     elif source[spointer] == 'M' and r >= 0.5:
         if apointer == 0: 
-            return (array, len(array), inputdata, output, source, spointer)
+            return (array, len(array) - 1, inputdata, output, source, spointer)
         else:
             return backward(array, apointer, inputdata, output, source, spointer)
     elif source[spointer] == 'B' and r < 0.33:
-        if apointer == len(array): 
+        if (apointer + 1) == len(array): 
             return (array, 0, inputdata, output, source, spointer)
         else:
             return forward(array, apointer, inputdata, output, source, spointer)
@@ -95,7 +95,7 @@ def random_op(array, apointer, inputdata, output, source, spointer):
         return decrement(array, apointer, inputdata, output, source, spointer)
     elif source[spointer] == 'B' and r >= 0.67:
         if apointer == 0:
-            return (array, len(array), inputdata, output, source, spointer)
+            return (array, len(array) - 1, inputdata, output, source, spointer)
         else:
             return backward(array, apointer, inputdata, output, source, spointer)
     elif source[spointer] == 'D' and r < 0.33:
@@ -103,7 +103,7 @@ def random_op(array, apointer, inputdata, output, source, spointer):
     elif source[spointer] == 'D' and r >= 0.33 and r < 0.67:
         return decrement(array, apointer, inputdata, output, source, spointer)
     elif source[spointer] == 'D' and r >= 0.67:
-        if apointer == len(array):
+        if (apointer + 1) == len(array):
             return (array, 0, inputdata, output, source, spointer)
         else:
             return forward(array, apointer, inputdata, output, source, spointer)
@@ -113,19 +113,19 @@ def random_op(array, apointer, inputdata, output, source, spointer):
         return decrement(array, apointer, inputdata, output, source, spointer)
     elif source[spointer] == 'H' and r >= 0.67:
         if apointer == 0:
-            return (array, len(array), inputdata, output, source, spointer)
+            return (array, len(array) - 1, inputdata, output, source, spointer)
         else:
             return backward(array, apointer, inputdata, output, source, spointer)
     elif source[spointer] == 'V' and r < 0.33:
         return increment(array, apointer, inputdata, output, source, spointer)
     elif source[spointer] == 'V' and r >= 0.33 and r < 0.67:
-        if apointer == len(array):
+        if (apointer + 1) == len(array):
             return (array, 0, inputdata, output, source, spointer)
         else:
             return forward(array, apointer, inputdata, output, source, spointer)
     elif source[spointer] == 'V' and r >= 0.67:
         if apointer == 0:
-            return (array, len(array), inputdata, output, source, spointer)
+            return (array, len(array) - 1, inputdata, output, source, spointer)
         else:
             return backward(array, apointer, inputdata, output, source, spointer)
     elif source[spointer] == 'N' and r < 0.25:
@@ -133,13 +133,13 @@ def random_op(array, apointer, inputdata, output, source, spointer):
     elif source[spointer] == 'N' and r >= 0.25 and r < 0.5:
         return decrement(array, apointer, inputdata, output, source, spointer)
     elif source[spointer] == 'N' and r >= 0.5 and r < 0.75:
-        if apointer == len(array): 
+        if (apointer + 1) == len(array): 
             return (array, 0, inputdata, output, source, spointer)
         else:
             return forward(array, apointer, inputdata, output, source, spointer)
     elif source[spointer] == 'N' and r >= 0.75:
         if apointer == 0:
-            return (array, len(array), inputdata, output, source, spointer)
+            return (array, len(array) - 1, inputdata, output, source, spointer)
         else:
             return backward(array, apointer, inputdata, output, source, spointer)
 
