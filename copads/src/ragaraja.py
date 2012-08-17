@@ -1,3 +1,47 @@
+'''
+Ragaraja Interpreter
+Date created: 16th August 2012
+Licence: Python Software Foundation License version 2
+
+Ragaraja is a derivative and massive extension of Brainfuck. 
+This work is influenced by a large number of Brainfuck 
+derivatives, other esoteric programming languages, and even 
+assembly languages. Probably the most critical difference 
+between Ragaraja and other Brainfuck derivatives is the large 
+number of commands / instructions - 1000 possible commands / 
+instructions, inspired by Nandi (follower of Lord Shiva) who 
+was supposed to be the first author of Kama Sutra and wrote it 
+in 1000 chapters. 
+
+Etymology: Ragaraja is the name of a Mahayana Buddhist deity 
+from Esoteric traditions. The Chinese calls him Àiran Míngwáng. 
+Ragaraja is one of the Wisdom Kings (a group of Bodhisattvas) 
+and represents the state at which sexual excitement or agitation 
+can be channeled towards enlightenment and passionate love can 
+become compassion for all living things. Hence, I name this 
+compilation/derivative/extension of Brainfuck in 1000 
+commands/instructions/opcode to signify the epitome, a 
+channeling of raw urge to the love and compassion for and 
+towards every being. May really be viewed as Brainfuck 
+attaining enlightenment or Nirvana. Whoever that can 
+remember all 1000 commands and use it, really deserves an award. 
+
+The interpreter environment consists of the following elements:
+
+1. Array/Tape: A circular tape initialized with 30 thousand cells 
+each with zero. This can be visualized as a 30,000 cell register 
+machine. The number of cells can increase or decrease during runtime.
+2. Source: The program
+3. Input List: A list of data given to the execution environment at 
+initialization.
+4. Output List: A list of output from the execution. This may also be 
+used as a secondary tape. 
+
+When the program terminates, all 4 elements are returned, and the 
+interpreter terminates itself. 
+
+Ref: http://esolangs.org/wiki/Ragaraja
+'''
 import random
 import register_machine as r
 from lc_bf import increment, decrement
