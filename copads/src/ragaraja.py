@@ -43,6 +43,8 @@ interpreter terminates itself.
 Ref: http://esolangs.org/wiki/Ragaraja
 '''
 import random
+import math
+import constants
 import register_machine as r
 from lc_bf import increment, decrement
 from lc_bf import forward, backward
@@ -313,6 +315,14 @@ def source_move(array, apointer, inputdata, output, source, spointer):
     028: Move source pointer backward by 10 instruction without execution 
     if the source pointer does not point beyond the length of the source 
     after the move, otherwise, does not move the source pointer. 
+    082: Skip next instruction if current cell is "0". Equivalent to "/" 
+    in [[Minimal]]. However, this operation will only execute if there is 
+    at least 1 more instruction from the current instruction.
+    083: Skip the number of instructions equivalent to the absolute integer 
+    value of the current cell if the source pointer does not point beyond 
+    the length of the source after the move, otherwise, does not move the 
+    source pointer. For example, if current cell is "5.6" or "5", the next 
+    5 instructions will be skipped.
     '''
     if source[spointer] == '023' and (spointer + 3) <= len(source):
         spointer = spointer + 3
@@ -326,6 +336,35 @@ def source_move(array, apointer, inputdata, output, source, spointer):
         spointer = spointer - 15
     if source[spointer] == '028' and (spointer - 30) => 0:
         spointer = spointer - 30
+    if source[spointer] == '082' and array[apointer] == 0 and \
+    (spointer + 3) <= len(source):
+        spointer = spointer + 3
+    if source[spointer] == '083' and \
+    (spointer + (3 * abs(int(array[apointer]))) <= len(source):
+        spointer = spointer + (3 * abs(int(array[apointer]))
+    return (array, apointer, inputdata, output, source, spointer)
+    
+def set_tape_value(array, apointer, inputdata, output, source, spointer):
+    '''
+    Set values into tape cell by over-writing the original value.
+    
+    Instructions handled:
+    084: Set current tape cell to "0".
+    085: Set current tape cell to "-1".
+    086: Set current tape cell to "1". 
+    097: Set the value of the current cell to pi (3.14159265358979323846)
+    098: Set the value of the current cell to e (2.718281828459045) 
+    '''
+    if source[spointer] == '084':
+        array[apointer] = 0
+    if source[spointer] == '085':
+        array[apointer] = -1
+    if source[spointer] == '086':
+        array[apointer] = 1
+    if source[spointer] == '097':
+        array[apointer] = constants.PI
+    if source[spointer] == '098':
+        array[apointer] = math.e
     return (array, apointer, inputdata, output, source, spointer)
     
 def not_used(array, apointer, inputdata, output, source, spointer):
@@ -418,11 +457,11 @@ ragaraja = {'000': forward,
             '079': not_used,
             '080': not_used,
             '081': not_used,
-            '082': not_used,
+            '082': source_move,
             '083': not_used,
-            '084': not_used,
-            '085': not_used,
-            '086': not_used,
+            '084': set_tape_value,
+            '085': set_tape_value,
+            '086': set_tape_value,
             '087': not_used,
             '088': not_used,
             '089': not_used,
@@ -433,8 +472,8 @@ ragaraja = {'000': forward,
             '094': not_used,
             '095': not_used,
             '096': not_used,
-            '097': not_used,
-            '098': not_used,
+            '097': set_tape_value,
+            '098': set_tape_value,
             '099': not_used,
             '100': not_used,
             '101': not_used,
