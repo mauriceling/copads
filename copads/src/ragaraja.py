@@ -290,6 +290,44 @@ def tape_size(array, apointer, inputdata, output, source, spointer):
         apointer = len(array)
     return (array, apointer, inputdata, output, source, spointer)
     
+def source_move(array, apointer, inputdata, output, source, spointer):
+    '''
+    Moving the source without execution.
+    
+    Instructions handled:
+    023: Move source pointer forward by one instruction without execution 
+    if the source pointer does not point beyond the length of the source 
+    after the move, otherwise, does not move the source pointer.
+    024: Move source pointer forward by 5 instruction without execution 
+    if the source pointer does not point beyond the length of the source 
+    after the move, otherwise, does not move the source pointer.
+    025: Move source pointer forward by 10 instruction without execution 
+    if the source pointer does not point beyond the length of the source 
+    after the move, otherwise, does not move the source pointer.
+    026: Move source pointer backward by one instruction without execution 
+    if the source pointer does not point beyond the length of the source 
+    after the move, otherwise, does not move the source pointer.
+    027: Move source pointer backward by 5 instruction without execution 
+    if the source pointer does not point beyond the length of the source 
+    after the move, otherwise, does not move the source pointer.
+    028: Move source pointer backward by 10 instruction without execution 
+    if the source pointer does not point beyond the length of the source 
+    after the move, otherwise, does not move the source pointer. 
+    '''
+    if source[spointer] == '023' and (spointer + 3) <= len(source):
+        spointer = spointer + 3
+    if source[spointer] == '024' and (spointer + 15) <= len(source):
+        spointer = spointer + 15
+    if source[spointer] == '025' and (spointer + 30) <= len(source):
+        spointer = spointer + 30
+    if source[spointer] == '026' and (spointer - 3) => 0:
+        spointer = spointer - 3
+    if source[spointer] == '027' and (spointer - 15) => 0:
+        spointer = spointer - 15
+    if source[spointer] == '028' and (spointer - 30) => 0:
+        spointer = spointer - 30
+    return (array, apointer, inputdata, output, source, spointer)
+    
 def not_used(array, apointer, inputdata, output, source, spointer):
     '''
     
@@ -321,12 +359,12 @@ ragaraja = {'000': forward,
             '020': call_out,
             '021': not_used,
             '022': not_used,
-            '023': not_used,
-            '024': not_used,
-            '025': not_used,
-            '026': not_used,
-            '027': not_used,
-            '028': not_used,
+            '023': source_move,
+            '024': source_move,
+            '025': source_move,
+            '026': source_move,
+            '027': source_move,
+            '028': source_move,
             '029': not_used,
             '030': not_used,
             '031': not_used,
