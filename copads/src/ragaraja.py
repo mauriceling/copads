@@ -85,26 +85,19 @@ def tape_move(array, apointer, inputdata, output, source, spointer):
     062: Move backward by the number of cells signified by the current 
     cell. 
     '''
-    if source[spointer] == '001': 
-        apointer = apointer + 5
-    if source[spointer] == '002': 
-        apointer = apointer + 10
+    if source[spointer] == '001': apointer = apointer + 5
+    if source[spointer] == '002': apointer = apointer + 10
     if source[spointer] == '003': 
         move = int(float(array[apointer]) * float(array[apointer]))
         apointer = apointer + float(array[apointer]) + move
-    if source[spointer] == '005': 
-        apointer = apointer - 5
-    if source[spointer] == '006': 
-        apointer = apointer - 10
+    if source[spointer] == '005': apointer = apointer - 5
+    if source[spointer] == '006': apointer = apointer - 10
     if source[spointer] == '007': 
         move = int(float(array[apointer]) * float(array[apointer]))
         apointer = apointer + float(array[apointer]) - move
-    if source[spointer] == '043': 
-        apointer = 0
-    if source[spointer] == '044': 
-        apointer = len(array)
-    if source[spointer] == '045': 
-        apointer = int(output[-1])
+    if source[spointer] == '043': apointer = 0
+    if source[spointer] == '044': apointer = len(array)
+    if source[spointer] == '045': apointer = int(output[-1])
     if source[spointer] == '061': 
         apointer = apointer + int(array[apointer])
     if source[spointer] == '062': 
@@ -283,18 +276,12 @@ def tape_size(array, apointer, inputdata, output, source, spointer):
     tape cell is 35, a cell initialized to zero will be added as cell 36. As 
     a result, the tape is 1 cell longer. 
     '''
-    if source[spointer] == '016':
-        array.append([0])
-    if source[spointer] == '017':
-        array.append([0]*10)
-    if source[spointer] == '018':
-        array = array[:-1]
-    if source[spointer] == '019':
-        array = array[:-10]
-    if apointer >= len(array):
-        apointer = len(array) - 1
-    if source[spointer] == '034':
-        array.insert(apointer + 1, 0)
+    if source[spointer] == '016': array.append([0])
+    if source[spointer] == '017': array.append([0]*10)
+    if source[spointer] == '018': array = array[:-1]
+    if source[spointer] == '019': array = array[:-10]
+    if source[spointer] == '034': array.insert(apointer + 1, 0)
+    if apointer >= len(array): apointer = len(array) - 1
     return (array, apointer, inputdata, output, source, spointer)
     
 def source_move(array, apointer, inputdata, output, source, spointer):
@@ -360,16 +347,11 @@ def set_tape_value(array, apointer, inputdata, output, source, spointer):
     097: Set the value of the current cell to pi (3.14159265358979323846)
     098: Set the value of the current cell to e (2.718281828459045) 
     '''
-    if source[spointer] == '084':
-        array[apointer] = 0
-    if source[spointer] == '085':
-        array[apointer] = -1
-    if source[spointer] == '086':
-        array[apointer] = 1
-    if source[spointer] == '097':
-        array[apointer] = constants.PI
-    if source[spointer] == '098':
-        array[apointer] = math.e
+    if source[spointer] == '084': array[apointer] = 0
+    if source[spointer] == '085': array[apointer] = -1
+    if source[spointer] == '086': array[apointer] = 1
+    if source[spointer] == '097': array[apointer] = constants.PI
+    if source[spointer] == '098': array[apointer] = math.e
     return (array, apointer, inputdata, output, source, spointer)
     
 def mathematics(array, apointer, inputdata, output, source, spointer):
@@ -636,10 +618,8 @@ def output_IO(array, apointer, inputdata, output, source, spointer):
     041: Remove first value from the output list.
     042: Remove last value from the output list. 
     '''
-    if source[spointer] == '021':
-        output.append(apointer)
-    if source[spointer] == '022':
-        output.append(spointer)
+    if source[spointer] == '021': output.append(apointer)
+    if source[spointer] == '022': output.append(spointer)
     if source[spointer] == '037' and len(output) > 0:
         array[apointer] = output.pop(-1)
     if source[spointer] == '038' and len(output) > 0:
@@ -648,10 +628,8 @@ def output_IO(array, apointer, inputdata, output, source, spointer):
         array[apointer] = output.pop(0)
     if source[spointer] == '040' and len(output) > 0:
         array[apointer] = output[0]
-    if source[spointer] == '041' and len(output) > 0:
-        output.pop(0)
-    if source[spointer] == '042' and len(output) > 0:
-        output.pop(-1)
+    if source[spointer] == '041' and len(output) > 0: output.pop(0)
+    if source[spointer] == '042' and len(output) > 0: output.pop(-1)
     return (array, apointer, inputdata, output, source, spointer)
 
 def logic(array, apointer, inputdata, output, source, spointer):
@@ -1267,24 +1245,15 @@ def LCBF_to_Ragaraja(source):
     '''
     converted = []
     for x in source:
-        if x == '>':
-            converted.append('000')
-        elif x == '<':
-            converted.append('004')
-        elif x == '+':
-            converted.append('008')
-        elif x == '-':
-            converted.append('011')
-        elif x == '.':
-            converted.append('020')
-        elif x == ',':
-            converted.append('063')
-        elif x == '[':
-            converted.append('014')
-        elif x == ']':
-            converted.append('015')
-        else:
-            converted.append('...')
+        if x == '>': converted.append('000')
+        elif x == '<': converted.append('004')
+        elif x == '+': converted.append('008')
+        elif x == '-': converted.append('011')
+        elif x == '.': converted.append('020')
+        elif x == ',': converted.append('063')
+        elif x == '[': converted.append('014')
+        elif x == ']': converted.append('015')
+        else: converted.append('...')
     return converted
 	
 def nBF_to_Ragaraja(source):
@@ -1297,40 +1266,23 @@ def nBF_to_Ragaraja(source):
     '''
     converted = []
     for x in source:
-        if x == 'G':
-            converted.append('000')
-        elif x == 'C':
-            converted.append('004')
-        elif x == 'A':
-            converted.append('008')
-        elif x == 'T':
-            converted.append('011')
-        elif x == '.':
-            converted.append('020')
-        elif x == 'R':
-            converted.append('050')
-        elif x == 'Y':
-            converted.append('051')
-        elif x == 'S':
-            converted.append('052')
-        elif x == 'W':
-            converted.append('053')
-        elif x == 'K':
-            converted.append('054')
-        elif x == 'M':
-            converted.append('055')
-        elif x == 'B':
-            converted.append('056')
-        elif x == 'D':
-            converted.append('057')
-        elif x == 'H':
-            converted.append('058')
-        elif x == 'V':
-            converted.append('059')
-        elif x == 'N':
-            converted.append('060')
-        else:
-            converted.append('...')
+        if x == 'G': converted.append('000')
+        elif x == 'C': converted.append('004')
+        elif x == 'A': converted.append('008')
+        elif x == 'T': converted.append('011')
+        elif x == '.': converted.append('020')
+        elif x == 'R': converted.append('050')
+        elif x == 'Y': converted.append('051')
+        elif x == 'S': converted.append('052')
+        elif x == 'W': converted.append('053')
+        elif x == 'K': converted.append('054')
+        elif x == 'M': converted.append('055')
+        elif x == 'B': converted.append('056')
+        elif x == 'D': converted.append('057')
+        elif x == 'H': converted.append('058')
+        elif x == 'V': converted.append('059')
+        elif x == 'N': converted.append('060')
+        else: converted.append('...')
     return converted
 			
 def interpreter(source, inputdata=[], array=None, size=30000):
