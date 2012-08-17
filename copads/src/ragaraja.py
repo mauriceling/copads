@@ -1312,7 +1312,7 @@ ragaraja = {'000': forward, '001': tape_move,
             '996': not_used, '997': not_used,
             '998': not_used, '999': not_used
            }
-			
+
 def LCBF_to_Ragaraja(source):
     '''
     Converts Loose Circular Brainfuck source code to Ragaraja source code
@@ -1333,7 +1333,7 @@ def LCBF_to_Ragaraja(source):
         elif x == ']': converted.append('015')
         else: converted.append('...')
     return converted
-	
+
 def nBF_to_Ragaraja(source):
     '''
     Converts NucleotideBF (nBF) source code to Ragaraja source code
@@ -1362,11 +1362,11 @@ def nBF_to_Ragaraja(source):
         elif x == 'N': converted.append('060')
         else: converted.append('...')
     return converted
-			
+
 def interpreter(source, inputdata=[], array=None, size=30000):
     (array, apointer, inputdata, output, source, spointer) = \
         r.interpret(source, ragaraja, 3, inputdata, array, size)
     return (array, apointer, inputdata, output, source, spointer)
-	
+
 if __name__ == '__main__':
     print interpreter('000008008000000011011011004008', [], None, 30)
