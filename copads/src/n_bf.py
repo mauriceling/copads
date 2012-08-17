@@ -1,8 +1,48 @@
+'''
+NucleotideBF (nBF) Interpreter
+Date created: 15th August 2012
+Licence: Python Software Foundation License version 2
+
+NucleotideBF is a derivative of Brainfuck based on IUPAC 
+nucleotide code. It uses only 5 of the 8 operations in 
+Brainfuck, and there is no loop operations.
+
+The commands for nBF can be divided into 2 classes - 
+deterministic operations and random operations. The 
+deterministic operations are A (increment, equivalent to '+'), 
+T (decrement, equivalent to '-'), C (backward, equivalent to 
+'<'), G (forward, equivalent to '>') and '.' (call out).
+
+Based on the same interpreter as Loose Circular Brainfuck (LCBF), 
+the tape or array is circular (a ring list) instead of linear. 
+When the pointer is at the "end" of the tape, an increment ("A") 
+will move the tape to the start. Similarly, when the pointer is 
+decremented at the "beginning" of the tape, the pointer goes to 
+the end. 
+
+Ref: http://esolangs.org/wiki/NucleotideBF_(nBF)
+'''
+
 import random
 import register_machine as r
 from lc_bf import increment, decrement, forward, backward, call_out
 
 def random_op(array, apointer, inputdata, output, source, spointer):
+	'''
+	Random operations / commands to simulate ambiguous DNA 
+	nucleotides. Allowable ambiguous nucleotides are:
+	R: Random between A or G
+	Y: Random between C or T
+	S: Random between G or C
+	W: Random between A or T
+	K: Random between G or T
+	M: Random between A or C
+	B: Random between C or G or T
+	D: Random between A or G or T
+	H: Random between A or C or T
+	V: Random between A or C or G
+	N: Random between A or T or C or G 
+	'''
     r = random.random()
     if source[spointer] == 'R' and r < 0.5:
         return increment(array, apointer, inputdata, output, source, spointer)

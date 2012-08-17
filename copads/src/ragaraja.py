@@ -6,6 +6,8 @@ from lc_bf import call_out, accept_predefined
 from lc_bf import cbf_start_loop, cbf_end_loop
 
 def not_used(array, apointer, inputdata, output, source, spointer):
+	'''
+	'''
     return (array, apointer, inputdata, output, source, spointer)
 
 ragaraja = {'000': forward,
