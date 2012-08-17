@@ -49,25 +49,111 @@ from lc_bf import forward, backward
 from lc_bf import call_out, accept_predefined
 from lc_bf import cbf_start_loop, cbf_end_loop
 
+def tape_move(array, apointer, inputdata, output, source, spointer):
+	'''
+	Moving tape pointer for more than one increment or decrement.
+	
+	Instructions handled:
+	001: Move forward by 5 cells on tape. Equivalent to 5 times of 
+	"000".
+	002: Move forward by 10 cells on tape. Equivalent to 10 times of 
+	"000".
+	003: Move forward by NxN cells on tape where N is the value of 
+	the current cell. This will only work if N is a positive number. 
+	If N is a decimal, it will move forward by the floor of NxN. For 
+	example, if N is 4.2, this operation will tape pointer forward 
+	by 17 cells. 
+	005: Move backward by 5 cells on tape. Equivalent to 5 times of 
+	"004".
+	006: Move backward by 10 cells on tape. Equivalent to 10 times of 
+	"004".
+	007: Move backward by NxN cells on tape where N is the value of 
+	the current cell. This will only work if N is a positive number. 
+	If N is a decimal, it will move backward by the floor of NxN. For 
+	example, if N is 4.2, this operation will tape pointer backward 
+	by 17 cells. 
+	043: Move the tape cell pointer to the first cell.
+	044: Move the tape cell pointer to the last cell.
+	045: Move the tape cell pointer to the location determined by 
+	the last value of the output list. For example, the last value 
+	of the output list is 5, the tape cell pointer will point to the 
+	5th cell on the tape. 
+	061: Move forward by the number of cells signified by the current 
+	cell.
+	062: Move backward by the number of cells signified by the current 
+	cell. 
+	'''
+	if source[spointer] == '001': 
+		apointer = apointer + 5
+	if source[spointer] == '002': 
+		apointer = apointer + 10
+	if source[spointer] == '003': 
+		move = int(float(array[apointer]) * float(array[apointer]))
+		apointer = apointer + float(array[apointer]) + move
+	if source[spointer] == '005': 
+		apointer = apointer - 5
+	if source[spointer] == '006': 
+		apointer = apointer - 10
+	if source[spointer] == '007': 
+		move = int(float(array[apointer]) * float(array[apointer]))
+		apointer = apointer + float(array[apointer]) - move
+	if source[spointer] == '043': 
+		apointer = 0
+	if source[spointer] == '044': 
+		apointer = len(array)
+	if source[spointer] == '045': 
+		apointer = int(output[-1])
+	if source[spointer] == '061': 
+		apointer = apointer + int(array[apointer])
+	if source[spointer] == '062': 
+		apointer = apointer - int(array[apointer])
+    return (array, apointer, inputdata, output, source, spointer)
+	
+def accumulations(array, apointer, inputdata, output, source, spointer):
+	'''
+	Accumulate the tape cell by more than one increment or decrement.
+	
+	Instructions handled:
+	009: Increase value of cell by 5. Equivalent to 5 times of "008".
+	010: Increase value of cell by 10. Equivalent to 10 times of "008".
+	012: Decrease value of cell by 5. Equivalent to 5 times of "011".
+	013: Decrease value of cell by 10. Equivalent to 10 times of "011". 
+	032: Double current tape cell value.
+	033: Half current tape cell value. 
+	'''
+	if source[spointer] == '009': 
+		array[apointer] = array[apointer] + 5
+	if source[spointer] == '010': 
+		array[apointer] = array[apointer] + 10
+	if source[spointer] == '012': 
+		array[apointer] = array[apointer] - 5
+	if source[spointer] == '013': 
+		array[apointer] = array[apointer] - 10
+	if source[spointer] == '032': 
+		array[apointer] = 2 * array[apointer]
+	if source[spointer] == '032': 
+		array[apointer] = 0.5 * array[apointer]
+    return (array, apointer, inputdata, output, source, spointer)
+	
 def not_used(array, apointer, inputdata, output, source, spointer):
 	'''
 	'''
     return (array, apointer, inputdata, output, source, spointer)
 
 ragaraja = {'000': forward,
-			'001': not_used,
-			'002': not_used,
-			'003': not_used,
+			'001': tape_move,
+			'002': tape_move,
+			'003': tape_move,
 			'004': backward,
-			'005': not_used,
-			'006': not_used,
-			'007': not_used,
+			'005': tape_move,
+			'006': tape_move,
+			'007': tape_move,
 			'008': increment,
-			'009': not_used,
-			'010': not_used,
+			'009': accumulations,
+			'010': accumulations,
 			'011': decrement,
-			'012': not_used,
-			'013': not_used,
+			'012': accumulations,
+			'013': accumulations,
 			'014': cbf_start_loop,
 			'015': cbf_end_loop,
 			'016': not_used,
@@ -86,8 +172,8 @@ ragaraja = {'000': forward,
 			'029': not_used,
 			'030': not_used,
 			'031': not_used,
-			'032': not_used,
-			'033': not_used,
+			'032': accumulations,
+			'033': accumulations,
 			'034': not_used,
 			'035': not_used,
 			'036': not_used,
@@ -97,9 +183,9 @@ ragaraja = {'000': forward,
 			'040': not_used,
 			'041': not_used,
 			'042': not_used,
-			'043': not_used,
-			'044': not_used,
-			'045': not_used,
+			'043': tape_move,
+			'044': tape_move,
+			'045': tape_move,
 			'046': not_used,
 			'047': not_used,
 			'048': not_used,
@@ -115,8 +201,8 @@ ragaraja = {'000': forward,
 			'058': not_used,
 			'059': not_used,
 			'060': not_used,
-			'061': not_used,
-			'062': not_used,
+			'061': tape_move,
+			'062': tape_move,
 			'063': accept_predefined,
 			'064': not_used,
 			'065': not_used,
