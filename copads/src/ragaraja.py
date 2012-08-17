@@ -170,7 +170,7 @@ def nBF_random_op(array, apointer, inputdata, output, source, spointer):
     if source[spointer] == '050' and r < 0.5:
         return increment(array, apointer, inputdata, output, source, spointer)
     elif source[spointer] == '050' and r >= 0.5:
-        if apointer == len(array): 
+        if (apointer + 1) == len(array): 
             return (array, 0, inputdata, output, source, spointer)
         else:
             return forward(array, apointer, inputdata, output, source, spointer)
@@ -178,17 +178,17 @@ def nBF_random_op(array, apointer, inputdata, output, source, spointer):
         return decrement(array, apointer, inputdata, output, source, spointer)
     elif source[spointer] == '051' and r >= 0.5:
         if apointer == 0: 
-            return (array, len(array), inputdata, output, source, spointer)
+            return (array, len(array) - 1, inputdata, output, source, spointer)
         else:
             return backward(array, apointer, inputdata, output, source, spointer)
     elif source[spointer] == '052' and r < 0.5:
-        if apointer == len(array): 
+        if (apointer + 1) == len(array): 
             return (array, 0, inputdata, output, source, spointer)
         else:
             return forward(array, apointer, inputdata, output, source, spointer)
     elif source[spointer] == '052' and r >= 0.5:
         if apointer == 0:
-            return (array, len(array), inputdata, output, source, spointer)
+            return (array, len(array) - 1, inputdata, output, source, spointer)
         else:
             return backward(array, apointer, inputdata, output, source, spointer)
     elif source[spointer] == '053' and r < 0.5:
@@ -198,7 +198,7 @@ def nBF_random_op(array, apointer, inputdata, output, source, spointer):
     elif source[spointer] == '054' and r < 0.5:
         return decrement(array, apointer, inputdata, output, source, spointer)
     elif source[spointer] == '054' and r >= 0.5:
-        if apointer == len(array): 
+        if (apointer + 1) == len(array): 
             return (array, 0, inputdata, output, source, spointer)
         else:
             return forward(array, apointer, inputdata, output, source, spointer)
@@ -206,11 +206,11 @@ def nBF_random_op(array, apointer, inputdata, output, source, spointer):
         return increment(array, apointer, inputdata, output, source, spointer)
     elif source[spointer] == '055' and r >= 0.5:
         if apointer == 0: 
-            return (array, len(array), inputdata, output, source, spointer)
+            return (array, len(array) - 1, inputdata, output, source, spointer)
         else:
             return backward(array, apointer, inputdata, output, source, spointer)
     elif source[spointer] == '056' and r < 0.33:
-        if apointer == len(array): 
+        if (apointer + 1) == len(array): 
             return (array, 0, inputdata, output, source, spointer)
         else:
             return forward(array, apointer, inputdata, output, source, spointer)
@@ -218,7 +218,7 @@ def nBF_random_op(array, apointer, inputdata, output, source, spointer):
         return decrement(array, apointer, inputdata, output, source, spointer)
     elif source[spointer] == '056' and r >= 0.67:
         if apointer == 0:
-            return (array, len(array), inputdata, output, source, spointer)
+            return (array, len(array) - 1, inputdata, output, source, spointer)
         else:
             return backward(array, apointer, inputdata, output, source, spointer)
     elif source[spointer] == '057' and r < 0.33:
@@ -226,7 +226,7 @@ def nBF_random_op(array, apointer, inputdata, output, source, spointer):
     elif source[spointer] == '057' and r >= 0.33 and r < 0.67:
         return decrement(array, apointer, inputdata, output, source, spointer)
     elif source[spointer] == '057' and r >= 0.67:
-        if apointer == len(array):
+        if (apointer + 1) == len(array):
             return (array, 0, inputdata, output, source, spointer)
         else:
             return forward(array, apointer, inputdata, output, source, spointer)
@@ -236,19 +236,19 @@ def nBF_random_op(array, apointer, inputdata, output, source, spointer):
         return decrement(array, apointer, inputdata, output, source, spointer)
     elif source[spointer] == '058' and r >= 0.67:
         if apointer == 0:
-            return (array, len(array), inputdata, output, source, spointer)
+            return (array, len(array) - 1, inputdata, output, source, spointer)
         else:
             return backward(array, apointer, inputdata, output, source, spointer)
     elif source[spointer] == '059' and r < 0.33:
         return increment(array, apointer, inputdata, output, source, spointer)
     elif source[spointer] == '059' and r >= 0.33 and r < 0.67:
-        if apointer == len(array):
+        if (apointer + 1) == len(array):
             return (array, 0, inputdata, output, source, spointer)
         else:
             return forward(array, apointer, inputdata, output, source, spointer)
     elif source[spointer] == '059' and r >= 0.67:
         if apointer == 0:
-            return (array, len(array), inputdata, output, source, spointer)
+            return (array, len(array) - 1, inputdata, output, source, spointer)
         else:
             return backward(array, apointer, inputdata, output, source, spointer)
     elif source[spointer] == '060' and r < 0.25:
@@ -256,13 +256,13 @@ def nBF_random_op(array, apointer, inputdata, output, source, spointer):
     elif source[spointer] == '060' and r >= 0.25 and r < 0.5:
         return decrement(array, apointer, inputdata, output, source, spointer)
     elif source[spointer] == '060' and r >= 0.5 and r < 0.75:
-        if apointer == len(array): 
+        if (apointer + 1) == len(array): 
             return (array, 0, inputdata, output, source, spointer)
         else:
             return forward(array, apointer, inputdata, output, source, spointer)
     elif source[spointer] == '060' and r >= 0.75:
         if apointer == 0:
-            return (array, len(array), inputdata, output, source, spointer)
+            return (array, len(array) - 1, inputdata, output, source, spointer)
         else:
             return backward(array, apointer, inputdata, output, source, spointer)
 
@@ -288,8 +288,8 @@ def tape_size(array, apointer, inputdata, output, source, spointer):
         array = array[:-1]
     if source[spointer] == '019':
         array = array[:-10]
-    if apointer > len(array):
-        apointer = len(array)
+    if apointer => len(array):
+        apointer = len(array) - 1
     return (array, apointer, inputdata, output, source, spointer)
     
 def source_move(array, apointer, inputdata, output, source, spointer):
@@ -324,24 +324,24 @@ def source_move(array, apointer, inputdata, output, source, spointer):
     source pointer. For example, if current cell is "5.6" or "5", the next 
     5 instructions will be skipped.
     '''
-    if source[spointer] == '023' and (spointer + 3) <= len(source):
+    if source[spointer] == '023' and (spointer + 3) < len(source):
         spointer = spointer + 3
-    if source[spointer] == '024' and (spointer + 15) <= len(source):
+    if source[spointer] == '024' and (spointer + 15) < len(source):
         spointer = spointer + 15
-    if source[spointer] == '025' and (spointer + 30) <= len(source):
+    if source[spointer] == '025' and (spointer + 30) < len(source):
         spointer = spointer + 30
-    if source[spointer] == '026' and (spointer - 3) => 0:
+    if source[spointer] == '026' and (spointer - 3) >= 0:
         spointer = spointer - 3
-    if source[spointer] == '027' and (spointer - 15) => 0:
+    if source[spointer] == '027' and (spointer - 15) >= 0:
         spointer = spointer - 15
-    if source[spointer] == '028' and (spointer - 30) => 0:
+    if source[spointer] == '028' and (spointer - 30) >= 0:
         spointer = spointer - 30
     if source[spointer] == '082' and array[apointer] == 0 and \
     (spointer + 3) <= len(source):
         spointer = spointer + 3
     if source[spointer] == '083' and \
-    (spointer + (3 * abs(int(array[apointer]))) <= len(source):
-        spointer = spointer + (3 * abs(int(array[apointer]))
+    (spointer + (3 * abs(int(array[apointer])))) < len(source):
+        spointer = spointer + (3 * abs(int(array[apointer])))
     return (array, apointer, inputdata, output, source, spointer)
     
 def set_tape_value(array, apointer, inputdata, output, source, spointer):
@@ -365,6 +365,16 @@ def set_tape_value(array, apointer, inputdata, output, source, spointer):
         array[apointer] = constants.PI
     if source[spointer] == '098':
         array[apointer] = math.e
+    return (array, apointer, inputdata, output, source, spointer)
+    
+def mathematics(array, apointer, inputdata, output, source, spointer):
+    '''
+    Performs mathematical and arithmetical operations.
+    
+    Instructions handled:
+    '''
+    if source[spointer] == '065' and (apointer + 1) < len(array):
+        array[apointer] = array[apointer]
     return (array, apointer, inputdata, output, source, spointer)
     
 def not_used(array, apointer, inputdata, output, source, spointer):
@@ -458,7 +468,7 @@ ragaraja = {'000': forward,
             '080': not_used,
             '081': not_used,
             '082': source_move,
-            '083': not_used,
+            '083': source_move,
             '084': set_tape_value,
             '085': set_tape_value,
             '086': set_tape_value,
