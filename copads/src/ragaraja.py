@@ -263,10 +263,39 @@ def nBF_random_op(array, apointer, inputdata, output, source, spointer):
             return (array, len(array), inputdata, output, source, spointer)
         else:
             return backward(array, apointer, inputdata, output, source, spointer)
-            
+
+def tape_size(array, apointer, inputdata, output, source, spointer):
+    '''
+    Change the length of the tape during runtime.
+    
+    Instructions handled:
+    016: Add one cell to the end of the tape.
+    017: Add 10 cells to the end of the tape.
+    018: Remove one cell from the end of the tape. If original tape pointer 
+    is at the last cell before removal operation, the tape pointer will point 
+    to the last cell after removal.
+    019: Remove 10 cells from the end of the tape. If original tape pointer 
+    is at the last cell before removal operation, the tape pointer will point 
+    to the last cell after removal. 
+    '''
+    if source[spointer] == '016':
+        array.append([0])
+    if source[spointer] == '017':
+        array.append([0]*10)
+    if source[spointer] == '018':
+        array = array[:-1]
+    if source[spointer] == '019':
+        array = array[:-10]
+    if apointer > len(array):
+        apointer = len(array)
+    return (array, apointer, inputdata, output, source, spointer)
+    
 def not_used(array, apointer, inputdata, output, source, spointer):
     '''
+    
+    Instructions handled:
     '''
+    if source[spointer] == 'xxx': pass
     return (array, apointer, inputdata, output, source, spointer)
 
 ragaraja = {'000': forward,
@@ -285,10 +314,10 @@ ragaraja = {'000': forward,
             '013': accumulations,
             '014': cbf_start_loop,
             '015': cbf_end_loop,
-            '016': not_used,
-            '017': not_used,
-            '018': not_used,
-            '019': not_used,
+            '016': tape_size,
+            '017': tape_size,
+            '018': tape_size,
+            '019': tape_size,
             '020': call_out,
             '021': not_used,
             '022': not_used,
