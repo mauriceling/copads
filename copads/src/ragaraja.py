@@ -134,7 +134,136 @@ def accumulations(array, apointer, inputdata, output, source, spointer):
     if source[spointer] == '032': 
         array[apointer] = 0.5 * array[apointer]
     return (array, apointer, inputdata, output, source, spointer)
-		
+	
+def nBF_random_op(array, apointer, inputdata, output, source, spointer):
+    '''
+    NucleotideBF (nBF) random operations - to simulate ambiguous DNA bases.
+    
+    Instructions handled:
+    050: Randomly execute "008" (increment by 1) or "000" (move forward 
+    by 1). Equivalent to "R" in NucleotideBF (nBF).
+    051: Randomly execute "011" (decrement by 1) or "004" (move backward 
+    by 1). Equivalent to "Y" in NucleotideBF (nBF).
+    052: Randomly execute "000" (move forward by 1) or "004" (move backward 
+    by 1). Equivalent to "S" in NucleotideBF (nBF).
+    053: Randomly execute "008" (increment by 1) or "011" (decrement by 1). 
+    Equivalent to "W" in NucleotideBF (nBF).
+    054: Randomly execute "000" (move forward by 1) or "011" (decrement 
+    by 1). Equivalent to "K" in NucleotideBF (nBF).
+    055: Randomly execute "004" (move backward by 1) or "008" (increment 
+    by 1). Equivalent to "M" in NucleotideBF (nBF).
+    056: Randomly execute "000" (move forward by 1) or "004" (move backward 
+    by 1) or "011" (decrement by 1). Equivalent to "B" in NucleotideBF (nBF).
+    057: Randomly execute "000" (move forward by 1) or "008" (increment by 1) 
+    or "011" (decrement by 1). Equivalent to "D" in NucleotideBF (nBF).
+    058: Randomly execute "004" (move backward by 1) or "008" (Increment 
+    by 1) or "011" (decrement by 1). Equivalent to "H" in NucleotideBF (nBF).
+    059: Randomly execute "000" (move forward by 1) or "004" (move backward 
+    by 1) or "008" (increment by 1). Equivalent to "V" in NucleotideBF (nBF).
+    060: Randomly execute "000" (move forward by 1) or "004" (move backward 
+    by 1) or "008" (increment by 1) or "011" (decrement by 1). Equivalent 
+    to "N" in NucleotideBF (nBF)
+    '''
+    r = random.random()
+    if source[spointer] == '050' and r < 0.5:
+        return increment(array, apointer, inputdata, output, source, spointer)
+    elif source[spointer] == '050' and r >= 0.5:
+        if apointer == len(array): 
+            return (array, 0, inputdata, output, source, spointer)
+        else:
+            return forward(array, apointer, inputdata, output, source, spointer)
+    elif source[spointer] == '051' and r < 0.5:
+        return decrement(array, apointer, inputdata, output, source, spointer)
+    elif source[spointer] == '051' and r >= 0.5:
+        if apointer == 0: 
+            return (array, len(array), inputdata, output, source, spointer)
+        else:
+            return backward(array, apointer, inputdata, output, source, spointer)
+    elif source[spointer] == '052' and r < 0.5:
+        if apointer == len(array): 
+            return (array, 0, inputdata, output, source, spointer)
+        else:
+            return forward(array, apointer, inputdata, output, source, spointer)
+    elif source[spointer] == '052' and r >= 0.5:
+        if apointer == 0:
+            return (array, len(array), inputdata, output, source, spointer)
+        else:
+            return backward(array, apointer, inputdata, output, source, spointer)
+    elif source[spointer] == '053' and r < 0.5:
+        return increment(array, apointer, inputdata, output, source, spointer)
+    elif source[spointer] == '053' and r >= 0.5:
+        return decrement(array, apointer, inputdata, output, source, spointer)
+    elif source[spointer] == '054' and r < 0.5:
+        return decrement(array, apointer, inputdata, output, source, spointer)
+    elif source[spointer] == '054' and r >= 0.5:
+        if apointer == len(array): 
+            return (array, 0, inputdata, output, source, spointer)
+        else:
+            return forward(array, apointer, inputdata, output, source, spointer)
+    elif source[spointer] == '055' and r < 0.5:
+        return increment(array, apointer, inputdata, output, source, spointer)
+    elif source[spointer] == '055' and r >= 0.5:
+        if apointer == 0: 
+            return (array, len(array), inputdata, output, source, spointer)
+        else:
+            return backward(array, apointer, inputdata, output, source, spointer)
+    elif source[spointer] == '056' and r < 0.33:
+        if apointer == len(array): 
+            return (array, 0, inputdata, output, source, spointer)
+        else:
+            return forward(array, apointer, inputdata, output, source, spointer)
+    elif source[spointer] == '056' and r >= 0.33 and r < 0.67:
+        return decrement(array, apointer, inputdata, output, source, spointer)
+    elif source[spointer] == '056' and r >= 0.67:
+        if apointer == 0:
+            return (array, len(array), inputdata, output, source, spointer)
+        else:
+            return backward(array, apointer, inputdata, output, source, spointer)
+    elif source[spointer] == '057' and r < 0.33:
+        return increment(array, apointer, inputdata, output, source, spointer)
+    elif source[spointer] == '057' and r >= 0.33 and r < 0.67:
+        return decrement(array, apointer, inputdata, output, source, spointer)
+    elif source[spointer] == '057' and r >= 0.67:
+        if apointer == len(array):
+            return (array, 0, inputdata, output, source, spointer)
+        else:
+            return forward(array, apointer, inputdata, output, source, spointer)
+    elif source[spointer] == '058' and r < 0.33:
+        return increment(array, apointer, inputdata, output, source, spointer)
+    elif source[spointer] == '058' and r >= 0.33 and r < 0.67:
+        return decrement(array, apointer, inputdata, output, source, spointer)
+    elif source[spointer] == '058' and r >= 0.67:
+        if apointer == 0:
+            return (array, len(array), inputdata, output, source, spointer)
+        else:
+            return backward(array, apointer, inputdata, output, source, spointer)
+    elif source[spointer] == '059' and r < 0.33:
+        return increment(array, apointer, inputdata, output, source, spointer)
+    elif source[spointer] == '059' and r >= 0.33 and r < 0.67:
+        if apointer == len(array):
+            return (array, 0, inputdata, output, source, spointer)
+        else:
+            return forward(array, apointer, inputdata, output, source, spointer)
+    elif source[spointer] == '059' and r >= 0.67:
+        if apointer == 0:
+            return (array, len(array), inputdata, output, source, spointer)
+        else:
+            return backward(array, apointer, inputdata, output, source, spointer)
+    elif source[spointer] == '060' and r < 0.25:
+        return increment(array, apointer, inputdata, output, source, spointer)
+    elif source[spointer] == '060' and r >= 0.25 and r < 0.5:
+        return decrement(array, apointer, inputdata, output, source, spointer)
+    elif source[spointer] == '060' and r >= 0.5 and r < 0.75:
+        if apointer == len(array): 
+            return (array, 0, inputdata, output, source, spointer)
+        else:
+            return forward(array, apointer, inputdata, output, source, spointer)
+    elif source[spointer] == '060' and r >= 0.75:
+        if apointer == 0:
+            return (array, len(array), inputdata, output, source, spointer)
+        else:
+            return backward(array, apointer, inputdata, output, source, spointer)
+            
 def not_used(array, apointer, inputdata, output, source, spointer):
     '''
     '''
@@ -190,17 +319,17 @@ ragaraja = {'000': forward,
             '047': not_used,
             '048': not_used,
             '049': not_used,
-            '050': not_used,
-            '051': not_used,
-            '052': not_used,
-            '053': not_used,
-            '054': not_used,
-            '055': not_used,
-            '056': not_used,
-            '057': not_used,
-            '058': not_used,
-            '059': not_used,
-            '060': not_used,
+            '050': nBF_random_op,
+            '051': nBF_random_op,
+            '052': nBF_random_op,
+            '053': nBF_random_op,
+            '054': nBF_random_op,
+            '055': nBF_random_op,
+            '056': nBF_random_op,
+            '057': nBF_random_op,
+            '058': nBF_random_op,
+            '059': nBF_random_op,
+            '060': nBF_random_op,
             '061': tape_move,
             '062': tape_move,
             '063': accept_predefined,
