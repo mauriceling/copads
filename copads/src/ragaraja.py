@@ -274,13 +274,18 @@ def tape_size(array, apointer, inputdata, output, source, spointer):
     to the last cell after removal.
     034: Insert a cell after the current tape cell. For example, if current 
     tape cell is 35, a cell initialized to zero will be added as cell 36. As 
-    a result, the tape is 1 cell longer. 
+    a result, the tape is 1 cell longer.
+    035: Delete the current cell. As a result, the tape is 1 cell shorter.
+    036: Delete the current and append to the end of the output list. As a 
+    result, the tape is 1 cell shorter. 
     '''
     if source[spointer] == '016': array.append([0])
     if source[spointer] == '017': array.append([0]*10)
     if source[spointer] == '018': array = array[:-1]
     if source[spointer] == '019': array = array[:-10]
     if source[spointer] == '034': array.insert(apointer + 1, 0)
+    if source[spointer] == '035': array.pop(apointer)
+    if source[spointer] == '036': output.append(array.pop(apointer))
     if apointer >= len(array): apointer = len(array) - 1
     return (array, apointer, inputdata, output, source, spointer)
     
@@ -754,6 +759,49 @@ def input_IO(array, apointer, inputdata, output, source, spointer):
         if len(inputdata) == 0: array[apointer] = 0
         else: array[apointer] = inputdata[0]
     return (array, apointer, inputdata, output, source, spointer)
+
+def tape_manipulate(array, apointer, inputdata, output, source, spointer):
+    '''
+    Manipulating the tape.
+    
+    Instructions handled:
+    081: Swap the value of the current cell (n) and (n+1)th cell. 
+    133: Flip the tape from the cell after the current cell to the end of the 
+    tape (temporarily breaking the circularity of the tape).
+    '''
+    if source[spointer] == '081':
+        if (apointer + 1) < len(array):
+            temp = array[apointer]
+            array[apointer] = array[apointer+1]
+            array[apointer+1] = temp
+        else:
+            temp = array[apointer]
+            array[apointer] = array[0]
+            array[0] = temp
+    if source[spointer] == '133' and (apointer + 1) < len(array):
+        temp = array[apointer+1:]
+        array = array[0:apointer+1]
+        temp.reverse()
+        array = array + temp
+    return (array, apointer, inputdata, output, source, spointer)
+    
+def source_manipulate(array, apointer, inputdata, output, source, spointer):
+    '''
+    Manipulating the source instructions.
+    
+    Instructions handled:
+    '''
+    if source[spointer] == 'xxx': pass
+    return (array, apointer, inputdata, output, source, spointer)
+    
+def interpreter_manipulate(array, apointer, inputdata, output, source, spointer):
+    '''
+    Manipulating the interpreter.
+    
+    Instructions handled:
+    '''
+    if source[spointer] == 'xxx': pass
+    return (array, apointer, inputdata, output, source, spointer)
     
 def not_used(array, apointer, inputdata, output, source, spointer):
     '''
@@ -780,8 +828,8 @@ ragaraja = {'000': forward, '001': tape_move,
             '028': source_move, '029': not_used,
             '030': not_used, '031': not_used,
             '032': accumulations, '033': accumulations,
-            '034': tape_size, '035': not_used,
-            '036': not_used, '037': output_IO,
+            '034': tape_size, '035': tape_size,
+            '036': tape_size, '037': output_IO,
             '038': output_IO, '039': output_IO,
             '040': output_IO, '041': output_IO,
             '042': output_IO, '043': tape_move,
@@ -803,7 +851,7 @@ ragaraja = {'000': forward, '001': tape_move,
             '074': mathematics, '075': mathematics,
             '076': mathematics, '077': mathematics,
             '078': mathematics, '079': mathematics,
-            '080': not_used, '081': not_used,
+            '080': mathematics, '081': tape_manipulate,
             '082': source_move, '083': source_move,
             '084': set_tape_value, '085': set_tape_value,
             '086': set_tape_value, '087': mathematics,
@@ -829,7 +877,7 @@ ragaraja = {'000': forward, '001': tape_move,
             '126': logic, '127': logic,
             '128': logic, '129': logic,
             '130': logic, '131': not_used,
-            '132': not_used, '133': not_used,
+            '132': not_used, '133': tape_manipulate,
             '134': not_used, '135': not_used,
             '136': not_used, '137': not_used,
             '138': not_used, '139': not_used,
