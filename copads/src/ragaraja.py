@@ -372,9 +372,231 @@ def mathematics(array, apointer, inputdata, output, source, spointer):
     Performs mathematical and arithmetical operations.
     
     Instructions handled:
+    065: Add the value of the current cell (n) and (n+1)th cell, and 
+    store the value in the current cell. Array[n] = Array[n] + Array[n+1]
+    066: Add the value of the current cell (n) and first of the input 
+    list, and store the value in the current cell.
+    067: Add the value of the current cell (n) and last of the input 
+    list, and store the value in the current cell.
+    068: Subtract the value of the current cell (n) from (n+1)th 
+    cell, and store the value in the current cell. 
+    Array[n] = Array[n+1] - Array[n]
+    069: Subtract the value of the current cell (n) from the first 
+    of the input list, and store the value in the current cell. 
+    Array[n] = InputList[0] - Array[n]
+    070: Subtract the value of the current cell (n) from the last 
+    of the input list, and store the value in the current cell. 
+    Array[n] = InputList[-1] - Array[n]
+    071: Multiply the value of the current cell (n) and (n+1)th 
+    cell, and store the value in the current cell. 
+    Array[n] = Array[n+1] * Array[n]
+    072: Multiply the value of the current cell (n) and first of 
+    the input list, and store the value in the current cell.
+    073: Multiply the value of the current cell (n) and last of 
+    the input list, and store the value in the current cell.
+    074: Divide the value of the current cell (n) from (n+1)th 
+    cell, and store the value in the current cell. 
+    Array[n] = Array[n+1] / Array[n]
+    075: Divide the value of the current cell (n) from the first 
+    of the input list, and store the value in the current cell. 
+    Array[n] = InputList[0] / Array[n]
+    076: Divide the value of the current cell (n) from the last 
+    of the input list, and store the value in the current cell. 
+    Array[n] = InputList[-1] - Array[n]
+    077: Modulus (remainder after division) the value of the 
+    current cell (n) from (n+1)th cell, and store the value in 
+    the current cell. Array[n] = Array[n+1] % Array[n]
+    078: Modulus (remainder after division) the value of the 
+    current cell (n) from the first of the input list, and store 
+    the value in the current cell. Array[n] = InputList[0] % Array[n]
+    079: Modulus (remainder after division) the value of the 
+    current cell (n) from the last of the input list, and store 
+    the value in the current cell. Array[n] = InputList[-1] % Array[n]
+    080: Floor the value of the current cell. For example, if 
+    the value of the current cell is 6.7, it will becomes 6.
+    087: Negate the value of the current cell. Positive value will be 
+    negative. Negative value will be positive. Equivalent to "_" in L00P
+    088: Calculate the sine of the value of the current cell (measured 
+    in radians) and replace. Equivalent to "s" in Grin. 
+    Array[n] = sine(Array[n])
+    089: Calculate the cosine of the value of the current cell 
+    (measured in radians) and replace. Equivalent to "c" in Grin. 
+    Array[n] = cosine(Array[n])
+    090: Calculate the tangent of the value of the current cell 
+    (measured in radians) and replace. Equivalent to "t" in Grin. 
+    Array[n] = tangent(Array[n])
+    091: Calculate the arc sine of the value of the current cell 
+    (measured in radians) and replace. Equivalent to "S" in Grin. 
+    Array[n] = arcsine(Array[n])
+    092: Calculate the arc cosine of the value of the current cell 
+    (measured in radians) and replace. Equivalent to "C" in Grin. 
+    Array[n] = arccosine(Array[n])
+    093: Calculate the arc tangent of the value of the current cell 
+    (measured in radians) and replace. Equivalent to "T" in Grin. 
+    Array[n] = arctangent(Array[n])
+    094: Calculate the reciprocal of the value of the current cell 
+    (measured in radians) and replace. Equivalent to "1" in Grin. 
+    Array[n] = 1/Array[n]
+    095: Calculate the square root of the value of the current cell 
+    (measured in radians) and replace. Equivalent to "q" in Grin. 
+    Array[n] = sqrt(Array[n])
+    096: Calculate the natural logarithm of the value of the current 
+    cell (measured in radians) and replace. Equivalent to "l" in Grin. 
+    Array[n] = ln(Array[n])
+    099: Calculate the hyperbolic sine of the value of the current 
+    cell (measured in radians) and replace. Array[n] = sinh(Array[n])
+    100: Calculate the hyperbolic cosine of the value of the current 
+    cell (measured in radians) and replace. Array[n] = cosh(Array[n])
+    101: Calculate the hyperbolic tangent of the value of the current 
+    cell (measured in radians) and replace. Array[n] = tanh(Array[n])
+    102: Calculate the hyperbolic arc sine of the value of the current 
+    cell (measured in radians) and replace. Array[n] = arcsinh(Array[n])
+    103: Calculate the hyperbolic arc cosine of the value of the current 
+    cell (measured in radians) and replace. Array[n] = arccosh(Array[n])
+    104: Calculate the hyperbolic arc tangent of the value of the 
+    current cell (measured in radians) and replace. 
+    Array[n] = arctanh(Array[n])
+    105: Convert the value of the current cell (measured in radians) to 
+    degrees and replace.
+    106: Convert the value of the current cell (measured in degrees) to 
+    radians and replace.
+    107: Raise the value of the current cell (n) to e, and store the 
+    value in the current cell. Array[n] = Array[n]^e
+    108: Raise e to the value of the current cell (n), and store the 
+    value in the current cell. Array[n] = e^Array[n]
+    109: Raise 10 to the value of the current cell (n), and store the 
+    value in the current cell. Array[n] = 10^Array[n]
+    110: Raise the value of the current cell (n) to the value of (n+1)th 
+    cell, and store the value in the current cell. 
+    Array[n] = Array[n]^Array[n+1]
+    111: Calculate the n-th root of the value of the current cell (n) 
+    where n is the value of (n+1)th cell, and store the value in the 
+    current cell. Array[n] = Array[n]^(1/Array[n+1])
+    112: Calculate the error function of the value of the current cell 
+    and replace. Array[n] = erf(Array[n])
+    113: Calculate the complementary error function of the value of the 
+    current cell and replace. Array[n] = erfc(Array[n])
+    114: Calculate the factorial of the integer value of the current 
+    cell (if the integer value is positive) and replace. 
+    Array[n] = factorial(Array[n])
+    115: Calculate the factorial of the absolute integer value of the 
+    current cell and replace. Array[n] = factorial(abs(Array[n]))
+    116: Calculate the Euclidean distance (hypotenuse) value of the 
+    current cell (n) to the value of (n+1)th cell, and store the value 
+    in the current cell. 
+    Array[n] = sqrt(Array[n]*Array[n] + Array[n+1]*Array[n+1])
+    117: Calculate the logarithm value of the current cell (n) to the
+    base of the value of (n+1)th cell, and store the value in the current 
+    cell. Array[n] = log(Array[n], base=Array[n+1])
     '''
     if source[spointer] == '065' and (apointer + 1) < len(array):
-        array[apointer] = array[apointer]
+        array[apointer] = array[apointer] + array[apointer+1]
+    else:
+        array[apointer] = array[apointer] + array[0]
+    if source[spointer] == '066' and len(inputdata) > 0:
+        array[apointer] = array[apointer] + inputdata[0]
+    if source[spointer] == '067' and len(inputdata) > 0:
+        array[apointer] = array[apointer] + inputdata[-1]
+    if source[spointer] == '068' and (apointer + 1) < len(array):
+        array[apointer] = array[apointer+1] - array[apointer]
+    else:
+        array[apointer] = array[0] - array[apointer]
+    if source[spointer] == '069' and len(inputdata) > 0:
+        array[apointer] = inputdata[0] - array[apointer]
+    if source[spointer] == '070' and len(inputdata) > 0:
+        array[apointer] = inputdata[-1] - array[apointer]
+    if source[spointer] == '071' and (apointer + 1) < len(array):
+        array[apointer] = array[apointer+1] * array[apointer]
+    else:
+        array[apointer] = array[0] * array[apointer]
+    if source[spointer] == '072' and len(inputdata) > 0:
+        array[apointer] = inputdata[0] * array[apointer]
+    if source[spointer] == '073' and len(inputdata) > 0:
+        array[apointer] = inputdata[-1] * array[apointer]
+    if source[spointer] == '074' and (apointer + 1) < len(array):
+        array[apointer] = array[apointer+1] / array[apointer]
+    else:
+        array[apointer] = array[0] / array[apointer]
+    if source[spointer] == '075' and len(inputdata) > 0:
+        array[apointer] = inputdata[0] / array[apointer]
+    if source[spointer] == '076' and len(inputdata) > 0:
+        array[apointer] = inputdata[-1] / array[apointer]
+    if source[spointer] == '077' and (apointer + 1) < len(array):
+        array[apointer] = array[apointer+1] % array[apointer]
+    else:
+        array[apointer] = array[0] % array[apointer]
+    if source[spointer] == '078' and len(inputdata) > 0:
+        array[apointer] = inputdata[0] % array[apointer]
+    if source[spointer] == '079' and len(inputdata) > 0:
+        array[apointer] = inputdata[-1] % array[apointer]
+    if source[spointer] == '080':
+        array[apointer] = int(array[apointer])
+    if source[spointer] == '087':
+        array[apointer] = -1 * array[apointer]
+    if source[spointer] == '088':
+        array[apointer] = math.sin(array[apointer])
+    if source[spointer] == '089':
+        array[apointer] = math.cos(array[apointer])
+    if source[spointer] == '090':
+        array[apointer] = math.tan(array[apointer])
+    if source[spointer] == '091':
+        array[apointer] = math.asin(array[apointer])
+    if source[spointer] == '092':
+        array[apointer] = math.acos(array[apointer])
+    if source[spointer] == '093':
+        array[apointer] = math.atan(array[apointer])
+    if source[spointer] == '094':
+        array[apointer] = 1 / array[apointer]
+    if source[spointer] == '095':
+        array[apointer] = math.sqrt(array[apointer])
+    if source[spointer] == '096':
+        array[apointer] = math.log(array[apointer], math.e)
+    if source[spointer] == '099':
+        array[apointer] = math.sinh(array[apointer])
+    if source[spointer] == '100':
+        array[apointer] = math.cosh(array[apointer])
+    if source[spointer] == '101':
+        array[apointer] = math.tanh(array[apointer])
+    if source[spointer] == '102':
+        array[apointer] = math.asinh(array[apointer])
+    if source[spointer] == '103':
+        array[apointer] = math.acosh(array[apointer])
+    if source[spointer] == '104':
+        array[apointer] = math.atanh(array[apointer])
+    if source[spointer] == '105':
+        array[apointer] = math.degrees(array[apointer])
+    if source[spointer] == '106':
+        array[apointer] = math.radians(array[apointer])
+    if source[spointer] == '107':
+        array[apointer] = array[apointer] ** math.e
+    if source[spointer] == '108':
+        array[apointer] = math.e ** array[apointer]
+    if source[spointer] == '109':
+        array[apointer] = 10 ** array[apointer]
+    if source[spointer] == '110' and (apointer + 1) < len(array):
+        array[apointer] = array[apointer] ** array[apointer+1]
+    else:
+        array[apointer] = array[apointer] ** array[0]
+    if source[spointer] == '111' and (apointer + 1) < len(array):
+        array[apointer] = array[apointer] ** (1 / array[apointer+1])
+    else:
+        array[apointer] = array[apointer] ** (1 / array[0])
+    if source[spointer] == '112':
+        array[apointer] = math.erf(array[apointer])
+    if source[spointer] == '113':
+        array[apointer] = math.erfc(array[apointer])
+    if source[spointer] == '114' and array[apointer] => 0:
+        array[apointer] = math.factorial(int(array[apointer]))
+    if source[spointer] == '115':
+        array[apointer] = math.factorial(abs(int(array[apointer])))
+    if source[spointer] == '116' and (apointer + 1) < len(array):
+        array[apointer] = math.hypot(array[apointer], array[apointer+1])
+    else:
+        array[apointer] = math.hypot(array[apointer], array[0])    
+    if source[spointer] == '117' and (apointer + 1) < len(array):
+        array[apointer] = math.log(array[apointer], array[apointer+1])
+    else:
+        array[apointer] = math.log(array[apointer], array[0])
     return (array, apointer, inputdata, output, source, spointer)
     
 def not_used(array, apointer, inputdata, output, source, spointer):
@@ -450,21 +672,21 @@ ragaraja = {'000': forward,
             '062': tape_move,
             '063': accept_predefined,
             '064': not_used,
-            '065': not_used,
-            '066': not_used,
-            '067': not_used,
-            '068': not_used,
-            '069': not_used,
-            '070': not_used,
-            '071': not_used,
-            '072': not_used,
-            '073': not_used,
-            '074': not_used,
-            '075': not_used,
-            '076': not_used,
-            '077': not_used,
-            '078': not_used,
-            '079': not_used,
+            '065': mathematics,
+            '066': mathematics,
+            '067': mathematics,
+            '068': mathematics,
+            '069': mathematics,
+            '070': mathematics,
+            '071': mathematics,
+            '072': mathematics,
+            '073': mathematics,
+            '074': mathematics,
+            '075': mathematics,
+            '076': mathematics,
+            '077': mathematics,
+            '078': mathematics,
+            '079': mathematics,
             '080': not_used,
             '081': not_used,
             '082': source_move,
@@ -472,37 +694,37 @@ ragaraja = {'000': forward,
             '084': set_tape_value,
             '085': set_tape_value,
             '086': set_tape_value,
-            '087': not_used,
-            '088': not_used,
-            '089': not_used,
-            '090': not_used,
-            '091': not_used,
-            '092': not_used,
-            '093': not_used,
-            '094': not_used,
-            '095': not_used,
-            '096': not_used,
+            '087': mathematics,
+            '088': mathematics,
+            '089': mathematics,
+            '090': mathematics,
+            '091': mathematics,
+            '092': mathematics,
+            '093': mathematics,
+            '094': mathematics,
+            '095': mathematics,
+            '096': mathematics,
             '097': set_tape_value,
             '098': set_tape_value,
-            '099': not_used,
-            '100': not_used,
-            '101': not_used,
-            '102': not_used,
-            '103': not_used,
-            '104': not_used,
-            '105': not_used,
-            '106': not_used,
-            '107': not_used,
-            '108': not_used,
-            '109': not_used,
-            '110': not_used,
-            '111': not_used,
-            '112': not_used,
-            '113': not_used,
-            '114': not_used,
-            '115': not_used,
-            '116': not_used,
-            '117': not_used,
+            '099': mathematics,
+            '100': mathematics,
+            '101': mathematics,
+            '102': mathematics,
+            '103': mathematics,
+            '104': mathematics,
+            '105': mathematics,
+            '106': mathematics,
+            '107': mathematics,
+            '108': mathematics,
+            '109': mathematics,
+            '110': mathematics,
+            '111': mathematics,
+            '112': mathematics,
+            '113': mathematics,
+            '114': mathematics,
+            '115': mathematics,
+            '116': mathematics,
+            '117': mathematics,
             '118': not_used,
             '119': not_used,
             '120': not_used,
