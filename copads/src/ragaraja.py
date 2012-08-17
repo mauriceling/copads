@@ -71,7 +71,7 @@ ragaraja = {'000': forward,
 			'060': not_used,
 			'061': not_used,
 			'062': not_used,
-			'063': not_used,
+			'063': accept_predefined,
 			'064': not_used,
 			'065': not_used,
 			'066': not_used,
@@ -1010,7 +1010,60 @@ ragaraja = {'000': forward,
 			'999': not_used
 		   }
 			
+def LCBF_to_Ragaraja(source):
+	'''
+	Converts Loose Circular Brainfuck source code to Ragaraja source code
+	
+	@param source: Loose Circular Brainfuck (LCBF) source code
+	@type source: string
+	@return: Ragaraja source code string
+	'''
+	converted = []
+	for x in source:
+		if x == '>': converted.append('000')
+		elif x == '<': converted.append('004')
+		elif x == '+': converted.append('008')
+		elif x == '-': converted.append('011')
+		elif x == '.': converted.append('020')
+		elif x == ',': converted.append('063')
+		elif x == '[': converted.append('014')
+		elif x == ']': converted.append('015')
+		else: converted.append('...')
+	return converted
+	
+def nBF_to_Ragaraja(source):
+	'''
+	Converts NucleotideBF (nBF) source code to Ragaraja source code
+	
+	@param source: NucleotideBF (nBF) source code
+	@type source: string
+	@return: Ragaraja source code string
+	'''
+	converted = []
+	for x in source:
+		if x == 'G': converted.append('000')
+		elif x == 'C': converted.append('004')
+		elif x == 'A': converted.append('008')
+		elif x == 'T': converted.append('011')
+		elif x == '.': converted.append('020')
+		elif x == 'R': converted.append('050')
+		elif x == 'Y': converted.append('051')
+		elif x == 'S': converted.append('052')
+		elif x == 'W': converted.append('053')
+		elif x == 'K': converted.append('054')
+		elif x == 'M': converted.append('055')
+		elif x == 'B': converted.append('056')
+		elif x == 'D': converted.append('057')
+		elif x == 'H': converted.append('058')
+		elif x == 'V': converted.append('059')
+		elif x == 'N': converted.append('060')
+		else: converted.append('...')
+	return converted
+			
 def interpreter(source, inputdata=[], array=None, size=30000):
 	(array, apointer, inputdata, output, source, spointer) = \
 		r.interpret(source, ragaraja, 3, inputdata, array, size)
 	return (array, apointer, inputdata, output, source, spointer)
+	
+if __name__ == '__main__':
+    print interpreter('000008008000000011011011004008', [], None, 30)
