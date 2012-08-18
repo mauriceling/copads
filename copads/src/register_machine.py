@@ -36,8 +36,7 @@ def interpret(source, functions,
             (array, apointer, inputdata, output,
             source, spointer) = functions[cmd](array, apointer,
                                                inputdata, output,
-                                               source, spointer,
-                                               cmd)
+                                               source, spointer)
         except KeyError:
             print ' '.join(['Unknown function: ', cmd,
                             'at source position', str(spointer)])
