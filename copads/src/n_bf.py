@@ -27,7 +27,7 @@ import random
 import register_machine as r
 from lc_bf import increment, decrement, forward, backward, call_out
 
-def random_op(array, apointer, inputdata, output, source, spointer, cmd):
+def random_op(array, apointer, inputdata, output, source, spointer):
     '''
     Random operations / commands to simulate ambiguous DNA 
     nucleotides. Allowable ambiguous nucleotides are:
@@ -44,104 +44,104 @@ def random_op(array, apointer, inputdata, output, source, spointer, cmd):
     N: Random between A or T or C or G 
     '''
     r = random.random()
-    if cmd == 'R' and r < 0.5:
-        return increment(array, apointer, inputdata, output, source, spointer, cmd)
-    elif cmd == 'R' and r >= 0.5:
+    if source[spointer] == 'R' and r < 0.5:
+        return increment(array, apointer, inputdata, output, source, spointer)
+    elif source[spointer] == 'R' and r >= 0.5:
         if (apointer + 1) == len(array): 
             return (array, 0, inputdata, output, source, spointer)
         else:
-            return forward(array, apointer, inputdata, output, source, spointer, cmd)
-    elif cmd == 'Y' and r < 0.5:
-        return decrement(array, apointer, inputdata, output, source, spointer, cmd)
-    elif cmd == 'Y' and r >= 0.5:
+            return forward(array, apointer, inputdata, output, source, spointer)
+    elif source[spointer] == 'Y' and r < 0.5:
+        return decrement(array, apointer, inputdata, output, source, spointer)
+    elif source[spointer] == 'Y' and r >= 0.5:
         if apointer == 0: 
             return (array, len(array) - 1, inputdata, output, source, spointer)
         else:
-            return backward(array, apointer, inputdata, output, source, spointer, cmd)
-    elif cmd == 'S' and r < 0.5:
+            return backward(array, apointer, inputdata, output, source, spointer)
+    elif source[spointer] == 'S' and r < 0.5:
         if (apointer + 1) == len(array): 
             return (array, 0, inputdata, output, source, spointer)
         else:
-            return forward(array, apointer, inputdata, output, source, spointer, cmd)
-    elif cmd == 'S' and r >= 0.5:
+            return forward(array, apointer, inputdata, output, source, spointer)
+    elif source[spointer] == 'S' and r >= 0.5:
         if apointer == 0:
             return (array, len(array) - 1, inputdata, output, source, spointer)
         else:
-            return backward(array, apointer, inputdata, output, source, spointer, cmd)
-    elif cmd == 'W' and r < 0.5:
-        return increment(array, apointer, inputdata, output, source, spointer, cmd)
-    elif cmd == 'W' and r >= 0.5:
-        return decrement(array, apointer, inputdata, output, source, spointer, cmd)
-    elif cmd == 'K' and r < 0.5:
-        return decrement(array, apointer, inputdata, output, source, spointer, cmd)
-    elif cmd == 'K' and r >= 0.5:
+            return backward(array, apointer, inputdata, output, source, spointer)
+    elif source[spointer] == 'W' and r < 0.5:
+        return increment(array, apointer, inputdata, output, source, spointer)
+    elif source[spointer] == 'W' and r >= 0.5:
+        return decrement(array, apointer, inputdata, output, source, spointer)
+    elif source[spointer] == 'K' and r < 0.5:
+        return decrement(array, apointer, inputdata, output, source, spointer)
+    elif source[spointer] == 'K' and r >= 0.5:
         if (apointer + 1) == len(array): 
             return (array, 0, inputdata, output, source, spointer)
         else:
-            return forward(array, apointer, inputdata, output, source, spointer, cmd)
-    elif cmd == 'M' and r < 0.5:
-        return increment(array, apointer, inputdata, output, source, spointer, cmd)
-    elif cmd == 'M' and r >= 0.5:
+            return forward(array, apointer, inputdata, output, source, spointer)
+    elif source[spointer] == 'M' and r < 0.5:
+        return increment(array, apointer, inputdata, output, source, spointer)
+    elif source[spointer] == 'M' and r >= 0.5:
         if apointer == 0: 
             return (array, len(array) - 1, inputdata, output, source, spointer)
         else:
-            return backward(array, apointer, inputdata, output, source, spointer, cmd)
-    elif cmd == 'B' and r < 0.33:
+            return backward(array, apointer, inputdata, output, source, spointer)
+    elif source[spointer] == 'B' and r < 0.33:
         if (apointer + 1) == len(array): 
             return (array, 0, inputdata, output, source, spointer)
         else:
-            return forward(array, apointer, inputdata, output, source, spointer, cmd)
-    elif cmd == 'B' and r >= 0.33 and r < 0.67:
-        return decrement(array, apointer, inputdata, output, source, spointer, cmd)
-    elif cmd == 'B' and r >= 0.67:
+            return forward(array, apointer, inputdata, output, source, spointer)
+    elif source[spointer] == 'B' and r >= 0.33 and r < 0.67:
+        return decrement(array, apointer, inputdata, output, source, spointer)
+    elif source[spointer] == 'B' and r >= 0.67:
         if apointer == 0:
             return (array, len(array) - 1, inputdata, output, source, spointer)
         else:
-            return backward(array, apointer, inputdata, output, source, spointer, cmd)
-    elif cmd == 'D' and r < 0.33:
-        return increment(array, apointer, inputdata, output, source, spointer, cmd)
-    elif cmd == 'D' and r >= 0.33 and r < 0.67:
-        return decrement(array, apointer, inputdata, output, source, spointer, cmd)
-    elif cmd == 'D' and r >= 0.67:
+            return backward(array, apointer, inputdata, output, source, spointer)
+    elif source[spointer] == 'D' and r < 0.33:
+        return increment(array, apointer, inputdata, output, source, spointer)
+    elif source[spointer] == 'D' and r >= 0.33 and r < 0.67:
+        return decrement(array, apointer, inputdata, output, source, spointer)
+    elif source[spointer] == 'D' and r >= 0.67:
         if (apointer + 1) == len(array):
             return (array, 0, inputdata, output, source, spointer)
         else:
-            return forward(array, apointer, inputdata, output, source, spointer, cmd)
-    elif cmd == 'H' and r < 0.33:
-        return increment(array, apointer, inputdata, output, source, spointer, cmd)
-    elif cmd == 'H' and r >= 0.33 and r < 0.67:
-        return decrement(array, apointer, inputdata, output, source, spointer, cmd)
-    elif cmd == 'H' and r >= 0.67:
+            return forward(array, apointer, inputdata, output, source, spointer)
+    elif source[spointer] == 'H' and r < 0.33:
+        return increment(array, apointer, inputdata, output, source, spointer)
+    elif source[spointer] == 'H' and r >= 0.33 and r < 0.67:
+        return decrement(array, apointer, inputdata, output, source, spointer)
+    elif source[spointer] == 'H' and r >= 0.67:
         if apointer == 0:
             return (array, len(array) - 1, inputdata, output, source, spointer)
         else:
-            return backward(array, apointer, inputdata, output, source, spointer, cmd)
-    elif cmd == 'V' and r < 0.33:
-        return increment(array, apointer, inputdata, output, source, spointer, cmd)
-    elif cmd == 'V' and r >= 0.33 and r < 0.67:
+            return backward(array, apointer, inputdata, output, source, spointer)
+    elif source[spointer] == 'V' and r < 0.33:
+        return increment(array, apointer, inputdata, output, source, spointer)
+    elif source[spointer] == 'V' and r >= 0.33 and r < 0.67:
         if (apointer + 1) == len(array):
             return (array, 0, inputdata, output, source, spointer)
         else:
-            return forward(array, apointer, inputdata, output, source, spointer, cmd)
-    elif cmd == 'V' and r >= 0.67:
+            return forward(array, apointer, inputdata, output, source, spointer)
+    elif source[spointer] == 'V' and r >= 0.67:
         if apointer == 0:
             return (array, len(array) - 1, inputdata, output, source, spointer)
         else:
-            return backward(array, apointer, inputdata, output, source, spointer, cmd)
-    elif cmd == 'N' and r < 0.25:
-        return increment(array, apointer, inputdata, output, source, spointer, cmd)
-    elif cmd == 'N' and r >= 0.25 and r < 0.5:
-        return decrement(array, apointer, inputdata, output, source, spointer, cmd)
-    elif cmd == 'N' and r >= 0.5 and r < 0.75:
+            return backward(array, apointer, inputdata, output, source, spointer)
+    elif source[spointer] == 'N' and r < 0.25:
+        return increment(array, apointer, inputdata, output, source, spointer)
+    elif source[spointer] == 'N' and r >= 0.25 and r < 0.5:
+        return decrement(array, apointer, inputdata, output, source, spointer)
+    elif source[spointer] == 'N' and r >= 0.5 and r < 0.75:
         if (apointer + 1) == len(array): 
             return (array, 0, inputdata, output, source, spointer)
         else:
-            return forward(array, apointer, inputdata, output, source, spointer, cmd)
-    elif cmd == 'N' and r >= 0.75:
+            return forward(array, apointer, inputdata, output, source, spointer)
+    elif source[spointer] == 'N' and r >= 0.75:
         if apointer == 0:
             return (array, len(array) - 1, inputdata, output, source, spointer)
         else:
-            return backward(array, apointer, inputdata, output, source, spointer, cmd)
+            return backward(array, apointer, inputdata, output, source, spointer)
 
 
 nBF = {'A': increment,
