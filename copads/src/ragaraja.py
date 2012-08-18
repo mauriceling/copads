@@ -161,101 +161,102 @@ def nBF_random_op(array, apointer, inputdata, output, source, spointer):
     by 1) or "008" (increment by 1) or "011" (decrement by 1). Equivalent 
     to "N" in NucleotideBF (nBF)
     '''
+    cmd = source[spointer:spointer+3]
     r = random.random()
-    if source[spointer] == '050' and r < 0.5:
+    if cmd == '050' and r < 0.5:
         return increment(array, apointer, inputdata, output, source, spointer)
-    elif source[spointer] == '050' and r >= 0.5:
+    elif cmd == '050' and r >= 0.5:
         if (apointer + 1) == len(array): 
             return (array, 0, inputdata, output, source, spointer)
         else:
             return forward(array, apointer, inputdata, output, source, spointer)
-    elif source[spointer] == '051' and r < 0.5:
+    elif cmd == '051' and r < 0.5:
         return decrement(array, apointer, inputdata, output, source, spointer)
-    elif source[spointer] == '051' and r >= 0.5:
+    elif cmd == '051' and r >= 0.5:
         if apointer == 0: 
             return (array, len(array) - 1, inputdata, output, source, spointer)
         else:
             return backward(array, apointer, inputdata, output, source, spointer)
-    elif source[spointer] == '052' and r < 0.5:
+    elif cmd == '052' and r < 0.5:
         if (apointer + 1) == len(array): 
             return (array, 0, inputdata, output, source, spointer)
         else:
             return forward(array, apointer, inputdata, output, source, spointer)
-    elif source[spointer] == '052' and r >= 0.5:
+    elif cmd == '052' and r >= 0.5:
         if apointer == 0:
             return (array, len(array) - 1, inputdata, output, source, spointer)
         else:
             return backward(array, apointer, inputdata, output, source, spointer)
-    elif source[spointer] == '053' and r < 0.5:
+    elif cmd == '053' and r < 0.5:
         return increment(array, apointer, inputdata, output, source, spointer)
-    elif source[spointer] == '053' and r >= 0.5:
+    elif cmd == '053' and r >= 0.5:
         return decrement(array, apointer, inputdata, output, source, spointer)
-    elif source[spointer] == '054' and r < 0.5:
+    elif cmd == '054' and r < 0.5:
         return decrement(array, apointer, inputdata, output, source, spointer)
-    elif source[spointer] == '054' and r >= 0.5:
+    elif cmd == '054' and r >= 0.5:
         if (apointer + 1) == len(array): 
             return (array, 0, inputdata, output, source, spointer)
         else:
             return forward(array, apointer, inputdata, output, source, spointer)
-    elif source[spointer] == '055' and r < 0.5:
+    elif cmd == '055' and r < 0.5:
         return increment(array, apointer, inputdata, output, source, spointer)
-    elif source[spointer] == '055' and r >= 0.5:
+    elif cmd == '055' and r >= 0.5:
         if apointer == 0: 
             return (array, len(array) - 1, inputdata, output, source, spointer)
         else:
             return backward(array, apointer, inputdata, output, source, spointer)
-    elif source[spointer] == '056' and r < 0.33:
+    elif cmd == '056' and r < 0.33:
         if (apointer + 1) == len(array): 
             return (array, 0, inputdata, output, source, spointer)
         else:
             return forward(array, apointer, inputdata, output, source, spointer)
-    elif source[spointer] == '056' and r >= 0.33 and r < 0.67:
+    elif cmd == '056' and r >= 0.33 and r < 0.67:
         return decrement(array, apointer, inputdata, output, source, spointer)
-    elif source[spointer] == '056' and r >= 0.67:
+    elif cmd == '056' and r >= 0.67:
         if apointer == 0:
             return (array, len(array) - 1, inputdata, output, source, spointer)
         else:
             return backward(array, apointer, inputdata, output, source, spointer)
-    elif source[spointer] == '057' and r < 0.33:
+    elif cmd == '057' and r < 0.33:
         return increment(array, apointer, inputdata, output, source, spointer)
-    elif source[spointer] == '057' and r >= 0.33 and r < 0.67:
+    elif cmd == '057' and r >= 0.33 and r < 0.67:
         return decrement(array, apointer, inputdata, output, source, spointer)
-    elif source[spointer] == '057' and r >= 0.67:
+    elif cmd == '057' and r >= 0.67:
         if (apointer + 1) == len(array):
             return (array, 0, inputdata, output, source, spointer)
         else:
             return forward(array, apointer, inputdata, output, source, spointer)
-    elif source[spointer] == '058' and r < 0.33:
+    elif cmd == '058' and r < 0.33:
         return increment(array, apointer, inputdata, output, source, spointer)
-    elif source[spointer] == '058' and r >= 0.33 and r < 0.67:
+    elif cmd == '058' and r >= 0.33 and r < 0.67:
         return decrement(array, apointer, inputdata, output, source, spointer)
-    elif source[spointer] == '058' and r >= 0.67:
+    elif cmd == '058' and r >= 0.67:
         if apointer == 0:
             return (array, len(array) - 1, inputdata, output, source, spointer)
         else:
             return backward(array, apointer, inputdata, output, source, spointer)
-    elif source[spointer] == '059' and r < 0.33:
+    elif cmd == '059' and r < 0.33:
         return increment(array, apointer, inputdata, output, source, spointer)
-    elif source[spointer] == '059' and r >= 0.33 and r < 0.67:
+    elif cmd == '059' and r >= 0.33 and r < 0.67:
         if (apointer + 1) == len(array):
             return (array, 0, inputdata, output, source, spointer)
         else:
             return forward(array, apointer, inputdata, output, source, spointer)
-    elif source[spointer] == '059' and r >= 0.67:
+    elif cmd == '059' and r >= 0.67:
         if apointer == 0:
             return (array, len(array) - 1, inputdata, output, source, spointer)
         else:
             return backward(array, apointer, inputdata, output, source, spointer)
-    elif source[spointer] == '060' and r < 0.25:
+    elif cmd == '060' and r < 0.25:
         return increment(array, apointer, inputdata, output, source, spointer)
-    elif source[spointer] == '060' and r >= 0.25 and r < 0.5:
+    elif cmd == '060' and r >= 0.25 and r < 0.5:
         return decrement(array, apointer, inputdata, output, source, spointer)
-    elif source[spointer] == '060' and r >= 0.5 and r < 0.75:
+    elif cmd == '060' and r >= 0.5 and r < 0.75:
         if (apointer + 1) == len(array): 
             return (array, 0, inputdata, output, source, spointer)
         else:
             return forward(array, apointer, inputdata, output, source, spointer)
-    elif source[spointer] == '060' and r >= 0.75:
+    elif cmd == '060' and r >= 0.75:
         if apointer == 0:
             return (array, len(array) - 1, inputdata, output, source, spointer)
         else:
@@ -281,13 +282,14 @@ def tape_size(array, apointer, inputdata, output, source, spointer):
     036: Delete the current and append to the end of the output list. As a 
     result, the tape is 1 cell shorter. 
     '''
-    if source[spointer] == '016': array.append([0])
-    if source[spointer] == '017': array.append([0]*10)
-    if source[spointer] == '018': array = array[:-1]
-    if source[spointer] == '019': array = array[:-10]
-    if source[spointer] == '034': array.insert(apointer + 1, 0)
-    if source[spointer] == '035': array.pop(apointer)
-    if source[spointer] == '036': output.append(array.pop(apointer))
+    cmd = source[spointer:spointer+3]
+    if cmd == '016': array.append([0])
+    if cmd == '017': array.append([0]*10)
+    if cmd == '018': array = array[:-1]
+    if cmd == '019': array = array[:-10]
+    if cmd == '034': array.insert(apointer + 1, 0)
+    if cmd == '035': array.pop(apointer)
+    if cmd == '036': output.append(array.pop(apointer))
     if apointer >= len(array): apointer = len(array) - 1
     return (array, apointer, inputdata, output, source, spointer)
     
@@ -323,22 +325,23 @@ def source_move(array, apointer, inputdata, output, source, spointer):
     source pointer. For example, if current cell is "5.6" or "5", the next 
     5 instructions will be skipped.
     '''
-    if source[spointer] == '023' and (spointer + 3) < len(source):
+    cmd = source[spointer:spointer+3]
+    if cmd == '023' and (spointer + 3) < len(source):
         spointer = spointer + 3
-    if source[spointer] == '024' and (spointer + 15) < len(source):
+    if cmd == '024' and (spointer + 15) < len(source):
         spointer = spointer + 15
-    if source[spointer] == '025' and (spointer + 30) < len(source):
+    if cmd == '025' and (spointer + 30) < len(source):
         spointer = spointer + 30
-    if source[spointer] == '026' and (spointer - 3) >= 0:
+    if cmd == '026' and (spointer - 3) >= 0:
         spointer = spointer - 3
-    if source[spointer] == '027' and (spointer - 15) >= 0:
+    if cmd == '027' and (spointer - 15) >= 0:
         spointer = spointer - 15
-    if source[spointer] == '028' and (spointer - 30) >= 0:
+    if cmd == '028' and (spointer - 30) >= 0:
         spointer = spointer - 30
-    if source[spointer] == '082' and array[apointer] == 0 and \
+    if cmd == '082' and array[apointer] == 0 and \
     (spointer + 3) <= len(source):
         spointer = spointer + 3
-    if source[spointer] == '083' and \
+    if cmd == '083' and \
     (spointer + (3 * abs(int(array[apointer])))) < len(source):
         spointer = spointer + (3 * abs(int(array[apointer])))
     return (array, apointer, inputdata, output, source, spointer)
@@ -354,11 +357,12 @@ def set_tape_value(array, apointer, inputdata, output, source, spointer):
     097: Set the value of the current cell to pi (3.14159265358979323846)
     098: Set the value of the current cell to e (2.718281828459045) 
     '''
-    if source[spointer] == '084': array[apointer] = 0
-    if source[spointer] == '085': array[apointer] = -1
-    if source[spointer] == '086': array[apointer] = 1
-    if source[spointer] == '097': array[apointer] = constants.PI
-    if source[spointer] == '098': array[apointer] = math.e
+    cmd = source[spointer:spointer+3]
+    if cmd == '084': array[apointer] = 0
+    if cmd == '085': array[apointer] = -1
+    if cmd == '086': array[apointer] = 1
+    if cmd == '097': array[apointer] = constants.PI
+    if cmd == '098': array[apointer] = math.e
     return (array, apointer, inputdata, output, source, spointer)
     
 def mathematics(array, apointer, inputdata, output, source, spointer):
@@ -483,119 +487,120 @@ def mathematics(array, apointer, inputdata, output, source, spointer):
     base of the value of (n+1)th cell, and store the value in the current 
     cell. Array[n] = log(Array[n], base=Array[n+1])
     '''
-    if source[spointer] == '065':
+    cmd = source[spointer:spointer+3]
+    if cmd == '065':
         if (apointer + 1) < len(array):
             array[apointer] = array[apointer] + array[apointer+1]
         else:
             array[apointer] = array[apointer] + array[0]
-    if source[spointer] == '066' and len(inputdata) > 0:
+    if cmd == '066' and len(inputdata) > 0:
         array[apointer] = array[apointer] + inputdata[0]
-    if source[spointer] == '067' and len(inputdata) > 0:
+    if cmd == '067' and len(inputdata) > 0:
         array[apointer] = array[apointer] + inputdata[-1]
-    if source[spointer] == '068':
+    if cmd == '068':
         if (apointer + 1) < len(array):
             array[apointer] = array[apointer+1] - array[apointer]
         else:
             array[apointer] = array[0] - array[apointer]
-    if source[spointer] == '069' and len(inputdata) > 0:
+    if cmd == '069' and len(inputdata) > 0:
         array[apointer] = inputdata[0] - array[apointer]
-    if source[spointer] == '070' and len(inputdata) > 0:
+    if cmd == '070' and len(inputdata) > 0:
         array[apointer] = inputdata[-1] - array[apointer]
-    if source[spointer] == '071': 
+    if cmd == '071': 
         if (apointer + 1) < len(array):
             array[apointer] = array[apointer+1] * array[apointer]
         else:
             array[apointer] = array[0] * array[apointer]
-    if source[spointer] == '072' and len(inputdata) > 0:
+    if cmd == '072' and len(inputdata) > 0:
         array[apointer] = inputdata[0] * array[apointer]
-    if source[spointer] == '073' and len(inputdata) > 0:
+    if cmd == '073' and len(inputdata) > 0:
         array[apointer] = inputdata[-1] * array[apointer]
-    if source[spointer] == '074':
+    if cmd == '074':
         if (apointer + 1) < len(array):
             array[apointer] = array[apointer+1] / array[apointer]
         else:
             array[apointer] = array[0] / array[apointer]
-    if source[spointer] == '075' and len(inputdata) > 0:
+    if cmd == '075' and len(inputdata) > 0:
         array[apointer] = inputdata[0] / array[apointer]
-    if source[spointer] == '076' and len(inputdata) > 0:
+    if cmd == '076' and len(inputdata) > 0:
         array[apointer] = inputdata[-1] / array[apointer]
-    if source[spointer] == '077':
+    if cmd == '077':
         if (apointer + 1) < len(array):
             array[apointer] = array[apointer+1] % array[apointer]
         else:
             array[apointer] = array[0] % array[apointer]
-    if source[spointer] == '078' and len(inputdata) > 0:
+    if cmd == '078' and len(inputdata) > 0:
         array[apointer] = inputdata[0] % array[apointer]
-    if source[spointer] == '079' and len(inputdata) > 0:
+    if cmd == '079' and len(inputdata) > 0:
         array[apointer] = inputdata[-1] % array[apointer]
-    if source[spointer] == '080':
+    if cmd == '080':
         array[apointer] = int(array[apointer])
-    if source[spointer] == '087':
+    if cmd == '087':
         array[apointer] = -1 * array[apointer]
-    if source[spointer] == '088':
+    if cmd == '088':
         array[apointer] = math.sin(array[apointer])
-    if source[spointer] == '089':
+    if cmd == '089':
         array[apointer] = math.cos(array[apointer])
-    if source[spointer] == '090':
+    if cmd == '090':
         array[apointer] = math.tan(array[apointer])
-    if source[spointer] == '091':
+    if cmd == '091':
         array[apointer] = math.asin(array[apointer])
-    if source[spointer] == '092':
+    if cmd == '092':
         array[apointer] = math.acos(array[apointer])
-    if source[spointer] == '093':
+    if cmd == '093':
         array[apointer] = math.atan(array[apointer])
-    if source[spointer] == '094':
+    if cmd == '094':
         array[apointer] = 1 / array[apointer]
-    if source[spointer] == '095':
+    if cmd == '095':
         array[apointer] = math.sqrt(array[apointer])
-    if source[spointer] == '096':
+    if cmd == '096':
         array[apointer] = math.log(array[apointer], math.e)
-    if source[spointer] == '099':
+    if cmd == '099':
         array[apointer] = math.sinh(array[apointer])
-    if source[spointer] == '100':
+    if cmd == '100':
         array[apointer] = math.cosh(array[apointer])
-    if source[spointer] == '101':
+    if cmd == '101':
         array[apointer] = math.tanh(array[apointer])
-    if source[spointer] == '102':
+    if cmd == '102':
         array[apointer] = math.asinh(array[apointer])
-    if source[spointer] == '103':
+    if cmd == '103':
         array[apointer] = math.acosh(array[apointer])
-    if source[spointer] == '104':
+    if cmd == '104':
         array[apointer] = math.atanh(array[apointer])
-    if source[spointer] == '105':
+    if cmd == '105':
         array[apointer] = math.degrees(array[apointer])
-    if source[spointer] == '106':
+    if cmd == '106':
         array[apointer] = math.radians(array[apointer])
-    if source[spointer] == '107':
+    if cmd == '107':
         array[apointer] = array[apointer] ** math.e
-    if source[spointer] == '108':
+    if cmd == '108':
         array[apointer] = math.e ** array[apointer]
-    if source[spointer] == '109':
+    if cmd == '109':
         array[apointer] = 10 ** array[apointer]
-    if source[spointer] == '110': 
+    if cmd == '110': 
         if (apointer + 1) < len(array):
             array[apointer] = array[apointer] ** array[apointer+1]
         else:
             array[apointer] = array[apointer] ** array[0]
-    if source[spointer] == '111':
+    if cmd == '111':
         if (apointer + 1) < len(array):
             array[apointer] = array[apointer] ** (1 / array[apointer+1])
         else:
             array[apointer] = array[apointer] ** (1 / array[0])
-    if source[spointer] == '112':
+    if cmd == '112':
         array[apointer] = math.erf(array[apointer])
-    if source[spointer] == '113':
+    if cmd == '113':
         array[apointer] = math.erfc(array[apointer])
-    if source[spointer] == '114' and array[apointer] >= 0:
+    if cmd == '114' and array[apointer] >= 0:
         array[apointer] = math.factorial(int(array[apointer]))
-    if source[spointer] == '115':
+    if cmd == '115':
         array[apointer] = math.factorial(abs(int(array[apointer])))
-    if source[spointer] == '116':
+    if cmd == '116':
         if (apointer + 1) < len(array):
             array[apointer] = math.hypot(array[apointer], array[apointer+1])
         else:
             array[apointer] = math.hypot(array[apointer], array[0])    
-    if source[spointer] == '117':
+    if cmd == '117':
         if (apointer + 1) < len(array):
             array[apointer] = math.log(array[apointer], array[apointer+1])
         else:
@@ -625,18 +630,19 @@ def output_IO(array, apointer, inputdata, output, source, spointer):
     041: Remove first value from the output list.
     042: Remove last value from the output list. 
     '''
-    if source[spointer] == '021': output.append(apointer)
-    if source[spointer] == '022': output.append(spointer)
-    if source[spointer] == '037' and len(output) > 0:
+    cmd = source[spointer:spointer+3]
+    if cmd == '021': output.append(apointer)
+    if cmd == '022': output.append(spointer)
+    if cmd == '037' and len(output) > 0:
         array[apointer] = output.pop(-1)
-    if source[spointer] == '038' and len(output) > 0:
+    if cmd == '038' and len(output) > 0:
         array[apointer] = output[-1]
-    if source[spointer] == '039' and len(output) > 0:
+    if cmd == '039' and len(output) > 0:
         array[apointer] = output.pop(0)
-    if source[spointer] == '040' and len(output) > 0:
+    if cmd == '040' and len(output) > 0:
         array[apointer] = output[0]
-    if source[spointer] == '041' and len(output) > 0: output.pop(0)
-    if source[spointer] == '042' and len(output) > 0: output.pop(-1)
+    if cmd == '041' and len(output) > 0: output.pop(0)
+    if cmd == '042' and len(output) > 0: output.pop(-1)
     return (array, apointer, inputdata, output, source, spointer)
 
 def logic(array, apointer, inputdata, output, source, spointer):
@@ -686,6 +692,7 @@ def logic(array, apointer, inputdata, output, source, spointer):
     "0" is False and "1" is True. Array[current] NOR Array[current+1] 
     is equivalent to NOT (Array[current] OR Array[current+1])
     '''
+    cmd = source[spointer:spointer+3]
     xValue = array[apointer]
     if array[apointer] > 0: x = True
     else: x = False
@@ -697,37 +704,37 @@ def logic(array, apointer, inputdata, output, source, spointer):
         yValue = array[0]
         if array[0] > 0: y = True
         else: y = False
-    if source[spointer] == '120': 
+    if cmd == '120': 
         if (x and y) == True: array[apointer] = 1
         else: array[apointer] = 0
-    if source[spointer] == '121': 
+    if cmd == '121': 
         if (x or y) == True: array[apointer] = 1
         else: array[apointer] = 0
-    if source[spointer] == '122': 
+    if cmd == '122': 
         if not x == True: array[apointer] = 1
         else: array[apointer] = 0
-    if source[spointer] == '123': 
+    if cmd == '123': 
         if xValue < yValue: array[apointer] = 1
         else: array[apointer] = 0
-    if source[spointer] == '124': 
+    if cmd == '124': 
         if xValue > yValue: array[apointer] = 1
         else: array[apointer] = 0
-    if source[spointer] == '125': 
+    if cmd == '125': 
         if xValue == yValue: array[apointer] = 1
         else: array[apointer] = 0
-    if source[spointer] == '126': 
+    if cmd == '126': 
         if xValue != yValue: array[apointer] = 1
         else: array[apointer] = 0
-    if source[spointer] == '127': 
+    if cmd == '127': 
         if xValue <= yValue: array[apointer] = 1
         else: array[apointer] = 0
-    if source[spointer] == '128': 
+    if cmd == '128': 
         if xValue >= yValue: array[apointer] = 1
         else: array[apointer] = 0
-    if source[spointer] == '129': 
+    if cmd == '129': 
         if (not (x and y)) == True: array[apointer] = 1
         else: array[apointer] = 0
-    if source[spointer] == '130': 
+    if cmd == '130': 
         if (not (x or y)) == True: array[apointer] = 1
         else: array[apointer] = 0
     return (array, apointer, inputdata, output, source, spointer)
@@ -743,9 +750,10 @@ def flipping(array, apointer, inputdata, output, source, spointer):
     048: Flip the instruction list (source) but the source pointer 
     does not flip in location.
     '''
-    if source[spointer] == '046': array.reverse()
-    if source[spointer] == '047': output.reverse()
-    if source[spointer] == '048': output.reverse()
+    cmd = source[spointer:spointer+3]
+    if cmd == '046': array.reverse()
+    if cmd == '047': output.reverse()
+    if cmd == '048': output.reverse()
     return (array, apointer, inputdata, output, source, spointer)
 
 def input_IO(array, apointer, inputdata, output, source, spointer):
@@ -757,7 +765,8 @@ def input_IO(array, apointer, inputdata, output, source, spointer):
     cell and without removing the value from the input list. If 
     input list is empty, "0" will be written. 
     '''
-    if source[spointer] == '064':
+    cmd = source[spointer:spointer+3]
+    if cmd == '064':
         if len(inputdata) == 0: array[apointer] = 0
         else: array[apointer] = inputdata[0]
     return (array, apointer, inputdata, output, source, spointer)
@@ -771,7 +780,8 @@ def tape_manipulate(array, apointer, inputdata, output, source, spointer):
     133: Flip the tape from the cell after the current cell to the end of the 
     tape (temporarily breaking the circularity of the tape).
     '''
-    if source[spointer] == '081':
+    cmd = source[spointer:spointer+3]
+    if cmd == '081':
         if (apointer + 1) < len(array):
             temp = array[apointer]
             array[apointer] = array[apointer+1]
@@ -780,7 +790,7 @@ def tape_manipulate(array, apointer, inputdata, output, source, spointer):
             temp = array[apointer]
             array[apointer] = array[0]
             array[0] = temp
-    if source[spointer] == '133' and (apointer + 1) < len(array):
+    if cmd == '133' and (apointer + 1) < len(array):
         temp = array[apointer+1:]
         array = array[0:apointer+1]
         temp.reverse()
@@ -793,7 +803,8 @@ def source_manipulate(array, apointer, inputdata, output, source, spointer):
     
     Instructions handled:
     '''
-    if source[spointer] == 'xxx': pass
+    cmd = source[spointer:spointer+3]
+    if cmd == 'xxx': pass
     return (array, apointer, inputdata, output, source, spointer)
     
 def interpreter_manipulate(array, apointer, inputdata, output, source, spointer):
@@ -802,7 +813,8 @@ def interpreter_manipulate(array, apointer, inputdata, output, source, spointer)
     
     Instructions handled:
     '''
-    if source[spointer] == 'xxx': pass
+    cmd = source[spointer:spointer+3]
+    if cmd == 'xxx': pass
     return (array, apointer, inputdata, output, source, spointer)
     
 def not_used(array, apointer, inputdata, output, source, spointer):
@@ -810,7 +822,8 @@ def not_used(array, apointer, inputdata, output, source, spointer):
     
     Instructions handled:
     '''
-    if source[spointer] == 'xxx': pass
+    cmd = source[spointer:spointer+3]
+    if cmd == 'xxx': pass
     return (array, apointer, inputdata, output, source, spointer)
 
 ragaraja = {'000': forward, '001': tape_move,
