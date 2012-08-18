@@ -85,22 +85,23 @@ def tape_move(array, apointer, inputdata, output, source, spointer):
     062: Move backward by the number of cells signified by the current 
     cell. 
     '''
-    if source[spointer] == '001': apointer = apointer + 5
-    if source[spointer] == '002': apointer = apointer + 10
-    if source[spointer] == '003': 
+    cmd = source[spointer:spointer+3]
+    if cmd == '001': apointer = apointer + 5
+    if cmd == '002': apointer = apointer + 10
+    if cmd == '003': 
         move = int(float(array[apointer]) * float(array[apointer]))
         apointer = apointer + float(array[apointer]) + move
-    if source[spointer] == '005': apointer = apointer - 5
-    if source[spointer] == '006': apointer = apointer - 10
-    if source[spointer] == '007': 
+    if cmd == '005': apointer = apointer - 5
+    if cmd == '006': apointer = apointer - 10
+    if cmd == '007': 
         move = int(float(array[apointer]) * float(array[apointer]))
         apointer = apointer + float(array[apointer]) - move
-    if source[spointer] == '043': apointer = 0
-    if source[spointer] == '044': apointer = len(array)
-    if source[spointer] == '045': apointer = int(output[-1])
-    if source[spointer] == '061': 
+    if cmd == '043': apointer = 0
+    if cmd == '044': apointer = len(array)
+    if cmd == '045': apointer = int(output[-1])
+    if cmd == '061': 
         apointer = apointer + int(array[apointer])
-    if source[spointer] == '062': 
+    if cmd == '062': 
         apointer = apointer - int(array[apointer])
     return (array, apointer, inputdata, output, source, spointer)
 	
@@ -116,17 +117,18 @@ def accumulations(array, apointer, inputdata, output, source, spointer):
     032: Double current tape cell value.
     033: Half current tape cell value. 
     '''
-    if source[spointer] == '009': 
+    cmd = source[spointer:spointer+3]
+    if cmd == '009': 
         array[apointer] = array[apointer] + 5
-    if source[spointer] == '010': 
+    if cmd == '010': 
         array[apointer] = array[apointer] + 10
-    if source[spointer] == '012': 
+    if cmd == '012': 
         array[apointer] = array[apointer] - 5
-    if source[spointer] == '013': 
+    if cmd == '013': 
         array[apointer] = array[apointer] - 10
-    if source[spointer] == '032': 
+    if cmd == '032': 
         array[apointer] = 2 * array[apointer]
-    if source[spointer] == '032': 
+    if cmd == '032': 
         array[apointer] = 0.5 * array[apointer]
     return (array, apointer, inputdata, output, source, spointer)
 	
@@ -1370,3 +1372,4 @@ def interpreter(source, inputdata=[], array=None, size=30000):
 	
 if __name__ == '__main__':
     print interpreter('000008008000000011011011004008', [], None, 30)
+    print interpreter('001009002010005012', [], None, 30)
