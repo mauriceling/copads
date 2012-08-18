@@ -84,6 +84,21 @@ def tape_move(array, apointer, inputdata, output, source, spointer):
     cell.
     062: Move backward by the number of cells signified by the current 
     cell. 
+    140: Move tape pointer to the centre of the tape. If the tape has odd 
+    number cells, it will move to the lower cell. For example, this instruction 
+    will move the tape pointer to the 500th cell of a 1000-cell tape, or 142nd 
+    of a 285-cell tape.
+    141: Move tape pointer to 1/4 the of the tape. If the tape has odd number 
+    cells, it will move to the lower cell. For example, this instruction will 
+    move the tape pointer to the 250th cell of a 1000-cell tape, or 71st of a 
+    285-cell tape.
+    142: Move tape pointer to 3/4 the of the tape. If the tape has odd number 
+    cells, it will move to the lower cell. For example, this instruction will 
+    move the tape pointer to the 750th cell of a 1000-cell tape, or 213rd of a 
+    285-cell tape.
+    143: Move tape pointer to the position as the integer value in the current 
+    cell. If the value of the cell is larger than the length of the tape, it 
+    will move to the modulus of the integer value in the current cell.
     '''
     if source[spointer] == '001': apointer = apointer + 5
     if source[spointer] == '002': apointer = apointer + 10
@@ -102,8 +117,12 @@ def tape_move(array, apointer, inputdata, output, source, spointer):
         apointer = apointer + int(array[apointer])
     if source[spointer] == '062': 
         apointer = apointer - int(array[apointer])
+    if source[spointer] == '140': apointer = int(len(array) / 2)
+    if source[spointer] == '141': apointer = int(len(array) / 4)
+    if source[spointer] == '142': apointer = int(len(array) * 0.75)
+    if source[spointer] == '143': apointer = int(array[apointer]) % len(array)
     return (array, apointer, inputdata, output, source, spointer)
-	
+
 def accumulations(array, apointer, inputdata, output, source, spointer):
     '''
     Accumulate the tape cell by more than one increment or decrement.
@@ -129,7 +148,7 @@ def accumulations(array, apointer, inputdata, output, source, spointer):
     if source[spointer] == '032': 
         array[apointer] = 0.5 * array[apointer]
     return (array, apointer, inputdata, output, source, spointer)
-	
+
 def nBF_random_op(array, apointer, inputdata, output, source, spointer):
     '''
     NucleotideBF (nBF) random operations - to simulate ambiguous DNA bases.
@@ -881,8 +900,8 @@ ragaraja = {'000': forward, '001': tape_move,
             '134': not_used, '135': not_used,
             '136': not_used, '137': not_used,
             '138': not_used, '139': not_used,
-            '140': not_used, '141': not_used,
-            '142': not_used, '143': not_used,
+            '140': tape_move, '141': tape_move,
+            '142': tape_move, '143': tape_move,
             '144': not_used, '145': not_used,
             '146': not_used, '147': not_used,
             '148': not_used, '149': not_used,
