@@ -96,9 +96,9 @@ def tape_move(array, apointer, inputdata, output, source, spointer):
     if cmd == '006': apointer = apointer - 10
     if cmd == '007': 
         move = int(float(array[apointer]) * float(array[apointer]))
-        apointer = apointer + float(array[apointer]) - move
+        apointer = apointer - move
     if cmd == '043': apointer = 0
-    if cmd == '044': apointer = len(array)
+    if cmd == '044': apointer = len(array) - 1
     if cmd == '045': apointer = int(output[-1])
     if cmd == '061': 
         apointer = apointer + int(array[apointer])
