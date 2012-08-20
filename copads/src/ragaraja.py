@@ -284,8 +284,8 @@ def tape_size(array, apointer, inputdata, output, source, spointer):
     result, the tape is 1 cell shorter. 
     '''
     cmd = source[spointer:spointer+3]
-    if cmd == '016': array.append([0])
-    if cmd == '017': array.append([0]*10)
+    if cmd == '016': array = array + [0]
+    if cmd == '017': array = array + [0]*10
     if cmd == '018': array = array[:-1]
     if cmd == '019': array = array[:-10]
     if cmd == '034': array.insert(apointer + 1, 0)
