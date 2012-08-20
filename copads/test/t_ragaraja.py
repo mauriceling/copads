@@ -188,6 +188,17 @@ testdata = {
 0620160180170190460460811330000840000850000860000970000980041200001210001220040\
 04008004008071065068000008115',
                  'spointer': 234},
+            # Testing 021, 022, 038, 042, 047
+            21: {'in_source': '021022047000038042',
+                 'array': [6,0,1,0,0,0,0,0,-1,-4],
+                 'apointer': 1,
+                 'inputdata': [],
+                 'output': [237],
+                 'out_source': '00800800800800000001101101100400400400401101101\
+1011011000000000008008008001009002005010043003044006012032013033004004004061004\
+0620160180170190460460811330000840000850000860000970000980041200001210001220040\
+04008004008071065068000008115021022047000038042',
+                 'spointer': 252},
            }
 
 tests = testdata.keys()
@@ -196,8 +207,8 @@ tests.sort()
 source = ''
 
 def comparator(data, result):
-    if data == result: return 'Passed'
-    else: return 'FAILED'
+    if data == result: return 'PASSED:'
+    else: return 'FAILED:'
     
 for t in tests:
     isource = source + testdata[t]['in_source']
@@ -210,6 +221,8 @@ for t in tests:
     array = [0]*10
     (array, apointer, inputdata, output, 
         source, spointer) = r.interpret(isource, N.ragaraja, 3, [], array, 10)
+    #(array, apointer, inputdata, output, 
+    #    source, spointer) = N.interpreter(isource, [], array, 30)
     print ' '.join(['Test number:', str(t), 
                     ', Original source code:', str(isource)])
     print ' '.join(['    ', str(comparator(oarray, array)), 'array.', 

@@ -1328,7 +1328,31 @@ ragaraja = {'000': forward, '001': tape_move,
             '996': not_used, '997': not_used,
             '998': not_used, '999': not_used
            }
-			
+
+tested_ragaraja_instructions = ['000', '001', '002', '003', '004', '005', 
+    '006', '008', '009', '010', '011', '012', '013', '016', '017', '018', 
+    '019', '021', '022', '032', '033', '038', '042', '043', '044', '046', 
+    '047', '061', '062', '065', '068', '071', '081', '084', '085', '086', 
+    '097', '098', '115', '120', '121', '122', '133']
+ 
+def tested_ragaraja(source):
+    '''
+    Checks a Ragaraja source code string and removes any instructions that 
+    had not been tested. The list of tested instructions is determined by 
+    tested_ragaraja_instructions list.
+    
+    @param source: Ragaraja source code string
+    @type source: string
+    @return: Ragaraja source code string
+    '''
+    tested_source = []
+    spointer = 0
+    while spointer < len(source):
+        if source[spointer:spointer+3] in tested_ragaraja_instructions:
+            tested_source = tested_source + [source[spointer:spointer+3]]
+        spointer = spointer + 3
+    return ''.join(tested_source)
+  
 def LCBF_to_Ragaraja(source):
     '''
     Converts Loose Circular Brainfuck source code to Ragaraja source code
@@ -1378,12 +1402,3 @@ def nBF_to_Ragaraja(source):
         elif x == 'N': converted.append('060')
         else: converted.append('...')
     return converted
-			
-def interpreter(source, inputdata=[], array=None, size=30000):
-    (array, apointer, inputdata, output, source, spointer) = \
-        r.interpret(source, ragaraja, 3, inputdata, array, size)
-    return (array, apointer, inputdata, output, source, spointer)
-	
-if __name__ == '__main__':
-    print interpreter('000008008000000011011011004008', [], None, 30)
-    print interpreter('001009002010005012', [], None, 30)
