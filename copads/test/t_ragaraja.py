@@ -8,6 +8,7 @@ import register_machine as r
 
 testdata = {
             # Tests 1-7 are the same tests as for NucleotideBF (t_n_bf.py)
+            # Testing 000, 004, 008, 011
             1: {'in_source': '008008008008',
                 'array': [4,0,0,0,0,0,0,0,0,0],
                 'apointer': 0,
@@ -42,7 +43,7 @@ testdata = {
                 'inputdata': [],
                 'output': [],
                 'out_source': '008008008008000000011011011004004004004011011011\
-                011011',
+011011',
                 'spointer': 54},
             6: {'in_source': '000000000',
                 'array': [4,0,-3,0,0,0,0,0,-5,0],
@@ -50,7 +51,7 @@ testdata = {
                 'inputdata': [],
                 'output': [],
                 'out_source': '008008008008000000011011011004004004004011011011\
-                011011000000000',
+011011000000000',
                 'spointer': 63},
             7: {'in_source': '008008008',
                 'array': [4,3,-3,0,0,0,0,0,-5,0],
@@ -58,8 +59,35 @@ testdata = {
                 'inputdata': [],
                 'output': [],
                 'out_source': '008008008008000000011011011004004004004011011011\
-                011011000000000008008008',
+011011000000000008008008',
                 'spointer': 72},
+            # Testing 001, 009
+            8: {'in_source': '001009',
+                'array': [4,3,-3,0,0,0,5,0,-5,0],
+                'apointer': 6,
+                'inputdata': [],
+                'output': [],
+                'out_source': '008008008008000000011011011004004004004011011011\
+011011000000000008008008001009',
+                'spointer': 78},
+            # Testing 002, 005
+            9: {'in_source': '002005010',
+                'array': [4,13,-3,0,0,0,5,0,-5,0],
+                'apointer': 1,
+                'inputdata': [],
+                'output': [],
+                'out_source': '008008008008000000011011011004004004004011011011\
+011011000000000008008008001009002005010',
+                'spointer': 87},
+            # Testing 003, 043
+            10: {'in_source': '043003',
+                 'array': [4,13,-3,0,0,0,5,0,-5,0],
+                 'apointer': 6,
+                 'inputdata': [],
+                 'output': [],
+                 'out_source': '00800800800800000001101101100400400400401101101\
+1011011000000000008008008001009002005010043003',
+                 'spointer': 93},
            }
 
 tests = testdata.keys()
@@ -108,3 +136,15 @@ for t in tests:
                     'Expected source pointer:', str(ospointer),
                     'Actual source pointer:', str(spointer)])
     print '=========================================================='
+    
+instruction_set = {}
+for i in range(0, len(isource), 3): instruction_set[isource[i:i+3]] = ''
+instruction_set = instruction_set.keys()
+instruction_set.sort()
+print 
+print 'Instruction set tested: '
+print ' '.join(instruction_set)
+print
+print 'Number of instructions tested :' + str(len(instruction_set))
+print
+print '----- End of test -----'

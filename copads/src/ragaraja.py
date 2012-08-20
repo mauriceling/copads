@@ -61,10 +61,11 @@ def tape_move(array, apointer, inputdata, output, source, spointer):
     002: Move forward by 10 cells on tape. Equivalent to 10 times of 
     "000".
     003: Move forward by NxN cells on tape where N is the value of 
-    the current cell. This will only work if N is a positive number. 
-    If N is a decimal, it will move forward by the floor of NxN. For 
-    example, if N is 4.2, this operation will tape pointer forward 
-    by 17 cells. 
+    the current cell. If N is a decimal, it will move forward by the 
+    floor of NxN. For example, if N is 4.2, this operation will tape 
+    pointer forward by 17 cells. As NxN is always a positive number, 
+    it does not matter if the value of the current cell is positive 
+    or negative.
     005: Move backward by 5 cells on tape. Equivalent to 5 times of 
     "004".
     006: Move backward by 10 cells on tape. Equivalent to 10 times of 
@@ -90,7 +91,7 @@ def tape_move(array, apointer, inputdata, output, source, spointer):
     if cmd == '002': apointer = apointer + 10
     if cmd == '003': 
         move = int(float(array[apointer]) * float(array[apointer]))
-        apointer = apointer + float(array[apointer]) + move
+        apointer = apointer + move
     if cmd == '005': apointer = apointer - 5
     if cmd == '006': apointer = apointer - 10
     if cmd == '007': 
