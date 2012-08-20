@@ -129,7 +129,7 @@ def accumulations(array, apointer, inputdata, output, source, spointer):
         array[apointer] = array[apointer] - 10
     if cmd == '032': 
         array[apointer] = 2 * array[apointer]
-    if cmd == '032': 
+    if cmd == '033': 
         array[apointer] = 0.5 * array[apointer]
     return (array, apointer, inputdata, output, source, spointer)
 	
