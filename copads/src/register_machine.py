@@ -40,7 +40,7 @@ def interpret(source, functions,
         except KeyError:
             print ' '.join(['Unknown function: ', cmd,
                             'at source position', str(spointer)])
-        if apointer > size:
+        if apointer > size - 1:
             apointer = apointer - size
         if apointer < 0:
             apointer = size + apointer
