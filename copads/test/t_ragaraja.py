@@ -246,18 +246,45 @@ def comparator(data, result):
     else: return 'FAILED:'
     
 for t in tests:
+    # ----------------------------
+    # ------- PREPARE TEST -------
+    # ----------------------------
+    
+    # Step 1: Check to concatenate source or restart source
+    try: 
+        if testdata[t]['restart'] == True: 
+            source = ''
+    except KeyError: 
+        pass 
     isource = source + testdata[t]['in_source']
+    
+    # Step 2: Get input data list from test (if any)
+    try: inputdata = testdata[t]['forcedindata']
+    except KeyError: inputdata = []
+    
+    # Step 3: get pre-execution tape from test (if any)
+    try: array = testdata[t]['forcedinarray']
+    except KeyError: array = [0]*10
+    
+    # Step 4: Get expected results after execution
     oarray = testdata[t]['array']
     oapointer = testdata[t]['apointer']
     oinputdata = testdata[t]['inputdata']
     ooutput = testdata[t]['output']
     osource = testdata[t]['out_source']
     ospointer = testdata[t]['spointer']
-    array = [0]*10
-    (array, apointer, inputdata, output, 
-        source, spointer) = r.interpret(isource, N.ragaraja, 3, [], array, 10)
-    #(array, apointer, inputdata, output, 
-    #    source, spointer) = N.interpreter(isource, [], array, 30)
+    
+    # ----------------------------
+    # ------- EXECUTE TEST -------
+    # ----------------------------
+    
+    (array, apointer, inputdata, output, source, spointer) = \
+        r.interpret(isource, N.ragaraja, 3, inputdata, array, 10)
+    
+    # ---------------------------------------------------
+    # ------- COMPARE EXPECTED RESULTS AFTER TEST -------
+    # ---------------------------------------------------
+    
     print ' '.join(['Test number:', str(t), 
                     ', Original source code:', str(isource)])
     print ' '.join(['    ', str(comparator(oarray, array)), 'array.', 
@@ -284,7 +311,11 @@ for t in tests:
                     'Expected source pointer:', str(ospointer),
                     'Actual source pointer:', str(spointer)])
     print '=========================================================='
-    
+
+# ---------------------------
+# --------- SUMMARY --------- 
+# ---------------------------
+   
 instruction_set = {}
 for i in range(0, len(isource), 3): instruction_set[isource[i:i+3]] = ''
 instruction_set = instruction_set.keys()
