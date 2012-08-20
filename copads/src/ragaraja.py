@@ -754,7 +754,7 @@ def flipping(array, apointer, inputdata, output, source, spointer):
     cmd = source[spointer:spointer+3]
     if cmd == '046': array.reverse()
     if cmd == '047': output.reverse()
-    if cmd == '048': output.reverse()
+    if cmd == '048': source = source[::-1]
     return (array, apointer, inputdata, output, source, spointer)
 
 def input_IO(array, apointer, inputdata, output, source, spointer):
