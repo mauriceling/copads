@@ -389,11 +389,16 @@ for t in tests:
                     'Actual source pointer:', str(spointer)])
     print '=========================================================='
 
+# ---------------------------------------------
+# --------- TESTING RANDOM OPERATIONS --------- 
+# ---------------------------------------------
+
 print
 print '===== Testing random operations ====='
-random_source = '050051052053054055056057058059060050051052053054055056057\
-058059060'
-for x in range(10):
+random_source = '050051052053054055056057058059060'
+random_source = random_source + random_source + random_source + \
+                random_source + random_source + random_source
+for x in range(20):
     tape = r.interpret(random_source, N.ragaraja, 3, [], [0]*10, 10)[0]
     print 'Test #' + str(x+1) + ', Tape: ' + str(tape)
 print '===== End of random operations testing ====='
