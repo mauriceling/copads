@@ -45,7 +45,6 @@ Ref: http://esolangs.org/wiki/Ragaraja
 import random
 import math
 import constants
-import register_machine as r
 from lc_bf import increment, decrement
 from lc_bf import forward, backward
 from lc_bf import call_out, accept_predefined
@@ -518,13 +517,13 @@ def mathematics(array, apointer, inputdata, output, source, spointer):
         array[apointer] = inputdata[-1] * array[apointer]
     if cmd == '074':
         if (apointer + 1) < len(array):
-            array[apointer] = array[apointer+1] / array[apointer]
+            array[apointer] = float(array[apointer+1]) / array[apointer]
         else:
             array[apointer] = array[0] / array[apointer]
     if cmd == '075' and len(inputdata) > 0:
-        array[apointer] = inputdata[0] / array[apointer]
+        array[apointer] = float(inputdata[0]) / array[apointer]
     if cmd == '076' and len(inputdata) > 0:
-        array[apointer] = inputdata[-1] / array[apointer]
+        array[apointer] = float(inputdata[-1]) / array[apointer]
     if cmd == '077':
         if (apointer + 1) < len(array):
             array[apointer] = array[apointer+1] % array[apointer]
@@ -1332,30 +1331,37 @@ ragaraja = {'000': forward, '001': tape_move,
 tested_ragaraja_instructions = [
     '000', '001', '002', '003', '004', '005', '006', '008', '009', '010', 
     '011', '012', '013', '016', '017', '018', '019', '021', '022', '032', 
-    '033', '038', '042', '043', '044', '046', '047', '061', '062', '065', 
-    '068', '071', '077', '080', '081', '084', '085', '086', '087', '088', 
-    '089', '090', '091', '092', '093', '094', '095', '096', '097', '098', 
-    '099', '100', '101', '102', '103', '104', '105', '108', '109', '112', 
-    '113', '115', '116', '117', '120', '121', '122', '133'
+    '033', '038', '042', '043', '044', '046', '047', '050', '051', '052', 
+    '053', '054', '055', '056', '057', '058', '059', '060', '061', '062', 
+    '065', '066', '067', '068', '069', '070', '071', '072', '073', '075', 
+    '076', '077', '080', '081', '084', '085', '086', '087', '088', '089', 
+    '090', '091', '092', '093', '094', '095', '096', '097', '098', '099', 
+    '100', '101', '102', '103', '104', '105', '108', '109', '112', '113', 
+    '115', '116', '117', '120', '121', '122', '133'
     ]
 
-def tested_ragaraja(source):
+nBF_instructions = ['000', '004', '008', '011', '020', '050', '051', '052', 
+                    '053', '054', '055', '056', '057', '058', '059' '060']
+
+def source_filter(source, sfilter=tested_ragaraja_instructions):
     '''
-    Checks a Ragaraja source code string and removes any instructions that 
-    had not been tested. The list of tested instructions is determined by 
-    tested_ragaraja_instructions list.
+    Checks a Ragaraja source code string and removes any instructions are
+    not found in the filter
     
     @param source: Ragaraja source code string
     @type source: string
+    @param sfilter: list of instructions allowed.
+    Default = tested_ragaraja_instructions. Other defined list are
+    nBF_instructions (NucleotideBF).
     @return: Ragaraja source code string
     '''
-    tested_source = []
+    filtered_source = []
     spointer = 0
     while spointer < len(source):
-        if source[spointer:spointer+3] in tested_ragaraja_instructions:
-            tested_source = tested_source + [source[spointer:spointer+3]]
+        if source[spointer:spointer+3] in sfilter:
+            filtered_source = filtered_source + [source[spointer:spointer+3]]
         spointer = spointer + 3
-    return ''.join(tested_source)
+    return ''.join(filtered_source)
   
 def LCBF_to_Ragaraja(source):
     '''
