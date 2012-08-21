@@ -105,7 +105,7 @@ def tape_move(array, apointer, inputdata, output, source, spointer):
     if cmd == '062': 
         apointer = apointer - int(array[apointer])
     return (array, apointer, inputdata, output, source, spointer)
-	
+
 def accumulations(array, apointer, inputdata, output, source, spointer):
     '''
     Accumulate the tape cell by more than one increment or decrement.
@@ -132,7 +132,7 @@ def accumulations(array, apointer, inputdata, output, source, spointer):
     if cmd == '033': 
         array[apointer] = 0.5 * array[apointer]
     return (array, apointer, inputdata, output, source, spointer)
-	
+
 def nBF_random_op(array, apointer, inputdata, output, source, spointer):
     '''
     NucleotideBF (nBF) random operations - to simulate ambiguous DNA bases.
@@ -1329,14 +1329,15 @@ ragaraja = {'000': forward, '001': tape_move,
             '998': not_used, '999': not_used
            }
 
-tested_ragaraja_instructions = ['000', '001', '002', '003', '004', '005', 
-    '006', '008', '009', '010', '011', '012', '013', '016', '017', '018', 
-    '019', '021', '022', '032', '033', '038', '042', '043', '044', '046', 
-    '047', '061', '062', '065', '068', '071', '077', '080', '081', '084', 
-    '085', '086', '087', '088', '089', '090', '091', '092', '093', '094', 
-    '095', '096', '097', '098', '099', '100', '101', '102', '103', '104', 
-    '105', '108', '109', '112', '113', '115', '116', '117', '120', '121', 
-    '122', '133']
+tested_ragaraja_instructions = [
+    '000', '001', '002', '003', '004', '005', '006', '008', '009', '010', 
+    '011', '012', '013', '016', '017', '018', '019', '021', '022', '032', 
+    '033', '038', '042', '043', '044', '046', '047', '061', '062', '065', 
+    '068', '071', '077', '080', '081', '084', '085', '086', '087', '088', 
+    '089', '090', '091', '092', '093', '094', '095', '096', '097', '098', 
+    '099', '100', '101', '102', '103', '104', '105', '108', '109', '112', 
+    '113', '115', '116', '117', '120', '121', '122', '133'
+    ]
 
 def tested_ragaraja(source):
     '''
@@ -1376,7 +1377,7 @@ def LCBF_to_Ragaraja(source):
         elif x == ']': converted.append('015')
         else: converted.append('...')
     return converted
-	
+
 def nBF_to_Ragaraja(source):
     '''
     Converts NucleotideBF (nBF) source code to Ragaraja source code

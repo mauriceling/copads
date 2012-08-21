@@ -1,3 +1,55 @@
+'''
+Testing Ragaraja Interpreter
+Date created: 20th August 2012
+Licence: Python Software Foundation License version 2
+
+The tests are executed in sequence from test 1 to test N where the test N 
+specific code is added on the the concatenated codes/instructions from the
+previous test in the form of
+
+code(N) = code(N-1) + code(N)
+
+Although it is possible to use unittest, it is probably mind-boggling to
+try to understand long stretches of codes. It is probably easier to gradually
+build up on the code and knowledge/state of the previous instructions. This
+means that it is not possible to pass test N but fail test N-1.
+
+Sample test case/scenario capsule -
+
+1: {'restart': False                
+    'in_source': '008008008008',    
+    'forcedinarray': [0]*10
+    'array': [4,0,0,0,0,0,0,0,0,0], 
+    'apointer': 0,
+    'forcedindata': []
+    'inputdata': [],
+    'output': [],
+    'out_source': '008008008008',
+    'spointer': 12                  # source pointer at the end of execution
+   }
+   
+containing 10 options:
+1. 'restart' - determines if the tester should clear concatenated instructions 
+    so far. Default = False, which means keep the clear concatenated 
+    instructions so far and add on the current instructions to execute.
+    Not used unless to clean out concatenated instructions so far.
+2. 'in_source' - the list of specific instructions to execute in this test,
+    which will be appended to the list of concatenated instructions so far.
+3. 'forcedinarray' - array/tape to be fed into register machine before code
+    execution (code = concatenated instructions so far + in_source). If not
+    defined, it will be set to [0,0,0,0,0,0,0,0,0,0].
+4. 'array' - array/tape at the end of execution.
+5. 'apointer' - array pointer at the end of execution.
+6. 'forcedindata' - input data list to be fed into register machine before 
+    code execution (code = concatenated instructions so far + in_source). 
+    If not defined, it will be set to [].
+7. 'inputdata' - input data list (defined by 'forcedindata') at the end of
+    execution.
+8. 'output' - output list at the end of execution.
+9. 'out_source': concatenated instructions so far + in_source.
+10. 'spointer': source pointer at the end of execution on 'out_source'.
+'''
+
 import sys
 import os
 
@@ -252,27 +304,26 @@ for t in tests:
     
     # Step 1: Check to concatenate source or restart source
     try: 
-        if testdata[t]['restart'] == True: 
-            source = ''
-    except KeyError: 
-        pass 
+        if testdata[t]['restart'] == True: source = ''
+    except KeyError: pass
+     
     isource = source + testdata[t]['in_source']
     
     # Step 2: Get input data list from test (if any)
     try: inputdata = testdata[t]['forcedindata']
     except KeyError: inputdata = []
     
-    # Step 3: get pre-execution tape from test (if any)
+    # Step 3: get pre-execution tape (array) from test (if any)
     try: array = testdata[t]['forcedinarray']
     except KeyError: array = [0]*10
     
     # Step 4: Get expected results after execution
-    oarray = testdata[t]['array']
-    oapointer = testdata[t]['apointer']
-    oinputdata = testdata[t]['inputdata']
-    ooutput = testdata[t]['output']
-    osource = testdata[t]['out_source']
-    ospointer = testdata[t]['spointer']
+    oarray = testdata[t]['array']            # tape (array) after execution
+    oapointer = testdata[t]['apointer']      # tape pointer
+    oinputdata = testdata[t]['inputdata']    # input data list
+    ooutput = testdata[t]['output']          # output list
+    osource = testdata[t]['out_source']      # source
+    ospointer = testdata[t]['spointer']      # source pointer
     
     # ----------------------------
     # ------- EXECUTE TEST -------
