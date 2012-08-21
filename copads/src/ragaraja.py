@@ -84,6 +84,18 @@ def tape_move(array, apointer, inputdata, output, source, spointer):
     cell.
     062: Move backward by the number of cells signified by the current 
     cell. 
+    140: Move tape pointer to the centre of the tape. If the tape has 
+    odd number cells, it will move to the lower cell. For example, this 
+    instruction will move the tape pointer to the 500th cell of a 
+    1000-cell tape, or 142nd of a 285-cell tape.
+    141: Move tape pointer to 1/4 the of the tape. If the tape has odd 
+    number cells, it will move to the lower cell. For example, this 
+    instruction will move the tape pointer to the 250th cell of a 
+    1000-cell tape, or 71st of a 285-cell tape.
+    142: Move tape pointer to 3/4 the of the tape. If the tape has odd 
+    number cells, it will move to the lower cell. For example, this 
+    instruction will move the tape pointer to the 750th cell of a 
+    1000-cell tape, or 213rd of a 285-cell tape. 
     '''
     cmd = source[spointer:spointer+3]
     if cmd == '001': apointer = apointer + 5
@@ -103,6 +115,12 @@ def tape_move(array, apointer, inputdata, output, source, spointer):
         apointer = apointer + int(array[apointer])
     if cmd == '062': 
         apointer = apointer - int(array[apointer])
+    if cmd == '140': 
+        apointer = int((len(array) - 1) * 0.5)
+    if cmd == '141': 
+        apointer = int((len(array) - 1) * 0.25)
+    if cmd == '142': 
+        apointer = int((len(array) - 1) * 0.75)
     return (array, apointer, inputdata, output, source, spointer)
 
 def accumulations(array, apointer, inputdata, output, source, spointer):
@@ -896,8 +914,8 @@ ragaraja = {'000': forward, '001': tape_move,
             '134': not_used, '135': not_used,
             '136': not_used, '137': not_used,
             '138': not_used, '139': not_used,
-            '140': not_used, '141': not_used,
-            '142': not_used, '143': not_used,
+            '140': tape_move, '141': tape_move,
+            '142': tape_move, '143': not_used,
             '144': not_used, '145': not_used,
             '146': not_used, '147': not_used,
             '148': not_used, '149': not_used,
@@ -1337,7 +1355,7 @@ tested_ragaraja_instructions = [
     '076', '077', '080', '081', '084', '085', '086', '087', '088', '089', 
     '090', '091', '092', '093', '094', '095', '096', '097', '098', '099', 
     '100', '101', '102', '103', '104', '105', '108', '109', '112', '113', 
-    '115', '116', '117', '120', '121', '122', '133'
+    '115', '116', '117', '120', '121', '122', '133', '140', '141', '142'
     ]
 
 nBF_instructions = ['000', '004', '008', '011', '020', '050', '051', '052', 
