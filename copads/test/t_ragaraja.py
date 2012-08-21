@@ -395,6 +395,8 @@ for t in tests:
 
 print
 print '===== Testing random operations ====='
+print 'Testing 050 051 052 053 054 055 056 057 058 059 060'
+print
 random_source = '050051052053054055056057058059060'
 random_source = random_source + random_source + random_source + \
                 random_source + random_source + random_source
