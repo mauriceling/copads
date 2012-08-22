@@ -27,8 +27,8 @@ def interpret(source, functions,
     if len(source) % function_size != 0:
         source = source + '!'*(function_size - \
                                len(source) % function_size)
-    tokens = functions.keys()
-    source = ''.join([x for x in source if x in tokens])
+	tokens = functions.keys()
+	source = ''.join([x for x in source if x in tokens])
     while spointer < len(source):
         try:
             cmd = source[spointer:spointer+function_size]
