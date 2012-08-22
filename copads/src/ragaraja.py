@@ -50,6 +50,9 @@ from lc_bf import forward, backward
 from lc_bf import call_out, accept_predefined
 from lc_bf import cbf_start_loop, cbf_end_loop
 
+global gpr      # general-purpose registers
+gpr = [0]*99
+
 def tape_move(array, apointer, inputdata, output, source, spointer):
     '''
     Moving tape pointer for more than one increment or decrement.
