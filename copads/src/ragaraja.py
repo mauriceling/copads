@@ -376,6 +376,7 @@ def set_tape_value(array, apointer, inputdata, output, source, spointer):
     086: Set current tape cell to "1". 
     097: Set the value of the current cell to pi (3.14159265358979323846)
     098: Set the value of the current cell to e (2.718281828459045) 
+    189: Set all values in tape to "0".
     '''
     cmd = source[spointer:spointer+3]
     if cmd == '084': array[apointer] = 0
@@ -383,6 +384,7 @@ def set_tape_value(array, apointer, inputdata, output, source, spointer):
     if cmd == '086': array[apointer] = 1
     if cmd == '097': array[apointer] = constants.PI
     if cmd == '098': array[apointer] = math.e
+    if cmd == '189': array = [0] * len(array)
     return (array, apointer, inputdata, output, source, spointer)
     
 def mathematics(array, apointer, inputdata, output, source, spointer):
@@ -841,10 +843,404 @@ def register_IO(array, apointer, inputdata, output, source, spointer):
     '''
     
     Instructions handled:
+    201: Store value of current tape cell to register #1
+    202: Store value of current tape cell to register #2
+    203: Store value of current tape cell to register #3
+    204: Store value of current tape cell to register #4
+    205: Store value of current tape cell to register #5
+    206: Store value of current tape cell to register #6
+    207: Store value of current tape cell to register #7
+    208: Store value of current tape cell to register #8
+    209: Store value of current tape cell to register #9
+    210: Store value of current tape cell to register #10
+    211: Store value of current tape cell to register #11
+    212: Store value of current tape cell to register #12
+    213: Store value of current tape cell to register #13
+    214: Store value of current tape cell to register #14
+    215: Store value of current tape cell to register #15
+    216: Store value of current tape cell to register #16
+    217: Store value of current tape cell to register #17
+    218: Store value of current tape cell to register #18
+    219: Store value of current tape cell to register #19
+    220: Store value of current tape cell to register #20
+    221: Store value of current tape cell to register #21
+    222: Store value of current tape cell to register #22
+    223: Store value of current tape cell to register #23
+    224: Store value of current tape cell to register #24
+    225: Store value of current tape cell to register #25
+    226: Store value of current tape cell to register #26
+    227: Store value of current tape cell to register #27
+    228: Store value of current tape cell to register #28
+    229: Store value of current tape cell to register #29
+    230: Store value of current tape cell to register #30
+    231: Store value of current tape cell to register #31
+    232: Store value of current tape cell to register #32
+    233: Store value of current tape cell to register #33
+    234: Store value of current tape cell to register #34
+    235: Store value of current tape cell to register #35
+    236: Store value of current tape cell to register #36
+    237: Store value of current tape cell to register #37
+    238: Store value of current tape cell to register #38
+    239: Store value of current tape cell to register #39
+    240: Store value of current tape cell to register #40
+    241: Store value of current tape cell to register #41
+    242: Store value of current tape cell to register #42
+    243: Store value of current tape cell to register #43
+    244: Store value of current tape cell to register #44
+    245: Store value of current tape cell to register #45
+    246: Store value of current tape cell to register #46
+    247: Store value of current tape cell to register #47
+    248: Store value of current tape cell to register #48
+    249: Store value of current tape cell to register #49
+    250: Store value of current tape cell to register #50
+    251: Store value of current tape cell to register #51
+    252: Store value of current tape cell to register #52
+    253: Store value of current tape cell to register #53
+    254: Store value of current tape cell to register #54
+    255: Store value of current tape cell to register #55
+    256: Store value of current tape cell to register #56
+    257: Store value of current tape cell to register #57
+    258: Store value of current tape cell to register #58
+    259: Store value of current tape cell to register #59
+    260: Store value of current tape cell to register #60
+    261: Store value of current tape cell to register #61
+    262: Store value of current tape cell to register #62
+    263: Store value of current tape cell to register #63
+    264: Store value of current tape cell to register #64
+    265: Store value of current tape cell to register #65
+    266: Store value of current tape cell to register #66
+    267: Store value of current tape cell to register #67
+    268: Store value of current tape cell to register #68
+    269: Store value of current tape cell to register #69
+    270: Store value of current tape cell to register #70
+    271: Store value of current tape cell to register #71
+    272: Store value of current tape cell to register #72
+    273: Store value of current tape cell to register #73
+    274: Store value of current tape cell to register #74
+    275: Store value of current tape cell to register #75
+    276: Store value of current tape cell to register #76
+    277: Store value of current tape cell to register #77
+    278: Store value of current tape cell to register #78
+    279: Store value of current tape cell to register #79
+    280: Store value of current tape cell to register #80
+    281: Store value of current tape cell to register #81
+    282: Store value of current tape cell to register #82
+    283: Store value of current tape cell to register #83
+    284: Store value of current tape cell to register #84
+    285: Store value of current tape cell to register #85
+    286: Store value of current tape cell to register #86
+    287: Store value of current tape cell to register #87
+    288: Store value of current tape cell to register #88
+    289: Store value of current tape cell to register #89
+    290: Store value of current tape cell to register #90
+    291: Store value of current tape cell to register #91
+    292: Store value of current tape cell to register #92
+    293: Store value of current tape cell to register #93
+    294: Store value of current tape cell to register #94
+    295: Store value of current tape cell to register #95
+    296: Store value of current tape cell to register #96
+    297: Store value of current tape cell to register #97
+    298: Store value of current tape cell to register #98
+    299: Store value of current tape cell to register #99
+    301: Put value from register #1 to current tape cell
+    302: Put value from register #2 to current tape cell
+    303: Put value from register #3 to current tape cell
+    304: Put value from register #4 to current tape cell
+    305: Put value from register #5 to current tape cell
+    306: Put value from register #6 to current tape cell
+    307: Put value from register #7 to current tape cell
+    308: Put value from register #8 to current tape cell
+    309: Put value from register #9 to current tape cell
+    310: Put value from register #10 to current tape cell
+    311: Put value from register #11 to current tape cell
+    312: Put value from register #12 to current tape cell
+    313: Put value from register #13 to current tape cell
+    314: Put value from register #14 to current tape cell
+    315: Put value from register #15 to current tape cell
+    316: Put value from register #16 to current tape cell
+    317: Put value from register #17 to current tape cell
+    318: Put value from register #18 to current tape cell
+    319: Put value from register #19 to current tape cell
+    320: Put value from register #20 to current tape cell
+    321: Put value from register #21 to current tape cell
+    322: Put value from register #22 to current tape cell
+    323: Put value from register #23 to current tape cell
+    324: Put value from register #24 to current tape cell
+    325: Put value from register #25 to current tape cell
+    326: Put value from register #26 to current tape cell
+    327: Put value from register #27 to current tape cell
+    328: Put value from register #28 to current tape cell
+    329: Put value from register #29 to current tape cell
+    330: Put value from register #30 to current tape cell
+    331: Put value from register #31 to current tape cell
+    332: Put value from register #32 to current tape cell
+    333: Put value from register #33 to current tape cell
+    334: Put value from register #34 to current tape cell
+    335: Put value from register #35 to current tape cell
+    336: Put value from register #36 to current tape cell
+    337: Put value from register #37 to current tape cell
+    338: Put value from register #38 to current tape cell
+    339: Put value from register #39 to current tape cell
+    340: Put value from register #40 to current tape cell
+    341: Put value from register #41 to current tape cell
+    342: Put value from register #42 to current tape cell
+    343: Put value from register #43 to current tape cell
+    344: Put value from register #44 to current tape cell
+    345: Put value from register #45 to current tape cell
+    346: Put value from register #46 to current tape cell
+    347: Put value from register #47 to current tape cell
+    348: Put value from register #48 to current tape cell
+    349: Put value from register #49 to current tape cell
+    350: Put value from register #50 to current tape cell
+    351: Put value from register #51 to current tape cell
+    352: Put value from register #52 to current tape cell
+    353: Put value from register #53 to current tape cell
+    354: Put value from register #54 to current tape cell
+    355: Put value from register #55 to current tape cell
+    356: Put value from register #56 to current tape cell
+    357: Put value from register #57 to current tape cell
+    358: Put value from register #58 to current tape cell
+    359: Put value from register #59 to current tape cell
+    360: Put value from register #60 to current tape cell
+    361: Put value from register #61 to current tape cell
+    362: Put value from register #62 to current tape cell
+    363: Put value from register #63 to current tape cell
+    364: Put value from register #64 to current tape cell
+    365: Put value from register #65 to current tape cell
+    366: Put value from register #66 to current tape cell
+    367: Put value from register #67 to current tape cell
+    368: Put value from register #68 to current tape cell
+    369: Put value from register #69 to current tape cell
+    370: Put value from register #70 to current tape cell
+    371: Put value from register #71 to current tape cell
+    372: Put value from register #72 to current tape cell
+    373: Put value from register #73 to current tape cell
+    374: Put value from register #74 to current tape cell
+    375: Put value from register #75 to current tape cell
+    376: Put value from register #76 to current tape cell
+    377: Put value from register #77 to current tape cell
+    378: Put value from register #78 to current tape cell
+    379: Put value from register #79 to current tape cell
+    380: Put value from register #80 to current tape cell
+    381: Put value from register #81 to current tape cell
+    382: Put value from register #82 to current tape cell
+    383: Put value from register #83 to current tape cell
+    384: Put value from register #84 to current tape cell
+    385: Put value from register #85 to current tape cell
+    386: Put value from register #86 to current tape cell
+    387: Put value from register #87 to current tape cell
+    388: Put value from register #88 to current tape cell
+    389: Put value from register #89 to current tape cell
+    390: Put value from register #90 to current tape cell
+    391: Put value from register #91 to current tape cell
+    392: Put value from register #92 to current tape cell
+    393: Put value from register #93 to current tape cell
+    394: Put value from register #94 to current tape cell
+    395: Put value from register #95 to current tape cell
+    396: Put value from register #96 to current tape cell
+    397: Put value from register #97 to current tape cell
+    398: Put value from register #98 to current tape cell
+    399: Put value from register #99 to current tape cell
     '''
     cmd = source[spointer:spointer+3]
     if cmd == '201': register[0] = array[apointer]
+    if cmd == '202': register[1] = array[apointer]
+    if cmd == '203': register[2] = array[apointer]
+    if cmd == '204': register[3] = array[apointer]
+    if cmd == '205': register[4] = array[apointer]
+    if cmd == '206': register[5] = array[apointer]
+    if cmd == '207': register[6] = array[apointer]
+    if cmd == '208': register[7] = array[apointer]
+    if cmd == '209': register[8] = array[apointer]
+    if cmd == '210': register[9] = array[apointer]
+    if cmd == '211': register[10] = array[apointer]
+    if cmd == '212': register[11] = array[apointer]
+    if cmd == '213': register[12] = array[apointer]
+    if cmd == '214': register[13] = array[apointer]
+    if cmd == '215': register[14] = array[apointer]
+    if cmd == '216': register[15] = array[apointer]
+    if cmd == '217': register[16] = array[apointer]
+    if cmd == '218': register[17] = array[apointer]
+    if cmd == '219': register[18] = array[apointer]
+    if cmd == '220': register[19] = array[apointer]
+    if cmd == '221': register[20] = array[apointer]
+    if cmd == '222': register[21] = array[apointer]
+    if cmd == '223': register[22] = array[apointer]
+    if cmd == '224': register[23] = array[apointer]
+    if cmd == '225': register[24] = array[apointer]
+    if cmd == '226': register[25] = array[apointer]
+    if cmd == '227': register[26] = array[apointer]
+    if cmd == '228': register[27] = array[apointer]
+    if cmd == '229': register[28] = array[apointer]
+    if cmd == '230': register[29] = array[apointer]
+    if cmd == '231': register[30] = array[apointer]
+    if cmd == '232': register[31] = array[apointer]
+    if cmd == '233': register[32] = array[apointer]
+    if cmd == '234': register[33] = array[apointer]
+    if cmd == '235': register[34] = array[apointer]
+    if cmd == '236': register[35] = array[apointer]
+    if cmd == '237': register[36] = array[apointer]
+    if cmd == '238': register[37] = array[apointer]
+    if cmd == '239': register[38] = array[apointer]
+    if cmd == '240': register[39] = array[apointer]
+    if cmd == '241': register[40] = array[apointer]
+    if cmd == '242': register[41] = array[apointer]
+    if cmd == '243': register[42] = array[apointer]
+    if cmd == '244': register[43] = array[apointer]
+    if cmd == '245': register[44] = array[apointer]
+    if cmd == '246': register[45] = array[apointer]
+    if cmd == '247': register[46] = array[apointer]
+    if cmd == '248': register[47] = array[apointer]
+    if cmd == '249': register[48] = array[apointer]
+    if cmd == '250': register[49] = array[apointer]
+    if cmd == '251': register[50] = array[apointer]
+    if cmd == '252': register[51] = array[apointer]
+    if cmd == '253': register[52] = array[apointer]
+    if cmd == '254': register[53] = array[apointer]
+    if cmd == '255': register[54] = array[apointer]
+    if cmd == '256': register[55] = array[apointer]
+    if cmd == '257': register[56] = array[apointer]
+    if cmd == '258': register[57] = array[apointer]
+    if cmd == '259': register[58] = array[apointer]
+    if cmd == '260': register[59] = array[apointer]
+    if cmd == '261': register[60] = array[apointer]
+    if cmd == '262': register[61] = array[apointer]
+    if cmd == '263': register[62] = array[apointer]
+    if cmd == '264': register[63] = array[apointer]
+    if cmd == '265': register[64] = array[apointer]
+    if cmd == '266': register[65] = array[apointer]
+    if cmd == '267': register[66] = array[apointer]
+    if cmd == '268': register[67] = array[apointer]
+    if cmd == '269': register[68] = array[apointer]
+    if cmd == '270': register[69] = array[apointer]
+    if cmd == '271': register[70] = array[apointer]
+    if cmd == '272': register[71] = array[apointer]
+    if cmd == '273': register[72] = array[apointer]
+    if cmd == '274': register[73] = array[apointer]
+    if cmd == '275': register[74] = array[apointer]
+    if cmd == '276': register[75] = array[apointer]
+    if cmd == '277': register[76] = array[apointer]
+    if cmd == '278': register[77] = array[apointer]
+    if cmd == '279': register[78] = array[apointer]
+    if cmd == '280': register[79] = array[apointer]
+    if cmd == '281': register[80] = array[apointer]
+    if cmd == '282': register[81] = array[apointer]
+    if cmd == '283': register[82] = array[apointer]
+    if cmd == '284': register[83] = array[apointer]
+    if cmd == '285': register[84] = array[apointer]
+    if cmd == '286': register[85] = array[apointer]
+    if cmd == '287': register[86] = array[apointer]
+    if cmd == '288': register[87] = array[apointer]
+    if cmd == '289': register[88] = array[apointer]
+    if cmd == '290': register[89] = array[apointer]
+    if cmd == '291': register[90] = array[apointer]
+    if cmd == '292': register[91] = array[apointer]
+    if cmd == '293': register[92] = array[apointer]
+    if cmd == '294': register[93] = array[apointer]
+    if cmd == '295': register[94] = array[apointer]
+    if cmd == '296': register[95] = array[apointer]
+    if cmd == '297': register[96] = array[apointer]
+    if cmd == '298': register[97] = array[apointer]
+    if cmd == '299': register[98] = array[apointer]
     if cmd == '301': array[apointer] = register[0]
+    if cmd == '302': array[apointer] = register[1]
+    if cmd == '303': array[apointer] = register[2]
+    if cmd == '304': array[apointer] = register[3]
+    if cmd == '305': array[apointer] = register[4]
+    if cmd == '306': array[apointer] = register[5]
+    if cmd == '307': array[apointer] = register[6]
+    if cmd == '308': array[apointer] = register[7]
+    if cmd == '309': array[apointer] = register[8]
+    if cmd == '310': array[apointer] = register[9]
+    if cmd == '311': array[apointer] = register[10]
+    if cmd == '312': array[apointer] = register[11]
+    if cmd == '313': array[apointer] = register[12]
+    if cmd == '314': array[apointer] = register[13]
+    if cmd == '315': array[apointer] = register[14]
+    if cmd == '316': array[apointer] = register[15]
+    if cmd == '317': array[apointer] = register[16]
+    if cmd == '318': array[apointer] = register[17]
+    if cmd == '319': array[apointer] = register[18]
+    if cmd == '320': array[apointer] = register[19]
+    if cmd == '321': array[apointer] = register[20]
+    if cmd == '322': array[apointer] = register[21]
+    if cmd == '323': array[apointer] = register[22]
+    if cmd == '324': array[apointer] = register[23]
+    if cmd == '325': array[apointer] = register[24]
+    if cmd == '326': array[apointer] = register[25]
+    if cmd == '327': array[apointer] = register[26]
+    if cmd == '328': array[apointer] = register[27]
+    if cmd == '329': array[apointer] = register[28]
+    if cmd == '330': array[apointer] = register[29]
+    if cmd == '331': array[apointer] = register[30]
+    if cmd == '332': array[apointer] = register[31]
+    if cmd == '333': array[apointer] = register[32]
+    if cmd == '334': array[apointer] = register[33]
+    if cmd == '335': array[apointer] = register[34]
+    if cmd == '336': array[apointer] = register[35]
+    if cmd == '337': array[apointer] = register[36]
+    if cmd == '338': array[apointer] = register[37]
+    if cmd == '339': array[apointer] = register[38]
+    if cmd == '340': array[apointer] = register[39]
+    if cmd == '341': array[apointer] = register[40]
+    if cmd == '342': array[apointer] = register[41]
+    if cmd == '343': array[apointer] = register[42]
+    if cmd == '344': array[apointer] = register[43]
+    if cmd == '345': array[apointer] = register[44]
+    if cmd == '346': array[apointer] = register[45]
+    if cmd == '347': array[apointer] = register[46]
+    if cmd == '348': array[apointer] = register[47]
+    if cmd == '349': array[apointer] = register[48]
+    if cmd == '350': array[apointer] = register[49]
+    if cmd == '351': array[apointer] = register[50]
+    if cmd == '352': array[apointer] = register[51]
+    if cmd == '353': array[apointer] = register[52]
+    if cmd == '354': array[apointer] = register[53]
+    if cmd == '355': array[apointer] = register[54]
+    if cmd == '356': array[apointer] = register[55]
+    if cmd == '357': array[apointer] = register[56]
+    if cmd == '358': array[apointer] = register[57]
+    if cmd == '359': array[apointer] = register[58]
+    if cmd == '360': array[apointer] = register[59]
+    if cmd == '361': array[apointer] = register[60]
+    if cmd == '362': array[apointer] = register[61]
+    if cmd == '363': array[apointer] = register[62]
+    if cmd == '364': array[apointer] = register[63]
+    if cmd == '365': array[apointer] = register[64]
+    if cmd == '366': array[apointer] = register[65]
+    if cmd == '367': array[apointer] = register[66]
+    if cmd == '368': array[apointer] = register[67]
+    if cmd == '369': array[apointer] = register[68]
+    if cmd == '370': array[apointer] = register[69]
+    if cmd == '371': array[apointer] = register[70]
+    if cmd == '372': array[apointer] = register[71]
+    if cmd == '373': array[apointer] = register[72]
+    if cmd == '374': array[apointer] = register[73]
+    if cmd == '375': array[apointer] = register[74]
+    if cmd == '376': array[apointer] = register[75]
+    if cmd == '377': array[apointer] = register[76]
+    if cmd == '378': array[apointer] = register[77]
+    if cmd == '379': array[apointer] = register[78]
+    if cmd == '380': array[apointer] = register[79]
+    if cmd == '381': array[apointer] = register[80]
+    if cmd == '382': array[apointer] = register[81]
+    if cmd == '383': array[apointer] = register[82]
+    if cmd == '384': array[apointer] = register[83]
+    if cmd == '385': array[apointer] = register[84]
+    if cmd == '386': array[apointer] = register[85]
+    if cmd == '387': array[apointer] = register[86]
+    if cmd == '388': array[apointer] = register[87]
+    if cmd == '389': array[apointer] = register[88]
+    if cmd == '390': array[apointer] = register[89]
+    if cmd == '391': array[apointer] = register[90]
+    if cmd == '392': array[apointer] = register[91]
+    if cmd == '393': array[apointer] = register[92]
+    if cmd == '394': array[apointer] = register[93]
+    if cmd == '395': array[apointer] = register[94]
+    if cmd == '396': array[apointer] = register[95]
+    if cmd == '397': array[apointer] = register[96]
+    if cmd == '398': array[apointer] = register[97]
+    if cmd == '399': array[apointer] = register[98]
     return (array, apointer, inputdata, output, source, spointer)
     
 def not_used(array, apointer, inputdata, output, source, spointer):
@@ -950,7 +1346,7 @@ ragaraja = {'000': forward, '001': tape_move,
             '182': not_used, '183': not_used,
             '184': not_used, '185': not_used,
             '186': not_used, '187': not_used,
-            '188': not_used, '189': not_used,
+            '188': not_used, '189': set_tape_value,
             '190': not_used, '191': not_used,
             '192': not_used, '193': not_used,
             '194': not_used, '195': not_used,
@@ -1007,55 +1403,55 @@ ragaraja = {'000': forward, '001': tape_move,
             '296': not_used, '297': not_used,
             '298': not_used, '299': not_used,
             '300': not_used, '301': register_IO,
-            '302': not_used, '303': not_used,
-            '304': not_used, '305': not_used,
-            '306': not_used, '307': not_used,
-            '308': not_used, '309': not_used,
-            '310': not_used, '311': not_used,
-            '312': not_used, '313': not_used,
-            '314': not_used, '315': not_used,
-            '316': not_used, '317': not_used,
-            '318': not_used, '319': not_used,
-            '320': not_used, '321': not_used,
-            '322': not_used, '323': not_used,
-            '324': not_used, '325': not_used,
-            '326': not_used, '327': not_used,
-            '328': not_used, '329': not_used,
-            '330': not_used, '331': not_used,
-            '332': not_used, '333': not_used,
-            '334': not_used, '335': not_used,
-            '336': not_used, '337': not_used,
-            '338': not_used, '339': not_used,
-            '340': not_used, '341': not_used,
-            '342': not_used, '343': not_used,
-            '344': not_used, '345': not_used,
-            '346': not_used, '347': not_used,
-            '348': not_used, '349': not_used,
-            '350': not_used, '351': not_used,
-            '352': not_used, '353': not_used,
-            '354': not_used, '355': not_used,
-            '356': not_used, '357': not_used,
-            '358': not_used, '359': not_used,
-            '360': not_used, '361': not_used,
-            '362': not_used, '363': not_used,
-            '364': not_used, '365': not_used,
-            '366': not_used, '367': not_used,
-            '368': not_used, '369': not_used,
-            '370': not_used, '371': not_used,
-            '372': not_used, '373': not_used,
-            '374': not_used, '375': not_used,
-            '376': not_used, '377': not_used,
-            '378': not_used, '379': not_used,
-            '380': not_used, '381': not_used,
-            '382': not_used, '383': not_used,
-            '384': not_used, '385': not_used,
-            '386': not_used, '387': not_used,
-            '388': not_used, '389': not_used,
-            '390': not_used, '391': not_used,
-            '392': not_used, '393': not_used,
-            '394': not_used, '395': not_used,
-            '396': not_used, '397': not_used,
-            '398': not_used, '399': not_used,
+            '302': register_IO, '303': register_IO,
+            '304': register_IO, '305': register_IO,
+            '306': register_IO, '307': register_IO,
+            '308': register_IO, '309': register_IO,
+            '310': register_IO, '311': register_IO,
+            '312': register_IO, '313': register_IO,
+            '314': register_IO, '315': register_IO,
+            '316': register_IO, '317': register_IO,
+            '318': register_IO, '319': register_IO,
+            '320': register_IO, '321': register_IO,
+            '322': register_IO, '323': register_IO,
+            '324': register_IO, '325': register_IO,
+            '326': register_IO, '327': register_IO,
+            '328': register_IO, '329': register_IO,
+            '330': register_IO, '331': register_IO,
+            '332': register_IO, '333': register_IO,
+            '334': register_IO, '335': register_IO,
+            '336': register_IO, '337': register_IO,
+            '338': register_IO, '339': register_IO,
+            '340': register_IO, '341': register_IO,
+            '342': register_IO, '343': register_IO,
+            '344': register_IO, '345': register_IO,
+            '346': register_IO, '347': register_IO,
+            '348': register_IO, '349': register_IO,
+            '350': register_IO, '351': register_IO,
+            '352': register_IO, '353': register_IO,
+            '354': register_IO, '355': register_IO,
+            '356': register_IO, '357': register_IO,
+            '358': register_IO, '359': register_IO,
+            '360': register_IO, '361': register_IO,
+            '362': register_IO, '363': register_IO,
+            '364': register_IO, '365': register_IO,
+            '366': register_IO, '367': register_IO,
+            '368': register_IO, '369': register_IO,
+            '370': register_IO, '371': register_IO,
+            '372': register_IO, '373': register_IO,
+            '374': register_IO, '375': register_IO,
+            '376': register_IO, '377': register_IO,
+            '378': register_IO, '379': register_IO,
+            '380': register_IO, '381': register_IO,
+            '382': register_IO, '383': register_IO,
+            '384': register_IO, '385': register_IO,
+            '386': register_IO, '387': register_IO,
+            '388': register_IO, '389': register_IO,
+            '390': register_IO, '391': register_IO,
+            '392': register_IO, '393': register_IO,
+            '394': register_IO, '395': register_IO,
+            '396': register_IO, '397': register_IO,
+            '398': register_IO, '399': register_IO,
             '400': not_used, '401': not_used,
             '402': not_used, '403': not_used,
             '404': not_used, '405': not_used,
