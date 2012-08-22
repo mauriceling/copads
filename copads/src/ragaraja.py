@@ -50,8 +50,7 @@ from lc_bf import forward, backward
 from lc_bf import call_out, accept_predefined
 from lc_bf import cbf_start_loop, cbf_end_loop
 
-global gpr      # general-purpose registers
-gpr = [0]*99
+register = [0]*99
 
 def tape_move(array, apointer, inputdata, output, source, spointer):
     '''
@@ -837,6 +836,16 @@ def interpreter_manipulate(array, apointer, inputdata, output, source, spointer)
     cmd = source[spointer:spointer+3]
     if cmd == 'xxx': pass
     return (array, apointer, inputdata, output, source, spointer)
+
+def register_IO(array, apointer, inputdata, output, source, spointer):
+    '''
+    
+    Instructions handled:
+    '''
+    cmd = source[spointer:spointer+3]
+    if cmd == '201': register[0] = array[apointer]
+    if cmd == '301': array[apointer] = register[0]
+    return (array, apointer, inputdata, output, source, spointer)
     
 def not_used(array, apointer, inputdata, output, source, spointer):
     '''
@@ -947,7 +956,7 @@ ragaraja = {'000': forward, '001': tape_move,
             '194': not_used, '195': not_used,
             '196': not_used, '197': not_used,
             '198': not_used, '199': not_used,
-            '200': not_used, '201': not_used,
+            '200': not_used, '201': register_IO,
             '202': not_used, '203': not_used,
             '204': not_used, '205': not_used,
             '206': not_used, '207': not_used,
@@ -997,7 +1006,7 @@ ragaraja = {'000': forward, '001': tape_move,
             '294': not_used, '295': not_used,
             '296': not_used, '297': not_used,
             '298': not_used, '299': not_used,
-            '300': not_used, '301': not_used,
+            '300': not_used, '301': register_IO,
             '302': not_used, '303': not_used,
             '304': not_used, '305': not_used,
             '306': not_used, '307': not_used,
