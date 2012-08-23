@@ -45,6 +45,7 @@ Ref: http://esolangs.org/wiki/Ragaraja
 import random
 import math
 import constants
+from samplestatistics import SingleSample
 from lc_bf import increment, decrement
 from lc_bf import forward, backward
 from lc_bf import call_out, accept_predefined
@@ -367,10 +368,22 @@ def set_tape_value(array, apointer, inputdata, output, source, spointer):
     086: Set current tape cell to "1". 
     097: Set the value of the current cell to pi (3.14159265358979323846)
     098: Set the value of the current cell to e (2.718281828459045) 
+    187: Set all the cell values in the cells after the current cell to 
+    "0" (current cell is not affected).
+    188: Set all the cell values in the cells before the current cell to 
+    "0" (current cell is not affected). 
     189: Set all values in tape to "0".
     190: Set all the cell values in the tape to the value of current cell.
     191: Set all the cell values in the tape to the tape position of 
     current cell.
+    192: Set all the cell values in the cells after the current cell to 
+    the value of current cell.
+    193: Set all the cell values in the cells before the current cell to 
+    the value of current cell.
+    194: Set all the cell values in the cells after the current cell to 
+    the tape position of current cell.
+    195: Set all the cell values in the cells before the current cell to 
+    the tape position of current cell. 
     '''
     cmd = source[spointer:spointer+3]
     if cmd == '084': array[apointer] = 0
@@ -378,9 +391,21 @@ def set_tape_value(array, apointer, inputdata, output, source, spointer):
     if cmd == '086': array[apointer] = 1
     if cmd == '097': array[apointer] = constants.PI
     if cmd == '098': array[apointer] = math.e
+    if cmd == '187': 
+        array = array[0:pointer+1] + [0 for x in array[pointer+1:]]
+    if cmd == '188': 
+        array = [0 for x in array[:apointer]] + array[apointer:]
     if cmd == '189': array = [0] * len(array)
     if cmd == '190': array = [array[apointer]] * len(array)
     if cmd == '191': array = [apointer] * len(array)
+    if cmd == '192': 
+        array = array[0:pointer+1] + [array[apointer] for x in array[pointer+1:]]
+    if cmd == '193': 
+        array = [array[apointer] for x in array[:apointer]] + array[apointer:]
+    if cmd == '194': 
+        array = array[0:pointer+1] + [apointer for x in array[pointer+1:]]
+    if cmd == '195': 
+        array = [apointer for x in array[:apointer]] + array[apointer:]
     return (array, apointer, inputdata, output, source, spointer)
     
 def mathematics(array, apointer, inputdata, output, source, spointer):
@@ -530,8 +555,23 @@ def mathematics(array, apointer, inputdata, output, source, spointer):
     158: Multiply every cell value in tape by 10.
     159: Divide every cell value in tape by 100.
     160: Multiply every cell value in tape by 100. 
+    165: Multiply every cell value in tape by -1. 
+    166: Square all the cell values in the cells after the current cell 
+    (current cell value is not affected).
+    167: Square all the cell values in the cells before the current cell 
+    (current cell value is not affected). 
     168: Square every cell value in tape.
-    169: Square root every cell value in tape.     
+    169: Square root every cell value in tape.
+    170: Square root all the cell values in the cells after the current 
+    cell (current cell value is not affected).
+    171: Square root all the cell values in the cells before the current 
+    cell (current cell value is not affected).
+    196: Set the value of the current cell to the standard deviation of 
+    the values in the tape.
+    197: Set the value of the current cell to the geometric mean of the 
+    values in the tape.
+    198: Set the value of the current cell to the harmonic mean of the 
+    values in the tape. 
     '''
     cmd = source[spointer:spointer+3]
     if cmd == '065':
@@ -652,8 +692,21 @@ def mathematics(array, apointer, inputdata, output, source, spointer):
     if cmd == '159': array = [0.01 * x for x in array]
     if cmd == '160': array = [100 * x for x in array]
     if cmd == '165': array = [-1 * x for x in array]
+    if cmd == '166': 
+        array = array[0:pointer+1] + [x * x for x in array[pointer+1:]]
+    if cmd == '167': 
+        array = [x * x for x in array[:apointer]] + array[apointer:]
     if cmd == '168': array = [x * x for x in array]
     if cmd == '169': array = [math.sqrt(x) for x in array]
+    if cmd == '170': 
+        array = array[0:pointer+1] + [math.sqrt(x) for x in array[pointer+1:]]
+    if cmd == '171': 
+        array = [math.sqrt(x) for x in array[:apointer]] + array[apointer:]
+    if cmd == '196': 
+        variance = SingleSample(array).variance()
+        array[apointer] = math.sqrt(variance)
+    if cmd == '197': array[apointer] = SingleSample(array).geometricMean()
+    if cmd == '198': array[apointer] = SingleSample(array).harmonicMean()
     return (array, apointer, inputdata, output, source, spointer)
     
 def output_IO(array, apointer, inputdata, output, source, spointer):
@@ -1378,9 +1431,9 @@ ragaraja = {'000': forward, '001': tape_move,
             '160': mathematics, '161': tape_manipulate,
             '162': not_used, '163': not_used,
             '164': not_used, '165': mathematics,
-            '166': not_used, '167': not_used,
+            '166': mathematics, '167': mathematics,
             '168': mathematics, '169': mathematics,
-            '170': not_used, '171': not_used,
+            '170': mathematics, '171': mathematics,
             '172': not_used, '173': not_used,
             '174': not_used, '175': not_used,
             '176': not_used, '177': not_used,
@@ -1388,13 +1441,13 @@ ragaraja = {'000': forward, '001': tape_move,
             '180': not_used, '181': not_used,
             '182': not_used, '183': not_used,
             '184': not_used, '185': not_used,
-            '186': not_used, '187': not_used,
-            '188': not_used, '189': set_tape_value,
+            '186': not_used, '187': set_tape_value,
+            '188': set_tape_value, '189': set_tape_value,
             '190': set_tape_value, '191': set_tape_value,
-            '192': not_used, '193': not_used,
-            '194': not_used, '195': not_used,
-            '196': not_used, '197': not_used,
-            '198': not_used, '199': not_used,
+            '192': set_tape_value, '193': set_tape_value,
+            '194': set_tape_value, '195': not_used,
+            '196': mathematics, '197': mathematics,
+            '198': mathematics, '199': not_used,
             '200': jump_identifier, '201': register_IO,
             '202': register_IO, '203': register_IO,
             '204': register_IO, '205': register_IO,
