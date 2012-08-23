@@ -78,10 +78,12 @@ def tape_move(array, apointer, inputdata, output, source, spointer):
     not matter if the value of the current cell is positive or negative.
     043: Move the tape cell pointer to the first cell.
     044: Move the tape cell pointer to the last cell.
-    045: Move the tape cell pointer to the location determined by 
-    the last value of the output list. For example, the last value 
-    of the output list is 5, the tape cell pointer will point to the 
-    5th cell on the tape. 
+    045: Move the tape cell pointer to the location determined by the 
+    last value of the output list. If the last value of the output list 
+    is more than the length of the tape, it will take the modulus of 
+    the length of the tape. For example, the last value of the output 
+    list is 5, the tape cell pointer will point to the 5th cell on the 
+    tape. 
     061: Move forward by the number of cells signified by the current 
     cell.
     062: Move backward by the number of cells signified by the current 
@@ -109,10 +111,10 @@ def tape_move(array, apointer, inputdata, output, source, spointer):
     if cmd == '006': apointer = apointer - 10
     if cmd == '007': 
         move = int(float(array[apointer]) * float(array[apointer]))
-        apointer = (apointer - move) % len(array)
+        apointer = (apointer - move) % (len(array) - 1)
     if cmd == '043': apointer = 0
     if cmd == '044': apointer = len(array) - 1
-    if cmd == '045': apointer = int(output[-1])
+    if cmd == '045': apointer = int(output[-1]) % (len(array) - 1)
     if cmd == '061': 
         apointer = apointer + int(array[apointer])
     if cmd == '062': 
@@ -627,6 +629,32 @@ def mathematics(array, apointer, inputdata, output, source, spointer):
             array[apointer] = math.log(array[apointer], array[apointer+1])
         else:
             array[apointer] = math.log(array[apointer], array[0])
+    if cmd == '144':
+        array[apointer] = 0.1 * (array[apointer])
+    if cmd == '145':
+        array[apointer] = 10 * (array[apointer])
+    if cmd == '146':
+        array[apointer] = sum(array[apointer+1:])
+    if cmd == '147':
+        array[apointer] = sum(array[apointer:])
+    if cmd == '148':
+        array[apointer] = sum(array[0:apointer])
+    if cmd == '149':
+        array[apointer] = sum(array[0:apointer+1])
+    if cmd == '150':
+        array[apointer] = sum(array)
+    if cmd == '151':
+        temp = array[apointer+1:]
+        array[apointer] = sum(temp) / float(len(temp))
+    if cmd == '152':
+        temp = array[apointer:]
+        array[apointer] = sum(temp) / float(len(temp))
+    if cmd == '153':
+        temp = array[0:apointer]
+        array[apointer] = sum(temp) / float(len(temp))
+    if cmd == '154':
+        temp = array[0:apointer+1]
+        array[apointer] = sum(temp) / float(len(temp))
     return (array, apointer, inputdata, output, source, spointer)
     
 def output_IO(array, apointer, inputdata, output, source, spointer):
@@ -841,6 +869,7 @@ def interpreter_manipulate(array, apointer, inputdata, output, source, spointer)
 
 def register_IO(array, apointer, inputdata, output, source, spointer):
     '''
+    Read from and write to register from tape cell.
     
     Instructions handled:
     201: Store value of current tape cell to register #1
@@ -1324,12 +1353,12 @@ ragaraja = {'000': forward, '001': tape_move,
             '138': not_used, '139': not_used,
             '140': tape_move, '141': tape_move,
             '142': tape_move, '143': not_used,
-            '144': not_used, '145': not_used,
-            '146': not_used, '147': not_used,
-            '148': not_used, '149': not_used,
-            '150': not_used, '151': not_used,
-            '152': not_used, '153': not_used,
-            '154': not_used, '155': not_used,
+            '144': mathematics, '145': mathematics,
+            '146': mathematics, '147': mathematics,
+            '148': mathematics, '149': mathematics,
+            '150': mathematics, '151': mathematics,
+            '152': mathematics, '153': mathematics,
+            '154': mathematics, '155': mathematics,
             '156': not_used, '157': not_used,
             '158': not_used, '159': not_used,
             '160': not_used, '161': not_used,
@@ -1759,9 +1788,9 @@ tested_ragaraja_instructions = [
     '010', '011', '012', '013', '016', '017', '018', '019', 
     '202', '021', '022', '023', '024', '025',
     '032', '033', '034', '035', '036', '038', 
-    '042', '043', '044', '046', '047', 
+    '042', '043', '044', '045', '046', '047', 
     '050', '051', '052', '053', '054', '055', '056', '057', '058', '059', 
-    '060', '061', '062', '065', '066', '067', '068', '069', 
+    '060', '061', '062', '063', '064', '065', '066', '067', '068', '069', 
     '070', '071', '072', '073', '075', '076', '077', 
     '080', '081', '084', '085', '086', '087', '088', '089', 
     '090', '091', '092', '093', '094', '095', '096', '097', '098', '099', 
@@ -1769,7 +1798,7 @@ tested_ragaraja_instructions = [
     '112', '113', '115', '116', '117', 
     '120', '121', '122', 
     '133', 
-    '140', '141', '142',
+    '140', '141', '142', '144', '145',
     '189', 
     '201', '202', '203', '204', '205', '206', '207', '208', '209', 
     '210', '211', '212', '213', '214', '215', '216', '217', '218', '219', 
