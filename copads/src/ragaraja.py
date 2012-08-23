@@ -655,6 +655,15 @@ def mathematics(array, apointer, inputdata, output, source, spointer):
     if cmd == '154':
         temp = array[0:apointer+1]
         array[apointer] = sum(temp) / float(len(temp))
+    if cmd == '155': array = [0.5 * x for x in array]
+    if cmd == '156': array = [2 * x for x in array]
+    if cmd == '157': array = [0.1 * x for x in array]
+    if cmd == '158': array = [10 * x for x in array]
+    if cmd == '159': array = [0.01 * x for x in array]
+    if cmd == '160': array = [100 * x for x in array]
+    if cmd == '165': array = [-1 * x for x in array]
+    if cmd == '168': array = [x * x for x in array]
+    if cmd == '169': array = [math.sqrt(x) for x in array]
     return (array, apointer, inputdata, output, source, spointer)
     
 def output_IO(array, apointer, inputdata, output, source, spointer):
@@ -1359,13 +1368,13 @@ ragaraja = {'000': forward, '001': tape_move,
             '150': mathematics, '151': mathematics,
             '152': mathematics, '153': mathematics,
             '154': mathematics, '155': mathematics,
-            '156': not_used, '157': not_used,
-            '158': not_used, '159': not_used,
-            '160': not_used, '161': not_used,
+            '156': mathematics, '157': mathematics,
+            '158': mathematics, '159': mathematics,
+            '160': mathematics, '161': not_used,
             '162': not_used, '163': not_used,
-            '164': not_used, '165': not_used,
+            '164': not_used, '165': mathematics,
             '166': not_used, '167': not_used,
-            '168': not_used, '169': not_used,
+            '168': mathematics, '169': mathematics,
             '170': not_used, '171': not_used,
             '172': not_used, '173': not_used,
             '174': not_used, '175': not_used,
