@@ -501,6 +501,34 @@ def mathematics(array, apointer, inputdata, output, source, spointer):
     117: Calculate the logarithm value of the current cell (n) to the
     base of the value of (n+1)th cell, and store the value in the current 
     cell. Array[n] = log(Array[n], base=Array[n+1])
+    144: Divide current cell value by 10.
+    145: Multiply current cell value by 10.
+    146: Add all cell values from (n+1)th cell to the end of the tape and 
+    store result in current cell (n). Array[n] = sum(Array[n+1:])
+    147: Add all cell values from n-th cell to the end of the tape and store 
+    result in current cell (n). Array[n] = sum(Array[n:])
+    148: Add all cell values from first cell to the cell before n-th cell 
+    and store result in current cell (n). Array[n] = sum(Array[0:n])
+    149: Add all cell values from first cell to n-th cell (inclusive) and 
+    store result in current cell (n). Array[n] = sum(Array[0:n+1])
+    150: Add all cell values in the tape and store result in current cell (n). 
+    Array[n] = sum(Array[:])
+    151: Average all cell values from (n+1)th cell to the end of the tape 
+    and store result in current cell (n). Array[n] = average(Array[n+1:])
+    152: Average all cell values from n-th cell to the end of the tape and 
+    store result in current cell (n). Array[n] = average(Array[n:])
+    153: Average all cell values from first cell to the cell before n-th cell 
+    and store result in current cell (n). Array[n] = average(Array[0:n])
+    154: Average all cell values from first cell to n-th cell (inclusive) 
+    and store result in current cell (n). Array[n] = average(Array[0:n+1])
+    155: Half every cell value in tape.
+    156: Double every cell value in tape.
+    157: Divide every cell value in tape by 10.
+    158: Multiply every cell value in tape by 10.
+    159: Divide every cell value in tape by 100.
+    160: Multiply every cell value in tape by 100. 
+    168: Square every cell value in tape.
+    169: Square root every cell value in tape.     
     '''
     cmd = source[spointer:spointer+3]
     if cmd == '065':
@@ -1781,7 +1809,9 @@ tested_ragaraja_instructions = [
     '112', '113', '115', '116', '117', 
     '120', '121', '122', 
     '133', 
-    '140', '141', '142', '144', '145',
+    '140', '141', '142', '144', '145', '146', '147',
+    '156', '157', 
+    '165',
     '189', 
     '201', '202', '203', '204', '205', '206', '207', '208', '209', 
     '210', '211', '212', '213', '214', '215', '216', '217', '218', '219', 
