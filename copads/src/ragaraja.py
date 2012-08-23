@@ -368,6 +368,9 @@ def set_tape_value(array, apointer, inputdata, output, source, spointer):
     097: Set the value of the current cell to pi (3.14159265358979323846)
     098: Set the value of the current cell to e (2.718281828459045) 
     189: Set all values in tape to "0".
+    190: Set all the cell values in the tape to the value of current cell.
+    191: Set all the cell values in the tape to the tape position of 
+    current cell.
     '''
     cmd = source[spointer:spointer+3]
     if cmd == '084': array[apointer] = 0
