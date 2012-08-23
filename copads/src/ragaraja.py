@@ -376,6 +376,8 @@ def set_tape_value(array, apointer, inputdata, output, source, spointer):
     if cmd == '097': array[apointer] = constants.PI
     if cmd == '098': array[apointer] = math.e
     if cmd == '189': array = [0] * len(array)
+    if cmd == '190': array = [array[apointer]] * len(array)
+    if cmd == '191': array = [apointer] * len(array)
     return (array, apointer, inputdata, output, source, spointer)
     
 def mathematics(array, apointer, inputdata, output, source, spointer):
@@ -1357,7 +1359,7 @@ ragaraja = {'000': forward, '001': tape_move,
             '184': not_used, '185': not_used,
             '186': not_used, '187': not_used,
             '188': not_used, '189': set_tape_value,
-            '190': not_used, '191': not_used,
+            '190': set_tape_value, '191': set_tape_value,
             '192': not_used, '193': not_used,
             '194': not_used, '195': not_used,
             '196': not_used, '197': not_used,
