@@ -71,11 +71,11 @@ def tape_move(array, apointer, inputdata, output, source, spointer):
     "004".
     006: Move backward by 10 cells on tape. Equivalent to 10 times of 
     "004".
-    007: Move backward by NxN cells on tape where N is the value of 
-    the current cell. This will only work if N is a positive number. 
-    If N is a decimal, it will move backward by the floor of NxN. For 
-    example, if N is 4.2, this operation will tape pointer backward 
-    by 17 cells. 
+    007: Move backward by NxN cells on tape where N is the value of the 
+    current cell. If N is a decimal, it will move backward by the floor 
+    of NxN. For example, if N is 4.2, this operation will tape pointer 
+    backward by 17 cells. As NxN is always a positive number, it does 
+    not matter if the value of the current cell is positive or negative.
     043: Move the tape cell pointer to the first cell.
     044: Move the tape cell pointer to the last cell.
     045: Move the tape cell pointer to the location determined by 
@@ -109,7 +109,7 @@ def tape_move(array, apointer, inputdata, output, source, spointer):
     if cmd == '006': apointer = apointer - 10
     if cmd == '007': 
         move = int(float(array[apointer]) * float(array[apointer]))
-        apointer = apointer - move
+        apointer = (apointer - move) % len(array)
     if cmd == '043': apointer = 0
     if cmd == '044': apointer = len(array) - 1
     if cmd == '045': apointer = int(output[-1])
@@ -1755,10 +1755,10 @@ ragaraja = {'000': forward, '001': tape_move,
            }
 
 tested_ragaraja_instructions = [
-    '000', '001', '002', '003', '004', '005', '006', '008', '009', 
+    '000', '001', '002', '003', '004', '005', '006', '007', '008', '009', 
     '010', '011', '012', '013', '016', '017', '018', '019', 
-    '021', '022', 
-    '032', '033', '038', 
+    '202', '021', '022', '023', '024', '025',
+    '032', '033', '034', '035', '036', '038', 
     '042', '043', '044', '046', '047', 
     '050', '051', '052', '053', '054', '055', '056', '057', '058', '059', 
     '060', '061', '062', '065', '066', '067', '068', '069', 
