@@ -115,16 +115,11 @@ def tape_move(array, apointer, inputdata, output, source, spointer):
     if cmd == '043': apointer = 0
     if cmd == '044': apointer = len(array) - 1
     if cmd == '045': apointer = int(output[-1]) % (len(array) - 1)
-    if cmd == '061': 
-        apointer = apointer + int(array[apointer])
-    if cmd == '062': 
-        apointer = apointer - int(array[apointer])
-    if cmd == '140': 
-        apointer = int((len(array) - 1) * 0.5)
-    if cmd == '141': 
-        apointer = int((len(array) - 1) * 0.25)
-    if cmd == '142': 
-        apointer = int((len(array) - 1) * 0.75)
+    if cmd == '061': apointer = apointer + int(array[apointer])
+    if cmd == '062': apointer = apointer - int(array[apointer])
+    if cmd == '140': apointer = int((len(array) - 1) * 0.5)
+    if cmd == '141': apointer = int((len(array) - 1) * 0.25)
+    if cmd == '142': apointer = int((len(array) - 1) * 0.75)
     return (array, apointer, inputdata, output, source, spointer)
 
 def accumulations(array, apointer, inputdata, output, source, spointer):
@@ -140,18 +135,12 @@ def accumulations(array, apointer, inputdata, output, source, spointer):
     033: Half current tape cell value. 
     '''
     cmd = source[spointer:spointer+3]
-    if cmd == '009': 
-        array[apointer] = array[apointer] + 5
-    if cmd == '010': 
-        array[apointer] = array[apointer] + 10
-    if cmd == '012': 
-        array[apointer] = array[apointer] - 5
-    if cmd == '013': 
-        array[apointer] = array[apointer] - 10
-    if cmd == '032': 
-        array[apointer] = 2 * array[apointer]
-    if cmd == '033': 
-        array[apointer] = 0.5 * array[apointer]
+    if cmd == '009': array[apointer] = array[apointer] + 5
+    if cmd == '010': array[apointer] = array[apointer] + 10
+    if cmd == '012': array[apointer] = array[apointer] - 5
+    if cmd == '013': array[apointer] = array[apointer] - 10
+    if cmd == '032': array[apointer] = 2 * array[apointer]
+    if cmd == '033': array[apointer] = 0.5 * array[apointer]
     return (array, apointer, inputdata, output, source, spointer)
 
 def nBF_random_op(array, apointer, inputdata, output, source, spointer):
@@ -557,50 +546,28 @@ def mathematics(array, apointer, inputdata, output, source, spointer):
         array[apointer] = inputdata[0] % array[apointer]
     if cmd == '079' and len(inputdata) > 0:
         array[apointer] = inputdata[-1] % array[apointer]
-    if cmd == '080':
-        array[apointer] = int(array[apointer])
-    if cmd == '087':
-        array[apointer] = -1 * array[apointer]
-    if cmd == '088':
-        array[apointer] = math.sin(array[apointer])
-    if cmd == '089':
-        array[apointer] = math.cos(array[apointer])
-    if cmd == '090':
-        array[apointer] = math.tan(array[apointer])
-    if cmd == '091':
-        array[apointer] = math.asin(array[apointer])
-    if cmd == '092':
-        array[apointer] = math.acos(array[apointer])
-    if cmd == '093':
-        array[apointer] = math.atan(array[apointer])
-    if cmd == '094':
-        array[apointer] = 1 / array[apointer]
-    if cmd == '095':
-        array[apointer] = math.sqrt(array[apointer])
-    if cmd == '096':
-        array[apointer] = math.log(array[apointer], math.e)
-    if cmd == '099':
-        array[apointer] = math.sinh(array[apointer])
-    if cmd == '100':
-        array[apointer] = math.cosh(array[apointer])
-    if cmd == '101':
-        array[apointer] = math.tanh(array[apointer])
-    if cmd == '102':
-        array[apointer] = math.asinh(array[apointer])
-    if cmd == '103':
-        array[apointer] = math.acosh(array[apointer])
-    if cmd == '104':
-        array[apointer] = math.atanh(array[apointer])
-    if cmd == '105':
-        array[apointer] = math.degrees(array[apointer])
-    if cmd == '106':
-        array[apointer] = math.radians(array[apointer])
-    if cmd == '107':
-        array[apointer] = array[apointer] ** math.e
-    if cmd == '108':
-        array[apointer] = math.e ** array[apointer]
-    if cmd == '109':
-        array[apointer] = 10 ** array[apointer]
+    if cmd == '080': array[apointer] = int(array[apointer])
+    if cmd == '087': array[apointer] = -1 * array[apointer]
+    if cmd == '088': array[apointer] = math.sin(array[apointer])
+    if cmd == '089': array[apointer] = math.cos(array[apointer])
+    if cmd == '090': array[apointer] = math.tan(array[apointer])
+    if cmd == '091': array[apointer] = math.asin(array[apointer])
+    if cmd == '092': array[apointer] = math.acos(array[apointer])
+    if cmd == '093': array[apointer] = math.atan(array[apointer])
+    if cmd == '094': array[apointer] = 1 / array[apointer]
+    if cmd == '095': array[apointer] = math.sqrt(array[apointer])
+    if cmd == '096': array[apointer] = math.log(array[apointer], math.e)
+    if cmd == '099': array[apointer] = math.sinh(array[apointer])
+    if cmd == '100': array[apointer] = math.cosh(array[apointer])
+    if cmd == '101': array[apointer] = math.tanh(array[apointer])
+    if cmd == '102': array[apointer] = math.asinh(array[apointer])
+    if cmd == '103': array[apointer] = math.acosh(array[apointer])
+    if cmd == '104': array[apointer] = math.atanh(array[apointer])
+    if cmd == '105': array[apointer] = math.degrees(array[apointer])
+    if cmd == '106': array[apointer] = math.radians(array[apointer])
+    if cmd == '107': array[apointer] = array[apointer] ** math.e
+    if cmd == '108': array[apointer] = math.e ** array[apointer]
+    if cmd == '109': array[apointer] = 10 ** array[apointer]
     if cmd == '110': 
         if (apointer + 1) < len(array):
             array[apointer] = array[apointer] ** array[apointer+1]
@@ -611,14 +578,11 @@ def mathematics(array, apointer, inputdata, output, source, spointer):
             array[apointer] = array[apointer] ** (1 / array[apointer+1])
         else:
             array[apointer] = array[apointer] ** (1 / array[0])
-    if cmd == '112':
-        array[apointer] = math.erf(array[apointer])
-    if cmd == '113':
-        array[apointer] = math.erfc(array[apointer])
+    if cmd == '112': array[apointer] = math.erf(array[apointer])
+    if cmd == '113': array[apointer] = math.erfc(array[apointer])
     if cmd == '114' and array[apointer] >= 0:
         array[apointer] = math.factorial(int(array[apointer]))
-    if cmd == '115':
-        array[apointer] = math.factorial(abs(int(array[apointer])))
+    if cmd == '115': array[apointer] = math.factorial(abs(int(array[apointer])))
     if cmd == '116':
         if (apointer + 1) < len(array):
             array[apointer] = math.hypot(array[apointer], array[apointer+1])
@@ -629,20 +593,13 @@ def mathematics(array, apointer, inputdata, output, source, spointer):
             array[apointer] = math.log(array[apointer], array[apointer+1])
         else:
             array[apointer] = math.log(array[apointer], array[0])
-    if cmd == '144':
-        array[apointer] = 0.1 * (array[apointer])
-    if cmd == '145':
-        array[apointer] = 10 * (array[apointer])
-    if cmd == '146':
-        array[apointer] = sum(array[apointer+1:])
-    if cmd == '147':
-        array[apointer] = sum(array[apointer:])
-    if cmd == '148':
-        array[apointer] = sum(array[0:apointer])
-    if cmd == '149':
-        array[apointer] = sum(array[0:apointer+1])
-    if cmd == '150':
-        array[apointer] = sum(array)
+    if cmd == '144': array[apointer] = 0.1 * (array[apointer])
+    if cmd == '145': array[apointer] = 10 * (array[apointer])
+    if cmd == '146': array[apointer] = sum(array[apointer+1:])
+    if cmd == '147': array[apointer] = sum(array[apointer:])
+    if cmd == '148': array[apointer] = sum(array[0:apointer])
+    if cmd == '149': array[apointer] = sum(array[0:apointer+1])
+    if cmd == '150': array[apointer] = sum(array)
     if cmd == '151':
         temp = array[apointer+1:]
         array[apointer] = sum(temp) / float(len(temp))
@@ -692,14 +649,10 @@ def output_IO(array, apointer, inputdata, output, source, spointer):
     cmd = source[spointer:spointer+3]
     if cmd == '021': output.append(apointer)
     if cmd == '022': output.append(spointer)
-    if cmd == '037' and len(output) > 0:
-        array[apointer] = output.pop(-1)
-    if cmd == '038' and len(output) > 0:
-        array[apointer] = output[-1]
-    if cmd == '039' and len(output) > 0:
-        array[apointer] = output.pop(0)
-    if cmd == '040' and len(output) > 0:
-        array[apointer] = output[0]
+    if cmd == '037' and len(output) > 0: array[apointer] = output.pop(-1)
+    if cmd == '038' and len(output) > 0: array[apointer] = output[-1]
+    if cmd == '039' and len(output) > 0: array[apointer] = output.pop(0)
+    if cmd == '040' and len(output) > 0: array[apointer] = output[0]
     if cmd == '041' and len(output) > 0: output.pop(0)
     if cmd == '042' and len(output) > 0: output.pop(-1)
     return (array, apointer, inputdata, output, source, spointer)
