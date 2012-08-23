@@ -392,18 +392,19 @@ def set_tape_value(array, apointer, inputdata, output, source, spointer):
     if cmd == '097': array[apointer] = constants.PI
     if cmd == '098': array[apointer] = math.e
     if cmd == '187': 
-        array = array[0:pointer+1] + [0 for x in array[pointer+1:]]
+        array = array[0:apointer+1] + [0 for x in array[apointer+1:]]
     if cmd == '188': 
         array = [0 for x in array[:apointer]] + array[apointer:]
     if cmd == '189': array = [0] * len(array)
     if cmd == '190': array = [array[apointer]] * len(array)
     if cmd == '191': array = [apointer] * len(array)
     if cmd == '192': 
-        array = array[0:pointer+1] + [array[apointer] for x in array[pointer+1:]]
+        array = array[0:apointer+1] + [array[apointer] 
+                                       for x in array[apointer+1:]]
     if cmd == '193': 
         array = [array[apointer] for x in array[:apointer]] + array[apointer:]
     if cmd == '194': 
-        array = array[0:pointer+1] + [apointer for x in array[pointer+1:]]
+        array = array[0:apointer+1] + [apointer for x in array[apointer+1:]]
     if cmd == '195': 
         array = [apointer for x in array[:apointer]] + array[apointer:]
     return (array, apointer, inputdata, output, source, spointer)
@@ -693,13 +694,13 @@ def mathematics(array, apointer, inputdata, output, source, spointer):
     if cmd == '160': array = [100 * x for x in array]
     if cmd == '165': array = [-1 * x for x in array]
     if cmd == '166': 
-        array = array[0:pointer+1] + [x * x for x in array[pointer+1:]]
+        array = array[0:apointer+1] + [x * x for x in array[apointer+1:]]
     if cmd == '167': 
         array = [x * x for x in array[:apointer]] + array[apointer:]
     if cmd == '168': array = [x * x for x in array]
     if cmd == '169': array = [math.sqrt(x) for x in array]
     if cmd == '170': 
-        array = array[0:pointer+1] + [math.sqrt(x) for x in array[pointer+1:]]
+        array = array[0:apointer+1] + [math.sqrt(x) for x in array[apointer+1:]]
     if cmd == '171': 
         array = [math.sqrt(x) for x in array[:apointer]] + array[apointer:]
     if cmd == '196': 
@@ -894,7 +895,7 @@ def tape_manipulate(array, apointer, inputdata, output, source, spointer):
         temp.reverse()
         array = array + temp
     if cmd == '161': 
-        array = array[apointer:] + a[0:apointer]
+        array = array[apointer:] + array[0:apointer]
         apointer = 0
     return (array, apointer, inputdata, output, source, spointer)
     
