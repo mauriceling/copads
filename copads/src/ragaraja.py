@@ -807,6 +807,9 @@ def tape_manipulate(array, apointer, inputdata, output, source, spointer):
         array = array[0:apointer+1]
         temp.reverse()
         array = array + temp
+    if cmd == '161': 
+        array = array[apointer:] + a[0:apointer]
+        apointer = 0
     return (array, apointer, inputdata, output, source, spointer)
     
 def source_manipulate(array, apointer, inputdata, output, source, spointer):
@@ -1233,6 +1236,22 @@ def register_IO(array, apointer, inputdata, output, source, spointer):
     if cmd == '398': array[apointer] = register[97]
     if cmd == '399': array[apointer] = register[98]
     return (array, apointer, inputdata, output, source, spointer)
+
+def jump_identifier(array, apointer, inputdata, output, source, spointer):
+    '''
+    
+    Instructions handled:
+    '''
+    cmd = source[spointer:spointer+3]
+    if cmd == '200': pass
+    if cmd == '300': pass
+    if cmd == '400': pass
+    if cmd == '500': pass
+    if cmd == '600': pass
+    if cmd == '700': pass
+    if cmd == '800': pass
+    if cmd == '900': pass
+    return (array, apointer, inputdata, output, source, spointer)
     
 def not_used(array, apointer, inputdata, output, source, spointer):
     '''
@@ -1323,7 +1342,7 @@ ragaraja = {'000': forward, '001': tape_move,
             '154': mathematics, '155': mathematics,
             '156': mathematics, '157': mathematics,
             '158': mathematics, '159': mathematics,
-            '160': mathematics, '161': not_used,
+            '160': mathematics, '161': tape_manipulate,
             '162': not_used, '163': not_used,
             '164': not_used, '165': mathematics,
             '166': not_used, '167': not_used,
@@ -1343,7 +1362,7 @@ ragaraja = {'000': forward, '001': tape_move,
             '194': not_used, '195': not_used,
             '196': not_used, '197': not_used,
             '198': not_used, '199': not_used,
-            '200': not_used, '201': register_IO,
+            '200': jump_identifier, '201': register_IO,
             '202': register_IO, '203': register_IO,
             '204': register_IO, '205': register_IO,
             '206': register_IO, '207': register_IO,
@@ -1393,7 +1412,7 @@ ragaraja = {'000': forward, '001': tape_move,
             '294': register_IO, '295': register_IO,
             '296': register_IO, '297': register_IO,
             '298': register_IO, '299': register_IO,
-            '300': not_used, '301': register_IO,
+            '300': jump_identifier, '301': register_IO,
             '302': register_IO, '303': register_IO,
             '304': register_IO, '305': register_IO,
             '306': register_IO, '307': register_IO,
@@ -1443,7 +1462,7 @@ ragaraja = {'000': forward, '001': tape_move,
             '394': register_IO, '395': register_IO,
             '396': register_IO, '397': register_IO,
             '398': register_IO, '399': register_IO,
-            '400': not_used, '401': not_used,
+            '400': jump_identifier, '401': not_used,
             '402': not_used, '403': not_used,
             '404': not_used, '405': not_used,
             '406': not_used, '407': not_used,
@@ -1493,7 +1512,7 @@ ragaraja = {'000': forward, '001': tape_move,
             '494': not_used, '495': not_used,
             '496': not_used, '497': not_used,
             '498': not_used, '499': not_used,
-            '500': not_used, '501': not_used,
+            '500': jump_identifier, '501': not_used,
             '502': not_used, '503': not_used,
             '504': not_used, '505': not_used,
             '506': not_used, '507': not_used,
@@ -1543,7 +1562,7 @@ ragaraja = {'000': forward, '001': tape_move,
             '594': not_used, '595': not_used,
             '596': not_used, '597': not_used,
             '598': not_used, '599': not_used,
-            '600': not_used, '601': not_used,
+            '600': jump_identifier, '601': not_used,
             '602': not_used, '603': not_used,
             '604': not_used, '605': not_used,
             '606': not_used, '607': not_used,
@@ -1593,7 +1612,7 @@ ragaraja = {'000': forward, '001': tape_move,
             '694': not_used, '695': not_used,
             '696': not_used, '697': not_used,
             '698': not_used, '699': not_used,
-            '700': not_used, '701': not_used,
+            '700': jump_identifier, '701': not_used,
             '702': not_used, '703': not_used,
             '704': not_used, '705': not_used,
             '706': not_used, '707': not_used,
@@ -1643,7 +1662,7 @@ ragaraja = {'000': forward, '001': tape_move,
             '794': not_used, '795': not_used,
             '796': not_used, '797': not_used,
             '798': not_used, '799': not_used,
-            '800': not_used, '801': not_used,
+            '800': jump_identifier, '801': not_used,
             '802': not_used, '803': not_used,
             '804': not_used, '805': not_used,
             '806': not_used, '807': not_used,
@@ -1693,7 +1712,7 @@ ragaraja = {'000': forward, '001': tape_move,
             '894': not_used, '895': not_used,
             '896': not_used, '897': not_used,
             '898': not_used, '899': not_used,
-            '900': not_used, '901': not_used,
+            '900': jump_identifier, '901': not_used,
             '902': not_used, '903': not_used,
             '904': not_used, '905': not_used,
             '906': not_used, '907': not_used,
