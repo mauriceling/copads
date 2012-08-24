@@ -666,11 +666,37 @@ testdata = {
 0100200300400500002500100200300400500600700800901000003403503403604506300006400\
 0000000144145146147157156165',
                  'spointer': 1734},
+            # Testing 146, 147, 148, 149, 150, 151, 152, 153, 154, 155, 166, 
+            # 167, 168, 169, 170, 171
+            41: {'restart': True,
+                 'in_source': '020000020000020000020000020166171167170168169146\
+147004148149000152154000151000153080150155',
+                 'forcedinarray': [1,4,9,16,25,1,2,3,4,5],
+                 'array': [0.5,2,4.5,14,4.95,1.75,38.2,1.5,2,2.5], 
+                 'apointer': 6,
+                 'forcedindata': [1,2,3,4,5,6,7,8,9],
+                 'inputdata': [1,2,3,4,5,6,7,8,9],
+                 'output': [1,4,9,16,25],
+                 'out_source': '02000002000002000002000002016617116717016816914\
+6147004148149000152154000151000153080150155',
+                 'spointer': 90},
+            # Testing 158, 159, 160, 196, 197, 198
+            42: {'in_source': '197198196158159160080',
+                 'forcedinarray': [1,4,9,16,25,1,2,3,4,5],
+                 'array': [5,20,45,140,49.5,17.5,39,15,20,25], 
+                 'apointer': 6,
+                 'forcedindata': [1,2,3,4,5,6,7,8,9],
+                 'inputdata': [1,2,3,4,5,6,7,8,9],
+                 'output': [1,4,9,16,25],
+                 'out_source': '02000002000002000002000002016617116717016816914\
+6147004148149000152154000151000153080150155197198196158159160080',
+                 'spointer': 108},
            }
 
 tests = testdata.keys()
 tests.sort()
 
+full_source = ''
 source = ''
 
 def comparator(data, result):
@@ -684,7 +710,9 @@ for t in tests:
     
     # Step 1: Check to concatenate source or restart source
     try: 
-        if testdata[t]['restart'] == True: source = ''
+        if testdata[t]['restart'] == True:
+            full_source = full_source + source
+            source = ''
     except KeyError: pass
      
     isource = source + testdata[t]['in_source']
@@ -770,7 +798,7 @@ print '===== End of random operations testing ====='
 # --------- SUMMARY --------- 
 # ---------------------------
 
-isource = isource + random_source
+isource = full_source + isource + random_source
 instruction_set = {}
 for i in range(0, len(isource), 3): instruction_set[isource[i:i+3]] = ''
 instruction_set = instruction_set.keys()
