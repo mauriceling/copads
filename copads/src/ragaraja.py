@@ -881,6 +881,9 @@ def tape_manipulate(array, apointer, inputdata, output, source, spointer):
     161: Cut the tape before the current cell (n) and append it to the end of 
     the tape and set tape pointer to 0. 
     <---A--->n<---B---> ==> n<---B---><---A--->
+    162: Cut the tape after the current cell (n) and append it to the start of 
+    the tape and set tape pointer to the last cell. 
+    <---A--->n<---B---> ==> <---B---><---A--->n
     163: Cut out the current cell and append it to the front of the tape and 
     set tape pointer to 0. <---A--->n<---B---> ==> n<---A---><---B--->
     164: Cut out the current cell and append it to the end of the tape and 
@@ -905,6 +908,9 @@ def tape_manipulate(array, apointer, inputdata, output, source, spointer):
     if cmd == '161': 
         array = array[apointer:] + array[0:apointer]
         apointer = 0
+    if cmd == '162':
+        array = array[apointer+1:] + array[0:apointer+1]
+        apointer = len(array) - 1
     if cmd == '163': 
         cell = array.pop(apointer)
         array = [cell] + array
@@ -1446,7 +1452,7 @@ ragaraja = {'000': forward, '001': tape_move,
             '156': mathematics, '157': mathematics,
             '158': mathematics, '159': mathematics,
             '160': mathematics, '161': tape_manipulate,
-            '162': not_used, '163': tape_manipulate,
+            '162': tape_manipulate, '163': tape_manipulate,
             '164': tape_manipulate, '165': mathematics,
             '166': mathematics, '167': mathematics,
             '168': mathematics, '169': mathematics,
