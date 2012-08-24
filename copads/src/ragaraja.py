@@ -101,6 +101,10 @@ def tape_move(array, apointer, inputdata, output, source, spointer):
     number cells, it will move to the lower cell. For example, this 
     instruction will move the tape pointer to the 750th cell of a 
     1000-cell tape, or 213rd of a 285-cell tape. 
+    143: Move tape pointer to the position as the integer value in the 
+    current cell. If the value of the cell is larger than the length of 
+    the tape, it will move to the modulus of the integer value in the 
+    current cell. 
     '''
     cmd = source[spointer:spointer+3]
     if cmd == '001': apointer = apointer + 5
@@ -121,6 +125,7 @@ def tape_move(array, apointer, inputdata, output, source, spointer):
     if cmd == '140': apointer = int((len(array) - 1) * 0.5)
     if cmd == '141': apointer = int((len(array) - 1) * 0.25)
     if cmd == '142': apointer = int((len(array) - 1) * 0.75)
+    if cmd == '143': apointer = int(array[apointer]) % (len(array) - 1)
     return (array, apointer, inputdata, output, source, spointer)
 
 def accumulations(array, apointer, inputdata, output, source, spointer):
@@ -1442,7 +1447,7 @@ ragaraja = {'000': forward, '001': tape_move,
             '136': not_used, '137': not_used,
             '138': not_used, '139': not_used,
             '140': tape_move, '141': tape_move,
-            '142': tape_move, '143': not_used,
+            '142': tape_move, '143': tape_move,
             '144': mathematics, '145': mathematics,
             '146': mathematics, '147': mathematics,
             '148': mathematics, '149': mathematics,
@@ -1888,9 +1893,9 @@ tested_ragaraja_instructions = [
     '110', '111', '112', '113', '114', '115', '116', '117', 
     '120', '121', '122', '123', '124', '125', '126', '127', '128',
     '133', 
-    '140', '141', '142', '144', '145', '146', '147',
+    '140', '141', '142', '143', '144', '145', '146', '147',
     '150', '151', '152', '153', '154', '155', '156', '157', '158', '159',
-    '160', '161', '165', '166', '167', '168', '169', 
+    '160', '161', '162', '163', '164', '165', '166', '167', '168', '169', 
     '170', '171'
     '189', 
     '196', '197', '198',
