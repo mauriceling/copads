@@ -878,6 +878,14 @@ def tape_manipulate(array, apointer, inputdata, output, source, spointer):
     081: Swap the value of the current cell (n) and (n+1)th cell. 
     133: Flip the tape from the cell after the current cell to the end of the 
     tape (temporarily breaking the circularity of the tape).
+    161: Cut the tape before the current cell (n) and append it to the end of 
+    the tape and set tape pointer to 0. 
+    <---A--->n<---B---> ==> n<---B---><---A--->
+    163: Cut out the current cell and append it to the front of the tape and 
+    set tape pointer to 0. <---A--->n<---B---> ==> n<---A---><---B--->
+    164: Cut out the current cell and append it to the end of the tape and 
+    set tape pointer to the last cell. 
+    <---A--->n<---B---> ==> <---A---><---B--->n
     '''
     cmd = source[spointer:spointer+3]
     if cmd == '081':
@@ -897,6 +905,14 @@ def tape_manipulate(array, apointer, inputdata, output, source, spointer):
     if cmd == '161': 
         array = array[apointer:] + array[0:apointer]
         apointer = 0
+    if cmd == '163': 
+        cell = array.pop(apointer)
+        array = [cell] + array
+        apointer = 0
+    if cmd == '164':
+        cell = array.pop(apointer)
+        array = array + [cell]
+        apointer = len(array) - 1
     return (array, apointer, inputdata, output, source, spointer)
     
 def source_manipulate(array, apointer, inputdata, output, source, spointer):
@@ -1430,8 +1446,8 @@ ragaraja = {'000': forward, '001': tape_move,
             '156': mathematics, '157': mathematics,
             '158': mathematics, '159': mathematics,
             '160': mathematics, '161': tape_manipulate,
-            '162': not_used, '163': not_used,
-            '164': not_used, '165': mathematics,
+            '162': not_used, '163': tape_manipulate,
+            '164': tape_manipulate, '165': mathematics,
             '166': mathematics, '167': mathematics,
             '168': mathematics, '169': mathematics,
             '170': mathematics, '171': mathematics,
@@ -1868,11 +1884,11 @@ tested_ragaraja_instructions = [
     '133', 
     '140', '141', '142', '144', '145', '146', '147',
     '150', '151', '152', '153', '154', '155', '156', '157', '158', '159',
-    '160', '165', '166', '167', '168', '169', 
+    '160', '161', '165', '166', '167', '168', '169', 
     '170', '171'
     '189', 
     '196', '197', '198',
-    '201', '202', '203', '204', '205', '206', '207', '208', '209', 
+    '200', '201', '202', '203', '204', '205', '206', '207', '208', '209', 
     '210', '211', '212', '213', '214', '215', '216', '217', '218', '219', 
     '220', '221', '222', '223', '224', '225', '226', '227', '228', '229', 
     '230', '231', '232', '233', '234', '235', '236', '237', '238', '239', 
@@ -1882,7 +1898,7 @@ tested_ragaraja_instructions = [
     '270', '271', '272', '273', '274', '275', '276', '277', '278', '279',
     '280', '281', '282', '283', '284', '285', '286', '287', '288', '289',
     '290', '291', '292', '293', '294', '295', '296', '297', '298', '299',
-    '301', '302', '303', '304', '305', '306', '307', '308', '309', 
+    '300', '301', '302', '303', '304', '305', '306', '307', '308', '309', 
     '310', '311', '312', '313', '314', '315', '316', '317', '318', '319', 
     '320', '321', '322', '323', '324', '325', '326', '327', '328', '329', 
     '330', '331', '332', '333', '334', '335', '336', '337', '338', '339', 
@@ -1892,6 +1908,12 @@ tested_ragaraja_instructions = [
     '370', '371', '372', '373', '374', '375', '376', '377', '378', '379',
     '380', '381', '382', '383', '384', '385', '386', '387', '388', '389',
     '390', '391', '392', '393', '394', '395', '396', '397', '398', '399',
+    '400',
+    '500',
+    '600',
+    '700',
+    '800',
+    '900',
     ]
 
 nBF_instructions = ['000', '004', '008', '011', '020', '050', '051', '052', 
