@@ -49,10 +49,54 @@ from samplestatistics import SingleSample
 from lc_bf import increment, decrement
 from lc_bf import forward, backward
 from lc_bf import call_out, accept_predefined
-from lc_bf import cbf_start_loop, cbf_end_loop
 
 register = [0]*99
 
+##def start_loop(array, apointer, inputdata, output, source, spointer):
+##    '''
+##    Start loop. Operations after a start loop operator ("[") will only 
+##    be executed provided the loop(s) are properly closed. If the loops 
+##    are open, the program will terminate. Note that unclosed or unopened 
+##    loops may result in non-deterministic behaviour. 
+##    '''
+##    if array[apointer] > 0:
+##        return (array, apointer, inputdata, output, source, spointer)
+##    else:
+##        count = 1
+##        try:
+##            while count > 0:
+##                cmd = source[spointer:spointer+3]
+##                spointer = spointer + 3
+##                print cmd
+##                if cmd == '015': count = count - 1
+##                if cmd == '014': count = count + 1
+##        except IndexError:
+##            spointer = len(source) - 1
+##    return (array, apointer, inputdata, output, source, spointer - 1)
+##
+##def end_loop(array, apointer, inputdata, output, source, spointer):
+##    '''
+##    End loop. However, it is possible to have an end loop operator 
+##    ("]") without a preceding start loop operator ("["). In this case, 
+##    the end loop operator ("]") will be ignored and execution continues. 
+##    Note that unclosed or unopened loops may result in non-deterministic 
+##    behaviour. 
+##    '''
+##    temp = spointer
+##    if array[apointer] < 1:
+##        return (array, apointer, inputdata, output, source, spointer + 1)
+##    else:
+##        count = 1
+##        try:
+##            while count > 0:
+##                cmd = source[spointer-3:spointer]
+##                spointer = spointer - 3
+##                if cmd == '015': count = count + 1
+##                if cmd == '014': count = count - 1
+##        except IndexError:
+##            spointer = temp
+##    return (array, apointer, inputdata, output, source, spointer)
+    
 def tape_move(array, apointer, inputdata, output, source, spointer):
     '''
     Moving tape pointer for more than one increment or decrement.
@@ -1383,7 +1427,7 @@ ragaraja = {'000': forward, '001': tape_move,
             '008': increment, '009': accumulations,
             '010': accumulations, '011': decrement,
             '012': accumulations, '013': accumulations,
-            '014': cbf_start_loop, '015': cbf_end_loop,
+            '014': not_used, '015': not_used,
             '016': tape_size, '017': tape_size,
             '018': tape_size, '019': tape_size,
             '020': call_out, '021': output_IO,
@@ -1969,7 +2013,7 @@ def LCBF_to_Ragaraja(source):
         elif x == '[': converted.append('014')
         elif x == ']': converted.append('015')
         else: converted.append('...')
-    return converted
+    return ''.join(converted)
 
 def nBF_to_Ragaraja(source):
     '''
@@ -1998,4 +2042,4 @@ def nBF_to_Ragaraja(source):
         elif x == 'V': converted.append('059')
         elif x == 'N': converted.append('060')
         else: converted.append('...')
-    return converted
+    return ''.join(converted)
