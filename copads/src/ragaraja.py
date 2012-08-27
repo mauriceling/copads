@@ -52,51 +52,50 @@ from lc_bf import call_out, accept_predefined
 
 register = [0]*99
 
-##def start_loop(array, apointer, inputdata, output, source, spointer):
-##    '''
-##    Start loop. Operations after a start loop operator ("[") will only 
-##    be executed provided the loop(s) are properly closed. If the loops 
-##    are open, the program will terminate. Note that unclosed or unopened 
-##    loops may result in non-deterministic behaviour. 
-##    '''
-##    if array[apointer] > 0:
-##        return (array, apointer, inputdata, output, source, spointer)
-##    else:
-##        count = 1
-##        try:
-##            while count > 0:
-##                cmd = source[spointer:spointer+3]
-##                spointer = spointer + 3
-##                print cmd
-##                if cmd == '015': count = count - 1
-##                if cmd == '014': count = count + 1
-##        except IndexError:
-##            spointer = len(source) - 1
-##    return (array, apointer, inputdata, output, source, spointer - 1)
-##
-##def end_loop(array, apointer, inputdata, output, source, spointer):
-##    '''
-##    End loop. However, it is possible to have an end loop operator 
-##    ("]") without a preceding start loop operator ("["). In this case, 
-##    the end loop operator ("]") will be ignored and execution continues. 
-##    Note that unclosed or unopened loops may result in non-deterministic 
-##    behaviour. 
-##    '''
-##    temp = spointer
-##    if array[apointer] < 1:
-##        return (array, apointer, inputdata, output, source, spointer + 1)
-##    else:
-##        count = 1
-##        try:
-##            while count > 0:
-##                cmd = source[spointer-3:spointer]
-##                spointer = spointer - 3
-##                if cmd == '015': count = count + 1
-##                if cmd == '014': count = count - 1
-##        except IndexError:
-##            spointer = temp
-##    return (array, apointer, inputdata, output, source, spointer)
-    
+loop_stack = []
+
+def loop_start(array, apointer, inputdata, output, source, spointer):
+    '''
+    Start loop. Operations after a start loop operator ("[") will only 
+    be executed provided the loop(s) are properly closed. If the loops 
+    are open, the program will terminate. Note that unclosed or unopened 
+    loops may result in non-deterministic behaviour. 
+    '''
+    if array[apointer] > 0:
+        return (array, apointer, inputdata, output, source, spointer)
+    else:
+        count = 1
+        try:
+            while count > 0:
+                spointer = spointer + 3
+                if source[spointer:spointer+3] == '015': count = count - 1
+                if source[spointer:spointer+3] == '014': count = count + 1
+            return (array, apointer, inputdata, output, source, spointer - 3)
+        except IndexError:
+            return (array, apointer, inputdata, output, source, len(source) - 1)
+
+def loop_end(array, apointer, inputdata, output, source, spointer):
+    '''
+    End loop. However, it is possible to have an end loop operator 
+    ("]") without a preceding start loop operator ("["). In this case, 
+    the end loop operator ("]") will be ignored and execution continues. 
+    Note that unclosed or unopened loops may result in non-deterministic 
+    behaviour. 
+    '''
+    temp = spointer
+    if array[apointer] < 1:
+        return (array, apointer, inputdata, output, source, spointer)
+    else:
+        count = 1
+        try:
+            while count > 0:
+                spointer = spointer - 3
+                if source[spointer:spointer+3] == '015': count = count + 1
+                if source[spointer:spointer+3] == '014': count = count - 1
+        except IndexError:
+            spointer = temp
+    return (array, apointer, inputdata, output, source, spointer)
+
 def tape_move(array, apointer, inputdata, output, source, spointer):
     '''
     Moving tape pointer for more than one increment or decrement.
@@ -1427,7 +1426,7 @@ ragaraja = {'000': forward, '001': tape_move,
             '008': increment, '009': accumulations,
             '010': accumulations, '011': decrement,
             '012': accumulations, '013': accumulations,
-            '014': not_used, '015': not_used,
+            '014': loop_start, '015': loop_end,
             '016': tape_size, '017': tape_size,
             '018': tape_size, '019': tape_size,
             '020': call_out, '021': output_IO,
@@ -1924,7 +1923,7 @@ ragaraja = {'000': forward, '001': tape_move,
 
 tested_ragaraja_instructions = [
     '000', '001', '002', '003', '004', '005', '006', '007', '008', '009', 
-    '010', '011', '012', '013', '016', '017', '018', '019', 
+    '010', '011', '012', '013', '014', '015', '016', '017', '018', '019', 
     '202', '021', '022', '023', '024', '025',
     '032', '033', '034', '035', '036', '037', '038', '039',
     '040', '041', '042', '043', '044', '045', '046', '047', 
