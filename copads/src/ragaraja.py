@@ -52,7 +52,11 @@ from lc_bf import call_out, accept_predefined
 
 register = [0]*99
 
-loop_stack = []
+def instruction_padding(inst):
+	inst = str(inst)
+	if len(inst) == 1: return '00' + inst
+	if len(inst) == 2: return '0' + inst
+	if len(inst) == 3: return inst
 
 def loop_start(array, apointer, inputdata, output, source, spointer):
     '''
@@ -779,6 +783,15 @@ def output_IO(array, apointer, inputdata, output, source, spointer):
     list.
     041: Remove first value from the output list.
     042: Remove last value from the output list. 
+    172: Append all the cell values in the cells after the current cell 
+    to the end of output list (current cell is not appended to output list). 
+    173: Append all the cell values in the cells after the current cell 
+    to the end of output list (current cell is not appended to output 
+    list), then set the values of all the cells after the current cell 
+    to "0" (current cell value is not affected).
+    174: Append all the cell values in the cells to the end of output list.
+    175: Append all the cell values in the cells to the end of output list 
+    and set the tape to "0".     
     '''
     cmd = source[spointer:spointer+3]
     if cmd == '021': output.append(apointer)
@@ -789,6 +802,16 @@ def output_IO(array, apointer, inputdata, output, source, spointer):
     if cmd == '040' and len(output) > 0: array[apointer] = output[0]
     if cmd == '041' and len(output) > 0: output.pop(0)
     if cmd == '042' and len(output) > 0: output.pop(-1)
+    if cmd == '172' and apointer != (len(array) - 1):
+        output = output + array[apointer+1:]
+    if cmd == '173' and apointer != (len(array) - 1):
+        data = array[apointer+1:]
+        output = output + data
+        array = array[0:apointer+1] + [0] * len(data)
+    if cmd == '174': output = output + array
+    if cmd == '175': 
+        output = output + array
+        array = [0] * len(array)
     return (array, apointer, inputdata, output, source, spointer)
 
 def logic(array, apointer, inputdata, output, source, spointer):
@@ -1504,8 +1527,8 @@ ragaraja = {'000': forward, '001': tape_move,
             '166': mathematics, '167': mathematics,
             '168': mathematics, '169': mathematics,
             '170': mathematics, '171': mathematics,
-            '172': not_used, '173': not_used,
-            '174': not_used, '175': not_used,
+            '172': output_IO, '173': output_IO,
+            '174': output_IO, '175': output_IO,
             '176': not_used, '177': not_used,
             '178': not_used, '179': not_used,
             '180': not_used, '181': not_used,
