@@ -56,10 +56,10 @@ loop_stack = []
 
 def loop_start(array, apointer, inputdata, output, source, spointer):
     '''
-    Start loop. Operations after a start loop operator ("[") will only 
-    be executed provided the loop(s) are properly closed. If the loops 
-    are open, the program will terminate. Note that unclosed or unopened 
-    loops may result in non-deterministic behaviour. 
+    Start loop. Will only enter loop if current cell is more than "0". If 
+    current cell is "0" or less, it will go to the end of the loop 
+    (command 015). if the loop is not closed, it will go to the end of the 
+    source.
     '''
     if array[apointer] > 0:
         return (array, apointer, inputdata, output, source, spointer)
@@ -77,10 +77,9 @@ def loop_start(array, apointer, inputdata, output, source, spointer):
 def loop_end(array, apointer, inputdata, output, source, spointer):
     '''
     End loop. However, it is possible to have an end loop operator 
-    ("]") without a preceding start loop operator ("["). In this case, 
-    the end loop operator ("]") will be ignored and execution continues. 
-    Note that unclosed or unopened loops may result in non-deterministic 
-    behaviour. 
+    (command 015) without a preceding start loop operator (command 014). 
+    In this case, the end loop operator (command 015) will be ignored and 
+    execution continues. 
     '''
     temp = spointer
     if array[apointer] < 1:
