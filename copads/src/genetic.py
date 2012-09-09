@@ -7,7 +7,7 @@ Licence: Python Software Foundation License version 2
 Ling, MHT. 2010. A genetic algorithm framework grounded in biology.
 The Python Papers Source Codes 2: 6. 
 """
-import random, os
+import random, os, string
 from copy import deepcopy
 
 class Chromosome(object):
@@ -164,7 +164,10 @@ class Organism(object):
     An organism represented by a list of chromosomes and a status table. This 
     class should almost never be instantiated on its own but acts as an ancestor
     class as some functions need to be over-ridden in the inherited class for 
-    the desired use.
+    the desired use. 
+    
+    Each organism is identifiable by a randomly generated 32-character 'name' as
+    Organism.identity.
     
     Methods to be over-ridden in the inherited class or substituted are
         - fitness
@@ -228,6 +231,8 @@ class Organism(object):
         self.mutation_type = mutation_type
         self.additional_mutation_rate = additional_mutation_rate
         self.gender = gender
+        self.identity = ''.join([random.choice(string.letters) 
+                                 for i in range(32)])
     
     def fitness(self):
         """
