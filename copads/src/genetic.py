@@ -679,24 +679,26 @@ def population_simulate(population,
         population.
     @param resultfile: Name of file to print out results of each generation. 
         Format of output is dependent on reporting method of the population
-        (Population.report). Default = 'result.txt'.
+        (Population.report). If 'None', it will print out the results into
+        a file. Default = 'result.txt'.
 
     @see: Lim, JZR, Aw, ZQ, Goh, DJW, How, JA, Low, SXZ, Loo, BZL,
     Ling, MHT. 2010. A genetic algorithm framework grounded in biology.
     The Python Papers Source Codes 2: 6.
     """
     if freezefreq == 'never': freezefreq = int(12e14)
-    result = open(resultfile, 'w')
+    if resultfile != 'None': result = open(resultfile, 'w')
     report = population.generation_step()
     reportitems = ['|'.join([str(key), str(report[key])])
                     for key in report.keys()]
     result.writelines('|'.join(reportitems))
     result.writelines(os.linesep)
     while population.generation < population.maxgenerations:
-        report = population.generation_step()
-        reportitems = ['|'.join([str(key), str(report[key])])
-                       for key in report.keys()]
-        result.writelines('|'.join(reportitems))
+        if resultfile != 'None': 
+            report = population.generation_step()
+            reportitems = ['|'.join([str(key), str(report[key])])
+                           for key in report.keys()]
+            result.writelines('|'.join(reportitems))
         if population.generation % int(printfreq) == 0:
             print '|'.join(reportitems)
         result.writelines(os.linesep)
