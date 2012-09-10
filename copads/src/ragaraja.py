@@ -1984,12 +1984,6 @@ tested_ragaraja_instructions = [
     '370', '371', '372', '373', '374', '375', '376', '377', '378', '379',
     '380', '381', '382', '383', '384', '385', '386', '387', '388', '389',
     '390', '391', '392', '393', '394', '395', '396', '397', '398', '399',
-    '400',
-    '500',
-    '600',
-    '700',
-    '800',
-    '900',
     ]
 
 nBF_instructions = ['000', '004', '008', '011', '020', '050', '051', '052', 
@@ -2064,3 +2058,19 @@ def nBF_to_Ragaraja(source):
         elif x == 'N': converted.append('060')
         else: converted.append('...')
     return ''.join(converted)
+
+def activate_tested():
+    '''
+    Function to only set tested instructions as usable
+    '''
+    for key in ragaraja.keys():
+        if key not in tested_ragaraja_instructions:
+            ragaraja[key] = not_used
+
+def activate_nBF():
+    '''
+    Function to only set NucleotideBF instructions as usable
+    '''
+    for key in ragaraja.keys():
+        if key not in nBF_instructions:
+            ragaraja[key] = not_used
