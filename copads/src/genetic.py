@@ -238,7 +238,7 @@ class Organism(object):
         """
         Function to calculate the fitness of the current organism. 
         B{This function MUST be over-ridden by the inherited class or 
-        substituted as fitness function is highly  dependent on utility.} The 
+        substituted as fitness function is highly dependent on utility.} The 
         only requirement is that a fitness score must be returned.
         
         Here, the sample implementation calculates fitness as proportion of the
