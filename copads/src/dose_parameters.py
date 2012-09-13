@@ -1,4 +1,5 @@
 chromosome_size = 50
+cytoplasm_size = 50
 population_size = 500
 population_names = ['pop1', 'pop2']
 world_x = 5
@@ -7,9 +8,10 @@ world_z = 5
 population_locations = [(0,0,0), (4,4,4)]
 background_mutation_rate = 0.0001
 additional_mutation_rate = 0
-maximum_generations = 1e14
+maximum_generations = 500
 fossilized_ratio = 0.01
 fossilized_frequency = 100
 fossil_files = {'pop1': 'pop1', 'pop2': 'pop2'}
 print_frequency = 100
 result_files = {'pop1': 'pop1', 'pop2': 'pop2'}
+ragaraja_version = 1

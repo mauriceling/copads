@@ -3,17 +3,21 @@ Boiler-plate codes for DOSE (digital organism simulation environment) entities
 Date created: 13th September 2012
 Licence: Python Software Foundation License version 2 
 '''
-import copy, random, string
 
 import genetic as g
 import dose_world as w
-from dose_parameters import *
+from dose_parameters import chromosome_size, background_mutation_rate
+from dose_parameters import cytoplasm_size, population_size
+from dose_parameters import maximum_generations
+from dose_parameters import world_x, world_y, world_z
 
-Chromosome = g.Chromosome([0]*chromosome_size, 
+Chromosome = g.Chromosome('0'*chromosome_size, 
                           ['0','1','2','3','4','5','6','7','8','9'], 
                           background_mutation_rate)
                           
 class Organism(g.Organism):
+    
+    cytoplasm = [0]*cytoplasm_size
     
     def __init__(self): self.genome = Chromosome.replicate()
     def fitness(self): pass
