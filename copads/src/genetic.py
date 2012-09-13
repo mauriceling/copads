@@ -231,8 +231,6 @@ class Organism(object):
         self.mutation_type = mutation_type
         self.additional_mutation_rate = additional_mutation_rate
         self.gender = gender
-        self.identity = ''.join([random.choice(string.letters) 
-                                 for i in range(32)])
     
     def fitness(self):
         """
