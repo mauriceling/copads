@@ -11,7 +11,7 @@ from dose_parameters import cytoplasm_size, population_size
 from dose_parameters import maximum_generations
 from dose_parameters import world_x, world_y, world_z
 
-Chromosome = g.Chromosome('0'*chromosome_size, 
+Chromosome = g.Chromosome(initial_chromosome, 
                           ['0','1','2','3','4','5','6','7','8','9'], 
                           background_mutation_rate)
                           
@@ -19,7 +19,9 @@ class Organism(g.Organism):
     
     cytoplasm = [0]*cytoplasm_size
     
-    def __init__(self): self.genome = Chromosome.replicate()
+    def __init__(self): self.genome = [Chromosome.replicate()]
+    def get_cytoplasm(self): 
+        return ','.join([str(x) for x in self.cytoplasm])
     def fitness(self): pass
     def mutation_scheme(self): pass
         
@@ -44,3 +46,5 @@ class World(w.World):
     def ecoregulate(self): pass
     def update_ecology(self, x, y, z): pass
     def update_local(self, x, y, z): pass
+    def report(self): pass
+    

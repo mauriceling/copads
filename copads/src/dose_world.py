@@ -129,3 +129,15 @@ class World(object):
         @type z: integer
         '''
         pass
+        
+    def report(self):
+        '''
+        Function to report the status of the world and ecosystem. B{This 
+        function may be over-ridden by the inherited class or substituted 
+        to cater for specific reporting schemes but not an absolute 
+        requirement to do so.} 
+        
+        @return: dictionary of status describing the current generation
+        '''
+        pass
+        

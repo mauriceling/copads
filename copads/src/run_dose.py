@@ -5,7 +5,9 @@ import register_machine as r
 from dose_parameters import *
 
 # Set Ragaraja instruction version
-if ragaraja_version == 1: 
+if ragaraja_version == 0:
+    ragaraja_instructions = N.nBF_instructions
+if ragaraja_version == 1:
     ragaraja_instructions = N.ragaraja_v1
 for instruction in N.ragaraja:
     if instruction not in ragaraja_instructions:
@@ -16,7 +18,8 @@ for name in population_names:
     f = open(result_files[name] + '.result.txt', 'a')
     f.write('STARTING SIMULATION - ' + str(datetime.utcnow()) + '\n')
     f.write('DOSE parameters:' + '\n')
-    f.write('chromosome_size = ' + str(chromosome_size) + '\n')
+    f.write('initial_chromosome = ' + str(initial_chromosome) + '\n')
+    f.write('chromosome_size = ' + str(len(initial_chromosome)) + '\n')
     f.write('cytoplasm_size = ' + str(cytoplasm_size) + '\n')
     f.write('population_size = ' + str(population_size) + '\n')
     f.write('population_names = ' + str(population_names) + '\n')
@@ -83,13 +86,17 @@ if __name__ == "__main__":
         population_names = populations.keys()
         for name in population_names:
             for i in range(len(populations[name].agents)):
-                source = populations[name].agents[i].genome.sequence
-                array = populations[name].agents[i].cytoplasm
+                source = populations[name].agents[i].genome[0].sequence
+                source = ''.join(source)
+                if clean_cytoplasm:
+                    array = [0]*cytoplasm_size
+                else:
+                    array = populations[name].agents[i].cytoplasm
                 L = populations[name].agents[i].status['location']
                 inputdata = world.ecosystem[L[0]][L[1]][L[2]]['local_input']
                 (array, apointer, inputdata, output, source, spointer) = \
-                    r.interpret(source, N.ragaraja, 3, inputdata, array, 10)
-                populations[name].agents[i].genome.sequence = source
+                    r.interpret(source, N.ragaraja, 3,
+                                inputdata, array, max_cytoplasm_size)
                 populations[name].agents[i].cytoplasm = array
                 world.ecosystem[L[0]][L[1]][L[2]]['temporary_input'] = inputdata
                 world.ecosystem[L[0]][L[1]][L[2]]['temporary_output'] = output
@@ -113,13 +120,15 @@ if __name__ == "__main__":
         '''
         For each ecological cell
             Run World.organism_movement function
-           Run World.organism_location function
+            Run World.organism_location function
+            Run World.report function
         '''
         for x in range(world.world_x):
             for y in range(world.world_y):
                 for z in range(world.world_z):
                     world.organism_movement(x, y, z)
                     world.organism_location(x, y, z)
+                    world.report()
         
         '''
         Administrative tasks
