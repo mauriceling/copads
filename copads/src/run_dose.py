@@ -6,6 +6,11 @@ from dose_parameters import *
 
 # Set Ragaraja instruction version
 if ragaraja_version == 0:
+    f = open(user_defined_instructions, 'r').readlines()
+    f = [x[:-1].split('=') for x in f]
+    f = [x[0] for x in f if x[1] == 'Y']
+    ragaraja_instructions = f
+if ragaraja_version == 0.1:
     ragaraja_instructions = N.nBF_instructions
 if ragaraja_version == 1:
     ragaraja_instructions = N.ragaraja_v1
@@ -39,8 +44,7 @@ for name in population_names:
     f.write('instruction_set = ' + str(ragaraja_instructions) + '\n')
     f.close()
     
-if __name__ == "__main__":
-    entity_module = sys.argv[1]
+def simulate(entity_module):
     exec('from %s import World, Population' % entity_module)
     
     populations = {}
@@ -83,7 +87,6 @@ if __name__ == "__main__":
             Update cytoplasm (Organism.cytoplasm)
             Add input/output from organism intermediate condition of local cell
         '''
-        population_names = populations.keys()
         for name in population_names:
             for i in range(len(populations[name].agents)):
                 source = populations[name].agents[i].genome[0].sequence
@@ -94,9 +97,16 @@ if __name__ == "__main__":
                     array = populations[name].agents[i].cytoplasm
                 L = populations[name].agents[i].status['location']
                 inputdata = world.ecosystem[L[0]][L[1]][L[2]]['local_input']
-                (array, apointer, inputdata, output, source, spointer) = \
-                    r.interpret(source, N.ragaraja, 3,
-                                inputdata, array, max_cytoplasm_size)
+                try: (array, apointer, inputdata,
+                      output, source, spointer) = \
+                        r.interpret(source, N.ragaraja, 3,
+                                    inputdata, array,
+                                    max_cytoplasm_size,
+                                    max_codon)
+                except IndexError: pass
+                except ZeroDivisionError: pass
+                except OverflowError: pass
+                except ValueError: pass
                 populations[name].agents[i].cytoplasm = array
                 world.ecosystem[L[0]][L[1]][L[2]]['temporary_input'] = inputdata
                 world.ecosystem[L[0]][L[1]][L[2]]['temporary_output'] = output
@@ -116,6 +126,14 @@ if __name__ == "__main__":
             if generation_count % int(fossilized_frequency) == 0:
                 ffile = fossil_files[name] + '_'
                 populations[name].freeze(ffile, fossilized_ratio)
+            if generation_count % int(print_frequency) == 0:
+                print str(generation_count), str(report)
+                f = open(result_files[name] + '.result.txt', 'a')
+                dtstamp = str(datetime.utcnow())
+                f.write('\t'.join([dtstamp, str(generation_count),
+                                   str(report)]))
+                f.write('\n')
+                f.close()
                 
         '''
         For each ecological cell
@@ -131,18 +149,12 @@ if __name__ == "__main__":
                     world.report()
         
         '''
-        Administrative tasks
+        Bury ecosystem if needed
         '''
-        if generation_count % int(print_frequency) == 0:
-            print str(generation_count), str(report)
-            for name in population_names:
-                f = open(result_files[name] + '.result.txt', 'a')
-                dtstamp = str(datetime.utcnow())
-                f.write('\t'.join([dtstamp, str(generation_count),
-                                   str(report)]))
-                f.write('\n')
-                f.close()
         if generation_count % int(eco_buried_frequency) == 0:
             filename = eco_burial_file + '_' + str(generation_count) + '.eco'
             world.eco_burial(filename)
             
+if __name__ == "__main__":
+    entity_module = sys.argv[1]
+    simulate(entity_module)

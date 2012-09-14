@@ -16,7 +16,7 @@ machine terminates itself.
 
 def interpret(source, functions,
              function_size=1, inputdata=[],
-             array=None, size=30):
+             array=None, size=30, max_instructions=1000):
     spointer = 0
     apointer = 0
     output = list()
@@ -29,10 +29,13 @@ def interpret(source, functions,
                                len(source) % function_size)
 	tokens = functions.keys()
 	source = ''.join([x for x in source if x in tokens])
+    instruction_count = 0
     while spointer < len(source):
+        instruction_count = instruction_count + 1
+        
         try:
             cmd = source[spointer:spointer+function_size]
-            #print cmd
+            #print instruction_count, cmd
             (array, apointer, inputdata, output,
                 source, spointer) = functions[cmd](array, apointer,
                                                    inputdata, output,
@@ -45,4 +48,6 @@ def interpret(source, functions,
         if apointer < 0:
             apointer = size + apointer
         spointer = spointer + function_size
+        if instruction_count > max_instructions:
+            return (array, apointer, inputdata, output, source, spointer)
     return (array, apointer, inputdata, output, source, spointer)
