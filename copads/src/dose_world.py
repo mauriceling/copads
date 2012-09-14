@@ -56,6 +56,26 @@ class World(object):
                 eco_x[y] = copy.deepcopy(eco_y)
             self.ecosystem[x] = copy.deepcopy(eco_x)
     
+    def eco_burial(self, filename):
+        '''
+        Function to preserve the entire ecosystem.
+        
+        @param filename: file name of preserved ecosystem.
+        '''
+        import cPickle
+        f = open(filename, 'w')
+        cPickle.dump(self.ecosystem, f)
+        f.close()
+        
+    def eco_excavate(self, filename):
+        '''
+        Function to excavate entire ecosystem.
+        
+        @param filename: file name of preserved ecosystem.
+        '''
+        import cPickle
+        self.ecosystem = cPickle.load(open(filename, 'r'))
+        
     def ecoregulate(self):
         '''
         Function to simulate events to the entire ecosystem. B{This function 

@@ -142,3 +142,7 @@ if __name__ == "__main__":
                                    str(report)]))
                 f.write('\n')
                 f.close()
+        if generation_count % int(eco_buried_frequency) == 0:
+            filename = eco_burial_file + '_' + str(generation_count) + '.eco'
+            world.eco_burial(filename)
+            
