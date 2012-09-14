@@ -1,7 +1,7 @@
+import sys
 from datetime import datetime
 import ragaraja as N
 import register_machine as r
-from dose_entities import Population, World
 from dose_parameters import *
 
 # Set Ragaraja instruction version
@@ -36,96 +36,100 @@ for name in population_names:
     f.write('instruction_set = ' + str(ragaraja_instructions) + '\n')
     f.close()
     
-populations = {}
-world = World()
-
-for i in range(len(population_names)): 
-    populations[population_names[i]] = Population()
-    L = population_locations[i]
-    world.ecosystem[L[0]][L[1]][L[2]]['organisms'] = \
-        len(populations[population_names[i]].agents)
-    for x in range(len(populations[population_names[i]].agents)):
-        populations[population_names[i]].agents[x].status['location'] = L
-
-########################################################################
-# Default Simulation Driver                                            #
-# (do not change anything above this line)                             #
-########################################################################
-generation_count = 0
-while generation_count < maximum_generations:
-    generation_count = generation_count + 1
-    '''
-    Run World.ecoregulate function
-    '''
-    world.ecoregulate()
+if __name__ == "__main__":
+    entity_module = sys.argv[1]
+    exec('from %s import World, Population' % entity_module)
     
-    '''
-    For each ecological cell, run World.update_ecology and 
-    World.update_local functions
-    '''
-    for x in range(world.world_x):
-        for y in range(world.world_y):
-            for z in range(world.world_z):
-                world.update_ecology(x, y, z)
-                world.update_local(x, y, z)  
-                
-    '''
-    For each organism
-        Execute genome by Ragaraja interpreter using 
-           existing cytoplasm, local conditions as input
-        Update cytoplasm (Organism.cytoplasm)
-        Add input/output from organism intermediate condition of local cell
-    '''
-    population_names = populations.keys()
-    for name in population_names:
-        for i in range(len(populations[name].agents)):
-            source = populations[name].agents[i].genome.sequence
-            array = populations[name].agents[i].cytoplasm
-            L = populations[name].agents[i].status['location']
-            inputdata = world.ecosystem[L[0]][L[1]][L[2]]['local_input']
-            (array, apointer, inputdata, output, source, spointer) = \
-                r.interpret(source, N.ragaraja, 3, inputdata, array, 10)
-            populations[name].agents[i].genome.sequence = source
-            populations[name].agents[i].cytoplasm = array
-            world.ecosystem[L[0]][L[1]][L[2]]['temporary_input'] = inputdata
-            world.ecosystem[L[0]][L[1]][L[2]]['temporary_output'] = output
+    populations = {}
+    world = World()
     
-    '''        
-    For each population
-        Run Population.prepopulation_control function
-        Run Population.mating function and add new organisms to cell
-        For each organism, run Organism.mutation_scheme function
-        Run Population.generation_events function
-        Add 1 to generation count
-        Run Population.report function
-        Fossilize population if needed
-    '''
-    for name in population_names:
-        report = populations[name].generation_step()
-        if generation_count % int(fossilized_frequency) == 0:
-            ffile = fossil_files[name] + '_'
-            populations[name].freeze(ffile, fossilized_ratio)
-            
-    '''
-    For each ecological cell
-        Run World.organism_movement function
-       Run World.organism_location function
-    '''
-    for x in range(world.world_x):
-        for y in range(world.world_y):
-            for z in range(world.world_z):
-                world.organism_movement(x, y, z)
-                world.organism_location(x, y, z)
+    for i in range(len(population_names)): 
+        populations[population_names[i]] = Population()
+        L = population_locations[i]
+        world.ecosystem[L[0]][L[1]][L[2]]['organisms'] = \
+            len(populations[population_names[i]].agents)
+        for x in range(len(populations[population_names[i]].agents)):
+            populations[population_names[i]].agents[x].status['location'] = L
     
-    '''
-    Administrative tasks
-    '''
-    if generation_count % int(print_frequency) == 0:
-        print str(generation_count), str(report)
+    ########################################################################
+    # Default Simulation Driver                                            #
+    # (do not change anything above this line)                             #
+    ########################################################################
+    generation_count = 0
+    while generation_count < maximum_generations:
+        generation_count = generation_count + 1
+        '''
+        Run World.ecoregulate function
+        '''
+        world.ecoregulate()
+        
+        '''
+        For each ecological cell, run World.update_ecology and 
+        World.update_local functions
+        '''
+        for x in range(world.world_x):
+            for y in range(world.world_y):
+                for z in range(world.world_z):
+                    world.update_ecology(x, y, z)
+                    world.update_local(x, y, z)  
+                    
+        '''
+        For each organism
+            Execute genome by Ragaraja interpreter using 
+               existing cytoplasm, local conditions as input
+            Update cytoplasm (Organism.cytoplasm)
+            Add input/output from organism intermediate condition of local cell
+        '''
+        population_names = populations.keys()
         for name in population_names:
-            f = open(result_files[name] + '.result.txt', 'a')
-            dtstamp = str(datetime.utcnow())
-            f.write('\t'.join([dtstamp, str(generation_count),
-                               str(report)]))
-            f.write('\n')
-            f.close()
+            for i in range(len(populations[name].agents)):
+                source = populations[name].agents[i].genome.sequence
+                array = populations[name].agents[i].cytoplasm
+                L = populations[name].agents[i].status['location']
+                inputdata = world.ecosystem[L[0]][L[1]][L[2]]['local_input']
+                (array, apointer, inputdata, output, source, spointer) = \
+                    r.interpret(source, N.ragaraja, 3, inputdata, array, 10)
+                populations[name].agents[i].genome.sequence = source
+                populations[name].agents[i].cytoplasm = array
+                world.ecosystem[L[0]][L[1]][L[2]]['temporary_input'] = inputdata
+                world.ecosystem[L[0]][L[1]][L[2]]['temporary_output'] = output
+        
+        '''        
+        For each population
+            Run Population.prepopulation_control function
+            Run Population.mating function and add new organisms to cell
+            For each organism, run Organism.mutation_scheme function
+            Run Population.generation_events function
+            Add 1 to generation count
+            Run Population.report function
+            Fossilize population if needed
+        '''
+        for name in population_names:
+            report = populations[name].generation_step()
+            if generation_count % int(fossilized_frequency) == 0:
+                ffile = fossil_files[name] + '_'
+                populations[name].freeze(ffile, fossilized_ratio)
+                
+        '''
+        For each ecological cell
+            Run World.organism_movement function
+           Run World.organism_location function
+        '''
+        for x in range(world.world_x):
+            for y in range(world.world_y):
+                for z in range(world.world_z):
+                    world.organism_movement(x, y, z)
+                    world.organism_location(x, y, z)
+        
+        '''
+        Administrative tasks
+        '''
+        if generation_count % int(print_frequency) == 0:
+            print str(generation_count), str(report)
+            for name in population_names:
+                f = open(result_files[name] + '.result.txt', 'a')
+                dtstamp = str(datetime.utcnow())
+                f.write('\t'.join([dtstamp, str(generation_count),
+                                   str(report)]))
+                f.write('\n')
+                f.close()
