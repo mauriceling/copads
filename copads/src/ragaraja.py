@@ -2028,7 +2028,7 @@ tested_ragaraja_instructions = [
     ]
 
 nBF_instructions = ['000', '004', '008', '011', '020', '050', '051', '052', 
-                    '053', '054', '055', '056', '057', '058', '059' '060']
+                    '053', '054', '055', '056', '057', '058', '059', '060']
 
 def source_filter(source, sfilter=tested_ragaraja_instructions):
     '''
