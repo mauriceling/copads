@@ -194,7 +194,7 @@ class Matrix:
         if len(args) == 2:    # Two arguments
             # Create an null n,m matrix.
             row, col = args
-            self.createNullMatrix(row, col)
+            self.create_null_matrix(row, col)
         else:    # One argument
             if isinstance(args[0], types.IntType):
                 # Create a square null matrix.
@@ -326,9 +326,9 @@ class Matrix:
         This is only called if other.__add__ is not defined, so assume that
         other is a scalar.
         """
-        if not self.isScalarElement(other):
+        if not self.is_scalar_element(other):
             raise TypeError("Cannot right-multiply by %s" % type(other))
-        return self.scalarMultiply(other)
+        return self.scalar_multiply(other)
 
     def scalarMultiply(self, scalar):
         """Multiply the matrix by a scalar value.
@@ -354,7 +354,7 @@ class Matrix:
             r.append([])
             for col in xrange(other.cols()):
                 r[row].append( \
-                    self.vectorInnerProduct(self.row(row), other.col(col)))
+                    self.vector_inner_product(self.row(row), other.col(col)))
         if len(r) == 1 and len(r[0]) == 1:
             # The result is a scalar.
             return r[0][0]
@@ -392,7 +392,7 @@ class Matrix:
 
     def determinant(self):
         """The determinant of the matrix"""
-        if not self.isSquare():
+        if not self.is_square():
             raise MatrixDeterminantError()
         # Calculate 2x2 determinants directly.
         if self.rows() == 2:
@@ -427,7 +427,7 @@ class Matrix:
             d += (-1)**(row+col) \
                 *self[(row, col)]*self.minor(row, col).determinant()
         return d
-        
+
     def minor(self, i, j):
         """A minor of the matrix
 
@@ -435,7 +435,7 @@ class Matrix:
         column j of the matrix.
         """
         # Verify parameters.
-        if not self.isSquare():
+        if not self.is_square():
             raise MatrixMinorError()
         if i<0 or i>=self.rows():
             raise ValueError("Row value %d is out of range" % i)
@@ -455,42 +455,7 @@ class Matrix:
                 minor_col = 0
                 minor_row += 1
         return m
-    
-    def gauss_jordan(self, eps = 1.0/(10**10)):
-        """
-        Puts given matrix (2D array) into the Reduced Row Echelon Form by
-        Gaussian-Jordan Elimation.
-        Adapted from Jarno Elonen which was released into Public Domain
-        http://elonen.iki.fi/code/misc-notes/python-gaussj/index.html
-        """
-        import copy
-        m = copy.deepcopy(self.m)
-        (h, w) = (len(m), len(m[0]))
-        for row in range(h):
-            for col in range(w):
-                m[row][col] = float(m[row][col])
-        for y in range(0,h):
-            maxrow = y
-            for y2 in range(y+1, h):    # Find max pivot
-                if abs(self.m[y2][y]) > abs(m[maxrow][y]):
-                    maxrow = y2
-            (m[y], m[maxrow]) = (m[maxrow], m[y])
-            if abs(m[y][y]) <= eps:     # Singular?
-                m[y][y] = eps
-            for y2 in range(y+1, h):    # Eliminate column y
-                c = m[y2][y] / m[y][y]
-                for x in range(y, w):
-                    m[y2][x] -= m[y][x] * c
-        for y in range(h-1, 0-1, -1): # Backsubstitute
-            c  = m[y][y]
-            for y2 in range(0,y):
-                for x in range(w-1, y-1, -1):
-                    m[y2][x] -=  m[y][x] * m[y2][y] / c
-            m[y][y] /= c
-            for x in range(h, w):       # Normalize row y
-                m[y][x] /= c
-        return Matrix(m)
-              
+
     def vectorInnerProduct(self, a, b):
         """Takes the inner product of vectors a and b
 
