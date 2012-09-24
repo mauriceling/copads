@@ -29,4 +29,4 @@ __version__ = '0.3'
 
 __author__ = 'Maurice H.T. Ling <mauriceling@acm.org>'
 
-__copyright__ = '(c) 2007-2010, Maurice H.T. Ling.'
+__copyright__ = '(c) 2007-2012, Maurice H.T. Ling.'
