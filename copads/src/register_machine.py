@@ -17,6 +17,25 @@ machine terminates itself.
 def interpret(source, functions,
              function_size=1, inputdata=[],
              array=None, size=30, max_instructions=1000):
+    '''
+    Interpreter loop.
+    
+    @param source: Instructions to execute.
+    @type source: string
+    @param functions: Dictionary of functions / operations.
+    @param function_size: Length of each instruction. Default = 1
+    @type function_size: integer
+    @param inputdata: Any input data that the function may need.
+    @type inputdata: list
+    @param array: The endless tape in a Turing machine which is implemented
+    as a circular list, making it virtually limitless.
+    @type array: list
+    @param size: Length of the type (array). Default = 30
+    @type size: integer
+    @param max_instructions: The maximum number of instructions to execute. 
+    Default = 1000
+    @type max_instructions: integer
+    '''
     spointer = 0
     apointer = 0
     output = list()

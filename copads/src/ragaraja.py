@@ -44,7 +44,6 @@ Ref: http://esolangs.org/wiki/Ragaraja
 '''
 import random
 import math
-import constants
 from samplestatistics import SingleSample
 from lc_bf import increment, decrement
 from lc_bf import forward, backward
