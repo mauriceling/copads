@@ -440,7 +440,7 @@ def set_tape_value(array, apointer, inputdata, output, source, spointer):
     if cmd == '084': array[apointer] = 0
     if cmd == '085': array[apointer] = -1
     if cmd == '086': array[apointer] = 1
-    if cmd == '097': array[apointer] = constants.PI
+    if cmd == '097': array[apointer] = math.pi
     if cmd == '098': array[apointer] = math.e
     if cmd == '187': 
         array = array[0:apointer+1] + [0 for x in array[apointer+1:]]
@@ -989,26 +989,6 @@ def tape_manipulate(array, apointer, inputdata, output, source, spointer):
         cell = array.pop(apointer)
         array = array + [cell]
         apointer = len(array) - 1
-    return (array, apointer, inputdata, output, source, spointer)
-    
-def source_manipulate(array, apointer, inputdata, output, source, spointer):
-    '''
-    Manipulating the source instructions.
-    
-    Instructions handled:
-    '''
-    cmd = source[spointer:spointer+3]
-    if cmd == 'xxx': pass
-    return (array, apointer, inputdata, output, source, spointer)
-    
-def interpreter_manipulate(array, apointer, inputdata, output, source, spointer):
-    '''
-    Manipulating the interpreter.
-    
-    Instructions handled:
-    '''
-    cmd = source[spointer:spointer+3]
-    if cmd == 'xxx': pass
     return (array, apointer, inputdata, output, source, spointer)
 
 def register_IO(array, apointer, inputdata, output, source, spointer):
