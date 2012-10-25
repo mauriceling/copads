@@ -2009,7 +2009,7 @@ tested_ragaraja_instructions = [
 nBF_instructions = ['000', '004', '008', '011', '020', '050', '051', '052', 
                     '053', '054', '055', '056', '057', '058', '059', '060']
 
-def source_filter(source, sfilter=tested_ragaraja_instructions):
+def source_filter(source, sfilter=ragaraja_v1):
     '''
     Checks a Ragaraja source code string and removes any instructions are
     not found in the filter
@@ -2017,8 +2017,8 @@ def source_filter(source, sfilter=tested_ragaraja_instructions):
     @param source: Ragaraja source code string
     @type source: string
     @param sfilter: list of instructions allowed.
-    Default = tested_ragaraja_instructions. Other defined list are
-    nBF_instructions (NucleotideBF).
+    Default = ragaraja_v1. Other defined list are
+    nBF_instructions (NucleotideBF) and tested_ragaraja_instructions.
     @return: Ragaraja source code string
     '''
     filtered_source = []
