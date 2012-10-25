@@ -1418,8 +1418,11 @@ def register_IO(array, apointer, inputdata, output, source, spointer):
 
 def jump_identifier(array, apointer, inputdata, output, source, spointer):
     '''
+    Defines jump location within the source tape. These instructions acts as pure
+    identifiers and do not perform any operations.
     
     Instructions handled:
+    200, 300, 400, 500, 600, 700, 800, 900
     '''
     cmd = source[spointer:spointer+3]
     if cmd == '200': pass
@@ -1434,23 +1437,20 @@ def jump_identifier(array, apointer, inputdata, output, source, spointer):
     
 def not_used(array, apointer, inputdata, output, source, spointer):
     '''
-    
-    Instructions handled:
+    Default do-nothing handler for not implemented instructions.
     '''
-    cmd = source[spointer:spointer+3]
-    if cmd == 'xxx': pass
     return (array, apointer, inputdata, output, source, spointer)
 
-ragaraja = {'000': forward, '001': tape_move,
-            '002': tape_move, '003': tape_move,
+ragaraja = {'000': forward, '001': tape_move, 
+            '002': tape_move, '003': tape_move, 
             '004': backward, '005': tape_move,
-            '006': tape_move, '007': tape_move,
-            '008': increment, '009': accumulations,
+            '006': tape_move, '007': tape_move, 
+            '008': increment, '009': accumulations, 
             '010': accumulations, '011': decrement,
-            '012': accumulations, '013': accumulations,
-            '014': loop_start, '015': loop_end,
+            '012': accumulations, '013': accumulations, 
+            '014': loop_start, '015': loop_end, 
             '016': tape_size, '017': tape_size,
-            '018': tape_size, '019': tape_size,
+            '018': tape_size, '019': tape_size, 
             '020': call_out, '021': output_IO,
             '022': output_IO, '023': source_move,
             '024': source_move, '025': source_move,
@@ -2049,27 +2049,6 @@ def source_filter(source, sfilter=tested_ragaraja_instructions):
             filtered_source = filtered_source + [source[spointer:spointer+3]]
         spointer = spointer + 3
     return ''.join(filtered_source)
-  
-def LCBF_to_Ragaraja(source):
-    '''
-    Converts Loose Circular Brainfuck source code to Ragaraja source code
-    
-    @param source: Loose Circular Brainfuck (LCBF) source code
-    @type source: string
-    @return: Ragaraja source code string
-    '''
-    converted = []
-    for x in source:
-        if x == '>': converted.append('000')
-        elif x == '<': converted.append('004')
-        elif x == '+': converted.append('008')
-        elif x == '-': converted.append('011')
-        elif x == '.': converted.append('020')
-        elif x == ',': converted.append('063')
-        elif x == '[': converted.append('014')
-        elif x == ']': converted.append('015')
-        else: converted.append('...')
-    return ''.join(converted)
 
 def nBF_to_Ragaraja(source):
     '''
@@ -2100,18 +2079,22 @@ def nBF_to_Ragaraja(source):
         else: converted.append('...')
     return ''.join(converted)
 
-def activate_tested():
+def activate_version(version=1):
     '''
-    Function to only set tested instructions as usable
+    Function to only set tested instructions as usable.
+    
+    @param version: Define the version to activate. Default = 1. Allowable
+    versions are 
+    - 0 (all currently tested instructions)
+    - 0.1 (using NucleotideBF instructions)
+    - 1 (as defined in Ling, MHT. 2012. An Artificial Life Simulation Library 
+    Based on Genetic Algorithm, 3-Character Genetic Code and Biological 
+    Hierarchy. The Python Papers.)
     '''
+    instructions = None
+    if version == 0.1: instructions = nBF_instructions
+    if version == 1: instructions = ragaraja_v1
+    if version == 0: instructions = tested_ragaraja_instructions
     for key in ragaraja.keys():
-        if key not in tested_ragaraja_instructions:
-            ragaraja[key] = not_used
-
-def activate_nBF():
-    '''
-    Function to only set NucleotideBF instructions as usable
-    '''
-    for key in ragaraja.keys():
-        if key not in nBF_instructions:
+        if key not in instructions:
             ragaraja[key] = not_used
