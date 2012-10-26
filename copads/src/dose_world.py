@@ -2,6 +2,10 @@
 World structure for DOSE (digital organism simulation environment)
 Date created: 13th September 2012
 Licence: Python Software Foundation License version 2 
+
+Reference: Ling, MHT. 2012. An Artificial Life Simulation Library Based on 
+Genetic Algorithm, 3-Character Genetic Code and Biological Hierarchy. The 
+Python Papers 7: 5.
 '''
 import copy
 
@@ -28,6 +32,10 @@ class World(object):
     - organisms: The number of organisms in the current ecological cell which 
         is updated by World.organism_movement and World.organism_location
         functions.
+        
+    @see: Ling, MHT. 2012. An Artificial Life Simulation Library Based on 
+    Genetic Algorithm, 3-Character Genetic Code and Biological Hierarchy. The 
+    Python Papers 7: 5.
     '''
     ecosystem = {}
     
