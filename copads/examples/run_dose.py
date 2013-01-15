@@ -1,5 +1,18 @@
-import sys
+'''
+Default DOSE simulation runner in manuscript [1]
+Date created: 13th September 2012
+Licence: Python Software Foundation License version 2 
+
+[1] Ling, MHT. 2012. An Artificial Life Simulation Library Based on Genetic 
+Algorithm, 3-Character Genetic Code and Biological Hierarchy. The Python 
+Papers 7: 5.
+'''
+
+import sys, os
 from datetime import datetime
+
+sys.path.append(os.path.join(os.path.dirname(os.getcwd()), 'src'))
+
 import ragaraja as N
 import register_machine as r
 from dose_parameters import *
