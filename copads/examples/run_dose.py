@@ -15,47 +15,47 @@ sys.path.append(os.path.join(os.path.dirname(os.getcwd()), 'src'))
 
 import ragaraja as N
 import register_machine as r
-from dose_parameters import *
 
-# Set Ragaraja instruction version
-if ragaraja_version == 0:
-    f = open(user_defined_instructions, 'r').readlines()
-    f = [x[:-1].split('=') for x in f]
-    f = [x[0] for x in f if x[1] == 'Y']
-    ragaraja_instructions = f
-if ragaraja_version == 0.1:
-    ragaraja_instructions = N.nBF_instructions
-if ragaraja_version == 1:
-    ragaraja_instructions = N.ragaraja_v1
-for instruction in N.ragaraja:
-    if instruction not in ragaraja_instructions:
-        N.ragaraja[instruction] = N.not_used
+def set_instruction_version():
+    if ragaraja_version == 0:
+        f = open(user_defined_instructions, 'r').readlines()
+        f = [x[:-1].split('=') for x in f]
+        f = [x[0] for x in f if x[1] == 'Y']
+        ragaraja_instructions = f
+    if ragaraja_version == 0.1:
+        ragaraja_instructions = N.nBF_instructions
+    if ragaraja_version == 1:
+        ragaraja_instructions = N.ragaraja_v1
+    for instruction in N.ragaraja:
+        if instruction not in ragaraja_instructions:
+            N.ragaraja[instruction] = N.not_used
+    return ragaraja_instructions
 
-# Write DOSE parameters into result files
-for name in population_names:
-    f = open(result_files[name] + '.result.txt', 'a')
-    f.write('STARTING SIMULATION - ' + str(datetime.utcnow()) + '\n')
-    f.write('DOSE parameters:' + '\n')
-    f.write('initial_chromosome = ' + str(initial_chromosome) + '\n')
-    f.write('chromosome_size = ' + str(len(initial_chromosome)) + '\n')
-    f.write('cytoplasm_size = ' + str(cytoplasm_size) + '\n')
-    f.write('population_size = ' + str(population_size) + '\n')
-    f.write('population_names = ' + str(population_names) + '\n')
-    f.write('world_x = ' + str(world_x) + '\n')
-    f.write('world_y = ' + str(world_y) + '\n')
-    f.write('world_z = ' + str(world_z) + '\n')
-    f.write('population_locations = ' + str(population_locations) + '\n')
-    f.write('background_mutation_rate = ' + str(background_mutation_rate) + '\n')
-    f.write('additional_mutation_rate = ' + str(additional_mutation_rate) + '\n')
-    f.write('maximum_generations = ' + str(maximum_generations) + '\n')
-    f.write('fossilized_ratio = ' + str(fossilized_ratio) + '\n')
-    f.write('fossilized_frequency = ' + str(fossilized_frequency) + '\n')
-    f.write('fossil_files = ' + str(fossil_files) + '\n')
-    f.write('print_frequency = ' + str(print_frequency) + '\n')
-    f.write('result_files = ' + str(result_files) + '\n')
-    f.write('ragaraja_version = ' + str(ragaraja_version) + '\n')
-    f.write('instruction_set = ' + str(ragaraja_instructions) + '\n')
-    f.close()
+def write_parameters():
+    for name in population_names:
+        f = open(result_files[name] + '.result.txt', 'a')
+        f.write('STARTING SIMULATION - ' + str(datetime.utcnow()) + '\n')
+        f.write('DOSE parameters:' + '\n')
+        f.write('initial_chromosome = ' + str(initial_chromosome) + '\n')
+        f.write('chromosome_size = ' + str(len(initial_chromosome)) + '\n')
+        f.write('cytoplasm_size = ' + str(cytoplasm_size) + '\n')
+        f.write('population_size = ' + str(population_size) + '\n')
+        f.write('population_names = ' + str(population_names) + '\n')
+        f.write('world_x = ' + str(world_x) + '\n')
+        f.write('world_y = ' + str(world_y) + '\n')
+        f.write('world_z = ' + str(world_z) + '\n')
+        f.write('population_locations = ' + str(population_locations) + '\n')
+        f.write('background_mutation_rate = ' + str(background_mutation_rate) + '\n')
+        f.write('additional_mutation_rate = ' + str(additional_mutation_rate) + '\n')
+        f.write('maximum_generations = ' + str(maximum_generations) + '\n')
+        f.write('fossilized_ratio = ' + str(fossilized_ratio) + '\n')
+        f.write('fossilized_frequency = ' + str(fossilized_frequency) + '\n')
+        f.write('fossil_files = ' + str(fossil_files) + '\n')
+        f.write('print_frequency = ' + str(print_frequency) + '\n')
+        f.write('result_files = ' + str(result_files) + '\n')
+        f.write('ragaraja_version = ' + str(ragaraja_version) + '\n')
+        f.write('instruction_set = ' + str(ragaraja_instructions) + '\n')
+        f.close()
     
 def simulate(entity_module):
     exec('from %s import World, Population' % entity_module)
@@ -169,5 +169,22 @@ def simulate(entity_module):
             world.eco_burial(filename)
             
 if __name__ == "__main__":
-    entity_module = sys.argv[1]
-    simulate(entity_module)
+    if len(sys.argv) != 3:
+        print '''
+        Default DOSE simulation runner in manuscript [1]
+        Date created: 13th September 2012
+        Licence: Python Software Foundation License version 2 
+
+        [1] Ling, MHT. 2012. An Artificial Life Simulation Library 
+        Based on Genetic Algorithm, 3-Character Genetic Code and 
+        Biological Hierarchy. The Python Papers 7: 5.
+        
+        Usage: python run_dose.py <DOSE entities> <DOSE parameters>
+        Example: python run_dose.py dose_entities_TPP_7_5 hose_parameters
+        '''
+    else:
+        entity_module = sys.argv[1]
+        exec('from %s import *' % sys.argv[2])
+        ragaraja_instructions = set_instruction_version()
+        write_parameters()
+        simulate(entity_module)
