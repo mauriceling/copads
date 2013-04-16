@@ -180,7 +180,7 @@ if __name__ == "__main__":
         Biological Hierarchy. The Python Papers 7: 5.
         
         Usage: python run_dose.py <DOSE entities> <DOSE parameters>
-        Example: python run_dose.py dose_entities_TPP_7_5 hose_parameters
+        Example: python run_dose.py dose_entities_TPP_7_5 dose_parameters
         '''
     else:
         entity_module = sys.argv[1]
