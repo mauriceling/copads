@@ -48,31 +48,31 @@ class testBinomial(unittest.TestCase):
 class testCauchy(unittest.TestCase):
     def testCDF1(self):
         p = N.CauchyDistribution(location = 0.0, scale = 1.0).CDF(0.0)
-        self.assertTrue(abs(p/0.5 - 1) < 0.01)
+        self.assertAlmostEqual(p, 0.5, places=4)
     def testCDF2(self):
         p = N.CauchyDistribution(location = 0.0, scale = 1.0).CDF(1.0)
-        self.assertTrue(abs(p/0.75 - 1) < 0.01)
+        self.assertAlmostEqual(p, 0.75, places=4)
     def testCDF3(self):
         p = N.CauchyDistribution(location = 0.0, scale = 1.0).CDF(2.0)
-        self.assertTrue(abs(p/0.8524163 - 1) < 0.01)
+        self.assertAlmostEqual(p, 0.85241, places=4)
     def testPDF1(self):
         p = N.CauchyDistribution(location = 0.0, scale = 1.0).PDF(0.0)
-        self.assertTrue(abs(p/0.3183098 - 1) < 0.01)
+        self.assertAlmostEqual(p, 0.31830, places=4)
     def testPDF2(self):
         p = N.CauchyDistribution(location = 0.0, scale = 1.0).PDF(1.0)
-        self.assertTrue(abs(p/0.1591549 - 1) < 0.01)
+        self.assertAlmostEqual(p, 0.15915, places=4)
     def testPDF3(self):
         p = N.CauchyDistribution(location = 0.0, scale = 1.0).PDF(2.0)
-        self.assertTrue(abs(p/0.06366197 - 1) < 0.01)
+        self.assertAlmostEqual(p, 0.06366, places=4)
     def testinverseCDF1(self):
         p = N.CauchyDistribution(location = 0.0, scale = 1.0).inverseCDF(0.5)[0]
-        self.assertTrue(abs(p) < 0.01)
+        self.assertAlmostEqual(p, 0)
     def testinverseCDF2(self):
         p = N.CauchyDistribution(location = 0.0, scale = 1.0).inverseCDF(0.75)[0]
-        self.assertTrue(abs(p/1.0 - 1) < 0.01)
+        self.assertAlmostEqual(p, 1.0)
     def testinverseCDF3(self):
         p = N.CauchyDistribution(location = 0.0, scale = 1.0).inverseCDF(0.8524163)[0]
-        self.assertTrue(abs(p/2.0 - 1) < 0.01)
+        self.assertAlmostEqual(p, 2.0)
 
 
 class testChiSquare(unittest.TestCase):
