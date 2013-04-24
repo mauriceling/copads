@@ -1010,7 +1010,7 @@ class BernoulliDistribution(Distribution):
         probability distribution.
         
         @param success: probability of success; 0 <= success <= 1"""
-        self.distribution = BinomialDistribution(succcess, trial = 1)
+        self.distribution = BinomialDistribution(success, trial = 1)
         
     def CDF(self, x): 
         """Cummulative Distribution Function, which gives the cummulative 
@@ -1128,7 +1128,7 @@ class BradfordDistribution(Distribution):
         """Gives the skew of the sample."""
         r = 12 * (self.shape ** 2)
         r = r - (9 * self.k * self.shape * (self.shape + 2))
-        r = r + ((2 * k * k) * ((self.shape * (self.shape + 3)) + 3))
+        r = r + ((2 * self.k * self.k) * ((self.shape * (self.shape + 3)) + 3))
         d = self.shape * (((self.k - 2) * self.shape) + (2 * self.k))
         d = math.sqrt(d)
         d = d * ((3 * self.shape * (self.k - 2)) + (6 * self.k))
@@ -1257,8 +1257,6 @@ class BurrDistribution(Distribution):
             r = ((1/(seed ** (1/self.D))) - 1) ** (-1/self.C)
             seed = self.location + self.scale * r
             yield seed
-
-
 
 
 class ChiDistribution(Distribution):
@@ -3055,7 +3053,9 @@ class TriangularDistribution(Distribution):
         if x > self.mode:
             raise AttributeError
         else:
-            return (( x - self.lower_limit) ** 2) / ((self.upper_limit - self.lower_limit) * (self.mode - self.lower_limit))
+            return (( x - self.lower_limit) ** 2) / \
+                ((self.upper_limit - self.lower_limit) * \
+                 (self.mode - self.lower_limit))
     def PDF(self, x): 
         """
         Partial Distribution Function, which gives the probability for the 
@@ -3066,7 +3066,9 @@ class TriangularDistribution(Distribution):
         if x > self.mode:
             raise AttributeError
         else:
-            return ((2 * (x - self.lower_limit)) / ((self.upper_limit - self.lower_limit) * (self.mode - self.lower_limit)))
+            return ((2 * (x - self.lower_limit)) / \
+                    ((self.upper_limit - self.lower_limit) * \
+                     (self.mode - self.lower_limit)))
     def inverseCDF(self, probability, start=0.0, step=0.01): 
         """
         It does the reverse of CDF() method, it takes a probability value 
