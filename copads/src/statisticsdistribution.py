@@ -1,4 +1,3 @@
-
 """
 Classes for Various Statistical Distributions.
 
@@ -3148,22 +3147,34 @@ def WaldDistribution(**parameters):
 
     
 class WeiBullDistribution(Distribution):
-#    def __init__(self, **parameters): 
-#        """Constructor method. The parameters are used to construct the 
-#        probability distribution."""
-#        raise DistributionFunctionError
-#    def CDF(self, x): 
-#        """
-#        Cummulative Distribution Function, which gives the cummulative 
-#        probability (area under the  probability curve) from -infinity or 0 
-#        to a give x-value on the x-axis where y-axis is the probability."""
-#        raise DistributionFunctionError
-#    def PDF(self, x): 
-#        """
-#        Partial Distribution Function, which gives the probability for the 
-#        particular value of x, or the area under trobability distribution 
-#        from x-h to x+h for continuous distribution."""
-#        raise DistributionFunctionError
+    def __init__(self, location=1.0, scale=1.0): 
+        """Constructor method. The parameters are used to construct the 
+        probability distribution.
+        
+        @param location: default = 1.0
+        @param scale: default = 1.0"""
+        self.location = location
+        self.scale = scale
+    def CDF(self, x): 
+        """
+        Cummulative Distribution Function, which gives the cummulative 
+        probability (area under the  probability curve) from -infinity or 0 
+        to a give x-value on the x-axis where y-axis is the probability."""
+        power = -1 * ((float(x) / self.location) ** self.scale)
+        return 1 - (math.e ** power)
+    def PDF(self, x): 
+        """
+        Partial Distribution Function, which gives the probability for the 
+        particular value of x, or the area under trobability distribution 
+        from x-h to x+h for continuous distribution."""
+        if x < 0:
+            return 0
+        else:
+            power = -1 * ((float(x) / self.location) ** self.scale)
+            t3 = math.e ** power
+            t2 = (float(x) / self.location) ** (self.scale - 1)
+            t1 = self.scale / self.location
+            return t1 * t2 * t3
     def inverseCDF(self, probability, start=0.0, step=0.01): 
         """
         It does the reverse of CDF() method, it takes a probability value and 
@@ -3175,12 +3186,12 @@ class WeiBullDistribution(Distribution):
             cprob = self.CDF(start)
             # print start, cprob
         return (start, cprob)
-#    def mean(self): 
-#        """Gives the arithmetic mean of the sample."""
-#        raise DistributionFunctionError
-#    def mode(self): 
-#        """Gives the mode of the sample."""
-#        raise DistributionFunctionError
+    # def mean(self): 
+        # """Gives the arithmetic mean of the sample."""
+        # return self.location * nrpy.gammln(1 + 1/self.scale)
+    def median(self): 
+        """Gives the median of the sample."""
+        return self.location * (math.log(2, math.e) ** (1/self.scale))
 #    def kurtosis(self): 
 #        """Gives the kurtosis of the sample."""
 #        raise DistributionFunctionError

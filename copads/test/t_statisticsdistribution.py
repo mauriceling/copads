@@ -495,13 +495,31 @@ class testUniform(unittest.TestCase):
                     scale=2).mean()
         self.assertAlmostEqual(p, 1.5)
 
-##class testWeibull(unittest.TestCase):
-##    def testCDF(self):
-##        pass
-##    def testPDF(self):
-##        pass
-##    def testinverseCDF(self):
-##        pass
+class testWeibull(unittest.TestCase):
+    def testCDF1(self):
+        p = N.WeiBullDistribution(location=1.0, 
+                    scale=1.0).CDF(2)
+        self.assertAlmostEqual(p, 0.864664, places=5)
+    def testCDF2(self):
+        p = N.WeiBullDistribution(location=2.0, 
+                    scale=2.0).CDF(2)
+        self.assertAlmostEqual(p, 0.632120, places=5)
+    def testPDF1(self):
+        p = N.WeiBullDistribution(location=1.0, 
+                    scale=1.0).PDF(2)
+        self.assertAlmostEqual(p, 0.135335, places=5)
+    def testinverseCDF1(self):
+        p = N.WeiBullDistribution(location=1.0, 
+                    scale=1.0).inverseCDF(0.864664)[0]
+        self.assertAlmostEqual(p, 2.000000, places=5)
+    def testinverseCDF2(self):
+        p = N.WeiBullDistribution(location=2.0, 
+                    scale=2.0).inverseCDF(0.632120)[0]
+        self.assertAlmostEqual(p, 2.000000, places=5)
+    def testmedian(self):
+        p = N.WeiBullDistribution(location=2.0, 
+                    scale=2.0).median()
+        self.assertAlmostEqual(p, 1.665109, places=5)
     
 if __name__ == '__main__':
     unittest.main()
