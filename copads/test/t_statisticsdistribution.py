@@ -338,12 +338,31 @@ class testNormal(unittest.TestCase):
         self.assertTrue(abs(p) < 0.01)
   
 class testHypergeometric(unittest.TestCase):
+    def testPDF(self):
+        p = N.HypergeometricDistribution(population_size=100, 
+                population_success=50).PDF(10, 5)
+        self.assertAlmostEqual(p, 0.259333,  places = 2)
+    def testCDF(self):
+        p = N.HypergeometricDistribution(population_size=100, 
+                population_success=50).CDF(10, 5)
+        self.assertAlmostEqual(p, 0.629073,  places = 2)
+    def testinverseCDF(self):
+        p = N.HypergeometricDistribution(population_size=100, 
+                population_success=50).inverseCDF(10, 0.629073)[0]
+        self.assertAlmostEqual(p, 5,  places = 2)
     def testmean(self):
-        p = N.HypergeometricDistribution(M=3, n=2, success=1).mean()
-        self.assertAlmostEqual(p, 0.6667,  places = 2)
-##    def testPDF(self):
-##        pass
-##    def testinverseCDF(self):
+        p = N.HypergeometricDistribution(population_size=100, 
+                population_success=50).mean(10)
+        self.assertAlmostEqual(p, 5.000,  places = 2)
+    def testmode(self):
+        p = N.HypergeometricDistribution(population_size=100, 
+                population_success=50).mode(10)
+        self.assertAlmostEqual(p, 5.500,  places = 2)
+    def testvariance(self):
+        p = N.HypergeometricDistribution(population_size=100, 
+                population_success=50).variance(10)
+        self.assertAlmostEqual(p, 2.272727,  places = 2)
+
 
 class testPoisson(unittest.TestCase):
     """
