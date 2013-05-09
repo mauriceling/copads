@@ -2128,68 +2128,64 @@ class HyperbolicSecantDistribution(Distribution):
 
 
 class HypergeometricDistribution(Distribution):
-    def __init__(self, population_size=100, population_success=50): 
+    def __init__(self, sample_size, 
+                 population_size=100, 
+                 population_success=50): 
         """
         Constructor method. The parameters are used to construct the 
         probability distribution."""
         if population_success > population_size:
             raise AttributeError('population_success cannot be more \
             than population_size')
+        elif sample_size > population_size:
+            raise AttributeError('sample_size cannot be more \
+            than population_size')
         else:
             self.psize = int(population_size)
             self.psuccess = int(population_success)
-    def CDF(self, sample_size, sample_success): 
+            self.ssize = int(sample_size)
+    def CDF(self, sample_success): 
         """
         Cummulative Distribution Function, which gives the cummulative 
         probability (area under the probability curve) from -infinity or 0 to 
         a give x-value on the x-axis where y-axis is the probability."""
-        if sample_success > sample_size:
+        if sample_success > self.ssize:
             raise AttributeError('sample_success cannot be more \
             than sample_size')
-        elif sample_size > self.psize:
-            raise AttributeError('sample_size cannot be more \
-            than population_size')
         else:
-            sample_size = int(sample_size)
-            sample_success = int(sample_success)
-            return sum([self.PDF(sample_size, n) 
-                        for n in range(1, sample_success+1)])
-    def PDF(self, sample_size, sample_success): 
+            return sum([self.PDF(n) for n in range(1, sample_success+1)])
+    def PDF(self, sample_success): 
         """
         Partial Distribution Function, which gives the probability for the 
         particular value of x, or the area under probability distribution 
         from x-h to x+h for continuous distribution."""
-        if sample_success > sample_size:
+        if sample_success > self.ssize:
             raise AttributeError('sample_success cannot be more \
             than sample_size')
-        elif sample_size > self.psize:
-            raise AttributeError('sample_size cannot be more \
-            than population_size')
         else:
-            sample_size = int(sample_size)
             sample_success = int(sample_success)
             numerator = nrpy.bico(self.psuccess, sample_success)
             numerator = numerator  * nrpy.bico(self.psize-self.psuccess, 
-                                               sample_size-sample_success)
-            denominator = nrpy.bico(self.psize, sample_size)
+                                               self.ssize-sample_success)
+            denominator = nrpy.bico(self.psize, self.ssize)
             return float(numerator)/float(denominator)
-    def inverseCDF(self, sample_size, probability, start=1, step=1): 
+    def inverseCDF(self, probability, start=1, step=1): 
         """
         It does the reverse of CDF() method, it takes a probability value 
         and returns the corresponding value on the x-axis."""
-        cprob = self.CDF(sample_size, start)
+        cprob = self.CDF(start)
         if probability < cprob: return (start, cprob)
         while (probability > cprob):
             start = start + step
-            cprob = self.CDF(sample_size, start)
+            cprob = self.CDF(start)
             # print start, cprob
         return (int(start), cprob)
-    def mean(self, sample_size): 
+    def mean(self): 
         """Gives the arithmetic mean of the sample."""
-        return sample_size * (float(self.psuccess)/float(self.psize))
-    def mode(self, sample_size): 
+        return self.ssize * (float(self.psuccess)/float(self.psize))
+    def mode(self): 
         """Gives the mode of the sample."""
-        temp = (sample_size + 1) * (self.psuccess + 1)
+        temp = (self.ssize + 1) * (self.psuccess + 1)
         return float(temp)/float(self.psize + 2)
 #    def kurtosis(self): 
 #        """Gives the kurtosis of the sample."""
@@ -2197,11 +2193,11 @@ class HypergeometricDistribution(Distribution):
 #    def skew(self): 
 #        """Gives the skew of the sample."""
 #        raise DistributionFunctionError
-    def variance(self, sample_size): 
+    def variance(self): 
         """Gives the variance of the sample."""
         t1 = float(self.psize-self.psuccess)/float(self.psize)
-        t2 = float(self.psize-sample_size)/float(self.psize-1)
-        return self.mean(sample_size) * t1 * t2
+        t2 = float(self.psize-self.ssize)/float(self.psize-1)
+        return self.mean() * t1 * t2
 #    def quantile1(self): 
 #        """Gives the 1st quantile of the sample."""
 #        raise DistributionFunctionError

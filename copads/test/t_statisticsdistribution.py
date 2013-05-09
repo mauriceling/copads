@@ -339,28 +339,34 @@ class testNormal(unittest.TestCase):
   
 class testHypergeometric(unittest.TestCase):
     def testPDF(self):
-        p = N.HypergeometricDistribution(population_size=100, 
-                population_success=50).PDF(10, 5)
+        p = N.HypergeometricDistribution(sample_size=10,
+                                population_size=100, 
+                                population_success=50).PDF(5)
         self.assertAlmostEqual(p, 0.259333,  places = 2)
     def testCDF(self):
-        p = N.HypergeometricDistribution(population_size=100, 
-                population_success=50).CDF(10, 5)
+        p = N.HypergeometricDistribution(sample_size=10,
+                                population_size=100, 
+                                population_success=50).CDF(5)
         self.assertAlmostEqual(p, 0.629073,  places = 2)
     def testinverseCDF(self):
-        p = N.HypergeometricDistribution(population_size=100, 
-                population_success=50).inverseCDF(10, 0.629073)[0]
+        p = N.HypergeometricDistribution(sample_size=10,
+                            population_size=100, 
+                            population_success=50).inverseCDF(0.629073)[0]
         self.assertAlmostEqual(p, 5,  places = 2)
     def testmean(self):
-        p = N.HypergeometricDistribution(population_size=100, 
-                population_success=50).mean(10)
+        p = N.HypergeometricDistribution(sample_size=10,
+                                population_size=100, 
+                                population_success=50).mean()
         self.assertAlmostEqual(p, 5.000,  places = 2)
     def testmode(self):
-        p = N.HypergeometricDistribution(population_size=100, 
-                population_success=50).mode(10)
+        p = N.HypergeometricDistribution(sample_size=10,
+                                population_size=100, 
+                                population_success=50).mode()
         self.assertAlmostEqual(p, 5.500,  places = 2)
     def testvariance(self):
-        p = N.HypergeometricDistribution(population_size=100, 
-                population_success=50).variance(10)
+        p = N.HypergeometricDistribution(sample_size=10,
+                                population_size=100, 
+                                population_success=50).variance()
         self.assertAlmostEqual(p, 2.272727,  places = 2)
 
 
