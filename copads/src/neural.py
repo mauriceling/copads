@@ -356,3 +356,48 @@ class Brain:
             [neuron for neuron in self.synapses[originating_neuron]
              if neuron != destination_neuron]
         self.neuron_pool[destination_neuron].disconnect(originating_neuron)
+        
+    def add_neuron(self, neuron, incoming=[], outgoing=[]):
+        '''
+        Adding a neuron to the brain and connecting it up to the rest of
+        the brain
+        
+        @param neuron: neuron to add
+        @type neuron: Neuron object
+        @param incoming: names of neurons to feed synaptic signal(s) to 
+        the added neuron
+        @type incoming: list
+        @param outgoing: names of neurons to feed synaptic signal of
+        added neuron to
+        @type outgoing: list
+        '''
+        self.neuron_pool[neuron.name] = neuron
+        self.activations[neuron.name] = 0.0
+        self.synapses[neuron.name] = []
+        for inflow in incoming:
+            self.connect_neurons(inflow, neuron.name)
+        for outflow in outgoing:
+            self.connect_neurons(neuron.name, outflow)
+            
+    def remove_neuron(self, neuron_name):
+        '''
+        Removing an existing neuron from the brain.
+        
+        @param neuron_name: name of neuron to remove
+        @type neuron_name: string
+        '''
+        neuron_name = str(neuron_name)
+        if neuron_name not in self.neuron_pool:
+            raise AttributeError('Neuron name, %s, does not exist in the \
+            current brain. Nothing to remove' % neuron_name)
+        neuron = copy.deepcopy(self.neuron_pool[neuron_name])
+        del self.neuron_pool[neuron_name]
+        del self.activations[neuron_name]
+        for inflow in neuron.weights.keys():
+            self.disconnect_neurons(inflow, neuron_name)
+        for outflow in self.synapses[neuron_name]:
+            self.disconnect_neurons(neuron_name, outflow)
+        del self.synapses[neuron_name]
+        return neuron
+    
+    
