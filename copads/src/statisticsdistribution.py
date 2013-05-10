@@ -1406,10 +1406,11 @@ class TriangularDistribution(Distribution):
                     ((self.upper_limit - self.lower_limit) * \
                      (self.mode - self.lower_limit)))
                      
-    def inverseCDF(self, probability, start=0.0, step=0.01): 
+    def inverseCDF(self, probability, start=0, step=0.01): 
         """
         It does the reverse of CDF() method, it takes a probability value 
         and returns the corresponding value on the x-axis."""
+        start = self.lower_limit
         cprob = self.CDF(start)
         if probability < cprob: return (start, cprob)
         while (probability > cprob):
