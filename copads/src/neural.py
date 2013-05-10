@@ -118,6 +118,18 @@ class Neuron:
         else:
             self.weights[incoming_neuron] = 0.01
             
+    def disconnect(self, incoming_neuron):
+        '''
+        @param incoming_neuron: name of incoming neuron to be connected.
+        @type incoming_neuron: string
+        '''
+        incoming_neuron = str(incoming_neuron)
+        if incoming_neuron in self.weights:
+            del self.weights[incoming_neuron]
+        else:
+            raise AttributeError('Synaptic connection to neuron, %s, \
+            did not exist. Does nothing' % incoming_neuron)
+            
     def set_synaptic_weight(self, incoming_neuron, weight=0.01):
         '''
         Set or reset synaptic weight of existing connected neuron.
@@ -288,7 +300,7 @@ class Brain:
             
     def connect_neurons(self, originating_neuron, destination_neuron):
         '''
-        Establish synaptic connection between 2 existing neurons
+        Establish synaptic connection between 2 existing neurons.
         
         @param originating_neuron: name of neuron to connect from
         @type originating_neuron: string
@@ -313,4 +325,34 @@ class Brain:
                                                  destination_neuron))
         self.synapses[originating_neuron].append(destination_neuron)
         self.neuron_pool[destination_neuron].connect(originating_neuron)
-            
+        
+    def disconnect_neurons(self, originating_neuron, destination_neuron):
+        '''
+        Disconnect between 2 connected neurons.
+        
+        @param originating_neuron: name of neuron to disconnect from
+        @type originating_neuron: string
+        @param destination_neuron: name of neuron to disconnect to
+        @type destination_neuron: string
+        '''
+        originating_neuron = str(originating_neuron)
+        destination_neuron = str(destination_neuron)
+        if originating_neuron not in self.synapses:
+            raise AttributeError('Originating neuron name, %s, is not \
+            found - this neuron has not been created. Disconnection can \
+            only take place between 2 existing and connected neurons' % 
+            originating_neuron)
+        if destination_neuron not in self.synapses:
+            raise AttributeError('Destination neuron name, %s, is not \
+            found - this neuron has not been created. Disconnection can \
+            only take place between 2 existing and connected neurons' % 
+            destination_neuron)
+        if destination_neuron not in self.synapses[originating_neuron]:
+            raise AttributeError('No existing connection/synapse exist \
+            between %s and %s. Disconnection can only take place between \
+            2 existing and connected neurons' % (originating_neuron, 
+                                                 destination_neuron))
+        self.synapses[originating_neuron] = \
+            [neuron for neuron in self.synapses[originating_neuron]
+             if neuron != destination_neuron]
+        self.neuron_pool[destination_neuron].disconnect(originating_neuron)
