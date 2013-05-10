@@ -251,22 +251,7 @@ class testGamma(unittest.TestCase):
 ##    def testinverseCDF(self):
 ##        pass
 ##      
-class testLogarithmic(unittest.TestCase):
-    def testPDF(self):
-        p = N.LogarithmicDistribution(shape=0.45).PDF(1.0)
-        self.assertAlmostEqual(p, 1.7332, places=4)
-    def testCDF(self):
-        p = N.LogarithmicDistribution(shape=0.45).CDF(0.0)
-        self.assertAlmostEqual(p, 0.0, places=2)
-    def testinverseCDF(self):
-        p = N.LogarithmicDistribution(shape=0.45).CDF(0.0)
-        self.assertAlmostEqual(p,0.0, places=2)
-    def testmode(self):
-        p = N.LogarithmicDistribution(shape=0.45).mode()
-        self.assertAlmostEqual(p, 1.0, places=2)
-    def testmean(self):
-        p = N.LogarithmicDistribution(shape=0.45).mean()
-        self.assertAlmostEqual(p, 3.15124, places=4)
+
 
 ##class testLogNormal(unittest.TestCase):
 ##    def testCDF(self):
@@ -321,22 +306,7 @@ class testGeometric(unittest.TestCase):
                 success=0.4).inverseCDF(0.953344)[0]
         self.assertAlmostEqual(p, 6.0000, places=4)
 
-
-class testNormal(unittest.TestCase):
-    """
-    @see: Ling, MHT. 2009. Ten Z-Test Routines from Gopal Kanji's 100 
-    Statistical Tests. The Python Papers Source Codes 1:5
-    """
-    def testCDF1(self):
-        p = N.NormalDistribution().CDF(0)
-        self.assertTrue(abs(p/0.5 - 1) < 0.01)
-    def testPDF1(self):
-        p = N.NormalDistribution().PDF(0)
-        self.assertTrue(abs(p/0.3989423 - 1) < 0.01)
-    def testinverseCDF1(self):
-        p = N.NormalDistribution().inverseCDF(0.5)[0]
-        self.assertTrue(abs(p) < 0.01)
-  
+        
 class testHypergeometric(unittest.TestCase):
     def testPDF(self):
         p = N.HypergeometricDistribution(sample_size=10,
@@ -369,7 +339,41 @@ class testHypergeometric(unittest.TestCase):
                                 population_success=50).variance()
         self.assertAlmostEqual(p, 2.272727,  places = 2)
 
+        
+class testLogarithmic(unittest.TestCase):
+    def testPDF(self):
+        p = N.LogarithmicDistribution(shape=0.45).PDF(1.0)
+        self.assertAlmostEqual(p, 1.7332, places=4)
+    def testCDF(self):
+        p = N.LogarithmicDistribution(shape=0.45).CDF(0.0)
+        self.assertAlmostEqual(p, 0.0, places=2)
+    def testinverseCDF(self):
+        p = N.LogarithmicDistribution(shape=0.45).CDF(0.0)
+        self.assertAlmostEqual(p,0.0, places=2)
+    def testmode(self):
+        p = N.LogarithmicDistribution(shape=0.45).mode()
+        self.assertAlmostEqual(p, 1.0, places=2)
+    def testmean(self):
+        p = N.LogarithmicDistribution(shape=0.45).mean()
+        self.assertAlmostEqual(p, 3.15124, places=4)
 
+        
+class testNormal(unittest.TestCase):
+    """
+    @see: Ling, MHT. 2009. Ten Z-Test Routines from Gopal Kanji's 100 
+    Statistical Tests. The Python Papers Source Codes 1:5
+    """
+    def testCDF1(self):
+        p = N.NormalDistribution().CDF(0)
+        self.assertTrue(abs(p/0.5 - 1) < 0.01)
+    def testPDF1(self):
+        p = N.NormalDistribution().PDF(0)
+        self.assertTrue(abs(p/0.3989423 - 1) < 0.01)
+    def testinverseCDF1(self):
+        p = N.NormalDistribution().inverseCDF(0.5)[0]
+        self.assertTrue(abs(p) < 0.01)
+
+        
 class testPoisson(unittest.TestCase):
     """
     @see: Ling, MHT. 2009. Compendium of Distributions, I: Beta, Binomial, Chi-
@@ -401,6 +405,7 @@ class testPoisson(unittest.TestCase):
                 expectation=7).inverseCDF(0.901)[0]
         self.assertAlmostEqual(x, 10.000, places=2)
 
+        
 class testSemicircular(unittest.TestCase):
     def testPDF1(self):
         p = N.SemicircularDistribution(location=0.0, scale=1.0).PDF(0.0)
@@ -418,6 +423,7 @@ class testSemicircular(unittest.TestCase):
         p = N.SemicircularDistribution(location=0.0,
                                        scale=1.0).inverseCDF(0.5)[0]
         self.assertAlmostEqual(p, 0.0, places = 2)
+    
     
 class testT(unittest.TestCase):
     """
@@ -479,6 +485,7 @@ class testTriangular(unittest.TestCase):
        p = N.TriangularDistribution(2.0, 1.0).kurtosis()
        self.assertAlmostEqual(p, -0.6, places=4)
 
+       
 class testUniform(unittest.TestCase):
     """
     @see: Ling, MHT. 2009. Compendium of Distributions, I: Beta, Binomial, Chi-
@@ -520,6 +527,7 @@ class testUniform(unittest.TestCase):
                     scale=2).mean()
         self.assertAlmostEqual(p, 1.5)
 
+        
 class testWeibull(unittest.TestCase):
     def testCDF1(self):
         p = N.WeiBullDistribution(location=1.0, 
@@ -545,6 +553,11 @@ class testWeibull(unittest.TestCase):
         p = N.WeiBullDistribution(location=2.0, 
                     scale=2.0).median()
         self.assertAlmostEqual(p, 1.665109, places=5)
-    
+    def testmode(self):
+        p = N.WeiBullDistribution(location=2.0, 
+                    scale=2.0).mode()
+        self.assertAlmostEqual(p, 1.414213, places=5)
+
+        
 if __name__ == '__main__':
     unittest.main()
