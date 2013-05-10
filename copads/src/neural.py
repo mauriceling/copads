@@ -286,4 +286,31 @@ class Brain:
                 self.activations[name] = 0.0
                 self.synapses[new_neuron.name] = []
             
+    def connect_neurons(self, originating_neuron, destination_neuron):
+        '''
+        Establish synaptic connection between 2 existing neurons
+        
+        @param originating_neuron: name of neuron to connect from
+        @type originating_neuron: string
+        @param destination_neuron: name of neuron to connect to
+        @type destination_neuron: string
+        '''
+        originating_neuron = str(originating_neuron)
+        destination_neuron = str(destination_neuron)
+        if originating_neuron not in self.synapses:
+            raise AttributeError('Originating neuron name, %s, is not \
+            found - this neuron has not been created. Connection can \
+            only be established on 2 existing neurons' % 
+            originating_neuron)
+        if destination_neuron not in self.synapses:
+            raise AttributeError('Destination neuron name, %s, is not \
+            found - this neuron has not been created. Connection can \
+            only be established on 2 existing neurons' % 
+            destination_neuron)
+        if destination_neuron in self.synapses[originating_neuron]:
+            raise AttributeError('A connection/synapse had existed \
+            between %s and %s. Does nothing.' % (originating_neuron, 
+                                                 destination_neuron))
+        self.synapses[originating_neuron].append(destination_neuron)
+        self.neuron_pool[destination_neuron].connect(originating_neuron)
             
