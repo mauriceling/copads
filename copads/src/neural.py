@@ -285,3 +285,5 @@ class Brain:
                 self.neuron_pool[name] = new_neuron
                 self.activations[name] = 0.0
                 self.synapses[new_neuron.name] = []
+            
+            
