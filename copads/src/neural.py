@@ -38,7 +38,8 @@ class Neuron:
     1. Each neuron is identified by a unique name, which will be used 
     for mapping between different neurons.
     2. The synaptic weights to modulate incoming signals are given in
-    "weights" dictionary.
+    "weights" dictionary. This forms the set of listener for the current
+    neuron - which neurons provide inputs.
     3. A dictionary, named "cellbody", is provided to contain any other
     information needed. For example, it can be used to contain a timer
     for time-delayed neuron activation or it can be used for neuronal
@@ -208,12 +209,22 @@ class Brain:
     4. In sequential activation (that is activation_sequence[0] before
     activation_sequence[1]), neurons in activation_sequence[0] will be 
     the input neurons to traditional neural networks.
-    5. The brain will also a learning algorithm to train / learn by 
+    5. The forward signal flow from each activated neuron to each 
+    receiving neuron is maintained in the "synapses" dictionary where the
+    key is the name of neuron for the originating signal and the value is
+    a list of neurons receiving signal from the activating neuron. 
+    Together with the "weights" dictionaries from each neuron, these form
+    the full picture of signal flow.
+    6. A dictionary, called "brainmatter", is provided to contain any 
+    other information needed.
+    7. The brain will also a learning algorithm to train / learn by 
     itself.
     '''
     activations = {}
     neuron_pool = {}
+    synapses = {}
     activation_sequence = []
+    brainmatter = {}
     learning_algorithm = None
     
     def __init__(self, number_of_neurons=0, original_neuron=None,
@@ -253,21 +264,24 @@ class Brain:
                 new_neuron = Neuron()
                 self.neuron_pool[new_neuron.name] = new_neuron
                 self.activations[new_neuron.name] = 0.0
+                self.synapses[new_neuron.name] = []
         elif (original_neuron == None) and (len(list_of_neuron_names) > 0):
             for name in list_of_neuron_names:
                 new_neuron = Neuron()
                 new_neuron.name = name
                 self.neuron_pool[name] = new_neuron
                 self.activations[name] = 0.0
+                self.synapses[new_neuron.name] = []
         elif (original_neuron != None) and (len(list_of_neuron_names) == 0):
             for x in range(number_of_neurons):
                 new_neuron = copy.deepcopy(original_neuron)
                 self.neuron_pool[new_neuron.name] = new_neuron
                 self.activations[new_neuron.name] = 0.0
+                self.synapses[new_neuron.name] = []
         else: # (original_neuron != None) and (len(list_of_neuron_names) > 0)
             for name in list_of_neuron_names:
                 new_neuron = copy.deepcopy(original_neuron)
                 new_neuron.name = name
                 self.neuron_pool[name] = new_neuron
                 self.activations[name] = 0.0
-        
+                self.synapses[new_neuron.name] = []
