@@ -52,12 +52,15 @@ class Neuron:
     itransfer_function = None
     dtransfer_function = None
     
-    def __init__(self, transfer_function=tf_linear,
+    def __init__(self, name=None, transfer_function=tf_linear,
                  itransfer_function=itf_linear,
-                 dtransfer_function=dtf_linear, name=None):
+                 dtransfer_function=dtf_linear):
         '''
         Constructor method for Neuron class.
         
+        @param name: unique name of the neuron. Default = a string of
+        60 to 75 numbers.
+        @type name: string
         @param transfer_function: a function to convert the consolidated
         weighted input for the neuron and generate an output signal. 
         Default = tf_linear; that is, output signal = consolidated 
@@ -69,9 +72,6 @@ class Neuron:
         @param dtransfer_function: differential of transfer_function, 
         used by some learning algorithms, Default = dtf_linear
         @type dtransfer_function: function
-        @param name: unique name of the neuron. Default = a string of
-        60 to 75 numbers.
-        @type name: string
         '''
         self.transfer_function = transfer_function
         self.dtransfer_function = dtransfer_function
@@ -390,6 +390,8 @@ class Brain:
         if neuron_name not in self.neuron_pool:
             raise AttributeError('Neuron name, %s, does not exist in the \
             current brain. Nothing to remove' % neuron_name)
+        # replicate a copy of the neuron (to preserve synaptic weights
+        # of the neuron) to be returned
         neuron = copy.deepcopy(self.neuron_pool[neuron_name])
         # remove neuron from neuron_pool and activations
         del self.neuron_pool[neuron_name]
