@@ -1,5 +1,6 @@
 import sys
 import os
+import copy
 import unittest
 
 sys.path.append(os.path.join(os.path.dirname(os.getcwd()), 'src'))
@@ -86,6 +87,27 @@ class testNeuron(unittest.TestCase):
         self.assertEqual(activations['nC'], 2)
         self.assertEqual(activations['nD'], 3)
         self.cell.disconnect_all()
+        
+        
+#class testBrain(unittest.TestCase):
+#    def testInit1(self):
+#        brain = n.Brain(5)
+#        names = brain.activations.keys()
+#        self.assertEqual(brain.neuron_pool.keys(), names)
+#        self.assertEqual(brain.synapses.keys(), names)
+#        self.assertEqual(brain.activations[names[1]], 0.0)
+#        self.assertEqual(brain.synapses[names[1]], [])
+#        brain.remove_all_neurons()
+#        self.assertEqual(brain.neuron_pool, {})
+#    def testInit2(self):
+#        names = ['nA', 'nB', 'nC']
+#        brain = n.Brain(list_of_neuron_names=names)
+#        self.assertEqual(brain.neuron_pool.keys(), names)
+#        self.assertEqual(brain.synapses.keys(), names)
+#        self.assertEqual(brain.activations[names[1]], 0.0)
+#        self.assertEqual(brain.synapses[names[1]], [])
+#        brain.remove_all_neurons()
+#        self.assertEqual(brain.neuron_pool, {})
         
         
 if __name__ == '__main__':
