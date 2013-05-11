@@ -391,13 +391,28 @@ class Brain:
             raise AttributeError('Neuron name, %s, does not exist in the \
             current brain. Nothing to remove' % neuron_name)
         neuron = copy.deepcopy(self.neuron_pool[neuron_name])
+        # remove neuron from neuron_pool and activations
         del self.neuron_pool[neuron_name]
         del self.activations[neuron_name]
+        # remove all synapses connecting to the neuron
         for inflow in neuron.weights.keys():
             self.disconnect_neurons(inflow, neuron_name)
+        # remove all synapses originating from the neuron to other neurons
         for outflow in self.synapses[neuron_name]:
             self.disconnect_neurons(neuron_name, outflow)
         del self.synapses[neuron_name]
+        # remove neuron from activation_sequence
+        for i in range(len(self.activation_sequence)):
+            self.activation_sequence[i] = \
+                [neuron for neuron in self.activation_sequence[i]
+                 if neuron != neuron_name]
         return neuron
     
+    def remove_all_neurons(self):
+        '''
+        Removing all neurons from the brain, resulting in a neuron-less 
+        brain.
+        '''
+        return [self.remove_neuron(neuron) 
+                for neuron in self.activations]
     
