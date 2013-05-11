@@ -130,6 +130,10 @@ class Neuron:
             raise AttributeError('Synaptic connection to neuron, %s, \
             did not exist. Does nothing' % incoming_neuron)
             
+    def disconnect_all(self):
+        for incoming_neuron in self.weights.keys(): 
+            self.disconnect(incoming_neuron)
+            
     def set_synaptic_weight(self, incoming_neuron, weight=0.01):
         '''
         Set or reset synaptic weight of existing connected neuron.
@@ -416,5 +420,5 @@ class Brain:
         brain.
         '''
         return [self.remove_neuron(neuron) 
-                for neuron in self.activations]
+                for neuron in self.activations.keys()]
     
