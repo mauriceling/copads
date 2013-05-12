@@ -119,6 +119,10 @@ class Neuron:
         '''
         Execute/activate the neuron into action.
         
+        @param synapses: dictionary of reverse synaptic connections and 
+        its synaptic weights in the format of {name of signal receiving 
+        neuron>: {<name of signal receiving neuron>: <synaptic weight>}}
+        @type synapses: dictionary
         @param activations: a dictionary of current activations of the 
         entire network where keys are the names of neurons and values 
         are the activation state or current output signal.
@@ -128,10 +132,10 @@ class Neuron:
         '''
         synapses = synapses[self.name]
         synaptic_input = 0.0
-        for key in self.weights.keys():
+        for key in synapses.keys():
             try: 
                 synaptic_input = synaptic_input + \
-                    (synapses[key] * float(activations[key]))
+                    (float(synapses[key]) * float(activations[key]))
             except KeyError: pass
         synaptic_input = float(synaptic_input)
         signal = self.transfer_function(synaptic_input)

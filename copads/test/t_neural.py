@@ -18,20 +18,17 @@ class testNeuron(unittest.TestCase):
         name2 = self.cell.generate_name()
         self.assertEqual(self.cell.name, name2)
         self.assertNotEqual(name1, name2)
-#    def testExecute1(self):
-#        self.cell.connect('nB')
-#        self.cell.connect('nC')
-#        self.cell.connect('nD')
-#        activations = {'nA': 0.0, 'nB': 1, 'nC': 2, 'nD': 3}
-#        activations = self.cell.execute(activations)
-#        self.assertEqual(self.cell.weights, 
-#                         {'nB': 0.01, 'nC': 0.01, 'nD': 0.01})
-#        result = 1*0.01 + 2*0.01 + 3*0.01
-#        self.assertEqual(activations['nA'], result)
-#        self.assertEqual(activations['nB'], 1)
-#        self.assertEqual(activations['nC'], 2)
-#        self.assertEqual(activations['nD'], 3)
-#        self.cell.disconnect_all()
+    def testExecute1(self):
+        synapses = {'nA': {'nB': 0.01, 'nC': 0.01, 'nD': 0.01}, 
+                    'nB': {}, 
+                    'nC': {}}
+        activations = {'nA': 0.0, 'nB': 1, 'nC': 2, 'nD': 3}
+        activations = self.cell.execute(synapses, activations)
+        result = 1*0.01 + 2*0.01 + 3*0.01
+        self.assertEqual(activations['nA'], result)
+        self.assertEqual(activations['nB'], 1)
+        self.assertEqual(activations['nC'], 2)
+        self.assertEqual(activations['nD'], 3)
 #    def testExecute2(self):
 #        self.cell.connect('nB')
 #        self.cell.connect('nC')
