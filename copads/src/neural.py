@@ -307,6 +307,40 @@ class Brain:
                                                  destination_neuron))
         else:
             del self.synapses[destination_neuron][originating_neuron]
+
+    def set_activation_sequence(self, activation_sequence):
+        '''
+        Set neuron activation sequence or replace current neuron 
+        activation sequence.
+        
+        @param activation_sequence: list of list of activation sequence
+        '''
+        if type(activation_sequence) != type([]):
+            raise AttributeError('Parameter, activation_sequence, must \
+            be a list but %s type given' % str(type(activation_sequence)))
+        else:
+            self.activation_sequence = activation_sequence
+            
+    def add_neuron_to_activation_sequence(self, neuron_name, position):
+        '''
+        Add neuron to activation sequence.
+        
+        @param neuron_name: name of neuron to add
+        @type neuron_name: string
+        @param position: position to add neuron, where position > 0
+        @type position: integer
+        '''
+        position = int(position)
+        neuron_name = str(neuron_name)
+        if neuron_name not in self.synapses:
+            raise AttributeError('Neuron %s, is not found - it is only \
+            possible to add an existing neuron to activation_sequence.' 
+            % neuron_name)
+        else:
+            if position > (len(self.activation_sequence)):
+                self.activation_sequence.append([neuron_name])
+            else:
+                self.activation_sequence[position-1].append(neuron_name)
             
     def add_neuron(self, neuron=None):
         '''
@@ -344,10 +378,15 @@ class Brain:
                     del self.synapses[name][neuron_name]
                 except KeyError: pass
             # remove neuron from activation_sequence
+            for i in range(len(self.activation_sequence)):
+                self.activation_sequence[i] = \
+                    [neuron 
+                     for neuron in self.activation_sequence[i] 
+                        if neuron != neuron_name]
             self.activation_sequence = \
-                [[neuron for neuron in step] 
-                 for step in self.activation_sequence 
-                    if neuron != neuron_name]
+                [sequence 
+                 for sequence in self.activation_sequence 
+                    if len(sequence) > 0]
             return neuron
     
     def empty_brain(self):

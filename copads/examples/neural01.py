@@ -6,8 +6,10 @@ Operations demonstrated:
 2. Establish synaptic connections between 2 neurons
 3. Disconnect synapse between 2 neurons
 4. Adding neurons into brain
-5. Remove singleton (unconnected) neuron
-6. Remove connected neuron
+5. Set activation sequence
+6. Add neurons to activation sequence
+7. Remove singleton (unconnected) neuron
+8. Remove connected neuron
 '''
 import sys, os
 sys.path.append(os.path.join(os.path.dirname(os.getcwd()), 'src'))
@@ -64,6 +66,20 @@ print 'Memory address for neuron I:', brain.neuron_pool['J']
 print 'Synapses table after additions:', brain.synapses
 print
 
+print 'Set activation sequence: [[A, B], [C, D], [E, F]]'
+brain.set_activation_sequence([['A', 'B'], ['C', 'D'], ['E', 'F']])
+print 'Current activation sequence:', brain.activation_sequence
+print
+
+print 'Add J to activation sequence 1'
+print 'Add H to activation sequence 2'
+print 'Add G to activation sequence 4'
+brain.add_neuron_to_activation_sequence('J', 1)
+brain.add_neuron_to_activation_sequence('H', 2)
+brain.add_neuron_to_activation_sequence('G', 4)
+print 'Current activation sequence:', brain.activation_sequence
+print
+
 print 'Connect neurons: F -> G -> H -> E'
 print 'Connect neurons: I -> G'
 brain.connect_neurons('F', 'G')
@@ -76,9 +92,11 @@ print
 print 'Remove singleton neuron: J'
 brain.remove_neuron('J')
 print 'Synapses table after removal:', brain.synapses
+print 'Current activation sequence:', brain.activation_sequence
 print
 
 print 'Remove connected neuron: G'
 brain.remove_neuron('G')
 print 'Synapses table after removal:', brain.synapses
+print 'Current activation sequence:', brain.activation_sequence
 print
