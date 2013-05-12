@@ -341,7 +341,34 @@ class Brain:
                 self.activation_sequence.append([neuron_name])
             else:
                 self.activation_sequence[position-1].append(neuron_name)
-            
+    
+    def remove_neuron_from_activation_sequence(self, neuron_name, 
+                                               position='all'):
+        '''
+        Remove neuron from activation sequence.
+        
+        @param neuron_name: name of neuron to remove
+        @type neuron_name: string
+        @param position: position to add neuron, where position > 0 
+        (integer) or 'all' (string). If position = 'all', this method will 
+        remove neuron from the entire activation sequence
+        '''
+        neuron_name = str(neuron_name)
+        if position == 'all':
+            for i in range(len(self.activation_sequence)):
+                self.activation_sequence[i] = \
+                    [neuron for neuron in self.activation_sequence[i] 
+                     if neuron != neuron_name]
+        else:
+            position = int(position)
+            try: self.activation_sequence[position] = \
+                    [neuron for neuron in self.activation_sequence[i] 
+                     if neuron != neuron_name]
+            except IndexError: pass
+        self.activation_sequence = \
+            [sequence for sequence in self.activation_sequence 
+             if len(sequence) > 0]
+        
     def add_neuron(self, neuron=None):
         '''
         Add a neuron into the brain.
@@ -378,15 +405,7 @@ class Brain:
                     del self.synapses[name][neuron_name]
                 except KeyError: pass
             # remove neuron from activation_sequence
-            for i in range(len(self.activation_sequence)):
-                self.activation_sequence[i] = \
-                    [neuron 
-                     for neuron in self.activation_sequence[i] 
-                        if neuron != neuron_name]
-            self.activation_sequence = \
-                [sequence 
-                 for sequence in self.activation_sequence 
-                    if len(sequence) > 0]
+            self.remove_neuron_from_activation_sequence(neuron_name, 'all')
             return neuron
     
     def empty_brain(self):
