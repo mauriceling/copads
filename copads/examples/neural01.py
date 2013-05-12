@@ -6,6 +6,8 @@ Operations demonstrated:
 2. Establish synaptic connections between 2 neurons
 3. Disconnect synapse between 2 neurons
 4. Adding neurons into brain
+5. Remove singleton (unconnected) neuron
+6. Remove connected neuron
 '''
 import sys, os
 sys.path.append(os.path.join(os.path.dirname(os.getcwd()), 'src'))
@@ -69,4 +71,14 @@ brain.connect_neurons('G', 'H')
 brain.connect_neurons('H', 'E')
 brain.connect_neurons('I', 'G')
 print 'Synapses table after connection:', brain.synapses
+print
+
+print 'Remove singleton neuron: J'
+brain.remove_neuron('J')
+print 'Synapses table after removal:', brain.synapses
+print
+
+print 'Remove connected neuron: G'
+brain.remove_neuron('G')
+print 'Synapses table after removal:', brain.synapses
 print

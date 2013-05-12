@@ -320,7 +320,36 @@ class Brain:
         self.neuron_pool[neuron.name] = neuron
         self.activations[neuron.name] = 0.0
         self.synapses[neuron.name] = {}
-            
+        
+    def remove_neuron(self, neuron_name):
+        '''
+        Removing a neuron from the brain.
+        
+        @param neuron_name: name of neuron to remove
+        @type neuron_name: string
+        '''
+        neuron_name = str(neuron_name)
+        if neuron_name not in self.synapses:
+            raise AttributeError('Neuron %s, is not found - it is only \
+            possible to remove an existing neuron.' % neuron_name)
+        else:
+            # remove neuron from neuron_pool
+            neuron = copy.deepcopy(self.neuron_pool[neuron_name])
+            del self.neuron_pool[neuron_name]
+            # remove synapses to the neuron
+            del self.synapses[neuron_name]
+            # remove all synapses from the neuron
+            for name in self.synapses.keys():
+                try: 
+                    del self.synapses[name][neuron_name]
+                except KeyError: pass
+            # remove neuron from activation_sequence
+            self.activation_sequence = \
+                [[neuron for neuron in step] 
+                 for step in self.activation_sequence 
+                    if neuron != neuron_name]
+            return neuron
+    
     def empty_brain(self):
         '''
         Empty/clear the entire brain of all neurons, connections and 
