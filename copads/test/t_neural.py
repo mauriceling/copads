@@ -126,6 +126,27 @@ class testBrain(unittest.TestCase):
         self.assertEqual(len(brain.activations), 0)
         self.assertEqual(len(brain.synapses), 0)
         self.assertEqual(len(brain.activation_sequence), 0)
+    def testConnect_Neurons(self):
+        names = ['A', 'B', 'C']
+        brain = n.Brain(list_of_neuron_names=names)
+        brain.connect_neurons('A', 'C')
+        self.assertEqual(brain.synapses, 
+                         {'A':{}, 'B': {}, 'C': {'A': 0.01}})
+        brain.connect_neurons('B', 'C')
+        self.assertEqual(brain.synapses, 
+                         {'A':{}, 'B': {}, 'C': {'A': 0.01, 'B': 0.01}})
+        brain.empty_brain()
+    def testDisconnect_Neurons(self):
+        names = ['A', 'B', 'C']
+        brain = n.Brain(list_of_neuron_names=names)
+        brain.connect_neurons('A', 'C')
+        brain.connect_neurons('B', 'C')
+        self.assertEqual(brain.synapses, 
+                         {'A':{}, 'B': {}, 'C': {'A': 0.01, 'B': 0.01}})
+        brain.disconnect_neurons('A', 'C')
+        self.assertEqual(brain.synapses, 
+                         {'A':{}, 'B': {}, 'C': {'B': 0.01}})
+        brain.empty_brain()
         
         
 if __name__ == '__main__':
