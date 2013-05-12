@@ -308,6 +308,19 @@ class Brain:
         else:
             del self.synapses[destination_neuron][originating_neuron]
             
+    def add_neuron(self, neuron=None):
+        '''
+        Add a neuron into the brain.
+        
+        @param neuron: the neuron to be added. If None, then a generic 
+        neuron will be created and added. Default = None.
+        @type neuron: Neuron object
+        '''
+        if neuron == None: neuron = Neuron()
+        self.neuron_pool[neuron.name] = neuron
+        self.activations[neuron.name] = 0.0
+        self.synapses[neuron.name] = {}
+            
     def empty_brain(self):
         '''
         Empty/clear the entire brain of all neurons, connections and 
