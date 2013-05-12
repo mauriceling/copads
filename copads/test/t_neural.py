@@ -18,75 +18,49 @@ class testNeuron(unittest.TestCase):
         name2 = self.cell.generate_name()
         self.assertEqual(self.cell.name, name2)
         self.assertNotEqual(name1, name2)
-    def testConnectDisconnect1(self):
-        self.cell.connect('nB')
-        self.assertEqual(self.cell.weights['nB'], 0.01)
-        self.cell.disconnect('nB')
-        self.assertEqual(self.cell.weights, {})
-    def testConnectDisconnect2(self):
-        self.cell.connect('nB')
-        self.assertEqual(self.cell.weights, {'nB': 0.01})
-        self.cell.connect('nC')
-        self.assertEqual(self.cell.weights, {'nB': 0.01, 'nC': 0.01})
-        self.cell.connect('nD')
-        self.assertEqual(self.cell.weights.keys(), ['nB', 'nC', 'nD'])
-        self.cell.disconnect('nB')
-        self.assertEqual(self.cell.weights, {'nC': 0.01, 'nD': 0.01})
-        self.cell.disconnect('nC')
-        self.assertEqual(self.cell.weights, {'nD': 0.01})
-        self.cell.disconnect('nD')
-        self.assertEqual(self.cell.weights, {})
-    def testSet_Synaptic_Weight(self):
-        self.cell.connect('nB')
-        self.cell.connect('nC')
-        self.cell.connect('nD')
-        self.cell.set_synaptic_weight('nC', 0.5)
-        self.assertEqual(self.cell.weights['nB'], 0.01)
-        self.assertEqual(self.cell.weights['nC'], 0.5)
-        self.cell.disconnect_all()
-    def testExecute1(self):
-        self.cell.connect('nB')
-        self.cell.connect('nC')
-        self.cell.connect('nD')
-        activations = {'nA': 0.0, 'nB': 1, 'nC': 2, 'nD': 3}
-        activations = self.cell.execute(activations)
-        self.assertEqual(self.cell.weights, 
-                         {'nB': 0.01, 'nC': 0.01, 'nD': 0.01})
-        result = 1*0.01 + 2*0.01 + 3*0.01
-        self.assertEqual(activations['nA'], result)
-        self.assertEqual(activations['nB'], 1)
-        self.assertEqual(activations['nC'], 2)
-        self.assertEqual(activations['nD'], 3)
-        self.cell.disconnect_all()
-    def testExecute2(self):
-        self.cell.connect('nB')
-        self.cell.connect('nC')
-        self.cell.connect('nD')
-        activations = {'nA': 0.0, 'nB': 1, 'nC': 2, 'nD': 3}
-        self.cell.set_synaptic_weight('nC', 0.5)
-        activations = self.cell.execute(activations)
-        self.assertEqual(self.cell.weights, 
-                         {'nB': 0.01, 'nC': 0.5, 'nD': 0.01})
-        result = 1*0.01 + 2*0.5 + 3*0.01
-        self.assertEqual(activations['nA'], result)
-        self.assertEqual(activations['nB'], 1)
-        self.assertEqual(activations['nC'], 2)
-        self.assertEqual(activations['nD'], 3)
-        self.cell.disconnect_all()
-    def testExecute3(self):
-        self.cell.connect('nB')
-        self.cell.connect('nC')
-        self.cell.connect('nD')
-        self.cell.disconnect('nB')
-        activations = {'nA': 0.0, 'nB': 1, 'nC': 2, 'nD': 3}
-        self.assertEqual(self.cell.weights, {'nC': 0.01, 'nD': 0.01})
-        activations = self.cell.execute(activations)
-        result = 2*0.01 + 3*0.01
-        self.assertEqual(activations['nA'], result)
-        self.assertEqual(activations['nB'], 1)
-        self.assertEqual(activations['nC'], 2)
-        self.assertEqual(activations['nD'], 3)
-        self.cell.disconnect_all()
+#    def testExecute1(self):
+#        self.cell.connect('nB')
+#        self.cell.connect('nC')
+#        self.cell.connect('nD')
+#        activations = {'nA': 0.0, 'nB': 1, 'nC': 2, 'nD': 3}
+#        activations = self.cell.execute(activations)
+#        self.assertEqual(self.cell.weights, 
+#                         {'nB': 0.01, 'nC': 0.01, 'nD': 0.01})
+#        result = 1*0.01 + 2*0.01 + 3*0.01
+#        self.assertEqual(activations['nA'], result)
+#        self.assertEqual(activations['nB'], 1)
+#        self.assertEqual(activations['nC'], 2)
+#        self.assertEqual(activations['nD'], 3)
+#        self.cell.disconnect_all()
+#    def testExecute2(self):
+#        self.cell.connect('nB')
+#        self.cell.connect('nC')
+#        self.cell.connect('nD')
+#        activations = {'nA': 0.0, 'nB': 1, 'nC': 2, 'nD': 3}
+#        self.cell.set_synaptic_weight('nC', 0.5)
+#        activations = self.cell.execute(activations)
+#        self.assertEqual(self.cell.weights, 
+#                         {'nB': 0.01, 'nC': 0.5, 'nD': 0.01})
+#        result = 1*0.01 + 2*0.5 + 3*0.01
+#        self.assertEqual(activations['nA'], result)
+#        self.assertEqual(activations['nB'], 1)
+#        self.assertEqual(activations['nC'], 2)
+#        self.assertEqual(activations['nD'], 3)
+#        self.cell.disconnect_all()
+#    def testExecute3(self):
+#        self.cell.connect('nB')
+#        self.cell.connect('nC')
+#        self.cell.connect('nD')
+#        self.cell.disconnect('nB')
+#        activations = {'nA': 0.0, 'nB': 1, 'nC': 2, 'nD': 3}
+#        self.assertEqual(self.cell.weights, {'nC': 0.01, 'nD': 0.01})
+#        activations = self.cell.execute(activations)
+#        result = 2*0.01 + 3*0.01
+#        self.assertEqual(activations['nA'], result)
+#        self.assertEqual(activations['nB'], 1)
+#        self.assertEqual(activations['nC'], 2)
+#        self.assertEqual(activations['nD'], 3)
+#        self.cell.disconnect_all()
         
         
 #class testBrain(unittest.TestCase):

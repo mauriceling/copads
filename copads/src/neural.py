@@ -37,10 +37,7 @@ class Neuron:
     
     1. Each neuron is identified by a unique name, which will be used 
     for mapping between different neurons.
-    2. The synaptic weights to modulate incoming signals are given in
-    "weights" dictionary. This forms the set of listener for the current
-    neuron - which neurons provide inputs.
-    3. A dictionary, named "cellbody", is provided to contain any other
+    2. A dictionary, named "cellbody", is provided to contain any other
     information needed. For example, it can be used to contain a timer
     for time-delayed neuron activation or it can be used for neuronal
     memory.
@@ -98,60 +95,6 @@ class Neuron:
                     str(int(random.random() * 1e15))
         return self.name
             
-    def connect(self, incoming_neuron):
-        '''
-        Connects a neuron to the current neuron - by designating an 
-        initial synaptic weight of 0.01 on the input of the incoming 
-        neuron. The incoming neuron must not been previously connected. 
-        Use set_synaptic_weight method to set/reset existing synaptic 
-        weight.
-        
-        @param incoming_neuron: name of incoming neuron to be connected.
-        @type incoming_neuron: string
-        '''
-        incoming_neuron = str(incoming_neuron)
-        if incoming_neuron in self.weights:
-            raise AttributeError('Neuron name, %s, had been previously \
-            connected. Unable to reconnect neuron as this operation \
-            will reset the synaptic weight from this neuron. Use \
-            set_synaptic_weight method instead.' % incoming_neuron)
-        else:
-            self.weights[incoming_neuron] = 0.01
-            
-    def disconnect(self, incoming_neuron):
-        '''
-        @param incoming_neuron: name of incoming neuron to be connected.
-        @type incoming_neuron: string
-        '''
-        incoming_neuron = str(incoming_neuron)
-        if incoming_neuron in self.weights:
-            del self.weights[incoming_neuron]
-        else:
-            raise AttributeError('Synaptic connection to neuron, %s, \
-            did not exist. Does nothing' % incoming_neuron)
-            
-    def disconnect_all(self):
-        for incoming_neuron in self.weights.keys(): 
-            self.disconnect(incoming_neuron)
-            
-    def set_synaptic_weight(self, incoming_neuron, weight=0.01):
-        '''
-        Set or reset synaptic weight of existing connected neuron.
-        
-        @param incoming_neuron: name of incoming neuron to be set.
-        @type incoming_neuron: string
-        @param weight: synaptic weight, default = 0.01
-        @type weight: float
-        '''
-        incoming_neuron = str(incoming_neuron)
-        if incoming_neuron in self.weights:
-            self.weights[incoming_neuron] = float(weight)
-        else:
-            raise AttributeError('Incoming neuron name, %s, had NOT \
-            been previously connected. Unable to set synaptic weight \
-            of unconnected neuron. Use connect method to establish \
-            a connection from incoming neuron.' % incoming_neuron)
-            
     def set_transfer_functions(self, transfer_function,
                                itransfer_function=None,
                                dtransfer_function=None):
@@ -172,7 +115,7 @@ class Neuron:
         self.itransfer_function = itransfer_function
         self.dtransfer_function = dtransfer_function
         
-    def execute(self, activations):
+    def execute(self, synapses, activations):
         '''
         Execute/activate the neuron into action.
         
@@ -183,11 +126,12 @@ class Neuron:
         @return: activations dictionary with the updated output signal 
         or activation state from the current neuron.
         '''
+        synapses = synapses[self.name]
         synaptic_input = 0.0
         for key in self.weights.keys():
             try: 
                 synaptic_input = synaptic_input + \
-                    (self.weights[key] * float(activations[key]))
+                    (synapses[key] * float(activations[key]))
             except KeyError: pass
         synaptic_input = float(synaptic_input)
         signal = self.transfer_function(synaptic_input)
@@ -225,12 +169,13 @@ class Brain:
     4. In sequential activation (that is activation_sequence[0] before
     activation_sequence[1]), neurons in activation_sequence[0] will be 
     the input neurons to traditional neural networks.
-    5. The forward signal flow from each activated neuron to each 
-    receiving neuron is maintained in the "synapses" dictionary where the
-    key is the name of neuron for the originating signal and the value is
-    a list of neurons receiving signal from the activating neuron. 
-    Together with the "weights" dictionaries from each neuron, these form
-    the full picture of signal flow.
+    5. The connections and synaptic weights are registered in "synapses"
+    dictionary as a reverse connection - {<name of signal receiving 
+    neuron>: <dictionary of signal receiving neurons and its weights>}
+    where <dictionary of signal receiving neurons and its weights> is 
+    {<name of signal receiving neuron>: <synaptic weight>}. Hence, synpases
+    dictionary is a nested dictionary of {name of signal receiving 
+    neuron>: {<name of signal receiving neuron>: <synaptic weight>}}.
     6. A dictionary, called "brainmatter", is provided to contain any 
     other information needed.
     7. The brain will also a learning algorithm to train / learn by 
@@ -280,27 +225,27 @@ class Brain:
             for x in range(number_of_neurons):
                 self.neuron_pool[new_neuron.name] = copy.deepcopy(new_neuron)
                 self.activations[new_neuron.name] = 0.0
-                self.synapses[new_neuron.name] = []
+                self.synapses[new_neuron.name] = {}
         elif (original_neuron == None) and (len(list_of_neuron_names) > 0):
             new_neuron = Neuron()
             for name in list_of_neuron_names:
                 new_neuron.name = name
                 self.neuron_pool[name] = copy.deepcopy(new_neuron)
                 self.activations[name] = 0.0
-                self.synapses[new_neuron.name] = []
+                self.synapses[new_neuron.name] = {}
         elif (original_neuron != None) and (len(list_of_neuron_names) == 0):
             for x in range(number_of_neurons):
                 new_neuron = copy.deepcopy(original_neuron)
                 self.neuron_pool[new_neuron.name] = new_neuron
                 self.activations[new_neuron.name] = 0.0
-                self.synapses[new_neuron.name] = []
+                self.synapses[new_neuron.name] = {}
         else: # (original_neuron != None) and (len(list_of_neuron_names) > 0)
             for name in list_of_neuron_names:
                 new_neuron = copy.deepcopy(original_neuron)
                 new_neuron.name = name
                 self.neuron_pool[name] = new_neuron
                 self.activations[name] = 0.0
-                self.synapses[new_neuron.name] = []
+                self.synapses[new_neuron.name] = {}
             
     def connect_neurons(self, originating_neuron, destination_neuron):
         '''
@@ -318,18 +263,18 @@ class Brain:
             found - this neuron has not been created. Connection can \
             only be established on 2 existing neurons' % 
             originating_neuron)
-        if destination_neuron not in self.synapses:
+        elif destination_neuron not in self.synapses:
             raise AttributeError('Destination neuron name, %s, is not \
             found - this neuron has not been created. Connection can \
             only be established on 2 existing neurons' % 
             destination_neuron)
-        if destination_neuron in self.synapses[originating_neuron]:
+        elif originating_neuron in self.synapses[destination_neuron]:
             raise AttributeError('A connection/synapse had existed \
             between %s and %s. Does nothing.' % (originating_neuron, 
                                                  destination_neuron))
-        self.synapses[originating_neuron].append(destination_neuron)
-        self.neuron_pool[destination_neuron].connect(originating_neuron)
-        
+        else:
+            self.synapses[destination_neuron][originating_neuron] = 0.01
+
     def disconnect_neurons(self, originating_neuron, destination_neuron):
         '''
         Disconnect between 2 connected neurons.
@@ -346,79 +291,16 @@ class Brain:
             found - this neuron has not been created. Disconnection can \
             only take place between 2 existing and connected neurons' % 
             originating_neuron)
-        if destination_neuron not in self.synapses:
+        elif destination_neuron not in self.synapses:
             raise AttributeError('Destination neuron name, %s, is not \
             found - this neuron has not been created. Disconnection can \
             only take place between 2 existing and connected neurons' % 
             destination_neuron)
-        if destination_neuron not in self.synapses[originating_neuron]:
+        elif originating_neuron not in self.synapses[destination_neuron]:
             raise AttributeError('No existing connection/synapse exist \
             between %s and %s. Disconnection can only take place between \
             2 existing and connected neurons' % (originating_neuron, 
                                                  destination_neuron))
-        self.synapses[originating_neuron] = \
-            [neuron for neuron in self.synapses[originating_neuron]
-             if neuron != destination_neuron]
-        self.neuron_pool[destination_neuron].disconnect(originating_neuron)
-        
-    def add_neuron(self, neuron, incoming=[], outgoing=[]):
-        '''
-        Adding a neuron to the brain and connecting it up to the rest of
-        the brain
-        
-        @param neuron: neuron to add
-        @type neuron: Neuron object
-        @param incoming: names of neurons to feed synaptic signal(s) to 
-        the added neuron
-        @type incoming: list
-        @param outgoing: names of neurons to feed synaptic signal of
-        added neuron to
-        @type outgoing: list
-        '''
-        self.neuron_pool[neuron.name] = neuron
-        self.activations[neuron.name] = 0.0
-        self.synapses[neuron.name] = []
-        for inflow in incoming:
-            self.connect_neurons(inflow, neuron.name)
-        for outflow in outgoing:
-            self.connect_neurons(neuron.name, outflow)
-            
-    def remove_neuron(self, neuron_name):
-        '''
-        Removing an existing neuron from the brain.
-        
-        @param neuron_name: name of neuron to remove
-        @type neuron_name: string
-        '''
-        neuron_name = str(neuron_name)
-        if neuron_name not in self.neuron_pool:
-            raise AttributeError('Neuron name, %s, does not exist in the \
-            current brain. Nothing to remove' % neuron_name)
-        # replicate a copy of the neuron (to preserve synaptic weights
-        # of the neuron) to be returned
-        neuron = copy.deepcopy(self.neuron_pool[neuron_name])
-        # remove neuron from neuron_pool and activations
-        del self.neuron_pool[neuron_name]
-        del self.activations[neuron_name]
-        # remove all synapses connecting to the neuron
-        for inflow in neuron.weights.keys():
-            self.disconnect_neurons(inflow, neuron_name)
-        # remove all synapses originating from the neuron to other neurons
-        for outflow in self.synapses[neuron_name]:
-            self.disconnect_neurons(neuron_name, outflow)
-        del self.synapses[neuron_name]
-        # remove neuron from activation_sequence
-        for i in range(len(self.activation_sequence)):
-            self.activation_sequence[i] = \
-                [neuron for neuron in self.activation_sequence[i]
-                 if neuron != neuron_name]
-        return neuron
-    
-    def remove_all_neurons(self):
-        '''
-        Removing all neurons from the brain, resulting in a neuron-less 
-        brain.
-        '''
-        return [self.remove_neuron(neuron) 
-                for neuron in self.activations.keys()]
-    
+        else:
+            del self.synapses[destination_neuron][originating_neuron]
+                
