@@ -64,25 +64,40 @@ class testNeuron(unittest.TestCase):
         self.assertEqual(activations['nD'], 3)
         
         
-#class testBrain(unittest.TestCase):
-#    def testInit1(self):
-#        brain = n.Brain(5)
-#        names = brain.activations.keys()
-#        self.assertEqual(brain.neuron_pool.keys(), names)
-#        self.assertEqual(brain.synapses.keys(), names)
-#        self.assertEqual(brain.activations[names[1]], 0.0)
-#        self.assertEqual(brain.synapses[names[1]], [])
-#        brain.remove_all_neurons()
-#        self.assertEqual(brain.neuron_pool, {})
-#    def testInit2(self):
-#        names = ['nA', 'nB', 'nC']
-#        brain = n.Brain(list_of_neuron_names=names)
-#        self.assertEqual(brain.neuron_pool.keys(), names)
-#        self.assertEqual(brain.synapses.keys(), names)
-#        self.assertEqual(brain.activations[names[1]], 0.0)
-#        self.assertEqual(brain.synapses[names[1]], [])
-#        brain.remove_all_neurons()
-#        self.assertEqual(brain.neuron_pool, {})
+class testBrain(unittest.TestCase):
+    def testInit1(self):
+        brain = n.Brain(5)
+        names = brain.activations.keys()
+        address = [hex(id(brain.neuron_pool[x])) for x in names]
+        self.assertEqual(brain.neuron_pool.keys(), names)
+        self.assertEqual(brain.synapses.keys(), names)
+        self.assertEqual(brain.activations[names[1]], 0.0)
+        self.assertEqual(brain.synapses[names[1]], {})
+        self.assertEqual(len(address), 5)
+        self.assertNotEqual(address[0], address[1])
+        self.assertNotEqual(address[0], address[2])
+        self.assertNotEqual(address[0], address[3])
+        self.assertNotEqual(address[0], address[4])
+        self.assertNotEqual(address[1], address[2])
+        self.assertNotEqual(address[1], address[3])
+        self.assertNotEqual(address[1], address[4])
+        self.assertNotEqual(address[2], address[3])
+        self.assertNotEqual(address[2], address[4])
+        self.assertNotEqual(address[3], address[4])
+        brain.empty_brain()
+    def testInit2(self):
+        names = ['nA', 'nB', 'nC']
+        brain = n.Brain(list_of_neuron_names=names)
+        address = [hex(id(brain.neuron_pool[x])) for x in names]
+        self.assertEqual(brain.neuron_pool.keys(), names)
+        self.assertEqual(brain.synapses.keys(), names)
+        self.assertEqual(brain.activations['nA'], 0.0)
+        self.assertEqual(brain.synapses['nA'], {})
+        self.assertEqual(len(address), 3)
+        self.assertNotEqual(address[0], address[1])
+        self.assertNotEqual(address[0], address[2])
+        self.assertNotEqual(address[1], address[2])
+        brain.empty_brain()
         
         
 if __name__ == '__main__':

@@ -225,16 +225,16 @@ class Brain:
         else:
             number_of_neurons = int(number_of_neurons)
         if (original_neuron == None) and (len(list_of_neuron_names) == 0):
-            new_neuron = Neuron()
             for x in range(number_of_neurons):
-                self.neuron_pool[new_neuron.name] = copy.deepcopy(new_neuron)
+                new_neuron = Neuron()
+                self.neuron_pool[new_neuron.name] = new_neuron
                 self.activations[new_neuron.name] = 0.0
                 self.synapses[new_neuron.name] = {}
         elif (original_neuron == None) and (len(list_of_neuron_names) > 0):
-            new_neuron = Neuron()
             for name in list_of_neuron_names:
+                new_neuron = Neuron()
                 new_neuron.name = name
-                self.neuron_pool[name] = copy.deepcopy(new_neuron)
+                self.neuron_pool[name] = new_neuron
                 self.activations[name] = 0.0
                 self.synapses[new_neuron.name] = {}
         elif (original_neuron != None) and (len(list_of_neuron_names) == 0):
@@ -307,4 +307,13 @@ class Brain:
                                                  destination_neuron))
         else:
             del self.synapses[destination_neuron][originating_neuron]
-                
+            
+    def empty_brain(self):
+        '''
+        Empty/clear the entire brain of all neurons, connections and 
+        states.
+        '''
+        self.activations.clear()
+        self.neuron_pool.clear()
+        self.synapses.clear()
+        self.activation_sequence = []
