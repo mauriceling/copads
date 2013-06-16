@@ -75,6 +75,9 @@ class Graph:
         Initialize a list of nodes (vertices) without edges.
         
         @param vertices: list of vertices
+        
+        @status: Tested method
+        @since: version 0.1
         """
         if type(vertices) != list: raise GraphParameterError('Vertices must \
                                     be a list')
@@ -87,7 +90,11 @@ class Graph:
         For example, P -> Q is written as ('P', 'Q').
         
         @param edges: edges
-        @type edges: list of 2-element tuple"""
+        @type edges: list of 2-element tuple
+        
+        @status: Tested method
+        @since: version 0.1
+        """
         if type(edges) != list: raise GraphParameterError('Edges must be a \
                                 list of tuples')
         from Set import Set
@@ -156,6 +163,12 @@ class Graph:
         but will correctly compute shortest paths even for some graphs with 
         negative edges, and will raise an exception if it discovers that a 
         negative edge has caused it to make a mistake.
+        
+        @param start: vertex of starting point
+        @param end: vertex of ending point
+        
+        @status: Tested method (by proxy from testing shortestPath method)
+        @since: version 0.1
         """
         D = {}    # dictionary of final distances
         P = {}    # dictionary of predecessors
@@ -186,6 +199,9 @@ class Graph:
         
         @param start: vertex of starting point
         @param end: vertex of ending point
+        
+        @status: Tested method
+        @since: version 0.1
         """
         D, P = self.Dijkstra(start, end)
         Path = []

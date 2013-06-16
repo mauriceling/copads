@@ -172,6 +172,9 @@ class BetaDistribution(Distribution):
     @see: Ling, MHT. 2009. Compendium of Distributions, I: Beta, Binomial, Chi-
     Square, F, Gamma, Geometric, Poisson, Student's t, and Uniform. The Python 
     Papers Source Codes 1:4
+    
+    @status: Tested method
+    @since: version 0.2
     """
 
     def __init__(self, location, scale, p, q):
@@ -277,6 +280,9 @@ class BinomialDistribution(Distribution):
     @see: Ling, MHT. 2009. Compendium of Distributions, I: Beta, Binomial, Chi-
     Square, F, Gamma, Geometric, Poisson, Student's t, and Uniform. The Python 
     Papers Source Codes 1:4
+    
+    @status: Tested method
+    @since: version 0.2
     """
 
     def __init__(self, success=0.5, trial=1000):
@@ -348,6 +354,9 @@ class BinomialDistribution(Distribution):
 class CauchyDistribution(Distribution):
     """
     Class for Cauchy Distribution.
+    
+    @status: Tested method
+    @since: version 0.4
     """
     
     def __init__(self, location=0.0, scale=1.0): 
@@ -424,6 +433,9 @@ class CosineDistribution(Distribution):
     """
     Cosine distribution is sometimes used as a simple approximation to 
     Normal distribution.
+    
+    @status: Tested method
+    @since: version 0.4
     """
     
     def __init__(self, location=0.0, scale=1.0): 
@@ -516,6 +528,9 @@ class ExponentialDistribution(Distribution):
     Exponential distribution is the continuous version of Geometric 
     distribution. It is also a special case of Gamma distribution where 
     shape = 1
+    
+    @status: Tested method
+    @since: version 0.4
     """
     
     def __init__(self, location=0.0, scale=1.0): 
@@ -606,6 +621,9 @@ class FDistribution(Distribution):
     @see: Ling, MHT. 2009. Compendium of Distributions, I: Beta, Binomial, Chi-
     Square, F, Gamma, Geometric, Poisson, Student's t, and Uniform. The Python 
     Papers Source Codes 1:4
+    
+    @status: Tested method
+    @since: version 0.2
     """
 
     def __init__(self, df1=1, df2=1):
@@ -665,6 +683,9 @@ class GammaDistribution(Distribution):
     @see: Ling, MHT. 2009. Compendium of Distributions, I: Beta, Binomial, Chi-
     Square, F, Gamma, Geometric, Poisson, Student's t, and Uniform. The Python 
     Papers Source Codes 1:4
+    
+    @status: Tested method
+    @since: version 0.2
     """
 
     def __init__(self, location, scale, shape):
@@ -736,7 +757,11 @@ def ErlangDistribution(location, scale, shape):
     
     @param location:
     @param scale:
-    @param shape:"""
+    @param shape:
+    
+    @status: Tested method
+    @since: version 0.2
+    """
     return GammaDistribution(location, scale, int(shape))
     
  
@@ -746,7 +771,11 @@ def FurryDistribution(location, scale, shape):
     
     @param location:
     @param scale:
-    @param shape:"""
+    @param shape:
+    
+    @status: Tested method
+    @since: version 0.2
+    """
     return GammaDistribution(location, scale, shape)
     
     
@@ -758,6 +787,9 @@ class ChiSquareDistribution(GammaDistribution):
     @see: Ling, MHT. 2009. Compendium of Distributions, I: Beta, Binomial, Chi-
     Square, F, Gamma, Geometric, Poisson, Student's t, and Uniform. The Python 
     Papers Source Codes 1:4
+    
+    @status: Tested method
+    @since: version 0.2
     """
 
     def __init__(self, df=2):
@@ -777,6 +809,9 @@ class GeometricDistribution(Distribution):
     @see: Ling, MHT. 2009. Compendium of Distributions, I: Beta, Binomial, Chi-
     Square, F, Gamma, Geometric, Poisson, Student's t, and Uniform. The Python 
     Papers Source Codes 1:4
+    
+    @status: Tested method
+    @since: version 0.2
     """
 
     def __init__(self, success=0.5):
@@ -837,6 +872,9 @@ class GeometricDistribution(Distribution):
 class HypergeometricDistribution(Distribution):
     """
     Class for Hypergeometric distribution
+    
+    @status: Tested method
+    @since: version 0.4
     """
     
     def __init__(self, sample_size, 
@@ -949,6 +987,9 @@ class HypergeometricDistribution(Distribution):
 class LogarithmicDistribution(Distribution):
     """
     Class for Logarithmic Distribution.
+    
+    @status: Tested method
+    @since: version 0.4
     """
     
     def __init__(self, shape): 
@@ -1012,6 +1053,9 @@ class NormalDistribution(Distribution):
     
     @see: Ling, MHT. 2009. Ten Z-Test Routines from Gopal Kanji's 100 
     Statistical Tests. The Python Papers Source Codes 1:5
+    
+    @status: Tested method
+    @since: version 0.1
     """
     def __init__(self):
         self.mean = 0.0
@@ -1099,6 +1143,9 @@ class PoissonDistribution(Distribution):
     @see: Ling, MHT. 2009. Compendium of Distributions, I: Beta, Binomial, Chi-
     Square, F, Gamma, Geometric, Poisson, Student's t, and Uniform. The Python 
     Papers Source Codes 1:4
+    
+    @status: Tested method
+    @since: version 0.2
     """
 
     def __init__(self, expectation=0.001):
@@ -1156,6 +1203,9 @@ class PoissonDistribution(Distribution):
 class SemicircularDistribution(Distribution):
     """
     Class for Semicircular Distribution.
+    
+    @status: Tested method
+    @since: version 0.4
     """
     
     def __init__(self, location=0.0, scale=1.0): 
@@ -1245,6 +1295,9 @@ class TDistribution(Distribution):
     @see: Ling, MHT. 2009. Compendium of Distributions, I: Beta, Binomial, Chi-
     Square, F, Gamma, Geometric, Poisson, Student's t, and Uniform. The Python 
     Papers Source Codes 1:4
+    
+    @status: Tested method
+    @since: version 0.2
     """
 
     def __init__(self, location=0.0, scale=1.0, shape=2):
@@ -1352,6 +1405,9 @@ class TDistribution(Distribution):
 class TriangularDistribution(Distribution):
     """
     Class for Triangular Distribution.
+    
+    @status: Tested method
+    @since: version 0.4
     """
     def __init__(self, upper_limit, peak, lower_limit=0): 
         """
@@ -1496,6 +1552,9 @@ class UniformDistribution(Distribution):
     @see: Ling, MHT. 2009. Compendium of Distributions, I: Beta, Binomial, Chi-
     Square, F, Gamma, Geometric, Poisson, Student's t, and Uniform. The Python 
     Papers Source Codes 1:4
+    
+    @status: Tested method
+    @since: version 0.2
     """
 
     def __init__(self, location, scale):
@@ -1578,6 +1637,9 @@ class UniformDistribution(Distribution):
 class WeiBullDistribution(Distribution):
     """
     Class for Weibull distribution.
+    
+    @status: Tested method
+    @since: version 0.4
     """
     def __init__(self, location=1.0, scale=1.0): 
         """Constructor method. The parameters are used to construct the 

@@ -42,6 +42,9 @@ class SingleSample:
     def geometricMean(self):
         """
         Calculates the geometric mean of the data
+        
+        @status: Tested method
+        @since: version 0.1
         """
         mult = 1.0
         one_over_n = 1.0 / len(self.data)
@@ -51,6 +54,9 @@ class SingleSample:
     def harmonicMean(self):
         """
         Calculates the harmonic mean of the data
+        
+        @status: Tested method
+        @since: version 0.1
         """
         sum = 0.000001
         for item in self.data:
@@ -61,6 +67,9 @@ class SingleSample:
     def arithmeticMean(self):
         """
         Returns the arithematic mean of the data
+        
+        @status: Tested method
+        @since: version 0.1
         """
         sum = 0
         for item in self.data: sum = sum + item
@@ -85,6 +94,9 @@ class SingleSample:
         Returns the skewness of the data, as defined in Numerical
         Recipies (alternate defn in CRC Standard Probability and
         Statistics, p.6.)
+        
+        @status: Tested method
+        @since: version 0.1
         """
         return self.moment(3) / math.pow(self.moment(2), 1.5)
 
@@ -93,6 +105,9 @@ class SingleSample:
         Returns the kurtosis of the data, as defined in Numerical
         Recipies (alternate defn in CRC Standard Probability and
         Statistics, p.6.)
+        
+        @status: Tested method
+        @since: version 0.1
         """
         return self.moment(4) / math.pow(self.moment(2), 2.0)
     
@@ -101,12 +116,18 @@ class SingleSample:
         Returns the coefficient of variation in percentage, as
         defined in CRC Standard Probability and Statistics, p.6.
         Ref: http://en.wikipedia.org/wiki/Coefficient_of_variation
+        
+        @status: Tested method
+        @since: version 0.1
         """
         return 100.0 * self.summary['stdev'] / self.summary['aMean']
 
     def range(self):
         """
         Returns the range of the data (maximum - minimum)
+        
+        @status: Tested method
+        @since: version 0.1
         """
         self.data.sort()
         return float(self.data[-1]) - float(self.data[0])
@@ -114,6 +135,9 @@ class SingleSample:
     def variance(self):
         """
         Returns the variance of the data
+        
+        @status: Tested method
+        @since: version 0.1
         """
         sum = 0.0
         mean = self.arithmeticMean()
@@ -143,6 +167,9 @@ class SampleDistribution(Distribution):
 
         
 class TwoSample:
+    """
+    Class to hold a two samples, and provides calculations on the samples
+    """
     sample = {}
     sample_name = []
     def __init__(self, data1, name1, data2, name2):
@@ -162,6 +189,9 @@ class TwoSample:
     def covariance(self):
         """
         Calculates covariance using the formula: Cov(xy) = E(xy) - E(x)E(y)
+        
+        @status: Tested method
+        @since: version 0.3
         """
         sname = self.listSamples()
         if self.sample[sname[0]].data == self.sample[sname[1]].data: return 1.0
@@ -179,6 +209,17 @@ class TwoSample:
         return mean_xy - (mean_x * mean_y)
     
     def linear_regression(self):
+        '''
+        Calculates the first order linear regression model in the form of
+        "y = mx + c" from the 2 samples where the first sample (data1 and
+        name1 in initialization method) is taken as "X" and the second 
+        sample (data2 and name2 in initialization method is taken as "Y".
+        
+        @return: Tuple of (gradient, intercept)
+        
+        @status: Tested method
+        @since: version 0.1
+        '''
         sname = self.listSamples()
         if self.sample[sname[0]].rowcount == self.sample[sname[1]].rowcount:
             slen = self.sample[sname[0]].rowcount
@@ -205,6 +246,9 @@ class TwoSample:
         (N * sum_xy) - (sum_x * sum_y)
         --------------------------------------------------------------
         ((N * sum_x2 - (sum_x)**2) * (N * sum_y2 - (sum_y)**2)) ** 0.5
+        
+        @status: Tested method
+        @since: version 0.1
         """
         sname = self.listSamples()
         if self.sample[sname[0]].rowcount == self.sample[sname[1]].rowcount:

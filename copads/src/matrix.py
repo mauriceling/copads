@@ -32,17 +32,35 @@ class Vector(list):
             return Vector(super(Vector, self).__getslice__(i, j))
         except: raise TypeError, 'vector::FAILURE in __getslice__'
         
-    def __add__(self, other): 
+    def __add__(self, other):
+        '''
+        Addition of current matrix to "other" matrix.
+        
+        @status: Tested method
+        @since: version 0.1
+        '''
         return Vector(map(lambda x, y: x+y, self, other))
         
-    def __neg__(self): return Vector([-x for x in self])
+    def __neg__(self): 
+        '''
+        @status: Tested method
+        @since: version 0.1
+        '''
+        return Vector([-x for x in self])
     
     def __sub__(self, other): 
+        '''
+        @status: Tested method
+        @since: version 0.1
+        '''
         return Vector(map(lambda x, y: x-y, self, other))
 
     def __mul__(self, other):
         """
         Element by element multiplication
+        
+        @status: Tested method
+        @since: version 0.1
         """
         try: return Vector(map(lambda x, y: x*y, self, other))
         except:
@@ -55,6 +73,9 @@ class Vector(list):
     def __div__(self, other):
         """
         Element by element division.
+        
+        @status: Tested method
+        @since: version 0.1
         """
         try: return Vector(map(lambda x, y: x/y, self, other))
         except: return Vector(map(lambda x: x/other, self))

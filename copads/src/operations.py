@@ -12,8 +12,12 @@ import random
 import constants
 
 class Modulus2:
-    """Class for Modulus 2 arithmetics"""
-
+    """
+    Class for Modulus 2 arithmetics
+    
+    @status: Tested methods
+    @since: version 0.1
+    """
     def __init__(self, input = 0):
         self.datum = input
 
@@ -33,8 +37,12 @@ class Modulus2:
         
 
 class Boolean:
-    """Class for Boolean arithmetics"""
-
+    """
+    Class for Boolean arithmetics
+    
+    @status: Tested methods
+    @since: version 0.1
+    """
     def __init__(self, input = 0):
         self.datum = input
 
@@ -273,7 +281,10 @@ def sample_wr(population, k):
     """
     Chooses k random elements (with replacement) from a population.
     Adapted from Raymond Hettinger's comment to 
-    http://code.activestate.com/recipes/273085/"""
+    http://code.activestate.com/recipes/273085/
+    
+    @since: version 0.2
+    """
     n = len(population)
     _random, _int = random.random, int  # speed hack
     selection = [_int(_random() * n) for i in itertools.repeat(None, k)]
@@ -281,7 +292,10 @@ def sample_wr(population, k):
 
 def sample(population, k):
     """
-    Chooses k random elements (without replacement) from a population."""
+    Chooses k random elements (without replacement) from a population.
+    
+    @since: version 0.2
+    """
     _random, _int = random.random, int
     if len(population) < k: return False
     t = range(k)

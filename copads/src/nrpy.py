@@ -50,6 +50,9 @@ def bessi(n, x):
     @param n: integer, more than 1 - modified n-th Bessel function 
     @param x: positive integer
     @return: modified n-th Bessel function of x
+    
+    @status: Tested function
+    @since: version 0.1
     """
     iacc = 40.0
     bigno = 1.0e10
@@ -78,11 +81,16 @@ def bessi(n, x):
             return ans*bessi0(x)/(float(bi))
     
 def bessi0(x):
-    """Modified Bessel function I-sub-0(x). 
+    """
+    Modified Bessel function I-sub-0(x). 
     @see: NRP 6.5
     
     @param x: float number
-    @return: modified Bessel function base 0 of x"""
+    @return: modified Bessel function base 0 of x
+    
+    @status: Tested function
+    @since: version 0.1
+    """
     if abs(x) < 3.75:
         y = (x/3.75)*(x/3.75)
         return 1.0 + y * (3.5156229 + y * (3.0899424 + y * (1.2067492 + y * \
@@ -97,11 +105,15 @@ def bessi0(x):
                0.392377e-2))))))))
     
 def bessi1(x):
-    """Bessel function I-sub-1(x). 
+    """
+    Bessel function I-sub-1(x). 
     @see: NRP 6.5
     
     @param x: float number
     @return: float number 
+    
+    @status: Tested function
+    @since: version 0.1
     """
     if abs(x) < 3.75:
         y = (x/3.75)*(x/3.75)
@@ -120,11 +132,15 @@ def bessi1(x):
         else: return ans
         
 def bessj(n, x): 
-    """Bessel function J-sub-n(x). 
+    """
+    Bessel function J-sub-n(x). 
     @see: NRP 6.5
     
     @param x: float number
     @return: float number 
+    
+    @status: Tested function
+    @since: version 0.1
     """
     iacc = 40.0
     bigno = 1.0e10
@@ -170,11 +186,15 @@ def bessj(n, x):
         return ans
 
 def bessj0(x):
-    """Bessel function J-sub-0(x). 
+    """
+    Bessel function J-sub-0(x). 
     @see: NRP 6.4
     
     @param x: float number
     @return: float number 
+    
+    @status: Tested function
+    @since: version 0.1
     """
     if abs(x) < 8.0:
         y = x*x
@@ -197,11 +217,15 @@ def bessj0(x):
                math.sin(xx) * ans2)
         
 def bessj1(x):
-    """Bessel function J-sub-1(x). 
+    """
+    Bessel function J-sub-1(x). 
     @see: NRP 6.4
     
     @param x: float number
-    @return: float number 
+    @return: float number
+     
+    @status: Tested function
+    @since: version 0.1
     """
     if abs(x) < 8.0:
         y = x*x
@@ -268,7 +292,8 @@ def bessk0(x):
                 y * (0.587872e-2 + y * (-0.25154e-2 + y * 0.53208e-3))))))
     
 def bessk1(x):
-    """Bessel function K-sub-1(x). 
+    """
+    Bessel function K-sub-1(x). 
     @see: NRP 6.5
     
     @param x: positive integer
@@ -285,12 +310,16 @@ def bessk1(x):
                 (-0.780353e-2 + y * (0.325614e-2 + y * (-0.68245e-3)))))))
         
 def bessy(n, x):
-    """Bessel function Y-sub-n(x). 
+    """
+    Bessel function Y-sub-n(x). 
     @see: NRP 6.4
     
     @param n: integer, more than 1 - n-th Bessel function 
     @param x: positive integer
     @return: n-th Bessel function of x
+    
+    @status: Tested function
+    @since: version 0.1
     """
     if n < 2: 
         raise FunctionParameterValueError('n must be more than 1 - \
@@ -306,12 +335,16 @@ def bessy(n, x):
         return by
     
 def bessy0(x):
-    """Bessel function Y-sub-0(x). 
+    """
+    Bessel function Y-sub-0(x). 
     @see: NRP 6.4
     Depend: bessj0
     
     @param x: float number
     @return: float number 
+    
+    @status: Tested function
+    @since: version 0.1
     """
     if x < 8.0:
         y = x*x
@@ -333,12 +366,16 @@ def bessy0(x):
         return math.sqrt(0.636619772 / x) * ans
     
 def bessy1(x):
-    """Bessel function Y-sub-1(x). 
+    """
+    Bessel function Y-sub-1(x). 
     @see: NRP 6.4
     Depend: bessj1
     
     @param x: float number
     @return: float number 
+    
+    @status: Tested function
+    @since: version 0.1
     """
     if abs(x) < 8.0:
         y = x*x
@@ -363,7 +400,8 @@ def bessy1(x):
                     ans1 + z * math.cos(xx) * ans2)
 
 def beta(z, w):
-    """Beta function.
+    """
+    Beta function.
     Depend: gammln
     @see: NRP 6.1
     @see: Ling, MHT. 2009. Compendium of Distributions, I: Beta, Binomial, Chi-
@@ -372,7 +410,11 @@ def beta(z, w):
 
     @param z: float number
     @param w: float number
-    @return: float number"""
+    @return: float number
+    
+    @status: Tested function
+    @since: version 0.1
+    """
     return math.exp(gammln(z) + gammln(w) - gammln(z+w))
 
 def betacf(a, b, x):
@@ -425,6 +467,9 @@ def betai(a, b, x):
     @see: Ling, MHT. 2009. Compendium of Distributions, I: Beta, Binomial, Chi-
     Square, F, Gamma, Geometric, Poisson, Student's t, and Uniform. The Python 
     Papers Source Codes 1:4
+    
+    @status: Tested function
+    @since: version 0.1
     """
     if (x < 0.0 or x > 1.0):
         raise ValueError('Bad value for x: %s' % x)
@@ -451,6 +496,9 @@ def bico(n, k):
     @param n: total number of items
     @param k: required number of items
     @return: floating point number
+    
+    @status: Tested function
+    @since: version 0.1
     """
     return math.floor(math.exp(factln(n) - factln(k) - factln(n-k)))
 
@@ -504,6 +552,9 @@ def erfc(x):
     
     @param x: float number
     @return: float number
+    
+    @status: Tested function
+    @since: version 0.1
     """
     if x < 0.0: return 1.0 + gammp(0.5, x*x)
     else: return gammq(0.5, x*x)
@@ -516,6 +567,9 @@ def erfcc(x):
     
     @param x: float number
     @return: float number
+    
+    @status: Tested function
+    @since: version 0.1
     """
     z = abs(x)
     t = 1.0 / (1.0 + 0.5*z)
@@ -558,6 +612,9 @@ def gammln(n):
 
     @param n: float number
     @return: float number
+    
+    @status: Tested function
+    @since: version 0.1
     """
     gammln_cof = [76.18009173, -86.50532033, 24.01409822,
                   -1.231739516e0, 0.120858003e-2, -0.536382e-5]
@@ -584,6 +641,9 @@ def gammp(a, x):
     @param a: float number
     @param x: float number
     @return: float number
+    
+    @status: Tested function
+    @since: version 0.1
     """
     if (x < 0.0 or a <= 0.0):
         raise ValueError('Bad value for a or x: %s, %s' % (a, x))
@@ -601,6 +661,9 @@ def gammq(a, x):
     @see: Ling, MHT. 2009. Compendium of Distributions, I: Beta, Binomial, Chi-
     Square, F, Gamma, Geometric, Poisson, Student's t, and Uniform. The Python 
     Papers Source Codes 1:4
+    
+    @status: Tested function
+    @since: version 0.1
     """
     if (x < 0.0 or a <= 0.0):
         raise ValueError('Bad value for a or x: %s, %s' % (a, x))
@@ -618,6 +681,9 @@ def gcf(a, x, itmax=200, eps=3.e-7):
     @see: Ling, MHT. 2009. Compendium of Distributions, I: Beta, Binomial, Chi-
     Square, F, Gamma, Geometric, Poisson, Student's t, and Uniform. The Python 
     Papers Source Codes 1:4
+    
+    @status: Tested function
+    @since: version 0.1
     """
     gln = gammln(a)
     gold = 0.0
@@ -653,6 +719,9 @@ def gser(a, x, itmax=700, eps=3.e-7):
     @see: Ling, MHT. 2009. Compendium of Distributions, I: Beta, Binomial, Chi-
     Square, F, Gamma, Geometric, Poisson, Student's t, and Uniform. The Python 
     Papers Source Codes 1:4
+    
+    @status: Tested function
+    @since: version 0.1
     """
     gln = gammln(a)
     if (x < 0.0):

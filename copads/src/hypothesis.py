@@ -68,7 +68,7 @@ def Z1Mean1Variance(smean, pmean, pvar, ssize, confidence):
     population mean and sample mean when the population variance is
     known.
     
-t-te    Limitations    
+    Limitations    
         1. Requires population variance (use Test 7 if population variance 
         unknown)
     
@@ -80,6 +80,9 @@ t-te    Limitations
     
     @see: Ling, MHT. 2009. Ten Z-Test Routines from Gopal Kanji's 100 
     Statistical Tests. The Python Papers Source Codes 1:5
+    
+    @status: Tested function
+    @since: version 0.1
     """
     statistic = float(abs(smean - pmean)/ \
                 (pvar / sqrt(ssize)))
@@ -108,6 +111,9 @@ def Z2Mean1Variance(smean1, smean2, pvar, ssize1, ssize2, confidence,
     
     @see: Ling, MHT. 2009. Ten Z-Test Routines from Gopal Kanji's 100 
     Statistical Tests. The Python Papers Source Codes 1:5
+    
+    @status: Tested function
+    @since: version 0.1
     """
     statistic = float(((smean1 - smean2) - (pmean1 - pmean2))/ \
                 (pvar * sqrt((1.0 / ssize1) + (1.0 / ssize2))))
@@ -137,6 +143,9 @@ def Z2Mean2Variance(smean1, smean2, pvar1, pvar2, ssize1, ssize2, confidence,
     
     @see: Ling, MHT. 2009. Ten Z-Test Routines from Gopal Kanji's 100 
     Statistical Tests. The Python Papers Source Codes 1:5
+    
+    @status: Tested function
+    @since: version 0.4
     """
     statistic = float(((smean1 - smean2) - (pmean1 - pmean2))/ \
                 sqrt((pvar1 / ssize1) + (pvar2 / ssize2)))
@@ -160,6 +169,9 @@ def Z1Proportion(spro, ppro, ssize, confidence):
     
     @see: Ling, MHT. 2009. Ten Z-Test Routines from Gopal Kanji's 100 
     Statistical Tests. The Python Papers Source Codes 1:5
+    
+    @status: Tested function
+    @since: version 0.1
     """
     statistic = float((abs(ppro - spro) - (1 / (2 * ssize)))/ \
                 sqrt((ppro * (1 - spro)) / ssize))
@@ -183,6 +195,9 @@ def Z2Proportion(spro1, spro2, ssize1, ssize2, confidence):
     
     @see: Ling, MHT. 2009. Ten Z-Test Routines from Gopal Kanji's 100 
     Statistical Tests. The Python Papers Source Codes 1:5
+    
+    @status: Tested function
+    @since: version 0.1
     """
     P = float(((spro1 * ssize1) + (spro2 * ssize2)) / (ssize1 + ssize2))
     statistic = float((spro1 - spro2) / \
@@ -207,6 +222,9 @@ def Z2Count(time1, time2, count1, count2, confidence):
     
     @see: Ling, MHT. 2009. Ten Z-Test Routines from Gopal Kanji's 100 
     Statistical Tests. The Python Papers Source Codes 1:5
+    
+    @status: Tested function
+    @since: version 0.1
     """
     R1 = count1 / float(time1)
     R2 = count2 / float(time2)
@@ -233,6 +251,9 @@ def t1Mean(smean, pmean, svar, ssize, confidence):
     @see: Chay, ZE, Ling, MHT. 2010. COPADS, II: Chi-Square test, F-Test
     and t-Test Routines from Gopal Kanji's 100 Statistical Tests. The Python
     Papers Source Codes 2:3
+    
+    @status: Tested function
+    @since: version 0.4
     """
     statistic = float((smean - pmean) / (svar / sqrt(ssize)))
     return test(statistic, TDistribution(shape = ssize-1), confidence)
@@ -263,6 +284,9 @@ def t2Mean2EqualVariance(smean1, smean2, svar1, svar2, ssize1, ssize2,
     @see: Chay, ZE, Ling, MHT. 2010. COPADS, II: Chi-Square test, F-Test
     and t-Test Routines from Gopal Kanji's 100 Statistical Tests. The Python
     Papers Source Codes 2:3
+    
+    @status: Tested function
+    @since: version 0.4
     """
     df = ssize1 + ssize2 - 2
     pvar = float((((ssize1 - 1) * svar1) + ((ssize2 - 1) * svar2)) / df)
@@ -295,6 +319,9 @@ def t2Mean2UnequalVariance(smean1, smean2, svar1, svar2, ssize1, ssize2,
     @see: Chay, ZE, Ling, MHT. 2010. COPADS, II: Chi-Square test, F-Test
     and t-Test Routines from Gopal Kanji's 100 Statistical Tests. The Python
     Papers Source Codes 2:3
+    
+    @status: Tested function
+    @since: version 0.4
     """
     statistic = float(((smean1 - smean2) - (pmean1 - pmean2)) / \
                 sqrt((svar1 / ssize1) + (svar2 / ssize2)))
@@ -319,6 +346,9 @@ def tPaired(smean1, smean2, svar, ssize, confidence):
     @see: Chay, ZE, Ling, MHT. 2010. COPADS, II: Chi-Square test, F-Test
     and t-Test Routines from Gopal Kanji's 100 Statistical Tests. The Python
     Papers Source Codes 2:3
+    
+    @status: Tested function
+    @since: version 0.4
     """
     statistic = float((smean1 - smean2) / (svar / sqrt(ssize)))
     return test(statistic, TDistribution(shape = ssize - 1), confidence)
@@ -341,6 +371,9 @@ def tRegressionCoefficient(variancex, varianceyx, b, ssize, confidence):
     @see: Chay, ZE, Ling, MHT. 2010. COPADS, II: Chi-Square test, F-Test
     and t-Test Routines from Gopal Kanji's 100 Statistical Tests. The Python
     Papers Source Codes 2:3
+    
+    @status: Tested function
+    @since: version 0.4
     """
     statistic = float(((b * sqrt(variancex)) / \
         sqrt(varianceyx)) * ((ssize-1) ** -0.5))
@@ -368,6 +401,9 @@ def tPearsonCorrelation(r, ssize, confidence):
     @see: Chay, ZE, Ling, MHT. 2010. COPADS, II: Chi-Square test, F-Test
     and t-Test Routines from Gopal Kanji's 100 Statistical Tests. The Python
     Papers Source Codes 2:3
+    
+    @status: Tested function
+    @since: version 0.4
     """
     statistic = float((r * sqrt(ssize - 2)) / sqrt(1 - (r **2)))
     return test(statistic, TDistribution(shape = ssize - 2), confidence)
@@ -394,6 +430,9 @@ def ZPearsonCorrelation(sr, pr, ssize, confidence):
     
     @see: Ling, MHT. 2009. Ten Z-Test Routines from Gopal Kanji's 100 
     Statistical Tests. The Python Papers Source Codes 1:5
+    
+    @status: Tested function
+    @since: version 0.1
     """
     if sr == 1.0: sr = 0.9999999999
     if pr == 1.0: pr = 0.9999999999
@@ -419,6 +458,9 @@ def Z2PearsonCorrelation(r1, r2, ssize1, ssize2, confidence):
     
     @see: Ling, MHT. 2009. Ten Z-Test Routines from Gopal Kanji's 100 
     Statistical Tests. The Python Papers Source Codes 1:5
+    
+    @status: Tested function
+    @since: version 0.1
     """
     z1 = float(0.5 * log((1.0 + r1) / (1.0 - r1)))
     z2 = float(0.5 * log((1.0 + r2) / (1.0 - r2)))
@@ -443,6 +485,9 @@ def ChiSquarePopVar(values, ssize, pv, confidence = 0.95):
     @see: Chay, ZE, Ling, MHT. 2010. COPADS, II: Chi-Square test, F-Test
     and t-Test Routines from Gopal Kanji's 100 Statistical Tests. The Python
     Papers Source Codes 2:3
+    
+    @status: Tested function
+    @since: version 0.4
     """
     mean = sum(values)/ssize
     freq = [float((values[i] - mean) ** 2) 
@@ -467,6 +512,9 @@ def FVarianceRatio(var1, var2, ssize1, ssize2, confidence):
     @see: Chay, ZE, Ling, MHT. 2010. COPADS, II: Chi-Square test, F-Test
     and t-Test Routines from Gopal Kanji's 100 Statistical Tests. The Python
     Papers Source Codes 2:3
+    
+    @status: Tested function
+    @since: version 0.4
     """
     statistic = float(var1 / var2)
     return test(statistic, FDistribution(df1=ssize1-1, df2=ssize2-1), 
@@ -488,30 +536,33 @@ def F2CorrelatedObs(r, var1, var2, ssize1, ssize2, confidence):
     @see: Chay, ZE, Ling, MHT. 2010. COPADS, II: Chi-Square test, F-Test
     and t-Test Routines from Gopal Kanji's 100 Statistical Tests. The Python
     Papers Source Codes 2:3
+    
+    @status: Tested function
+    @since: version 0.4
     """
     statistic = float(((var1 / var2)- 1) / (((((var1 / var2) + 1) ** 2) - \
         (4 * (r ** 2) * (var1 / var2))) ** 0.5))
     return test(statistic, FDistribution(ssize1-1, ssize2-1), confidence)
 
-def t18(**kwargs):
-    """
-    Test 18: Hotelling's T-square test for two series of population means
-    
-    To compare the results of two experiments, each of which yields a
-    multivariate result. In another words, we wish to know if the mean pattern
-    obtained from the first experiment agrees with the mean pattern obtained
-    for the second.
-    """
-    return test(statistic, Distribution(), confidence)
-
-def t19(**kwargs):
-    """
-    Test 19: Discriminant test for the origin of a p-fold sample
-    
-    To investigate the origin of one species of values for p random variates,
-    when one of two markedly different populations may have produced that
-    particular series."""
-    return test(statistic, Distribution(), confidence)
+#def t18(**kwargs):
+#    """
+#    Test 18: Hotelling's T-square test for two series of population means
+#    
+#    To compare the results of two experiments, each of which yields a
+#    multivariate result. In another words, we wish to know if the mean pattern
+#    obtained from the first experiment agrees with the mean pattern obtained
+#    for the second.
+#    """
+#    return test(statistic, Distribution(), confidence)
+#
+#def t19(**kwargs):
+#    """
+#    Test 19: Discriminant test for the origin of a p-fold sample
+#    
+#    To investigate the origin of one species of values for p random variates,
+#    when one of two markedly different populations may have produced that
+#    particular series."""
+#    return test(statistic, Distribution(), confidence)
 
 # def Fishercumulant(m1, m2, m3, m4, ssize, confidence):
     # """Test 20: Fisher's cumulant test for normality of a population
@@ -623,6 +674,9 @@ def ZCorrProportion(ssize, ny, yn, confidence):
     
     @see: Ling, MHT. 2009. Ten Z-Test Routines from Gopal Kanji's 100 
     Statistical Tests. The Python Papers Source Codes 1:5
+    
+    @status: Tested function
+    @since: version 0.1
     """    
     sigma = float((ny + yn) - (((ny - yn) ** 2.0) / ssize))
     sigma = float(sqrt(sigma / (ssize * (ssize - 1.0))))
@@ -647,6 +701,9 @@ def Chisq2Variance(ssize, svar, pvar, confidence):
     @see: Chay, ZE, Ling, MHT. 2010. COPADS, II: Chi-Square test, F-Test
     and t-Test Routines from Gopal Kanji's 100 Statistical Tests. The Python
     Papers Source Codes 2:3
+    
+    @status: Tested function
+    @since: version 0.4
     """
     statistic = float((ssize-1) * svar/pvar)
     return test(statistic, ChiSquareDistribution(df = ssize - 1), confidence)
@@ -674,6 +731,9 @@ def F2Count(count1, count2, confidence, time1=0, time2=0, repeat=False):
     @see: Chay, ZE, Ling, MHT. 2010. COPADS, II: Chi-Square test, F-Test
     and t-Test Routines from Gopal Kanji's 100 Statistical Tests. The Python
     Papers Source Codes 2:3
+    
+    @status: Tested function
+    @since: version 0.4
     """
     if not repeat:
         statistic = float(count1) / float(count2 + 1)
@@ -687,67 +747,67 @@ def F2Count(count1, count2, confidence, time1=0, time2=0, repeat=False):
     return test(statistic, FDistribution(df1 = numerator, 
         df2 = denominator), confidence)
 
-def t26(**kwargs):
-    """
-    """
-    return test(statistic, Distribution(), confidence)
-
-def t27(**kwargs):
-    """
-    """
-    return test(statistic, Distribution(), confidence)
-
-def t28(**kwargs):
-    """
-    """
-    return test(statistic, Distribution(), confidence)
-
-def t29(**kwargs):
-    """
-    """
-    return test(statistic, Distribution(), confidence)
-
-def t30(**kwargs):
-    """
-    """
-    return test(statistic, Distribution(), confidence)
-
-def t31(**kwargs):
-    """
-    """
-    return test(statistic, Distribution(), confidence)
-
-def t32(**kwargs):
-    """
-    """
-    return test(statistic, Distribution(), confidence)
-
-def t33(**kwargs):
-    """
-    """
-    return test(statistic, Distribution(), confidence)
-
-def t34(**kwargs):
-    """
-    """
-    return test(statistic, Distribution(), confidence)
-
-def t35(**kwargs):
-    """
-    """
-    return test(statistic, Distribution(), confidence)
-
-def tKolmogorovSmirnov():
-    """Test 36: The Kolmogorov-Smirnov test for comparing two populations
-    
-    To investigate the significance of the difference between two population
-    distributions based on the two sample distributions
-    
-    Limitations
-        1. Best results obtained when samples are sufficiently large, 15
-        samples or more
-    """
-    return test(statistic, Distribution(), confidence)
+#def t26(**kwargs):
+#    """
+#    """
+#    return test(statistic, Distribution(), confidence)
+#
+#def t27(**kwargs):
+#    """
+#    """
+#    return test(statistic, Distribution(), confidence)
+#
+#def t28(**kwargs):
+#    """
+#    """
+#    return test(statistic, Distribution(), confidence)
+#
+#def t29(**kwargs):
+#    """
+#    """
+#    return test(statistic, Distribution(), confidence)
+#
+#def t30(**kwargs):
+#    """
+#    """
+#    return test(statistic, Distribution(), confidence)
+#
+#def t31(**kwargs):
+#    """
+#    """
+#    return test(statistic, Distribution(), confidence)
+#
+#def t32(**kwargs):
+#    """
+#    """
+#    return test(statistic, Distribution(), confidence)
+#
+#def t33(**kwargs):
+#    """
+#    """
+#    return test(statistic, Distribution(), confidence)
+#
+#def t34(**kwargs):
+#    """
+#    """
+#    return test(statistic, Distribution(), confidence)
+#
+#def t35(**kwargs):
+#    """
+#    """
+#    return test(statistic, Distribution(), confidence)
+#
+#def tKolmogorovSmirnov():
+#    """Test 36: The Kolmogorov-Smirnov test for comparing two populations
+#    
+#    To investigate the significance of the difference between two population
+#    distributions based on the two sample distributions
+#    
+#    Limitations
+#        1. Best results obtained when samples are sufficiently large, 15
+#        samples or more
+#    """
+#    return test(statistic, Distribution(), confidence)
 
 def ChisqFit(observed, expected, confidence):
     """
@@ -770,6 +830,9 @@ def ChisqFit(observed, expected, confidence):
     @see: Chay, ZE, Ling, MHT. 2010. COPADS, II: Chi-Square test, F-Test
     and t-Test Routines from Gopal Kanji's 100 Statistical Tests. The Python
     Papers Source Codes 2:3
+    
+    @status: Tested function
+    @since: version 0.4
     """ 
     freq = [float((observed[i] - expected[i]) ** 2) / (float(expected[i]))
             for i in range(len(observed))]
@@ -794,6 +857,9 @@ def tx2testofKcounts(T, V, confidence):
     @see: Chay, ZE, Ling, MHT. 2010. COPADS, II: Chi-Square test, F-Test
     and t-Test Routines from Gopal Kanji's 100 Statistical Tests. The Python
     Papers Source Codes 2:3
+    
+    @status: Tested function
+    @since: version 0.4
     """
     R = float(sum(V)) / float(sum(T))
     freq = [((V[i] - (T[i] * R)) ** 2) / float(T[i] * R) 
@@ -801,10 +867,10 @@ def tx2testofKcounts(T, V, confidence):
     statistic = sum(freq)
     return test(statistic, ChiSquareDistribution(df = len(V) - 1), confidence)
 
-def t39(**kwargs):
-    """
-    """
-    return test(statistic, Distribution(), confidence)
+#def t39(**kwargs):
+#    """
+#    """
+#    return test(statistic, Distribution(), confidence)
 
 def Chisq2x2(s1, s2, ssize, confidence):
     """
@@ -825,6 +891,9 @@ def Chisq2x2(s1, s2, ssize, confidence):
     @see: Chay, ZE, Ling, MHT. 2010. COPADS, II: Chi-Square test, F-Test
     and t-Test Routines from Gopal Kanji's 100 Statistical Tests. The Python
     Papers Source Codes 2:3
+    
+    @status: Tested function
+    @since: version 0.4
     """
     s1c1 = s1[0]
     s1c2 = s1[1]
@@ -854,6 +923,9 @@ def ChisquareKx2table(c1, c2, k, confidence):
     @see: Chay, ZE, Ling, MHT. 2010. COPADS, II: Chi-Square test, F-Test
     and t-Test Routines from Gopal Kanji's 100 Statistical Tests. The Python
     Papers Source Codes 2:3
+    
+    @status: Tested function
+    @since: version 0.4
     """
     z = sum(c1)
     nx = sum(c2)
@@ -866,10 +938,10 @@ def ChisquareKx2table(c1, c2, k, confidence):
     statistic = D * C
     return test(statistic, ChiSquareDistribution(k-1), confidence)
 
-def t42(**kwargs):
-    """
-    """
-    return test(statistic, Distribution(), confidence)
+#def t42(**kwargs):
+#    """
+#    """
+#    return test(statistic, Distribution(), confidence)
 
 def Chisquare2xKtable(s1, s2, k, confidence):
     """Test 43: The x2-test for consistency in a 2 x K table
@@ -889,6 +961,9 @@ def Chisquare2xKtable(s1, s2, k, confidence):
     @see: Chay, ZE, Ling, MHT. 2010. COPADS, II: Chi-Square test, F-Test
     and t-Test Routines from Gopal Kanji's 100 Statistical Tests. The Python
     Papers Source Codes 2:3
+    
+    @status: Tested function
+    @since: version 0.4
     """
     N1 = sum(s1)
     N2 = sum(s2)
@@ -918,10 +993,10 @@ def Chisquare2xKtable(s1, s2, k, confidence):
     # n01 = [sum(d[i]) for i in range(q)
     # return test(statistic, ChiSquareDistribution((p-1) * (q-1)), confidence)
 
-def t45(**kwargs):
-    """
-    """
-    return test(statistic, Distribution(), confidence)
+#def t45(**kwargs):
+#    """
+#    """
+#    return test(statistic, Distribution(), confidence)
 
 # def t2MediansPairedObs(x, y, confidence):
     # """Test 46: The sign test for two medians (paired observations)
@@ -942,36 +1017,36 @@ def t45(**kwargs):
     # statistic = sum(freq)
     # return test(statistic, Distribution(), confidence)
 
-def t47(**kwargs):
-    """
-    """
-    return test(statistic, Distribution(), confidence)
-
-def t2MeansPairedObs(x, y, confidence):
-    """
-    Test 48: The signed rank test fo two means (paired observations)
-    
-    Limitations: 
-        1.Observations in the two samples should be taken in pairs, one
-        from each distribution, taken under similar conditions. It is not
-        necessary that different pairs should be taken under similar conditions
-        
-    @param x: A list of Means
-    @param y: A list of Means
-    @param confidence: confidence level"""
-    # freq = [x[i] - y[i]
-            # for i in range(len(x))]
-    # Rank the difference of means using 0 as the norm
-    # Tabulate the number of minus signs and plus signs
-    # If the number of minus>plus sign, add up the values of the rank of all minus rank values
-    # If the number of plus>minus sign, add up the values of the rank of all plus rank values
-    # return test(statistic, Distribution(), confidence)
-
-def WilcoxonInversion():
-    """Test 49: The Wilcoxon inversion test(U-test)
-    
-    """
-    return test(statistic, Distribution(), confidence)
+#def t47(**kwargs):
+#    """
+#    """
+#    return test(statistic, Distribution(), confidence)
+#
+#def t2MeansPairedObs(x, y, confidence):
+#    """
+#    Test 48: The signed rank test fo two means (paired observations)
+#    
+#    Limitations: 
+#        1.Observations in the two samples should be taken in pairs, one
+#        from each distribution, taken under similar conditions. It is not
+#        necessary that different pairs should be taken under similar conditions
+#        
+#    @param x: A list of Means
+#    @param y: A list of Means
+#    @param confidence: confidence level"""
+#    # freq = [x[i] - y[i]
+#            # for i in range(len(x))]
+#    # Rank the difference of means using 0 as the norm
+#    # Tabulate the number of minus signs and plus signs
+#    # If the number of minus>plus sign, add up the values of the rank of all minus rank values
+#    # If the number of plus>minus sign, add up the values of the rank of all plus rank values
+#    # return test(statistic, Distribution(), confidence)
+#
+#def WilcoxonInversion():
+#    """Test 49: The Wilcoxon inversion test(U-test)
+#    
+#    """
+#    return test(statistic, Distribution(), confidence)
 
 def MedianTestfor2Pop(s1=(9, 6), s2=(6, 9), confidence=0.95):
     """Test 50: The median test of two populations
@@ -989,6 +1064,9 @@ def MedianTestfor2Pop(s1=(9, 6), s2=(6, 9), confidence=0.95):
     @see: Chay, ZE, Ling, MHT. 2010. COPADS, II: Chi-Square test, F-Test
     and t-Test Routines from Gopal Kanji's 100 Statistical Tests. The Python
     Papers Source Codes 2:3
+    
+    @status: Tested function
+    @since: version 0.4
     """
     ls1 = s1[0]
     rs1 = s1[1]
@@ -999,40 +1077,40 @@ def MedianTestfor2Pop(s1=(9, 6), s2=(6, 9), confidence=0.95):
     ((ls1+ls2)*(ls1+rs1)*(ls2+rs2)*(rs1+rs2))
     return test(statistic, ChiSquareDistribution(df=1), confidence)
     
-def t51(**kwargs):
-    """
-    """
-    return test(statistic, Distribution(), confidence)
-
-def t52(**kwargs):
-    """
-    """
-    return test(statistic, Distribution(), confidence)
-
-def t53(**kwargs):
-    """
-    """
-    return test(statistic, Distribution(), confidence)
-
-def t54(**kwargs):
-    """
-    """
-    return test(statistic, Distribution(), confidence)
-
-def t55(**kwargs):
-    """
-    """
-    return test(statistic, Distribution(), confidence)
-
-def t56(**kwargs):
-    """
-    """
-    return test(statistic, Distribution(), confidence)
-
-def t57(**kwargs):
-    """
-    """
-    return test(statistic, Distribution(), confidence)
+#def t51(**kwargs):
+#    """
+#    """
+#    return test(statistic, Distribution(), confidence)
+#
+#def t52(**kwargs):
+#    """
+#    """
+#    return test(statistic, Distribution(), confidence)
+#
+#def t53(**kwargs):
+#    """
+#    """
+#    return test(statistic, Distribution(), confidence)
+#
+#def t54(**kwargs):
+#    """
+#    """
+#    return test(statistic, Distribution(), confidence)
+#
+#def t55(**kwargs):
+#    """
+#    """
+#    return test(statistic, Distribution(), confidence)
+#
+#def t56(**kwargs):
+#    """
+#    """
+#    return test(statistic, Distribution(), confidence)
+#
+#def t57(**kwargs):
+#    """
+#    """
+#    return test(statistic, Distribution(), confidence)
 
 def SpearmanCorrelation(ssize, confidence, R=None, series1=[], series2=[]):
     """
@@ -1052,6 +1130,9 @@ def SpearmanCorrelation(ssize, confidence, R=None, series1=[], series2=[]):
     
     @see: Ling, MHT. 2009. Ten Z-Test Routines from Gopal Kanji's 100 
     Statistical Tests. The Python Papers Source Codes 1:5
+    
+    @status: Tested function
+    @since: version 0.1
     """
     if R == None:
         R = sum([((series1[i] - series2[i]) ** 2) for i in range(len(series1))])
@@ -1059,130 +1140,130 @@ def SpearmanCorrelation(ssize, confidence, R=None, series1=[], series2=[]):
     statistic = statistic / (ssize * (ssize + 1.0) * sqrt(ssize - 1.0))
     return test(statistic, NormalDistribution(), confidence)
 
-def t59(**kwargs):
-    """
-    """
-    return test(statistic, Distribution(), confidence)
-
-def t60(**kwargs):
-    """
-    """
-    return test(statistic, Distribution(), confidence)
-
-def t61(**kwargs):
-    """
-    """
-    return test(statistic, Distribution(), confidence)
-
-def t62(**kwargs):
-    """
-    """
-    return test(statistic, Distribution(), confidence)
-
-def t63(**kwargs):
-    """
-    """
-    return test(statistic, Distribution(), confidence)
-
-def t64(**kwargs):
-    """
-    """
-    return test(statistic, Distribution(), confidence)
-
-def t65(**kwargs):
-    """
-    """
-    return test(statistic, Distribution(), confidence)
-
-def t66(**kwargs):
-    """
-    """
-    return test(statistic, Distribution(), confidence)
-
-def t67(**kwargs):
-    """
-    """
-    return test(statistic, Distribution(), confidence)
-
-def t68(**kwargs):
-    """
-    """
-    return test(statistic, Distribution(), confidence)
-
-def t69(**kwargs):
-    """
-    """
-    return test(statistic, Distribution(), confidence)
-
-def t70(**kwargs):
-    """
-    """
-    return test(statistic, Distribution(), confidence)
-
-def t71(**kwargs):
-    """
-    """
-    return test(statistic, Distribution(), confidence)
-
-def t72(**kwargs):
-    """
-    """
-    return test(statistic, Distribution(), confidence)
-
-def t73(**kwargs):
-    """
-    """
-    return test(statistic, Distribution(), confidence)
-
-def t74(**kwargs):
-    """
-    """
-    return test(statistic, Distribution(), confidence)
-
-def t75(**kwargs):
-    """
-    """
-    return test(statistic, Distribution(), confidence)
-
-def t76(**kwargs):
-    """
-    """
-    return test(statistic, Distribution(), confidence)
-
-def t77(**kwargs):
-    """
-    """
-    return test(statistic, Distribution(), confidence)
-
-def t78(**kwargs):
-    """
-    """
-    return test(statistic, Distribution(), confidence)
-
-def t79(**kwargs):
-    """
-    """
-    return test(statistic, Distribution(), confidence)
-
-def t80(**kwargs):
-    """
-    """
-    return test(statistic, Distribution(), confidence)
-
-def t81(**kwargs):
-    """
-    """
-    return test(statistic, Distribution(), confidence)
-
-def t82(**kwargs):
-    """
-    """
-    return test(statistic, Distribution(), confidence)
-
-def t83(**kwargs):
-    """
-    """
-    return test(statistic, Distribution(), confidence)
+#def t59(**kwargs):
+#    """
+#    """
+#    return test(statistic, Distribution(), confidence)
+#
+#def t60(**kwargs):
+#    """
+#    """
+#    return test(statistic, Distribution(), confidence)
+#
+#def t61(**kwargs):
+#    """
+#    """
+#    return test(statistic, Distribution(), confidence)
+#
+#def t62(**kwargs):
+#    """
+#    """
+#    return test(statistic, Distribution(), confidence)
+#
+#def t63(**kwargs):
+#    """
+#    """
+#    return test(statistic, Distribution(), confidence)
+#
+#def t64(**kwargs):
+#    """
+#    """
+#    return test(statistic, Distribution(), confidence)
+#
+#def t65(**kwargs):
+#    """
+#    """
+#    return test(statistic, Distribution(), confidence)
+#
+#def t66(**kwargs):
+#    """
+#    """
+#    return test(statistic, Distribution(), confidence)
+#
+#def t67(**kwargs):
+#    """
+#    """
+#    return test(statistic, Distribution(), confidence)
+#
+#def t68(**kwargs):
+#    """
+#    """
+#    return test(statistic, Distribution(), confidence)
+#
+#def t69(**kwargs):
+#    """
+#    """
+#    return test(statistic, Distribution(), confidence)
+#
+#def t70(**kwargs):
+#    """
+#    """
+#    return test(statistic, Distribution(), confidence)
+#
+#def t71(**kwargs):
+#    """
+#    """
+#    return test(statistic, Distribution(), confidence)
+#
+#def t72(**kwargs):
+#    """
+#    """
+#    return test(statistic, Distribution(), confidence)
+#
+#def t73(**kwargs):
+#    """
+#    """
+#    return test(statistic, Distribution(), confidence)
+#
+#def t74(**kwargs):
+#    """
+#    """
+#    return test(statistic, Distribution(), confidence)
+#
+#def t75(**kwargs):
+#    """
+#    """
+#    return test(statistic, Distribution(), confidence)
+#
+#def t76(**kwargs):
+#    """
+#    """
+#    return test(statistic, Distribution(), confidence)
+#
+#def t77(**kwargs):
+#    """
+#    """
+#    return test(statistic, Distribution(), confidence)
+#
+#def t78(**kwargs):
+#    """
+#    """
+#    return test(statistic, Distribution(), confidence)
+#
+#def t79(**kwargs):
+#    """
+#    """
+#    return test(statistic, Distribution(), confidence)
+#
+#def t80(**kwargs):
+#    """
+#    """
+#    return test(statistic, Distribution(), confidence)
+#
+#def t81(**kwargs):
+#    """
+#    """
+#    return test(statistic, Distribution(), confidence)
+#
+#def t82(**kwargs):
+#    """
+#    """
+#    return test(statistic, Distribution(), confidence)
+#
+#def t83(**kwargs):
+#    """
+#    """
+#    return test(statistic, Distribution(), confidence)
 
 def ZtestLogOddsRatio(group1, group2, confidence):
     """Test 84: Z-test for comparing sequential contingencies acoss two groups
@@ -1221,105 +1302,105 @@ def ZtestLogOddsRatio(group1, group2, confidence):
     (1/x2a2) + (1/x2b2) + (1/y2a2) + (1/y2b2)) **0.5)
     return test(statistic, NormalDistribution(), confidence)
 
-def t85(**kwargs):
-    """
-    """
-    return test(statistic, Distribution(), confidence)
+#def t85(**kwargs):
+#    """
+#    """
+#    return test(statistic, Distribution(), confidence)
+#
+#def t86(**kwargs):
+#    """
+#    """
+#    return test(statistic, Distribution(), confidence)
+#
+#def t87(**kwargs):
+#    """
+#    """
+#    return test(statistic, Distribution(), confidence)
+#
+#def t88(**kwargs):
+#    """
+#    """
+#    return test(statistic, Distribution(), confidence)
+#
+#def t89(**kwargs):
+#    """
+#    """
+#    return test(statistic, Distribution(), confidence)
+#
+#def t90(**kwargs):
+#    """
+#    """
+#    return test(statistic, Distribution(), confidence)
+#
+#def t91(**kwargs):
+#    """
+#    """
+#    return test(statistic, Distribution(), confidence)
 
-def t86(**kwargs):
-    """
-    """
-    return test(statistic, Distribution(), confidence)
-
-def t87(**kwargs):
-    """
-    """
-    return test(statistic, Distribution(), confidence)
-
-def t88(**kwargs):
-    """
-    """
-    return test(statistic, Distribution(), confidence)
-
-def t89(**kwargs):
-    """
-    """
-    return test(statistic, Distribution(), confidence)
-
-def t90(**kwargs):
-    """
-    """
-    return test(statistic, Distribution(), confidence)
-
-def t91(**kwargs):
-    """
-    """
-    return test(statistic, Distribution(), confidence)
-
-def DubinWatsontest(**kwargs):
-    """
-    Test 92: Dubin-Watson test
-    
-    To test whether the error terms in a regression model are autocorrelated
-    
-    Limitations:
-        This test is applicable if the autocorrelation parameter and error
-        terms are independently normally distributed with mean zero and
-        variance s2. 
-        
-    @param confidence: confidence level"""
-    return test(statistic, Distribution(), confidence)
-
-def t93(**kwargs):
-    """
-    """
-    return test(statistic, Distribution(), confidence)
-
-def ChisquareProbModel(**kwargs):
-    """
-    Test 94: x2-test for a suitable probabilistic model
-    
-    Many experiments yield a set of data, say x1, x2, x3, xn and the
-    experimenter often is interested in determining whether the data can be
-    treated as the observed values of the random sample x1, x2, xn from a 
-    given distribution.
-    
-    Limitations:
-        this test is applicable if both distributions have the same interval 
-        classification and the number of elements. The observed data are
-        observed by random sampling.
-        
-    @param confidence: confidence level
-    """
-    return test(statistic, Distribution(), confidence)
-
-def t95(**kwargs):
-    """
-    """
-    return test(statistic, Distribution(), confidence)
-
-def t96(**kwargs):
-    """
-    """
-    return test(statistic, Distribution(), confidence)
-
-def t97(**kwargs):
-    """
-    """
-    return test(statistic, Distribution(), confidence)
-
-def t98(**kwargs):
-    """
-    """
-    return test(statistic, Distribution(), confidence)
-
-def t99(**kwargs):
-    """
-    """
-    return test(statistic, Distribution(), confidence)
-
-def t100(**kwargs):
-    """
-    """
-    return test(statistic, Distribution(), confidence)
+#def DubinWatsontest(**kwargs):
+#    """
+#    Test 92: Dubin-Watson test
+#    
+#    To test whether the error terms in a regression model are autocorrelated
+#    
+#    Limitations:
+#        This test is applicable if the autocorrelation parameter and error
+#        terms are independently normally distributed with mean zero and
+#        variance s2. 
+#        
+#    @param confidence: confidence level"""
+#    return test(statistic, Distribution(), confidence)
+#
+#def t93(**kwargs):
+#    """
+#    """
+#    return test(statistic, Distribution(), confidence)
+#
+#def ChisquareProbModel(**kwargs):
+#    """
+#    Test 94: x2-test for a suitable probabilistic model
+#    
+#    Many experiments yield a set of data, say x1, x2, x3, xn and the
+#    experimenter often is interested in determining whether the data can be
+#    treated as the observed values of the random sample x1, x2, xn from a 
+#    given distribution.
+#    
+#    Limitations:
+#        this test is applicable if both distributions have the same interval 
+#        classification and the number of elements. The observed data are
+#        observed by random sampling.
+#        
+#    @param confidence: confidence level
+#    """
+#    return test(statistic, Distribution(), confidence)
+#
+#def t95(**kwargs):
+#    """
+#    """
+#    return test(statistic, Distribution(), confidence)
+#
+#def t96(**kwargs):
+#    """
+#    """
+#    return test(statistic, Distribution(), confidence)
+#
+#def t97(**kwargs):
+#    """
+#    """
+#    return test(statistic, Distribution(), confidence)
+#
+#def t98(**kwargs):
+#    """
+#    """
+#    return test(statistic, Distribution(), confidence)
+#
+#def t99(**kwargs):
+#    """
+#    """
+#    return test(statistic, Distribution(), confidence)
+#
+#def t100(**kwargs):
+#    """
+#    """
+#    return test(statistic, Distribution(), confidence)
 
