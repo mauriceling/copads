@@ -2036,6 +2036,8 @@ def nBF_to_Ragaraja(source):
     @param source: NucleotideBF (nBF) source code
     @type source: string
     @return: Ragaraja source code string
+    
+    @since: version 0.4
     '''
     converted = []
     for x in source:

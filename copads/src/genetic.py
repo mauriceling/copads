@@ -17,6 +17,8 @@ class Chromosome(object):
     @see: Lim, JZR, Aw, ZQ, Goh, DJW, How, JA, Low, SXZ, Loo, BZL,
     Ling, MHT. 2010. A genetic algorithm framework grounded in biology.
     The Python Papers Source Codes 2: 6.
+    
+    @since: version 0.4
     """
     def __init__(self, sequence, base, 
                  background_mutation=0.0001):
@@ -30,6 +32,8 @@ class Chromosome(object):
         @param background_mutation: background mutation rate represented as the 
             probability of number of mutations per base. Default = 0.0001 
             (0.01%).
+            
+        @since: version 0.4
         """
         self.sequence = sequence
         self.base = base
@@ -55,6 +59,8 @@ class Chromosome(object):
             Default = 0, start of the genome.
         @param end: last base on the sequence for mutation. Default = -1, end of
             the genome.
+            
+        @since: version 0.4
         """
         if end > len(self.sequence) - 1: end = len(self.sequence) - 1
         if end == -1: end = len(self.sequence) - 1
@@ -129,6 +135,8 @@ class Chromosome(object):
             insert (insertion mutation)
         @param tpos: position of the chromosome to insert the translocated
             sequence.
+            
+        @since: version 0.4
         """
         if type == 'point':
             self.sequence[start] = sequence
@@ -155,6 +163,8 @@ class Chromosome(object):
         Replicates (deep copy) the chromosome.
         
         @return: a copy of current chromosome.
+        
+        @since: version 0.4
         """
         return deepcopy(self)
  
@@ -189,6 +199,8 @@ class Organism(object):
     @see: Lim, JZR, Aw, ZQ, Goh, DJW, How, JA, Low, SXZ, Loo, BZL,
     Ling, MHT. 2010. A genetic algorithm framework grounded in biology.
     The Python Papers Source Codes 2: 6.
+    
+    @since: version 0.4
     """
     status = {'alive': True,                # is the organism alive?
               'vitality': 100.0,            # % of vitality
@@ -221,6 +233,8 @@ class Organism(object):
             will ever happen if (rate + background_mutation) is less than zero.
         @param gender: establishes the gender of the organism which may be used
             for mating routines.
+            
+        @since: version 0.4
         """
         if genome == 'default': 
             self.genome = [Chromosome()]
@@ -243,6 +257,8 @@ class Organism(object):
         genome with '1's.
         
         @return: fitness score or fitness list
+        
+        @since: version 0.4
         """
         one_count = sum([sum(chromosome.sequence) 
                          for chromosome in self.genome])
@@ -267,6 +283,8 @@ class Organism(object):
         @param rate: probability of mutation per base above background mutation 
             rate. Default = None. No mutation event will ever happen if 
             (rate + background_mutation) is less than zero.
+            
+        @since: version 0.4
         """
         for chromosome in self.genome: 
             if not type and not rate:
@@ -285,6 +303,8 @@ class Organism(object):
         
         @param variable: name of status to change
         @param value: new value of the status
+        
+        @since: version 0.4
         """
         if variable == 'alive' and value == True: 
             self.status['alive'] = value
@@ -316,6 +336,8 @@ class Organism(object):
         
         @param variable: name of the status variable
         @return: status or a KeyError if status is not found
+        
+        @since: version 0.4
         """
         try:
             return self.status[variable]
@@ -331,6 +353,8 @@ class Organism(object):
         Cloness (deep copy) the organism.
         
         @return: a copy of current organism.
+        
+        @since: version 0.4
         """
         return deepcopy(self)
         
@@ -350,6 +374,8 @@ class Population(object):
     @see: Lim, JZR, Aw, ZQ, Goh, DJW, How, JA, Low, SXZ, Loo, BZL,
     Ling, MHT. 2010. A genetic algorithm framework grounded in biology.
     The Python Papers Source Codes 2: 6.
+    
+    @since: version 0.4
     """
     
     def __init__(self, goal, maxgenerations='infinite', agents=[]):
@@ -362,6 +388,8 @@ class Population(object):
             Default = 'infinite'.
         @param agents: organisms making up the initial population.
         @type agents: list of Organism objects
+        
+        @since: version 0.4
         """
         self.agents = agents
         self.goal = goal
@@ -383,6 +411,8 @@ class Population(object):
         less than 20. This is to prevent extinction. However, if the number of
         organisms is more than 2000 (more than 100x initial population size, 
         a random selection of 2000 will be used for the next generation.
+        
+        @since: version 0.4
         """
         size = len(self.agents)
         sfitness = [self.agents[x].fitness() for x in range(size)]
@@ -410,6 +440,8 @@ class Population(object):
         Here, the sample implementation randomly selects any 2 organisms from
         the culled list and generate a new genome for the progeny organism by
         single crossover.
+        
+        @since: version 0.4
         """
         size = len(self.agents)
         temp = []
@@ -431,6 +463,8 @@ class Population(object):
         requirement, it is extremely encouraged to prevent exhaustion of memory 
         space. Without population control, it will seems like a reproducing 
         immortal population.
+        
+        @since: version 0.4
         """
         pass
         
@@ -441,7 +475,9 @@ class Population(object):
         cater for specific events but not an absolute requirement to do so.} 
         Events and controls may include
             - processes simulating disaster or other catastrophic events
-            - changes in mutations            
+            - changes in mutations 
+            
+        @since: version 0.4           
         """
         pass
     
@@ -454,6 +490,8 @@ class Population(object):
         reached.
         
         @return: dictionary of status describing the current generation
+        
+        @since: version 0.4
         """
         sfitness = [self.agents[x].fitness() for x in xrange(len(self.agents))]
         afitness = sum(sfitness) / float(len(self.agents))
@@ -472,6 +510,8 @@ class Population(object):
             - reporting the population status
         
         @return: information returned from report function.
+        
+        @since: version 0.4
         """
         if self.generation > 0:
             self.prepopulation_control()
@@ -486,7 +526,9 @@ class Population(object):
     def add_organism(self, organism):
         """Add a new organism(s) to the population.
         
-        @param organism: list of new Organism object(s)"""
+        @param organism: list of new Organism object(s)
+        
+        @since: version 0.4"""
         self.agents = self.agents + organism
         
     def freeze(self, prefix='pop', proportion=0.01):
@@ -499,6 +541,8 @@ class Population(object):
         @param prefix: prefix of file name. Default = 'pop'.
         @param proportion: proportion of population to be preserved.
             Default = 0.01, preserves 1% of the population.
+            
+        @since: version 0.4
         """
         import cPickle
         if proportion > 1.0: proportion = 1.0
@@ -523,6 +567,8 @@ class Population(object):
         @param type: type of revival. Allows 'replace' (replace the current 
             population with the revived population) or 'add' (add the revived
             population to the current population). Default = 'replace'.
+            
+        @since: version 0.4
         """
         import cPickle
         if type == 'replace':
@@ -540,6 +586,8 @@ def crossover(chromosome1, chromosome2, position):
     @param position: base position of the swap over
     @type position: integer
     @return: (resulting chromosome1, resulting chromosome2)
+    
+    @since: version 0.4
     """
     seq1 = chromosome1.sequence
     seq2 = chromosome2.sequence 
@@ -633,6 +681,8 @@ def population_constructor(data=population_data):
     @see: Lim, JZR, Aw, ZQ, Goh, DJW, How, JA, Low, SXZ, Loo, BZL,
     Ling, MHT. 2010. A genetic algorithm framework grounded in biology.
     The Python Papers Source Codes 2: 6.
+    
+    @since: version 0.4
     """
     chr = Chromosome(data['chromosome'], 
                      data['nucleotide_list'],
@@ -688,6 +738,8 @@ def population_simulate(population,
     @see: Lim, JZR, Aw, ZQ, Goh, DJW, How, JA, Low, SXZ, Loo, BZL,
     Ling, MHT. 2010. A genetic algorithm framework grounded in biology.
     The Python Papers Source Codes 2: 6.
+    
+    @since: version 0.4
     """
     if freezefreq == 'never': freezefreq = int(12e14)
     if resultfile != 'None': result = open(resultfile, 'w')
