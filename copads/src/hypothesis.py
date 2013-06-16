@@ -360,7 +360,7 @@ def tRegressionCoefficient(variancex, varianceyx, b, ssize, confidence):
     To investigate the significance of the regression coefficient.
     
     Limitations
-    1. Homoedasticity of values
+        1. Homoedasticity of values
         
     @param variancex: variance of x
     @param varianceyx: variance of yx

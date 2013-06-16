@@ -28,19 +28,19 @@ remember all 1000 commands and use it, really deserves an award.
 
 The interpreter environment consists of the following elements:
 
-1. Array/Tape: A circular tape initialized with 30 thousand cells 
-each with zero. This can be visualized as a 30,000 cell register 
-machine. The number of cells can increase or decrease during runtime.
-2. Source: The program
-3. Input List: A list of data given to the execution environment at 
-initialization.
-4. Output List: A list of output from the execution. This may also be 
-used as a secondary tape. 
+	1. Array/Tape: A circular tape initialized with 30 thousand cells 
+	each with zero. This can be visualized as a 30,000 cell register 
+	machine. The number of cells can increase or decrease during runtime.
+	2. Source: The program
+	3. Input List: A list of data given to the execution environment at 
+	initialization.
+	4. Output List: A list of output from the execution. This may also be 
+	used as a secondary tape. 
 
 When the program terminates, all 4 elements are returned, and the 
 interpreter terminates itself. 
 
-Ref: http://esolangs.org/wiki/Ragaraja
+@see: http://esolangs.org/wiki/Ragaraja
 '''
 import random
 import math
@@ -2068,11 +2068,11 @@ def activate_version(version=1):
     
     @param version: Define the version to activate. Default = 1. Allowable
     versions are 
-    - 0 (all currently tested instructions)
-    - 0.1 (using NucleotideBF instructions)
-    - 1 (as defined in Ling, MHT. 2012. An Artificial Life Simulation Library 
-    Based on Genetic Algorithm, 3-Character Genetic Code and Biological 
-    Hierarchy. The Python Papers.)
+	    - 0 (all currently tested instructions)
+	    - 0.1 (using NucleotideBF instructions)
+	    - 1 (as defined in Ling, MHT. 2012. An Artificial Life Simulation 
+	    Library Based on Genetic Algorithm, 3-Character Genetic Code and 
+	    Biological Hierarchy. The Python Papers.)
     
     @since: version 0.4
     '''

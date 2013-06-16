@@ -35,12 +35,12 @@ class Neuron:
     '''
     Class for a Neuron.
     
-    1. Each neuron is identified by a unique name, which will be used 
-    for mapping between different neurons.
-    2. A dictionary, named "cellbody", is provided to contain any other
-    information needed. For example, it can be used to contain a timer
-    for time-delayed neuron activation or it can be used for neuronal
-    memory.
+        1. Each neuron is identified by a unique name, which will be used 
+        for mapping between different neurons.
+        2. A dictionary, named "cellbody", is provided to contain any 
+        other information needed. For example, it can be used to contain 
+        a timer for time-delayed neuron activation or it can be used for 
+        neuronal memory.
     '''
     name = None
     weights = {}
@@ -156,34 +156,37 @@ class Brain:
     '''
     Class for the neural network.
     
-    1. A brain consists of a set of neurons (uniquely named or uniquely
-    randomly named) held in "neuron_pool" dictionary where key is the
-    name and value is the neuron object.
-    2. The corresponding names of neurons are entered into "activations" 
-    dictionary as keys. This dictionary holds the current activation 
-    states or output signals (as values) of all neurons.
-    3. A sequence of neuronal activity is given as activation_sequence, 
-    which is a list of list. This suggests that neurons listed in 
-    activation_sequence[0] will be activated before those neurons listed
-    in activation_sequence[1], and neuron in activation_sequence[0][0] 
-    will be activated before neuron in activation_sequence[0][1]. 
-    Inherited class can over-ride Brain.run() method to cater for parallel 
-    activations of all neurons in activation_sequence[0] or even parallel 
-    activation of all neurons regardless of sequence.
-    4. In sequential activation (that is activation_sequence[0] before
-    activation_sequence[1]), neurons in activation_sequence[0] will be 
-    the input neurons to traditional neural networks.
-    5. The connections and synaptic weights are registered in "synapses"
-    dictionary as a reverse connection - {<name of signal receiving 
-    neuron>: <dictionary of signal receiving neurons and its weights>}
-    where <dictionary of signal receiving neurons and its weights> is 
-    {<name of signal receiving neuron>: <synaptic weight>}. Hence, synpases
-    dictionary is a nested dictionary of {name of signal receiving 
-    neuron>: {<name of signal receiving neuron>: <synaptic weight>}}.
-    6. A dictionary, called "brainmatter", is provided to contain any 
-    other information needed.
-    7. The brain will also a learning algorithm to train / learn by 
-    itself.
+        1. A brain consists of a set of neurons (uniquely named or 
+        uniquely randomly named) held in "neuron_pool" dictionary where 
+        key is the name and value is the neuron object.
+        2. The corresponding names of neurons are entered into 
+        "activations" dictionary as keys. This dictionary holds the 
+        current activation states or output signals (as values) of all 
+        neurons.
+        3. A sequence of neuronal activity is given as activation_sequence, 
+        which is a list of list. This suggests that neurons listed in 
+        activation_sequence[0] will be activated before those neurons 
+        listed in activation_sequence[1], and neuron in 
+        activation_sequence[0][0] will be activated before neuron in 
+        activation_sequence[0][1]. Inherited class can over-ride 
+        Brain.run() method to cater for parallel activations of all 
+        neurons in activation_sequence[0] or even parallel activation of 
+        all neurons regardless of sequence.
+        4. In sequential activation (that is activation_sequence[0] before
+        activation_sequence[1]), neurons in activation_sequence[0] will be 
+        the input neurons to traditional neural networks.
+        5. The connections and synaptic weights are registered in 
+        "synapses" dictionary as a reverse connection - {<name of signal 
+        receiving neuron>: <dictionary of signal receiving neurons and 
+        its weights>} where <dictionary of signal receiving neurons and 
+        its weights> is {<name of signal receiving neuron>: 
+        <synaptic weight>}. Hence, synpases dictionary is a nested 
+        dictionary of {name of signal receiving neuron>: {<name of signal 
+        receiving neuron>: <synaptic weight>}}.
+        6. A dictionary, called "brainmatter", is provided to contain any 
+        other information needed.
+        7. The brain will also a learning algorithm to train / learn by 
+        itself.
     '''
     activations = {}
     neuron_pool = {}

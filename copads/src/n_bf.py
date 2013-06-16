@@ -20,7 +20,7 @@ will move the tape to the start. Similarly, when the pointer is
 decremented at the "beginning" of the tape, the pointer goes to 
 the end. 
 
-Ref: http://esolangs.org/wiki/NucleotideBF_(nBF)
+@see: http://esolangs.org/wiki/NucleotideBF_(nBF)
 '''
 
 import random
