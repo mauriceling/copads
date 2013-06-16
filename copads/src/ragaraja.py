@@ -2020,6 +2020,8 @@ def source_filter(source, sfilter=ragaraja_v1):
     Default = ragaraja_v1. Other defined list are
     nBF_instructions (NucleotideBF) and tested_ragaraja_instructions.
     @return: Ragaraja source code string
+    
+    @since: version 0.4
     '''
     filtered_source = []
     spointer = 0
@@ -2071,6 +2073,8 @@ def activate_version(version=1):
     - 1 (as defined in Ling, MHT. 2012. An Artificial Life Simulation Library 
     Based on Genetic Algorithm, 3-Character Genetic Code and Biological 
     Hierarchy. The Python Papers.)
+    
+    @since: version 0.4
     '''
     instructions = None
     if version == 0.1: instructions = nBF_instructions
