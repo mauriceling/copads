@@ -25,7 +25,7 @@ License: Unless specified otherwise, all parts of this package, except
 those adapted, are covered under Python Software Foundation License version 2.
 """
 
-__version__ = '0.4'
+__version__ = '0.4.1'
 
 __author__ = 'Maurice H.T. Ling <mauriceling@acm.org>'
 

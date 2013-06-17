@@ -117,9 +117,9 @@ def cfh(filename,
     dependent on the block size and number of start points.
     
     Algorithm:
-        1. forward hash <- hash(start) + [hash{start + 1) 
+        1. forward hash <- hash(start) + [hash(start + 1) 
         for start = 0 to startpoints]
-        2. backward hash <- hash(start) + [hash{start - 1) 
+        2. backward hash <- hash(start) + [hash(start - 1) 
         for start = startpoints to 0]
         3. Return forward hash + backward hash
     
