@@ -11,14 +11,29 @@ Papers 7: 5.
 import sys, os
 from datetime import datetime
 
-sys.path.append(os.path.join(os.path.dirname(os.getcwd()), 'src'))
-
 import ragaraja as N
 import register_machine as r
 
-def set_instruction_version():
+def set_instruction_version(ragaraja_version,
+                            instruction_set='ragaraja_instructions.txt'):
+    '''
+    Set active / usable set of Ragaraja instructions / operations for
+    the current simulation.
+    
+    @param ragaraja_version: defines the version of Ragaraja instructions 
+    to be used. Allowed values are {0 | 0.1 | 1}
+    @param instruction_set: file name for user-defined instruction set 
+    usage. This will only be used when ragaraja_version=0. Default =
+    ragaraja_instructions.txt. Please see ragaraja_instructions.txt for 
+    format.
+    @type instruction_set: string
+    @return: dictionary of ragaraja instructions as keys and instruction 
+    execution functions as values.
+    
+    @since: version 0.4.1
+    '''
     if ragaraja_version == 0:
-        f = open(user_defined_instructions, 'r').readlines()
+        f = open(instruction_set, 'r').readlines()
         f = [x[:-1].split('=') for x in f]
         f = [x[0] for x in f if x[1] == 'Y']
         ragaraja_instructions = f
@@ -32,6 +47,11 @@ def set_instruction_version():
     return ragaraja_instructions
 
 def write_parameters():
+    '''
+    Write parameters into file.
+    
+    @since: version 0.4.1
+    '''
     for name in population_names:
         f = open(result_files[name] + '.result.txt', 'a')
         f.write('STARTING SIMULATION - ' + str(datetime.utcnow()) + '\n')
@@ -58,6 +78,16 @@ def write_parameters():
         f.close()
     
 def simulate(entity_module):
+    '''
+    Simulate the entities in DOSE.
+    
+    @param entity_module: python module of entities to execute. Required 
+    classes in entity_module are Chromosome (inherited from genetic.Chromosome),
+    Organism (inherited from genetic.Organism), Population (inherited from 
+    genetic.Population) and World (inherited from dose_world.World).
+    
+    @since: version 0.4.1
+    '''
     exec('from %s import World, Population' % entity_module)
     
     populations = {}
@@ -185,6 +215,7 @@ if __name__ == "__main__":
     else:
         entity_module = sys.argv[1]
         exec('from %s import *' % sys.argv[2])
-        ragaraja_instructions = set_instruction_version()
+        ragaraja_instructions = set_instruction_version(ragaraja_version,
+                                                user_defined_instructions)
         write_parameters()
         simulate(entity_module)
