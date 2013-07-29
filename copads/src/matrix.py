@@ -215,7 +215,7 @@ class Matrix:
         if len(args) == 2:    # Two arguments
             # Create an null n,m matrix.
             row, col = args
-            self.create_null_matrix(row, col)
+            self.createNullMatrix(row, col)
         else:    # One argument
             if isinstance(args[0], types.IntType):
                 # Create a square null matrix.
@@ -333,11 +333,11 @@ class Matrix:
 
         other can be another matrix or a scalar.
         """
-        if self.is_scalar_element(other):
-            return self.scalar_multiply(other)
+        if self.isScalarElement(other):
+            return self.scalarMultiply(other)
         if not isinstance(other, Matrix):
             raise TypeError("Cannot multiply matrix and type %s" % type(other))
-        if other.is_row_vector():
+        if other.isRowVector():
             raise MatrixMultiplicationError(self, other)
         return self.matrixMultiply(other)
 
@@ -347,9 +347,9 @@ class Matrix:
         This is only called if other.__add__ is not defined, so assume that
         other is a scalar.
         """
-        if not self.is_scalar_element(other):
+        if not self.isScalarElement(other):
             raise TypeError("Cannot right-multiply by %s" % type(other))
-        return self.scalar_multiply(other)
+        return self.scalarMultiply(other)
 
     def scalarMultiply(self, scalar):
         """Multiply the matrix by a scalar value.
@@ -374,8 +374,8 @@ class Matrix:
         for row in xrange(self.rows()):
             r.append([])
             for col in xrange(other.cols()):
-                r[row].append( \
-                    self.vector_inner_product(self.row(row), other.col(col)))
+                r[row].append( self.vectorInnerProduct(self.row(row),
+                                                       other.col(col)))
         if len(r) == 1 and len(r[0]) == 1:
             # The result is a scalar.
             return r[0][0]
@@ -413,7 +413,7 @@ class Matrix:
 
     def determinant(self):
         """The determinant of the matrix"""
-        if not self.is_square():
+        if not self.isSquare():
             raise MatrixDeterminantError()
         # Calculate 2x2 determinants directly.
         if self.rows() == 2:
@@ -456,7 +456,7 @@ class Matrix:
         column j of the matrix.
         """
         # Verify parameters.
-        if not self.is_square():
+        if not self.isSquare():
             raise MatrixMinorError()
         if i<0 or i>=self.rows():
             raise ValueError("Row value %d is out of range" % i)
@@ -466,17 +466,49 @@ class Matrix:
         m = Matrix(self.rows()-1, self.cols()-1)
         # Loop through the matrix, skipping over the row and column specified
         # by i and j.
-        minor_row = minor_col = 0
+        minor_row = 0
+        minor_col = 0
         for self_row in xrange(self.rows()):
             if not self_row == i:    # Skip row i.
                 for self_col in xrange(self.cols()):
                     if not self_col == j:    # Skip column j.
                         m[(minor_row, minor_col)] = self[(self_row, self_col)]
-                        minor_col += 1
+                        minor_col = minor_col + 1
                 minor_col = 0
-                minor_row += 1
+                minor_row = minor_col + 1
+        return m
+        
+    def minorMatrix(self):
+        """
+        Calculates minor matrix
+        """
+        m = Matrix(self.rows(), self.cols())
+        for row in range(self.rows()):
+            for col in range(self.cols()):
+                minor_matrix = self.minor(row, col)
+                m[(row, col)] = minor_matrix.determinant()
         return m
 
+    def adjoint(self):
+        """
+        Calculates adjoint matrix
+        """
+        m = Matrix(self.rows(), self.cols())
+        for row in range(self.rows()):
+            for col in range(self.cols()):
+                minor_matrix = self.minor(row, col)
+                det = minor_matrix.determinant()
+                m[(row, col)] = ((-1)**(row+col)) * det
+        return m
+
+    def inverse(self):
+        """
+        Calculates inverse matrix
+        """
+        det = float(self.determinant())
+        adj = self.adjoint()
+        return adj.scalarMultiply(1/det)
+        
     def vectorInnerProduct(self, a, b):
         """Takes the inner product of vectors a and b
 
