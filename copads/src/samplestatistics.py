@@ -23,6 +23,7 @@ from statisticsdistribution import Distribution
 from copadsexceptions import FunctionParameterTypeError
 from copadsexceptions import FunctionParameterValueError
 from operations import summation
+from matrix import Matrix
 import nrpy
 
 class SingleSample:
@@ -225,7 +226,8 @@ class TwoSample:
             slen = self.sample[sname[0]].rowcount
         elif self.sample[sname[0]].rowcount > self.sample[sname[1]].rowcount:
             slen = self.sample[sname[1]].rowcount
-        else: slen = self.sample[sname[0]].rowcount
+        else: 
+            slen = self.sample[sname[0]].rowcount
         mean_x = self.sample[sname[0]].arithmeticMean()
         mean_y = self.sample[sname[1]].arithmeticMean()
         error_x = [self.sample[sname[0]].data[i] - mean_x 
@@ -238,6 +240,26 @@ class TwoSample:
                         for index in range(len(error_x))])
         intercept = mean_y - (gradient * mean_x)
         return (gradient, intercept)
+    
+    def mlr(self, order=2):
+        sname = self.listSamples()
+        if self.sample[sname[0]].rowcount == self.sample[sname[1]].rowcount:
+            slen = self.sample[sname[0]].rowcount
+        elif self.sample[sname[0]].rowcount > self.sample[sname[1]].rowcount:
+            slen = self.sample[sname[1]].rowcount
+        else: 
+            slen = self.sample[sname[0]].rowcount
+        X_data = self.sample[sname[0]].data[:slen]
+        Y_data = self.sample[sname[1]].data[:slen]
+        data_array = [[1]*slen]
+        for x in range(1, order+1):
+            data_array.append([element**x for element in X_data])
+        beta_matrix = Matrix(data_array)
+        b1 = beta_matrix * beta_matrix.transpose()
+        b1 = b1.inverse()
+        b2 = Matrix(data_array) * Matrix([Y_data]).transpose()
+        result = b1 * b2
+        return [x[0] for x in result.m]
     
     def pearson(self):
         """

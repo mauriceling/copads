@@ -18,9 +18,6 @@ class Vector(list):
     """
     A list based vector class that supports elementwise mathematical operations
 
-    In this version, the vector call inherits from list; this 
-    requires Python 2.2 or later.
-
     Adapted from http://aspn.activestate.com/ASPN/Cookbook/Python/Recipe/52272
     Original author: A. Pletzer
     """
