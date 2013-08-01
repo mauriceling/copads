@@ -1317,4 +1317,4 @@ print ' '.join(instruction_set)
 print
 print 'Number of instructions tested :' + str(len(instruction_set))
 print
-print '----- End of test -----'
+print '------------------------- END OF TESTS -------------------------'
