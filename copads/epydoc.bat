@@ -1,1 +1,31 @@
-python "c:\Python27\Scripts\epydoc.py" -v --html --output=d:\copads\doc\epydoc --name="COPADS - Collection of Python Algorithms and Data Structures" --url=http://copads.sourceforge.net --show-imports copads
+mkdir copads
+cp -r src/ copads/
+
+epydoc --verbose \
+       --pdf \
+       --output=doc/epydoc \
+       --name="COPADS: Collection of Python Algorithms and Data Structures" \
+       --url=https://github.com/copads/copads \
+       --show-imports \
+       --show-private \
+       --show-sourcecode \
+       --show-frames \
+       --navlink=https://github.com/copads/copads \
+       copads
+
+mv doc/epydoc/api.pdf doc/COPADS_API_Documentation.pdf
+rm -rf doc/epydoc
+
+epydoc --verbose \
+       --html \
+       --output=doc/epydoc \
+       --name="COPADS: Collection of Python Algorithms and Data Structures" \
+       --url=https://github.com/copads/copads \
+       --show-imports \
+       --show-private \
+       --show-sourcecode \
+       --show-frames \
+       --navlink=https://github.com/copads/copads \
+       copads
+
+rm -rf copads
