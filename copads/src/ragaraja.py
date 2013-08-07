@@ -1221,6 +1221,20 @@ def register_IO(array, apointer, inputdata, output, source, spointer):
     397: Put value from register #97 to current tape cell
     398: Put value from register #98 to current tape cell
     399: Put value from register #99 to current tape cell
+    415: Clear all registers
+    416: Compact registers to the front by removing all null 
+    and zero values from the registers and put values from 
+    register #1 onwards.
+    417: Compact registers to the back by removing all null 
+    and zero values from the registers and put values from 
+    register #99 backwards.
+    418: Push value of current tape cell to register #1; 
+    thereby, shifting all values in register #N to register 
+    #N+1. The value in the original register #99 will be lost.
+    419: Pop value of register #1 to current tape cell; thereby, 
+    shifting all values in register #N to register #N-1. Register
+    #99 will have the value of zero.
+    420: Swap values between register #1 and register #2.
     501: Clear register #1 (set to 0)
 	502: Clear register #2 (set to 0)
 	503: Clear register #3 (set to 0)
@@ -1520,6 +1534,21 @@ def register_IO(array, apointer, inputdata, output, source, spointer):
     if cmd == '397': array[apointer] = register[96]
     if cmd == '398': array[apointer] = register[97]
     if cmd == '399': array[apointer] = register[98]
+    if cmd == '415': register = [0]*99
+    if cmd == '416':
+    	register = [x for x in register if x != 0]
+    	register = register + [0] * (99 - len(register)) 
+    if cmd == '417':
+    	register = [x for x in register if x != 0]
+    	register = [0] * (99 - len(register)) + register
+    if cmd == '418': register = array[apointer] + register[:-1]
+    if cmd == '419': 
+    	array[apointer] = register[0]
+    	register = register[1:] + [0]
+    if cmd == '420': 
+    	temp = register[0]
+    	register[0] = register[1]
+    	register[1] = temp
     if cmd == '501': register[0] = 0
     if cmd == '502': register[1] = 0
     if cmd == '503': register[2] = 0
@@ -1853,10 +1882,10 @@ ragaraja = {'000': forward, '001': tape_move,
             '408': accumulations, '409': accumulations,
             '410': accumulations, '411': accumulations,
             '412': accumulations, '413': accumulations,
-            '414': accumulations, '415': not_used,
-            '416': not_used, '417': not_used,
-            '418': not_used, '419': not_used,
-            '420': not_used, '421': not_used,
+            '414': accumulations, '415': register_IO,
+            '416': register_IO, '417': register_IO,
+            '418': register_IO, '419': register_IO,
+            '420': register_IO, '421': not_used,
             '422': not_used, '423': not_used,
             '424': not_used, '425': not_used,
             '426': not_used, '427': not_used,
