@@ -184,6 +184,20 @@ def accumulations(array, apointer, inputdata, output, source, spointer):
     013: Decrease value of cell by 10. Equivalent to 10 times of "011". 
     032: Double current tape cell value.
     033: Half current tape cell value. 
+    401: Increase value of cell by 2.
+    402: Increase value of cell by 3. 
+    403: Increase value of cell by 4.
+    404: Increase value of cell by 6.
+    405: Increase value of cell by 7.
+    406: Increase value of cell by 8.
+    407: Increase value of cell by 9.
+    408: Decrease value of cell by 2.
+    409: Decrease value of cell by 3. 
+    410: Decrease value of cell by 4.
+    411: Decrease value of cell by 6.
+    412: Decrease value of cell by 7.
+    413: Decrease value of cell by 8.
+    414: Decrease value of cell by 9.
     '''
     cmd = source[spointer:spointer+3]
     if cmd == '009': array[apointer] = array[apointer] + 5
@@ -192,6 +206,20 @@ def accumulations(array, apointer, inputdata, output, source, spointer):
     if cmd == '013': array[apointer] = array[apointer] - 10
     if cmd == '032': array[apointer] = 2 * array[apointer]
     if cmd == '033': array[apointer] = 0.5 * array[apointer]
+    if cmd == '401': array[apointer] = array[apointer] + 2
+    if cmd == '402': array[apointer] = array[apointer] + 3
+    if cmd == '403': array[apointer] = array[apointer] + 4
+    if cmd == '404': array[apointer] = array[apointer] + 6
+    if cmd == '405': array[apointer] = array[apointer] + 7
+    if cmd == '406': array[apointer] = array[apointer] + 8
+    if cmd == '407': array[apointer] = array[apointer] + 9
+    if cmd == '408': array[apointer] = array[apointer] - 2
+    if cmd == '409': array[apointer] = array[apointer] - 3
+    if cmd == '410': array[apointer] = array[apointer] - 4
+    if cmd == '411': array[apointer] = array[apointer] - 6
+    if cmd == '412': array[apointer] = array[apointer] - 7
+    if cmd == '413': array[apointer] = array[apointer] - 8
+    if cmd == '414': array[apointer] = array[apointer] - 9
     return (array, apointer, inputdata, output, source, spointer)
 
 def nBF_random_op(array, apointer, inputdata, output, source, spointer):
@@ -1819,13 +1847,13 @@ ragaraja = {'000': forward, '001': tape_move,
             '396': register_IO, '397': register_IO,
             '398': register_IO, '399': register_IO,
             '400': jump_identifier, '401': not_used,
-            '402': not_used, '403': not_used,
-            '404': not_used, '405': not_used,
-            '406': not_used, '407': not_used,
-            '408': not_used, '409': not_used,
-            '410': not_used, '411': not_used,
-            '412': not_used, '413': not_used,
-            '414': not_used, '415': not_used,
+            '402': accumulations, '403': accumulations,
+            '404': accumulations, '405': accumulations,
+            '406': accumulations, '407': accumulations,
+            '408': accumulations, '409': accumulations,
+            '410': accumulations, '411': accumulations,
+            '412': accumulations, '413': accumulations,
+            '414': accumulations, '415': not_used,
             '416': not_used, '417': not_used,
             '418': not_used, '419': not_used,
             '420': not_used, '421': not_used,
