@@ -98,7 +98,7 @@ class vector(list):
 	    """
 	    Prints out the vector.
 	    """
-	    print self
+	    print(self)
 
 ###############################################################################
 
@@ -306,82 +306,82 @@ def atan2(a,b):
 ###############################################################################
 if __name__ == "__main__":
 
-	print 'a = zeros(4)'
+	print('a = zeros(4)')
 	a = zeros(4)
 
-	print 'a.__doc__=',a.__doc__
+	print('a.__doc__=',a.__doc__)
 
-	print 'a[0] = 1.0'
+	print('a[0] = 1.0')
 	a[0] = 1.0
 
-	print 'a[3] = 3.0'
+	print('a[3] = 3.0')
 	a[3] = 3.0
 
-	print 'a[0]=', a[0]
-	print 'a[1]=', a[1]
+	print('a[0]=', a[0])
+	print('a[1]=', a[1])
 
-	print 'len(a)=',len(a)
-	print 'a.size()=', a.size()
+	print('len(a)=',len(a))
+	print('a.size()=', a.size())
 			
 	b = vector([1, 2, 3, 4])
-	print 'a=', a
-	print 'b=', b
+	print('a=', a)
+	print('b=', b)
 
-	print 'a+b'
+	print('a+b')
 	c = a + b
 	c.out()
 
-	print '-a'
+	print('-a')
 	c = -a
 	c.out()
 	a.out()
 
-	print 'a-b'
+	print('a-b')
 	c = a - b
 	c.out()
 
-	print 'a*1.2'
+	print('a*1.2')
 	c = a*1.2
 	c.out()
 
 
-	print '1.2*a'
+	print('1.2*a')
 	c = 1.2*a
 	c.out()
-	print 'a=', a
+	print('a=', a)
 
-	print 'dot(a,b) = ', dot(a,b)
-	print 'dot(b,a) = ', dot(b,a)
+	print('dot(a,b) = ', dot(a,b))
+	print('dot(b,a) = ', dot(b,a))
 
-	print 'a*b'
+	print('a*b')
 	c = a*b
 	c.out()
 	
-	print 'a/1.2'
+	print('a/1.2')
 	c = a/1.2
 	c.out()
 
-	print 'a[0:2]'
+	print('a[0:2]')
 	c = a[0:2]
 	c.out()
 
-	print 'a[2:5] = [9.0, 4.0, 5.0]'
+	print('a[2:5] = [9.0, 4.0, 5.0]')
 	a[2:5] = [9.0, 4.0, 5.0]
 	a.out()
 
-	print 'sqrt(a)=',sqrt(a)
-	print 'pow(a, 2*ones(len(a)))=',pow(a, 2*ones(len(a)))
-	print 'pow(a, 2)=',pow(a, 2*ones(len(a)))
+	print('sqrt(a)=',sqrt(a))
+	print('pow(a, 2*ones(len(a)))=',pow(a, 2*ones(len(a))))
+	print('pow(a, 2)=',pow(a, 2*ones(len(a))))
 
-	print 'ones(10)'
+	print('ones(10)')
 	c = ones(10)
 	c.out()
 
-	print 'zeros(10)'
+	print('zeros(10)')
 	c = zeros(10)
 	c.out()	
 
-	print 'del a'
+	print('del a')
 	del a
 
 	try:

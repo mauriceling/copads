@@ -113,7 +113,7 @@ class OrderedBinaryTree:
             pass
         else:
             self.printTree(root.left)
-            print root.data,
+            print(root.data, end=' ')
             self.printTree(root.right)
 
     def printRevTree(self, root):
@@ -123,7 +123,7 @@ class OrderedBinaryTree:
             pass
         else:
             self.printRevTree(root.right)
-            print root.data,
+            print(root.data, end=' ')
             self.printRevTree(root.left)
             
 
@@ -315,8 +315,8 @@ class RBTree(object):
                 if self.unique == False: 
                     current.count += 1
                 else: # raise an Error
-                    print "Warning: This element is already in the list ... \
-                    ignored!"
+                    print("Warning: This element is already in the list ... \
+                    ignored!")
                     #SF I don't want to raise an error because I want to keep 
                     #SF the code compatible to previous versions
                     #SF But here would be the right place to do this
@@ -788,18 +788,18 @@ if __name__ == "__main__":
         data = raw_input("insert the node value nr %d: " % i)
         # insert values
         BTree.insert(root, data)
-    print
+    print()
     
     BTree.printTree(root)
-    print
+    print()
     BTree.printRevTree(root)
-    print
+    print()
     data = raw_input("insert a value to find: ")
     if BTree.lookup(root, data):
-        print "found"
+        print("found")
     else:
-        print "not found"
+        print("not found")
         
-    print BTree.minValue(root)
-    print BTree.maxDepth(root)
-    print BTree.size(root)
+    print(BTree.minValue(root))
+    print(BTree.maxDepth(root))
+    print(BTree.size(root))

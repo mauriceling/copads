@@ -72,6 +72,6 @@ class AVLTree:
         self.do_balance() 
         
     def print_tree(self, indent = 0): 
-        print " " * indent + str(self.data) 
+        print(" " * indent + str(self.data)) 
         if self.left: self.left.print_tree(indent + 2) 
         if self.right: self.right.print_tree(indent + 2) 

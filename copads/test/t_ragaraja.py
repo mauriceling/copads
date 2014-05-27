@@ -1250,57 +1250,57 @@ for t in tests:
     # ------- COMPARE EXPECTED RESULTS AFTER TEST -------
     # ---------------------------------------------------
     
-    print ' '.join(['Test number:', str(t), 
-                    ', Original source code:', str(isource)])
-    print ' '.join(['    ', str(comparator(oarray, array)), 'array.', 
+    print(' '.join(['Test number:', str(t), 
+                    ', Original source code:', str(isource)]))
+    print(' '.join(['    ', str(comparator(oarray, array)), 'array.', 
                     'Expected array:', str(oarray),
-                    'Actual array:', str(array)])
-    print ' '.join(['    ', str(comparator(oapointer, apointer)), 
+                    'Actual array:', str(array)]))
+    print(' '.join(['    ', str(comparator(oapointer, apointer)), 
                     'array pointer.', 
                     'Expected array pointer:', str(oapointer),
-                    'Actual array pointer:', str(apointer)])
-    print ' '.join(['    ', str(comparator(oinputdata, inputdata)), 
+                    'Actual array pointer:', str(apointer)]))
+    print(' '.join(['    ', str(comparator(oinputdata, inputdata)), 
                     'input data list.', 
                     'Expected input data list:', str(oinputdata),
-                    'Actual input data list:', str(inputdata)])
-    print ' '.join(['    ', str(comparator(ooutput, output)), 
+                    'Actual input data list:', str(inputdata)]))
+    print(' '.join(['    ', str(comparator(ooutput, output)), 
                     'output list.', 
                     'Expected output list:', str(ooutput),
-                    'Actual output list:', str(output)])
-    print ' '.join(['    ', str(comparator(osource, source)), 
+                    'Actual output list:', str(output)]))
+    print(' '.join(['    ', str(comparator(osource, source)), 
                     'source code after execution.', 
                     'Expected source:', str(osource),
-                    'Actual source:', str(source)])
-    print ' '.join(['    ', str(comparator(ospointer, spointer)), 
+                    'Actual source:', str(source)]))
+    print(' '.join(['    ', str(comparator(ospointer, spointer)), 
                     'source code pointer after execution.', 
                     'Expected source pointer:', str(ospointer),
-                    'Actual source pointer:', str(spointer)])
+                    'Actual source pointer:', str(spointer)]))
     if testdata[t].has_key('register'):
-        print 'Internal registers: ' + str(N.register)
-    print '=========================================================='
+        print('Internal registers: ' + str(N.register))
+    print('==========================================================')
 # -----------------------------
 # --------- REGISTERS --------- 
 # -----------------------------
 
-print
-print '===== Internal register state ====='
-print 'Internal registers: ' + str(N.register)
+print()
+print('===== Internal register state =====')
+print('Internal registers: ' + str(N.register))
 
 # ---------------------------------------------
 # --------- TESTING RANDOM OPERATIONS --------- 
 # ---------------------------------------------
 
-print
-print '===== Testing random operations ====='
-print 'Testing 050 051 052 053 054 055 056 057 058 059 060'
-print
+print()
+print('===== Testing random operations =====')
+print('Testing 050 051 052 053 054 055 056 057 058 059 060')
+print()
 random_source = '050051052053054055056057058059060'
 random_source = random_source + random_source + random_source + \
                 random_source + random_source + random_source
 for x in range(20):
     tape = r.interpret(random_source, N.ragaraja, 3, [], [0]*10, 10)[0]
-    print 'Test #' + str(x+1) + ', Tape: ' + str(tape)
-print '===== End of random operations testing ====='
+    print('Test #' + str(x+1) + ', Tape: ' + str(tape))
+print('===== End of random operations testing =====')
 
 # ---------------------------
 # --------- SUMMARY --------- 
@@ -1311,10 +1311,10 @@ instruction_set = {}
 for i in range(0, len(isource), 3): instruction_set[isource[i:i+3]] = ''
 instruction_set = instruction_set.keys()
 instruction_set.sort()
-print 
-print 'Instruction set tested: '
-print ' '.join(instruction_set)
-print
-print 'Number of instructions tested :' + str(len(instruction_set))
-print
-print '------------------------- END OF TESTS -------------------------'
+print() 
+print('Instruction set tested: ')
+print(' '.join(instruction_set))
+print()
+print('Number of instructions tested :' + str(len(instruction_set)))
+print()
+print('------------------------- END OF TESTS -------------------------')

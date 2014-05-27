@@ -112,7 +112,7 @@ class Vector(list):
         """
         Prints out the vector.
         """
-        print self        
+        print(self)        
     
 
 class Matrix:
@@ -604,9 +604,9 @@ class SparseMatrix(dict):
                             map(operator.abs, self.values())))
 
     def out(self):
-        print '# (i, j) -- value'
+        print('# (i, j) -- value')
         for k in self.keys():
-            print k, self[k]
+            print(k, self[k])
 
     def plot(self, width_in=400, height_in=400):
 
@@ -654,9 +654,9 @@ class SparseMatrix(dict):
             raise TypeError, self.__class__, ' in solve '
         else:
             if self.size()[0] != len(b) or self.size()[1] != len(b):
-                print '**Incompatible sizes in solve'
-                print '**size()=', self.size()[0], self.size()[1]
-                print '**len=', len(b)
+                print('**Incompatible sizes in solve')
+                print('**size()=', self.size()[0], self.size()[1])
+                print('**len=', len(b))
             else:
                 kvec = diag(self) # preconditionner
                 n = len(b)
@@ -664,12 +664,12 @@ class SparseMatrix(dict):
                 r = b - sm_dot(self, x)
                 try:
                     w = r/kvec
-                except: print '***singular kvec'
+                except: print('***singular kvec')
                 p = v_zeros(n)
                 beta = v_dot(r, w)
                 err = v_norm(dot(self, x) - b)
                 k = 0
-                if verbose: print " conjugate gradient convergence (log error)"
+                if verbose: print(" conjugate gradient convergence (log error)")
                 while abs(err) > tol and k < nmax:
                     p = w + beta*p
                     z = sm_dot(self, p)
@@ -682,7 +682,7 @@ class SparseMatrix(dict):
                     beta = rho/rhoold
                     err = v_norm(dot(self, x) - b)
                     if verbose:
-                        print k, ' %5.1f ' % math.log10(err)
+                        print(k, ' %5.1f ' % math.log10(err))
                     k = k+1
                 return x
                 
@@ -696,9 +696,9 @@ class SparseMatrix(dict):
                 raise TypeError, self.__class__, ' in solve '
             else:
                 if self.size()[0] != len(b) or self.size()[1] != len(b):
-                    print '**Incompatible sizes in solve'
-                    print '**size()=', self.size()[0], self.size()[1]
-                    print '**len=', len(b)
+                    print('**Incompatible sizes in solve')
+                    print('**size()=', self.size()[0], self.size()[1])
+                    print('**len=', len(b))
                 else:
                     kvec = sm_diag(self) # preconditionner 
                     n = len(b)
@@ -713,7 +713,7 @@ class SparseMatrix(dict):
                     rho = v_dot(rbar, w)
                     err = v_norm(dot(self, x) - b)
                     k = 0
-                    print " bi-conjugate gradient convergence (log error)"
+                    print(" bi-conjugate gradient convergence (log error)")
                     while abs(err) > tol and k < nmax:
                         p = w + beta*p
                         pbar = wbar + beta*pbar
@@ -728,11 +728,11 @@ class SparseMatrix(dict):
                         x = x + alpha*p
                         beta = rho/rhoold
                         err = v_norm(sm_dot(self, x) - b)
-                        print k, ' %5.1f ' % math.log10(err)
+                        print(k, ' %5.1f ' % math.log10(err))
                         k = k+1
                     return x
         except:
-            print 'ERROR ', self.__class__, '::biCGsolve'
+            print('ERROR ', self.__class__, '::biCGsolve')
 
     def save(self, filename, OneBased=0):
         """
@@ -887,7 +887,7 @@ def smDotDot(y, a, x):
             res += y[i]*a[ij]*x[j]
         return res
     else:
-        print 'sparse::Error: dotDot takes vector, sparse , vector as args'
+        print('sparse::Error: dotDot takes vector, sparse , vector as args')
 
 def smDot(a, b):
     """vector-matrix, matrix-vector or matrix-matrix product"""
@@ -903,7 +903,7 @@ def smDot(a, b):
         return new
     elif isSparse(a) and isSparse(b):
         if a.size()[1] != b.size()[0]:
-            print '**Warning shapes do not match in dot(sparse, sparse)'
+            print('**Warning shapes do not match in dot(sparse, sparse)')
         new = SparseMatrix({})
         n = min([a.size()[1], b.size()[0]])
         for i in range(a.size()[0]):

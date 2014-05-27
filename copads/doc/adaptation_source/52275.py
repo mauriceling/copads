@@ -78,9 +78,9 @@ class sparse(dict):
 		return sparse(zip(self.keys(), map(operator.abs, self.values())))
 
 	def out(self):
-		print '# (i, j) -- value'
+		print('# (i, j) -- value')
 		for k in self.keys():
-			print k, self[k]
+			print(k, self[k])
 
 	def plot(self, width_in=400, height_in=400):
 
@@ -127,9 +127,9 @@ class sparse(dict):
 			raise TypeError, self.__class__,' in solve '
 		else:
 			if self.size()[0] != len(b) or self.size()[1] != len(b):
-				print '**Incompatible sizes in solve'
-				print '**size()=', self.size()[0], self.size()[1]
-				print '**len=', len(b)
+				print('**Incompatible sizes in solve')
+				print('**size()=', self.size()[0], self.size()[1])
+				print('**len=', len(b))
 			else:
 				kvec = diag(self) # preconditionner
 				n = len(b)
@@ -137,13 +137,13 @@ class sparse(dict):
 				r =  b - dot(self, x)
 				try:
 					w = r/kvec
-				except: print '***singular kvec'
+				except: print('***singular kvec')
 				p = vector.zeros(n);
 				beta = 0.0;
 				rho = vector.dot(r, w);
 				err = vector.norm(dot(self,x) - b);
 				k = 0
-				if verbose: print " conjugate gradient convergence (log error)"
+				if verbose: print(" conjugate gradient convergence (log error)")
 				while abs(err) > tol and k < nmax:
 					p = w + beta*p;
 					z = dot(self, p);
@@ -155,7 +155,7 @@ class sparse(dict):
 					x = x + alpha*p;
 					beta = rho/rhoold;
 					err = vector.norm(dot(self, x) - b);
-					if verbose: print k,' %5.1f ' % math.log10(err)
+					if verbose: print(k,' %5.1f ' % math.log10(err))
 					k = k+1
 				return x
 				
@@ -172,9 +172,9 @@ class sparse(dict):
 				raise TypeError, self.__class__,' in solve '
 			else:
 				if self.size()[0] != len(b) or self.size()[1] != len(b):
-					print '**Incompatible sizes in solve'
-					print '**size()=', self.size()[0], self.size()[1]
-					print '**len=', len(b)
+					print('**Incompatible sizes in solve')
+					print('**size()=', self.size()[0], self.size()[1])
+					print('**len=', len(b))
 				else:
 					kvec = diag(self) # preconditionner 
 					n = len(b)
@@ -189,7 +189,7 @@ class sparse(dict):
 					rho = vector.dot(rbar, w);
 					err = vector.norm(dot(self,x) - b);
 					k = 0
-					print " bi-conjugate gradient convergence (log error)"
+					print(" bi-conjugate gradient convergence (log error)")
 					while abs(err) > tol and k < nmax:
 						p = w + beta*p;
 						pbar = wbar + beta*pbar;
@@ -204,11 +204,11 @@ class sparse(dict):
 						x = x + alpha*p;
 						beta = rho/rhoold;
 						err = vector.norm(dot(self, x) - b);
-						print k,' %5.1f ' % math.log10(err)
+						print(k,' %5.1f ' % math.log10(err))
 						k = k+1
 					return x
 			
-		except: print 'ERROR ',self.__class__,'::biCGsolve'
+		except: print('ERROR ',self.__class__,'::biCGsolve')
 
 
 	def save(self, filename, OneBased=0):
@@ -253,7 +253,7 @@ def dotDot(y,a,x):
 			res += y[i]*a[ij]*x[j]
 		return res
 	else:
-		print 'sparse::Error: dotDot takes vector, sparse , vector as args'
+		print('sparse::Error: dotDot takes vector, sparse , vector as args')
 
 def dot(a, b):
 	" vector-matrix, matrix-vector or matrix-matrix product "
@@ -269,7 +269,7 @@ def dot(a, b):
 		return new
 	elif isSparse(a) and isSparse(b):
 		if a.size()[1] != b.size()[0]:
-			print '**Warning shapes do not match in dot(sparse, sparse)'
+			print('**Warning shapes do not match in dot(sparse, sparse)')
 		new = sparse({})
 		n = min([a.size()[1], b.size()[0]])
 		for i in range(a.size()[0]):
@@ -302,89 +302,89 @@ def identity(n):
 ###############################################################################
 if __name__ == "__main__":
 
-	print 'a = sparse()'
+	print('a = sparse()')
 	a = sparse()
 
-	print 'a.__doc__=',a.__doc__
+	print('a.__doc__=',a.__doc__)
 
-	print 'a[(0,0)] = 1.0'
+	print('a[(0,0)] = 1.0')
 	a[(0,0)] = 1.0
 	a.out()
 
-	print 'a[(2,3)] = 3.0'
+	print('a[(2,3)] = 3.0')
 	a[(2,3)] = 3.0
 	a.out()
 
-	print 'len(a)=',len(a)
-	print 'a.size()=', a.size()
+	print('len(a)=',len(a))
+	print('a.size()=', a.size())
 			
 	b = sparse({(0,0):2.0, (0,1):1.0, (1,0):1.0, (1,1):2.0, (1,2):1.0, (2,1):1.0, (2,2):2.0})
-	print 'a=', a
-	print 'b=', b
+	print('a=', a)
+	print('b=', b)
 	b.out()
 
-	print 'a+b'
+	print('a+b')
 	c = a + b
 	c.out()
 
-	print '-a'
+	print('-a')
 	c = -a
 	c.out()
 	a.out()
 
-	print 'a-b'
+	print('a-b')
 	c = a - b
 	c.out()
 
-	print 'a*1.2'
+	print('a*1.2')
 	c = a*1.2
 	c.out()
 
 
-	print '1.2*a'
+	print('1.2*a')
 	c = 1.2*a
 	c.out()
-	print 'a=', a
+	print('a=', a)
 
-	print 'dot(a, b)'
-	print 'a.size()[1]=',a.size()[1],' b.size()[0]=', b.size()[0]
+	print('dot(a, b)')
+	print('a.size()[1]=',a.size()[1],' b.size()[0]=', b.size()[0])
 	c = dot(a, b)
 	c.out()
 
-	print 'dot(b, a)'
-	print 'b.size()[1]=',b.size()[1],' a.size()[0]=', a.size()[0]
+	print('dot(b, a)')
+	print('b.size()[1]=',b.size()[1],' a.size()[0]=', a.size()[0])
 	c = dot(b, a)
 	c.out()
 
 	try:
-		print 'dot(b, vector.vector([1,2,3]))'
+		print('dot(b, vector.vector([1,2,3]))')
 		c = dot(b, vector.vector([1,2,3]))
 		c.out()
 	
-		print 'dot(vector.vector([1,2,3]), b)'
+		print('dot(vector.vector([1,2,3]), b)')
 		c = dot(vector.vector([1,2,3]), b)
 		c.out()
 
-		print 'b.size()=', b.size()
+		print('b.size()=', b.size())
 	except: pass
 	
-	print 'a*b -> element by element product'
+	print('a*b -> element by element product')
 	c = a*b
 	c.out()
 
-	print 'b*a -> element by element product'
+	print('b*a -> element by element product')
 	c = b*a
 	c.out()
 	
-	print 'a/1.2'
+	print('a/1.2')
 	c = a/1.2
 	c.out()
 
-	print 'c = identity(4)'
+	print('c = identity(4)')
 	c = identity(4)
 	c.out()
 
-	print 'c = transp(a)'
+	print('c = transp(a)')
 	c = transp(a)
 	c.out()
 
@@ -394,27 +394,27 @@ if __name__ == "__main__":
 
 	try:
 		import vector
-		print 'Check conjugate gradient solver'
+		print('Check conjugate gradient solver')
 		s = vector.vector([1, 0, 0])
-		print 's'
+		print('s')
 		s.out()
 		x0 = s 
-		print 'x = b.biCGsolve(x0, s, 1.0e-10, len(b)+1)'
+		print('x = b.biCGsolve(x0, s, 1.0e-10, len(b)+1)')
 		x = b.biCGsolve(x0, s, 1.0e-10,  len(b)+1)
 		x.out()
 
-		print 'check validity of CG'
+		print('check validity of CG')
 		c = dot(b, x) - s
 		c.out()
 	except: pass
 
-	print 'plot b matrix'
+	print('plot b matrix')
 	b.out()
 	b.plot()
 
-	print 'del b[(2,2)]'
+	print('del b[(2,2)]')
 	del b[(2,2)]
 
-	print 'del a'
+	print('del a')
 	del a
 	#a.out()

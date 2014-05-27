@@ -77,29 +77,29 @@ for t in tests:
     array = [0]*10
     (array, apointer, inputdata, output, 
         source, spointer) = r.interpret(isource, N.nBF, 1, [], array, 10)
-    print ' '.join(['Test number:', str(t), 
-                    ', Original source code:', str(source)])
-    print ' '.join(['    ', str(comparator(oarray, array)), 'array.', 
+    print(' '.join(['Test number:', str(t), 
+                    ', Original source code:', str(source)]))
+    print(' '.join(['    ', str(comparator(oarray, array)), 'array.', 
                     'Expected array:', str(oarray),
-                    'Actual array:', str(array)])
-    print ' '.join(['    ', str(comparator(oapointer, apointer)), 
+                    'Actual array:', str(array)]))
+    print(' '.join(['    ', str(comparator(oapointer, apointer)), 
                     'array pointer.', 
                     'Expected array pointer:', str(oapointer),
-                    'Actual array pointer:', str(apointer)])
-    print ' '.join(['    ', str(comparator(oinputdata, inputdata)), 
+                    'Actual array pointer:', str(apointer)]))
+    print(' '.join(['    ', str(comparator(oinputdata, inputdata)), 
                     'input data list.', 
                     'Expected input data list:', str(oinputdata),
-                    'Actual input data list:', str(inputdata)])
-    print ' '.join(['    ', str(comparator(ooutput, output)), 
+                    'Actual input data list:', str(inputdata)]))
+    print(' '.join(['    ', str(comparator(ooutput, output)), 
                     'output list.', 
                     'Expected output list:', str(ooutput),
-                    'Actual output list:', str(output)])
-    print ' '.join(['    ', str(comparator(osource, source)), 
+                    'Actual output list:', str(output)]))
+    print(' '.join(['    ', str(comparator(osource, source)), 
                     'source code after execution.', 
                     'Expected source:', str(osource),
-                    'Actual source:', str(source)])
-    print ' '.join(['    ', str(comparator(ospointer, spointer)), 
+                    'Actual source:', str(source)]))
+    print(' '.join(['    ', str(comparator(ospointer, spointer)), 
                     'source code pointer after execution.', 
                     'Expected source pointer:', str(ospointer),
-                    'Actual source pointer:', str(spointer)])
-    print '=========================================================='
+                    'Actual source pointer:', str(spointer)]))
+    print('==========================================================')

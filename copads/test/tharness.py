@@ -3,7 +3,7 @@ import unittest
 class testHarness(unittest.TestCase):
     def testEqual(self, func, caseData):
         if len(caseData) < 2 or len(caseData) > 7:
-            print "length of caseData must be 2-7"
+            print("length of caseData must be 2-7")
         if len(caseData) == 2: 
             self.assertEqual(func(caseData[0]), 
                              caseData[1])

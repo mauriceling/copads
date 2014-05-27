@@ -166,16 +166,16 @@ def chisq_crit(nu, p, tol=1.e-5):
 
 # Allow it to run as a script    
 if __name__ == "__main__":
-    print 'gammln: ', gammln(0.5)
-    print 'gser: ', gser(5., 5.)
-    print 'gcf:  ', gcf(5., 7.)
-    print 'gammp, gammq: ', gammp(5.,5.), gammq(5.,5.)
-    print 'erfcc: ', erfcc(.5)
-    print 'ncdf_inv: ', ncdf_inv(0.977), ncdf_inv(0.5)
-    print 'ncdf: ', ncdf(1.)
-    print 'ncdf_sig: ', ncdf_sig(2.)
-    print 'q & p chisq: ', qchisq(4.,1), pchisq(4.,1)
-    print 'chisq_crit: ', chisq_crit(1.,0.954)
+    print('gammln: ', gammln(0.5))
+    print('gser: ', gser(5., 5.))
+    print('gcf:  ', gcf(5., 7.))
+    print('gammp, gammq: ', gammp(5.,5.), gammq(5.,5.))
+    print('erfcc: ', erfcc(.5))
+    print('ncdf_inv: ', ncdf_inv(0.977), ncdf_inv(0.5))
+    print('ncdf: ', ncdf(1.))
+    print('ncdf_sig: ', ncdf_sig(2.))
+    print('q & p chisq: ', qchisq(4.,1), pchisq(4.,1))
+    print('chisq_crit: ', chisq_crit(1.,0.954))
 #gammln:  0.572364942913
 #gser:  (0.55950669681645049, 3.1780538301903123)
 #gcf:   (0.1729916079093404, 3.1780538301903123)

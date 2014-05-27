@@ -53,7 +53,7 @@ def forward_file_hash(f, fsize, start, blocksize, algorithm):
         start = start + blocksize
         count = count + 1
 ##        print start, hash_result
-    print 'forward hash:', start, count
+    print('forward hash:', start, count)
     return hash_result
     
 def backward_file_hash(f, end, blocksize, algorithm):
@@ -102,7 +102,7 @@ def backward_file_hash(f, end, blocksize, algorithm):
         current = current + blocksize
         count = count + 1
 ##        print end, hash_result
-    print 'backward hash:', end, count
+    print('backward hash:', end, count)
     return hash_result
     
 def cfh(filename,
