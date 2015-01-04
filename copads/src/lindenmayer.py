@@ -5,6 +5,7 @@ Copyright (c) Maurice H.T. Ling <mauriceling@acm.org>
 
 Date created: 4th January 2015
 '''
+import random
 
 class lindenmayer(object):
     '''
@@ -27,13 +28,25 @@ class lindenmayer(object):
             elif len(x) == 3:
                 # [predicate, replacement, priority]
                 self.rules.append([x[0], x[1], int(x[2]), 'replacement', None])
-            elif len(x) == 4 and (x[3] not in ['replacement', 'function']):
+            elif len(x) == 4 and (x[3] not in ['probability', 
+                                               'replacement', 
+                                               'function']):
                 # [predicate, replacement, priority, '<something_else>']
-                print('''Warning: Rule type can only be 'replacement' or \ 
-                'function'. Rule, %s, is not added into system.''' % str(x))
+                print('''Warning: Rule type can only be 'probabilistic', \          
+                'replacement' or 'function'. Rule, %s, is not added into \ 
+                system.''' % str(x))
             elif len(x) == 4 and x[3] == 'replacement':
                 # [predicate, replacement, priority, 'replacement']
                 self.rules.append([x[0], x[1], int(x[2]), x[3], None])
+             elif len(x) == 4 and x[3] == 'probabilistic':
+                # [predicate, replacement, priority, 'probability']
+                print('''Warning: Function rule will require a \ 
+                probability. Rule, %s, is added into system as a \
+                replacement rule (100% activation probability).''' % str(x))
+                self.rules.append([x[0], x[1], int(x[2]), 'replacement', None])
+            elif len(x) == 5 and x[3] == 'probability':
+                # [predicate, replacement, priority, 'probability', probability]
+                self.rules.append([x[0], x[1], int(x[2]), x[3], float(x[4])])
             elif len(x) == 4 and x[3] == 'function':
                 print('''Warning: Function rule will require a \ 
                 bounded-function. Rule, %s, is not added into \
@@ -53,6 +66,10 @@ class lindenmayer(object):
             cmd = data[pointer:pointer+self.command_length]
             for rule in rules:
                 if cmd == rule[0] and rule[3] == 'replacement':
+                    cmd = rule[1]
+                    break
+                if cmd == rule[0] and rule[3] == 'probability' \
+                and random.random() < x[4]:
                     cmd = rule[1]
                     break
                 if cmd == rule[0] and rule[3] == 'function':
