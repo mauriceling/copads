@@ -1,7 +1,6 @@
 '''
 One dimensional tape/register machine
 Date created: 15th August 2012
-Licence: Python Software Foundation License version 2
 
 The machine consists of the following elements:
     1. Array/Tape: A circular tape for operations to occur
@@ -46,7 +45,7 @@ def interpret(source, functions,
     if len(source) % function_size != 0:
         source = source + '!'*(function_size - \
                                len(source) % function_size)
-	tokens = functions.keys()
+	tokens = list(functions.keys())
 	source = ''.join([x for x in source if x in tokens])
     instruction_count = 0
     while spointer < len(source):
