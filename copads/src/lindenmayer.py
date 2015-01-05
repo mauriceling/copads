@@ -1,5 +1,5 @@
 '''
-Lindenmayer System (L-System)
+Framework for Lindenmayer System (L-System)
 
 Copyright (c) Maurice H.T. Ling <mauriceling@acm.org>
 
@@ -9,9 +9,93 @@ import random
 
 class lindenmayer(object):
     '''
+    Lindenmayer system, also commonly known as L-System, is developed 
+    by Aristid Lindenmayer in 1968 (reference: Mathematical models for 
+    cellular interaction in development. Journal of Theoretical 
+    Biology 18:280-315). It is a set of formal grammar of production 
+    rules for rewiting an initial axiom or seed text over generations. 
+    
+    This implementation defines 3 types of rules, also known as production 
+    rules or predicates; replacement, probability, and function rules. Each 
+    rule can be given a priority.
+    
+    The simplest form of production rule takes the form of 'A -> BAC', which 
+    is read as "whenever 'A' is found, it is replaced/rewritten as 'BAC'". 
+    For example, if the starting axiom is "A", then the following will happen
+    
+    Generation 0: A
+    Generation 1: BAC
+    Generation 2: BBACC
+    Generation 3: BBBACCC
+    Generation 4: BBBBACCCC
+    and so on.
+    
+    In this case, the predicate 'A -> BAC' can be written as in 4 different 
+    ways - ['A', 'BAC'], ['A', 'BAC', 1], ['A', 'BAC', 1, 'replacement'], 
+    or ['A', 'BAC', 1, 'replacement', 1].
+    
+    When a list of 2-elements is given (e.g., ['A', 'BAC']), it is taken to 
+    be replacement rule with the highest priority; that is, priority of 1. 
+    Hence, ['A', 'BAC'], ['A', 'BAC', 1], and ['A', 'BAC', 1, 'replacement'] 
+    are the same. 
+    
+    This also means that production rules can have different priorities. For 
+    example, given [['A', 'BAC', 1], ['B', 'BC', 2]], rule ['A', 'BAC', 1] 
+    will be executed before ['B', 'BC', 2] in the following manner
+    
+    Generation 0: A
+    Generation 1: BCAC      # A -> BAC, BAC -> BCAC
+    Generation 2: BCCBCACC
+    Generation 3: BCCCBCCBCACCC
+    and so on as all production rules in ascending order of priorities (with 
+    '1' being the highest priority) will be executed in parallel on the 
+    resulting axiom at that current point in time.
+    
+    However, if given [['A', 'BAC', 1], ['B', 'BC', 1]], then
+    
+    Generation 0: A
+    Generation 1: BAC
+    Generation 2: BCBACC
+    Generation 3: BCCBCBACCC
+    Generation 4: BCCCBCCBCBACCCC
+    and so on.
+    
+    The second form of production rule is probabilistic, also known as 
+    stochastic grammars. Probabilistic rule will take the format of 
+    [<domain>, <range>, <priority>, 'probability', <probability>]. For 
+    example, ['A', 'BAC', 1, 'probability', 0.5] means that 'A' will 
+    only be rewritten into 'BAC' 50% of the time. 'A' will be left 
+    unchanged 50% of the time. The same priority principle applies. 
+    Hence, ['A', 'BAC', 1, 'probability', 1] is in effect the same as 
+    ['A', 'BAC', 1, 'replacement'].
+    
+    The thirs form of production rule is function rule, which takes the 
+    form of [<domain>, <function>, <priority>, 'function']. For 
+    example, ['A', axiom_func, 1, 'function'] means that when 'A' is 
+    encounted in the axiom, the command string up to that point in time 
+    will be used as parameter for axion_func function, such as
+    
+    Generation 0: A
+    Generation 1: dependent on the return value of axiom_func('A')
+    and so on.
+    
+    In summary, the following rule formats are allowed:
+        - [<domain>, <range>]
+        - [<domain>, <range>, <priority>]
+        - [<domain>, <range>, <priority>, 'replacement']
+        - [<domain>, <range>, <priority>, 'probability', <probability>]
+        - [<domain>, <function>, <priority>, 'function']
     '''
     def __init__(self, command_length=1, rules=[]):
         '''
+        Constructor method.
+        
+        @param command_length: length of each instruction or command. 
+        Default = 1
+        @type command_length: integer
+        @param rules: a list of list describing the production rules. Please 
+        see above for rule syntax. Default is empty list.
+        @type rules: list
         '''
         self.command_length = command_length
         self.rules = []
@@ -20,6 +104,12 @@ class lindenmayer(object):
     
     def add_rules(self, rules):
         '''
+        Method to add a list of production rules / predicates into the 
+        system. 
+        
+        @param rules: a list of list describing the production rules. Please 
+        see above for rule syntax.
+        @type rules: list
         '''
         for x in rules:
             if len(x) == 2:
@@ -38,7 +128,7 @@ class lindenmayer(object):
             elif len(x) == 4 and x[3] == 'replacement':
                 # [predicate, replacement, priority, 'replacement']
                 self.rules.append([x[0], x[1], int(x[2]), x[3], None])
-             elif len(x) == 4 and x[3] == 'probabilistic':
+            elif len(x) == 4 and x[3] == 'probability':
                 # [predicate, replacement, priority, 'probability']
                 print('''Warning: Function rule will require a \ 
                 probability. Rule, %s, is added into system as a \
@@ -48,22 +138,25 @@ class lindenmayer(object):
                 # [predicate, replacement, priority, 'probability', probability]
                 self.rules.append([x[0], x[1], int(x[2]), x[3], float(x[4])])
             elif len(x) == 4 and x[3] == 'function':
-                print('''Warning: Function rule will require a \ 
-                bounded-function. Rule, %s, is not added into \
-                system.''' % str(x))
-            elif len(x) == 5 and x[3] == 'function':
-                # [predicate, replacement, priority, 'function', func]
-                self.rules.append([x[0], x[1], int(x[2]), x[3], x[4]])
+                # [predicate, function, priority, 'function']
+                self.rules.append([x[0], x[1], int(x[2]), x[3], None])
         self.priority_levels = [x[2] for x in self.rules][-1]
          
-    def _apply_priority_rules(self, priority, data):
+    def _apply_priority_rules(self, priority, data_string):
         '''
+        Private method - to be used by apply_rules method to apply production 
+        rules of a particular priority.
+        
+        @param priority: order of priority
+        @type priority: integer
+        @param data_string: data or symbol string to be processed
+        @type data_string: string
         '''
         rules = [x for x in self.rules if x[2] == int(priority)]
         ndata = ''
         pointer = 0
-        while pointer < len(data):
-            cmd = data[pointer:pointer+self.command_length]
+        while pointer < len(data_string):
+            cmd = data_string[pointer:pointer+self.command_length]
             for rule in rules:
                 if cmd == rule[0] and rule[3] == 'replacement':
                     cmd = rule[1]
@@ -73,38 +166,25 @@ class lindenmayer(object):
                     cmd = rule[1]
                     break
                 if cmd == rule[0] and rule[3] == 'function':
-                    cmd = rule[4](data)
+                    cmd = rule[1](data)
                     break
             ndata = ndata + cmd
             pointer = pointer + self.command_length
         return ndata
             
-    def apply_rules(self, data):
+    def apply_rules(self, data_string):
         '''
+        Method to apply all production rules on axiom string (in the first 
+        generation) or data/symbol string (in the subsequent generations).
+        This method is implemented as a generator.
+        
+        @param data_string: data or symbol string to be processed
+        @type data_string: string
         '''
         for priority in list(range(1, self.priority_levels+1)):
-            data = self._apply_priority_rules(priority, data)
-        return data
-        
+            data_string = self._apply_priority_rules(priority, 
+                                                     data_string)
+        return data_string
 
-if __name__=='__main__':
-    print('Case 1')
-    s = lindenmayer(1)
-    r = [['A', 'B'],
-         ['B', 'AB']]
-    s.add_rules(r)
-    axiom = 'A'
-    for i in range(10):
-        print(i, axiom)
-        axiom = s.apply_rules(axiom)
-    print('Case 2')
-    s = lindenmayer(2)
-    r = [['AA', 'AB'],
-         ['AB', 'AAB']]
-    s.add_rules(r)
-    axiom = 'AA'
-    for i in range(15):
-        print(i, axiom)
-        axiom = s.apply_rules(axiom)
         
     
