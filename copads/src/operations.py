@@ -78,7 +78,7 @@ def items(l):
     """
     try:
         return list(asdict(l).keys())
-    except TypeError, x:
+    except TypeError as x:
         if str(x).find("unhashable") == -1:
             raise
     # asdict failed because l is unhashable.  Back up to a naive
@@ -129,7 +129,7 @@ def itemindex(l):
     """
     dict = {}
     for i in range(len(l)):
-        if not dict.has_key(l[i]):
+        if l[i] not in dict:
             dict[l[i]] = i
     return dict
 
