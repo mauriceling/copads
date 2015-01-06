@@ -1,11 +1,16 @@
 import sys
 import os
 import unittest
+import re
 
 sys.path.append(os.path.join(os.path.dirname(os.getcwd()), 'src'))
 import lindenmayer as N
 
 class testReplacement(unittest.TestCase):
+    '''
+    Test for single replacement rule without priority.
+    Command length = 1
+    '''
     def setUp(self):
         s = N.lindenmayer(1)
         r = [['A', 'BAC']]
@@ -29,6 +34,10 @@ class testReplacement(unittest.TestCase):
         self.assertEqual(self.result, self.answer)
 
 class testReplacementPriority(unittest.TestCase):
+    '''
+    Test for replacement rules with priority.
+    Command length = 1
+    '''
     def setUp(self):
         s = N.lindenmayer(1)
         r = [['A', 'BAC', 1],
@@ -51,6 +60,10 @@ class testReplacementPriority(unittest.TestCase):
         self.assertEqual(self.result, self.answer)
 
 class testReplacementNoPriority(unittest.TestCase):
+    '''
+    Test for replacement rules without priority.
+    Command length = 1
+    '''
     def setUp(self):
         s = N.lindenmayer(1)
         r = [['A', 'BAC'],
@@ -73,6 +86,10 @@ class testReplacementNoPriority(unittest.TestCase):
         self.assertEqual(self.result, self.answer)
 
 class testReplacement2(unittest.TestCase):
+    '''
+    Test for replacement rules without priority.
+    Command length = 2
+    '''
     def setUp(self):
         s = N.lindenmayer(2)
         r = [['AA', 'BBAAC'],
@@ -94,6 +111,33 @@ class testReplacement2(unittest.TestCase):
                        'BBBBBBBBBBBBBBBBAACCCCCCCC']
     def testGeneration(self):
         self.assertEqual(self.result, self.answer)
+    
+class testFunction(unittest.TestCase):
+    '''
+    Test for function rules.
+    Command length = 1
+    '''
+    def replaceFunction(self, dstring, position):
+        if dstring[position+3] == 'O': return 'BAAB'
+        elif dstring[position-1] == 'O': return 'AABB'
+        else: return 'OOAB'
+    def setUp(self):
+        s = N.lindenmayer(2)
+        r = [['AB', self.replaceFunction, 1, 'function']]
+        s.add_rules(r)
+        axiom = 'ACCCABABDD'
+        self.result = []
+        for i in range(5):
+            axiom = s.apply_rules(axiom)
+            self.result.append(axiom)
+        self.answer = ['ACCCOOABOOABDD',
+                       'ACCCOOBAABOOAABBDD',
+                       'ACCCOOBABAABOOAABBDD',
+                       'ACCCOOBABABAABOOAABBDD',
+                       'ACCCOOBABABABAABOOAABBDD']
+    def testGeneration(self):
+        self.assertEqual(self.result, self.answer)
+
 
 if __name__ == '__main__':
     unittest.main()
