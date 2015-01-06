@@ -166,8 +166,9 @@ class lindenmayer(object):
                     cmd = rule[1]
                     break
                 if cmd == rule[0] and rule[3] == 'function':
-                    cmd = rule[1](data)
+                    cmd = rule[1](data_string, pointer)
                     break
+            if cmd == None: cmd = ''
             ndata = ndata + cmd
             pointer = pointer + self.command_length
         return ndata
