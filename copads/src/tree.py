@@ -49,7 +49,7 @@ class OrderedBinaryTree:
     
     def addNode(self, data):
         # creates a new node and returns it
-        return Node(data)
+        return BinaryNode(data)
 
     def insert(self, root, data):
         # inserts a new data
@@ -113,7 +113,7 @@ class OrderedBinaryTree:
             pass
         else:
             self.printTree(root.left)
-            print(root.data, end=' ')
+            print(root.data)
             self.printTree(root.right)
 
     def printRevTree(self, root):
@@ -123,7 +123,7 @@ class OrderedBinaryTree:
             pass
         else:
             self.printRevTree(root.right)
-            print(root.data, end=' ')
+            print(root.data)
             self.printRevTree(root.left)
             
 
@@ -696,7 +696,7 @@ class RBDict(RBTree):
 
     def __init__(self, dict={}, cmpfn=cmp):
         RBTree.__init__(self, cmpfn)
-        for key, value in dict.items():
+        for key, value in list(dict.items()):
             self[key]=value
 
     def __str__(self):
@@ -768,7 +768,7 @@ class RBDict(RBTree):
         Will overwrite old entries with new ones.
 
         """
-        for key in other.keys():
+        for key in list(other.keys()):
             self[key] = other[key]
 
     def setdefault(self, key, value=None):

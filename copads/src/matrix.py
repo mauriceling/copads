@@ -547,7 +547,7 @@ class SparseMatrix(dict):
         " returns # of rows and columns "
         nrow = 0
         ncol = 0
-        for key in self.keys():
+        for key in list(self.keys()):
             nrow = max([nrow, key[0]+1])
             ncol = max([ncol, key[1]+1])
         return (nrow, ncol)
@@ -559,8 +559,8 @@ class SparseMatrix(dict):
         return res
         
     def __neg__(self):
-        return SparseMatrix(zip(self.keys(), 
-                            map(operator.neg, self.values())))
+        return SparseMatrix(zip(list(self.keys()), 
+                            map(operator.neg, list(self.values()))))
 
     def __sub__(self, other):
         res = SparseMatrix(self.copy())
@@ -583,29 +583,29 @@ class SparseMatrix(dict):
             return res
         except:
             # other is scalar
-            return SparseMatrix(zip(self.keys(), 
-                                map(lambda x: x*other, self.values())))
+            return SparseMatrix(zip(list(self.keys()), 
+                                map(lambda x: x*other, list(self.values()))))
 
     def __rmul__(self, other):
         return self.__mul__(other)
 
     def __div__(self, other):
         " element by element division self/other: other is scalar"
-        return SparseMatrix(zip(self.keys(), 
-                            map(lambda x: x/other, self.values())))
+        return SparseMatrix(zip(list(self.keys()), 
+                            map(lambda x: x/other, list(self.values()))))
         
     def __rdiv__(self, other):
         " element by element division other/self: other is scalar"
-        return SparseMatrix(zip(self.keys(), 
-                            map(lambda x: other/x, self.values())))
+        return SparseMatrix(zip(list(self.keys()), 
+                            map(lambda x: other/x, list(self.values()))))
 
     def abs(self):
-        return SparseMatrix(zip(self.keys(), 
-                            map(operator.abs, self.values())))
+        return SparseMatrix(zip(list(self.keys()), 
+                            map(operator.abs, list(self.values()))))
 
     def out(self):
         print('# (i, j) -- value')
-        for k in self.keys():
+        for k in list(self.keys()):
             print(k, self[k])
 
     def plot(self, width_in=400, height_in=400):
@@ -635,7 +635,7 @@ class SparseMatrix(dict):
                                 command=frame.quit)
         button.pack()
 
-        for index in self.keys():
+        for index in list(self.keys()):
             ix, iy = index[0], ymax-index[1]-1
             ya, xa = offset+scale*(ix), height_in -offset-scale*(iy)
             yb, xb = offset+scale*(ix+1), height_in -offset-scale*(iy)
@@ -742,13 +742,13 @@ class SparseMatrix(dict):
         """
         m = n = 0
         nnz = len(self)
-        for ij in self.keys():
+        for ij in list(self.keys()):
             m = max(ij[0], m)
             n = max(ij[1], n)
 
         f = open(filename, 'w')
         f.write('%d %d %d %d\n' % (OneBased, m+1, n+1, nnz))
-        for ij in self.keys():
+        for ij in list(self.keys()):
             i, j = ij
             f.write('%d %d %20.17f \n'% \
                 (i+OneBased, j+OneBased, self[ij]))
@@ -882,7 +882,7 @@ def smDotDot(y, a, x):
     """double dot product y^+ *A*x """
     if Vector.isVector(y) and isSparse(a) and Vector.isVector(x):
         res = 0.
-        for ij in a.keys():
+        for ij in list(a.keys()):
             i, j = ij
             res += y[i]*a[ij]*x[j]
         return res
@@ -893,12 +893,12 @@ def smDot(a, b):
     """vector-matrix, matrix-vector or matrix-matrix product"""
     if isSparse(a) and isVector(b):
         new = v_zeros(a.size()[0])
-        for ij in a.keys():
+        for ij in list(a.keys()):
             new[ij[0]] += a[ij]* b[ij[1]]
         return new
     elif isVector(a) and isSparse(b):
         new = v_zeros(b.size()[1])
-        for ij in b.keys():
+        for ij in list(b.keys()):
             new[ij[1]] += a[ij[0]]* b[ij]
         return new
     elif isSparse(a) and isSparse(b):

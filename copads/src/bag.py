@@ -25,7 +25,7 @@ class Bag(object):
         """Update the bag
         @param iterable: dictionary if elements to add"""
         if isinstance(iterable, dict):
-            for elem, n in iterable.iteritems():
+            for elem, n in iterable.items():
                 self[elem] += n
         else:
             for elem in iterable:
@@ -48,7 +48,7 @@ class Bag(object):
         del self._data[elem]
 
     def __len__(self):
-        assert self._len == sum(self._data.itervalues())
+        assert self._len == sum(self._data.values())
         return self._len
 
     def __eq__(self, other):
@@ -94,15 +94,15 @@ class Bag(object):
         self._len = 0
 
     def __iter__(self):
-        for elem, cnt in self._data.iteritems():
+        for elem, cnt in self._data.items():
             for i in xrange(cnt):
                 yield elem
                 
     def iterunique(self):
-        return self._data.iterkeys()
+        return iter(self._data.keys())
 
     def itercounts(self):
-        return self._data.iteritems()     
+        return iter(self._data.items())     
 
     def mostcommon(self, n=None):
         """Lists the most common elements of the bag and its counts

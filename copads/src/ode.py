@@ -20,7 +20,7 @@ def boundary_checker(y, boundary, type):
     @param type: the type of boundary to be checked, either 'upper' (upper 
     boundary) or 'lower' (lower boundary)
     '''
-    for k in boundary.keys():
+    for k in list(boundary.keys()):
         if y[int(k)] < boundary[k][0] and type == 'lower':
             y[int(k)] = boundary[k][1]
         if y[int(k)] > boundary[k][0] and type == 'upper':

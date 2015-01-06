@@ -132,7 +132,7 @@ class Neuron:
         '''
         synapses = synapses[self.name]
         synaptic_input = 0.0
-        for key in synapses.keys():
+        for key in list(synapses.keys()):
             try: 
                 synaptic_input = synaptic_input + \
                     (float(synapses[key]) * float(activations[key]))
@@ -403,7 +403,7 @@ class Brain:
             # remove synapses to the neuron
             del self.synapses[neuron_name]
             # remove all synapses from the neuron
-            for name in self.synapses.keys():
+            for name in list(self.synapses.keys()):
                 try: 
                     del self.synapses[name][neuron_name]
                 except KeyError: pass

@@ -112,7 +112,7 @@ class dataframe(object):
         @return: Dictionary of data
         '''
         temp = {}
-        for key in self.data.keys():
+        for key in list(self.data.keys()):
             try:
                 temp[key] = self.data[key][observation-1]
             except IndexError:
