@@ -307,11 +307,16 @@ class lindenmayer(object):
                        '[': 'push',
                        ']': 'pop'}
         stack = []
-        if 'random_angle' not in mapping: mapping['random_angle'] = 0
-        if 'random_distance' not in mapping: mapping['random_distance'] = 0
-        if 'set_heading' not in mapping: mapping['set_heading'] = 0
-        if 'set_colour' not in mapping: mapping['set_colour'] = 'black'
-        if 'background_colour' not in mapping: mapping['background_colour'] = 'ivory'
+        if 'random_angle' not in mapping: 
+            mapping['random_angle'] = 0
+        if 'random_distance' not in mapping: 
+            mapping['random_distance'] = 0
+        if 'set_heading' not in mapping: 
+            mapping['set_heading'] = 0
+        if 'set_colour' not in mapping: 
+            mapping['set_colour'] = 'black'
+        if 'background_colour' not in mapping: 
+            mapping['background_colour'] = 'ivory'
         data_string = [cmd for cmd in data_string if cmd in mapping]
         if scriptfile != None:
             f = open(scriptfile, 'w')
@@ -406,7 +411,8 @@ class lindenmayer(object):
             f.write('\n')
             f.write('try: \n')
             f.write('    import canvasvg \n')
-            f.write("    canvasvg.saveall('%s', t.getscreen()._canvas) \n" % imagefile)
+            f.write("    canvasvg.saveall('%s', t.getscreen()._canvas) \n" \
+                    % imagefile)
             f.write('except ImportError: pass \n')
         exec('turtle.done()')
         print('%s instructions processed. Drawing completed.' % str(count))
