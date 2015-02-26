@@ -1,3 +1,5 @@
+error_tolerance = 1e-8
+
 def boundary_checker(y, boundary, type):
     '''
     Private function - called by ODE solvers to perform boundary checking 
@@ -68,19 +70,27 @@ def Euler(funcs, x0, y0, step, xmax,
     @type zerodivision: float
     '''
     yield [x0] + y0
-    n = len(funcs)
-    while x0 < xmax:
+    xExpected = x0
+    def solver(funcs, x0, y0, step):
+        n = len(funcs)
+        y1 = [0]*n
         for i in range(n):
-            try: y0[i] = y0[i] + (step*funcs[i](x0, y0))
+            try: y1[i] = y0[i] + (step*funcs[i](x0, y0))
             except TypeError: pass
             except ZeroDivisionError: y0[i] = zerodivision
             except OverflowError: y0[i] = overflow
+        return y1
+    while x0 < xmax:
+        y1 = solver(funcs, x0, y0, step)
         if lower_bound: 
-            y0 = boundary_checker(y0, lower_bound, 'lower')
+            y1 = boundary_checker(y1, lower_bound, 'lower')
         if upper_bound: 
-            y0 = boundary_checker(y0, upper_bound, 'upper')
+            y1 = boundary_checker(y1, upper_bound, 'upper')
+        xExpected = xExpected + step
+        y0 = y1
         x0 = x0 + step
-        yield [x0] + y0
+        if (x0-xExpected) < (step + 0.1*step):
+            yield [x0] + y0
 
 def Heun(funcs, x0, y0, step, xmax,
          lower_bound=None, upper_bound=None,
@@ -120,9 +130,10 @@ def Heun(funcs, x0, y0, step, xmax,
     @type zerodivision: float
     '''
     yield [x0] + y0
-    n = len(funcs)
-    f1 = [0]*n
-    while x0 < xmax:
+    xExpected = x0
+    def solver(funcs, x0, y0, step):
+        n = len(funcs)
+        f1 = [0]*n
         y1, y2 = [0]*n, [0]*n
         for i in range(n): 
             try: f1[i] = funcs[i](x0, y0)
@@ -139,14 +150,19 @@ def Heun(funcs, x0, y0, step, xmax,
             except TypeError: pass
             except ZeroDivisionError: y2[i] = zerodivision
             except OverflowError: y2[i] = overflow
-        x0 = x0 + step
-        y0 = y2
+        return y2
+    while x0 < xmax:
+        y2 = solver(funcs, x0, y0, step)
         if lower_bound: 
-            y0 = boundary_checker(y0, lower_bound, 'lower')
+            y2 = boundary_checker(y2, lower_bound, 'lower')
         if upper_bound: 
-            y0 = boundary_checker(y0, upper_bound, 'upper')
-        yield [x0] + y0
-        
+            y2 = boundary_checker(y2, upper_bound, 'upper')
+        xExpected = xExpected + step
+        y0 = y2
+        x0 = x0 + step
+        if (x0-xExpected) < (step + 0.1*step):
+            yield [x0] + y0
+    
 def RK3(funcs, x0, y0, step, xmax,
         lower_bound=None, upper_bound=None,
         overflow=1e100, zerodivision=1e100):
@@ -184,10 +200,12 @@ def RK3(funcs, x0, y0, step, xmax,
     integration. Default = 1e100.
     @type zerodivision: float
     '''
-    n = len(funcs)
+    xExpected = x0
     yield [x0] + y0
-    f1, f2, f3 = [0]*n, [0]*n, [0]*n
-    while x0 < xmax:
+    def solver(funcs, x0, y0, step):
+        n = len(funcs)
+        f1, f2, f3 = [0]*n, [0]*n, [0]*n
+        y1, y2 = [0]*n, [0]*n
         y1 = [0]*n
         for i in range(n): 
             try: f1[i] = step * funcs[i](x0, y0)
@@ -208,18 +226,23 @@ def RK3(funcs, x0, y0, step, xmax,
             except TypeError: pass
             except ZeroDivisionError: f3[i] = zerodivision
             except OverflowError: f3[i] = overflow
-        x0 = x0 + step
         for i in range(n): 
             try: y1[i] = y0[i] + (f1[i] + 4*f2[i] + f3[i])/6.0
             except TypeError: pass
             except ZeroDivisionError: y1[i] = zerodivision
             except OverflowError: y1[i] = overflow
-        y0 = y1
+        return y1
+    while x0 < xmax:
+        y1 = solver(funcs, x0, y0, step)
         if lower_bound: 
-            y0 = boundary_checker(y0, lower_bound, 'lower')
+            y1 = boundary_checker(y1, lower_bound, 'lower')
         if upper_bound: 
-            y0 = boundary_checker(y0, upper_bound, 'upper')
-        yield [x0] + y1
+            y1 = boundary_checker(y1, upper_bound, 'upper')
+        xExpected = xExpected + step
+        y0 = y1
+        x0 = x0 + step
+        if (x0-xExpected) < (step + 0.1*step):
+            yield [x0] + y0
         
 def RK4(funcs, x0, y0, step, xmax, 
         lower_bound=None, upper_bound=None,
@@ -258,10 +281,11 @@ def RK4(funcs, x0, y0, step, xmax,
     integration. Default = 1e100.
     @type zerodivision: float
     '''
-    n = len(funcs)
+    xExpected = x0
     yield [x0] + y0
-    f1, f2, f3, f4 = [0]*n, [0]*n, [0]*n, [0]*n
-    while x0 < xmax:
+    def solver(funcs, x0, y0, step):
+        n = len(funcs)
+        f1, f2, f3, f4 = [0]*n, [0]*n, [0]*n, [0]*n
         y1 = [0]*n
         for i in range(n):
             try: f1[i] = funcs[i](x0, y0)
@@ -289,19 +313,24 @@ def RK4(funcs, x0, y0, step, xmax,
             except TypeError: pass
             except ZeroDivisionError: f4[i] = zerodivision
             except OverflowError: f4[i] = overflow
-        x0 = x0 + step
         for i in range(n):
             try: y1[i] = y0[i] + (step * \
                     (f1[i] + (2.0*f2[i]) + (2.0*f3[i]) + f4[i]) / 6.0)
             except TypeError: pass
             except ZeroDivisionError: y1[i] = zerodivision
             except OverflowError: y1[i] = overflow
+        return y1
+    while x0 < xmax:
+        y1 = solver(funcs, x0, y0, step)
         if lower_bound: 
             y1 = boundary_checker(y1, lower_bound, 'lower')
         if upper_bound: 
             y1 = boundary_checker(y1, upper_bound, 'upper')
+        xExpected = xExpected + step
         y0 = y1
-        yield [x0] + y1
+        x0 = x0 + step
+        if (x0-xExpected) < (step + 0.1*step):
+            yield [x0] + y0
         
 def RK38(funcs, x0, y0, step, xmax, 
         lower_bound=None, upper_bound=None,
@@ -340,10 +369,11 @@ def RK38(funcs, x0, y0, step, xmax,
     integration. Default = 1e100.
     @type zerodivision: float
     '''
-    n = len(funcs)
+    xExpected = x0
     yield [x0] + y0
-    f1, f2, f3, f4 = [0]*n, [0]*n, [0]*n, [0]*n
-    while x0 < xmax:
+    def solver(funcs, x0, y0, step):
+        n = len(funcs)
+        f1, f2, f3, f4 = [0]*n, [0]*n, [0]*n, [0]*n
         y1 = [0]*n
         for i in range(n):
             try: f1[i] = funcs[i](x0, y0)
@@ -371,19 +401,24 @@ def RK38(funcs, x0, y0, step, xmax,
             except TypeError: pass
             except ZeroDivisionError: f4[i] = zerodivision
             except OverflowError: f4[i] = overflow
-        x0 = x0 + step
         for i in range(n):
             try: y1[i] = y0[i] + (step * \
                     (f1[i] + (3.0*f2[i]) + (3.0*f3[i]) + f4[i]) / 8.0)
             except TypeError: pass
             except ZeroDivisionError: y1[i] = zerodivision
             except OverflowError: y1[i] = overflow
+        return y1
+    while x0 < xmax:
+        y1 = solver(funcs, x0, y0, step)
         if lower_bound: 
             y1 = boundary_checker(y1, lower_bound, 'lower')
         if upper_bound: 
             y1 = boundary_checker(y1, upper_bound, 'upper')
+        xExpected = xExpected + step
         y0 = y1
-        yield [x0] + y1
+        x0 = x0 + step
+        if (x0-xExpected) < (step + 0.1*step):
+            yield [x0] + y0
 
 def CK4(funcs, x0, y0, step, xmax, 
         lower_bound=None, upper_bound=None,
@@ -422,10 +457,11 @@ def CK4(funcs, x0, y0, step, xmax,
     integration. Default = 1e100.
     @type zerodivision: float
     '''
-    n = len(funcs)
+    xExpected = x0
     yield [x0] + y0
-    f1, f2, f3, f4, f5, f6 = [0]*n, [0]*n, [0]*n, [0]*n, [0]*n, [0]*n
-    while x0 < xmax:
+    def solver(funcs, x0, y0, step):
+        n = len(funcs)
+        f1, f2, f3, f4, f5, f6 = [0]*n, [0]*n, [0]*n, [0]*n, [0]*n, [0]*n
         y1 = [0]*n
         for i in range(n):
             try: f1[i] = funcs[i](x0, y0)
@@ -471,7 +507,6 @@ def CK4(funcs, x0, y0, step, xmax,
             except TypeError: pass
             except ZeroDivisionError: f6[i] = zerodivision
             except OverflowError: f6[i] = overflow
-        x0 = x0 + step
         for i in range(n):
             try: y1[i] = y0[i] + (step * \
                     ((2825*f1[i]/27648) + (18575*f3[i]/48384) + \
@@ -480,12 +515,18 @@ def CK4(funcs, x0, y0, step, xmax,
             except TypeError: pass
             except ZeroDivisionError: y1[i] = zerodivision
             except OverflowError: y1[i] = overflow
+        return y1
+    while x0 < xmax:
+        y1 = solver(funcs, x0, y0, step)
         if lower_bound: 
             y1 = boundary_checker(y1, lower_bound, 'lower')
         if upper_bound: 
             y1 = boundary_checker(y1, upper_bound, 'upper')
+        xExpected = xExpected + step
         y0 = y1
-        yield [x0] + y1
+        x0 = x0 + step
+        if (x0-xExpected) < (step + 0.1*step):
+            yield [x0] + y0
         
 def CK5(funcs, x0, y0, step, xmax, 
         lower_bound=None, upper_bound=None,
@@ -524,10 +565,11 @@ def CK5(funcs, x0, y0, step, xmax,
     integration. Default = 1e100.
     @type zerodivision: float
     '''
-    n = len(funcs)
+    xExpected = x0
     yield [x0] + y0
-    f1, f2, f3, f4, f5, f6 = [0]*n, [0]*n, [0]*n, [0]*n, [0]*n, [0]*n
-    while x0 < xmax:
+    def solver(funcs, x0, y0, step):
+        n = len(funcs)
+        f1, f2, f3, f4, f5, f6 = [0]*n, [0]*n, [0]*n, [0]*n, [0]*n, [0]*n
         y1 = [0]*n
         for i in range(n):
             try: f1[i] = funcs[i](x0, y0)
@@ -573,7 +615,6 @@ def CK5(funcs, x0, y0, step, xmax,
             except TypeError: pass
             except ZeroDivisionError: f6[i] = zerodivision
             except OverflowError: f6[i] = overflow
-        x0 = x0 + step
         for i in range(n):
             try: y1[i] = y0[i] + (step * \
                     ((37*f1[i]/378.0) + (250*f3[i]/621.0) + \
@@ -581,12 +622,18 @@ def CK5(funcs, x0, y0, step, xmax,
             except TypeError: pass
             except ZeroDivisionError: y1[i] = zerodivision
             except OverflowError: y1[i] = overflow
+        return y1
+    while x0 < xmax:
+        y1 = solver(funcs, x0, y0, step)
         if lower_bound: 
             y1 = boundary_checker(y1, lower_bound, 'lower')
         if upper_bound: 
             y1 = boundary_checker(y1, upper_bound, 'upper')
+        xExpected = xExpected + step
         y0 = y1
-        yield [x0] + y1
+        x0 = x0 + step
+        if (x0-xExpected) < (step + 0.1*step):
+            yield [x0] + y0
         
 def RKF4(funcs, x0, y0, step, xmax, 
         lower_bound=None, upper_bound=None,
@@ -625,10 +672,11 @@ def RKF4(funcs, x0, y0, step, xmax,
     integration. Default = 1e100.
     @type zerodivision: float
     '''
-    n = len(funcs)
+    xExpected = x0
     yield [x0] + y0
-    f1, f2, f3, f4, f5, f6 = [0]*n, [0]*n, [0]*n, [0]*n, [0]*n, [0]*n
-    while x0 < xmax:
+    def solver(funcs, x0, y0, step):
+        n = len(funcs)
+        f1, f2, f3, f4, f5, f6 = [0]*n, [0]*n, [0]*n, [0]*n, [0]*n, [0]*n
         y1 = [0]*n
         for i in range(n):
             try: f1[i] = funcs[i](x0, y0)
@@ -675,7 +723,6 @@ def RKF4(funcs, x0, y0, step, xmax,
             except TypeError: pass
             except ZeroDivisionError: f6[i] = zerodivision
             except OverflowError: f6[i] = overflow
-        x0 = x0 + step
         for i in range(n):
             try: y1[i] = y0[i] + (step * \
                     ((25*f1[i]/216.0) + (1408*f3[i]/2565.0) + \
@@ -683,12 +730,18 @@ def RKF4(funcs, x0, y0, step, xmax,
             except TypeError: pass
             except ZeroDivisionError: y1[i] = zerodivision
             except OverflowError: y1[i] = overflow
+        return y1
+    while x0 < xmax:
+        y1 = solver(funcs, x0, y0, step)
         if lower_bound: 
             y1 = boundary_checker(y1, lower_bound, 'lower')
         if upper_bound: 
             y1 = boundary_checker(y1, upper_bound, 'upper')
+        xExpected = xExpected + step
         y0 = y1
-        yield [x0] + y1
+        x0 = x0 + step
+        if (x0-xExpected) < (step + 0.1*step):
+            yield [x0] + y0
       
 def RKF5(funcs, x0, y0, step, xmax, 
         lower_bound=None, upper_bound=None,
@@ -727,10 +780,11 @@ def RKF5(funcs, x0, y0, step, xmax,
     integration. Default = 1e100.
     @type zerodivision: float
     '''
-    n = len(funcs)
+    xExpected = x0
     yield [x0] + y0
-    f1, f2, f3, f4, f5, f6 = [0]*n, [0]*n, [0]*n, [0]*n, [0]*n, [0]*n
-    while x0 < xmax:
+    def solver(funcs, x0, y0, step):
+        n = len(funcs)
+        f1, f2, f3, f4, f5, f6 = [0]*n, [0]*n, [0]*n, [0]*n, [0]*n, [0]*n
         y1 = [0]*n
         for i in range(n):
             try: f1[i] = funcs[i](x0, y0)
@@ -778,7 +832,6 @@ def RKF5(funcs, x0, y0, step, xmax,
             except TypeError: pass
             except ZeroDivisionError: f6[i] = zerodivision
             except OverflowError: f6[i] = overflow
-        x0 = x0 + step
         for i in range(n):
             try: y1[i] = y0[i] + (step * \
                     ((16*f1[i]/135.0) + (6656*f3[i]/12825.0) + \
@@ -787,12 +840,18 @@ def RKF5(funcs, x0, y0, step, xmax,
             except TypeError: pass
             except ZeroDivisionError: y1[i] = zerodivision
             except OverflowError: y1[i] = overflow
+        return y1
+    while x0 < xmax:
+        y1 = solver(funcs, x0, y0, step)
         if lower_bound: 
             y1 = boundary_checker(y1, lower_bound, 'lower')
         if upper_bound: 
             y1 = boundary_checker(y1, upper_bound, 'upper')
+        xExpected = xExpected + step
         y0 = y1
-        yield [x0] + y1
+        x0 = x0 + step
+        if (x0-xExpected) < (step + 0.1*step):
+            yield [x0] + y0
         
 def DP4(funcs, x0, y0, step, xmax, 
         lower_bound=None, upper_bound=None,
@@ -831,11 +890,12 @@ def DP4(funcs, x0, y0, step, xmax,
     integration. Default = 1e100.
     @type zerodivision: float
     '''
-    n = len(funcs)
+    xExpected = x0
     yield [x0] + y0
-    f1, f2, f3 = [0]*n, [0]*n, [0]*n
-    f4, f5, f6, f7 = [0]*n, [0]*n, [0]*n, [0]*n
-    while x0 < xmax:
+    def solver(funcs, x0, y0, step):
+        n = len(funcs)
+        f1, f2, f3 = [0]*n, [0]*n, [0]*n
+        f4, f5, f6, f7 = [0]*n, [0]*n, [0]*n, [0]*n
         y1 = [0]*n
         for i in range(n):
             try: f1[i] = funcs[i](x0, y0)
@@ -892,7 +952,6 @@ def DP4(funcs, x0, y0, step, xmax,
             except TypeError: pass
             except ZeroDivisionError: f7[i] = zerodivision
             except OverflowError: f7[i] = overflow
-        x0 = x0 + step
         for i in range(n):
             try: y1[i] = y0[i] + (step * \
                     ((5179*f1[i]/57600.0) + (7571*f3[i]/16695.0) + \
@@ -901,12 +960,18 @@ def DP4(funcs, x0, y0, step, xmax,
             except TypeError: pass
             except ZeroDivisionError: y1[i] = zerodivision
             except OverflowError: y1[i] = overflow
+        return y1
+    while x0 < xmax:
+        y1 = solver(funcs, x0, y0, step)
         if lower_bound: 
             y1 = boundary_checker(y1, lower_bound, 'lower')
         if upper_bound: 
             y1 = boundary_checker(y1, upper_bound, 'upper')
+        xExpected = xExpected + step
         y0 = y1
-        yield [x0] + y1
+        x0 = x0 + step
+        if (x0-xExpected) < (step + 0.1*step):
+            yield [x0] + y0
         
 def DP5(funcs, x0, y0, step, xmax, 
         lower_bound=None, upper_bound=None,
@@ -945,11 +1010,12 @@ def DP5(funcs, x0, y0, step, xmax,
     integration. Default = 1e100.
     @type zerodivision: float
     '''
-    n = len(funcs)
+    xExpected = x0
     yield [x0] + y0
-    f1, f2, f3 = [0]*n, [0]*n, [0]*n
-    f4, f5, f6, f7 = [0]*n, [0]*n, [0]*n, [0]*n
-    while x0 < xmax:
+    def solver(funcs, x0, y0, step):
+        n = len(funcs)
+        f1, f2, f3 = [0]*n, [0]*n, [0]*n
+        f4, f5, f6, f7 = [0]*n, [0]*n, [0]*n, [0]*n
         y1 = [0]*n
         for i in range(n):
             try: f1[i] = funcs[i](x0, y0)
@@ -1006,7 +1072,6 @@ def DP5(funcs, x0, y0, step, xmax,
             except TypeError: pass
             except ZeroDivisionError: f7[i] = zerodivision
             except OverflowError: f7[i] = overflow
-        x0 = x0 + step
         for i in range(n):
             try: y1[i] = y0[i] + (step * \
                     ((35*f1[i]/384.0) + (500*f3[i]/1113.0) + \
@@ -1015,9 +1080,15 @@ def DP5(funcs, x0, y0, step, xmax,
             except TypeError: pass
             except ZeroDivisionError: y1[i] = zerodivision
             except OverflowError: y1[i] = overflow
+        return y1
+    while x0 < xmax:
+        y1 = solver(funcs, x0, y0, step)
         if lower_bound: 
             y1 = boundary_checker(y1, lower_bound, 'lower')
         if upper_bound: 
             y1 = boundary_checker(y1, upper_bound, 'upper')
+        xExpected = xExpected + step
         y0 = y1
-        yield [x0] + y1
+        x0 = x0 + step
+        if (x0-xExpected) < (step + 0.1*step):
+            yield [x0] + y0
