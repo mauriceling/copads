@@ -1,5 +1,10 @@
-error_tolerance = 1e-8
+'''
+Ordinary Differential Equation (ODE) Solvers.
 
+Copyright (c) Maurice H.T. Ling <mauriceling@acm.org>
+
+Date created: 20th December 2014
+'''
 def boundary_checker(y, boundary, type):
     '''
     Private function - called by ODE solvers to perform boundary checking 
@@ -70,7 +75,6 @@ def Euler(funcs, x0, y0, step, xmax,
     @type zerodivision: float
     '''
     yield [x0] + y0
-    xExpected = x0
     def solver(funcs, x0, y0, step):
         n = len(funcs)
         y1 = [0]*n
@@ -86,11 +90,9 @@ def Euler(funcs, x0, y0, step, xmax,
             y1 = boundary_checker(y1, lower_bound, 'lower')
         if upper_bound: 
             y1 = boundary_checker(y1, upper_bound, 'upper')
-        xExpected = xExpected + step
         y0 = y1
         x0 = x0 + step
-        if (x0-xExpected) < (step + 0.1*step):
-            yield [x0] + y0
+        yield [x0] + y0
 
 def Heun(funcs, x0, y0, step, xmax,
          lower_bound=None, upper_bound=None,
@@ -130,7 +132,6 @@ def Heun(funcs, x0, y0, step, xmax,
     @type zerodivision: float
     '''
     yield [x0] + y0
-    xExpected = x0
     def solver(funcs, x0, y0, step):
         n = len(funcs)
         f1 = [0]*n
@@ -157,11 +158,9 @@ def Heun(funcs, x0, y0, step, xmax,
             y2 = boundary_checker(y2, lower_bound, 'lower')
         if upper_bound: 
             y2 = boundary_checker(y2, upper_bound, 'upper')
-        xExpected = xExpected + step
         y0 = y2
         x0 = x0 + step
-        if (x0-xExpected) < (step + 0.1*step):
-            yield [x0] + y0
+        yield [x0] + y0
     
 def RK3(funcs, x0, y0, step, xmax,
         lower_bound=None, upper_bound=None,
@@ -200,7 +199,6 @@ def RK3(funcs, x0, y0, step, xmax,
     integration. Default = 1e100.
     @type zerodivision: float
     '''
-    xExpected = x0
     yield [x0] + y0
     def solver(funcs, x0, y0, step):
         n = len(funcs)
@@ -238,11 +236,9 @@ def RK3(funcs, x0, y0, step, xmax,
             y1 = boundary_checker(y1, lower_bound, 'lower')
         if upper_bound: 
             y1 = boundary_checker(y1, upper_bound, 'upper')
-        xExpected = xExpected + step
         y0 = y1
         x0 = x0 + step
-        if (x0-xExpected) < (step + 0.1*step):
-            yield [x0] + y0
+        yield [x0] + y0
         
 def RK4(funcs, x0, y0, step, xmax, 
         lower_bound=None, upper_bound=None,
@@ -281,7 +277,6 @@ def RK4(funcs, x0, y0, step, xmax,
     integration. Default = 1e100.
     @type zerodivision: float
     '''
-    xExpected = x0
     yield [x0] + y0
     def solver(funcs, x0, y0, step):
         n = len(funcs)
@@ -326,11 +321,9 @@ def RK4(funcs, x0, y0, step, xmax,
             y1 = boundary_checker(y1, lower_bound, 'lower')
         if upper_bound: 
             y1 = boundary_checker(y1, upper_bound, 'upper')
-        xExpected = xExpected + step
         y0 = y1
         x0 = x0 + step
-        if (x0-xExpected) < (step + 0.1*step):
-            yield [x0] + y0
+        yield [x0] + y0
         
 def RK38(funcs, x0, y0, step, xmax, 
         lower_bound=None, upper_bound=None,
@@ -369,7 +362,6 @@ def RK38(funcs, x0, y0, step, xmax,
     integration. Default = 1e100.
     @type zerodivision: float
     '''
-    xExpected = x0
     yield [x0] + y0
     def solver(funcs, x0, y0, step):
         n = len(funcs)
@@ -414,11 +406,9 @@ def RK38(funcs, x0, y0, step, xmax,
             y1 = boundary_checker(y1, lower_bound, 'lower')
         if upper_bound: 
             y1 = boundary_checker(y1, upper_bound, 'upper')
-        xExpected = xExpected + step
         y0 = y1
         x0 = x0 + step
-        if (x0-xExpected) < (step + 0.1*step):
-            yield [x0] + y0
+        yield [x0] + y0
 
 def CK4(funcs, x0, y0, step, xmax, 
         lower_bound=None, upper_bound=None,
@@ -457,7 +447,6 @@ def CK4(funcs, x0, y0, step, xmax,
     integration. Default = 1e100.
     @type zerodivision: float
     '''
-    xExpected = x0
     yield [x0] + y0
     def solver(funcs, x0, y0, step):
         n = len(funcs)
@@ -522,11 +511,9 @@ def CK4(funcs, x0, y0, step, xmax,
             y1 = boundary_checker(y1, lower_bound, 'lower')
         if upper_bound: 
             y1 = boundary_checker(y1, upper_bound, 'upper')
-        xExpected = xExpected + step
         y0 = y1
         x0 = x0 + step
-        if (x0-xExpected) < (step + 0.1*step):
-            yield [x0] + y0
+        yield [x0] + y0
         
 def CK5(funcs, x0, y0, step, xmax, 
         lower_bound=None, upper_bound=None,
@@ -565,7 +552,6 @@ def CK5(funcs, x0, y0, step, xmax,
     integration. Default = 1e100.
     @type zerodivision: float
     '''
-    xExpected = x0
     yield [x0] + y0
     def solver(funcs, x0, y0, step):
         n = len(funcs)
@@ -629,11 +615,9 @@ def CK5(funcs, x0, y0, step, xmax,
             y1 = boundary_checker(y1, lower_bound, 'lower')
         if upper_bound: 
             y1 = boundary_checker(y1, upper_bound, 'upper')
-        xExpected = xExpected + step
         y0 = y1
         x0 = x0 + step
-        if (x0-xExpected) < (step + 0.1*step):
-            yield [x0] + y0
+        yield [x0] + y0
         
 def RKF4(funcs, x0, y0, step, xmax, 
         lower_bound=None, upper_bound=None,
@@ -672,7 +656,6 @@ def RKF4(funcs, x0, y0, step, xmax,
     integration. Default = 1e100.
     @type zerodivision: float
     '''
-    xExpected = x0
     yield [x0] + y0
     def solver(funcs, x0, y0, step):
         n = len(funcs)
@@ -737,11 +720,9 @@ def RKF4(funcs, x0, y0, step, xmax,
             y1 = boundary_checker(y1, lower_bound, 'lower')
         if upper_bound: 
             y1 = boundary_checker(y1, upper_bound, 'upper')
-        xExpected = xExpected + step
         y0 = y1
         x0 = x0 + step
-        if (x0-xExpected) < (step + 0.1*step):
-            yield [x0] + y0
+        yield [x0] + y0
       
 def RKF5(funcs, x0, y0, step, xmax, 
         lower_bound=None, upper_bound=None,
@@ -780,7 +761,6 @@ def RKF5(funcs, x0, y0, step, xmax,
     integration. Default = 1e100.
     @type zerodivision: float
     '''
-    xExpected = x0
     yield [x0] + y0
     def solver(funcs, x0, y0, step):
         n = len(funcs)
@@ -847,11 +827,9 @@ def RKF5(funcs, x0, y0, step, xmax,
             y1 = boundary_checker(y1, lower_bound, 'lower')
         if upper_bound: 
             y1 = boundary_checker(y1, upper_bound, 'upper')
-        xExpected = xExpected + step
         y0 = y1
         x0 = x0 + step
-        if (x0-xExpected) < (step + 0.1*step):
-            yield [x0] + y0
+        yield [x0] + y0
         
 def DP4(funcs, x0, y0, step, xmax, 
         lower_bound=None, upper_bound=None,
@@ -890,7 +868,6 @@ def DP4(funcs, x0, y0, step, xmax,
     integration. Default = 1e100.
     @type zerodivision: float
     '''
-    xExpected = x0
     yield [x0] + y0
     def solver(funcs, x0, y0, step):
         n = len(funcs)
@@ -967,11 +944,9 @@ def DP4(funcs, x0, y0, step, xmax,
             y1 = boundary_checker(y1, lower_bound, 'lower')
         if upper_bound: 
             y1 = boundary_checker(y1, upper_bound, 'upper')
-        xExpected = xExpected + step
         y0 = y1
         x0 = x0 + step
-        if (x0-xExpected) < (step + 0.1*step):
-            yield [x0] + y0
+        yield [x0] + y0
         
 def DP5(funcs, x0, y0, step, xmax, 
         lower_bound=None, upper_bound=None,
@@ -1010,7 +985,6 @@ def DP5(funcs, x0, y0, step, xmax,
     integration. Default = 1e100.
     @type zerodivision: float
     '''
-    xExpected = x0
     yield [x0] + y0
     def solver(funcs, x0, y0, step):
         n = len(funcs)
@@ -1087,8 +1061,6 @@ def DP5(funcs, x0, y0, step, xmax,
             y1 = boundary_checker(y1, lower_bound, 'lower')
         if upper_bound: 
             y1 = boundary_checker(y1, upper_bound, 'upper')
-        xExpected = xExpected + step
         y0 = y1
         x0 = x0 + step
-        if (x0-xExpected) < (step + 0.1*step):
-            yield [x0] + y0
+        yield [x0] + y0
