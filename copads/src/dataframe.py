@@ -306,3 +306,21 @@ class Dataframe(object):
         except ValueError: return None
         except KeyError: return None
         
+    def getLabels(self, datum):
+        '''
+        Method to get label name(s) for a given data value. However, this 
+        method does not return the series name from which the data value 
+        is/are found.
+        
+        @param datum: the data value to retrieve its corresponding label.
+        @return: [None] if data value is not found; list of one or more 
+        label names if the data value is found.
+        @rtype: list
+        '''
+        labels = [label
+                  for label in self.data.keys()
+                     for series in range(len(self.data[label]))
+                         if self.data[label][series] == datum]
+        if len(labels) == 0: return [None]
+        if len(labels) > 0: return labels
+        

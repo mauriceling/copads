@@ -287,6 +287,23 @@ class testDataframe(unittest.TestCase):
         self.assertEqual(df.getDatum('seriesP', 'B'), None)
         self.assertEqual(df.getDatum('seriesA', 'P'), None)
         self.assertEqual(df.getDatum('seriesP', 'P'), None)
+    def testGetLabels(self):
+        df = d.Dataframe('frame1')
+        dataset = {'seriesA': [10, 11, 12, 13, 14, 15, 16, 17, 18, 19],
+                   'seriesB': [20, 21, 22, 23, 24, 14, 26, 27, 28, 29],
+                   'seriesC': [30, 31, 32, 33, 34, 35, 14, 37, 38, 39],
+                   'seriesD': [40, 41, 41, 41, 44, 45, 46, 47, 48, 49]}
+        label = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J']
+        df.addData(dataset, label)
+        self.assertEqual(df.getLabels(21), ['B'])
+        self.assertEqual(df.getLabels(49), ['J'])
+        self.assertEqual(df.getLabels(88), [None])
+        rlabels = df.getLabels(14)
+        rlabels.sort()
+        self.assertEqual(rlabels, ['E', 'F', 'G'])
+        rlabels = df.getLabels(41)
+        rlabels.sort()
+        self.assertEqual(rlabels, ['B', 'C', 'D'])
         
 
 if __name__ == "__main__":
