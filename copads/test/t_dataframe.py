@@ -25,6 +25,13 @@ class testSeries(unittest.TestCase):
         s.addData(data, label)
         self.assertEqual(s.data, data)
         self.assertEqual(s.label, label)
+    def testChangeDatum(self):
+        s = d.Series('new_series')
+        data = [10, 11, 12, 13, 14, 15, 16, 17, 18, 19]
+        label = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J']
+        s.addData(data, label)
+        s.changeDatum(50, 'C')
+        self.assertEqual(s.data, [10, 11, 50, 13, 14, 15, 16, 17, 18, 19])
         
         
 class testDataframe(unittest.TestCase):

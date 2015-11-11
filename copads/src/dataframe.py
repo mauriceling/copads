@@ -45,6 +45,12 @@ class Series(object):
         self.data = data
         self.label = label
         
+    def changeDatum(self, new_value, label):
+        try: 
+            index = self.label.index(label)
+            self.data[index] = new_value
+        except: pass
+        
     
 class Dataframe(object):
     '''
