@@ -10,6 +10,20 @@ from copadsexceptions import FunctionParameterValueError
 
 class Series(object):
     '''
+    A data series is essentially a labeled list or vector. Each item in 
+    the list/vector is given a label for identification and retrieval. 
+    Hence, the number of labels and the number of data elements must be 
+    equal.
+    
+    In itself, a data series can be viewed as a column of data in a data 
+    table where the name of the series corresponds to the field name; such 
+    as::
+    
+        <Label>    Height
+        Tom        165
+        Ellis      191
+        Richard    172
+        Melvin     175
     '''
     def __init__(self, name=''):
         '''
