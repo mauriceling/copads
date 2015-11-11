@@ -129,8 +129,8 @@ class testDataframe(unittest.TestCase):
                    'seriesC': [30, 31, 32, 33, 34, 35, 36, 37, 38, 39],
                    'seriesD': [40, 41, 42, 43, 44, 45, 46, 47, 48, 49]}
         label = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J']
-        df.label.sort()
         df.addData(dataset, label)
+        df.label.sort()
         self.assertEqual(df.series_names, ['seriesA', 'seriesB', 
                                            'seriesC', 'seriesD'])
         self.assertEqual(df.label, ['A', 'B', 'C', 'D', 'E', 'F', 'G', 
@@ -145,6 +145,38 @@ class testDataframe(unittest.TestCase):
                                    'H':[17, 27, 37, 47], 
                                    'I':[18, 28, 38, 48], 
                                    'J':[19, 29, 39, 49]})
+    def testAddDataAndSeries(self):
+        df = d.Dataframe('frame1')
+        dataset = {'seriesA': [10, 11, 12, 13, 14, 15, 16, 17, 18, 19],
+                   'seriesB': [20, 21, 22, 23, 24, 25, 26, 27, 28, 29],
+                   'seriesC': [30, 31, 32, 33, 34, 35, 36, 37, 38, 39],
+                   'seriesD': [40, 41, 42, 43, 44, 45, 46, 47, 48, 49]}
+        label = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J']
+        df.addData(dataset, label)
+        s1 = d.Series('seriesE')
+        s1.addData([51, 52, 53, 54, 55],
+                   ['A', 'B', 'K', 'L', 'M'])
+        df.addSeries(s1, 'NA')
+        self.assertEqual(df.series_names, ['seriesA', 'seriesB', 
+                                           'seriesC', 'seriesD',
+                                           'seriesE'])
+        df.label.sort()
+        self.assertEqual(df.label, ['A', 'B', 'C', 'D', 'E', 'F', 'G', 
+                                    'H', 'I', 'J', 'K', 'L', 'M'])
+        self.assertEqual(df.data, {'A':[10, 20, 30, 40, 51], 
+                                   'B':[11, 21, 31, 41, 52], 
+                                   'C':[12, 22, 32, 42, 'NA'], 
+                                   'D':[13, 23, 33, 43, 'NA'], 
+                                   'E':[14, 24, 34, 44, 'NA'], 
+                                   'F':[15, 25, 35, 45, 'NA'], 
+                                   'G':[16, 26, 36, 46, 'NA'], 
+                                   'H':[17, 27, 37, 47, 'NA'], 
+                                   'I':[18, 28, 38, 48, 'NA'], 
+                                   'J':[19, 29, 39, 49, 'NA'],
+                                   'K':['NA', 'NA', 'NA', 'NA', 53], 
+                                   'L':['NA', 'NA', 'NA', 'NA', 54], 
+                                   'M':['NA', 'NA', 'NA', 'NA', 55]})
+    
         
 
 if __name__ == "__main__":
