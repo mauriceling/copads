@@ -61,6 +61,7 @@ class Dataframe(object):
         self.name = str(name)
         self.series_names = []
         self.data = {}
+        self.label = []
         self.analyses = {}
     
     def _generateRandomName(self):
@@ -74,15 +75,22 @@ class Dataframe(object):
     def addSeries(self, series, fill_in=None):
         if series.name == '':
             series.name = self._generateRandomName()
-        series_length = len(self.series_name)
+        df_label = self.data.keys()
         for i in range(len(series.data)):
-            if series.label[i] not in self.data:
-                temp = [fill_in for j in range(series_length)]
-                temp = temp.append(series.data[i])
+            if series.label[i] not in df_label:
+                temp = [fill_in] * len(self.series_names)
+                temp.append(series.data[i])
                 self.data[series.label[i]] = temp
             else:
                 temp = self.data[series.label[i]]
-                temp = temp.append(series.data[i])
+                temp.append(series.data[i])
                 self.data[series.label[i]] = temp
+        self.series_names.append(series.name)
+        self.label = self.data.keys()
+        for k in self.label:
+            if len(self.data[k]) < len(self.series_names):
+                temp = self.data[k]
+                temp.append(fill_in)
+                self.data[k] = temp
                 
                 
