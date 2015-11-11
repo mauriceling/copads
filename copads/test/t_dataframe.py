@@ -64,6 +64,14 @@ class testSeries(unittest.TestCase):
         self.assertEqual(s.getDatum('B'), 11)
         self.assertEqual(s.getDatum('D'), 13)
         self.assertEqual(s.getDatum('J'), 19)
+    def testGetLabels(self):
+        s = d.Series('new_series')
+        data = [10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 18]
+        label = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K']
+        s.addData(data, label)
+        self.assertEqual(s.getLabels(11), ['B'])
+        self.assertEqual(s.getLabels(50), [None])
+        self.assertEqual(s.getLabels(18), ['I', 'K'])
         
         
 class testDataframe(unittest.TestCase):

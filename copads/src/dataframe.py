@@ -64,6 +64,13 @@ class Series(object):
             return self.data[index]
         except ValueError: pass
         
+    def getLabels(self, datum):
+        labels = [self.label[index] 
+                  for index in range(len(self.data)) 
+                     if self.data[index] == datum]
+        if len(labels) == 0: return [None]
+        if len(labels) > 0: return labels
+        
     
 class Dataframe(object):
     '''
