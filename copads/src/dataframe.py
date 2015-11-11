@@ -324,3 +324,21 @@ class Dataframe(object):
         if len(labels) == 0: return [None]
         if len(labels) > 0: return labels
         
+    def getSeries(self, datum):
+        '''
+        Method to get label name(s) for a given data value. However, this 
+        method does not return the series name from which the data value 
+        is/are found.
+        
+        @param datum: the data value to retrieve its corresponding label.
+        @return: [None] if data value is not found; list of one or more 
+        label names if the data value is found.
+        @rtype: list
+        '''
+        series = [self.series_names[series]
+                  for label in self.data.keys()
+                     for series in range(len(self.data[label]))
+                         if self.data[label][series] == datum]
+        if len(series) == 0: return [None]
+        if len(series) > 0: return series
+        

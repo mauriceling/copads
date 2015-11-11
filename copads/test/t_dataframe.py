@@ -304,6 +304,23 @@ class testDataframe(unittest.TestCase):
         rlabels = df.getLabels(41)
         rlabels.sort()
         self.assertEqual(rlabels, ['B', 'C', 'D'])
+    def testGetSeriess(self):
+        df = d.Dataframe('frame1')
+        dataset = {'seriesA': [10, 11, 12, 13, 14, 15, 16, 17, 18, 19],
+                   'seriesB': [20, 21, 22, 23, 24, 25, 26, 17, 28, 29],
+                   'seriesC': [30, 31, 32, 33, 34, 35, 36, 37, 38, 39],
+                   'seriesD': [40, 41, 42, 43, 14, 45, 46, 17, 48, 49]}
+        label = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J']
+        df.addData(dataset, label)
+        self.assertEqual(df.getSeries(21), ['seriesB'])
+        self.assertEqual(df.getSeries(49), ['seriesD'])
+        self.assertEqual(df.getSeries(88), [None])
+        rseries = df.getSeries(14)
+        rseries.sort()
+        self.assertEqual(rseries, ['seriesA', 'seriesD'])
+        rseries = df.getSeries(17)
+        rseries.sort()
+        self.assertEqual(rseries, ['seriesA', 'seriesB', 'seriesD'])
         
 
 if __name__ == "__main__":
