@@ -119,4 +119,11 @@ class Dataframe(object):
                 temp.append(fill_in)
                 self.data[k] = temp
                 
-                
+    def addData(self, dataset, labels, fill_in=None):
+        series_names = dataset.keys()
+        series_names.sort()
+        for series_name in series_names:
+            s = Series(str(series_name))
+            s.addData(dataset[series_name], labels)
+            self.addSeries(s, fill_in)
+            
