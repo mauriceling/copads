@@ -132,4 +132,21 @@ class Dataframe(object):
             s = self.series_names.index(series)
             self.data[label][s] = new_value
         except ValueError: pass
-            
+        
+    def changeSeriesName(self, new_name, original_name):
+        try:
+            index = self.series_names.index(original_name)
+            self.series_names[index] = new_name
+        except ValueError: pass
+  
+    def changeLabel(self, new_label, original_label):
+        try:
+            data = [x for x in self.data[original_label]]
+            self.data[new_label] = data
+            del self.data[original_label]
+        except KeyError: pass
+        try:
+            index = self.label.index(original_label)
+            self.label[index] = new_label
+        except ValueError: pass
+        
