@@ -326,13 +326,13 @@ class Dataframe(object):
         
     def getSeries(self, datum):
         '''
-        Method to get label name(s) for a given data value. However, this 
-        method does not return the series name from which the data value 
+        Method to get series name(s) for a given data value. However, this 
+        method does not return the label name from which the data value 
         is/are found.
         
-        @param datum: the data value to retrieve its corresponding label.
+        @param datum: the data value to retrieve its corresponding series.
         @return: [None] if data value is not found; list of one or more 
-        label names if the data value is found.
+        series names if the data value is found.
         @rtype: list
         '''
         series = [self.series_names[series]
