@@ -274,6 +274,19 @@ class testDataframe(unittest.TestCase):
                                    'H':[17, 27, 37, 47], 
                                    'I':[18, 28, 38, 48], 
                                    'J':[19, 29, 39, 49]})
+    def testGetDatum(self):
+        df = d.Dataframe('frame1')
+        dataset = {'seriesA': [10, 11, 12, 13, 14, 15, 16, 17, 18, 19],
+                   'seriesB': [20, 21, 22, 23, 24, 25, 26, 27, 28, 29],
+                   'seriesC': [30, 31, 32, 33, 34, 35, 36, 37, 38, 39],
+                   'seriesD': [40, 41, 42, 43, 44, 45, 46, 47, 48, 49]}
+        label = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J']
+        df.addData(dataset, label)
+        self.assertEqual(df.getDatum('seriesA', 'B'), 11)
+        self.assertEqual(df.getDatum('seriesB', 'J'), 29)
+        self.assertEqual(df.getDatum('seriesP', 'B'), None)
+        self.assertEqual(df.getDatum('seriesA', 'P'), None)
+        self.assertEqual(df.getDatum('seriesP', 'P'), None)
         
 
 if __name__ == "__main__":

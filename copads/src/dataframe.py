@@ -289,3 +289,20 @@ class Dataframe(object):
             self.label[index] = new_label
         except ValueError: pass
         
+    def getDatum(self, series, label):
+        '''
+        Method to get data value for a given series and label names. If the 
+        series name or label name is not found within the data series, None 
+        will be returned.
+        
+        @param series: the series name for the data value to retrieve.
+        @param label: the label name for the data value to retrieve.
+        @return: data value tagged to the series and label (if found), or 
+        None (if the series or label is not found).
+        '''
+        try:
+            s = self.series_names.index(series)
+            return self.data[label][s]
+        except ValueError: return None
+        except KeyError: return None
+        
