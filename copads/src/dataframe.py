@@ -127,3 +127,9 @@ class Dataframe(object):
             s.addData(dataset[series_name], labels)
             self.addSeries(s, fill_in)
             
+    def changeDatum(self, new_value, series, label):
+        try: 
+            s = self.series_names.index(series)
+            self.data[label][s] = new_value
+        except ValueError: pass
+            
