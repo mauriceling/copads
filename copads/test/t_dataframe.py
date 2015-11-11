@@ -304,7 +304,7 @@ class testDataframe(unittest.TestCase):
         rlabels = df.getLabels(41)
         rlabels.sort()
         self.assertEqual(rlabels, ['B', 'C', 'D'])
-    def testGetSeriess(self):
+    def testGetSeries(self):
         df = d.Dataframe('frame1')
         dataset = {'seriesA': [10, 11, 12, 13, 14, 15, 16, 17, 18, 19],
                    'seriesB': [20, 21, 22, 23, 24, 25, 26, 17, 28, 29],
@@ -321,6 +321,32 @@ class testDataframe(unittest.TestCase):
         rseries = df.getSeries(17)
         rseries.sort()
         self.assertEqual(rseries, ['seriesA', 'seriesB', 'seriesD'])
+        
+    def testGetSeriesLabels(self):
+        df = d.Dataframe('frame1')
+        dataset = {'seriesA': [10, 11, 12, 13, 14, 15, 16, 17, 18, 19],
+                   'seriesB': [20, 21, 22, 23, 24, 25, 26, 17, 28, 29],
+                   'seriesC': [30, 31, 10, 33, 34, 35, 36, 37, 38, 39],
+                   'seriesD': [40, 41, 42, 10, 14, 45, 46, 17, 48, 49]}
+        label = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J']
+        df.addData(dataset, label)
+        self.assertEqual(df.getSeriesLabels(21), [('seriesB', 'B')])
+        self.assertEqual(df.getSeriesLabels(49), [('seriesD', 'J')])
+        self.assertEqual(df.getSeriesLabels(88), [(None, None)])
+        coordinates = df.getSeriesLabels(14)
+        coordinates.sort()
+        self.assertEqual(coordinates, [('seriesA', 'E'), 
+                                       ('seriesD', 'E')])
+        coordinates = df.getSeriesLabels(17)
+        coordinates.sort()
+        self.assertEqual(coordinates, [('seriesA', 'H'), 
+                                       ('seriesB', 'H'), 
+                                       ('seriesD', 'H')])
+        coordinates = df.getSeriesLabels(10)
+        coordinates.sort()
+        self.assertEqual(coordinates, [('seriesA', 'A'), 
+                                       ('seriesC', 'C'), 
+                                       ('seriesD', 'D')])
         
 
 if __name__ == "__main__":

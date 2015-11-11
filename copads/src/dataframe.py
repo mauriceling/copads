@@ -342,3 +342,22 @@ class Dataframe(object):
         if len(series) == 0: return [None]
         if len(series) > 0: return series
         
+    def getSeriesLabels(self, datum):
+        '''
+        Method to get series name(s) and label name(s) for a given data 
+        value. This method returns the a list of coodinates tuples, 
+        (series name, label name) in which the given data value is found.
+        
+        @param datum: the data value to retrieve its corresponding 
+        coordinates.
+        @return: [(None, None)] if data value is not found; list of one or 
+        more coordinates if the data value is found.
+        @rtype: list
+        '''
+        coordinates = [(self.series_names[series], label)
+                       for label in self.data.keys()
+                           for series in range(len(self.data[label]))
+                               if self.data[label][series] == datum]
+        if len(coordinates) == 0:  return [(None, None)]
+        else: return list(set(coordinates))
+        
