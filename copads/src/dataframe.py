@@ -49,7 +49,14 @@ class Series(object):
         try: 
             index = self.label.index(label)
             self.data[index] = new_value
-        except: pass
+        except ValueError: pass
+        
+    def changeLabel(self, new_label, original_label):
+        try:
+            index = self.label.index(original_label)
+            self.label[index] = new_label
+        except ValueError: pass
+      
         
     
 class Dataframe(object):

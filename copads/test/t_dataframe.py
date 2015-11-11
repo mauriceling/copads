@@ -32,6 +32,14 @@ class testSeries(unittest.TestCase):
         s.addData(data, label)
         s.changeDatum(50, 'C')
         self.assertEqual(s.data, [10, 11, 50, 13, 14, 15, 16, 17, 18, 19])
+    def testChangeLabel(self):
+        s = d.Series('new_series')
+        data = [10, 11, 12, 13, 14, 15, 16, 17, 18, 19]
+        label = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J']
+        s.addData(data, label)
+        s.changeLabel('Z', 'C')
+        self.assertEqual(s.label, ['A', 'B', 'Z', 'D', 'E', 'F', 
+                                   'G', 'H', 'I', 'J'])
         
         
 class testDataframe(unittest.TestCase):
