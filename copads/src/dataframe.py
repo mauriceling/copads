@@ -58,6 +58,11 @@ class Series(object):
             self.label[index] = new_label
         except ValueError: pass
       
+    def getDatum(self, label):
+        try:
+            index = self.label.index(label)
+            return self.data[index]
+        except ValueError: pass
         
     
 class Dataframe(object):
