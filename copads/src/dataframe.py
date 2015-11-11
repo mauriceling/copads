@@ -42,8 +42,9 @@ class Series(object):
             label = range(len(data))
         if len(data) != len(label):
             raise FunctionParameterValueError()
-        self.data = data
-        self.label = label
+        for i in range(len(data)):
+            self.data.append(data[i])
+            self.label.append(label[i])
         
     def changeDatum(self, new_value, label):
         try: 

@@ -25,6 +25,22 @@ class testSeries(unittest.TestCase):
         s.addData(data, label)
         self.assertEqual(s.data, data)
         self.assertEqual(s.label, label)
+    def testAddData3(self):
+        s = d.Series('new_series')
+        data = [10, 11, 12, 13, 14, 15, 16, 17, 18, 19]
+        label = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J']
+        s.addData(data, label)
+        s.addData([30, 31])
+        self.assertEqual(s.data, data + [30, 31])
+        self.assertEqual(s.label, label + [0, 1])
+    def testAddData4(self):
+        s = d.Series('new_series')
+        data = [10, 11, 12, 13, 14, 15, 16, 17, 18, 19]
+        label = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J']
+        s.addData(data, label)
+        s.addData([30, 31], ['K', 'L'])
+        self.assertEqual(s.data, data + [30, 31])
+        self.assertEqual(s.label, label + ['K', 'L'])
     def testChangeDatum(self):
         s = d.Series('new_series')
         data = [10, 11, 12, 13, 14, 15, 16, 17, 18, 19]
