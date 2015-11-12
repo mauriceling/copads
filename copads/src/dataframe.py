@@ -118,7 +118,7 @@ class Series(object):
         if len(labels) > 0: return labels
         
     
-class Dataframe(Series):
+class Dataframe(object):
     '''
     A data frame is an encapsulation of one or more data series and its 
     associated analyses. Hence, a data frame can be formed using one or 
@@ -362,7 +362,7 @@ class Dataframe(Series):
         else: return list(set(coordinates))
         
         
-class MultiDataframe(Dataframe):
+class MultiDataframe(object):
     '''
     A multidata frame is a container of one or more data frames. This 
     allows for processing across more than one data frames.
