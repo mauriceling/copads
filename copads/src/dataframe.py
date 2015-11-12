@@ -221,6 +221,14 @@ class Dataframe(object):
             D   13       23       33       43
             E   14       24       34       44
         
+        @param dataset: set of data to add. This is formatted as a 
+        dictionary where the key is the series name and the value is a list 
+        of data values of the same number of elements as labels.
+        @type dataset: dictionary
+        @param labels: list of labels for the data values. If not given, 
+        a sequential number will be given as label but this does not ensure 
+        uniqueness in label names across the entire series.
+        @type label: list
         @param fill_in: value to fill into missing values during process. 
         This is required as the number of data elements across each label 
         must be the same. Hence, filling in of missing values can occur 
@@ -236,6 +244,47 @@ class Dataframe(object):
         for series_name in series_names:
             s = Series(str(series_name))
             s.addData(dataset[series_name], labels)
+            self.addSeries(s, fill_in)
+            
+    def addCSV(self, filepath, series_header=True, separator=',', 
+               fill_in=None, newline='\n'):
+        '''
+        Method to add data from comma-delimited file (CSV) into current 
+        data frame.
+        
+        @param filepath: path to CSV file.
+        @type filepath: string
+        @param series_header: boolean flag to denote whether the first row 
+        in the CSV file contains the data header. It is highly recommended 
+        that header is included in the CSV file. Default = True (header is 
+        included)
+        @param separator: item separator within the CSV file. Default = ','
+        @param fill_in: value to fill into missing values during process. 
+        This is required as the number of data elements across each label 
+        must be the same. Hence, filling in of missing values can occur 
+        when (1) the newly added data series consists of new labels which 
+        are not found in the current data frame (this will require filling 
+        in of missing values in the current data frame), or (2) the current 
+        data frame consists of labels that are not found in the newly 
+        added data series (this will require filling in of missing values 
+        to the newly added data series). Default = None.
+        @param newline: character to denote new line or line feed in the 
+        CSV file. Default = '\n'
+        '''
+        data = open(filepath, 'r').readlines()
+        data = [x[:(-1)*len(newline)] for x in data]
+        data = [[item.strip() 
+                 for item in x.split(separator)] 
+                for x in data]
+        if series_header:
+            series = data[0][1:]
+            data = data[1:]
+        labels = [x[0] for x in data]
+        data = [x[1:] for x in data]
+        data = zip(*data)
+        for i in range(len(series)):
+            s = Series(series[i])
+            s.addData(data[i], labels)
             self.addSeries(s, fill_in)
             
     def changeDatum(self, new_value, series, label):
