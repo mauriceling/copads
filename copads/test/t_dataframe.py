@@ -349,5 +349,175 @@ class testDataframe(unittest.TestCase):
                                        ('seriesD', 'D')])
         
 
+class testMultiDataframe(unittest.TestCase):
+    def testAddDataFrame1(self):
+        df = d.Dataframe('frame1')
+        dataset = {'seriesA': [10, 11, 12, 13, 14, 15, 16, 17, 18, 19],
+                   'seriesB': [20, 21, 22, 23, 24, 25, 26, 27, 28, 29],
+                   'seriesC': [30, 31, 32, 33, 34, 35, 36, 37, 38, 39],
+                   'seriesD': [40, 41, 42, 43, 44, 45, 46, 47, 48, 49]}
+        label = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J']
+        df.addData(dataset, label)
+        mdf = d.MultiDataframe('multiframe1')
+        mdf.addDataframe(df)
+        mdf.frames['frame1'].label.sort()
+        self.assertEqual(mdf.frames['frame1'].label, label)
+        self.assertEqual(mdf.frames['frame1'].data, 
+                         {'A':[10, 20, 30, 40], 
+                          'B':[11, 21, 31, 41], 
+                          'C':[12, 22, 32, 42], 
+                          'D':[13, 23, 33, 43], 
+                          'E':[14, 24, 34, 44], 
+                          'F':[15, 25, 35, 45], 
+                          'G':[16, 26, 36, 46], 
+                          'H':[17, 27, 37, 47], 
+                          'I':[18, 28, 38, 48], 
+                          'J':[19, 29, 39, 49]})
+    def testAddDataFrame2(self):
+        df1 = d.Dataframe('frame1')
+        df2 = d.Dataframe('frame2')
+        dataset = {'seriesA': [10, 11, 12, 13, 14, 15, 16, 17, 18, 19],
+                   'seriesB': [20, 21, 22, 23, 24, 25, 26, 27, 28, 29],
+                   'seriesC': [30, 31, 32, 33, 34, 35, 36, 37, 38, 39],
+                   'seriesD': [40, 41, 42, 43, 44, 45, 46, 47, 48, 49]}
+        label = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J']
+        df1.addData(dataset, label)
+        df2.addData(dataset, label)
+        mdf = d.MultiDataframe('multiframe1')
+        mdf.addDataframe(df1)
+        mdf.addDataframe(df2)
+        mdf.frames['frame1'].label.sort()
+        self.assertEqual(mdf.frames['frame1'].label, label)
+        self.assertEqual(mdf.frames['frame1'].data, 
+                         {'A':[10, 20, 30, 40], 
+                          'B':[11, 21, 31, 41], 
+                          'C':[12, 22, 32, 42], 
+                          'D':[13, 23, 33, 43], 
+                          'E':[14, 24, 34, 44], 
+                          'F':[15, 25, 35, 45], 
+                          'G':[16, 26, 36, 46], 
+                          'H':[17, 27, 37, 47], 
+                          'I':[18, 28, 38, 48], 
+                          'J':[19, 29, 39, 49]})
+        self.assertEqual(mdf.frames['frame1'].data, 
+                         mdf.frames['frame2'].data)
+    def testAddDataFrame3(self):
+        df1 = d.Dataframe('frame1')
+        df2 = d.Dataframe('frame2')
+        dataset = {'seriesA': [10, 11, 12, 13, 14, 15, 16, 17, 18, 19],
+                   'seriesB': [20, 21, 22, 23, 24, 25, 26, 27, 28, 29]}
+        label = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J']
+        df1.addData(dataset, label)
+        dataset = {'seriesC': [30, 31, 32, 33, 34, 35, 36, 37, 38, 39],
+                   'seriesD': [40, 41, 42, 43, 44, 45, 46, 47, 48, 49]}
+        df2.addData(dataset, label)
+        mdf = d.MultiDataframe('multiframe1')
+        mdf.addDataframe(df1)
+        mdf.addDataframe(df2)
+        mdf.frames['frame1'].label.sort()
+        self.assertEqual(mdf.frames['frame1'].label, label)
+        self.assertEqual(mdf.frames['frame1'].data, 
+                         {'A':[10, 20], 
+                          'B':[11, 21], 
+                          'C':[12, 22], 
+                          'D':[13, 23], 
+                          'E':[14, 24], 
+                          'F':[15, 25], 
+                          'G':[16, 26], 
+                          'H':[17, 27], 
+                          'I':[18, 28], 
+                          'J':[19, 29]})
+        self.assertEqual(mdf.frames['frame2'].data, 
+                         {'A':[30, 40], 
+                          'B':[31, 41], 
+                          'C':[32, 42], 
+                          'D':[33, 43], 
+                          'E':[34, 44], 
+                          'F':[35, 45], 
+                          'G':[36, 46], 
+                          'H':[37, 47], 
+                          'I':[38, 48], 
+                          'J':[39, 49]})
+    def testAddDataFrame3(self):
+        df1 = d.Dataframe('frame1')
+        df2 = d.Dataframe('frame1')
+        mdf = d.MultiDataframe('multiframe1')
+        dataset = {'seriesA': [10, 11, 12, 13, 14, 15, 16, 17, 18, 19],
+                   'seriesB': [20, 21, 22, 23, 24, 25, 26, 27, 28, 29]}
+        label = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J']
+        df1.addData(dataset, label)
+        mdf.addDataframe(df1, True)
+        mdf.frames['frame1'].label.sort()
+        self.assertEqual(mdf.frames['frame1'].label, label)
+        self.assertEqual(len(mdf.frames), 1)
+        self.assertEqual(mdf.frames['frame1'].data, 
+                         {'A':[10, 20], 
+                          'B':[11, 21], 
+                          'C':[12, 22], 
+                          'D':[13, 23], 
+                          'E':[14, 24], 
+                          'F':[15, 25], 
+                          'G':[16, 26], 
+                          'H':[17, 27], 
+                          'I':[18, 28], 
+                          'J':[19, 29]})
+        dataset = {'seriesC': [30, 31, 32, 33, 34, 35, 36, 37, 38, 39],
+                   'seriesD': [40, 41, 42, 43, 44, 45, 46, 47, 48, 49]}
+        df2.addData(dataset, label)
+        mdf.addDataframe(df2, True)
+        self.assertEqual(len(mdf.frames), 1)
+        self.assertEqual(mdf.frames['frame1'].data, 
+                         {'A':[30, 40], 
+                          'B':[31, 41], 
+                          'C':[32, 42], 
+                          'D':[33, 43], 
+                          'E':[34, 44], 
+                          'F':[35, 45], 
+                          'G':[36, 46], 
+                          'H':[37, 47], 
+                          'I':[38, 48], 
+                          'J':[39, 49]})
+    def testAddDataFrame4(self):
+        df1 = d.Dataframe('frame1')
+        df2 = d.Dataframe('frame1')
+        mdf = d.MultiDataframe('multiframe1')
+        dataset = {'seriesA': [10, 11, 12, 13, 14, 15, 16, 17, 18, 19],
+                   'seriesB': [20, 21, 22, 23, 24, 25, 26, 27, 28, 29]}
+        label = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J']
+        df1.addData(dataset, label)
+        mdf.addDataframe(df1, False)
+        mdf.frames['frame1'].label.sort()
+        self.assertEqual(mdf.frames['frame1'].label, label)
+        self.assertEqual(len(mdf.frames), 1)
+        self.assertEqual(mdf.frames['frame1'].data, 
+                         {'A':[10, 20], 
+                          'B':[11, 21], 
+                          'C':[12, 22], 
+                          'D':[13, 23], 
+                          'E':[14, 24], 
+                          'F':[15, 25], 
+                          'G':[16, 26], 
+                          'H':[17, 27], 
+                          'I':[18, 28], 
+                          'J':[19, 29]})
+        dataset = {'seriesC': [30, 31, 32, 33, 34, 35, 36, 37, 38, 39],
+                   'seriesD': [40, 41, 42, 43, 44, 45, 46, 47, 48, 49]}
+        df2.addData(dataset, label)
+        mdf.addDataframe(df2, False)
+        self.assertEqual(len(mdf.frames), 2)
+        frame_names = mdf.frame_names
+        self.assertEqual(mdf.frames[frame_names[-1]].data, 
+                         {'A':[30, 40], 
+                          'B':[31, 41], 
+                          'C':[32, 42], 
+                          'D':[33, 43], 
+                          'E':[34, 44], 
+                          'F':[35, 45], 
+                          'G':[36, 46], 
+                          'H':[37, 47], 
+                          'I':[38, 48], 
+                          'J':[39, 49]})
+                                   
+                                   
 if __name__ == "__main__":
     unittest.main()

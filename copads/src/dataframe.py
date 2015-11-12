@@ -118,7 +118,7 @@ class Series(object):
         if len(labels) > 0: return labels
         
     
-class Dataframe(object):
+class Dataframe(Series):
     '''
     A data frame is an encapsulation of one or more data series and its 
     associated analyses. Hence, a data frame can be formed using one or 
@@ -361,3 +361,53 @@ class Dataframe(object):
         if len(coordinates) == 0:  return [(None, None)]
         else: return list(set(coordinates))
         
+        
+class MultiDataframe(Dataframe):
+    '''
+    A multidata frame is a container of one or more data frames. This 
+    allows for processing across more than one data frames.
+    '''
+
+    def __init__(self, name=''):
+        '''
+        Constructor. Initialize multidata frame with a name.
+        
+        @param name: Name of this data frame. Default is empty name.
+        @type name: string
+        '''
+        self.name = str(name)
+        self.frames = {}
+        self.frame_names = []
+        self.analyses = {}
+        
+    def addDataframe(self, dataframe, replace=False):
+        '''
+        Method to add a data frame. It is highly encouraged that all 
+        data frames to be added have their own identifying names. In event 
+        whereby the data frame does not have a name, a randomly generated 
+        8-character name will be assigned.
+        
+        This method allows for replacement of existing data frame when 
+        'replace' flag is set to True. In event where 'replace' flag is 
+        False (do not replace existing data frame, if present) and there 
+        is an existing data frame with the same name, a randomly generated 
+        8-character name will be appended to the name of the data frame to 
+        be added.
+        '''
+        df_name = dataframe.name
+        used_names = self.frames.keys()
+        if (not replace) and (df_name in used_names):
+            while df_name in used_names:
+                df_name = df_name + '_' + \
+                          ''.join([random.choice(string.ascii_uppercase) 
+                                for i in range(8)])
+            dataframe.name = df_name
+        if df_name == '':
+            name = ''.join([random.choice(string.ascii_uppercase) 
+                            for i in range(8)])
+            while name in used_names:
+                name = ''.join([random.choice(string.ascii_uppercase) 
+                                for i in range(8)])
+            dataframe.name = name
+        self.frames[dataframe.name] = dataframe
+        self.frame_names.append(dataframe.name)
