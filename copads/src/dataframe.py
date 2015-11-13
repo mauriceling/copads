@@ -15,15 +15,12 @@ class Series(object):
     Hence, the number of labels and the number of data elements must be 
     equal.
     
-    In itself, a data series can be viewed as a column of data in a data 
+    In itself, a data series can be viewed as a row of data in a data 
     table where the name of the series corresponds to the field name; such 
     as::
     
-        <Label>    Height
-        Tom        165
-        Ellis      191
-        Richard    172
-        Melvin     175
+                    Tom     Ellis   Richard     Melvin
+        Height      165     191     172         175
     '''
     def __init__(self, name=''):
         '''
@@ -36,6 +33,24 @@ class Series(object):
         self.data = []
         self.label = []
         self.analyses = {}
+    
+    def toDataframe(self):
+        '''
+        Method to convert and return the current data series as a data 
+        frame object. The following will happen in the returned data frame 
+        object:
+            1. Name of the data frame will be the name of the current data 
+            series
+            2. Name of the series in the data frame will be the name of 
+            the current data series
+            3. Hence, name of the returned data frame and its data series 
+            will be the same
+            
+        @return: dataframe.Dataframe object
+        '''
+        df = Dataframe(self.name)
+        df.addSeries(self)
+        return df
         
     def addData(self, data, label=[]):
         '''
