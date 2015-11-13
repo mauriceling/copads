@@ -458,6 +458,23 @@ class Dataframe(object):
             for label in self.data.keys(): self.data[label].pop(index)
         except: pass
         
+    def popSeries(self, series_names, new_dataframe_name=''):
+        '''
+        Method to pop one or more series (extract one or more series from 
+        the current data frame into new data frame, followed by removing 
+        the extracted series from the current data frame).
+        
+        @param series_names: names of series to pop
+        @type series_names: list
+        @param new_dataframe_name: name for new data frame (that is to be 
+        returned)
+        @type new_dataframe_name: string
+        @return: dataframe.Dataframe object
+        '''
+        df = self.extractSeries(series_names, new_dataframe_name)
+        for series in series_names: self.removeSeries(series)
+        return df
+        
     def removeLabel(self, label):
         '''
         Method to remove / delete a label across all data series from the 
