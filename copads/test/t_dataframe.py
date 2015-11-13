@@ -560,6 +560,16 @@ class testDataframe(unittest.TestCase):
                                     'H':[27, 47], 
                                     'I':[28, 48], 
                                     'J':[29, 49]})
+        self.assertEqual(df.data, {'A':[10, 20, 30, 40], 
+                                   'B':[11, 21, 31, 41], 
+                                   'C':[12, 22, 32, 42], 
+                                   'D':[13, 23, 33, 43], 
+                                   'E':[14, 24, 34, 44], 
+                                   'F':[15, 25, 35, 45], 
+                                   'G':[16, 26, 36, 46], 
+                                   'H':[17, 27, 37, 47], 
+                                   'I':[18, 28, 38, 48], 
+                                   'J':[19, 29, 39, 49]})
     def testPopSeries1(self):
         df = d.Dataframe('frame1')
         dataset = {'seriesA': [10, 11, 12, 13, 14, 15, 16, 17, 18, 19],
@@ -689,6 +699,16 @@ class testDataframe(unittest.TestCase):
         self.assertEqual(ndf.label, ['B', 'G'])
         self.assertEqual(ndf.data, {'B':[11, 21, 31, 41],
                                     'G':[16, 26, 36, 46]})
+        self.assertEqual(df.data, {'A':[10, 20, 30, 40], 
+                                   'B':[11, 21, 31, 41], 
+                                   'C':[12, 22, 32, 42], 
+                                   'D':[13, 23, 33, 43], 
+                                   'E':[14, 24, 34, 44], 
+                                   'F':[15, 25, 35, 45], 
+                                   'G':[16, 26, 36, 46], 
+                                   'H':[17, 27, 37, 47], 
+                                   'I':[18, 28, 38, 48], 
+                                   'J':[19, 29, 39, 49]})
     def testPopLabels1(self):
         df = d.Dataframe('frame1')
         dataset = {'seriesA': [10, 11, 12, 13, 14, 15, 16, 17, 18, 19],
