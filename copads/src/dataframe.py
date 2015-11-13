@@ -164,6 +164,25 @@ class Dataframe(object):
         self.data = {}
         self.label = []
         self.analyses = {}
+        
+    def toSeries(self, series_name):
+        '''
+        Method to extract a series within the current data frame into a 
+        Series object.
+        
+        @param series_name: name of series to extract
+        @type series_name: string
+        @return: dataframe.Series object
+        '''
+        series_name = str(series_name)
+        s = Series(series_name)
+        try:
+            index = self.series_names.index(series_name)
+            data = [self.data[k][index] for k in self.data.keys()]
+            s.addData(data, self.label)
+            return s
+        except ValueError, KeyError: 
+            return s
     
     def _generateRandomName(self):
         '''
