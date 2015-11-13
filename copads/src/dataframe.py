@@ -283,6 +283,28 @@ class Dataframe(object):
             s = self.toSeries(series)
             df.addSeries(s)
         return df
+        
+    def extractLabels(self, label_names, new_dataframe_name=''):
+        '''
+        Method to extract one or more data labels across all series from 
+        the current data frame into a new data frame.
+        
+        @param label_names: names of series to extract
+        @type label_names: list
+        @param new_dataframe_name: name for new data frame (that is to be 
+        returned)
+        @type new_dataframe_name: string
+        @return: dataframe.Dataframe object
+        '''
+        df = Dataframe(str(new_dataframe_name))
+        data = {}
+        for label in label_names:
+            try: data[label] = [x for x in self.data[label]]
+            except KeyError: pass
+        df.data = data
+        df.label = label_names
+        df.series_names = [x for x in self.series_names]
+        return df
     
     def _generateRandomName(self):
         '''
