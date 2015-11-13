@@ -215,6 +215,42 @@ class testDataframe(unittest.TestCase):
                                    'K':['NA', 'NA', 'NA', 'NA', 53], 
                                    'L':['NA', 'NA', 'NA', 'NA', 54], 
                                    'M':['NA', 'NA', 'NA', 'NA', 55]})
+    def testRemoveSeries(self):
+        df = d.Dataframe('frame1')
+        dataset = {'seriesA': [10, 11, 12, 13, 14, 15, 16, 17, 18, 19],
+                   'seriesB': [20, 21, 22, 23, 24, 25, 26, 27, 28, 29],
+                   'seriesC': [30, 31, 32, 33, 34, 35, 36, 37, 38, 39],
+                   'seriesD': [40, 41, 42, 43, 44, 45, 46, 47, 48, 49]}
+        label = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J']
+        df.addData(dataset, label)
+        df.label.sort()
+        self.assertEqual(df.series_names, ['seriesA', 'seriesB', 
+                                           'seriesC', 'seriesD'])
+        self.assertEqual(df.label, ['A', 'B', 'C', 'D', 'E', 'F', 'G', 
+                                    'H', 'I', 'J'])
+        self.assertEqual(df.data, {'A':[10, 20, 30, 40], 
+                                   'B':[11, 21, 31, 41], 
+                                   'C':[12, 22, 32, 42], 
+                                   'D':[13, 23, 33, 43], 
+                                   'E':[14, 24, 34, 44], 
+                                   'F':[15, 25, 35, 45], 
+                                   'G':[16, 26, 36, 46], 
+                                   'H':[17, 27, 37, 47], 
+                                   'I':[18, 28, 38, 48], 
+                                   'J':[19, 29, 39, 49]})
+        df.removeSeries('seriesB')
+        self.assertEqual(df.series_names, ['seriesA', 
+                                           'seriesC', 'seriesD'])
+        self.assertEqual(df.data, {'A':[10, 30, 40], 
+                                   'B':[11, 31, 41], 
+                                   'C':[12, 32, 42], 
+                                   'D':[13, 33, 43], 
+                                   'E':[14, 34, 44], 
+                                   'F':[15, 35, 45], 
+                                   'G':[16, 36, 46], 
+                                   'H':[17, 37, 47], 
+                                   'I':[18, 38, 48], 
+                                   'J':[19, 39, 49]})
     def testCast1(self):
         df = d.Dataframe('frame1')
         dataset = {'seriesA': [10, 11, 12, 13, 14],

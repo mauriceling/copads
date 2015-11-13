@@ -420,7 +420,23 @@ class Dataframe(object):
             s = Series(series[i])
             s.addData(data[i], labels)
             self.addSeries(s, fill_in)
-            
+    
+    def removeSeries(self, series_name):
+        '''
+        Method to remove / delete a data series from the current data 
+        frame.
+        
+        @param series_names: names of series to remove
+        @type series_names: string
+        '''
+        series_name = str(series_name)
+        try:
+            index = self.series_names.index(series_name)
+            self.series_names.pop(index)
+            for label in self.data.keys():
+                self.data[label].pop(index)
+        except: pass
+        
     def changeDatum(self, new_value, series, label):
         '''
         Method to change the data value of a series and label. If the 
