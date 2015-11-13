@@ -490,6 +490,24 @@ class Dataframe(object):
             del self.data[label]
         except: pass
         
+    def popLabels(self, label_names, new_dataframe_name=''):
+        '''
+        Method to pop one or more labels across all data series (extract 
+        one or more labels across all data series from the current data 
+        frame into new data frame, followed by removing the extracted 
+        labels from the current data frame).
+        
+        @param label_names: names of series to pop
+        @type label_names: list
+        @param new_dataframe_name: name for new data frame (that is to be 
+        returned)
+        @type new_dataframe_name: string
+        @return: dataframe.Dataframe object
+        '''
+        df = self.extractLabels(label_names, new_dataframe_name)
+        for label in label_names: self.removeLabel(label)
+        return df
+        
     def changeDatum(self, new_value, series, label):
         '''
         Method to change the data value of a series and label. If the 
