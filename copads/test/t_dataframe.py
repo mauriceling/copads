@@ -215,6 +215,48 @@ class testDataframe(unittest.TestCase):
                                    'K':['NA', 'NA', 'NA', 'NA', 53], 
                                    'L':['NA', 'NA', 'NA', 'NA', 54], 
                                    'M':['NA', 'NA', 'NA', 'NA', 55]})
+    def testCast1(self):
+        df = d.Dataframe('frame1')
+        dataset = {'seriesA': [10, 11, 12, 13, 14],
+                   'seriesB': [20, 21, 22, 23, 24],
+                   'seriesC': [30, 31, 32, 33, 34],
+                   'seriesD': [40, 41, 42, 43, 44]}
+        label = ['A', 'B', 'C', 'D', 'E']
+        df.addData(dataset, label)
+        df.cast('float', 1e-10, 'all')
+        self.assertEqual(df.data, {'A':[10.0, 20.0, 30.0, 40.0], 
+                                   'B':[11.0, 21.0, 31.0, 41.0], 
+                                   'C':[12.0, 22.0, 32.0, 42.0], 
+                                   'D':[13.0, 23.0, 33.0, 43.0], 
+                                   'E':[14.0, 24.0, 34.0, 44.0]})
+    def testCast2(self):
+        df = d.Dataframe('frame1')
+        dataset = {'seriesA': [10, 'A', 12, 13, 14],
+                   'seriesB': [20, 21, 22, 23, 24],
+                   'seriesC': [30, 31, 32, 'B', 34],
+                   'seriesD': [40, 41, 42, 43, 44]}
+        label = ['A', 'B', 'C', 'D', 'E']
+        df.addData(dataset, label)
+        df.cast('float', 1e-10, 'all')
+        self.assertEqual(df.data, {'A':[10.0, 20.0, 30.0, 40.0], 
+                                   'B':[1e-10, 21.0, 31.0, 41.0], 
+                                   'C':[12.0, 22.0, 32.0, 42.0], 
+                                   'D':[13.0, 23.0, 1e-10, 43.0], 
+                                   'E':[14.0, 24.0, 34.0, 44.0]})
+    def testCast3(self):
+        df = d.Dataframe('frame1')
+        dataset = {'seriesA': [10, 11, 12, 13, 14],
+                   'seriesB': [20, 21, 22, 23, 24],
+                   'seriesC': [30, 31, 32, 33, 34],
+                   'seriesD': [40, 41, 42, 43, 44]}
+        label = ['A', 'B', 'C', 'D', 'E']
+        df.addData(dataset, label)
+        df.cast('float', 1e-10, 'seriesB')
+        self.assertEqual(df.data, {'A':[10, 20, 30, 40], 
+                                   'B':[11.0, 21.0, 31.0, 41.0], 
+                                   'C':[12, 22, 32, 42], 
+                                   'D':[13, 23, 33, 43], 
+                                   'E':[14, 24, 34, 44]})
     def testChangeDatum(self):
         df = d.Dataframe('frame1')
         dataset = {'seriesA': [10, 11, 12, 13, 14, 15, 16, 17, 18, 19],

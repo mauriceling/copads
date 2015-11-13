@@ -194,6 +194,58 @@ class Dataframe(object):
         self.data = {}
         self.label = []
         self.analyses = {}
+    
+    def cast(self, type, error_replace, series_name='all'):
+        '''
+        Method to cast data in the one or all series into a specific data 
+        type.
+        
+        Allowable data types are:
+            1. integer (type == 'int' or 'integer')
+            2. float (type == 'real' or 'float')
+            3. string (type == 'str' or 'string')
+            
+        @param type: data type to cast into
+        @type type: string
+        @param error_replace: in event where there is a failure to cast 
+        the data element (such as attempt to cast a character into an 
+        integer, which will result ina ValueError), the data element will 
+        be replace with error_replace
+        @param series_name: series name to cast values into a specific 
+        data type. If 'all', the entire data frame (all data series) will 
+        be type casted. Default = 'all'
+        '''
+        if series_name != 'all':
+            try:
+                index = self.series_names.index(series_name)
+            except:
+                return 0
+        if series_name == 'all':
+            for k in self.data.keys():
+                data = [0] * len(self.data[k])
+                type = str(type)
+                for i in range(len(self.data[k])):
+                    try:
+                        if type == 'int' or type == 'integer': 
+                            data[i] = int(self.data[k][i])
+                        if type == 'real' or type == 'float':
+                            data[i] = float(self.data[k][i])
+                        if type == 'str' or type == 'string':
+                            data[i] = str(self.data[k][i])
+                    except:
+                        data[i] = error_replace
+                self.data[k] = data
+        else:
+            for k in self.data.keys():
+                try:
+                    if type == 'int' or type == 'integer': 
+                        self.data[k][index] = int(self.data[k][index])
+                    if type == 'real' or type == 'float':
+                         self.data[k][index] = float(self.data[k][index])
+                    if type == 'str' or type == 'string':
+                         self.data[k][index] = str(self.data[k][index])
+                except:
+                     self.data[k][index] = error_replace
         
     def toSeries(self, series_name):
         '''
