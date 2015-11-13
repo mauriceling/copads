@@ -41,6 +41,27 @@ class testSeries(unittest.TestCase):
         s.addData([30, 31], ['K', 'L'])
         self.assertEqual(s.data, data + [30, 31])
         self.assertEqual(s.label, label + ['K', 'L'])
+    def testCast1(self):
+        s = d.Series('new_series')
+        data = [10, 11, 12, 13, 14]
+        label = ['A', 'B', 'C', 'D', 'E']
+        s.addData(data, label)
+        s.cast('float', 1e-10)
+        self.assertEqual(s.data, [10.0, 11.0, 12.0, 13.0, 14.0])
+    def testCast2(self):
+        s = d.Series('new_series')
+        data = [10, 11, 12, 13, 14]
+        label = ['A', 'B', 'C', 'D', 'E']
+        s.addData(data, label)
+        s.cast('string', 'NA')
+        self.assertEqual(s.data, ['10', '11', '12', '13', '14'])
+    def testCast3(self):
+        s = d.Series('new_series')
+        data = [10, 11, 'A', 13, 14]
+        label = ['A', 'B', 'C', 'D', 'E']
+        s.addData(data, label)
+        s.cast('float', 1e-10)
+        self.assertEqual(s.data, [10.0, 11.0, 1e-10, 13.0, 14.0])
     def testToDataframe(self):
         s = d.Series('new_series')
         data = [10, 11, 12, 13, 14, 15, 16, 17, 18, 19]

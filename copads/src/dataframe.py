@@ -34,6 +34,36 @@ class Series(object):
         self.label = []
         self.analyses = {}
     
+    def cast(self, type, error_replace):
+        '''
+        Method to cast data in the series into a specific data type.
+        
+        Allowable data types are:
+            1. integer (type == 'int' or 'integer')
+            2. float (type == 'real' or 'float')
+            3. string (type == 'str' or 'string')
+            
+        @param type: data type to cast into
+        @type type: string
+        @param error_replace: in event where there is a failure to cast 
+        the data element (such as attempt to cast a character into an 
+        integer, which will result ina ValueError), the data element will 
+        be replace with error_replace
+        '''
+        data = [0] * len(self.data)
+        type = str(type)
+        for i in range(len(self.data)):
+            try:
+                if type == 'int' or type == 'integer': 
+                    data[i] = int(self.data[i])
+                if type == 'real' or type == 'float':
+                    data[i] = float(self.data[i])
+                if type == 'str' or type == 'string':
+                    data[i] = str(self.data[i])
+            except:
+                data[i] = error_replace
+        self.data = data
+    
     def toDataframe(self):
         '''
         Method to convert and return the current data series as a data 
