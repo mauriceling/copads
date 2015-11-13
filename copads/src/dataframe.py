@@ -433,8 +433,22 @@ class Dataframe(object):
         try:
             index = self.series_names.index(series_name)
             self.series_names.pop(index)
-            for label in self.data.keys():
-                self.data[label].pop(index)
+            for label in self.data.keys(): self.data[label].pop(index)
+        except: pass
+        
+    def removeLabel(self, label):
+        '''
+        Method to remove / delete a label across all data series from the 
+        current data frame.
+        
+        @param label: names of label to remove
+        @type label: string
+        '''
+        label = str(label)
+        try:
+            index = self.label.index(label)
+            self.label.pop(index)
+            del self.data[label]
         except: pass
         
     def changeDatum(self, new_value, series, label):
