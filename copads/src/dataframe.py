@@ -266,6 +266,24 @@ class Dataframe(object):
         except ValueError, KeyError: 
             return s
     
+    def extractSeries(self, series_names, new_dataframe_name=''):
+        '''
+        Method to extract one or more series from the current data frame 
+        into a new data frame.
+        
+        @param series_names: names of series to extract
+        @type series_names: list
+        @param new_dataframe_name: name for new data frame (that is to be 
+        returned)
+        @type new_dataframe_name: string
+        @return: dataframe.Dataframe object
+        '''
+        df = Dataframe(str(new_dataframe_name))
+        for series in series_names:
+            s = self.toSeries(series)
+            df.addSeries(s)
+        return df
+    
     def _generateRandomName(self):
         '''
         Private method to generate a 8-character upper case name to be used 
