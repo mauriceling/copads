@@ -972,6 +972,17 @@ class testDataframe(unittest.TestCase):
                                     'H':[17, 27, 37, 47], 
                                     'I':[18, 28, 38, 48], 
                                     'J':[19, 29, 39, 49]})
+        ndf = df.extractValue('*', '', 'new_frame')
+        self.assertEqual(ndf.data, {'A':[10, 20, 30, 40], 
+                                    'B':[11, 21, 31, 41], 
+                                    'C':[12, 22, 32, 42], 
+                                    'D':[13, 23, 33, 43], 
+                                    'E':[14, 24, 34, 44], 
+                                    'F':[15, 25, 35, 45], 
+                                    'G':[16, 26, 36, 46], 
+                                    'H':[17, 27, 37, 47], 
+                                    'I':[18, 28, 38, 48], 
+                                    'J':[19, 29, 39, 49]})
         
 
 class testMultiDataframe(unittest.TestCase):
