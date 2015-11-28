@@ -597,6 +597,26 @@ class testDataframe(unittest.TestCase):
                                     'H':[27, 47], 
                                     'I':[28, 48], 
                                     'J':[29, 49]})
+        ndf = df.extractGreedySeriesValue(['seriesB', 'seriesD'], '>=', 44, 
+                                          'newframe')
+        self.assertEqual(ndf.data, {'E':[24, 44],
+                                    'F':[25, 45], 
+                                    'G':[26, 46], 
+                                    'H':[27, 47], 
+                                    'I':[28, 48], 
+                                    'J':[29, 49]})
+        ndf = df.extractGreedySeriesValue(['seriesA', 'seriesB'], '<', 12, 
+                                          'newframe')
+        self.assertEqual(ndf.data, {'A':[10, 20], 
+                                    'B':[11, 21]})
+        ndf = df.extractGreedySeriesValue(['seriesA', 'seriesB'], '<=', 12, 
+                                          'newframe')
+        self.assertEqual(ndf.data, {'A':[10, 20], 
+                                    'B':[11, 21],
+                                    'C':[12, 22]})
+        ndf = df.extractGreedySeriesValue(['seriesB', 'seriesD'], '=', 45, 
+                                          'newframe')
+        self.assertEqual(ndf.data, {'F':[25, 45]})
     def testExtractSeriesValue(self):
         df = d.Dataframe('frame1')
         dataset = {'seriesA': [10, 11, 12, 13, 14, 15, 16, 17, 18, 19],
