@@ -314,6 +314,55 @@ class Dataframe(object):
         df = self.extractSeries(series_names, new_dataframe_name)
         return df.extractValue(operator, value, new_dataframe_name)
         
+    def extractSeriesValue(self, series_name, operator, value, 
+                           new_dataframe_name=''):
+        '''
+        Method for extraction of row data where a specified value or range of 
+        value is found in the current data frame.
+            
+        This method is logically identical to SQL select.
+        
+        select * from <current> where <current>.seriesA > 30
+        
+        can be represented as
+        
+        >>> df = <current>.extractSeriesValue('seriesA', '>', 30, '')
+        
+        @param series_names: names of series to extract
+        @type series_names: list
+        @param operator: comparative operator. Allowed values are: '>' (more 
+        than), '<' (less than), '>=' (more than or equals to), '<=' (less 
+        than or equals to), '=' (equals to), '!=' (not equals to), and '*' 
+        (all, basically replicating the entire data frame).
+        @param original_value: original value of the data.
+        @param new_dataframe_name: name for new data frame (that is to be 
+        returned)
+        @type new_dataframe_name: string
+        @return: dataframe.Dataframe object
+        '''
+        df = Dataframe(new_dataframe_name)
+        try:
+            data = {}
+            index = self.series_names.index(series_name)
+            for label in self.data.keys():
+                if operator == '=' and self.data[label][index] == value:
+                    data[label] = [x for x in self.data[label]]
+                elif operator == '>' and self.data[label][index] > value:
+                    data[label] = [x for x in self.data[label]]
+                elif operator == '<' and self.data[label][index] < value:
+                    data[label] = [x for x in self.data[label]]
+                elif operator == '>=' and self.data[label][index] >= value:
+                    data[label] = [x for x in self.data[label]]
+                elif operator == '<=' and self.data[label][index] <= value:
+                    data[label] = [x for x in self.data[label]]
+                elif operator == '*':
+                    data[label] = [x for x in self.data[label]]
+                df.data = data
+                df.series_names = [name for name in self.series_names]
+                df.label = data.keys()
+        except IOError: pass
+        return df
+        
     def extractLabels(self, label_names, new_dataframe_name=''):
         '''
         Method to extract one or more data labels across all series from 
