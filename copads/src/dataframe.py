@@ -284,6 +284,36 @@ class Dataframe(object):
             df.addSeries(s)
         return df
         
+    def extractGreedySeriesValue(self, series_names, operator, value, 
+                                 new_dataframe_name=''):
+        '''
+        Method for "greedy" extraction of series name(s) and value by the 
+        following:
+            1. Generate a new data frame by extracting required series using 
+            Dataframe.extractSeries method, which is essentially column 
+            reduction.
+            2. Reduce the data labels (essentially, row reduction) by finding 
+            data values in any remaining (one or more) series using the 
+            search criterion.
+            
+        This method is considered to be "greedy" as the row reduction is not 
+        specific to particular series (column).
+        
+        @param series_names: names of series to extract
+        @type series_names: list
+        @param operator: comparative operator. Allowed values are: '>' (more 
+        than), '<' (less than), '>=' (more than or equals to), '<=' (less 
+        than or equals to), '=' (equals to), '!=' (not equals to), and '*' 
+        (all, basically replicating the entire data frame).
+        @param original_value: original value of the data.
+        @param new_dataframe_name: name for new data frame (that is to be 
+        returned)
+        @type new_dataframe_name: string
+        @return: dataframe.Dataframe object
+        '''
+        df = self.extractSeries(series_names, new_dataframe_name)
+        return df.extractValue(operator, value, new_dataframe_name)
+        
     def extractLabels(self, label_names, new_dataframe_name=''):
         '''
         Method to extract one or more data labels across all series from 
@@ -305,7 +335,7 @@ class Dataframe(object):
         df.label = label_names
         df.series_names = [x for x in self.series_names]
         return df
-        
+    
     def extractValue(self, operator, value, new_dataframe_name=''):
         '''
         Method to extract one or more data labels across all series, based on 
