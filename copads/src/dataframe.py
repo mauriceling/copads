@@ -321,7 +321,8 @@ class Dataframe(object):
         @type label_names: list
         @param operator: comparative operator. Allowed values are: '>' (more 
         than), '<' (less than), '>=' (more than or equals to), '<=' (less 
-        than or equals to), '=' (equals to), and '!=' (not equals to).
+        than or equals to), '=' (equals to), '!=' (not equals to), and '*' 
+        (all, basically replicating the entire data frame).
         @param original_value: original value of the data.
         @param new_dataframe_name: name for new data frame (that is to be 
         returned)
@@ -334,22 +335,24 @@ class Dataframe(object):
             try:
                 if (operator == '>') and \
                     sum([1 for item in self.data[label] if item > value]):
-                        data[label] = [x for x in self.data[label]]
+                    data[label] = [x for x in self.data[label]]
                 elif (operator == '<') and \
                     sum([1 for item in self.data[label] if item < value]):
-                        data[label] = [x for x in self.data[label]]
+                    data[label] = [x for x in self.data[label]]
                 elif (operator == '>=') and \
                     sum([1 for item in self.data[label] if item >= value]):
-                        data[label] = [x for x in self.data[label]]
+                    data[label] = [x for x in self.data[label]]
                 elif (operator == '<=') and \
                     sum([1 for item in self.data[label] if item <= value]):
-                        data[label] = [x for x in self.data[label]]
+                    data[label] = [x for x in self.data[label]]
                 elif (operator == '=') and \
                     sum([1 for item in self.data[label] if item == value]):
-                        data[label] = [x for x in self.data[label]]
+                    data[label] = [x for x in self.data[label]]
                 elif (operator == '!=') and \
                     sum([1 for item in self.data[label] if item != value]):
-                        data[label] = [x for x in self.data[label]]
+                    data[label] = [x for x in self.data[label]]
+                elif (operator == '*'):
+                    data[label] = [x for x in self.data[label]]
             except KeyError: pass
         df.data = data
         df.label = data.keys()
