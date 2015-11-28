@@ -266,7 +266,7 @@ class Dataframe(object):
         except ValueError, KeyError: 
             return s
     
-    def extractSeriesName(self, series_names, new_dataframe_name=''):
+    def extractSeries(self, series_names, new_dataframe_name=''):
         '''
         Method to extract one or more series from the current data frame 
         into a new data frame.
@@ -284,7 +284,7 @@ class Dataframe(object):
             df.addSeries(s)
         return df
         
-    def extractLabelsName(self, label_names, new_dataframe_name=''):
+    def extractLabels(self, label_names, new_dataframe_name=''):
         '''
         Method to extract one or more data labels across all series from 
         the current data frame into a new data frame.
@@ -521,7 +521,7 @@ class Dataframe(object):
         @type new_dataframe_name: string
         @return: dataframe.Dataframe object
         '''
-        df = self.extractSeriesName(series_names, new_dataframe_name)
+        df = self.extractSeries(series_names, new_dataframe_name)
         for series in series_names: self.removeSeries(series)
         return df
         
@@ -554,7 +554,7 @@ class Dataframe(object):
         @type new_dataframe_name: string
         @return: dataframe.Dataframe object
         '''
-        df = self.extractLabelsName(label_names, new_dataframe_name)
+        df = self.extractLabels(label_names, new_dataframe_name)
         for label in label_names: self.removeLabel(label)
         return df
         

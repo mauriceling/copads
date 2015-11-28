@@ -499,7 +499,7 @@ class testDataframe(unittest.TestCase):
         self.assertEqual(coordinates, [('seriesA', 'A'), 
                                        ('seriesC', 'C'), 
                                        ('seriesD', 'D')])
-    def testExtractSeriesName1(self):
+    def testExtractSeries1(self):
         df = d.Dataframe('frame1')
         dataset = {'seriesA': [10, 11, 12, 13, 14, 15, 16, 17, 18, 19],
                    'seriesB': [20, 21, 22, 23, 24, 25, 26, 27, 28, 29],
@@ -517,7 +517,7 @@ class testDataframe(unittest.TestCase):
                                    'H':[17, 27, 37, 47], 
                                    'I':[18, 28, 38, 48], 
                                    'J':[19, 29, 39, 49]})
-        ndf = df.extractSeriesName(['seriesB'], 'newframe')
+        ndf = df.extractSeries(['seriesB'], 'newframe')
         self.assertEqual(ndf.name, 'newframe')
         self.assertEqual(ndf.data, {'A':[20], 
                                     'B':[21], 
@@ -529,7 +529,7 @@ class testDataframe(unittest.TestCase):
                                     'H':[27], 
                                     'I':[28], 
                                     'J':[29]})
-    def testExtractSeriesName2(self):
+    def testExtractSeries2(self):
         df = d.Dataframe('frame1')
         dataset = {'seriesA': [10, 11, 12, 13, 14, 15, 16, 17, 18, 19],
                    'seriesB': [20, 21, 22, 23, 24, 25, 26, 27, 28, 29],
@@ -547,7 +547,7 @@ class testDataframe(unittest.TestCase):
                                    'H':[17, 27, 37, 47], 
                                    'I':[18, 28, 38, 48], 
                                    'J':[19, 29, 39, 49]})
-        ndf = df.extractSeriesName(['seriesB', 'seriesD'], 'newframe')
+        ndf = df.extractSeries(['seriesB', 'seriesD'], 'newframe')
         self.assertEqual(ndf.name, 'newframe')
         self.assertEqual(ndf.series_names, ['seriesB', 'seriesD'])
         self.assertEqual(ndf.data, {'A':[20, 40], 
@@ -652,7 +652,7 @@ class testDataframe(unittest.TestCase):
                                    'H':[17, 37], 
                                    'I':[18, 38], 
                                    'J':[19, 39]})
-    def testExtractLabelsName1(self):
+    def testExtractLabels1(self):
         df = d.Dataframe('frame1')
         dataset = {'seriesA': [10, 11, 12, 13, 14, 15, 16, 17, 18, 19],
                    'seriesB': [20, 21, 22, 23, 24, 25, 26, 27, 28, 29],
@@ -670,12 +670,12 @@ class testDataframe(unittest.TestCase):
                                    'H':[17, 27, 37, 47], 
                                    'I':[18, 28, 38, 48], 
                                    'J':[19, 29, 39, 49]})
-        ndf = df.extractLabelsName(['B'], 'newframe')
+        ndf = df.extractLabels(['B'], 'newframe')
         self.assertEqual(ndf.series_names, ['seriesA', 'seriesB', 
                                             'seriesC', 'seriesD'])
         self.assertEqual(ndf.label, ['B'])
         self.assertEqual(ndf.data, {'B':[11, 21, 31, 41]})
-    def testExtractLabelsName2(self):
+    def testExtractLabels2(self):
         df = d.Dataframe('frame1')
         dataset = {'seriesA': [10, 11, 12, 13, 14, 15, 16, 17, 18, 19],
                    'seriesB': [20, 21, 22, 23, 24, 25, 26, 27, 28, 29],
@@ -693,7 +693,7 @@ class testDataframe(unittest.TestCase):
                                    'H':[17, 27, 37, 47], 
                                    'I':[18, 28, 38, 48], 
                                    'J':[19, 29, 39, 49]})
-        ndf = df.extractLabelsName(['B', 'G'], 'newframe')
+        ndf = df.extractLabels(['B', 'G'], 'newframe')
         self.assertEqual(ndf.series_names, ['seriesA', 'seriesB', 
                                             'seriesC', 'seriesD'])
         self.assertEqual(ndf.label, ['B', 'G'])
