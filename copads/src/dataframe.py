@@ -315,7 +315,7 @@ class Dataframe(object):
         series where data value is more than 30, and generate and return a new 
         dataframe (ndf).
         
-        >>> ndf = df.replaceLabel('>', 30, 'newframe')
+        >>> ndf = df.extractValue('>', 30, 'newframe')
         
         @param label_names: names of labels to extract
         @type label_names: list
