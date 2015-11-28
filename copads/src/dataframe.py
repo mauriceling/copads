@@ -289,7 +289,7 @@ class Dataframe(object):
         Method to extract one or more data labels across all series from 
         the current data frame into a new data frame.
         
-        @param label_names: names of series to extract
+        @param label_names: names of labels to extract
         @type label_names: list
         @param new_dataframe_name: name for new data frame (that is to be 
         returned)
