@@ -306,7 +306,7 @@ class Dataframe(object):
         df.series_names = [x for x in self.series_names]
         return df
         
-    def extractLabelsValue(self, operator, value, new_dataframe_name=''):
+    def extractValue(self, operator, value, new_dataframe_name=''):
         '''
         Method to extract one or more data labels across all series, based on 
         criterion, from the current data frame into a new data frame.
