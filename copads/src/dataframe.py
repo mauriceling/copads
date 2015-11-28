@@ -5,7 +5,6 @@ Licence: Python Software Foundation License version 2
 '''
 import string
 import random
-import copy
 
 from copadsexceptions import FunctionParameterValueError
 
@@ -322,8 +321,7 @@ class Dataframe(object):
         @type label_names: list
         @param operator: comparative operator. Allowed values are: '>' (more 
         than), '<' (less than), '>=' (more than or equals to), '<=' (less 
-        than or equals to), '=' (equals to), '!=' (not equals to), and '*' 
-        (all, basically deepcopying the entire data frame).
+        than or equals to), '=' (equals to), and '!=' (not equals to).
         @param original_value: original value of the data.
         @param new_dataframe_name: name for new data frame (that is to be 
         returned)
@@ -352,8 +350,6 @@ class Dataframe(object):
                 elif (operator == '!=') and \
                     sum([1 for item in self.data[label] if item != value]):
                         data[label] = [x for x in self.data[label]]
-                elif (operator == '*'):
-                    data = copy.deepcopy(self.data)
             except KeyError: pass
         df.data = data
         df.label = data.keys()
