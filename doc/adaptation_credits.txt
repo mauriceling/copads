@@ -1,0 +1,49 @@
+As a collection, COPADS adapted numerous codes available from other sources. Wherever possible, specific credits are given within individual source files. The original sources can be found in doc/adaptation_source directory. 
+A summary of credits to acknowledge the works of various authors/developers is as follows:
+
+MatrixError subclasses (MatrixError, MatrixArithmeticError, MatrixMultiplicationError, MatrixAdditionError, MatrixSquareError, MatrixTraceError, MatrixMinorError, MatrixDeterminantError)
+(file: doc/adaptation_source/189971.py)
+http://http://aspn.activestate.com/ASPN/Cookbook/Python/Recipe/189971 
+
+Matrix class (file: doc/adaptation_source/189971.py)
+http://http://aspn.activestate.com/ASPN/Cookbook/Python/Recipe/189971 
+
+Bag class (file: doc/adaptation_source/259174.py)
+http://aspn.activestate.com/ASPN/Cookbook/Python/Recipe/259174 
+
+GeometricMean, HarmonicMean, ArithmeticMean, Median, MedianScore, Mode, Moment, Variation, Skew, Kurtosis, Describe (file: doc/adapation_source/harvard_gary_stat.py)
+http://www.nmr.mgh.harvard.edu/Neural_Systems_Group/gary/python/stats.py 
+
+asdict, items, count, contents, intersection, difference, itemindex, indexesof, take, take_byfn, fcmp, intd, safe_log, safe_log2, safe_exp, Euclidean. BioPython project.
+
+PriorityDictionary class (file: doc/adaptation_source/117228.py)
+http://aspn.activestate.com/ASPN/Cookbook/Python/Recipe/117228 
+
+RingList class (file: doc/adaptation_source/435902.py)
+http://aspn.activestate.com/ASPN/Cookbook/Python/Recipe/435902 
+
+Levenshtein distance (http://www.hetland.org/python/distance.py)
+
+Vector class (file: doc/adaptation_source/52272.py)
+http://aspn.activestate.com/ASPN/Cookbook/Python/Recipe/52272 
+
+SparseMatrix class (file: doc/adaptation_source/52275.py)
+http://aspn.activestate.com/ASPN/Cookbook/Python/Recipe/52275 
+
+floatRgb, strRgb, rgc, htmlRgb (file: doc/adaptation_source/52275.py)
+http://aspn.activestate.com/ASPN/Cookbook/Python/Recipe/52275 
+
+Red-Black Tree (file: doc/adaptation_source/RBTree.py)
+http://newcenturycomputers.net/projects/rbtree.html
+
+Dijkstra (file: doc/adaptation_source/119466.py)
+http://aspn.activestate.com/ASPN/Cookbook/Python/Recipe/119466
+
+Numerical algorithms by Tom Loredo (file: doc/adaptation_source/2000_June_671838.py)
+http://http://mail.python.org/pipermail/python-list/2000-June/671838.html
+
+Digamma, trigamma unctions by Gavin E Crooks (file: doc/adaptation_source/moremaths.py)
+http://www.koders.com/python/fidA1F143F7BBA4CFACA5F3442265D17800581A493F.aspx
+
+AVL Tree (file: doc/adaptation_source/AVLTree.py)
+http://bjourne.blogspot.com/2006/11/avl-tree-in-python.html
