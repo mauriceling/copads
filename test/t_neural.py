@@ -4,7 +4,7 @@ import copy
 import pprint
 import unittest
 
-sys.path.append(os.path.join(os.path.dirname(os.getcwd()), 'src'))
+sys.path.append(os.path.join(os.path.dirname(os.getcwd()), 'copads'))
 import neural as n
 
 brainfile = 'testbrain.db'

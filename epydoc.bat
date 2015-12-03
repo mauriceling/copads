@@ -1,6 +1,3 @@
-mkdir copads
-cp -r src/ copads/
-
 epydoc --verbose \
        --pdf \
        --output=doc/epydoc \
@@ -27,5 +24,3 @@ epydoc --verbose \
        --show-frames \
        --navlink=https://github.com/copads/copads \
        copads
-
-rm -rf copads

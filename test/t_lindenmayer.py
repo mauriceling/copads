@@ -3,7 +3,7 @@ import os
 import unittest
 import re
 
-sys.path.append(os.path.join(os.path.dirname(os.getcwd()), 'src'))
+sys.path.append(os.path.join(os.path.dirname(os.getcwd()), 'copads'))
 import lindenmayer as N
 
 class testReplacement(unittest.TestCase):
