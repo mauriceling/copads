@@ -73,9 +73,7 @@ class SingleSample:
         @status: Tested method
         @since: version 0.1
         """
-        sum = 0
-        for item in self.data: sum = sum + item
-        return sum / float(len(self.data))
+        return sum(self.data) / float(len(self.data))
     
     def moment(self, moment=1):
         """
