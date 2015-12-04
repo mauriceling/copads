@@ -1,4 +1,4 @@
-"""
+'''
 Data Structures and Algorithms for Data Collected from One or More Samples.
 
 The following functions were adapted from http://www.nmr.mgh.harvard.edu/
@@ -16,20 +16,19 @@ input):
     - kurtosis
 
 Copyright (c) Maurice H.T. Ling <mauriceling@acm.org>
-"""
+'''
 
 import math
 from statisticsdistribution import Distribution
 from copadsexceptions import FunctionParameterTypeError
 from copadsexceptions import FunctionParameterValueError
-from operations import summation
 from matrix import Matrix
 import nrpy
 
 class SingleSample(object):
-    """
+    '''
     Class to hold a single sample, and provides calculations on the sample
-    """
+    '''
     data = None
     rowcount = 0
     name = None
@@ -42,24 +41,24 @@ class SingleSample(object):
         self.fullSummary()
         
     def geometricMean(self):
-        """
+        '''
         Calculates the geometric mean of the data
         
         @status: Tested method
         @since: version 0.1
-        """
+        '''
         mult = 1.0
         one_over_n = 1.0 / len(self.data)
         for item in self.data: mult = mult * math.pow(item, one_over_n)
         return mult
     
     def harmonicMean(self):
-        """
+        '''
         Calculates the harmonic mean of the data
         
         @status: Tested method
         @since: version 0.1
-        """
+        '''
         sum = 0.000001
         for item in self.data:
             if item != 0: sum = sum + 1.0/item
@@ -67,18 +66,18 @@ class SingleSample(object):
         return len(self.data) / sum
     
     def arithmeticMean(self):
-        """
+        '''
         Returns the arithematic mean of the data
         
         @status: Tested method
         @since: version 0.1
-        """
+        '''
         return sum(self.data) / float(len(self.data))
     
     def moment(self, moment=1):
-        """
+        '''
         Calculates the nth moment about the mean for the data
-        """
+        '''
         if moment == 1:
             return 0.0
         else:
@@ -90,55 +89,55 @@ class SingleSample(object):
             return s / float(n)
         
     def skew(self):
-        """
+        '''
         Returns the skewness of the data, as defined in Numerical
         Recipies (alternate defn in CRC Standard Probability and
         Statistics, p.6.)
         
         @status: Tested method
         @since: version 0.1
-        """
+        '''
         return self.moment(3) / math.pow(self.moment(2), 1.5)
 
     def kurtosis(self):
-        """
+        '''
         Returns the kurtosis of the data, as defined in Numerical
         Recipies (alternate defn in CRC Standard Probability and
         Statistics, p.6.)
         
         @status: Tested method
         @since: version 0.1
-        """
+        '''
         return self.moment(4) / math.pow(self.moment(2), 2.0)
     
     def variation(self):
-        """
+        '''
         Returns the coefficient of variation in percentage, as
         defined in CRC Standard Probability and Statistics, p.6.
         Ref: http://en.wikipedia.org/wiki/Coefficient_of_variation
         
         @status: Tested method
         @since: version 0.1
-        """
+        '''
         return 100.0 * self.summary['stdev'] / self.summary['aMean']
 
     def range(self):
-        """
+        '''
         Returns the range of the data (maximum - minimum)
         
         @status: Tested method
         @since: version 0.1
-        """
+        '''
         self.data.sort()
         return float(self.data[-1]) - float(self.data[0])
 
     def variance(self):
-        """
+        '''
         Returns the variance of the data
         
         @status: Tested method
         @since: version 0.1
-        """
+        '''
         sum = 0.0
         mean = self.arithmeticMean()
         for item in self.data:
@@ -167,9 +166,9 @@ class SampleDistribution(Distribution):
 
         
 class TwoSample(object):
-    """
+    '''
     Class to hold a two samples, and provides calculations on the samples
-    """
+    '''
     sample = {}
     sample_name = []
     def __init__(self, data1, name1, data2, name2):
@@ -187,25 +186,24 @@ class TwoSample(object):
         return self.sample_name
 
     def covariance(self):
-        """
+        '''
         Calculates covariance using the formula: Cov(xy) = E(xy) - E(x)E(y)
         
         @status: Tested method
         @since: version 0.3
-        """
+        '''
         sname = self.listSamples()
-        if self.sample[sname[0]].data == self.sample[sname[1]].data: return 1.0
-        if self.sample[sname[0]].rowcount == self.sample[sname[1]].rowcount:
-            slen = self.sample[sname[0]].rowcount
-        elif self.sample[sname[0]].rowcount > self.sample[sname[1]].rowcount:
-            slen = self.sample[sname[1]].rowcount
-        else: slen = self.sample[sname[0]].rowcount
-        xy = SingleSample([self.sample[sname[0]].data[i] * \
-                            self.sample[sname[1]].data[i]
-                            for i in range(slen)], 'temporary')
+        X = self.sample[sname[0]]
+        Y = self.sample[sname[1]]
+        if X.data == Y.data: return 1.0
+        if X.rowcount == Y.rowcount: slen = X.rowcount
+        elif X.rowcount > Y.rowcount: slen = Y.rowcount
+        else: slen = X.rowcount
+        xy = SingleSample([X.data[i] * Y.data[i] for i in range(slen)], 
+                          'temporary')
         mean_xy = xy.arithmeticMean()
-        mean_x = self.sample[sname[0]].arithmeticMean()
-        mean_y = self.sample[sname[1]].arithmeticMean()
+        mean_x = X.arithmeticMean()
+        mean_y = Y.arithmeticMean()
         return mean_xy - (mean_x * mean_y)
     
     def linear_regression(self):
@@ -221,18 +219,15 @@ class TwoSample(object):
         @since: version 0.1
         '''
         sname = self.listSamples()
-        if self.sample[sname[0]].rowcount == self.sample[sname[1]].rowcount:
-            slen = self.sample[sname[0]].rowcount
-        elif self.sample[sname[0]].rowcount > self.sample[sname[1]].rowcount:
-            slen = self.sample[sname[1]].rowcount
-        else: 
-            slen = self.sample[sname[0]].rowcount
-        mean_x = self.sample[sname[0]].arithmeticMean()
-        mean_y = self.sample[sname[1]].arithmeticMean()
-        error_x = [self.sample[sname[0]].data[i] - mean_x 
-                   for i in range(slen)]
-        error_y = [self.sample[sname[1]].data[i] - mean_y 
-                   for i in range(slen)]
+        X = self.sample[sname[0]]
+        Y = self.sample[sname[1]]
+        if X.rowcount == Y.rowcount: slen = X.rowcount
+        elif X.rowcount > Y.rowcount: slen = Y.rowcount
+        else: slen = X.rowcount
+        mean_x = X.arithmeticMean()
+        mean_y = Y.arithmeticMean()
+        error_x = [X.data[i] - mean_x for i in range(slen)]
+        error_y = [Y.data[i] - mean_y for i in range(slen)]
         gradient = sum([error_x[index] * error_y[index]
                         for index in range(len(error_x))]) / \
                    sum([error_x[index] * error_x[index]
@@ -242,14 +237,13 @@ class TwoSample(object):
     
     def mlr(self, order=2):
         sname = self.listSamples()
-        if self.sample[sname[0]].rowcount == self.sample[sname[1]].rowcount:
-            slen = self.sample[sname[0]].rowcount
-        elif self.sample[sname[0]].rowcount > self.sample[sname[1]].rowcount:
-            slen = self.sample[sname[1]].rowcount
-        else: 
-            slen = self.sample[sname[0]].rowcount
-        X_data = self.sample[sname[0]].data[:slen]
-        Y_data = self.sample[sname[1]].data[:slen]
+        X = self.sample[sname[0]]
+        Y = self.sample[sname[1]]
+        if X.rowcount == Y.rowcount: slen = X.rowcount
+        elif X.rowcount > Y.rowcount: slen = Y.rowcount
+        else: slen = X.rowcount
+        X_data = X.data[:slen]
+        Y_data = Y.data[:slen]
         data_array = [[1]*slen]
         for x in range(1, order+1):
             data_array.append([element**x for element in X_data])
@@ -261,7 +255,7 @@ class TwoSample(object):
         return [x[0] for x in result.m]
     
     def pearson(self):
-        """
+        '''
         Calculates the Pearson's product-moment coefficient by the formula
         
         (N * sum_xy) - (sum_x * sum_y)
@@ -270,32 +264,24 @@ class TwoSample(object):
         
         @status: Tested method
         @since: version 0.1
-        """
+        '''
         sname = self.listSamples()
-        if self.sample[sname[0]].rowcount == self.sample[sname[1]].rowcount:
-            slen = self.sample[sname[0]].rowcount
-        elif self.sample[sname[0]].rowcount > self.sample[sname[1]].rowcount:
-            slen = self.sample[sname[1]].rowcount
-        else: slen = self.sample[sname[0]].rowcount
-        sum_x = summation([self.sample[sname[0]].data[i] 
-                            for i in range(slen)])
-        sum_x2 = summation([self.sample[sname[0]].data[i] * \
-                            self.sample[sname[0]].data[i] 
-                            for i in range(slen)])
-        sum_y = summation([self.sample[sname[1]].data[i] 
-                            for i in range(slen)])
-        sum_y2 = summation([self.sample[sname[1]].data[i] * \
-                            self.sample[sname[1]].data[i]
-                            for i in range(slen)])
-        sum_xy = summation([self.sample[sname[0]].data[i] * \
-                            self.sample[sname[1]].data[i]
-                            for i in range(slen)])
+        X = self.sample[sname[0]]
+        Y = self.sample[sname[1]]
+        if X.rowcount == Y.rowcount: slen = X.rowcount
+        elif X.rowcount > Y.rowcount: slen = Y.rowcount
+        else: slen = X.rowcount
+        sum_x = sum([X.data[i] for i in range(slen)])
+        sum_x2 = sum([X.data[i] ** 2 for i in range(slen)])
+        sum_y = sum([Y.data[i] for i in range(slen)])
+        sum_y2 = sum([Y.data[i] ** 2 for i in range(slen)])
+        sum_xy = sum([X.data[i] * Y.data[i] for i in range(slen)])
         numerator = (slen * sum_xy) - (sum_x * sum_y)
         denominator_x = (slen * sum_x2) - (sum_x * sum_x)
         denominator_y = (slen * sum_y2) - (sum_y * sum_y)
         return float(numerator / ((denominator_x * denominator_y) ** 0.5))
     
-"""        
+'''        
 class MultiSample(object):
     sample = {}
     def __init__(self): pass
@@ -320,5 +306,5 @@ class MultiSample(object):
 
     def listSamples(self):
         return self.sample.keys()
-"""    
+'''    
     
