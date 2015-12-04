@@ -13,7 +13,6 @@ name2 = 'data2'
 class testSingleSample(unittest.TestCase):
     def setUp(self):
         self.data = S.SingleSample(data1, name1)
-        self.data.fullSummary()
     def testInit(self):
         self.assertEqual(self.data.data, data1)
         self.assertEqual(self.data.name, name1)
