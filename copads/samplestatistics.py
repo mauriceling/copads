@@ -26,7 +26,7 @@ from operations import summation
 from matrix import Matrix
 import nrpy
 
-class SingleSample:
+class SingleSample(object):
     """
     Class to hold a single sample, and provides calculations on the sample
     """
@@ -166,7 +166,7 @@ class SampleDistribution(Distribution):
         self.sample = sampleData
 
         
-class TwoSample:
+class TwoSample(object):
     """
     Class to hold a two samples, and provides calculations on the samples
     """
@@ -296,7 +296,7 @@ class TwoSample:
         return float(numerator / ((denominator_x * denominator_y) ** 0.5))
     
 """        
-class MultiSample:
+class MultiSample(object):
     sample = {}
     def __init__(self): pass
     
