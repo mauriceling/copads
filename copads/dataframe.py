@@ -305,7 +305,7 @@ class Dataframe(object):
         than), '<' (less than), '>=' (more than or equals to), '<=' (less 
         than or equals to), '=' (equals to), '!=' (not equals to), and '*' 
         (all, basically replicating the entire data frame).
-        @param original_value: original value of the data.
+        @param value: value of the data to compare.
         @param new_dataframe_name: name for new data frame (that is to be 
         returned)
         @type new_dataframe_name: string
@@ -328,13 +328,13 @@ class Dataframe(object):
         
         >>> df = <current>.extractSeriesValue('seriesA', '>', 30, '')
         
-        @param series_names: names of series to extract
-        @type series_names: list
+        @param series_name: name of series to extract
+        @type series_name: list
         @param operator: comparative operator. Allowed values are: '>' (more 
         than), '<' (less than), '>=' (more than or equals to), '<=' (less 
         than or equals to), '=' (equals to), '!=' (not equals to), and '*' 
         (all, basically replicating the entire data frame).
-        @param original_value: original value of the data.
+        @param value: value of the data to compare.
         @param new_dataframe_name: name for new data frame (that is to be 
         returned)
         @type new_dataframe_name: string
@@ -395,14 +395,12 @@ class Dataframe(object):
         dataframe (ndf).
         
         >>> ndf = df.extractValue('>', 30, 'newframe')
-        
-        @param label_names: names of labels to extract
-        @type label_names: list
+       
         @param operator: comparative operator. Allowed values are: '>' (more 
         than), '<' (less than), '>=' (more than or equals to), '<=' (less 
         than or equals to), '=' (equals to), '!=' (not equals to), and '*' 
         (all, basically replicating the entire data frame).
-        @param original_value: original value of the data.
+        @param value: value of the data to compare.
         @param new_dataframe_name: name for new data frame (that is to be 
         returned)
         @type new_dataframe_name: string
@@ -516,7 +514,7 @@ class Dataframe(object):
         @param labels: list of labels for the data values. If not given, 
         a sequential number will be given as label but this does not ensure 
         uniqueness in label names across the entire series.
-        @type label: list
+        @type labels: list
         @param fill_in: value to fill into missing values during process. 
         This is required as the number of data elements across each label 
         must be the same. Hence, filling in of missing values can occur 
@@ -557,7 +555,7 @@ class Dataframe(object):
         added data series (this will require filling in of missing values 
         to the newly added data series). Default = None.
         @param newline: character to denote new line or line feed in the 
-        CSV file. Default = '\n'
+        CSV file.
         '''
         data = open(filepath, 'r').readlines()
         data = [x[:(-1)*len(newline)] for x in data]
@@ -580,8 +578,8 @@ class Dataframe(object):
         Method to remove / delete a data series from the current data 
         frame.
         
-        @param series_names: names of series to remove
-        @type series_names: string
+        @param series_name: names of series to remove
+        @type series_name: string
         '''
         series_name = str(series_name)
         try:

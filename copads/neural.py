@@ -243,11 +243,6 @@ class brainbase(object):
         @type sourceID: string
         @param destinationID: ID of destination / sink neuron.
         @type destinationID: string
-        @param kwargs: initial synaptic data (as dictionary). The following 
-        mandatory fields will be added for each neuron::
-            - weight: initial weight of synapse. Default = generated random 
-            value between 0-1.
-        @type kwargs: dictionary
         '''
         if self._check_neuron_presence(sourceID) == False:
             sourceID = self.add_neuron()
@@ -455,7 +450,7 @@ class brainbase(object):
         @type ID: string
         @param stype: type of synaptic state of the synapse (connection) to get. 
         Default = weight.
-        @type state: string
+        @type stype: string
         @return: list of tuples (<ID of destination neuron>, <value of stype>)
         '''
         self.cur.execute('''select destination, value 
@@ -512,8 +507,8 @@ class brainbase(object):
             - add external input: AEXTIN:<ID of source / originating neuron>:
             <ID of destination / sink neuron>:<value of input>
             
-        @param sourceID: ID of source / originating neuron.
-        @type sourceID: string
+        @param source: ID of source / originating neuron.
+        @type source: string
         @param destinationID: ID of destination / sink neuron.
         @type destinationID: string
         @param value: value of the input.
