@@ -150,12 +150,30 @@ class PNet(object):
             count = count + 1
     
     def _attribute_swap(self, place_name):
-        d = {}
+        '''
+        Private method which replaces Place.attributeA with the values in 
+        Place.attributeB.
+        
+        @param place_name: name of the place/container
+        @type place_name: string
+        '''
         for k in self.places[place_name].attributesB.keys(): 
-            d[k] = self.places[place_name].attributesB[k]
-        self.places[place_name].attributesA = d
+            self.places[place_name].attributesA[k] = \
+            self.places[place_name].attributesB[k]
         
     def _step_rule(self, movement, value, interval):
+        '''
+        Private method which simulates a step rule action.
+        
+        @param movement: defines the movement of a token type. Each 
+        movement is defined in the following format: <source 
+        place>.<source token> -> <destination place>.<destination token>
+        @type movement: string
+        @param value: the number of tokens to move
+        @type value: float
+        @param interval: simulation time interval
+        @type interval: integer
+        '''
         source_place = self.places[movement[0].split('.')[0]]
         source_value = movement[0].split('.')[1]
         destination_place = self.places[movement[1].split('.')[0]]
@@ -165,34 +183,60 @@ class PNet(object):
         source_place.attributesB[source_value] = \
             source_place.attributesA[source_value] - (value*interval)
         destination_place.attributesB[destination_value] = \
-            destination_place.attributesB[destination_value] + (value*interval)
+            destination_place.attributesB[destination_value] + \
+            (value*interval)
         return [movement[0].split('.')[0], 
                 movement[1].split('.')[0]]
     
-    def _test_condition(self, source_place, source_value, operator, criterion):
-        criterion = float(criterion)
+    def _test_condition(self, place, token, operator, value):
+        '''
+        Private method used by rule processors for logical check of 
+        condition. For example, the condition 'mixer.flour == 0' will be 
+        written as 
+        
+        >>> _test_condition('mixer', 'flour', '==', 0)
+        
+        @param place: anme of place/container
+        @type place: string
+        @param token: name of token
+        @type token: string
+        @param operator: binary operator. Allowable values are '==' 
+        (equals to), '>' (more than), '>=' (more than or equals to), '<' 
+        (less than), '<=' (less than or equals to), and '!=' (not equals 
+        to).
+        @type operator: string
+        @param value: value to be checked
+        @return: 'passed' if test result is true, or 0 if test result is 
+        false
+        '''
+        value = float(value)
         if operator == '==' and \
-            self.places[source_place].attributesA[source_value] == criterion:
+            self.places[place].attributesA[token] == value:
             return 'passed'
         elif operator == '>' and \
-            self.places[source_place].attributesA[source_value] > criterion:
+            self.places[place].attributesA[token] > value:
             return 'passed'
         elif operator == '>=' and \
-            self.places[source_place].attributesA[source_value] >= criterion:
+            self.places[place].attributesA[token] >= value:
             return 'passed'
         elif operator == '<' and \
-            self.places[source_place].attributesA[source_value] < criterion:
+            self.places[place].attributesA[token] < value:
             return 'passed'
         elif operator == '<=' and \
-            self.places[source_place].attributesA[source_value] <= criterion:
+            self.places[place].attributesA[token] <= value:
             return 'passed'
         elif operator == '!=' and \
-            self.places[source_place].attributesA[source_value] != criterion:
+            self.places[place].attributesA[token] != value:
             return 'passed'
         else:
             return 0
     
     def _incubate_rule(self, rule, interval):
+        '''
+        
+        @param interval: simulation time interval
+        @type interval: integer
+        '''
         value = rule['value']
         timer = rule['timer']
         conditions = rule['conditions']
