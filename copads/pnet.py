@@ -233,9 +233,12 @@ class PNet(object):
     
     def _incubate_rule(self, rule, interval):
         '''
+        Private method which simulates an incubate rule action.
         
+        @param rule: a dictionary representing the incubate rule
         @param interval: simulation time interval
         @type interval: integer
+        @return: modified rule dictionary
         '''
         value = rule['value']
         timer = rule['timer']
