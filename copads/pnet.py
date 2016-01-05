@@ -335,9 +335,9 @@ class PNet(object):
         end_time = int(end_time)
         while clock < end_time:
             self._execute_rules(clock, interval)
-            clock = clock + interval
             if (clock % report_frequency) == 0: 
                 self._generate_report(clock)
+            clock = clock + interval
 
     def simulate_yield(self, end_time, interval=1.0):
         '''
@@ -361,7 +361,7 @@ class PNet(object):
             for k in self.report[str(clock)].keys():
                 rept[k] = self.report[str(clock)][k]
             del self.report[str(clock)][k]
-            yield rept
+            yield (clock, rept)
             clock = clock + interval
                 
     def _generate_report(self, clock):
@@ -379,4 +379,43 @@ class PNet(object):
                 name = '.'.join([pName, aName])
                 rept[name] = value
         self.report[str(clock)] = rept
+        
+    def report_tokens(self, reportdict=None):
+        '''
+        Method to report the status of each token(s) from each place as a 
+        list. This can be used in 2 different ways: to generate a list 
+        representation of a status from one time step (such as from 
+        simulate_yield method), or to generate a list representation of 
+        a status from entire simulation (such as from simulate method). 
+        
+        >>> # from simulate method
+        >>> net.simulate(65, 1, 1)
+        >>> status = net.report_tokens()
+        
+        >>> # from simulate_yield method
+        >>> status = [d for d in net.simulate_yield(65, 1)]
+        >>> status = [(d[0], net.report_tokens(d[1])) for d in status]
+        
+        @param reportdict: status from one time step. Default = None. If 
+        None, it will assume that simulate method had been executed and 
+        all status are stored in memory, and this method will generate a 
+        report from status stored in memory
+        @type reportdict: dictionary
+        @return: tuple of ([<place.token name>], [([<place.token value>]]) 
+        if reportdict is given, or tuple of (time step, [<place.token 
+        name>], [([<place.token value>]]) if reportdict is None.
+        '''
+        if reportdict:
+            placetokens = reportdict.keys()
+            tokenvalues = [reportdict[k] for k in placetokens]
+            return (placetokens, tokenvalues)
+        else:
+            timelist = self.report.keys()
+            datalist = [0] * len(timelist)
+            for i in range(len(timelist)):
+                placetokens = self.report[timelist[i]].keys()
+                tokenvalues = [self.report[timelist[i]][k] 
+                               for k in placetokens]
+                datalist[i] = (timelist[i], placetokens, tokenvalues)
+            return datalist
         
