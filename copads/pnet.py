@@ -286,45 +286,92 @@ class PNet(object):
                 rule['timer'] = 0
         return (rule, [movement[0].split('.')[0], 
                        movement[1].split('.')[0]])
-        
-    def simulate(self, end_time, interval=1, report_frequency=1, 
-                 yielding=False):
+    
+    def _execute_rules(self, clock, interval):
         affected_places = []
+        for rName in self.rules.keys():
+            # Step rule
+            if self.rules[rName]['type'] == 'step':
+                movement = self.rules[rName]['movement']
+                value = self.rules[rName]['value']
+                affected = self._step_rule(movement, value, interval)
+                affected_places = affected_places + affected
+            # Delay rule
+            if self.rules[rName]['type'] == 'delay' and \
+                (clock % self.rules[rName]['delay']) == 0:
+                movement = self.rules[rName]['movement']
+                value = self.rules[rName]['value']
+                affected = self._step_rule(movement, value, interval)
+                affected_places = affected_places + affected
+            # Incubate rule
+            if self.rules[rName]['type'] == 'incubate':
+                value = self.rules[rName]['value']
+                (rule, affected) = self._incubate_rule(self.rules[rName],
+                                                       interval)
+                self.rules[rName] = rule
+                affected_places = affected_places + affected
+        for pName in affected_places: self._attribute_swap(pName)
+       
+    def simulate(self, end_time, interval=1.0, report_frequency=1.0):
+        '''
+        Method to simulate the Petri Net. This method stores the generated 
+        report in memory; hence, not suitable for extended simulations as 
+        it can run out of memory. It is possible to conserve memory by 
+        reducing the reporting frequency. Use simulate_yield method for 
+        extended simulations.
+        
+        @param end_time: number of time steps to simulate. If end_time 
+        = 1000, it can be 1000 seconds or 1000 days, depending on the 
+        significance of each step
+        @type end_time: integer
+        @param interval: number of intervals between each time step. 
+        Default = 1.0, simulate by time step interval
+        @type interval: float
+        @param report_frequency: number of time steps between each 
+        reporting. Default = 1.0, each time step is reported
+        @type report_frequency: float
+        '''
         clock = 1
+        end_time = int(end_time)
         while clock < end_time:
-            for rName in self.rules.keys():
-                # Step rule
-                if self.rules[rName]['type'] == 'step':
-                    movement = self.rules[rName]['movement']
-                    value = self.rules[rName]['value']
-                    affected = self._step_rule(movement, value, interval)
-                    affected_places = affected_places + affected
-                # Delay rule
-                if self.rules[rName]['type'] == 'delay' and \
-                    (clock % self.rules[rName]['delay']) == 0:
-                    movement = self.rules[rName]['movement']
-                    value = self.rules[rName]['value']
-                    affected = self._step_rule(movement, value, interval)
-                    affected_places = affected_places + affected
-                # Incubate rule
-                if self.rules[rName]['type'] == 'incubate':
-                    value = self.rules[rName]['value']
-                    (rule, affected) = self._incubate_rule(self.rules[rName],
-                                                           interval)
-                    self.rules[rName] = rule
-                    affected_places = affected_places + affected
-            for pName in affected_places: self._attribute_swap(pName)
+            self._execute_rules(clock, interval)
             clock = clock + interval
             if (clock % report_frequency) == 0: 
-                self.generate_report(clock)
-            if yielding:
-                rept = {}
-                for k in self.report[str(clock)].keys():
-                    rept[k] = self.report[str(clock)][k]
-                del self.report[str(clock)][k]
-                yield rept
-            
-    def generate_report(self, clock):
+                self._generate_report(clock)
+
+    def simulate_yield(self, end_time, interval=1.0):
+        '''
+        Method to simulate the Petri Net. This method runs as a generator, 
+        making it suitable for extended simulation.
+        
+        @param end_time: number of time steps to simulate. If end_time 
+        = 1000, it can be 1000 seconds or 1000 days, depending on the 
+        significance of each step
+        @type end_time: integer
+        @param interval: number of intervals between each time step. 
+        Default = 1.0, simulate by time step interval
+        @type interval: float
+        '''
+        clock = 1
+        end_time = int(end_time)
+        while clock < end_time:
+            self._execute_rules(clock, interval)
+            self._generate_report(clock)
+            rept = {}
+            for k in self.report[str(clock)].keys():
+                rept[k] = self.report[str(clock)][k]
+            del self.report[str(clock)][k]
+            yield rept
+            clock = clock + interval
+                
+    def _generate_report(self, clock):
+        '''
+        Private method to generate and store report in memory of each 
+        token status (the value of each token) in every place/container.
+        
+        @param clock: step count of the current simulation
+        @type clock: float
+        '''
         rept = {}
         for pName in self.places.keys():
             for aName in self.places[pName].attributesA.keys():
