@@ -240,7 +240,8 @@ class PNet(object):
         return (rule, [movement[0].split('.')[0], 
                        movement[1].split('.')[0]])
         
-    def simulate(self, end_time, interval=1, report_frequency=1):
+    def simulate(self, end_time, interval=1, report_frequency=1, 
+                 yielding=False):
         affected_places = []
         clock = 1
         while clock < end_time:
@@ -267,7 +268,14 @@ class PNet(object):
                     affected_places = affected_places + affected
             for pName in affected_places: self._attribute_swap(pName)
             clock = clock + interval
-            if (clock % report_frequency) == 0: self.generate_report(clock)
+            if (clock % report_frequency) == 0: 
+                self.generate_report(clock)
+            if yielding:
+                rept = {}
+                for k in self.report[str(clock)].keys():
+                    rept[k] = self.report[str(clock)][k]
+                del self.report[str(clock)][k]
+                yield rept
             
     def generate_report(self, clock):
         rept = {}
