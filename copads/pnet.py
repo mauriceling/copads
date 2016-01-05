@@ -41,6 +41,50 @@ class PNet(object):
     <number> in order to ensure uniqueness) as key and the value is a 
     dictionary to represent the transition rule (the structure of the 
     transition rule dictionary is dependent on the type of rules).
+    
+    The following types of transition rules are allowed: 
+        - step rule
+        - delay rule
+        - incubate rule
+        
+    Step rule is to be executed at each time step. For example, if 20g of 
+    flour is to be transferred from flour bowl to mixer bowl at each time 
+    step, this 'add_flour' rule can be defined as:
+    
+    >>> net.add_rules('add_flour', 'step', 
+                      ['flour.flour -> mixer.flour; 20'])
+    
+    A single step rule can trigger more than one token movement. For 
+    example, the following step rule simulates the mixing of ingredients 
+    into a flour dough:
+    
+    >>> net.add_rules('blend', 'step', 
+                      ['mixer.flour -> mixer.dough; 15',
+                       'mixer.water -> mixer.dough; 10',
+                       'mixer.sugar -> mixer.dough; 0.9',
+                       'mixer.yeast -> mixer.dough; 1'])
+                       
+    Delay rule acts as a time delay between each token movement. For 
+    example, the following rule simulates the transfer of 0.5g of yeast 
+    into the mixer bowl:
+    
+    >>> net.add_rules('add_yeast', 'delay', 
+                      ['yeast.yeast -> mixer.yeast; 0.5; 10'])
+                      
+    Incubate rule is a variation of delay rule. While delay rule is not 
+    condition dependent, incubate rule starts a time delay when one or 
+    more conditions are met. For example,
+    
+    >>> net.add_rules('rise', 'incubate', 
+                      ['10; mixer.dough -> pan.dough; \
+                       mixer.flour == 0; mixer.water == 0; \
+                       mixer.sugar == 0; mixer.yeast == 0'])
+                       
+    sets a 10 time step delay when all flour, water, sugar, and yeast in 
+    the mixer bowl are used up, which simulates the completemixing into a 
+    bread dough. The 10 time step then simulates the time needed for the 
+    dough to rise. After 10 time steps, dough in the mixer is transferred 
+    into the pan.
     '''
     def __init__(self):
         '''
@@ -52,14 +96,39 @@ class PNet(object):
     
     def add_places(self, place_name, tokens):
         '''
+        Method to add a place/container into the Petri Net.
+        
+        For example, the following adds a "flour" place containing 1000 
+        tokens of flour, which can be seen as a bowl of 1000g of flour:
+        
+        >>> net.add_places('flour', {'flour': 1000})
+        
+        @param place_name: name of the place/container
+        @type place_name: string
+        @param tokens: token(s) for the place/container where key is the 
+        name/type of token and value is the number of tokens for the specific 
+        type
+        @type tokens: dictionary
         '''
         self.places[place_name] = Place(place_name)
         self.places[place_name].attributesA = tokens
-        d = {}
-        for k in tokens: d[k] = 0
-        self.places[place_name].attributesB = d
+        for k in tokens:
+            self.places[place_name].attributesB[k] = 0
     
     def add_rules(self, rule_name, rule_type, triggers):
+        '''
+        Method to add a transition rule into the Petri Net.
+        
+        @param rule_name: name of the transition rule
+        @type rule_name: string
+        @param rule_type: type of rule. Allowable types are 'step' for 
+        step rule, 'delay' for delay rule, and 'incubate' for incubate 
+        rule. Please see module documentation for the description of 
+        rules.
+        @type rule_type: string
+        @param triggers: description of the trigger rule
+        @type triggers: list
+        '''
         count = 1
         for t in triggers:
             t = [x.strip() for x in t.split(';')]
