@@ -85,6 +85,7 @@ class PNet(object):
         self.places = {}
         self.rules = {}
         self.report = {}
+        self.losses = {}
         self.rulenumber = 1
     
     def add_places(self, place_name, tokens):
@@ -144,6 +145,13 @@ class PNet(object):
                                  for loc in movement]
                 d['conditions'] = [cond for cond in t[2:]]
                 d['timer'] = 0
+            if rule_type == 'ratio':
+                movement = [x.strip() for x in t[0].split('->')]
+                d['movement'] = [(loc.split('.')[0], loc.split('.')[1]) 
+                                 for loc in movement]
+                d['ratio'] = float(t[1])
+                d['limit_check'] = t[2]
+                d['limit_set'] = float(t[3])
             self.rules[rule_name + '_' + str(self.rulenumber)] = d
             self.rulenumber = self.rulenumber + 1
         
@@ -263,12 +271,62 @@ class PNet(object):
                 destination_place = self.places[movement[1][0]]
                 destination_value = movement[1][1]
                 destination_place.attributes[destination_value] = \
+                    destination_place.attributes[destination_value] + \
                     source_place.attributes[source_value]
-                source_place.attributes[source_value] = 0
                 source_place.attributes[source_value] = 0
                 rule['timer'] = 0
         return rule
     
+    def _ratio_rule(self, movement, ratio, limit_check, 
+                    limit_set, interval):
+        '''
+        Private method which simulates a ratio rule action.
+        
+        @param movement: defines the movement of a token type. Each 
+        movement is defined in the following format: <source 
+        place>.<source token> -> <destination place>.<destination token>
+        @type movement: string
+        @param ratio: the ratio of tokens to move
+        @type ratio: float
+        @param limit_check: logical check for remainder value
+        @type limit_check: string
+        @param limit_set: value to set token if token in limit_check is 
+        true
+        @type limit_set: float
+        @param interval: simulation time interval
+        @type interval: integer
+        '''
+        source_place = self.places[movement[0][0]]
+        source_value = movement[0][1]
+        destination_place = self.places[movement[1][0]]
+        destination_value = movement[1][1]
+        # Step 1: Perform ratio rule operation
+        token_value = source_place.attributes[source_value] * \
+                      ratio * interval
+        source_place.attributes[source_value] = \
+            source_place.attributes[source_value] - token_value
+        destination_place.attributes[destination_value] = \
+            destination_place.attributes[destination_value] + token_value
+        # Step 2: Perform remaining checks and corrections
+        if len(limit_check.split('>')) == 2:
+            operator = '>'
+            limit_check = [c.strip() for c in limit_check.split('>')]
+        if len(limit_check.split('<')) == 2:
+            operator = '<'
+            limit_check = [c.strip() for c in limit_check.split('<')]
+        check_place = limit_check[0].split('.')[0]
+        check_token = limit_check[0].split('.')[1]
+        check_value = float(limit_check[1])
+        if self._test_condition(check_place, check_token, 
+            operator, check_value) == 'passed':
+            if self.losses.has_key(source_value):
+                self.losses[source_value] = self.losses[source_value] + \
+                source_place.attributes[source_value] - limit_set
+            else:
+                self.losses[source_value] = \
+                source_place.attributes[source_value] - limit_set
+            source_place.attributes[source_value] = limit_set
+            
     def _execute_rules(self, clock, interval):
         affected_places = []
         for rName in self.rules.keys():
@@ -288,6 +346,14 @@ class PNet(object):
                 value = self.rules[rName]['value']
                 rule = self._incubate_rule(self.rules[rName], interval)
                 self.rules[rName] = rule
+            # Ratio rule
+            if self.rules[rName]['type'] == 'ratio':
+                movement = self.rules[rName]['movement']
+                ratio = self.rules[rName]['ratio']
+                limit_check = self.rules[rName]['limit_check']
+                limit_set = self.rules[rName]['limit_set']
+                self._ratio_rule(movement, ratio, limit_check, 
+                                 limit_set, interval)
        
     def simulate(self, end_time, interval=1.0, report_frequency=1.0):
         '''
