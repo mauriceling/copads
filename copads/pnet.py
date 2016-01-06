@@ -11,13 +11,6 @@ class Place(object):
     key-value pair. The key represents the type of token and the value 
     represents the number of such tokens. This enables more than one type 
     of tokens to be represented.
-    
-    The tokens are represented in 2 dictionaries - attributeA and 
-    attributeB, where attributeA is the state of one or more tokens at the 
-    start of time t, and attributeB, which is the state of one or more 
-    tokens after time t. Before the start of time t+1, attributeA is 
-    replaced with attributeB. This is prevent simulation errors resulting 
-    from the firing order or rules, also known as transition rules.
     '''
     def __init__(self, name):
         '''
@@ -27,8 +20,7 @@ class Place(object):
         @type name: string
         '''
         self.name = str(name)
-        self.attributesA = {}
-        self.attributesB = {}
+        self.attributes = {}
         
 class PNet(object):
     '''
@@ -211,22 +203,22 @@ class PNet(object):
         '''
         value = float(value)
         if operator == '==' and \
-            self.places[place].attributesA[token] == value:
+            self.places[place].attributes[token] == value:
             return 'passed'
         elif operator == '>' and \
-            self.places[place].attributesA[token] > value:
+            self.places[place].attributes[token] > value:
             return 'passed'
         elif operator == '>=' and \
-            self.places[place].attributesA[token] >= value:
+            self.places[place].attributes[token] >= value:
             return 'passed'
         elif operator == '<' and \
-            self.places[place].attributesA[token] < value:
+            self.places[place].attributes[token] < value:
             return 'passed'
         elif operator == '<=' and \
-            self.places[place].attributesA[token] <= value:
+            self.places[place].attributes[token] <= value:
             return 'passed'
         elif operator == '!=' and \
-            self.places[place].attributesA[token] != value:
+            self.places[place].attributes[token] != value:
             return 'passed'
         else:
             return 0
@@ -294,23 +286,18 @@ class PNet(object):
             if self.rules[rName]['type'] == 'step':
                 movement = self.rules[rName]['movement']
                 value = self.rules[rName]['value']
-                affected = self._step_rule(movement, value, interval)
-                affected_places = affected_places + affected
+                self._step_rule(movement, value, interval)
             # Delay rule
             if self.rules[rName]['type'] == 'delay' and \
                 (clock % self.rules[rName]['delay']) == 0:
                 movement = self.rules[rName]['movement']
                 value = self.rules[rName]['value']
-                affected = self._step_rule(movement, value, interval)
-                affected_places = affected_places + affected
+                self._step_rule(movement, value, interval)
             # Incubate rule
             if self.rules[rName]['type'] == 'incubate':
                 value = self.rules[rName]['value']
-                (rule, affected) = self._incubate_rule(self.rules[rName],
-                                                       interval)
+                rule = self._incubate_rule(self.rules[rName], interval)
                 self.rules[rName] = rule
-                affected_places = affected_places + affected
-        for pName in affected_places: self._attribute_swap(pName)
        
     def simulate(self, end_time, interval=1.0, report_frequency=1.0):
         '''
@@ -374,8 +361,8 @@ class PNet(object):
         '''
         rept = {}
         for pName in self.places.keys():
-            for aName in self.places[pName].attributesA.keys():
-                value = self.places[pName].attributesA[aName]
+            for aName in self.places[pName].attributes.keys():
+                value = self.places[pName].attributes[aName]
                 name = '.'.join([pName, aName])
                 rept[name] = value
         self.report[str(clock)] = rept
