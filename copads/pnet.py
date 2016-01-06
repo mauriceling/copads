@@ -160,19 +160,17 @@ class PNet(object):
         @param interval: simulation time interval
         @type interval: integer
         '''
-        source_place = self.places[movement[0].split('.')[0]]
-        source_value = movement[0].split('.')[1]
-        destination_place = self.places[movement[1].split('.')[0]]
-        destination_value = movement[1].split('.')[1]
-        if source_place.attributesA[source_value] < (value*interval):
-            value = source_place.attributesA[source_value]
-        source_place.attributesB[source_value] = \
-            source_place.attributesA[source_value] - (value*interval)
-        destination_place.attributesB[destination_value] = \
-            destination_place.attributesB[destination_value] + \
+        source_place = self.places[movement[0][0]]
+        source_value = movement[0][1]
+        destination_place = self.places[movement[1][0]]
+        destination_value = movement[1][1]
+        if source_place.attributes[source_value] < (value*interval):
+            value = source_place.attributes[source_value]
+        source_place.attributes[source_value] = \
+            source_place.attributes[source_value] - (value*interval)
+        destination_place.attributes[destination_value] = \
+            destination_place.attributes[destination_value] + \
             (value*interval)
-        return [movement[0].split('.')[0], 
-                movement[1].split('.')[0]]
     
     def _test_condition(self, place, token, operator, value):
         '''
@@ -260,18 +258,16 @@ class PNet(object):
             if (timer + interval) < value:
                 rule['timer'] = timer + interval
             else:
-                source_place = self.places[movement[0].split('.')[0]]
-                source_value = movement[0].split('.')[1]
-                destination_place = self.places[movement[1].split('.')[0]]
-                destination_value = movement[1].split('.')[1]
-                destination_place.attributesB[destination_value] = \
-                    source_place.attributesA[source_value]
-                destination_place.attributesA[destination_value] = 0
-                source_place.attributesA[source_value] = 0
-                source_place.attributesB[source_value] = 0
+                source_place = self.places[movement[0][0]]
+                source_value = movement[0][1]
+                destination_place = self.places[movement[1][0]]
+                destination_value = movement[1][1]
+                destination_place.attributes[destination_value] = \
+                    source_place.attributes[source_value]
+                source_place.attributes[source_value] = 0
+                source_place.attributes[source_value] = 0
                 rule['timer'] = 0
-        return (rule, [movement[0].split('.')[0], 
-                       movement[1].split('.')[0]])
+        return rule
     
     def _execute_rules(self, clock, interval):
         affected_places = []
