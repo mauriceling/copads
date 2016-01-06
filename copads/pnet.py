@@ -38,6 +38,7 @@ class PNet(object):
         - step rule
         - delay rule
         - incubate rule
+        - ratio rule
         
     Step rule is to be executed at each time step. For example, if 20g of 
     flour is to be transferred from flour bowl to mixer bowl at each time 
@@ -77,6 +78,17 @@ class PNet(object):
     bread dough. The 10 time step then simulates the time needed for the 
     dough to rise. After 10 time steps, dough in the mixer is transferred 
     into the pan.
+    
+    Ratio rule is a variant of step rule. Instead of absolute number of 
+    tokens to move, the movement is a percentage of the number of tokens. 
+    For example, 
+    
+    >>> net.add_rules('bake', 'ratio', 
+                      ['pan.dough -> pan.bread; 0.3; pan.dough < 1; 0'])
+                      
+    will move 30% of the token value from dough in pan to bread in pan. If 
+    the token value of dough in pan is less than 1, then the token value 
+    of dough in pan will be set to 0.
     '''
     def __init__(self):
         '''
@@ -328,6 +340,15 @@ class PNet(object):
             source_place.attributes[source_value] = limit_set
             
     def _execute_rules(self, clock, interval):
+        '''
+        Private method used by PNet.simulate() and PNet.simulate_yield() 
+        to execute all the rules.
+        
+        @param clock: wall time of the current simulation
+        @type clock: float
+        @param interval: simulation time interval
+        @type interval: integer
+        '''
         affected_places = []
         for rName in self.rules.keys():
             # Step rule
