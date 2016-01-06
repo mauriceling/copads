@@ -85,6 +85,7 @@ class PNet(object):
         self.places = {}
         self.rules = {}
         self.report = {}
+        self.rulenumber = 1
     
     def add_places(self, place_name, tokens):
         '''
@@ -103,55 +104,48 @@ class PNet(object):
         @type tokens: dictionary
         '''
         self.places[place_name] = Place(place_name)
-        self.places[place_name].attributesA = tokens
-        for k in tokens:
-            self.places[place_name].attributesB[k] = 0
+        self.places[place_name].attributes = tokens
     
-    def add_rules(self, rule_name, rule_type, triggers):
+    def add_rules(self, rule_name, rule_type, actions):
         '''
         Method to add a transition rule into the Petri Net.
         
-        @param rule_name: name of the transition rule
+        @param rule_name: name of the transition rule. This name need not 
+        be unique within the model as this method will append a running 
+        rule number to the name to ensure internal uniqueness.
         @type rule_name: string
         @param rule_type: type of rule. Allowable types are 'step' for 
         step rule, 'delay' for delay rule, and 'incubate' for incubate 
         rule. Please see module documentation for the description of 
         rules.
         @type rule_type: string
-        @param triggers: description of the trigger rule
-        @type triggers: list
+        @param actions: describe the action(s) of the transition rule
+        @type actions: list
         '''
-        count = 1
-        for t in triggers:
+        for t in actions:
             t = [x.strip() for x in t.split(';')]
             d = {'type': rule_type,
                  'movement': None}
             if rule_type == 'step': 
-                d['movement'] = [x.strip() for x in t[0].split('->')]
+                movement = [x.strip() for x in t[0].split('->')]
+                d['movement'] = [(loc.split('.')[0], loc.split('.')[1]) 
+                                 for loc in movement]
                 d['value'] = float(t[1])
             if rule_type == 'delay': 
-                d['movement'] = [x.strip() for x in t[0].split('->')]
+                movement = [x.strip() for x in t[0].split('->')]
+                d['movement'] = [(loc.split('.')[0], loc.split('.')[1]) 
+                                 for loc in movement]
                 d['value'] = float(t[1])
                 d['delay'] = int(t[2])
             if rule_type == 'incubate':
                 d['value'] = float(t[0])
-                d['movement'] = [x.strip() for x in t[1].split('->')]
+                movement = [x.strip() for x in t[1].split('->')]
+                d['movement'] = [(loc.split('.')[0], loc.split('.')[1]) 
+                                 for loc in movement]
                 d['conditions'] = [cond for cond in t[2:]]
                 d['timer'] = 0
-            self.rules[rule_name + '_' + str(count)] = d
-            count = count + 1
-    
-    def _attribute_swap(self, place_name):
-        '''
-        Private method which replaces Place.attributeA with the values in 
-        Place.attributeB.
-        
-        @param place_name: name of the place/container
-        @type place_name: string
-        '''
-        for k in self.places[place_name].attributesB.keys(): 
-            self.places[place_name].attributesA[k] = \
-            self.places[place_name].attributesB[k]
+            self.rules[rule_name + '_' + str(self.rulenumber)] = d
+            self.rulenumber = self.rulenumber + 1
         
     def _step_rule(self, movement, value, interval):
         '''
