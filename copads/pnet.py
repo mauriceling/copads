@@ -39,6 +39,7 @@ class PNet(object):
         - delay rule
         - incubate rule
         - ratio rule
+        - function rule
         
     Step rule is to be executed at each time step. For example, if 20g of 
     flour is to be transferred from flour bowl to mixer bowl at each time 
@@ -89,6 +90,27 @@ class PNet(object):
     will move 30% of the token value from dough in pan to bread in pan. If 
     the token value of dough in pan is less than 1, then the token value 
     of dough in pan will be set to 0.
+    
+    Function rule is a generic and free-form rule, that takes the form of 
+    a Python function. This is usually used when the transition cannot be 
+    represented by any other rules. Given a user-defined function, FUNC, 
+    
+    >>> net.add_rules('cool', 'function', 
+                      ['table.temperature -> air.temperature', FUNC, 
+                       'table.bread > 0; table.temperature > 30'])
+                       
+    FUNC will be executed when table.bread > 0 and table.temperature > 30. 
+    The returned result of FUNC will be the token transfer from 
+    table.temperature to air.temperature. 
+    
+    FUNC takes all the places as a single parameter, such as FUNC(places),  
+    where 'places' is a dictionary with the name of each place as key. 
+    Token values in any place can be assessed. For example,
+    
+    >>> place_names = places.keys()
+    >>> a_place = places[places_names[0]]
+    >>> token_set = a_place.attributes.keys()
+    >>> a_token_value = a_place.attributes[token_set[0]]
     '''
     def __init__(self):
         '''
@@ -135,35 +157,48 @@ class PNet(object):
         @param actions: describe the action(s) of the transition rule
         @type actions: list
         '''
-        for t in actions:
-            t = [x.strip() for x in t.split(';')]
+        if rule_type not in ['function']:
+            for t in actions:
+                t = [x.strip() for x in t.split(';')]
+                d = {'type': rule_type,
+                     'movement': None}
+                if rule_type == 'step': 
+                    movement = [x.strip() for x in t[0].split('->')]
+                    d['movement'] = [(loc.split('.')[0], loc.split('.')[1]) 
+                                     for loc in movement]
+                    d['value'] = float(t[1])
+                if rule_type == 'delay': 
+                    movement = [x.strip() for x in t[0].split('->')]
+                    d['movement'] = [(loc.split('.')[0], loc.split('.')[1]) 
+                                     for loc in movement]
+                    d['value'] = float(t[1])
+                    d['delay'] = int(t[2])
+                if rule_type == 'incubate':
+                    d['value'] = float(t[0])
+                    movement = [x.strip() for x in t[1].split('->')]
+                    d['movement'] = [(loc.split('.')[0], loc.split('.')[1]) 
+                                     for loc in movement]
+                    d['conditions'] = [cond for cond in t[2:]]
+                    d['timer'] = 0
+                if rule_type == 'ratio':
+                    movement = [x.strip() for x in t[0].split('->')]
+                    d['movement'] = [(loc.split('.')[0], loc.split('.')[1]) 
+                                     for loc in movement]
+                    d['ratio'] = float(t[1])
+                    d['limit_check'] = t[2]
+                    d['limit_set'] = float(t[3])
+                self.rules[rule_name + '_' + str(self.rulenumber)] = d
+                self.rulenumber = self.rulenumber + 1
+        if rule_type in ['function']:
             d = {'type': rule_type,
                  'movement': None}
-            if rule_type == 'step': 
-                movement = [x.strip() for x in t[0].split('->')]
+            if rule_type == 'function':
+                movement = [x.strip() for x in actions[0].split('->')]
                 d['movement'] = [(loc.split('.')[0], loc.split('.')[1]) 
                                  for loc in movement]
-                d['value'] = float(t[1])
-            if rule_type == 'delay': 
-                movement = [x.strip() for x in t[0].split('->')]
-                d['movement'] = [(loc.split('.')[0], loc.split('.')[1]) 
-                                 for loc in movement]
-                d['value'] = float(t[1])
-                d['delay'] = int(t[2])
-            if rule_type == 'incubate':
-                d['value'] = float(t[0])
-                movement = [x.strip() for x in t[1].split('->')]
-                d['movement'] = [(loc.split('.')[0], loc.split('.')[1]) 
-                                 for loc in movement]
-                d['conditions'] = [cond for cond in t[2:]]
-                d['timer'] = 0
-            if rule_type == 'ratio':
-                movement = [x.strip() for x in t[0].split('->')]
-                d['movement'] = [(loc.split('.')[0], loc.split('.')[1]) 
-                                 for loc in movement]
-                d['ratio'] = float(t[1])
-                d['limit_check'] = t[2]
-                d['limit_set'] = float(t[3])
+                d['function'] = actions[1]
+                d['conditions'] = [cond.strip() 
+                                   for cond in actions[2].split(';')]
             self.rules[rule_name + '_' + str(self.rulenumber)] = d
             self.rulenumber = self.rulenumber + 1
         
@@ -200,7 +235,7 @@ class PNet(object):
         
         >>> _test_condition('mixer', 'flour', '==', 0)
         
-        @param place: anme of place/container
+        @param place: name of place/container
         @type place: string
         @param token: name of token
         @type token: string
@@ -233,21 +268,17 @@ class PNet(object):
             self.places[place].attributes[token] != value:
             return 'passed'
         else:
-            return 0
+            return 'failed'
     
-    def _incubate_rule(self, rule, interval):
+    def _conditions_processor(self, conditions):
         '''
-        Private method which simulates an incubate rule action.
+        Private method used by rule processors to evaluate logical conditions.
         
-        @param rule: a dictionary representing the incubate rule
-        @param interval: simulation time interval
-        @type interval: integer
-        @return: modified rule dictionary
+        @param conditions: one or more logical conditions in the format of 
+        '<place>.<token> <binary operator> <criterion>', such as 'oven.heat > 
+        300', for evaluation
+        @type conditions: list
         '''
-        value = rule['value']
-        timer = rule['timer']
-        conditions = rule['conditions']
-        movement = rule['movement']
         test = [0] * len(conditions)
         for i in range(len(conditions)):
             cond = conditions[i]
@@ -274,7 +305,23 @@ class PNet(object):
             criterion = cond[1]
             test[i] = self._test_condition(source_place, source_value, 
                                            operator, criterion)
-        if len([0 for t in test if t == 0]) == 0:
+        return test
+        
+    def _incubate_rule(self, rule, interval):
+        '''
+        Private method which simulates an incubate rule action.
+        
+        @param rule: a dictionary representing the incubate rule
+        @param interval: simulation time interval
+        @type interval: integer
+        @return: modified rule dictionary
+        '''
+        value = rule['value']
+        timer = rule['timer']
+        conditions = rule['conditions']
+        movement = rule['movement']
+        test = self._conditions_processor(conditions)
+        if len(['failed' for t in test if t == 'failed']) == 0:
             if (timer + interval) < value:
                 rule['timer'] = timer + interval
             else:
@@ -338,7 +385,35 @@ class PNet(object):
                 self.losses[source_value] = \
                 source_place.attributes[source_value] - limit_set
             source_place.attributes[source_value] = limit_set
-            
+    
+    def _function_rule(self, movement, function, conditions):
+        '''
+        Private method which simulates a function rule action.
+        
+        @param movement: defines the movement of a token type. Each 
+        movement is defined in the following format: <source 
+        place>.<source token> -> <destination place>.<destination token>
+        @type movement: string
+        @param function: a Python function to be executed when conditions are
+        met. This function describes the transition of token.
+        @type function: function
+        @param conditions: one or more logical conditions in the format of 
+        '<place>.<token> <binary operator> <criterion>', such as 'oven.heat > 
+        300', for evaluation
+        @type conditions: list
+        '''
+        source_place = self.places[movement[0][0]]
+        source_value = movement[0][1]
+        destination_place = self.places[movement[1][0]]
+        destination_value = movement[1][1]
+        test = self._conditions_processor(conditions)
+        if len(['failed' for t in test if t == 'failed']) == 0:
+            token_value = function(self.places)
+            source_place.attributes[source_value] = \
+                source_place.attributes[source_value] - token_value
+            destination_place.attributes[destination_value] = \
+                destination_place.attributes[destination_value] + token_value
+        
     def _execute_rules(self, clock, interval):
         '''
         Private method used by PNet.simulate() and PNet.simulate_yield() 
@@ -375,6 +450,12 @@ class PNet(object):
                 limit_set = self.rules[rName]['limit_set']
                 self._ratio_rule(movement, ratio, limit_check, 
                                  limit_set, interval)
+            # Function rule
+            if self.rules[rName]['type'] == 'function':
+                movement = self.rules[rName]['movement']
+                conditions = self.rules[rName]['conditions']
+                function = self.rules[rName]['function']
+                self._function_rule(movement, function, conditions)
        
     def simulate(self, end_time, interval=1.0, report_frequency=1.0):
         '''
@@ -397,7 +478,7 @@ class PNet(object):
         '''
         clock = 1
         end_time = int(end_time)
-        while clock < end_time:
+        while clock < (end_time + 1):
             self._execute_rules(clock, interval)
             if (clock % report_frequency) == 0: 
                 self._generate_report(clock)
