@@ -1,0 +1,157 @@
+'''
+A collection of (pseudo)-random number generators
+Date created: 18th February 2016
+Licence: Python Software Foundation License version 2
+'''
+import sys
+import random
+
+try:
+    randgen = random.SystemRandom()
+except NotImplementedError:
+    randgen = random
+
+
+class Randomizer(object):
+    '''
+    Abstract class for all random number generators (RNG).
+    '''
+    def __init__(self, seed=None):
+        '''
+        Constructor method.
+
+        @param seed: seed to start the RNG. Default = None,
+        a random seed will be generated.
+        @type seed: integer
+        '''
+        if seed == None:
+            self.seed = int(randgen.random()*1000000)
+        else:
+            self.seed = int(seed)
+
+    def randrange(self, start=0, stop=sys.maxint):
+        '''
+        Method to generate a random integer between start and stop
+        (start < random_number <= stop).
+
+        @param start: lower boundary of random integer (not includsive)
+        to generate. Default = 0.
+        @type start: integer
+        @param stop: upper boundary of random integer (inclusive) to
+        generate. Default = maximum integer allowable by system.
+        @type stop: integer
+        '''
+        raise NotImplementedError
+
+    def random(self):
+        '''
+        Method to generate a random float between zero (not inclusive)
+        and one (inclusive) (0 < random_float <= 1).
+        '''
+        raise NotImplementedError
+
+    def choice(self, sequence):
+        '''
+        Method to randomly select an element from a sequence.
+
+        @param sequence: sequence to select from.
+        @type sequence: list or tuple
+        @return: an element in sequence.
+        '''
+        raise NotImplementedError
+
+    
+class MersenneTwister(Randomizer):
+    '''
+    32-bit Mersenne twister algorithm (MT19937).
+    
+    Adapted from https://en.wikipedia.org/wiki/Mersenne_Twister
+    
+    Reference: Matsumoto, M., Nishimura, T. (1998). Mersenne twister:
+    a 623-dimensionally equidistributed uniform pseudo-random number
+    generator. ACM Transactions on Modeling and Computer Simulation 8
+    (1): 3-30. doi:10.1145/272991.272995
+    '''
+    def __init__(self, seed=None):
+        '''
+        Constructor method.
+
+        @param seed: seed to start the RNG. Default = None,
+        a random seed will be generated.
+        @type seed: integer
+        '''
+        if seed == None:
+            self.seed = int(randgen.random()*1000000)
+        else:
+            self.seed = int(seed)
+        self.index = 624
+        self.block = [0] * 624
+        self.block[0] = int(self.seed)
+        for i in range(1, 624):
+            t = self.block[i-1] ^ (self.block[i-1] >> 30)
+            self.block[i] = self._int32(1812433253 * t + i)
+
+    def _int32(self, x):
+        # Get the 32 least significant bits.
+        return int(0xFFFFFFFF & x)
+    
+    def _random(self):
+        if self.index >= 624: self._twist()
+        y = self.block[self.index]
+        # Right s+hift by 11 bits
+        y = y ^ (y >> 11)
+        # Shift y left by 7 and take the bitwise and of 2636928640
+        y = y ^ ((y << 7) & 2636928640)
+        # Shift y left by 15 and take the bitwise and of y and 4022730752
+        y = y ^ ((y << 15) & 4022730752)
+        # Right shift by 18 bits
+        y = y ^ (y >> 18)
+        self.index = self.index + 1
+        return self._int32(y)
+    
+    def _twist(self):
+        for i in range(624):
+            # Get the most significant bit and add it to the less significant
+            # bits of the next number
+            t = self.block[(i+1) % 624] & 0x7fffffff
+            y = self._int32((self.block[i] & 0x80000000) + t)
+            self.block[i] = self.block[(i+397) % 624] ^ (y >> 1)
+            if y % 2 != 0:
+                self.block[i] = self.block[i] ^ 0x9908b0df
+        self.index = 0
+
+    def randrange(self, start=0, stop=sys.maxint):
+        '''
+        Method to generate a random integer between start and stop
+        (start < random_number <= stop).
+
+        @param start: lower boundary of random integer (not includsive)
+        to generate. Default = 0.
+        @type start: integer
+        @param stop: upper boundary of random integer (inclusive) to
+        generate. Default = maximum integer allowable by system.
+        @type stop: integer
+        '''
+        x = self._random() + int(start)
+        return int(x % int(stop))
+
+    def random(self):
+        '''
+        Method to generate a random float between zero (not inclusive)
+        and one (inclusive) (0 < random_float <= 1).
+        '''
+        x = float(self._random()) / float(self._random())
+        if x < 1: return x
+        else: return 1 - x
+
+    def choice(self, sequence):
+        '''
+        Method to randomly select an element from a sequence.
+
+        @param sequence: sequence to select from.
+        @type sequence: list or tuple
+        @return: an element in sequence.
+        '''
+        index = self.randrange(0, len(sequence)-1)
+        return seq[index]
+
