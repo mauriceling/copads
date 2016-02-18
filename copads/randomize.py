@@ -59,8 +59,7 @@ class Randomizer(object):
         and one (inclusive) (0 < random_float <= 1).
         '''
         x = float(self._random()) / float(self._random())
-        if x < 1: return x
-        else: return 1 - x
+        return abs(x) % 1
 
     def choice(self, sequence):
         '''
