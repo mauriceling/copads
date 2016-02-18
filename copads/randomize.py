@@ -167,8 +167,9 @@ class LCG(Randomizer):
         are:
             - ansic: ANSI C (32-bit)
             - borlandc: Borland C/C++ (32-bit)
+            - crc: CRC vector machine (48-bit)
             - java: Java.utils.Random (48-bit)
-            - lehmer: Lehmer RNG (also known as Park–Miller RNG) (32-bit)
+            - lehmer: Lehmer RNG (also known as Park-Miller RNG) (32-bit)
             - mmix: MMIX by Donald Knuth (64-bit)
             - newlib: NewLib (http://www.sourceware.org/newlib/) (64-bit)
             - nag: Numerical Algorithms Group (64-bit)
@@ -222,6 +223,10 @@ class LCG(Randomizer):
             self.multiplier = 1103515245
             self.increment = 12345
             self.modulus = 2**31
+        elif generator == 'cdc':
+            self.multiplier = 5**15
+            self.increment = 0
+            self.modulus = 2**47
         else:                               # generator == 'mmix'
             self.multiplier = 6364136223846793005	
             self.increment = 1442695040888963407
