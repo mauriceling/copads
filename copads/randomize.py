@@ -255,4 +255,46 @@ class LCG(Randomizer):
         return self.seed
 
 
-    
+class CLCG(Randomizer):
+    '''
+    Combined linear congruential generator (CLCG), made by combining 2 linear 
+    congruential generators.
+    '''
+    def __init__(self, seedA=None, generatorA='mmix',
+                 seedB=None, generatorB='mmix'):
+        '''
+        Constructor method.
+
+        @param seedA: seed to start the the first LCG. Default = None,
+        a random seed will be generated.
+        @type seedA: integer
+        @param generatorA: type of generator for first LCG. Default = 'mmix'. 
+        Allowable types are the same as LCG.
+        @type generatorA: string
+        @param seedB: seed to start the the second LCG. Default = None,
+        a random seed will be generated.
+        @type seedB: integer
+        @param generatorB: type of generator for second LCG. Default = 'mmix'. 
+        Allowable types are the same as LCG.
+        @type generatorB: string
+        '''
+        self.LCG_A = LCG(seedA, generatorA)
+        self.LCG_B = LCG(seedB, generatorB)
+        self.modulus = max(self.LCG_A.modulus, self.LCG_B.modulus)
+        
+    def _random(self):
+        '''
+        Method to generate a random integer using the following equation where 
+        s is a newly generated integer:
+        
+            x(n+1) = [multiplierX * x(n) + incrementX] % modulusX
+            y(n+1) = [multiplierY * y(n) + incrementY] % modulusY
+            s = [x(n+1) + y(n+1)] % max(modulusX, modulusY)
+        
+        @return: a random generated integer.
+        '''
+        rA = self.LCG_A.random()
+        rB = self.LCG_B.random()
+        t = (rA + rB) % self.modulus
+        return t * self.modulus
+        
