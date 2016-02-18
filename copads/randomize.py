@@ -53,6 +53,15 @@ class Randomizer(object):
         x = self._random() + int(start)
         return int(x % int(stop))
 
+    def randint(self):
+        '''
+        Method to generate a random integer between 0 (not inclusive) and the 
+        maximum integer allowable by system (inclusive)
+
+        @type stop: integer
+        '''
+        return self.randrange()
+        
     def random(self):
         '''
         Method to generate a random float between zero (not inclusive)
