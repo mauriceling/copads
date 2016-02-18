@@ -8,7 +8,7 @@ import random
 
 try:
     randgen = random.SystemRandom()
-except NotImplementedError:
+except:
     randgen = random
 
 
@@ -29,6 +29,15 @@ class Randomizer(object):
         else:
             self.seed = int(seed)
 
+    def _random(self):
+        '''
+        Method to hold algorithm to generate a random integer. This method will 
+        be called by other methods.
+        
+        @return: a random generated integer.
+        '''
+        raise NotImplementedError
+        
     def randrange(self, start=0, stop=sys.maxint):
         '''
         Method to generate a random integer between start and stop
@@ -41,14 +50,17 @@ class Randomizer(object):
         generate. Default = maximum integer allowable by system.
         @type stop: integer
         '''
-        raise NotImplementedError
+        x = self._random() + int(start)
+        return int(x % int(stop))
 
     def random(self):
         '''
         Method to generate a random float between zero (not inclusive)
         and one (inclusive) (0 < random_float <= 1).
         '''
-        raise NotImplementedError
+        x = float(self._random()) / float(self._random())
+        if x < 1: return x
+        else: return 1 - x
 
     def choice(self, sequence):
         '''
@@ -58,7 +70,8 @@ class Randomizer(object):
         @type sequence: list or tuple
         @return: an element in sequence.
         '''
-        raise NotImplementedError
+        index = self.randrange(0, len(sequence)-1)
+        return seq[index]
 
     
 class MersenneTwister(Randomizer):
@@ -96,6 +109,11 @@ class MersenneTwister(Randomizer):
         return int(0xFFFFFFFF & x)
     
     def _random(self):
+        '''
+        Method to generate a random integer.
+        
+        @return: a random generated integer.
+        '''
         if self.index >= 624: self._twist()
         y = self.block[self.index]
         # Right s+hift by 11 bits
@@ -120,38 +138,85 @@ class MersenneTwister(Randomizer):
                 self.block[i] = self.block[i] ^ 0x9908b0df
         self.index = 0
 
-    def randrange(self, start=0, stop=sys.maxint):
-        '''
-        Method to generate a random integer between start and stop
-        (start < random_number <= stop).
 
-        @param start: lower boundary of random integer (not includsive)
-        to generate. Default = 0.
-        @type start: integer
-        @param stop: upper boundary of random integer (inclusive) to
-        generate. Default = maximum integer allowable by system.
-        @type stop: integer
+class LCG(Randomizer):
+    '''
+    A set of linear congruential generators (LCG) and LCG-based generators 
+    to generate a sequence of pseudorandom numbers.
+    '''
+    def __init__(self, seed=None, generator='ansic'):
         '''
-        x = self._random() + int(start)
-        return int(x % int(stop))
+        Constructor method.
 
-    def random(self):
+        @param seed: seed to start the RNG. Default = None,
+        a random seed will be generated.
+        @type seed: integer
+        @param generator: type of generator. Default = 'ansic'. Allowable types 
+        are:
+            - nr: defined in Numerical Recipes
+            - borlandc: Borland C/C++
+            - ansic: ANSI C
+            - pascal: Borland Delphi/Visual Pascal
+            - visualc: Microsoft Visual C/C++
+            - vb6: Microsoft Visual Basic 6 and below
+            - mmix: MMIX
+            - newlib: NewLib
+            - java: Java.utils.random
+        @type generator: string
         '''
-        Method to generate a random float between zero (not inclusive)
-        and one (inclusive) (0 < random_float <= 1).
-        '''
-        x = float(self._random()) / float(self._random())
-        if x < 1: return x
-        else: return 1 - x
+        if seed == None:
+            self.seed = int(randgen.random()*1000000)
+        else:
+            self.seed = int(seed)
+        if generator == 'nr':
+            self.multiplier = 1664525
+            self.increment = 1013904223
+            self.modulus = 2**32
+        elif generator == 'borlandc':
+            self.multiplier = 22695477
+            self.increment = 1
+            self.modulus = 2**32
+        elif generator == 'pascal':
+            self.multiplier = 134775813
+            self.increment = 1
+            self.modulus = 2**32
+        elif generator == 'visualc':
+            self.multiplier = 214013	
+            self.increment = 2531011
+            self.modulus = 2**32
+        elif generator == 'vb6':
+            self.multiplier = 1140671485	
+            self.increment = 12820163
+            self.modulus = 2**24
+        elif generator == 'mmix':
+            self.multiplier = 6364136223846793005	
+            self.increment = 1442695040888963407
+            self.modulus = 2**64
+        elif generator == 'newlib':
+            self.multiplier = 6364136223846793005	
+            self.increment = 1
+            self.modulus = 2**64
+        elif generator == 'java':
+            self.multiplier = 25214903917
+            self.increment = 11
+            self.modulus = 2**48
+        else:                               # generator == 'ansic'
+            self.multiplier = 1103515245
+            self.increment = 12345
+            self.modulus = 2**31
 
-    def choice(self, sequence):
+    def _random(self):
         '''
-        Method to randomly select an element from a sequence.
-
-        @param sequence: sequence to select from.
-        @type sequence: list or tuple
-        @return: an element in sequence.
+        Method to generate a random integer using the following equation where 
+        x(n+1) is a newly generated integer:
+        
+            x(n+1) = [multiplier * x(n) + increment] % modulus
+        
+        @return: a random generated integer.
         '''
-        index = self.randrange(0, len(sequence)-1)
-        return seq[index]
+        t = (self.multiplier * self.seed) + self.increment
+        self.seed = t % self.modulus
+        return self.seed
 
+
+    
