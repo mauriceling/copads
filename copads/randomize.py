@@ -153,15 +153,16 @@ class LCG(Randomizer):
         @type seed: integer
         @param generator: type of generator. Default = 'ansic'. Allowable types 
         are:
-            - nr: defined in Numerical Recipes
-            - borlandc: Borland C/C++
             - ansic: ANSI C
+            - borlandc: Borland C/C++
+            - java: Java.utils.Random
+            - lehmer: Lehmer RNG (also known as Park–Miller RNG)
+            - mmix: MMIX by Donald Knuth
+            - newlib: NewLib (http://www.sourceware.org/newlib/)
+            - nr: defined in Numerical Recipes
             - pascal: Borland Delphi/Visual Pascal
-            - visualc: Microsoft Visual C/C++
             - vb6: Microsoft Visual Basic 6 and below
-            - mmix: MMIX
-            - newlib: NewLib
-            - java: Java.utils.random
+            - visualc: Microsoft Visual C/C++
         @type generator: string
         '''
         if seed == None:
@@ -200,6 +201,10 @@ class LCG(Randomizer):
             self.multiplier = 25214903917
             self.increment = 11
             self.modulus = 2**48
+        elif generator == 'lehmer':
+            self.multiplier = 16,807
+            self.increment = 0
+            self.modulus = 2**31 - 1
         else:                               # generator == 'ansic'
             self.multiplier = 1103515245
             self.increment = 12345
