@@ -142,27 +142,41 @@ class MersenneTwister(Randomizer):
 class LCG(Randomizer):
     '''
     A set of linear congruential generators (LCG) and LCG-based generators 
-    to generate a sequence of pseudorandom numbers.
+    to generate a sequence of pseudorandom numbers. LCG has the general 
+    equation of:
+    
+        x(n+1) = [multiplier * x(n) + increment] % modulus
+        
+    where
+    
+        1. increment (also known as offset) and modulus are co-primes
+        2. (multiplier - 1) is divisible by all prime factors of modulus
+        3. (multiplier - 1) is divisible by 4 if modulus is divisible by 4
+        
+    Depending on the parameters, different LCGs exist. If increment is zero, 
+    the LCG is known as multiplicative congruential generator (MCG). If 
+    increment is not zero, the LCG is known as mixed congruential generator.
     '''
-    def __init__(self, seed=None, generator='ansic'):
+    def __init__(self, seed=None, generator='mmix'):
         '''
         Constructor method.
 
         @param seed: seed to start the RNG. Default = None,
         a random seed will be generated.
         @type seed: integer
-        @param generator: type of generator. Default = 'ansic'. Allowable types 
+        @param generator: type of generator. Default = 'mmix'. Allowable types 
         are:
-            - ansic: ANSI C
-            - borlandc: Borland C/C++
-            - java: Java.utils.Random
-            - lehmer: Lehmer RNG (also known as Park–Miller RNG)
-            - mmix: MMIX by Donald Knuth
-            - newlib: NewLib (http://www.sourceware.org/newlib/)
-            - nr: defined in Numerical Recipes
-            - pascal: Borland Delphi/Visual Pascal
-            - vb6: Microsoft Visual Basic 6 and below
-            - visualc: Microsoft Visual C/C++
+            - ansic: ANSI C (32-bit)
+            - borlandc: Borland C/C++ (32-bit)
+            - java: Java.utils.Random (48-bit)
+            - lehmer: Lehmer RNG (also known as Park–Miller RNG) (32-bit)
+            - mmix: MMIX by Donald Knuth (64-bit)
+            - newlib: NewLib (http://www.sourceware.org/newlib/) (64-bit)
+            - nag: Numerical Algorithms Group (64-bit)
+            - nr: defined in Numerical Recipes (32-bit)
+            - pascal: Borland Delphi/Visual Pascal (32-bit)
+            - vb6: Microsoft Visual Basic 6 and below (24-bit)
+            - visualc: Microsoft Visual C/C++ (32-bit)
         @type generator: string
         '''
         if seed == None:
@@ -189,10 +203,10 @@ class LCG(Randomizer):
             self.multiplier = 1140671485	
             self.increment = 12820163
             self.modulus = 2**24
-        elif generator == 'mmix':
-            self.multiplier = 6364136223846793005	
-            self.increment = 1442695040888963407
-            self.modulus = 2**64
+        elif generator == 'nag':
+            self.multiplier = 13**13
+            self.increment = 0
+            self.modulus = 2**59
         elif generator == 'newlib':
             self.multiplier = 6364136223846793005	
             self.increment = 1
@@ -202,13 +216,17 @@ class LCG(Randomizer):
             self.increment = 11
             self.modulus = 2**48
         elif generator == 'lehmer':
-            self.multiplier = 16,807
+            self.multiplier = 16807
             self.increment = 0
             self.modulus = 2**31 - 1
-        else:                               # generator == 'ansic'
+        elif generator == 'ansic':
             self.multiplier = 1103515245
             self.increment = 12345
             self.modulus = 2**31
+        else:                               # generator == 'mmix'
+            self.multiplier = 6364136223846793005	
+            self.increment = 1442695040888963407
+            self.modulus = 2**64
 
     def _random(self):
         '''
