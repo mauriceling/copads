@@ -113,7 +113,9 @@ class MersenneTwister(Randomizer):
             self.block[i] = self._int32(1812433253 * t + i)
 
     def _int32(self, x):
-        # Get the 32 least significant bits.
+        '''
+        Private method to get the 32 least significant bits.
+        '''
         return int(0xFFFFFFFF & x)
     
     def _random(self):
@@ -136,6 +138,9 @@ class MersenneTwister(Randomizer):
         return self._int32(y)
     
     def _twist(self):
+        '''
+        Private method to generate twist.
+        '''
         for i in range(624):
             # Get the most significant bit and add it to the less significant
             # bits of the next number
