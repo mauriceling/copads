@@ -112,14 +112,21 @@ class PNet(object):
     >>> token_set = a_place.attributes.keys()
     >>> a_token_value = a_place.attributes[token_set[0]]
     '''
-    def __init__(self):
+    def __init__(self, zerolowerbound=True):
         '''
         Contructor method.
+        
+        @param zerolowerbound: flag to determine whether number of tokens 
+        is bounded at zero. Default = True (the lowest number for tokens 
+        is zero)
+        @type zerolowerbound: boolean
         '''
         self.places = {}
+        self.add_places('ouroboros', {'U': float('inf')})
         self.rules = {}
         self.report = {}
         self.losses = {}
+        self.zerolowerbound = zerolowerbound
         self.rulenumber = 1
     
     def add_places(self, place_name, tokens):
@@ -219,7 +226,8 @@ class PNet(object):
         source_value = movement[0][1]
         destination_place = self.places[movement[1][0]]
         destination_value = movement[1][1]
-        if source_place.attributes[source_value] < (value*interval):
+        if source_place.attributes[source_value] < (value*interval) and \
+            self.zerolowerbound == True:
             value = source_place.attributes[source_value]
         source_place.attributes[source_value] = \
             source_place.attributes[source_value] - (value*interval)
