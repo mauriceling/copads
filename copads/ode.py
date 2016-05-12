@@ -5,6 +5,8 @@ Copyright (c) Maurice H.T. Ling <mauriceling@acm.org>
 
 Date created: 20th December 2014
 '''
+import re
+
 def boundary_checker(y, boundary, type):
     '''
     Private function - called by ODE solvers to perform boundary checking 
@@ -33,7 +35,7 @@ def boundary_checker(y, boundary, type):
         if y[int(k)] > boundary[k][0] and type == 'upper':
             y[int(k)] = boundary[k][1]
     return y
-        
+
 def Euler(funcs, x0, y0, step, xmax,
           lower_bound=None, upper_bound=None,
           overflow=1e100, zerodivision=1e100):
@@ -1094,3 +1096,226 @@ def DP5(funcs, x0, y0, step, xmax,
         y0 = y1
         x0 = x0 + step
         yield [x0] + y0
+
+def _equation_constructor(expressions={},
+                          parameters={},
+                          variables=[]):
+    '''
+    Private function to support ODE_constructor to generate ODE function 
+    for each ODE.
+    
+    @param expressions: dictionary of expressions for ODE(s). Please see 
+    above documentation. 
+    @param parameters: dictionary of parameter values to be substituted 
+    into the ODE equations
+    @param variables: list of additional variables to be tagged for 
+    substitution(s)
+    @return: tuple of (<list of generated ODE functions>, <list of tagged 
+    variables>) 
+    '''
+    statements = []
+    # Generate ODE function, one at a time
+    for name in expressions.keys():
+        # Generate ODE function definition
+        stmt = '\ndef %s(t, y):' % str(name)
+        expression = expressions[name]
+        if type(expression) == type(''): expression = [expression]
+        count = 1
+        # Generate list of expression(s) for current ODE function
+        exp_list = []
+        variables = list(set(variables + expressions.keys()))
+        for exp in expression:
+            # Substitute parameter/variable values 
+            for k in parameters.keys():
+                exp = exp.replace(str(k), str(parameters[k]))
+            #variables = list(set(variables + expressions.keys()))
+            
+            for v in variables:
+                exp = exp.replace(str(v), 'v@'+str(v))
+            # Generate expression codes
+            stmt = stmt + '\n    exp_%s = %s' % (str(count), str(exp))
+            exp_list.append('exp_%s' % str(count))
+            count = count + 1
+        # Compile generated expressions into return value
+        return_stmt = '\n    return ' + ' + '.join(exp_list)
+        stmt = stmt + return_stmt
+        statements.append(stmt)
+    return (statements, variables)
+
+def ODE_constructor(scriptfile,
+                    resultsfile,
+                    time=(0.0, 0.1, 100.0),
+                    ODE_solver='RK4',
+                    expressions={},
+                    parameters={},
+                    initial_conditions={},
+                    lower_bound=None, 
+                    upper_bound=None,
+                    overflow=1e100, 
+                    zerodivision=1e100):
+    '''
+    Function to construct an ODE simulation script file from given 
+    definitions.
+    
+    For example, the following system of ODEs
+    
+    M{
+    d(human)/dt = birth - zombied - death
+    d(zombie)/dt = zombied + resurrected - destroyed
+    d(dead)/dt = death + destroyed - resurrected
+    
+    birth = 0
+    zombied = 0.0095 * human * zombie
+    death = 0.0001 * human
+    resurrected = 0.0002 * dead
+    destroyed = 0.0003 * human * zombie
+    
+    where initially (t0), 
+    
+    number of humans = 500
+    number of zombies = 0
+    number of dead = 0
+    }
+    
+    can be specified as 
+    
+    C{
+    scriptfile = 'zombie_attack.py'
+    resultsfile = 'zombie_data.csv'
+    time = (0.0, 0.1, 100.0)
+    ODE_solver = 'RK4'
+    expressions = {'human': ['birth_rate',
+                             '- (transmission_rate * human * zombie)',
+                             '- (death_rate * human)'],
+                   'zombie': ['(transmission_rate * human * zombie)',
+                              '(resurrection_rate * dead)',
+                              '- (destroy_rate * human * zombie)'],
+                   'dead': ['(death_rate * human)',
+                            '(destroy_rate * human * zombie)',
+                            '- (resurrection_rate * dead)']}
+    parameters = {'birth_rate': 0.0,           # birth rate
+                  'transmission_rate': 0.0095, # transmission percent   
+                  'death_rate': 0.0001,        # natural death percent  
+                  'resurrection_rate': 0.0002, # resurect percent  
+                  'destroy_rate':0.0003        # destroy percent   
+                  }
+    initial_conditions = {'human': 500.0,
+                          'zombie': 0.0, 
+                          'dead': 0.0}
+    lower_bound = {'human': [0.0, 0.0]}
+    upper_bound = {'zombie': [initial_conditions['human'],
+                              initial_conditions['human']],
+                   'dead': [initial_conditions['human'],
+                            initial_conditions['human']]}
+    overflow = 1e100
+    zerodivision = 1e100
+    }
+    
+    @param scriptfile: name of Python file for the generated ODE script 
+    file
+    @type scriptfile: string
+    @param resultsfile: name of ODE simulation results file (CSV file), 
+    which will be included into the generated simulation script file
+    @type resultsfile: string    
+    @param time: tuple of time parameters for simulation in the format of 
+    (<start time>, <time step>, <end time>). Default = (0.0, 0.1, 100.0)
+    @param ODE_solver: name of ODE solver to use. Default = RK4
+    @param expressions: dictionary of expressions for ODE(s). Please see 
+    above documentation. 
+    @param parameters: dictionary of parameter values to be substituted 
+    into the ODE equations
+    @param initial_conditions: dictionary of initial conditions for each 
+    ODE
+    @param lower_bound: set of values for lower boundary of variables
+    @type lower_bound: dictionary
+    @param upper_bound: set of values for upper boundary of variables
+    @type upper_bound: dictionary
+    @param overflow: value (usually a large value) to assign in event of 
+    over flow error (usually caused by a large number) during integration. 
+    Default = 1e100.
+    @type overflow: float
+    @param zerodivision: value (usually a large value) to assign in event 
+    of zero division error, which results in positive infinity, during 
+    integration. Default = 1e100.
+    @type zerodivision: float
+    @return: generated ODE codes for the entire script
+    @rtype: list
+    '''
+    statements = [] 
+    initial_conditions_list = initial_conditions.keys()
+    # Construct ODE functions
+    (ODE_functions,
+     variables) = _equation_constructor(expressions,
+                                        parameters,
+                                        initial_conditions_list)
+    # Generate ODE functions/equations table
+    table = {}
+    count = 0
+    for v in initial_conditions_list:
+        table[str(v)] = str(count)
+        count = count + 1
+    # Generate lower boundary table
+    if lower_bound != None:
+        lbound = {}
+        for k in lower_bound.keys():
+            lbound[table[k]] = lower_bound[k]
+    else:
+        lbound = None
+    # Generate upper boundary table
+    if upper_bound != None:
+        ubound = {}
+        for k in upper_bound.keys():
+            ubound[table[k]] = upper_bound[k]
+    else:
+        ubound = None
+    # Write ode module import
+    statements.append('import ode\n\n')  
+    # Generate variable array and statements
+    statements.append('y = range(%s)\n' % str(len(variables)))
+    count = 0
+    for k in initial_conditions_list:
+        statements.append('y[%s] = %s\n' % \
+                          (str(count), str(initial_conditions[k])))
+        count = count + 1
+    statements.append('\n')
+    # Perform variable replacements in ODE functions, and write functions
+    for funct in ODE_functions:
+        for v in table.keys():
+            funct = funct.replace('v@'+v, 'y[%s]' % table[v])
+        statements.append(funct)
+    statements.append('\n\n')
+    # Generate ODE assignment array and statements
+    statements.append('ODE = range(%s)\n' % str(len(variables)))
+    count = 0
+    for k in initial_conditions_list:
+        statements.append('ODE[%s] = %s\n' % (str(count), str(k)))
+        count = count + 1
+    statements.append('\n')
+    # Generate ODE execution codes
+    statements.append('stime = %s \n' % str(time[0]))
+    statements.append('step = %s \n' % str(time[1]))
+    statements.append('etime = %s \n' % str(time[2]))
+    statements.append('lower_bound = %s \n' % str(lbound))
+    statements.append('upper_bound = %s \n' % str(ubound))
+    statements.append('overflow = %s \n' % str(overflow))
+    statements.append('zerodivision = %s \n' % str(zerodivision))
+    statements.append('\n')
+    statements.append("f = open('%s', 'w')\n" % str(resultsfile))
+    headers = ['time'] + [str(k)for k in initial_conditions.keys()]
+    headers = ','.join(headers)
+    statements.append("f.write('%s' + '\\n') \n" % headers)
+    statements.append('\n')
+    statements.append('for x in ode.%s(ODE, stime, y, step, etime, \n' % \
+                      str(ODE_solver))
+    statements.append('        lower_bound, lower_bound, \n') 
+    statements.append('        overflow, zerodivision): \n')
+                      
+    statements.append("    f.write(','.join([str(item) for item in x]) + '\\n')")
+    statements.append('\n')
+    statements.append('f.close()')
+    # Write generated codes into script file
+    sfile = open(scriptfile, 'w')
+    sfile.writelines(statements)
+    sfile.close()
+    return statements
+    
