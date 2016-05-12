@@ -125,6 +125,9 @@ def Heun(funcs, x0, y0, step, xmax,
     @type lower_bound: dictionary
     @param upper_bound: set of values for upper boundary of variables
     @type upper_bound: dictionary
+    @param overflow: value (usually a large value) to assign in event of 
+    over flow error (usually caused by a large number) during integration. 
+    Default = 1e100.
     @type overflow: float
     @param zerodivision: value (usually a large value) to assign in event 
     of zero division error, which results in positive infinity, during 
@@ -193,6 +196,9 @@ def RK3(funcs, x0, y0, step, xmax,
     @type lower_bound: dictionary
     @param upper_bound: set of values for upper boundary of variables
     @type upper_bound: dictionary
+    @param overflow: value (usually a large value) to assign in event of 
+    over flow error (usually caused by a large number) during integration. 
+    Default = 1e100.
     @type overflow: float
     @param zerodivision: value (usually a large value) to assign in event 
     of zero division error, which results in positive infinity, during 
@@ -271,6 +277,9 @@ def RK4(funcs, x0, y0, step, xmax,
     @type lower_bound: dictionary
     @param upper_bound: set of values for upper boundary of variables
     @type upper_bound: dictionary
+    @param overflow: value (usually a large value) to assign in event of 
+    over flow error (usually caused by a large number) during integration. 
+    Default = 1e100.
     @type overflow: float
     @param zerodivision: value (usually a large value) to assign in event 
     of zero division error, which results in positive infinity, during 
@@ -356,6 +365,9 @@ def RK38(funcs, x0, y0, step, xmax,
     @type lower_bound: dictionary
     @param upper_bound: set of values for upper boundary of variables
     @type upper_bound: dictionary
+    @param overflow: value (usually a large value) to assign in event of 
+    over flow error (usually caused by a large number) during integration. 
+    Default = 1e100.
     @type overflow: float
     @param zerodivision: value (usually a large value) to assign in event 
     of zero division error, which results in positive infinity, during 
@@ -441,6 +453,9 @@ def CK4(funcs, x0, y0, step, xmax,
     @type lower_bound: dictionary
     @param upper_bound: set of values for upper boundary of variables
     @type upper_bound: dictionary
+    @param overflow: value (usually a large value) to assign in event of 
+    over flow error (usually caused by a large number) during integration. 
+    Default = 1e100.
     @type overflow: float
     @param zerodivision: value (usually a large value) to assign in event 
     of zero division error, which results in positive infinity, during 
@@ -546,6 +561,9 @@ def CK5(funcs, x0, y0, step, xmax,
     @type lower_bound: dictionary
     @param upper_bound: set of values for upper boundary of variables
     @type upper_bound: dictionary
+    @param overflow: value (usually a large value) to assign in event of 
+    over flow error (usually caused by a large number) during integration. 
+    Default = 1e100.
     @type overflow: float
     @param zerodivision: value (usually a large value) to assign in event 
     of zero division error, which results in positive infinity, during 
@@ -650,6 +668,9 @@ def RKF4(funcs, x0, y0, step, xmax,
     @type lower_bound: dictionary
     @param upper_bound: set of values for upper boundary of variables
     @type upper_bound: dictionary
+    @param overflow: value (usually a large value) to assign in event of 
+    over flow error (usually caused by a large number) during integration. 
+    Default = 1e100.
     @type overflow: float
     @param zerodivision: value (usually a large value) to assign in event 
     of zero division error, which results in positive infinity, during 
@@ -755,6 +776,9 @@ def RKF5(funcs, x0, y0, step, xmax,
     @type lower_bound: dictionary
     @param upper_bound: set of values for upper boundary of variables
     @type upper_bound: dictionary
+    @param overflow: value (usually a large value) to assign in event of 
+    over flow error (usually caused by a large number) during integration. 
+    Default = 1e100.
     @type overflow: float
     @param zerodivision: value (usually a large value) to assign in event 
     of zero division error, which results in positive infinity, during 
@@ -862,6 +886,9 @@ def DP4(funcs, x0, y0, step, xmax,
     @type lower_bound: dictionary
     @param upper_bound: set of values for upper boundary of variables
     @type upper_bound: dictionary
+    @param overflow: value (usually a large value) to assign in event of 
+    over flow error (usually caused by a large number) during integration. 
+    Default = 1e100.
     @type overflow: float
     @param zerodivision: value (usually a large value) to assign in event 
     of zero division error, which results in positive infinity, during 
@@ -979,6 +1006,9 @@ def DP5(funcs, x0, y0, step, xmax,
     @type lower_bound: dictionary
     @param upper_bound: set of values for upper boundary of variables
     @type upper_bound: dictionary
+    @param overflow: value (usually a large value) to assign in event of 
+    over flow error (usually caused by a large number) during integration. 
+    Default = 1e100.
     @type overflow: float
     @param zerodivision: value (usually a large value) to assign in event 
     of zero division error, which results in positive infinity, during 
