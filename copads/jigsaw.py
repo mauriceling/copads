@@ -108,7 +108,39 @@ class JigsawCore(object):
                 str(sha512.hexdigest())]
 
 class JigsawFile(JigsawCore):
+    '''
+    Implementation of Jigsaw System for files, to be used on individual 
+    file; where a file will be split into multiple smaller files of either 
+    equal or unequal file sizes known as Jigsaw files. A keyfile will be 
+    generated (the file name is <original filename with extension>.jgk), 
+    which is required for assembly of the various sub-files (file extension 
+    is '.jig' into the original file.
+    
+    >>> from jigsaw import JigsawFile
+    >>> jsys = JigsawFile()
+    >>> jsys.setting('version', 1)          # Jigsaw version 1
+    >>> jsys.setting('slicer', 'uneven')    # generates uneven sized files
+    >>> jsys.setting('blocksize', 65535)    # 64kb < file size < 128kb
+    >>> jsys.setting('filenamelength', 30)  # 30 character sub-file names
+    >>> jsys.setting('hashlength', 16)      # 16 character sub-file hash
+    >>> # encrypt /home/mling/GA.zip and place sub-files and keyfile into 
+    >>> # /home/jigsaw
+    >>> jsys.encrypt('/home/mling/GA.zip', /home/jigsaw)
+    >>> # decrypt the previously encrypted file
+    >>> # keyfile = /home/jigsaw/GA.zip.jgk
+    >>> # all the encrypted sub-files are found in /home/jigsaw
+    >>> # assembled/decrypted file = /home/jigsaw/GA_decrypt.zip
+    >>> jsys.decrypt('/home/jigsaw/GA.zip.jgk', 
+    ...              '/home/jigsaw/GA_decrypt.zip', 
+    ...              '/home/jigsaw')
+    >>>
+    
+    The following Jigsaw versions are implemented:
+        - version 1: The original file is sliced and saved as a series of 
+        smaller files.
+    '''
     def __init__(self):
+        '''Constructor method.'''
         self.version = 'JigsawFileONE'
         self.decryptkey = []
         self.fileList = []
@@ -124,6 +156,30 @@ class JigsawFile(JigsawCore):
         self.decryptfilename = ''
 
     def setting(self, key, value):
+        '''
+        Function to set various options to the system.
+        
+        Available options to set are:
+            - slicer: Set the file slicing method. Allowable values are 
+            'even' (even Jigsaw file size) or 'uneven' (uneven Jigsaw file 
+            size).
+            - blocksize: Set the size of a Jigsaw file. Allowable values 
+            are any positive integer. In the case of uneven slicer, size 
+            of Jisgaw files will be between 1 to 2  block sizes.
+            - filenamelength: Set the length of file name of a Jigsaw file. 
+            Longer file name determines the number of allowable Jigsaw 
+            files in a directory, up to file system limits. Allowable 
+            values are any positive integer.
+            - version: Set the Jigsaw version. Allowable values are 1 
+            (version 1).
+            - hashlength: Set the file has length of each Jigsaw file. 
+            This is used to check for fidelity of the files. Allowable 
+            values are any positive integer.
+        
+        @param key: name of option to set.
+        @type key: string
+        @param value: value to set the option.
+        '''
         key = str(key).lower()
         if key == 'slicer':
             if str(value).lower() == 'uneven':
@@ -131,16 +187,19 @@ class JigsawFile(JigsawCore):
             else:
                 self.slicer = 'even'
         elif key == 'blocksize':
-            self.block_size = int(value)
+            self.block_size = abs(int(value))
         elif key == 'filenamelength':
-            self.filename_length = int(value)
+            self.filename_length = abs(int(value))
         elif key == 'version':
             if key == 1:
                 self.version == 'JigsawFileONE'
         elif key == 'hashlength':
-            self.hashlength = int(value)
+            self.hashlength = abs(int(value))
 
     def _generateFilename(self):
+        '''
+        Private method to generate non-duplicating name for sub-files.
+        '''
         mapping = ['1', '2', '3', '4', '5', '6', '7', '8', '9', 'A',
                    'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K',
                    'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U',
@@ -155,6 +214,27 @@ class JigsawFile(JigsawCore):
                 return randomName
 
     def _setEncryptDir(self, outputdir=''):
+        '''
+        Private function to set the input and output directories prior to 
+        encryption.
+        
+        Input directory (directory of file to encrypt): It will first 
+        attempt to get input directory from input file name if the input 
+        file name is an absolute path. Otherwise, if the input file name 
+        is a relative path, the current working directory will be used.
+        
+        Output directory (directory to write out Jigsaw files and keyfile): 
+        If given, it will be used. If not given, it will use the input 
+        directory (depending on whether the input file name is absolute or 
+        relative file name).
+        
+        @param outputdir: absolute path of directory (without trailing 
+        slash) to write the Jigsaw files (encrypted/sub-files) into. This 
+        parameter is optional. If not given, the Jigsaw files will be in 
+        the same directory as the input file or int he current working 
+        directory.
+        @type outputdir: string
+        '''
         # Input directory
         print('... Sorting out input (source file) directory')
         print('...... Attempt to get input directory from input file path')
@@ -186,6 +266,15 @@ class JigsawFile(JigsawCore):
                 self.outputdir = os.getcwd()
 
     def _writeJigsawFile(self, count, block):
+        '''
+        Private method to write out a Jigsaw file.
+        
+        @param count: sequential count of the block slice from the original 
+        unencrypted file.
+        @type count: integer
+        @param block: file block to be written as a Jigsaw file.
+        @type block: bytes
+        '''
         ofileName = self._generateFilename()
         ofile = open(self.outputdir + os.sep + ofileName, 'wb')
         hash = str(self.hash(block).hexdigest()[:self.hashlength])
@@ -197,6 +286,11 @@ class JigsawFile(JigsawCore):
         ofile.close()
 
     def _writeKeyFile(self):
+        '''
+        Private method to write out keyfile (.jgk) after encryption.
+        
+        @return: name of keyfile.
+        '''
         if len(self.filename.split(os.sep)) == 1:
             filename = self.filename
         else:
@@ -222,6 +316,14 @@ class JigsawFile(JigsawCore):
         return kfileName
 
     def _encrypt1(self, filename):
+        '''
+        Private method to run the operations for Jigsaw version 1 
+        encryption.
+        
+        @param filename: name (absolute path or relative path) of file to 
+        be encrypted.
+        @type filename: string
+        '''
         count = 0
         if self.slicer == 'even':
             print('Processing using even slicer')
@@ -238,9 +340,26 @@ class JigsawFile(JigsawCore):
                 count = count + 1
 
     def encrypt(self, filename, outputdir=''):
+        '''
+        Function to run encryption.
+        
+        @param filename: name (absolute path or relative path) of file to 
+        be hashed.
+        @type filename: string
+        @param outputdir: absolute path of directory (without trailing 
+        slash) to write the Jigsaw files (encrypted/sub-files) into. This 
+        parameter is optional. If not given, the Jigsaw files will be in 
+        the same directory as the input file or in the current working 
+        directory.
+        @type outputdir: string
+        @return: name of keyfile.
+        '''
         print('Encrypting file: %s' % filename)
         self.filename = filename
         self._setEncryptDir(outputdir)
+        self.fileList = [x.split('.')[0] 
+                         for x in os.listdir(self.outputdir)
+                             if x.endswith('.jig')]
         print('... in input directory: %s' % self.inputdir)
         print('... onto output directory: %s' % self.outputdir)
         print('... using Jigsaw version: %s' % self.version)
@@ -255,6 +374,10 @@ class JigsawFile(JigsawCore):
         return keyFileName
     
     def _readKeyFile(self):
+        '''
+        Private method to read and process a keyfile (.jgk) for decryption 
+        and assembly.
+        '''
         print('... Processing key file')
         keydata = open(self.keyfilename, 'r').readlines()
         keydata = [x[:-1].strip() for x in keydata]
@@ -274,6 +397,30 @@ class JigsawFile(JigsawCore):
             self.keycode[blockcount] = x[1:]
             
     def _setDecryptDir(self, decryptfilename='', encryptdir=''):
+        '''
+        Private function to set the input directory and output file name 
+        prior to decryption and assembly.
+        
+        Input directory (location of Jigsaw files): If given, it will be 
+        used. If not given, it will try the following in sequence. Firstly, 
+        it will attempt to set to the directory of the keyfile if name of 
+        keyfile is absolute path. Secondly, it will attempt to set to the 
+        directory of the decrypted file if the name is an absolute path. 
+        If both attempt fails, it will set to the current working directory.
+        
+        Output file name (name of decrypted file): If given, it will be 
+        used. Otherwise, it will use the original file name from encryption 
+        as the output file name and write into the input (Jigsaw files) 
+        directory.
+        
+        @param decryptfilename: absolute or relative file name for the 
+        decrypted file.
+        @type decryptfilename: string
+        @param encryptdir: absolute path of directory (without trailing 
+        slash) where the required Jigsaw files (encrypted/sub-files) are 
+        located.
+        @type encryptdir: string
+        '''
         # Input directory
         print('... Sorting out input (encrypted files) directory')
         if encryptdir == '':
@@ -325,6 +472,10 @@ class JigsawFile(JigsawCore):
                 self.decryptfilename = decryptfilename
     
     def _decrypt1(self):
+        '''
+        Private method to run the operations for Jigsaw version 1 
+        decryption.
+        '''
         print('Decrypting file ......')
         ofile = open(self.decryptfilename, 'wb')
         block_sequence = self.keycode.keys()
@@ -351,6 +502,10 @@ class JigsawFile(JigsawCore):
         ofile.close()
         
     def _compareHash(self):
+        '''
+        Private method to print out a series of file hashes from the 
+        expected decrypted file and the actual decrypted file.
+        '''
         self.checksums = self.generateHash(self.decryptfilename)
         print('File Hashs (Decrypted File vs Original Unencrypted File)')
         print('md5: %s' % self.checksums[0])
@@ -367,6 +522,23 @@ class JigsawFile(JigsawCore):
         print('  vs    %s' % self.keyhead['sha512'])
         
     def decrypt(self, keyfilename, decryptfilename='', encryptdir=''):
+        '''
+        Function to run decryption.
+
+        @param keyfilename: absolute path to the keyfile (.jgk) required 
+        for decryption.
+        @type keyfilename: string
+        @param decryptfilename: absolute or relative file name for the 
+        decrypted file. This parameter is optional. If not given, the 
+        decrypted file will be in the same directory as the keyfile or in 
+        the current working directory.
+        @type decryptfilename: string
+        @param encryptdir: absolute path of directory (without trailing 
+        slash) where the required Jigsaw files (encrypted/sub-files) are 
+        located. This parameter is optional. If not given, it will be set 
+        to the same directory as the keyfile or in the current working directory.
+        @type encryptdir: string
+        '''
         print('Decrypting file using keyfile: %s' % keyfilename)
         self.keyfilename = keyfilename
         self._readKeyFile()
