@@ -9,13 +9,29 @@ import random
 import hashlib
 
 class JigsawCore(object):
-
+    '''
+    Class to hold the core functions that are common for Jigsaw 
+    implementations.
+    '''
+    
     hash = hashlib.sha256
     
     def __init__(self):
+        '''Constructor method'''
         pass
     
     def evenSlicer(self, filename, block_size=4096):
+        '''
+        Generator function to slice a file into blocks of even sizes 
+        (except the last block).
+        
+        @param filename: name (absolute path or relative path) of file to 
+        be sliced.
+        @type filename: string
+        @param block_size: size of each block. Default = 4096 bytes.
+        @type block_size: integer
+        @return: Blocks of file (generator function).
+        '''
         f = open(filename, 'rb')
         block_size = int(block_size)
         block = True
@@ -27,6 +43,20 @@ class JigsawCore(object):
     def unevenSlicer(self, filename, 
                      min_block_size=4096, 
                      max_block_size=16384):
+        '''
+        Generator function to slice a file into blocks of uneven sizes.
+        
+        @param filename: name (absolute path or relative path) of file to 
+        be sliced.
+        @type filename: string
+        @param min_block_size: minimum size of each block. Default = 4096 
+        bytes.
+        @type min_block_size: integer
+        @param max_block_size: maximum size of each block. Default = 16384 
+        bytes.
+        @type max_block_size: integer
+        @return: Blocks of file (generator function).
+        '''
         f = open(filename, 'rb')
         block = True
         while block:
@@ -38,6 +68,22 @@ class JigsawCore(object):
         f.close()
         
     def generateHash(self, filename):
+        '''
+        Function to generate a set of hashes for a single file. The hashes 
+        which will be generated are:
+            - md5
+            - sha1
+            - sha224
+            - sha256
+            - sha384
+            - sha512
+        
+        @param filename: name (absolute path or relative path) of file to 
+        be hashed.
+        @type filename: string
+        @return: a list of hashes - [md5, sha1, sha224, sha256, sha384, 
+        sha512].
+        '''
         md5 = hashlib.md5()
         sha1 = hashlib.sha1()
         sha224 = hashlib.sha224()
