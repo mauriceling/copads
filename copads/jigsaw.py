@@ -499,22 +499,20 @@ class JigsawFile(JigsawCore):
             else:
                 self.decryptfilename = decryptfilename
     
-    def _decryptVerbosity(self, count, data):
+    def _decryptVerbosity(self, data):
         '''
         Private method to generate process information based in level of 
         verbosity (1 = most information; highest verbosity) during 
         decryption.
 
-        @param count: block sequence
-        @type count: integer
         @param data: process information
         @type data: string
         '''
         if self.verbose == 1:
-            self.decryptkey[count] = data
+            self.decryptkey.write(data + '\n')
             print('Code: %s' % data)
         elif self.verbose == 2:
-            self.decryptkey[count] = data
+            self.decryptkey.write(data + '\n')
         if self.verbose > 1 and (count % 1000 == 0):
             print('%s blocks processed' % str(count))
 
@@ -542,10 +540,16 @@ class JigsawFile(JigsawCore):
                               self.keycode[b][3], hash])
             expected = expected + int(blocksize)
             actual = actual + len(block)
-            self._decryptVerbosity(b, data)
+            self._decryptVerbosity(data)
         print('%s encrypted files processed' % str(len(block_sequence)))
         print('Expected number of bytes: %s' % str(expected))
         print('Actual number of bytes  : %s' % str(actual))
+        self.decryptkey.write('%s encrypted files processed \n' % 
+            str(len(block_sequence)))
+        self.decryptkey.write('Expected number of bytes: %s \n' % 
+            str(expected))
+        self.decryptkey.write('Actual number of bytes  : %s \n' % 
+            str(actual))
         ofile.close()
         
     def _compareHash(self):
@@ -555,22 +559,36 @@ class JigsawFile(JigsawCore):
         '''
         self.checksums = self.generateHash(self.decryptfilename)
         print('File Hashs (Decrypted File vs Original Unencrypted File)')
+        self.decryptkey.write('File Hashs (Decrypted File vs Original Unencrypted File) \n')
         print('md5: %s' % self.checksums[0])
         print('  vs %s' % self.keyhead['md5'])
+        self.decryptkey.write('md5: %s \n' % self.checksums[0])
+        self.decryptkey.write('  vs %s \n' % self.keyhead['md5'])
         print('sha1: %s' % self.checksums[1]) 
         print('  vs  %s' % self.keyhead['sha1'])
+        self.decryptkey.write('sha1: %s \n' % self.checksums[1]) 
+        self.decryptkey.write('  vs  %s \n' % self.keyhead['sha1'])
         print('sha224: %s' % self.checksums[2]) 
         print('  vs    %s' % self.keyhead['sha224'])
+        self.decryptkey.write('sha224: %s \n' % self.checksums[2]) 
+        self.decryptkey.write('  vs    %s \n' % self.keyhead['sha224'])
         print('sha256: %s' % self.checksums[3]) 
         print('  vs    %s' % self.keyhead['sha256'])
+        self.decryptkey.write('sha256: %s \n' % self.checksums[3]) 
+        self.decryptkey.write('  vs    %s \n' % self.keyhead['sha256'])
         print('sha384: %s' % self.checksums[4]) 
         print('  vs    %s' % self.keyhead['sha384'])
+        self.decryptkey.write('sha384: %s \n' % self.checksums[4]) 
+        self.decryptkey.write('  vs    %s \n' % self.keyhead['sha384'])
         print('sha512: %s' % self.checksums[5]) 
         print('  vs    %s' % self.keyhead['sha512'])
+        self.decryptkey.write('sha512: %s \n' % self.checksums[5]) 
+        self.decryptkey.write('  vs    %s \n' % self.keyhead['sha512'])
         
     def decrypt(self, keyfilename, decryptfilename='', encryptdir=''):
         '''
-        Function to run decryption.
+        Function to run decryption. The decryption information will be 
+        stored in a file - <decryptfilename>.jkd
 
         @param keyfilename: absolute path to the keyfile (.jgk) required 
         for decryption.
@@ -594,7 +612,8 @@ class JigsawFile(JigsawCore):
             self.inputdir)
         print('... Uncrypted file name (output): %s' % 
             self.decryptfilename)
-        self.decryptkey = {}
+        self.decryptkey = open(self.decryptfilename + '.jkd', 'w')
         if self.keyhead['version'] == 'JigsawFileONE': 
             self._decrypt1()
         self._compareHash()
+        self.decryptkey.close()
