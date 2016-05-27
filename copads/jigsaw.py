@@ -299,6 +299,22 @@ class JigsawFile(JigsawCore):
             self.decryptkey.write(line + '\n')
         return kfileName
 
+    def _encryptVerbosity(self, count, data):
+        '''
+        Private method to generate process information based in level of 
+        verbosity (1 = most information; highest verbosity) during 
+        encryption.
+
+        @param count: block sequence
+        @type count: integer
+        @param data: process information
+        @type data: string
+        '''
+        if self.verbose == 1:
+            print('Code: %s' % data)
+        if self.verbose > 1 and (count % 1000 == 0):
+            print('%s blocks processed' % str(count))
+        
     def _encrypt1(self, filename):
         '''
         Private method to run the operations for Jigsaw version 1 
@@ -321,10 +337,7 @@ class JigsawFile(JigsawCore):
                 data = '>>'.join(['AA', str(count), str(len(block)), 
                                   self.outputdir, ofileName, hash])
                 self.decryptkey.write(data + '\n')
-                if self.verbose == 1:
-                    print('Code: %s' % data)
-                if self.verbose > 1 and (count % 1000 == 0):
-                    print('%s blocks processed' % str(count))
+                self._encryptVerbosity(count, data)
                 count = count + 1
         if self.slicer == 'uneven':
             print('Processing using uneven slicer')
@@ -339,10 +352,7 @@ class JigsawFile(JigsawCore):
                 data = '>>'.join(['AA', str(count), str(len(block)), 
                                   self.outputdir, ofileName, hash])
                 self.decryptkey.write(data + '\n')
-                if self.verbose == 1:
-                    print('Code: %s' % data)
-                if self.verbose > 1 and (count % 1000 == 0):
-                    print('%s blocks processed' % str(count))
+                self._encryptVerbosity(count, data)
                 count = count + 1
 
     def encrypt(self, filename, outputdir=''):
@@ -483,7 +493,8 @@ class JigsawFile(JigsawCore):
     def _decryptVerbosity(self, count, data):
         '''
         Private method to generate process information based in level of 
-        verbosity (1 = most information; highest verbosity).
+        verbosity (1 = most information; highest verbosity) during 
+        decryption.
 
         @param count: block sequence
         @type count: integer
