@@ -269,30 +269,12 @@ class JigsawFile(JigsawCore):
                 print('...... Set output directory to currect working directory')
                 self.outputdir = os.getcwd()
 
-    def _writeJigsawFile(self, count, block):
-        '''
-        Private method to write out a Jigsaw file.
-        
-        @param count: sequential count of the block slice from the original 
-        unencrypted file.
-        @type count: integer
-        @param block: file block to be written as a Jigsaw file.
-        @type block: bytes
-        '''
-        ofileName = self._generateFilename()
-        ofile = open(self.outputdir + os.sep + ofileName, 'wb')
-        hash = str(self.hash(block).hexdigest()[:self.hashlength])
-        ofile.write(block)
-        data = '>>'.join([str(count), str(len(block)), 
-                          self.outputdir, ofileName, hash])
-        self.decryptkey.write(data + '\n')
-        if self.verbose == 1:
-            print('Code: %s' % data)
-        ofile.close()
-
     def _writeKeyHeader(self):
         '''
-        Private method to write out keyfile (.jgk) header.
+        Private method to write out keyfile (.jgk) header. The header 
+        contains information and metadata related to the encryption, which 
+        may be used during decryption process. To separate from header 
+        from the encryption coding, header lines starts with '#'.
         
         @return: name of keyfile.
         '''
@@ -331,7 +313,16 @@ class JigsawFile(JigsawCore):
             print('Processing using even slicer')
             for block in self.evenSlicer(self.filename, 
                                          self.block_size):
-                self._writeJigsawFile(count, block)
+                ofileName = self._generateFilename()
+                ofile = open(self.outputdir + os.sep + ofileName, 'wb')
+                hash = str(self.hash(block).hexdigest()[:self.hashlength])
+                ofile.write(block)
+                ofile.close()
+                data = '>>'.join(['AA', str(count), str(len(block)), 
+                                  self.outputdir, ofileName, hash])
+                self.decryptkey.write(data + '\n')
+                if self.verbose == 1:
+                    print('Code: %s' % data)
                 if self.verbose > 1 and (count % 1000 == 0):
                     print('%s blocks processed' % str(count))
                 count = count + 1
@@ -340,7 +331,16 @@ class JigsawFile(JigsawCore):
             for block in self.unevenSlicer(self.filename, 
                                            self.block_size, 
                                            self.block_size*2):
-                self._writeJigsawFile(count, block)
+                ofileName = self._generateFilename()
+                ofile = open(self.outputdir + os.sep + ofileName, 'wb')
+                hash = str(self.hash(block).hexdigest()[:self.hashlength])
+                ofile.write(block)
+                ofile.close()
+                data = '>>'.join(['AA', str(count), str(len(block)), 
+                                  self.outputdir, ofileName, hash])
+                self.decryptkey.write(data + '\n')
+                if self.verbose == 1:
+                    print('Code: %s' % data)
                 if self.verbose > 1 and (count % 1000 == 0):
                     print('%s blocks processed' % str(count))
                 count = count + 1
@@ -398,9 +398,12 @@ class JigsawFile(JigsawCore):
         code = [x for x in keydata if not x.startswith('#')]
         code = [[str(item).strip() for item in line.split('>>')] 
                 for line in code]
-        for x in code:
-            blockcount = int(x[0])
-            self.keycode[blockcount] = x[1:]
+        codeset = list(set([x[0] for x in code]))
+        for section in codeset:
+            self.keycode[section] = {}
+            for x in code:
+                blockcount = int(x[1])
+                self.keycode[section][blockcount] = x[2:]
             
     def _setDecryptDir(self, decryptfilename='', encryptdir=''):
         '''
@@ -502,6 +505,7 @@ class JigsawFile(JigsawCore):
         '''
         print('Decrypting file ......')
         ofile = open(self.decryptfilename, 'wb')
+        self.keycode = self.keycode['AA']       # for Jigsaw version 1 
         block_sequence = self.keycode.keys()
         block_sequence.sort()
         actual = 0
