@@ -57,8 +57,6 @@ class Randomizer(object):
         '''
         Method to generate a random integer between 0 (not inclusive) and the 
         maximum integer allowable by system (inclusive)
-
-        @type stop: integer
         '''
         return self.randrange()
         
@@ -156,9 +154,9 @@ class LCG(Randomizer):
     '''
     A set of linear congruential generators (LCG) and LCG-based generators 
     to generate a sequence of pseudorandom numbers. LCG has the general 
-    equation of:
+    equation of
     
-        x(n+1) = [multiplier * x(n) + increment] % modulus
+    x(n+1) = [multiplier * x(n) + increment] % modulus
         
     where
     
@@ -259,9 +257,9 @@ class LCG(Randomizer):
     def _random(self):
         '''
         Method to generate a random integer using the following equation where 
-        x(n+1) is a newly generated integer:
+        x(n+1) is a newly generated integer
         
-            x(n+1) = [multiplier * x(n) + increment] % modulus
+        x(n+1) = [multiplier * x(n) + increment] % modulus
         
         @return: a random generated integer.
         '''
@@ -299,12 +297,14 @@ class CLCG(Randomizer):
         
     def _random(self):
         '''
-        Method to generate a random integer using the following equation where 
-        s is a newly generated integer:
+        Method to generate a random integer using the following equation 
+        where s is a newly generated integer
         
-            x(n+1) = [multiplierX * x(n) + incrementX] % modulusX
-            y(n+1) = [multiplierY * y(n) + incrementY] % modulusY
-            s = [x(n+1) + y(n+1)] % max(modulusX, modulusY)
+        x(n+1) = [multiplierX * x(n) + incrementX] % modulusX
+        
+        y(n+1) = [multiplierY * y(n) + incrementY] % modulusY
+        
+        s = [x(n+1) + y(n+1)] % max(modulusX, modulusY)
         
         @return: a random generated integer.
         '''

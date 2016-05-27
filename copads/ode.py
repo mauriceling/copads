@@ -1159,57 +1159,61 @@ def ODE_constructor(scriptfile,
     
     For example, the following system of ODEs
     
-    M{
-    d(human)/dt = birth - zombied - death
-    d(zombie)/dt = zombied + resurrected - destroyed
-    d(dead)/dt = death + destroyed - resurrected
+    M{d(human)/dt = birth - zombied - death}
     
-    birth = 0
-    zombied = 0.0095 * human * zombie
-    death = 0.0001 * human
-    resurrected = 0.0002 * dead
-    destroyed = 0.0003 * human * zombie
+    M{d(zombie)/dt = zombied + resurrected - destroyed}
+    
+    M{d(dead)/dt = death + destroyed - resurrected}
+    
+    M{birth = 0}
+    
+    M{zombied = 0.0095 * human * zombie}
+    
+    M{death = 0.0001 * human}
+    
+    M{resurrected = 0.0002 * dead}
+    
+    M{destroyed = 0.0003 * human * zombie}
     
     where initially (t0), 
     
     number of humans = 500
+    
     number of zombies = 0
+    
     number of dead = 0
-    }
     
     can be specified as 
     
-    C{
-    scriptfile = 'zombie_attack.py'
-    resultsfile = 'zombie_data.csv'
-    time = (0.0, 0.1, 100.0)
-    ODE_solver = 'RK4'
-    expressions = {'human': ['birth_rate',
-                             '- (transmission_rate * human * zombie)',
-                             '- (death_rate * human)'],
-                   'zombie': ['(transmission_rate * human * zombie)',
-                              '(resurrection_rate * dead)',
-                              '- (destroy_rate * human * zombie)'],
-                   'dead': ['(death_rate * human)',
-                            '(destroy_rate * human * zombie)',
-                            '- (resurrection_rate * dead)']}
-    parameters = {'birth_rate': 0.0,           # birth rate
-                  'transmission_rate': 0.0095, # transmission percent   
-                  'death_rate': 0.0001,        # natural death percent  
-                  'resurrection_rate': 0.0002, # resurect percent  
-                  'destroy_rate':0.0003        # destroy percent   
-                  }
-    initial_conditions = {'human': 500.0,
-                          'zombie': 0.0, 
-                          'dead': 0.0}
-    lower_bound = {'human': [0.0, 0.0]}
-    upper_bound = {'zombie': [initial_conditions['human'],
-                              initial_conditions['human']],
-                   'dead': [initial_conditions['human'],
-                            initial_conditions['human']]}
-    overflow = 1e100
-    zerodivision = 1e100
-    }
+    >>> scriptfile = 'zombie_attack.py'
+    >>> resultsfile = 'zombie_data.csv'
+    >>> time = (0.0, 0.1, 100.0)
+    >>> ODE_solver = 'RK4'
+    >>> expressions = {'human': ['birth_rate',
+    ...                          '- (transmission_rate * human * zombie)',
+    ...                          '- (death_rate * human)'],
+    ...                'zombie': ['(transmission_rate * human * zombie)',
+    ...                           '(resurrection_rate * dead)',
+    ...                           '- (destroy_rate * human * zombie)'],
+    ...                'dead': ['(death_rate * human)',
+    ...                         '(destroy_rate * human * zombie)',
+    ...                         '- (resurrection_rate * dead)']}
+    >>> parameters = {'birth_rate': 0.0,           # birth rate
+    ...               'transmission_rate': 0.0095, # transmission percent   
+    ...               'death_rate': 0.0001,        # natural death percent  
+    ...               'resurrection_rate': 0.0002, # resurect percent  
+    ...               'destroy_rate':0.0003        # destroy percent   
+    ...               }
+    >>> initial_conditions = {'human': 500.0,
+    ...                       'zombie': 0.0, 
+    ...                       'dead': 0.0}
+    >>> lower_bound = {'human': [0.0, 0.0]}
+    >>> upper_bound = {'zombie': [initial_conditions['human'],
+    ...                           initial_conditions['human']],
+    ...                'dead': [initial_conditions['human'],
+    ...                         initial_conditions['human']]}
+    >>> overflow = 1e100
+    >>> zerodivision = 1e100
     
     @param scriptfile: name of Python file for the generated ODE script 
     file
