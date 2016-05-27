@@ -322,6 +322,21 @@ class JigsawFile(JigsawCore):
         if self.verbose > 1 and (count % 1000 == 0):
             print('%s blocks processed' % str(count))
         
+    def _writeJigsawFile(self, block):
+        '''
+        Private method to write a block into a Jigsaw file.
+
+        @param block: data to be written into a Jigsaw file.
+        @type block: byte
+        @return: (hash of block, relative path of Jigsaw file)
+        '''
+        ofileName = self._generateFilename()
+        ofile = open(self.outputdir + os.sep + ofileName, 'wb')
+        hash = str(self.hash(block).hexdigest()[:self.hashlength])
+        ofile.write(block)
+        ofile.close()
+        return (hash, ofileName)
+
     def _encrypt1(self, filename):
         '''
         Private method to run the operations for Jigsaw version 1 
@@ -345,11 +360,7 @@ class JigsawFile(JigsawCore):
             print('Processing using even slicer')
             for block in self.evenSlicer(self.filename, 
                                          self.block_size):
-                ofileName = self._generateFilename()
-                ofile = open(self.outputdir + os.sep + ofileName, 'wb')
-                hash = str(self.hash(block).hexdigest()[:self.hashlength])
-                ofile.write(block)
-                ofile.close()
+                (hash, ofileName) = self._writeJigsawFile(block)
                 data = '>>'.join(['AA', str(count), str(len(block)), 
                                   self.outputdir, ofileName, hash])
                 self.decryptkey.write(data + '\n')
@@ -360,11 +371,7 @@ class JigsawFile(JigsawCore):
             for block in self.unevenSlicer(self.filename, 
                                            self.block_size, 
                                            self.block_size*2):
-                ofileName = self._generateFilename()
-                ofile = open(self.outputdir + os.sep + ofileName, 'wb')
-                hash = str(self.hash(block).hexdigest()[:self.hashlength])
-                ofile.write(block)
-                ofile.close()
+                (hash, ofileName) = self._writeJigsawFile(block)
                 data = '>>'.join(['AA', str(count), str(len(block)), 
                                   self.outputdir, ofileName, hash])
                 self.decryptkey.write(data + '\n')
@@ -516,12 +523,14 @@ class JigsawFile(JigsawCore):
             else:
                 self.decryptfilename = decryptfilename
     
-    def _decryptVerbosity(self, data):
+    def _decryptVerbosity(self, count, data):
         '''
         Private method to generate process information based in level of 
         verbosity (1 = most information; highest verbosity) during 
         decryption.
 
+        @param count: block sequence
+        @type count: integer
         @param data: process information
         @type data: string
         '''
@@ -557,7 +566,7 @@ class JigsawFile(JigsawCore):
                               self.keycode[b][3], hash])
             expected = expected + int(blocksize)
             actual = actual + len(block)
-            self._decryptVerbosity(data)
+            self._decryptVerbosity(b, data)
         print('%s encrypted files processed' % str(len(block_sequence)))
         print('Expected number of bytes: %s' % str(expected))
         print('Actual number of bytes  : %s' % str(actual))
