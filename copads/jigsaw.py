@@ -67,6 +67,34 @@ class JigsawCore(object):
             yield block
         f.close()
         
+    def reverseBlock(self, block, rtype='string'):
+        '''
+        Function to reverse a string or a list.
+
+        >>> import jigsaw
+        >>> c = jigsaw.JigsawCore()
+        >>> c.reverseBlock('1234567890', 'string')
+        '0987654321'
+        >>> c.reverseBlock('1234567890', 'list')
+        ['0', '9', '8', '7', '6', '5', '4', '3', '2', '1']
+        >>>
+
+        @param block: data to be reversed.
+        @type block: string or list
+        @param rtype: return type. Allowable values are 'string' 
+        (return type will be a string) or 'list' (return type will 
+        be a list). Default = 'string'.
+        @type rtype: string
+        @return: reversed block
+        '''
+        if type(block) == type('str'):
+            block = [item for item in block]
+        block.reverse()
+        if rtype == 'string':
+            return ''.join(block)
+        else:
+            return block
+
     def generateHash(self, filename):
         '''
         Function to generate a set of hashes for a single file. The hashes 
