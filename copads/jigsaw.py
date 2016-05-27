@@ -442,6 +442,23 @@ class JigsawFile(JigsawCore):
         code = [[str(item).strip() for item in line.split('>>')] 
                 for line in code]
         codeset = list(set([x[0] for x in code]))
+        '''
+        Note to myself: The first 2 elements in the encryption code will 
+        not be in the value of self.keycode. For example, for Jigsaw 
+        version 1, the encryption code is 
+        ['AA', 
+         <block sequence>,
+         <size of block (in bytes)>,
+         <directory to write out Jigsaw file>,
+         <name of Jigsaw file>
+         <truncated sha256 hash of block>]
+
+        self.keycode['AA'][<block sequence>] = \
+            [<size of block (in bytes)>,
+             <directory to write out Jigsaw file>,
+             <name of Jigsaw file>
+             <truncated sha256 hash of block>]
+        '''
         for section in codeset:
             self.keycode[section] = {}
             for x in code:
