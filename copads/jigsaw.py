@@ -142,7 +142,7 @@ class JigsawFile(JigsawCore):
     def __init__(self):
         '''Constructor method.'''
         self.version = 'JigsawFileONE'
-        self.decryptkey = []
+        self.decryptkey = None
         self.fileList = []
         self.checksums = []
         self.slicer = 'even'
@@ -154,15 +154,13 @@ class JigsawFile(JigsawCore):
         self.outputdir = ''
         self.keyfilename = ''
         self.decryptfilename = ''
+        self.verbose = 1
 
     def setting(self, key, value):
         '''
         Function to set various options to the system.
         
         Available options to set are:
-            - slicer: Set the file slicing method. Allowable values are 
-            'even' (even Jigsaw file size) or 'uneven' (uneven Jigsaw file 
-            size).
             - blocksize: Set the size of a Jigsaw file. Allowable values 
             are any positive integer. In the case of uneven slicer, size 
             of Jisgaw files will be between 1 to 2  block sizes.
@@ -170,11 +168,15 @@ class JigsawFile(JigsawCore):
             Longer file name determines the number of allowable Jigsaw 
             files in a directory, up to file system limits. Allowable 
             values are any positive integer.
-            - version: Set the Jigsaw version. Allowable values are 1 
-            (version 1).
             - hashlength: Set the file has length of each Jigsaw file. 
             This is used to check for fidelity of the files. Allowable 
             values are any positive integer.
+            - slicer: Set the file slicing method. Allowable values are 
+            'even' (even Jigsaw file size) or 'uneven' (uneven Jigsaw file 
+            size).
+            - verbose: Set the verbosity from 1 (most information) onwards.
+            - version: Set the Jigsaw version. Allowable values are 1 
+            (version 1).
         
         @param key: name of option to set.
         @type key: string
@@ -195,6 +197,8 @@ class JigsawFile(JigsawCore):
                 self.version == 'JigsawFileONE'
         elif key == 'hashlength':
             self.hashlength = abs(int(value))
+        elif key == 'verbose':
+            self.verbose = abs(int(value))
 
     def _generateFilename(self):
         '''
@@ -281,13 +285,14 @@ class JigsawFile(JigsawCore):
         ofile.write(block)
         data = '>>'.join([str(count), str(len(block)), 
                           self.outputdir, ofileName, hash])
-        self.decryptkey.append(data)
-        print('Code: %s' % data)
+        self.decryptkey.write(data + '\n')
+        if self.verbose == 1:
+            print('Code: %s' % data)
         ofile.close()
 
-    def _writeKeyFile(self):
+    def _writeKeyHeader(self):
         '''
-        Private method to write out keyfile (.jgk) after encryption.
+        Private method to write out keyfile (.jgk) header.
         
         @return: name of keyfile.
         '''
@@ -297,7 +302,7 @@ class JigsawFile(JigsawCore):
             filename = self.filename.split(os.sep)[-1]
         kfileName = os.sep.join([self.outputdir, filename + '.jgk'])
         print('Writing key file: %s' % kfileName)
-        ofile = open(kfileName, 'w')
+        self.decryptkey = open(kfileName, 'w')
         header = ['>>'.join(['#version', self.version]),
                   '>>'.join(['#inputdir', self.inputdir]),
                   '>>'.join(['#infile', filename]),
@@ -309,10 +314,7 @@ class JigsawFile(JigsawCore):
                   '>>'.join(['#sha384', self.checksums[4]]),
                   '>>'.join(['#sha512', self.checksums[5]])]
         for line in header:
-            ofile.write(line + '\n')
-        for line in self.decryptkey:
-            ofile.write(line + '\n')
-        ofile.close()
+            self.decryptkey.write(line + '\n')
         return kfileName
 
     def _encrypt1(self, filename):
@@ -330,6 +332,8 @@ class JigsawFile(JigsawCore):
             for block in self.evenSlicer(self.filename, 
                                          self.block_size):
                 self._writeJigsawFile(count, block)
+                if self.verbose > 1 and (count % 1000 == 0):
+                    print('%s blocks processed' % str(count))
                 count = count + 1
         if self.slicer == 'uneven':
             print('Processing using uneven slicer')
@@ -337,6 +341,8 @@ class JigsawFile(JigsawCore):
                                            self.block_size, 
                                            self.block_size*2):
                 self._writeJigsawFile(count, block)
+                if self.verbose > 1 and (count % 1000 == 0):
+                    print('%s blocks processed' % str(count))
                 count = count + 1
 
     def encrypt(self, filename, outputdir=''):
@@ -365,11 +371,11 @@ class JigsawFile(JigsawCore):
         print('... using Jigsaw version: %s' % self.version)
         print('... using slicer: %s' % self.slicer)
         print('... using block size: %s' % str(self.block_size))
-        self.decryptkey = []
         self.checksums = self.generateHash(filename)
+        keyFileName = self._writeKeyHeader()
         if self.version == 'JigsawFileONE': 
             self._encrypt1(self.filename)
-        keyFileName = self._writeKeyFile()
+        self.decryptkey.close()
         print('')
         return keyFileName
     
@@ -471,6 +477,24 @@ class JigsawFile(JigsawCore):
             else:
                 self.decryptfilename = decryptfilename
     
+    def _decryptVerbosity(self, count, data):
+        '''
+        Private method to generate process information based in level of 
+        verbosity (1 = most information; highest verbosity).
+
+        @param count: block sequence
+        @type count: integer
+        @param data: process information
+        @type data: string
+        '''
+        if self.verbose == 1:
+            self.decryptkey[count] = data
+            print('Code: %s' % data)
+        elif self.verbose == 2:
+            self.decryptkey[count] = data
+        if self.verbose > 1 and (count % 1000 == 0):
+            print('%s blocks processed' % str(count))
+
     def _decrypt1(self):
         '''
         Private method to run the operations for Jigsaw version 1 
@@ -492,10 +516,9 @@ class JigsawFile(JigsawCore):
             data = '>>'.join([str(b), filename, 
                               str(blocksize), str(len(block)),
                               self.keycode[b][3], hash])
-            self.decryptkey.append(data)
             expected = expected + int(blocksize)
             actual = actual + len(block)
-            print('Code: %s' % data)
+            self._decryptVerbosity(b, data)
         print('%s encrypted files processed' % str(len(block_sequence)))
         print('Expected number of bytes: %s' % str(expected))
         print('Actual number of bytes  : %s' % str(actual))
@@ -547,7 +570,7 @@ class JigsawFile(JigsawCore):
             self.inputdir)
         print('... Uncrypted file name (output): %s' % 
             self.decryptfilename)
-        self.decryptkey = []
+        self.decryptkey = {}
         if self.keyhead['version'] == 'JigsawFileONE': 
             self._decrypt1()
         self._compareHash()
