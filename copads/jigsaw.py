@@ -155,6 +155,7 @@ class JigsawFile(JigsawCore):
         self.keyfilename = ''
         self.decryptfilename = ''
         self.verbose = 1
+        self.header = {}
 
     def setting(self, key, value):
         '''
@@ -285,20 +286,26 @@ class JigsawFile(JigsawCore):
         kfileName = os.sep.join([self.outputdir, filename + '.jgk'])
         print('Writing key file: %s' % kfileName)
         self.decryptkey = open(kfileName, 'w')
-        header = ['>>'.join(['#version', self.version]),
-                  '>>'.join(['#inputdir', self.inputdir]),
-                  '>>'.join(['#infile', filename]),
-                  '>>'.join(['#hashlength', str(self.hashlength)]),
-                  '>>'.join(['#md5', self.checksums[0]]),
-                  '>>'.join(['#sha1', self.checksums[1]]),
-                  '>>'.join(['#sha224', self.checksums[2]]),
-                  '>>'.join(['#sha256', self.checksums[3]]),
-                  '>>'.join(['#sha384', self.checksums[4]]),
-                  '>>'.join(['#sha512', self.checksums[5]])]
+        header = ['>>'.join([k, self.header[k]]) 
+                  for k in self.header.keys()]
         for line in header:
             self.decryptkey.write(line + '\n')
         return kfileName
 
+    def _addHeader(self, key, value):
+        '''
+        Private method to add items to be written into keyfile.
+        
+        @param key: name of option to set.
+        @type key: string
+        @param value: value to set the option.
+        '''
+        key = str(key)
+        value = str(value)
+        if not key.startswith('#'):
+            key = '#' + key
+        self.header[key] = value
+            
     def _encryptVerbosity(self, count, data):
         '''
         Private method to generate process information based in level of 
@@ -391,6 +398,16 @@ class JigsawFile(JigsawCore):
         print('... using slicer: %s' % self.slicer)
         print('... using block size: %s' % str(self.block_size))
         self.checksums = self.generateHash(filename)
+        self._addHeader('version', self.version)
+        self._addHeader('inputdir', self.inputdir)
+        self._addHeader('infile', filename)
+        self._addHeader('hashlength', str(self.hashlength))
+        self._addHeader('md5', self.checksums[0])
+        self._addHeader('sha1', self.checksums[1])
+        self._addHeader('sha224', self.checksums[2])
+        self._addHeader('sha256', self.checksums[3])
+        self._addHeader('sha384', self.checksums[4])
+        self._addHeader('sha512', self.checksums[5])
         keyFileName = self._writeKeyHeader()
         if self.version == 'JigsawFileONE': 
             self._encrypt1(self.filename)
