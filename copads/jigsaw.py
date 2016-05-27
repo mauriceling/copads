@@ -15,6 +15,7 @@ class JigsawCore(object):
     '''
     
     hash = hashlib.sha256
+    random = random.random
     
     def __init__(self):
         '''Constructor method'''
@@ -61,7 +62,7 @@ class JigsawCore(object):
         block = True
         while block:
             block_size = int(max_block_size) - int(min_block_size)
-            block_size = int(random.random() * block_size)
+            block_size = int(self.random() * block_size)
             block_size = int(min_block_size) + block_size
             block = f.read(block_size)
             yield block
