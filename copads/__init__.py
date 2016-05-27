@@ -26,8 +26,8 @@ those adapted, are covered under Python Software Foundation License
 version 2.
 """
 
-__version__ = '0.4.1'
+__version__ = '0.5.0'
 
 __author__ = 'Maurice H.T. Ling <mauriceling@acm.org>'
 
-__copyright__ = '(c) 2007-2013, Maurice H.T. Ling.'
+__copyright__ = '(c) 2007-2016, Maurice H.T. Ling.'
