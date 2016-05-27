@@ -15,7 +15,8 @@ class JigsawCore(object):
     '''
     
     hash = hashlib.sha256
-    random = random.random
+    rfloat = random.random
+    rchoice = random.choice
     
     def __init__(self):
         '''Constructor method'''
@@ -62,7 +63,7 @@ class JigsawCore(object):
         block = True
         while block:
             block_size = int(max_block_size) - int(min_block_size)
-            block_size = int(self.random() * block_size)
+            block_size = int(self.rfloat() * block_size)
             block_size = int(min_block_size) + block_size
             block = f.read(block_size)
             yield block
@@ -223,8 +224,10 @@ class JigsawFile(JigsawCore):
         elif key == 'filenamelength':
             self.filename_length = abs(int(value))
         elif key == 'version':
-            if key == 1:
-                self.version == 'JigsawFileONE'
+            if value == 1:
+                self.version = 'JigsawFileONE'
+            elif value == 2:
+                self.version = 'JigsawFileTWO'
         elif key == 'hashlength':
             self.hashlength = abs(int(value))
         elif key == 'verbose':
@@ -240,7 +243,7 @@ class JigsawFile(JigsawCore):
                    'V', 'W', 'X', 'Y', 'Z', 'a', 'b', 'd', 'e', 'g',
                    'h', 'q', 'r', 't']
         while True:
-            randomName = [random.choice(mapping) 
+            randomName = [self.rchoice(mapping) 
                           for i in range(self.filename_length)]
             randomName = ''.join(randomName) + '.jig'
             if randomName not in self.fileList:
