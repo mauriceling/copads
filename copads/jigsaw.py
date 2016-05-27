@@ -320,6 +320,15 @@ class JigsawFile(JigsawCore):
         Private method to run the operations for Jigsaw version 1 
         encryption.
         
+        The encryption coding write out into keyfile consist of the 
+        following (in the order, delimited by '>>'):
+            - 'AA'
+            - block sequence (incremental integer from 0)
+            - size of block (in bytes)
+            - directory to write out Jigsaw file
+            - name of Jigsaw file
+            - truncated sha256 hash of block
+        
         @param filename: name (absolute path or relative path) of file to 
         be encrypted.
         @type filename: string
