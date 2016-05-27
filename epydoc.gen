@@ -1,0 +1,26 @@
+epydoc --verbose \
+       --pdf \
+       --output=doc/copads-api-documentation \
+       --name="COPADS: Collection of Python Algorithms and Data Structures" \
+       --url=https://github.com/mauriceling/copads \
+       --show-imports \
+       --show-private \
+       --show-sourcecode \
+       --show-frames \
+       --navlink=https://github.com/mauriceling/copads \
+       copads
+
+mv doc/copads-api-documentation/api.pdf doc/COPADS_API_Documentation.pdf
+rm -rf doc/copads-api-documentation
+
+epydoc --verbose \
+       --html \
+       --output=doc/copads-api-documentation \
+       --name="COPADS: Collection of Python Algorithms and Data Structures" \
+       --url=https://github.com/mauriceling/copads \
+       --show-imports \
+       --show-private \
+       --show-sourcecode \
+       --show-frames \
+       --navlink=https://github.com/mauriceling/copads \
+       copads
