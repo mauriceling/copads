@@ -888,6 +888,27 @@ class JigsawFile(JigsawCore):
         if self.verbose > 1 and (count % 1000 == 0):
             print('%s blocks processed' % str(count))
 
+    def _decryptSummary(self, num_blocks, expected, actual):
+        '''
+        Private method to display summary of decryption.
+
+        @param num_blocks: number of Jigsaw files processed.
+        @type num_blocks: integer
+        @param expected: expected number of bytes to be processed.
+        @type expected: integer
+        @param actual: actual number of bytes processed.
+        @type actual: integer
+        '''
+        print('%s Jigsaw files processed' % str(num_blocks))
+        print('Expected number of bytes: %s' % str(expected))
+        print('Actual number of bytes  : %s' % str(actual))
+        self.decryptkey.write('%s Jigsaw files processed \n' % 
+            str(num_blocks))
+        self.decryptkey.write('Expected number of bytes: %s \n' % 
+            str(expected))
+        self.decryptkey.write('Actual number of bytes  : %s \n' % 
+            str(actual))
+
     def _decrypt1(self):
         '''
         Private method to run the operations for Jigsaw version 1 
@@ -913,15 +934,7 @@ class JigsawFile(JigsawCore):
             expected = expected + int(blocksize)
             actual = actual + len(block)
             self._decryptVerbosity(b, data)
-        print('%s encrypted files processed' % str(len(block_sequence)))
-        print('Expected number of bytes: %s' % str(expected))
-        print('Actual number of bytes  : %s' % str(actual))
-        self.decryptkey.write('%s encrypted files processed \n' % 
-            str(len(block_sequence)))
-        self.decryptkey.write('Expected number of bytes: %s \n' % 
-            str(expected))
-        self.decryptkey.write('Actual number of bytes  : %s \n' % 
-            str(actual))
+        self._decryptSummary(len(block_sequence), expected, actual)
         ofile.close()
         
     def _decrypt2(self):
@@ -950,15 +963,7 @@ class JigsawFile(JigsawCore):
             expected = expected + int(blocksize)
             actual = actual + len(block)
             self._decryptVerbosity(b, data)
-        print('%s encrypted files processed' % str(len(block_sequence)))
-        print('Expected number of bytes: %s' % str(expected))
-        print('Actual number of bytes  : %s' % str(actual))
-        self.decryptkey.write('%s encrypted files processed \n' % 
-            str(len(block_sequence)))
-        self.decryptkey.write('Expected number of bytes: %s \n' % 
-            str(expected))
-        self.decryptkey.write('Actual number of bytes  : %s \n' % 
-            str(actual))
+        self._decryptSummary(len(block_sequence), expected, actual)
         ofile.close()
 
     def _compareHash(self):
