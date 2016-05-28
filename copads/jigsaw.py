@@ -143,6 +143,42 @@ class JigsawCore(object):
         else:
             yield block
 
+    def shuffleBlock(self, block, length, rtype='string'):
+        '''
+        Function to take a block, divide the block into smaller 
+        sub-blocks, and shuffle the order of the sub-blocks.
+
+        >>> import jigsaw
+        >>> c = jigsaw.JigsawCore()
+        >>> text = 'MyNameIsMauriceLing,AndIInventedJigsawEncryption'
+        >>> (shuffled_blocks, block_order) = c.shuffleBlock(text, 10, 'string')
+        >>> for i in range(len(shuffled_blocks)):
+        ...     print block_order[i], shuffled_blocks[i]
+        ... 
+        3 edJigsawEn
+        0 MyNameIsMa
+        4 cryption
+        1 uriceLing,
+        2 AndIInvent
+        >>> 
+
+        @param block: data block to be shuffled.
+        @type block: string or list
+        @param length: length of sub-block.
+        @type length: integer
+        @param rtype: return type. Allowable values are 'string' 
+        (return type will be a string) or 'list' (return type will 
+        be a list). Default = 'string'.
+        @type rtype: string
+        @return: (shuffled block, order of sub-blocks)
+        '''
+        sblocks = [sb for sb in self.subBlock(block, length, rtype)]
+        shuffled_blocks = range(len(sblocks))
+        block_order = range(len(sblocks))
+        random.shuffle(block_order)
+        shuffled_blocks = [sblocks[order] for order in block_order]
+        return (shuffled_blocks, block_order)
+
     def reversePartBlock(self, block, length, rtype='string'):
         '''
         Function to reverse the first N-th length of a string or 
