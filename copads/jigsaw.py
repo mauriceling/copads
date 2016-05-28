@@ -198,6 +198,9 @@ class JigsawFile(JigsawCore):
     The following Jigsaw versions are implemented:
         - version 1: The original file is sliced and saved as a series of 
         smaller files.
+        - version 2: The original file is sliced into blocks. Each block is 
+        separated into 2 sub-blocks where the first sub-block is reversed 
+        and merged before saved as a file.
     '''
     def __init__(self):
         '''Constructor method.'''
