@@ -97,6 +97,41 @@ class JigsawCore(object):
         else:
             return block
 
+    def subBlock(self, block, length, rtype='string'):
+        '''
+        Generator function to divide a block into smaller blocks 
+        (also known as sub-blocks).
+
+
+        @param block: data block to be divided into sub-blocks.
+        @type block: string or list
+        @param length: length of sub-block.
+        @type length: integer
+        @param rtype: return type. Allowable values are 'string' 
+        (return type will be a string) or 'list' (return type will 
+        be a list). Default = 'string'.
+        @type rtype: string
+        @return: sub-block
+        '''
+        length = int(length)
+        if type(block) == type('str'):
+            block = [item for item in block]
+        sblock = []
+        while len(block) > length - 1:
+            if len(block) > length:
+                sblock = block[:length]
+                block = block[length:]
+            else:
+                sblock = block
+            if rtype == 'string':
+                yield ''.join(sblock)
+            else:
+                yield sblock
+        if rtype == 'string':
+            yield ''.join(block)
+        else:
+            yield block
+
     def reversePartBlock(self, block, length, rtype='string'):
         '''
         Function to reverse the first N-th length of a string or 
