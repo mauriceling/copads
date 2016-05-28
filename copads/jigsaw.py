@@ -102,6 +102,17 @@ class JigsawCore(object):
         Generator function to divide a block into smaller blocks 
         (also known as sub-blocks).
 
+        >>> c = jigsaw.JigsawCore()
+        >>> text = 'MyNameIsMauriceLing,AndIInventedJigsawEncryption'
+        >>> for s in c.subBlock(text, 10, 'string'):
+        ...     print s
+        ... 
+        MyNameIsMa
+        uriceLing,
+        AndIInvent
+        edJigsawEn
+        cryption
+        >>> 
 
         @param block: data block to be divided into sub-blocks.
         @type block: string or list
