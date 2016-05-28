@@ -389,11 +389,14 @@ class JigsawFile(JigsawCore):
         
     def _writeJigsawFile(self, block):
         '''
-        Private method to write a block into a Jigsaw file.
+        Private method to write a block into a Jigsaw file. A 
+        truncated SHA1 hash of the block/Jigsaw file will be 
+        generated for checking against corruption during file 
+        storage and transportation.
 
         @param block: data to be written into a Jigsaw file.
         @type block: byte
-        @return: (hash of block, relative path of Jigsaw file)
+        @return: (hash, relative path of Jigsaw file)
         '''
         ofileName = self._generateFilename()
         ofile = open(self.outputdir + os.sep + ofileName, 'wb')
@@ -810,8 +813,8 @@ class JigsawFile(JigsawCore):
             filename = os.sep.join([self.inputdir, filename])
             blocksize = self.keycode[b][1]
             block = open(filename, 'rb').read()
-            block = self._version2BlockReverse(block, self.keycode[b][0])
             hash = str(self.hash(block).hexdigest()[:self.hashlength])
+            block = self._version2BlockReverse(block, self.keycode[b][0])
             ofile.write(block)
             data = '>>'.join([str(b), self.keycode[b][0], filename, 
                               str(blocksize), str(len(block)),
