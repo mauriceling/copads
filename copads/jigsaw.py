@@ -807,8 +807,7 @@ class JigsawFile(JigsawCore):
             filename = os.sep.join([self.inputdir, filename])
             blocksize = self.keycode[b][1]
             block = open(filename, 'rb').read()
-            if self.keycode[b][0] == 'R':
-                block = self.reverseBlock(block)
+            block = self._version2BlockReverse(block, self.keycode[b][0])
             hash = str(self.hash(block).hexdigest()[:self.hashlength])
             ofile.write(block)
             data = '>>'.join([str(b), self.keycode[b][0], filename, 
