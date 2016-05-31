@@ -44,8 +44,8 @@ file and split into 16 64-KB Jigsaw files, there are 2 x 10**13
 permutations to assemble 16 64-KB files into the original 1 MB file using 
 Jigsaw version 1. 
 
-Jigsaw version 2 provides 12 variations for each Jigsaw file. This means 
-that there are 2 x 10**14 permutations for the 16 64-KB files. Hence, the 
+Jigsaw version 2 provides 31 variations for each Jigsaw file. This means 
+that there are 2 x 10**33 permutations for the 16 64-KB files. Hence, the 
 full permutations possible for 16 64-KB files is much more than 2 x 
 10**20065 [full permutation for 6000, nPr(6000, 6000), is 2 x 10**20065].
 '''
@@ -582,18 +582,38 @@ class JigsawFile(JigsawCore):
         @param block: data to be reversed.
         @type block: string or list
         @param reverse_flag: type of reversal. Allowable values 
-        are 'A' (no reversal), 'B' (full reversal), 'C' (reverse 
-        first 200 bytes), 'D' (reverse first 400 bytes), 'E' (reverse 
-        first 600 bytes), 'F' (reverse first 800 bytes), 'G' (reverse 
-        first 1000 bytes), 'H' (reverse first 1200 bytes), 'I' 
-        (reverse first 1400 bytes), 'J' (reverse first 1600 bytes), 
-        'K' (reverse first 1800 bytes), 'L' (reverse first 2000 bytes), 
-        'M' (reverse first 2200 bytes), 'N' (reverse first 2400 bytes), 
-        'O' (reverse first 2600 bytes), 'P' (reverse first 2800 bytes), 
-        'Q' (reverse first 3000 bytes), 'R' (reverse first 3200 bytes), 
-        'S' (reverse first 3400 bytes), 'T' (reverse first 3600 bytes), 
-        'U' (reverse first 3800 bytes), and 'V' (reverse first 4000 
-        bytes).
+        are: 
+            - 'A' (no reversal)
+            - 'B' (full reversal)
+            - 'C' (reverse first 200 bytes)
+            - 'D' (reverse first 400 bytes)
+            - 'E' (reverse first 600 bytes)
+            - 'F' (reverse first 800 bytes)
+            - 'G' (reverse first 1000 bytes)
+            - 'H' (reverse first 1200 bytes)
+            - 'I' (reverse first 1400 bytes)
+            - 'J' (reverse first 1600 bytes)
+            - 'K' (reverse first 1800 bytes)
+            - 'L' (reverse first 2000 bytes)
+            - 'M' (reverse first 2200 bytes)
+            - 'N' (reverse first 2400 bytes)
+            - 'O' (reverse first 2600 bytes)
+            - 'P' (reverse first 2800 bytes)
+            - 'Q' (reverse first 3000 bytes)
+            - 'R' (reverse first 3200 bytes)
+            - 'S' (reverse first 3400 bytes)
+            - 'T' (reverse first 3600 bytes)
+            - 'U' (reverse first 3800 bytes)
+            - 'V' (reverse first 4000 bytes)
+            - '1' (reverse first 10% of the bytes)
+            - '2' (reverse first 20% of the bytes)
+            - '3' (reverse first 30% of the bytes)
+            - '4' (reverse first 40% of the bytes)
+            - '5' (reverse first 50% of the bytes)
+            - '6' (reverse first 60% of the bytes)
+            - '7' (reverse first 70% of the bytes)
+            - '8' (reverse first 80% of the bytes)
+            - '9' (reverse first 90% of the bytes)
         @type reverse_flag: string
         @return: reversed block
         '''
@@ -641,6 +661,42 @@ class JigsawFile(JigsawCore):
             block = self.reversePartBlock(block, 3800, 'string')
         elif reverse_flag == 'V':
             block = self.reversePartBlock(block, 4000, 'string')
+        elif reverse_flag == '1':
+            length = int(len(block) / 10)
+            length = 1 * length
+            block = self.reversePartBlock(block, length, 'string')
+        elif reverse_flag == '2':
+            length = int(len(block) / 10)
+            length = 2 * length
+            block = self.reversePartBlock(block, length, 'string')
+        elif reverse_flag == '3':
+            length = int(len(block) / 10)
+            length = 3 * length
+            block = self.reversePartBlock(block, length, 'string')
+        elif reverse_flag == '4':
+            length = int(len(block) / 10)
+            length = 4 * length
+            block = self.reversePartBlock(block, length, 'string')
+        elif reverse_flag == '5':
+            length = int(len(block) / 10)
+            length = 5 * length
+            block = self.reversePartBlock(block, length, 'string')
+        elif reverse_flag == '6':
+            length = int(len(block) / 10)
+            length = 6 * length
+            block = self.reversePartBlock(block, length, 'string')
+        elif reverse_flag == '7':
+            length = int(len(block) / 10)
+            length = 7 * length
+            block = self.reversePartBlock(block, length, 'string')
+        elif reverse_flag == '8':
+            length = int(len(block) / 10)
+            length = 8 * length
+            block = self.reversePartBlock(block, length, 'string')
+        elif reverse_flag == '9':
+            length = int(len(block) / 10)
+            length = 9 * length
+            block = self.reversePartBlock(block, length, 'string')
         else:
             block = block
         return block
@@ -677,7 +733,9 @@ class JigsawFile(JigsawCore):
                                              'F', 'G', 'H', 'I', 'J', 
                                              'K', 'L', 'M', 'N', 'O',
                                              'P', 'Q', 'R', 'S', 'T',
-                                             'U', 'V'])
+                                             'U', 'V', '1', '2', '3',
+                                             '4', '5', '6', '7', '8',
+                                             '9'])
                 block = self._version2BlockReverse(block, reverse_flag)
                 (hash, ofileName) = self._writeJigsawFile(block)
                 data = '>>'.join(['AA', str(count), reverse_flag,
@@ -695,7 +753,9 @@ class JigsawFile(JigsawCore):
                                              'F', 'G', 'H', 'I', 'J', 
                                              'K', 'L', 'M', 'N', 'O',
                                              'P', 'Q', 'R', 'S', 'T',
-                                             'U', 'V'])
+                                             'U', 'V', '1', '2', '3',
+                                             '4', '5', '6', '7', '8',
+                                             '9'])
                 block = self._version2BlockReverse(block, reverse_flag)
                 (hash, ofileName) = self._writeJigsawFile(block)
                 data = '>>'.join(['AA', str(count), reverse_flag,
