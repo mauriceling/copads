@@ -47,7 +47,10 @@ Jigsaw version 1.
 Jigsaw version 2 provides 59 variations for each Jigsaw file. This means 
 that there are 1 x 10**80 permutations for the 16 64-KB files. Hence, the 
 full permutations possible for 16 64-KB files is much more than 2 x 
-10**20065 [full permutation for 6000, nPr(6000, 6000), is 2 x 10**20065].
+10**20065 [full permutation for 6000, nPr(6000, 6000), is 2 x 10**20065]. 
+The full number of possible permutation is 1 x 10**80 factorial multiply 
+by 16 factorial, and that is just for a 1 MB file split into 16 64-KB 
+Jigsaw files.
 '''
 
 import os
