@@ -118,42 +118,32 @@ class JigsawCore(object):
             yield block
         f.close()
         
-    def reverseBlock(self, block, rtype='string'):
+    def reverseBlock(self, block):
         '''
-        Function to reverse a string or a list.
+        Function to reverse a string.
 
         >>> import jigsaw
         >>> c = jigsaw.JigsawCore()
-        >>> c.reverseBlock('1234567890', 'string')
+        >>> c.reverseBlock('1234567890')
         '0987654321'
-        >>> c.reverseBlock('1234567890', 'list')
-        ['0', '9', '8', '7', '6', '5', '4', '3', '2', '1']
         >>>
 
         @param block: data to be reversed.
-        @type block: string or list
-        @param rtype: return type. Allowable values are 'string' 
-        (return type will be a string) or 'list' (return type will 
-        be a list). Default = 'string'.
-        @type rtype: string
+        @type block: string
         @return: reversed block
         '''
-        if type(block) == type('str'):
-            block = [item for item in block]
+        block = [item for item in block]
         block.reverse()
-        if rtype == 'string':
-            return ''.join(block)
-        else:
-            return block
+        return ''.join(block)
 
-    def subBlock(self, block, length, rtype='string'):
+    def subBlock(self, block, length):
         '''
         Generator function to divide a block into smaller blocks 
         (also known as sub-blocks).
 
         >>> c = jigsaw.JigsawCore()
         >>> text = 'MyNameIsMauriceLing,AndIInventedJigsawEncryption'
-        >>> for s in c.subBlock(text, 10, 'string'):
+        >>> for s in c.subBlock(text, 10):
         ...     print s
         ... 
         MyNameIsMa
@@ -164,18 +154,13 @@ class JigsawCore(object):
         >>> 
 
         @param block: data block to be divided into sub-blocks.
-        @type block: string or list
+        @type block: string
         @param length: length of sub-block.
         @type length: integer
-        @param rtype: return type. Allowable values are 'string' 
-        (return type will be a string) or 'list' (return type will 
-        be a list). Default = 'string'.
-        @type rtype: string
         @return: sub-block
         '''
         length = int(length)
-        if type(block) == type('str'):
-            block = [item for item in block]
+        block = [item for item in block]
         sblock = []
         while len(block) > length - 1:
             if len(block) > length:
@@ -183,16 +168,10 @@ class JigsawCore(object):
                 block = block[length:]
             else:
                 sblock = block
-            if rtype == 'string':
-                yield ''.join(sblock)
-            else:
-                yield sblock
-        if rtype == 'string':
-            yield ''.join(block)
-        else:
-            yield block
+            yield ''.join(sblock)
+        yield ''.join(block)
 
-    def shuffleBlock(self, block, length, rtype='string'):
+    def shuffleBlock(self, block, length):
         '''
         Function to take a block, divide the block into smaller 
         sub-blocks, and shuffle the order of the sub-blocks.
@@ -200,65 +179,51 @@ class JigsawCore(object):
         >>> import jigsaw
         >>> c = jigsaw.JigsawCore()
         >>> text = 'MyNameIsMauriceLing,AndIInventedJigsawEncryption'
-        >>> (shuffled_blocks, block_order) = c.shuffleBlock(text, 10, 'string')
-        >>> for i in range(len(shuffled_blocks)):
-        ...     print block_order[i], shuffled_blocks[i]
-        ... 
-        3 edJigsawEn
-        0 MyNameIsMa
-        4 cryption
-        1 uriceLing,
-        2 AndIInvent
-        >>> 
+        >>> (shuffled_blocks, block_order) = c.shuffleBlock(text, 10)
+        >>> print shuffled_blocks
+        'AndIInventcryptionedJigsawEnMyNameIsMauriceLing,'
+        >>> print block_order
+        [2, 4, 3, 0, 1]
+        >>>
 
         @param block: data block to be shuffled.
-        @type block: string or list
+        @type block: string
         @param length: length of sub-block.
         @type length: integer
-        @param rtype: return type. Allowable values are 'string' 
-        (return type will be a string) or 'list' (return type will 
-        be a list). Default = 'string'.
-        @type rtype: string
         @return: (shuffled block, order of sub-blocks)
         '''
-        sblocks = [sb for sb in self.subBlock(block, length, rtype)]
+        sblocks = [sb for sb in self.subBlock(block, length)]
         shuffled_blocks = range(len(sblocks))
-        block_order = range(len(sblocks))
+        block_order = range(len(sblocks)-1)
         random.shuffle(block_order)
+        block_order.append(len(sblocks)-1)
         shuffled_blocks = [sblocks[order] for order in block_order]
+        shuffled_blocks = ''.join(shuffled_blocks)
         return (shuffled_blocks, block_order)
 
-    def reversePartBlock(self, block, length, rtype='string'):
+    def reversePartBlock(self, block, length):
         '''
         Function to reverse the first N-th length of a string or 
         a list. If N is equal or more than the length of the 
         block, the entire block will be reversed
 
         @param block: data to be reversed.
-        @type block: string or list
+        @type block: string
         @param length: number of N-th items (from the front) to be 
         reversed.
         @type length: integer
-        @param rtype: return type. Allowable values are 'string' 
-        (return type will be a string) or 'list' (return type will 
-        be a list). Default = 'string'.
-        @type rtype: string
         @return: reversed block
         '''
         length = abs(int(length))
         if length > len(block) - 1:
-            return self.reverseBlock(block, rtype)
-        if type(block) == type('str'):
-            block = [item for item in block]
-            rblock = block[:length]
-            rblock.reverse()
-            block = rblock + block[length:]
-            if rtype == 'string':
-                return ''.join(block)
-            else:
-                return block
+            return self.reverseBlock(block)
+        block = [item for item in block]
+        rblock = block[:length]
+        rblock.reverse()
+        block = rblock + block[length:]
+        return ''.join(block)
                 
-    def reversePartBlock2(self, block, slength, elength, rtype='string'):
+    def reversePartBlock2(self, block, slength, elength):
         '''
         Function to reverse from M-th to N-th length of a string or 
         a list where M < N. If M is zero or less than zero, reversal will 
@@ -266,17 +231,13 @@ class JigsawCore(object):
         of the block, the entire block from M will be reversed. 
 
         @param block: data to be reversed.
-        @type block: string or list
+        @type block: string
         @param slength: number of M-th items (from the front) to start 
         reversing.
         @type slength: integer
         @param elength: number of N-th items (from the front) to start 
         reversing.
         @type elength: integer
-        @param rtype: return type. Allowable values are 'string' 
-        (return type will be a string) or 'list' (return type will 
-        be a list). Default = 'string'.
-        @type rtype: string
         @return: reversed block
         '''
         slength = abs(int(slength))
@@ -287,15 +248,11 @@ class JigsawCore(object):
             elength = len(block) - 1
         if elength < slength:
             elength = slength
-        if type(block) == type('str'):
-            block = [item for item in block]
+        block = [item for item in block]
         rblock = block[slength:elength]
         rblock.reverse()
         block = block[:slength] + rblock + block[elength:]
-        if rtype == 'string':
-            return ''.join(block)
-        else:
-            return block
+        return ''.join(block)
 
     def generateHash(self, filename):
         '''
@@ -702,203 +659,173 @@ class JigsawFile(JigsawCore):
         if reverse_flag == 'A':
             block = block
         elif reverse_flag == 'B':
-            block = self.reverseBlock(block, 'string')
+            block = self.reverseBlock(block)
         elif reverse_flag == 'C':
-            block = self.reversePartBlock(block, 200, 'string')
+            block = self.reversePartBlock(block, 200)
         elif reverse_flag == 'D':
-            block = self.reversePartBlock(block, 400, 'string')
+            block = self.reversePartBlock(block, 400)
         elif reverse_flag == 'E':
-            block = self.reversePartBlock(block, 600, 'string')
+            block = self.reversePartBlock(block, 600)
         elif reverse_flag == 'F':
-            block = self.reversePartBlock(block, 800, 'string')
+            block = self.reversePartBlock(block, 800)
         elif reverse_flag == 'G':
-            block = self.reversePartBlock(block, 1000, 'string')
+            block = self.reversePartBlock(block, 1000)
         elif reverse_flag == 'H':
-            block = self.reversePartBlock(block, 1200, 'string')
+            block = self.reversePartBlock(block, 1200)
         elif reverse_flag == 'I':
-            block = self.reversePartBlock(block, 1400, 'string')
+            block = self.reversePartBlock(block, 1400)
         elif reverse_flag == 'J':
-            block = self.reversePartBlock(block, 1600, 'string')
+            block = self.reversePartBlock(block, 1600)
         elif reverse_flag == 'K':
-            block = self.reversePartBlock(block, 1800, 'string')
+            block = self.reversePartBlock(block, 1800)
         elif reverse_flag == 'L':
-            block = self.reversePartBlock(block, 2000, 'string')
+            block = self.reversePartBlock(block, 2000)
         elif reverse_flag == 'M':
-            block = self.reversePartBlock(block, 2200, 'string')
+            block = self.reversePartBlock(block, 2200)
         elif reverse_flag == 'N':
-            block = self.reversePartBlock(block, 2400, 'string')
+            block = self.reversePartBlock(block, 2400)
         elif reverse_flag == 'O':
-            block = self.reversePartBlock(block, 2600, 'string')
+            block = self.reversePartBlock(block, 2600)
         elif reverse_flag == 'P':
-            block = self.reversePartBlock(block, 2800, 'string')
+            block = self.reversePartBlock(block, 2800)
         elif reverse_flag == 'Q':
-            block = self.reversePartBlock(block, 3000, 'string')
+            block = self.reversePartBlock(block, 3000)
         elif reverse_flag == 'R':
-            block = self.reversePartBlock(block, 3200, 'string')
+            block = self.reversePartBlock(block, 3200)
         elif reverse_flag == 'S':
-            block = self.reversePartBlock(block, 3400, 'string')
+            block = self.reversePartBlock(block, 3400)
         elif reverse_flag == 'T':
-            block = self.reversePartBlock(block, 3600, 'string')
+            block = self.reversePartBlock(block, 3600)
         elif reverse_flag == 'U':
-            block = self.reversePartBlock(block, 3800, 'string')
+            block = self.reversePartBlock(block, 3800)
         elif reverse_flag == 'V':
-            block = self.reversePartBlock(block, 4000, 'string')
+            block = self.reversePartBlock(block, 4000)
         elif reverse_flag == '1':
             length = int(len(block) / 10)
             length = 1 * length
-            block = self.reversePartBlock(block, length, 'string')
+            block = self.reversePartBlock(block, length)
         elif reverse_flag == '2':
             length = int(len(block) / 10)
             length = 2 * length
-            block = self.reversePartBlock(block, length, 'string')
+            block = self.reversePartBlock(block, length)
         elif reverse_flag == '3':
             length = int(len(block) / 10)
             length = 3 * length
-            block = self.reversePartBlock(block, length, 'string')
+            block = self.reversePartBlock(block, length)
         elif reverse_flag == '4':
             length = int(len(block) / 10)
             length = 4 * length
-            block = self.reversePartBlock(block, length, 'string')
+            block = self.reversePartBlock(block, length)
         elif reverse_flag == '5':
             length = int(len(block) / 10)
             length = 5 * length
-            block = self.reversePartBlock(block, length, 'string')
+            block = self.reversePartBlock(block, length)
         elif reverse_flag == '6':
             length = int(len(block) / 10)
             length = 6 * length
-            block = self.reversePartBlock(block, length, 'string')
+            block = self.reversePartBlock(block, length)
         elif reverse_flag == '7':
             length = int(len(block) / 10)
             length = 7 * length
-            block = self.reversePartBlock(block, length, 'string')
+            block = self.reversePartBlock(block, length)
         elif reverse_flag == '8':
             length = int(len(block) / 10)
             length = 8 * length
-            block = self.reversePartBlock(block, length, 'string')
+            block = self.reversePartBlock(block, length)
         elif reverse_flag == '9':
             length = int(len(block) / 10)
             length = 9 * length
-            block = self.reversePartBlock(block, length, 'string')
+            block = self.reversePartBlock(block, length)
         elif reverse_flag == '1a':
             length = int(len(block) / 10)
-            block = self.reversePartBlock2(block, 1*length, 2*length, 
-                                           'string')
+            block = self.reversePartBlock2(block, 1*length, 2*length)
         elif reverse_flag == '1b':
             length = int(len(block) / 10)
-            block = self.reversePartBlock2(block, 2*length, 3*length, 
-                                           'string')
+            block = self.reversePartBlock2(block, 2*length, 3*length)
         elif reverse_flag == '1c':
             length = int(len(block) / 10)
-            block = self.reversePartBlock2(block, 3*length, 4*length, 
-                                           'string')
+            block = self.reversePartBlock2(block, 3*length, 4*length)
         elif reverse_flag == '1d':
             length = int(len(block) / 10)
-            block = self.reversePartBlock2(block, 4*length, 5*length, 
-                                           'string')
+            block = self.reversePartBlock2(block, 4*length, 5*length)
         elif reverse_flag == '1e':
             length = int(len(block) / 10)
-            block = self.reversePartBlock2(block, 5*length, 6*length, 
-                                           'string')
+            block = self.reversePartBlock2(block, 5*length, 6*length)
         elif reverse_flag == '1f':
             length = int(len(block) / 10)
-            block = self.reversePartBlock2(block, 6*length, 7*length, 
-                                           'string')
+            block = self.reversePartBlock2(block, 6*length, 7*length)
         elif reverse_flag == '1g':
             length = int(len(block) / 10)
-            block = self.reversePartBlock2(block, 7*length, 8*length, 
-                                           'string')
+            block = self.reversePartBlock2(block, 7*length, 8*length)
         elif reverse_flag == '1h':
             length = int(len(block) / 10)
-            block = self.reversePartBlock2(block, 8*length, 9*length, 
-                                           'string')
+            block = self.reversePartBlock2(block, 8*length, 9*length)
         elif reverse_flag == '2a':
             length = int(len(block) / 10)
-            block = self.reversePartBlock2(block, 1*length, 3*length, 
-                                           'string')
+            block = self.reversePartBlock2(block, 1*length, 3*length)
         elif reverse_flag == '2b':
             length = int(len(block) / 10)
-            block = self.reversePartBlock2(block, 2*length, 4*length, 
-                                           'string')
+            block = self.reversePartBlock2(block, 2*length, 4*length)
         elif reverse_flag == '2c':
             length = int(len(block) / 10)
-            block = self.reversePartBlock2(block, 3*length, 5*length, 
-                                           'string')
+            block = self.reversePartBlock2(block, 3*length, 5*length)
         elif reverse_flag == '2d':
             length = int(len(block) / 10)
-            block = self.reversePartBlock2(block, 4*length, 6*length, 
-                                           'string')
+            block = self.reversePartBlock2(block, 4*length, 6*length)
         elif reverse_flag == '2e':
             length = int(len(block) / 10)
-            block = self.reversePartBlock2(block, 5*length, 7*length, 
-                                           'string')
+            block = self.reversePartBlock2(block, 5*length, 7*length)
         elif reverse_flag == '2f':
             length = int(len(block) / 10)
-            block = self.reversePartBlock2(block, 6*length, 8*length, 
-                                           'string')
+            block = self.reversePartBlock2(block, 6*length, 8*length)
         elif reverse_flag == '2g':
             length = int(len(block) / 10)
-            block = self.reversePartBlock2(block, 7*length, 9*length, 
-                                           'string')
+            block = self.reversePartBlock2(block, 7*length, 9*length)
         elif reverse_flag == '3a':
             length = int(len(block) / 10)
-            block = self.reversePartBlock2(block, 1*length, 4*length, 
-                                           'string')
+            block = self.reversePartBlock2(block, 1*length, 4*length)
         elif reverse_flag == '3b':
             length = int(len(block) / 10)
-            block = self.reversePartBlock2(block, 2*length, 5*length, 
-                                           'string')
+            block = self.reversePartBlock2(block, 2*length, 5*length)
         elif reverse_flag == '3c':
             length = int(len(block) / 10)
-            block = self.reversePartBlock2(block, 3*length, 6*length, 
-                                           'string')
+            block = self.reversePartBlock2(block, 3*length, 6*length)
         elif reverse_flag == '3d':
             length = int(len(block) / 10)
-            block = self.reversePartBlock2(block, 4*length, 7*length, 
-                                           'string')
+            block = self.reversePartBlock2(block, 4*length, 7*length)
         elif reverse_flag == '3e':
             length = int(len(block) / 10)
-            block = self.reversePartBlock2(block, 5*length, 8*length, 
-                                           'string')
+            block = self.reversePartBlock2(block, 5*length, 8*length)
         elif reverse_flag == '3f':
             length = int(len(block) / 10)
-            block = self.reversePartBlock2(block, 6*length, 9*length, 
-                                           'string')
+            block = self.reversePartBlock2(block, 6*length, 9*length)
         elif reverse_flag == '4a':
             length = int(len(block) / 10)
-            block = self.reversePartBlock2(block, 1*length, 5*length, 
-                                           'string')
+            block = self.reversePartBlock2(block, 1*length, 5*length)
         elif reverse_flag == '4b':
             length = int(len(block) / 10)
-            block = self.reversePartBlock2(block, 2*length, 6*length, 
-                                           'string')
+            block = self.reversePartBlock2(block, 2*length, 6*length)
         elif reverse_flag == '4c':
             length = int(len(block) / 10)
-            block = self.reversePartBlock2(block, 3*length, 7*length, 
-                                           'string')
+            block = self.reversePartBlock2(block, 3*length, 7*length)
         elif reverse_flag == '4d':
             length = int(len(block) / 10)
-            block = self.reversePartBlock2(block, 4*length, 8*length, 
-                                           'string')
+            block = self.reversePartBlock2(block, 4*length, 8*length)
         elif reverse_flag == '4e':
             length = int(len(block) / 10)
-            block = self.reversePartBlock2(block, 5*length, 9*length, 
-                                           'string')
+            block = self.reversePartBlock2(block, 5*length, 9*length)
         elif reverse_flag == '5a':
             length = int(len(block) / 10)
-            block = self.reversePartBlock2(block, 1*length, 6*length, 
-                                           'string')
+            block = self.reversePartBlock2(block, 1*length, 6*length)
         elif reverse_flag == '5b':
             length = int(len(block) / 10)
-            block = self.reversePartBlock2(block, 2*length, 7*length, 
-                                           'string')
+            block = self.reversePartBlock2(block, 2*length, 7*length)
         elif reverse_flag == '5c':
             length = int(len(block) / 10)
-            block = self.reversePartBlock2(block, 3*length, 8*length, 
-                                           'string')
+            block = self.reversePartBlock2(block, 3*length, 8*length)
         elif reverse_flag == '5d':
             length = int(len(block) / 10)
-            block = self.reversePartBlock2(block, 4*length, 9*length, 
-                                           'string')
+            block = self.reversePartBlock2(block, 4*length, 9*length)
         else:
             block = block
         return block
