@@ -44,8 +44,8 @@ file and split into 16 64-KB Jigsaw files, there are 2 x 10**13
 permutations to assemble 16 64-KB files into the original 1 MB file using 
 Jigsaw version 1. 
 
-Jigsaw version 2 provides 31 variations for each Jigsaw file. This means 
-that there are 2 x 10**33 permutations for the 16 64-KB files. Hence, the 
+Jigsaw version 2 provides 59 variations for each Jigsaw file. This means 
+that there are 1 x 10**80 permutations for the 16 64-KB files. Hence, the 
 full permutations possible for 16 64-KB files is much more than 2 x 
 10**20065 [full permutation for 6000, nPr(6000, 6000), is 2 x 10**20065].
 '''
@@ -254,6 +254,45 @@ class JigsawCore(object):
                 return ''.join(block)
             else:
                 return block
+                
+    def reversePartBlock2(self, block, slength, elength, rtype='string'):
+        '''
+        Function to reverse from M-th to N-th length of a string or 
+        a list where M < N. If M is zero or less than zero, reversal will 
+        start from the first element. If N is equal or more than the length 
+        of the block, the entire block from M will be reversed. 
+
+        @param block: data to be reversed.
+        @type block: string or list
+        @param slength: number of M-th items (from the front) to start 
+        reversing.
+        @type slength: integer
+        @param elength: number of N-th items (from the front) to start 
+        reversing.
+        @type elength: integer
+        @param rtype: return type. Allowable values are 'string' 
+        (return type will be a string) or 'list' (return type will 
+        be a list). Default = 'string'.
+        @type rtype: string
+        @return: reversed block
+        '''
+        slength = abs(int(slength))
+        elength = abs(int(elength))
+        if slength < 0:
+            slength = 0
+        if elength > len(block) - 1:
+            elength = len(block) - 1
+        if elength < slength:
+            elength = slength
+        if type(block) == type('str'):
+            block = [item for item in block]
+        rblock = block[slength:elength]
+        rblock.reverse()
+        block = block[:slength] + rblock + block[elength:]
+        if rtype == 'string':
+            return ''.join(block)
+        else:
+            return block
 
     def generateHash(self, filename):
         '''
@@ -333,6 +372,16 @@ class JigsawFile(JigsawCore):
     def __init__(self):
         '''Constructor method.'''
         self.version = 'JigsawFileONE'
+        self.reverseOptions = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 
+                               'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 
+                               'Q', 'R', 'S', 'T', 'U', 'V', '1', '2', 
+                               '3', '4', '5', '6', '7', '8', '9', '1a',
+                               '1b', '1c', '1e', '1f',
+                               '1g', '1h', '2a', '2b', 
+                               '2c', '2e', '2f', '2g', '3a', 
+                               '3b', '3c', '3d', '3e', '3f',
+                               '4a', '4b', '4c', '4d', '4e',
+                               '5a', '5b', '5c', '5d']
         self.decryptkey = None
         self.fileList = []
         self.checksums = []
@@ -613,7 +662,37 @@ class JigsawFile(JigsawCore):
             - '6' (reverse first 60% of the bytes)
             - '7' (reverse first 70% of the bytes)
             - '8' (reverse first 80% of the bytes)
-            - '9' (reverse first 90% of the bytes)
+            - '9' (reverse first 90% of the bytes
+            - '1a' (reverse first 10% to 20% of the bytes)
+            - '1b' (reverse first 20% to 30% of the bytes)
+            - '1c' (reverse first 30% to 40% of the bytes)
+            - '1d' (reverse first 40% to 50% of the bytes)
+            - '1e' (reverse first 50% to 60% of the bytes)
+            - '1f' (reverse first 60% to 70% of the bytes)
+            - '1g' (reverse first 70% to 80% of the bytes)
+            - '1h' (reverse first 80% to 90% of the bytes)
+            - '2a' (reverse first 10% to 30% of the bytes)
+            - '2b' (reverse first 20% to 40% of the bytes)
+            - '2c' (reverse first 30% to 50% of the bytes)
+            - '2d' (reverse first 40% to 60% of the bytes)
+            - '2e' (reverse first 50% to 70% of the bytes)
+            - '2f' (reverse first 60% to 80% of the bytes)
+            - '2g' (reverse first 70% to 90% of the bytes)
+            - '3a' (reverse first 10% to 40% of the bytes)
+            - '3b' (reverse first 20% to 50% of the bytes)
+            - '3c' (reverse first 30% to 60% of the bytes)
+            - '3d' (reverse first 40% to 70% of the bytes)
+            - '3e' (reverse first 50% to 80% of the bytes)
+            - '3f' (reverse first 60% to 90% of the bytes)
+            - '4a' (reverse first 10% to 50% of the bytes)
+            - '4b' (reverse first 20% to 60% of the bytes)
+            - '4c' (reverse first 30% to 70% of the bytes)
+            - '4d' (reverse first 40% to 80% of the bytes)
+            - '4e' (reverse first 50% to 90% of the bytes)
+            - '5a' (reverse first 10% to 60% of the bytes)
+            - '5b' (reverse first 20% to 70% of the bytes)
+            - '5c' (reverse first 30% to 80% of the bytes)
+            - '5d' (reverse first 40% to 90% of the bytes)
         @type reverse_flag: string
         @return: reversed block
         '''
@@ -697,6 +776,126 @@ class JigsawFile(JigsawCore):
             length = int(len(block) / 10)
             length = 9 * length
             block = self.reversePartBlock(block, length, 'string')
+        elif reverse_flag == '1a':
+            length = int(len(block) / 10)
+            block = self.reversePartBlock2(block, 1*length, 2*length, 
+                                           'string')
+        elif reverse_flag == '1b':
+            length = int(len(block) / 10)
+            block = self.reversePartBlock2(block, 2*length, 3*length, 
+                                           'string')
+        elif reverse_flag == '1c':
+            length = int(len(block) / 10)
+            block = self.reversePartBlock2(block, 3*length, 4*length, 
+                                           'string')
+        elif reverse_flag == '1d':
+            length = int(len(block) / 10)
+            block = self.reversePartBlock2(block, 4*length, 5*length, 
+                                           'string')
+        elif reverse_flag == '1e':
+            length = int(len(block) / 10)
+            block = self.reversePartBlock2(block, 5*length, 6*length, 
+                                           'string')
+        elif reverse_flag == '1f':
+            length = int(len(block) / 10)
+            block = self.reversePartBlock2(block, 6*length, 7*length, 
+                                           'string')
+        elif reverse_flag == '1g':
+            length = int(len(block) / 10)
+            block = self.reversePartBlock2(block, 7*length, 8*length, 
+                                           'string')
+        elif reverse_flag == '1h':
+            length = int(len(block) / 10)
+            block = self.reversePartBlock2(block, 8*length, 9*length, 
+                                           'string')
+        elif reverse_flag == '2a':
+            length = int(len(block) / 10)
+            block = self.reversePartBlock2(block, 1*length, 3*length, 
+                                           'string')
+        elif reverse_flag == '2b':
+            length = int(len(block) / 10)
+            block = self.reversePartBlock2(block, 2*length, 4*length, 
+                                           'string')
+        elif reverse_flag == '2c':
+            length = int(len(block) / 10)
+            block = self.reversePartBlock2(block, 3*length, 5*length, 
+                                           'string')
+        elif reverse_flag == '2d':
+            length = int(len(block) / 10)
+            block = self.reversePartBlock2(block, 4*length, 6*length, 
+                                           'string')
+        elif reverse_flag == '2e':
+            length = int(len(block) / 10)
+            block = self.reversePartBlock2(block, 5*length, 7*length, 
+                                           'string')
+        elif reverse_flag == '2f':
+            length = int(len(block) / 10)
+            block = self.reversePartBlock2(block, 6*length, 8*length, 
+                                           'string')
+        elif reverse_flag == '2g':
+            length = int(len(block) / 10)
+            block = self.reversePartBlock2(block, 7*length, 9*length, 
+                                           'string')
+        elif reverse_flag == '3a':
+            length = int(len(block) / 10)
+            block = self.reversePartBlock2(block, 1*length, 4*length, 
+                                           'string')
+        elif reverse_flag == '3b':
+            length = int(len(block) / 10)
+            block = self.reversePartBlock2(block, 2*length, 5*length, 
+                                           'string')
+        elif reverse_flag == '3c':
+            length = int(len(block) / 10)
+            block = self.reversePartBlock2(block, 3*length, 6*length, 
+                                           'string')
+        elif reverse_flag == '3d':
+            length = int(len(block) / 10)
+            block = self.reversePartBlock2(block, 4*length, 7*length, 
+                                           'string')
+        elif reverse_flag == '3e':
+            length = int(len(block) / 10)
+            block = self.reversePartBlock2(block, 5*length, 8*length, 
+                                           'string')
+        elif reverse_flag == '3f':
+            length = int(len(block) / 10)
+            block = self.reversePartBlock2(block, 6*length, 9*length, 
+                                           'string')
+        elif reverse_flag == '4a':
+            length = int(len(block) / 10)
+            block = self.reversePartBlock2(block, 1*length, 5*length, 
+                                           'string')
+        elif reverse_flag == '4b':
+            length = int(len(block) / 10)
+            block = self.reversePartBlock2(block, 2*length, 6*length, 
+                                           'string')
+        elif reverse_flag == '4c':
+            length = int(len(block) / 10)
+            block = self.reversePartBlock2(block, 3*length, 7*length, 
+                                           'string')
+        elif reverse_flag == '4d':
+            length = int(len(block) / 10)
+            block = self.reversePartBlock2(block, 4*length, 8*length, 
+                                           'string')
+        elif reverse_flag == '4e':
+            length = int(len(block) / 10)
+            block = self.reversePartBlock2(block, 5*length, 9*length, 
+                                           'string')
+        elif reverse_flag == '5a':
+            length = int(len(block) / 10)
+            block = self.reversePartBlock2(block, 1*length, 6*length, 
+                                           'string')
+        elif reverse_flag == '5b':
+            length = int(len(block) / 10)
+            block = self.reversePartBlock2(block, 2*length, 7*length, 
+                                           'string')
+        elif reverse_flag == '5c':
+            length = int(len(block) / 10)
+            block = self.reversePartBlock2(block, 3*length, 8*length, 
+                                           'string')
+        elif reverse_flag == '5d':
+            length = int(len(block) / 10)
+            block = self.reversePartBlock2(block, 4*length, 9*length, 
+                                           'string')
         else:
             block = block
         return block
@@ -729,13 +928,7 @@ class JigsawFile(JigsawCore):
             print('Processing using even slicer')
             for block in self.evenSlicer(self.filename, 
                                          self.block_size):
-                reverse_flag = self.rchoice(['A', 'B', 'C', 'D', 'E', 
-                                             'F', 'G', 'H', 'I', 'J', 
-                                             'K', 'L', 'M', 'N', 'O',
-                                             'P', 'Q', 'R', 'S', 'T',
-                                             'U', 'V', '1', '2', '3',
-                                             '4', '5', '6', '7', '8',
-                                             '9'])
+                reverse_flag = self.rchoice(self.reverseOptions)
                 block = self._version2BlockReverse(block, reverse_flag)
                 (hash, ofileName) = self._writeJigsawFile(block)
                 data = '>>'.join(['AA', str(count), reverse_flag,
@@ -749,13 +942,7 @@ class JigsawFile(JigsawCore):
             for block in self.unevenSlicer(self.filename, 
                                            self.block_size, 
                                            self.block_size*2):
-                reverse_flag = self.rchoice(['A', 'B', 'C', 'D', 'E', 
-                                             'F', 'G', 'H', 'I', 'J', 
-                                             'K', 'L', 'M', 'N', 'O',
-                                             'P', 'Q', 'R', 'S', 'T',
-                                             'U', 'V', '1', '2', '3',
-                                             '4', '5', '6', '7', '8',
-                                             '9'])
+                reverse_flag = self.rchoice(self.reverseOptions)
                 block = self._version2BlockReverse(block, reverse_flag)
                 (hash, ofileName) = self._writeJigsawFile(block)
                 data = '>>'.join(['AA', str(count), reverse_flag,
