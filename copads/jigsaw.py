@@ -116,6 +116,49 @@ class JigsawCore(object):
             yield block
         f.close()
         
+    def swapBlock(self, block, subBlockALocation, subBlockBLocation):
+        '''
+        Function to swap 2 sub-blocks within a block. For example, if the 
+        block consist of [1, 'A', 2, 'B', 3]; swapping 'A' and 'B' will 
+        result in [1, 'B', 2, 'A', 3].
+        
+        >>> import jigsaw
+        >>> c = jigsaw.JigsawCore()
+        >>> block = 'ABCDEFGHIJKLM'
+        >>> swapped = c.swapBlock(block, (3, 4), (10, 11))
+        >>> swapped
+        'ABCKEFGHIJDLM'
+        >>> reverse_swapped = c.swapBlock(swapped, (3, 4), (10, 11))
+        >>> reverse_swapped
+        'ABCDEFGHIJKLM'
+        >>> 
+        
+        @param block: block to be processed.
+        @type block: string
+        @param subBlockALocation: coordinate of first sub-block.
+        @type subBlockALocation: tuple
+        @param subBlockBLocation: coordinate of second sub-block.
+        @type:subBlockBLocation: tuple
+        '''
+        block = [item for item in block]
+        if type(subBlockALocation) == type([]) and \
+            len(subBlockALocation) == 1:
+            subBlockALocation = [0, int(subBlockALocation[0])]
+        elif type(subBlockALocation) == type('str'):
+            subBlockALocation = [0, int(subBlockALocation[0])]
+        if type(subBlockBLocation) == type([]) and \
+            len(subBlockBLocation) == 1:
+            subBlockBLocation = [int(subBlockBLocation[0]), len(block)]
+        elif type(subBlockBLocation) == type('str'):
+            subBlockBLocation = [int(subBlockBLocation[0]), len(block)]
+        preBlockA = block[0:subBlockALocation[0]]
+        BlockA = block[subBlockALocation[0]:subBlockALocation[1]]
+        BlockABlockB = block[subBlockALocation[1]:subBlockBLocation[0]]
+        BlockB = block[subBlockBLocation[0]:subBlockBLocation[1]]
+        postBlockB = block[subBlockBLocation[1]:]
+        swapped = preBlockA + BlockB + BlockABlockB + BlockA + postBlockB
+        return ''.join(swapped)
+        
     def reverseBlock(self, block):
         '''
         Function to reverse a string.
