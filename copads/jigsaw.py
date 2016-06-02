@@ -625,9 +625,9 @@ class JigsawFile(JigsawCore):
                 self._encryptVerbosity(count, data)
                 count = count + 1
 
-    def _version2BlockReverse(self, block, reverse_flag):
+    def _blockReverse(self, block, reverse_flag):
         '''
-        Private method for block reversal (mainly used by Jigsaw 
+        Private method for block reversal based on fixed reversal scheme.
         version 2).
 
         @param block: data to be reversed.
@@ -918,7 +918,7 @@ class JigsawFile(JigsawCore):
             for block in self.evenSlicer(self.filename, 
                                          self.block_size):
                 reverse_flag = self.rchoice(self.reverseOptions)
-                block = self._version2BlockReverse(block, reverse_flag)
+                block = self._blockReverse(block, reverse_flag)
                 (hash, ofileName) = self._writeJigsawFile(block)
                 data = '>>'.join(['AA', str(count), reverse_flag,
                                   str(len(block)), 
@@ -932,7 +932,7 @@ class JigsawFile(JigsawCore):
                                            self.block_size, 
                                            self.block_size*2):
                 reverse_flag = self.rchoice(self.reverseOptions)
-                block = self._version2BlockReverse(block, reverse_flag)
+                block = self._blockReverse(block, reverse_flag)
                 (hash, ofileName) = self._writeJigsawFile(block)
                 data = '>>'.join(['AA', str(count), reverse_flag,
                                   str(len(block)), 
@@ -1191,7 +1191,7 @@ class JigsawFile(JigsawCore):
             blocksize = self.keycode[b][1]
             block = open(filename, 'rb').read()
             hash = str(self.hash(block).hexdigest()[:self.hashlength])
-            block = self._version2BlockReverse(block, self.keycode[b][0])
+            block = self._blockReverse(block, self.keycode[b][0])
             ofile.write(block)
             data = '>>'.join([str(b), self.keycode[b][0], filename, 
                               str(blocksize), str(len(block)),
