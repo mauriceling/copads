@@ -44,12 +44,10 @@ file and split into 16 64-KB Jigsaw files, there are 2 x 10**13
 permutations to assemble 16 64-KB files into the original 1 MB file using 
 Jigsaw version 1. 
 
-Jigsaw version 2 provides 59 variations for each Jigsaw file. This means 
-that there are 1 x 10**80 permutations for the 16 64-KB files. Hence, the 
-full permutations possible for 16 64-KB files is much more than 2 x 
-10**20065 [full permutation for 6000, nPr(6000, 6000), is 2 x 10**20065]. 
-The full number of possible permutation is 1 x 10**80 factorial multiply 
-by 16 factorial, and that is just for a 1 MB file split into 16 64-KB 
+Jigsaw version 2 provides 63 variations for each Jigsaw file. This means 
+that there are 2 x 10**13 permutations for the 16 64-KB files. Hence, the 
+full permutations possible for 16 64-KB files is (2 x 10**13)**63 or 9 x 
+10**837, and that is just for a 1 MB file split into 16 64-KB.
 Jigsaw files.
 '''
 
@@ -334,14 +332,15 @@ class JigsawFile(JigsawCore):
         self.version = 'JigsawFileONE'
         self.reverseOptions = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 
                                'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 
-                               'Q', 'R', 'S', 'T', 'U', 'V', '1', '2', 
-                               '3', '4', '5', '6', '7', '8', '9', '1a',
+                               'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 
+                               'Y', 'Z', '1', '2', '3', '4', '5', '6', 
+                               '7', '8', '9', '1a',
                                '1b', '1c', '1e', '1f',
-                               '1g', '1h', '2a', '2b', 
-                               '2c', '2e', '2f', '2g', '3a', 
-                               '3b', '3c', '3d', '3e', '3f',
-                               '4a', '4b', '4c', '4d', '4e',
-                               '5a', '5b', '5c', '5d']
+                               '1g', '1h', '2a', '2b', '2c', 
+                               '2e', '2f', '2g', '3a', '3b', 
+                               '3c', '3d', '3e', '3f', '4a', 
+                               '4b', '4c', '4d', '4e','5a', 
+                               '5b', '5c', '5d']
         self.decryptkey = None
         self.fileList = []
         self.checksums = []
@@ -590,8 +589,7 @@ class JigsawFile(JigsawCore):
 
         @param block: data to be reversed.
         @type block: string or list
-        @param reverse_flag: type of reversal. Allowable values 
-        are: 
+        @param reverse_flag: type of reversal. Allowable values are: 
             - 'A' (no reversal)
             - 'B' (full reversal)
             - 'C' (reverse first 200 bytes)
@@ -614,6 +612,10 @@ class JigsawFile(JigsawCore):
             - 'T' (reverse first 3600 bytes)
             - 'U' (reverse first 3800 bytes)
             - 'V' (reverse first 4000 bytes)
+            - 'W' (reversing the last 10% of the bytes)
+            - 'X' (reversing the last 20% of the bytes)
+            - 'Y' (reversing the last 30% of the bytes)
+            - 'Z' (reversing the last 40% of the bytes)
             - '1' (reverse first 10% of the bytes)
             - '2' (reverse first 20% of the bytes)
             - '3' (reverse first 30% of the bytes)
@@ -622,7 +624,7 @@ class JigsawFile(JigsawCore):
             - '6' (reverse first 60% of the bytes)
             - '7' (reverse first 70% of the bytes)
             - '8' (reverse first 80% of the bytes)
-            - '9' (reverse first 90% of the bytes
+            - '9' (reverse first 90% of the bytes)
             - '1a' (reverse first 10% to 20% of the bytes)
             - '1b' (reverse first 20% to 30% of the bytes)
             - '1c' (reverse first 30% to 40% of the bytes)
@@ -656,7 +658,9 @@ class JigsawFile(JigsawCore):
         @type reverse_flag: string
         @return: reversed block
         '''
-        if reverse_flag == 'A':
+        if reverse_flag.startswith('RR'):
+            pass
+        elif reverse_flag == 'A':
             block = block
         elif reverse_flag == 'B':
             block = self.reverseBlock(block)
@@ -699,7 +703,19 @@ class JigsawFile(JigsawCore):
         elif reverse_flag == 'U':
             block = self.reversePartBlock(block, 3800)
         elif reverse_flag == 'V':
-            block = self.reversePartBlock(block, 4000)
+            block = self.reversePartBlock(block, 4000) 
+        elif reverse_flag == 'W':
+            length = int(len(block) / 10)
+            block = self.reversePartBlock2(block, 9*length, 10*length)
+        elif reverse_flag == 'X':
+            length = int(len(block) / 10)
+            block = self.reversePartBlock2(block, 8*length, 10*length)
+        elif reverse_flag == 'Y':
+            length = int(len(block) / 10)
+            block = self.reversePartBlock2(block, 7*length, 10*length)
+        elif reverse_flag == 'Z':
+            length = int(len(block) / 10)
+            block = self.reversePartBlock2(block, 6*length, 10*length)
         elif reverse_flag == '1':
             length = int(len(block) / 10)
             length = 1 * length
@@ -841,7 +857,7 @@ class JigsawFile(JigsawCore):
         following (in the order, delimited by '>>'):
             - 'AA'
             - block sequence (incremental integer from 0)
-            - reverse flag (A = original; B to V = different reversals)
+            - reverse flag
             - size of block (in bytes)
             - directory to write out Jigsaw file
             - name of Jigsaw file
