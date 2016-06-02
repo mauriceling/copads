@@ -384,6 +384,8 @@ class JigsawFile(JigsawCore):
                                '3c', '3d', '3e', '3f', '4a', 
                                '4b', '4c', '4d', '4e','5a', 
                                '5b', '5c', '5d']
+        # 1350 swap sizes
+        self.swapSize = [str(x) for x in range(0, 4050, 3)]
         self.decryptkey = None
         self.fileList = []
         self.checksums = []
@@ -440,6 +442,8 @@ class JigsawFile(JigsawCore):
                 self.version = 'JigsawFileONE'
             elif value == 2:
                 self.version = 'JigsawFileTWO'
+            elif value == 3:
+                self.version = 'JigsawFileTHREE'
         elif key == 'hashlength':
             self.hashlength = abs(int(value))
         elif key == 'verbose':
@@ -631,7 +635,7 @@ class JigsawFile(JigsawCore):
         version 2).
 
         @param block: data to be reversed.
-        @type block: string or list
+        @type block: string
         @param reverse_flag: type of reversal. Allowable values are: 
             - 'A' (no reversal)
             - 'B' (full reversal)
@@ -941,6 +945,99 @@ class JigsawFile(JigsawCore):
                 self._encryptVerbosity(count, data)
                 count = count + 1
 
+    def _blockSwap(self, block, swap_flag):
+        '''
+        Private method for block swap based on fixed swapping 
+        scheme.
+
+        @param block: data to be swapped.
+        @type block: string
+        @param swap_flag: type of swapping. All swap flags starts 
+        with 'S', followed by the number of bytes to be swapped. 
+        For example, 'S300' in a block of 1000 bytes will result 
+        in swapping first 300 bytes of the block with 500th to 
+        799th byte.
+        @type swap_flag: string
+        '''
+        midpoint = int(len(block) / 2)
+        swap_size = int(swap_flag[1:])
+        if swap_flag.startswith('S'):
+            block = self.swapBlock(block, (0, swap_size), 
+                (midpoint, midpoint+swap_size))
+        else:
+            block = block
+        return block
+
+    def _encrypt3(self, filename):
+        '''
+        Private method to run the operations for Jigsaw version 3 
+        encryption. Jigsaw version 3 encryption requires block size 
+        to be at least 16384 bytes and must be divisible by 2. Any 
+        block size smaller than 16384 bytes will be set to 16384 
+        bytes.
+        
+        The encryption coding write out into keyfile consist of the 
+        following (in the order, delimited by '>>'):
+            - 'AA'
+            - block sequence (incremental integer from 0)
+            - swap flag (all swap flags starts with 'S')
+            - reverse flag 
+            - size of block (in bytes)
+            - directory to write out Jigsaw file
+            - name of Jigsaw file
+            - truncated sha256 hash of block
+        
+        @param filename: name (absolute path or relative path) of file to 
+        be encrypted.
+        @type filename: string
+        '''
+        if self.block_size < 16384:
+            self.block_size = 16384
+        count = 0
+        if self.slicer == 'even':
+            print('Processing using even slicer')
+            for block in self.evenSlicer(self.filename, 
+                                         self.block_size):
+                reverse_flag = self.rchoice(self.reverseOptions)
+                block = self._blockReverse(block, reverse_flag)
+                swap_flag = 'S' + self.rchoice(self.swapSize)
+                block = self._blockSwap(block, swap_flag)
+                (hash, ofileName) = self._writeJigsawFile(block)
+                data = '>>'.join(['AA', str(count), swap_flag,
+                                  reverse_flag, str(len(block)), 
+                                  self.outputdir, ofileName, hash])
+                self.decryptkey.write(data + '\n')
+                self._encryptVerbosity(count, data)
+                (hash, ofileName) = self._writeJigsawFile(block)
+                data = '>>'.join(['AA', str(count), swap_flag, 
+                                  reverse_flag, str(len(block)), 
+                                  self.outputdir, ofileName, hash])
+                self.decryptkey.write(data + '\n')
+                self._encryptVerbosity(count, data)
+                count = count + 1
+        if self.slicer == 'uneven':
+            print('Processing using uneven slicer')
+            for block in self.unevenSlicer(self.filename, 
+                                           self.block_size, 
+                                           self.block_size*2):
+                reverse_flag = self.rchoice(self.reverseOptions)
+                block = self._blockReverse(block, reverse_flag)
+                swap_flag = 'S' + self.rchoice(self.swapSize)
+                block = self._blockSwap(block, swap_flag)
+                (hash, ofileName) = self._writeJigsawFile(block)
+                data = '>>'.join(['AA', str(count), swap_flag,
+                                  reverse_flag, str(len(block)), 
+                                  self.outputdir, ofileName, hash])
+                self.decryptkey.write(data + '\n')
+                self._encryptVerbosity(count, data)
+                (hash, ofileName) = self._writeJigsawFile(block)
+                data = '>>'.join(['AA', str(count), swap_flag, 
+                                  reverse_flag, str(len(block)), 
+                                  self.outputdir, ofileName, hash])
+                self.decryptkey.write(data + '\n')
+                self._encryptVerbosity(count, data)
+                count = count + 1
+
     def encrypt(self, filename, outputdir=''):
         '''
         Function to run encryption.
@@ -983,6 +1080,8 @@ class JigsawFile(JigsawCore):
             self._encrypt1(self.filename)
         if self.version == 'JigsawFileTWO': 
             self._encrypt2(self.filename)
+        if self.version == 'JigsawFileTHREE': 
+            self._encrypt3(self.filename)
         self.decryptkey.close()
         print('')
         return keyFileName
@@ -1202,6 +1301,37 @@ class JigsawFile(JigsawCore):
         self._decryptSummary(len(block_sequence), expected, actual)
         ofile.close()
 
+    def _decrypt3(self):
+        '''
+        Private method to run the operations for Jigsaw version 3 
+        decryption.
+        '''
+        print('Decrypting file ......')
+        ofile = open(self.decryptfilename, 'wb')
+        self.keycode = self.keycode['AA']       # for Jigsaw version 1 
+        block_sequence = self.keycode.keys()
+        block_sequence.sort()
+        actual = 0
+        expected = 0
+        for b in block_sequence:
+            filename = self.keycode[b][4]
+            filename = os.sep.join([self.inputdir, filename])
+            blocksize = self.keycode[b][2]
+            block = open(filename, 'rb').read()
+            hash = str(self.hash(block).hexdigest()[:self.hashlength])
+            block = self._blockSwap(block, self.keycode[b][0])
+            block = self._blockReverse(block, self.keycode[b][1])
+            ofile.write(block)
+            data = '>>'.join([str(b), self.keycode[b][0], 
+                              self.keycode[b][1], filename, 
+                              str(blocksize), str(len(block)),
+                              self.keycode[b][5], hash])
+            expected = expected + int(blocksize)
+            actual = actual + len(block)
+            self._decryptVerbosity(b, data)
+        self._decryptSummary(len(block_sequence), expected, actual)
+        ofile.close()
+
     def _compareHash(self):
         '''
         Private method to print out a series of file hashes from the 
@@ -1267,5 +1397,7 @@ class JigsawFile(JigsawCore):
             self._decrypt1()
         if self.keyhead['version'] == 'JigsawFileTWO': 
             self._decrypt2()
+        if self.keyhead['version'] == 'JigsawFileTHREE': 
+            self._decrypt3()
         self._compareHash()
         self.decryptkey.close()
