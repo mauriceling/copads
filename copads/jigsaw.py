@@ -44,11 +44,15 @@ file and split into 16 64-KB Jigsaw files, there are 2 x 10**13
 permutations to assemble 16 64-KB files into the original 1 MB file using 
 Jigsaw version 1. 
 
-Jigsaw version 2 provides 63 variations for each Jigsaw file. This means 
+Jigsaw version 2 provides 63 variations for each Jigsaw file. Hence, the 
 that there are 2 x 10**13 permutations for the 16 64-KB files. Hence, the 
 full permutations possible for 16 64-KB files is (2 x 10**13)**63 or 9 x 
 10**837, and that is just for a 1 MB file split into 16 64-KB.
 Jigsaw files.
+
+Jigsaw version 3 takes the Jigsaw file provided by Jigsaw version 2 and 
+apply one of the 1350 transpositions. Hence, the full permutations 
+possible for 16 64-KB files is (9 x 10**837)**1350 or 1 x 10**1131238.
 '''
 
 import os
@@ -369,6 +373,10 @@ class JigsawFile(JigsawCore):
         - version 2: The original file is sliced into blocks. Each block is 
         separated into 2 sub-blocks where the first sub-block is reversed 
         and merged before saved as a file.
+        - version 2: The original file is sliced into blocks. Each block is 
+        separated into 2 sub-blocks where the first sub-block is reversed. 
+        This is following double transposition of the same number of bytes 
+        in the block before saved as a file.
     '''
     def __init__(self):
         '''Constructor method.'''
