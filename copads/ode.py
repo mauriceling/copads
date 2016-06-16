@@ -56,7 +56,8 @@ def Euler(funcs, x0, y0, step, xmax, nonODEfunc=None,
     }
     
     This function must take 'y' (variable list) and 'step' (time step) as 
-    parameters and must return 'y' (the modified variable list).
+    parameters and must return 'y' (the modified variable list). This 
+    function will execute before boundary checking at each time step.
     
     Upper and lower boundaries of one or more variable can be set using 
     upper_bound and lower_bound parameters respectively. These parameters 
@@ -135,7 +136,8 @@ def Heun(funcs, x0, y0, step, xmax, nonODEfunc=None,
     }
     
     This function must take 'y' (variable list) and 'step' (time step) as 
-    parameters and must return 'y' (the modified variable list).
+    parameters and must return 'y' (the modified variable list). This 
+    function will execute before boundary checking at each time step.
     
     Upper and lower boundaries of one or more variable can be set using 
     upper_bound and lower_bound parameters respectively. These parameters 
@@ -225,7 +227,8 @@ def RK3(funcs, x0, y0, step, xmax, nonODEfunc=None,
     }
     
     This function must take 'y' (variable list) and 'step' (time step) as 
-    parameters and must return 'y' (the modified variable list).
+    parameters and must return 'y' (the modified variable list). This 
+    function will execute before boundary checking at each time step.
     
     Upper and lower boundaries of one or more variable can be set using 
     upper_bound and lower_bound parameters respectively. These parameters 
@@ -325,7 +328,8 @@ def RK4(funcs, x0, y0, step, xmax, nonODEfunc=None,
     }
     
     This function must take 'y' (variable list) and 'step' (time step) as 
-    parameters and must return 'y' (the modified variable list).
+    parameters and must return 'y' (the modified variable list). This 
+    function will execute before boundary checking at each time step.
     
     Upper and lower boundaries of one or more variable can be set using 
     upper_bound and lower_bound parameters respectively. These parameters 
@@ -432,7 +436,8 @@ def RK38(funcs, x0, y0, step, xmax, nonODEfunc=None,
     }
     
     This function must take 'y' (variable list) and 'step' (time step) as 
-    parameters and must return 'y' (the modified variable list).
+    parameters and must return 'y' (the modified variable list). This 
+    function will execute before boundary checking at each time step.
     
     Upper and lower boundaries of one or more variable can be set using 
     upper_bound and lower_bound parameters respectively. These parameters 
@@ -539,7 +544,8 @@ def CK4(funcs, x0, y0, step, xmax, nonODEfunc=None,
     }
     
     This function must take 'y' (variable list) and 'step' (time step) as 
-    parameters and must return 'y' (the modified variable list).
+    parameters and must return 'y' (the modified variable list). This 
+    function will execute before boundary checking at each time step.
     
     Upper and lower boundaries of one or more variable can be set using 
     upper_bound and lower_bound parameters respectively. These parameters 
@@ -666,7 +672,8 @@ def CK5(funcs, x0, y0, step, xmax, nonODEfunc=None,
     }
     
     This function must take 'y' (variable list) and 'step' (time step) as 
-    parameters and must return 'y' (the modified variable list).
+    parameters and must return 'y' (the modified variable list). This 
+    function will execute before boundary checking at each time step.
     
     Upper and lower boundaries of one or more variable can be set using 
     upper_bound and lower_bound parameters respectively. These parameters 
@@ -792,7 +799,8 @@ def RKF4(funcs, x0, y0, step, xmax, nonODEfunc=None,
     }
     
     This function must take 'y' (variable list) and 'step' (time step) as 
-    parameters and must return 'y' (the modified variable list).
+    parameters and must return 'y' (the modified variable list). This 
+    function will execute before boundary checking at each time step.
     
     Upper and lower boundaries of one or more variable can be set using 
     upper_bound and lower_bound parameters respectively. These parameters 
@@ -919,7 +927,8 @@ def RKF5(funcs, x0, y0, step, xmax, nonODEfunc=None,
     }
     
     This function must take 'y' (variable list) and 'step' (time step) as 
-    parameters and must return 'y' (the modified variable list).
+    parameters and must return 'y' (the modified variable list). This 
+    function will execute before boundary checking at each time step.
     
     Upper and lower boundaries of one or more variable can be set using 
     upper_bound and lower_bound parameters respectively. These parameters 
@@ -1048,7 +1057,8 @@ def DP4(funcs, x0, y0, step, xmax, nonODEfunc=None,
     }
     
     This function must take 'y' (variable list) and 'step' (time step) as 
-    parameters and must return 'y' (the modified variable list).
+    parameters and must return 'y' (the modified variable list). This 
+    function will execute before boundary checking at each time step.
     
     Upper and lower boundaries of one or more variable can be set using 
     upper_bound and lower_bound parameters respectively. These parameters 
@@ -1187,7 +1197,8 @@ def DP5(funcs, x0, y0, step, xmax, nonODEfunc=None,
     }
     
     This function must take 'y' (variable list) and 'step' (time step) as 
-    parameters and must return 'y' (the modified variable list).
+    parameters and must return 'y' (the modified variable list). This 
+    function will execute before boundary checking at each time step.
     
     Upper and lower boundaries of one or more variable can be set using 
     upper_bound and lower_bound parameters respectively. These parameters 
@@ -1351,6 +1362,21 @@ def _equation_constructor(expressions={},
         statements.append(stmt)
     return (statements, variables)
 
+def _modifying_constructor(modifying_expressions):
+    '''
+    Private function to support ODE_constructor to generate function code 
+    for modifying expressions.
+    
+    @param modifying_expressions: list of expressions to modify the 
+    variables
+    @return: generated function code
+    '''
+    stmt = '\ndef modifying_expression(y, step):'
+    for exp in modifying_expressions:
+        stmt = stmt + '\n    %s' % str(exp)
+    stmt = stmt + '\n    return y'
+    return stmt
+
 def ODE_constructor(scriptfile,
                     resultsfile,
                     time=(0.0, 0.1, 100.0),
@@ -1358,6 +1384,7 @@ def ODE_constructor(scriptfile,
                     expressions={},
                     parameters={},
                     initial_conditions={},
+                    modifying_expressions=[],
                     lower_bound=None, 
                     upper_bound=None,
                     overflow=1e100, 
@@ -1384,6 +1411,14 @@ def ODE_constructor(scriptfile,
     number of humans = 500
     number of zombies = 0
     number of dead = 0
+    
+    and with the following boundaries
+    
+    number of humans > 0
+    number of zombies < 10000
+    number of dead < 10000
+    
+    and there is an influx of 5 humans per day into the infected village
     }
     
     can be specified as 
@@ -1411,11 +1446,10 @@ def ODE_constructor(scriptfile,
     initial_conditions = {'human': 500.0,
                           'zombie': 0.0, 
                           'dead': 0.0}
+    modifying_expression = ['human = human + (5 * step)']
     lower_bound = {'human': [0.0, 0.0]}
-    upper_bound = {'zombie': [initial_conditions['human'],
-                              initial_conditions['human']],
-                   'dead': [initial_conditions['human'],
-                            initial_conditions['human']]}
+    upper_bound = {'zombie': [10000.0, 10000.0],
+                   'dead': [10000.0, 10000.0]}
     overflow = 1e100
     zerodivision = 1e100
     }
@@ -1433,6 +1467,8 @@ def ODE_constructor(scriptfile,
     above documentation. 
     @param parameters: dictionary of parameter values to be substituted 
     into the ODE equations
+    @param modifying_expressions: list of expressions to modify the 
+    variables
     @param initial_conditions: dictionary of initial conditions for each 
     ODE
     @param lower_bound: set of values for lower boundary of variables
@@ -1457,6 +1493,8 @@ def ODE_constructor(scriptfile,
      variables) = _equation_constructor(expressions,
                                         parameters,
                                         initial_conditions_list)
+    # Construct modifying expression
+    mexpression = _modifying_constructor(modifying_expressions)
     # Generate ODE functions/equations table
     table = {}
     count = 0
@@ -1493,6 +1531,11 @@ def ODE_constructor(scriptfile,
             funct = funct.replace('v@'+v, 'y[%s]' % table[v])
         statements.append(funct)
     statements.append('\n\n')
+    # Perform variable replacements in modifying expression, and write out
+    for v in table.keys():
+        mexpression = mexpression.replace(v, 'y[%s]' % table[v])
+    statements.append(mexpression)
+    statements.append('\n\n')
     # Generate ODE assignment array and statements
     statements.append('ODE = range(%s)\n' % str(len(variables)))
     count = 0
@@ -1516,7 +1559,8 @@ def ODE_constructor(scriptfile,
     statements.append('\n')
     statements.append('for x in ode.%s(ODE, stime, y, step, etime, \n' % \
                       str(ODE_solver))
-    statements.append('        lower_bound, lower_bound, \n') 
+    statements.append('        modifying_expression, \n') 
+    statements.append('        lower_bound, upper_bound, \n') 
     statements.append('        overflow, zerodivision): \n')
                       
     statements.append("    f.write(','.join([str(item) for item in x]) + '\\n')")
