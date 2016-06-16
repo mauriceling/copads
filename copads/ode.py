@@ -105,12 +105,12 @@ def Euler(funcs, x0, y0, step, xmax, nonODEfunc=None,
         return y1
     while x0 < xmax:
         y1 = solver(funcs, x0, y0, step)
+        if nonODEfunc:
+            y1 = nonODEfunc(y1, step)
         if lower_bound: 
             y1 = boundary_checker(y1, lower_bound, 'lower')
         if upper_bound: 
             y1 = boundary_checker(y1, upper_bound, 'upper')
-        if nonODEfunc:
-            y1 = nonODEfunc(y1, step)
         y0 = y1
         x0 = x0 + step
         yield [x0] + y0
@@ -195,12 +195,12 @@ def Heun(funcs, x0, y0, step, xmax, nonODEfunc=None,
         return y2
     while x0 < xmax:
         y2 = solver(funcs, x0, y0, step)
+        if nonODEfunc:
+            y1 = nonODEfunc(y1, step)
         if lower_bound: 
             y2 = boundary_checker(y2, lower_bound, 'lower')
         if upper_bound: 
             y2 = boundary_checker(y2, upper_bound, 'upper')
-        if nonODEfunc:
-            y1 = nonODEfunc(y1, step)
         y0 = y2
         x0 = x0 + step
         yield [x0] + y0
@@ -295,12 +295,12 @@ def RK3(funcs, x0, y0, step, xmax, nonODEfunc=None,
         return y1
     while x0 < xmax:
         y1 = solver(funcs, x0, y0, step)
+        if nonODEfunc:
+            y1 = nonODEfunc(y1, step)
         if lower_bound: 
             y1 = boundary_checker(y1, lower_bound, 'lower')
         if upper_bound: 
             y1 = boundary_checker(y1, upper_bound, 'upper')
-        if nonODEfunc:
-            y1 = nonODEfunc(y1, step)
         y0 = y1
         x0 = x0 + step
         yield [x0] + y0
@@ -402,12 +402,12 @@ def RK4(funcs, x0, y0, step, xmax, nonODEfunc=None,
         return y1
     while x0 < xmax:
         y1 = solver(funcs, x0, y0, step)
+        if nonODEfunc:
+            y1 = nonODEfunc(y1, step)
         if lower_bound: 
             y1 = boundary_checker(y1, lower_bound, 'lower')
         if upper_bound: 
             y1 = boundary_checker(y1, upper_bound, 'upper')
-        if nonODEfunc:
-            y1 = nonODEfunc(y1, step)
         y0 = y1
         x0 = x0 + step
         yield [x0] + y0
@@ -509,12 +509,12 @@ def RK38(funcs, x0, y0, step, xmax, nonODEfunc=None,
         return y1
     while x0 < xmax:
         y1 = solver(funcs, x0, y0, step)
+        if nonODEfunc:
+            y1 = nonODEfunc(y1, step)
         if lower_bound: 
             y1 = boundary_checker(y1, lower_bound, 'lower')
         if upper_bound: 
             y1 = boundary_checker(y1, upper_bound, 'upper')
-        if nonODEfunc:
-            y1 = nonODEfunc(y1, step)
         y0 = y1
         x0 = x0 + step
         yield [x0] + y0
@@ -636,12 +636,12 @@ def CK4(funcs, x0, y0, step, xmax, nonODEfunc=None,
         return y1
     while x0 < xmax:
         y1 = solver(funcs, x0, y0, step)
+        if nonODEfunc:
+            y1 = nonODEfunc(y1, step)
         if lower_bound: 
             y1 = boundary_checker(y1, lower_bound, 'lower')
         if upper_bound: 
             y1 = boundary_checker(y1, upper_bound, 'upper')
-        if nonODEfunc:
-            y1 = nonODEfunc(y1, step)
         y0 = y1
         x0 = x0 + step
         yield [x0] + y0
@@ -762,12 +762,12 @@ def CK5(funcs, x0, y0, step, xmax, nonODEfunc=None,
         return y1
     while x0 < xmax:
         y1 = solver(funcs, x0, y0, step)
+        if nonODEfunc:
+            y1 = nonODEfunc(y1, step)
         if lower_bound: 
             y1 = boundary_checker(y1, lower_bound, 'lower')
         if upper_bound: 
             y1 = boundary_checker(y1, upper_bound, 'upper')
-        if nonODEfunc:
-            y1 = nonODEfunc(y1, step)
         y0 = y1
         x0 = x0 + step
         yield [x0] + y0
@@ -889,12 +889,12 @@ def RKF4(funcs, x0, y0, step, xmax, nonODEfunc=None,
         return y1
     while x0 < xmax:
         y1 = solver(funcs, x0, y0, step)
+        if nonODEfunc:
+            y1 = nonODEfunc(y1, step)
         if lower_bound: 
             y1 = boundary_checker(y1, lower_bound, 'lower')
         if upper_bound: 
             y1 = boundary_checker(y1, upper_bound, 'upper')
-        if nonODEfunc:
-            y1 = nonODEfunc(y1, step)
         y0 = y1
         x0 = x0 + step
         yield [x0] + y0
@@ -1018,12 +1018,12 @@ def RKF5(funcs, x0, y0, step, xmax, nonODEfunc=None,
         return y1
     while x0 < xmax:
         y1 = solver(funcs, x0, y0, step)
+        if nonODEfunc:
+            y1 = nonODEfunc(y1, step)
         if lower_bound: 
             y1 = boundary_checker(y1, lower_bound, 'lower')
         if upper_bound: 
             y1 = boundary_checker(y1, upper_bound, 'upper')
-        if nonODEfunc:
-            y1 = nonODEfunc(y1, step)
         y0 = y1
         x0 = x0 + step
         yield [x0] + y0
@@ -1157,12 +1157,12 @@ def DP4(funcs, x0, y0, step, xmax, nonODEfunc=None,
         return y1
     while x0 < xmax:
         y1 = solver(funcs, x0, y0, step)
+        if nonODEfunc:
+            y1 = nonODEfunc(y1, step)
         if lower_bound: 
             y1 = boundary_checker(y1, lower_bound, 'lower')
         if upper_bound: 
             y1 = boundary_checker(y1, upper_bound, 'upper')
-        if nonODEfunc:
-            y1 = nonODEfunc(y1, step)
         y0 = y1
         x0 = x0 + step
         yield [x0] + y0
@@ -1296,12 +1296,12 @@ def DP5(funcs, x0, y0, step, xmax, nonODEfunc=None,
         return y1
     while x0 < xmax:
         y1 = solver(funcs, x0, y0, step)
+        if nonODEfunc:
+            y1 = nonODEfunc(y1, step)
         if lower_bound: 
             y1 = boundary_checker(y1, lower_bound, 'lower')
         if upper_bound: 
             y1 = boundary_checker(y1, upper_bound, 'upper')
-        if nonODEfunc:
-            y1 = nonODEfunc(y1, step)
         y0 = y1
         x0 = x0 + step
         yield [x0] + y0
