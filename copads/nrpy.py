@@ -756,6 +756,19 @@ def moment(data):
         kurt = (kurt/(len(data)*svar*svar)) - 3.0
     return (ave, adev, sdev, var, skew, kurt)
 
+def pythag(a, b):
+    '''
+    '''
+    a = math.fabs(a)
+    b = math.fabs(b)
+    if (a > b):
+        return a * math.sqrt(1.0 + SQR(b/a))
+    else: 
+        if (b == 0.0):
+            return 0.0
+        else:
+            return b * math.sqrt(1.0 + SQR(a/b))
+
 def qgaus(a, b, func):
     """
     @see: NRP 4.5"""

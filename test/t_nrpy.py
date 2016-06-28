@@ -215,6 +215,7 @@ class testNR(unittest.TestCase):
 #    def testpsdes(self): self.assertAlmostEqual(N.<something>( ), testdata)
 #    def testpwt(self): self.assertAlmostEqual(N.<something>( ), testdata)
 #    def testpwtest(self): self.assertAlmostEqual(N.<something>( ), testdata)
+    def testpythag(self): self.assertAlmostEqual(N.pythag(4.0, 4.0), 5.6568542)
 #    def testpzextr(self): self.assertAlmostEqual(N.<something>( ), testdata)
 #    def testqcksrt(self): self.assertAlmostEqual(N.<something>( ), testdata)
 #    def testqgaus(self): self.assertAlmostEqual(N.<something>( ), testdata)
