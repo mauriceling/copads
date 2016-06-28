@@ -42,43 +42,62 @@ from copadsexceptions import FunctionParameterTypeError
 from copadsexceptions import FunctionParameterValueError
 from copadsexceptions import MaxIterationsException
 
+# medfit global data
+ndatat = 0
+xt = []
+yt = []
+aa = 0
+abdevt = 0
 
-def bessi(n, x):
-    """Modified Bessel function I-sub-n(x). 
-    @see: NRP 6.5
-    
-    @param n: integer, more than 1 - modified n-th Bessel function 
-    @param x: positive integer
-    @return: modified n-th Bessel function of x
-    
-    @status: Tested function
-    @since: version 0.1
-    """
-    iacc = 40.0
-    bigno = 1.0e10
-    bigni = 1.0e-10
-    if n < 2: 
-        raise FunctionParameterValueError('n must be more than 1 - use \
-            bessi0 or bessi1 for n = 0 or 1 respectively')
-    else:
-        if x == 0.0: ans = 0.0
-        else:
-            ans = 0.0
-            tox = 2.0/float((x))
-            bip = 0.0
-            bi = 1.0
-            m = 2 * (n + math.floor(math.sqrt(iacc * n)))
-            for j in range(int(m), 1, -1):
-                bim = bip+j*tox*bi
-                bip = bi
-                bi = bim
-                if abs(bi) > bigno:
-                    ans = ans*bigni
-                    bi = bi*bigni
-                    bip = bip*bigni
-                if j == n: ans = bip
-            if x < 0.0 and (n % 2) == 1: ans = -ans
-            return ans*bessi0(x)/(float(bi))
+# Support Functions
+
+def showvec(x, f='%0.6f'):
+  s = ''
+  for i in x:
+    s = s + str(f%i) + ', '
+  s = s.strip(', ')
+  return '['+s+']'
+
+def nrerror(s):
+  print(s)
+  sys.exit()
+
+def vector(n, value=0.0):
+  a = []
+  for i in range(n+1):
+    a.append(value)
+  return a
+
+def matrix(n, m, value=0.0):
+  a = []
+  for i in range(n+1):
+    a.append(vector(m, value))
+  return a
+
+def SQR(a):
+  sqrarg = a
+  if sqrarg == 0: 
+    return 0
+  return sqrarg*sqrarg
+
+def MAX(a, b):
+  if a > b: 
+    return a
+  else:
+    return b
+
+def MIN(a, b):
+  if a < b: 
+    return a
+  else:
+    return b
+
+def SIGN(a, b):
+  if b >= 0.0: 
+    return math.fabs(a)
+  return -math.fabs(a)
+
+# End of Support Functions
     
 def bessi0(x):
     """
@@ -130,60 +149,6 @@ def bessi1(x):
         ans = (math.exp(ax)/math.sqrt(ax))*ans
         if x < 0.0: return -ans
         else: return ans
-        
-def bessj(n, x): 
-    """
-    Bessel function J-sub-n(x). 
-    @see: NRP 6.5
-    
-    @param x: float number
-    @return: float number 
-    
-    @status: Tested function
-    @since: version 0.1
-    """
-    iacc = 40.0
-    bigno = 1.0e10
-    bigni = 1.0e-10
-    if n < 2: 
-        raise FunctionParameterValueError('n must be more than 1 - use \
-            bessj0 or bessj1 for n = 0 or 1 respectively')
-    if x == 0.0: ans = 0.0
-    else:
-        if abs(x) > 1.0 * n:
-            tox = 2.0/abs(x)
-            bjm = bessj0(abs(x))
-            bj = bessj1(abs(x))
-            for j in range(1, n):
-                bjp = j*tox*bj-bjm
-                bjm = bj
-                bj = bjp
-            ans = bj
-        else:
-            tox=2.0/abs(x)
-            m = int(2*((n+math.floor(math.sqrt(1.0*(iacc*n)))) % 2))
-            ans = 0.0
-            jsum = 0.0
-            sum = 0.0
-            bjp = 0.0
-            bj = 1.0
-            for j in range(m, 1, -1):
-                bjm = j*tox*bj-bjp
-                bjp = bj
-                bj = bjm
-                if abs(bj) > bigno:
-                    bj = bj*bigni
-                    bjp = bjp*bigni
-                    ans = ans*bigni
-                    sum = sum*bigni
-                if jsum != 0: sum = sum + bj
-                jsum = 1-jsum
-                if j == n: ans = bjp
-            sum = 2.0*sum-bj
-            print(sum, ans)
-            ans = ans/sum
-        if x < 0.0 and (n % 2) == 1: ans = -ans
-        return ans
 
 def bessj0(x):
     """
@@ -262,8 +227,8 @@ def bessk(n, x):
     @return: modified n-th Bessel function of x
     """
     if n < 2: 
-        raise FunctionParameterValueError('n must be more than 1 - \
-            use bessk0 or bessk1 for n = 0 or 1 respectively')
+        raise FunctionParameterValueError('''n must be more than 1 - \
+            use bessk0 or bessk1 for n = 0 or 1 respectively''')
     else:
         tox = 2.0/x
         bkm = bessk0(x)
@@ -322,8 +287,8 @@ def bessy(n, x):
     @since: version 0.1
     """
     if n < 2: 
-        raise FunctionParameterValueError('n must be more than 1 - \
-            use bessy0 or bessy1 for n = 0 or 1 respectively')
+        raise FunctionParameterValueError('''n must be more than 1 - \
+            use bessy0 or bessy1 for n = 0 or 1 respectively''')
     else:
         tox = 2.0/x
         by = bessy1(x)
