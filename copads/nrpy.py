@@ -585,6 +585,18 @@ def factln(n):
     """
     return gammln(n + 1.0)
 
+def fgauss(x, a, y, dyda, na):
+    y = 0.0
+    for i in range(1, na, 3)
+        arg = (x-a[i+1]) / a[i+2]
+        ex = exp(-arg*arg)
+        fac = a[i] * ex * 2.0 * arg
+        y = y + (a[i]*ex)
+        dyda[i] = ex
+        dyda[i+1] = fac / a[i+2]
+        dyda[i+2] = (fac*arg) / a[i+2]
+    return (y, dyda)
+
 def gammln(n):
     """
     Complete Gamma function.
@@ -825,7 +837,6 @@ def qgaus(a, b, func):
 #def convlv(): raise NotImplementedError
 #def correl(): raise NotImplementedError
 #def cosft(): raise NotImplementedError
-#def covsrt(): raise NotImplementedError
 #def dbrent(): raise NotImplementedError
 #def ddpoly(): raise NotImplementedError
 #def des(): raise NotImplementedError
@@ -839,7 +850,6 @@ def qgaus(a, b, func):
 #def eulsum(): raise NotImplementedError
 #def evlmem(): raise NotImplementedError
 #def f1dim(): raise NotImplementedError
-#def fgauss(): raise NotImplementedError
 #def fit(): raise NotImplementedError
 #def fixrts(): raise NotImplementedError
 #def fleg(): raise NotImplementedError
