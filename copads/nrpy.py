@@ -491,6 +491,25 @@ def chebev(a, b, c, m, x):
             dd = sv
         return y * d - dd + 0.5 * c[0]
     
+def covsrt(covar, ma, ia, mfit):
+    '''
+    '''
+    for i in range(mfit+1, ma+1):
+        for j in range(1,i+1): 
+            covar[i][j] = 0.0
+            covar[j][i] = 0.0
+    k = mfit
+    for j in range(ma, 0, -1):
+        if (ia[j] == 1):
+            for i in range(1, ma+1): 
+                covar[i][k] = covar[i][j]
+                covar[i][j] = covar[i][k]
+            for i in range(1, ma+1): 
+                covar[k][i] = covar[j][i]
+                covar[j][i] = covar[k][i]
+            k = k - 1
+    return (covar, ma, ia)
+
 def erf(x): 
     """
     Error function (a special incomplete gamma function) equivalent to 
