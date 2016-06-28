@@ -813,6 +813,23 @@ def qgaus(a, b, func):
         ss = ss + w[i] * (func(xm + dx) + func(xm - dx))
     return xr * ss
 
+def svdvar(v, ma, w, cvm):
+    '''
+    '''
+    wti = vector(ma)
+    for i in range(1, ma+1):
+        wti[i] = 0.0
+        if (w[i] > 0): 
+            wti[i] = 1.0 / (w[i]*w[i])
+    for i in range(1, ma+1):
+        for j in range(1, i+1):
+            sum = 0.0
+        for k in range(1, ma+1): 
+            sum = sum + (v[i][k]*v[j][k]*wti[k])
+        cvm[j][i] = sum
+        cvm[i][j] = sum
+    return cvm
+
 #def adi(): raise NotImplementedError
 #def amoeba(): raise NotImplementedError
 #def anneal(): raise NotImplementedError
@@ -958,7 +975,6 @@ def qgaus(a, b, func):
 #def svbksb(): raise NotImplementedError
 #def svdcmp(): raise NotImplementedError
 #def svdfit(): raise NotImplementedError
-#def svdvar(): raise NotImplementedError
 #def toeplz(): raise NotImplementedError
 #def tptest(): raise NotImplementedError
 #def tqli(): raise NotImplementedError
@@ -973,7 +989,6 @@ def qgaus(a, b, func):
 #def zbrak(): raise NotImplementedError
 #def zbrent(): raise NotImplementedError
 #def zroots(): raise NotImplementedError
-#
 #def airy(): raise NotImplementedError
 #def amebsa(): raise NotImplementedError
 #def anorm2(): raise NotImplementedError
