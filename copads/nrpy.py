@@ -751,6 +751,58 @@ def mdian1(data):
     if n2 % 2 == 1: return data[n2+1]
     else: return 0.5*(data[n2] + data[n2+1])
 
+def mnbrak(ax, bx, func):
+    '''
+    '''
+    GOLD = 1.618034
+    GLIMIT = 100.0
+    TINY = 1.0e-20
+    dum = 0
+    def SHFT(a, b, c, d): 
+        return (b, c, d)
+    fa = func(ax)
+    fb = func(bx)
+    if (fb > fa):
+        (dum, ax, bx) = SHFT(dum, ax, bx, dum)
+        (dum, fb, fa) = SHFT(dum, fb, fa, dum)
+    cx = bx + (GOLD * (bx-ax))
+    fc = func(cx)
+    while (fb > fc):
+        r = (bx-ax) * (fb-fc)
+        q = (bx-cx) * (fb-fa)
+        u = bx - \
+            ((((bx-cx) * q) - ((bx-ax) * r)) / \
+            (2.0 * SIGN(FMAX(fabs(q-r), TINY), q-r)))
+        ulim = bx + (GLIMIT * (cx-bx))
+        if ((bx-u) * (u-cx)) > 0.0:
+            fu = func(u)
+            if (fu < fc):
+                ax = bx
+                bx = u
+                fa = fb
+                fb = fu
+                return (ax, bx, cx, fa, fb, fc)
+            elif (fu > fb):
+                cx = u
+                fc = fu
+                return (ax, bx, cx, fa, fb, fc)
+            u = cx + (GOLD * (cx-bx))
+            fu = func(u)
+        elif ((cx-u) * (u-ulim)) > 0.0:
+            fu = func(u)
+            if (fu < fc):
+                (bx, cx, u) = SHFT(bx, cx, u, cx+GOLD*(cx-bx))
+                (fb, fc, fu) = SHFT(fb, fc, fu, func(u))
+        elif ((u-ulim) * (ulim-cx)) >= 0.0:
+            u = ulim
+            fu = func(u)
+        else:
+            u = cx + (GOLD * (cx-bx))
+            fu = func(u)
+        (ax, bx, cx) = SHFT(ax, bx, cx, u)
+        (fa, fb, fc) = SHFT(fa, fb, fc, fu)
+    return (ax, bx, cx, fa, fb, fc)
+
 def moment(data):
     """Calculates moment from a list of numerical data. @see: NRP 13.1
     
