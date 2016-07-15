@@ -67,20 +67,22 @@ class Vector(object):
         self.values = values
         return self.values
 
-# def vSin(a):
-    # """Elementwise sine."""
-    # try: return Vector([math.sin(x) for x in a])
-    # except: raise TypeError, 'vector::FAILURE in sin'
+    def cos(self):
+        try:
+            values = [math.cos(x) for x in self.values]
+        except:
+            raise VectorOperationError('Failure in Vector.cos()')
+        self.values = values
+        return self.values
         
-# def vTan(a):
-    # """Elementwise tangent."""
-    # try: return Vector([math.tan(x) for x in a])
-    # except: raise TypeError, 'vector::FAILURE in tan'
-        
-# def vCos(a):
-    # """ Elementwise cosine."""
-    # try: return Vector([math.cos(x) for x in a])
-    # except: raise TypeError, 'vector::FAILURE in cos'
+    def tan(self):
+        try:
+            values = [math.tan(x) for x in self.values]
+        except:
+            raise VectorOperationError('Failure in Vector.tan()')
+        self.values = values
+        return self.values
+
 
 # def vAsin(a):
     # """Elementwise inverse sine."""

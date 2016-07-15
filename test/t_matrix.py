@@ -32,6 +32,14 @@ class testVector(unittest.TestCase):
         vectorA = m.Vector([1, 2, 3, 4])
         result = [math.sin(x) for x in vectorA.values]
         self.assertEqual(vectorA.sin(), result)
+    def testCos(self):
+        vectorA = m.Vector([1, 2, 3, 4])
+        result = [math.cos(x) for x in vectorA.values]
+        self.assertEqual(vectorA.cos(), result)
+    def testTan(self):
+        vectorA = m.Vector([1, 2, 3, 4])
+        result = [math.tan(x) for x in vectorA.values]
+        self.assertEqual(vectorA.tan(), result)
 
 # def Vector_test():
 
