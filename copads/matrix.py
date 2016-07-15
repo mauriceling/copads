@@ -107,11 +107,21 @@ class Vector(object):
         self.values = values
         return self.values
 
-
-# def vSqrt(a):
-    # """Elementwise sqrt."""
-    # try: return Vector([math.sqrt(x) for x in a])
-    # except: raise TypeError, 'vector::FAILURE in sqrt'
+    def sqrt(self):
+        try:
+            values = [math.sqrt(x) for x in self.values]
+        except:
+            raise VectorOperationError('Failure in Vector.sqrt()')
+        self.values = values
+        return self.values
+        
+    def root(self, n):
+        try:
+            values = [float(x)**(1.0/float(n)) for x in self.values]
+        except:
+            raise VectorOperationError('Failure in Vector.root()')
+        self.values = values
+        return self.values
 
 # def vSinh(a):
     # """Elementwise hyperbolic sine."""

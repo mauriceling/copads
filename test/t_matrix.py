@@ -52,6 +52,18 @@ class testVector(unittest.TestCase):
         vectorA = m.Vector([0.1, 0.2, 0.3, 0.4])
         result = [math.atan(x) for x in vectorA.values]
         self.assertEqual(vectorA.atan(), result)
+    def testSqrt(self):
+        vectorA = m.Vector([1, 2, 3, 4])
+        result = [math.sqrt(x) for x in vectorA.values]
+        self.assertEqual(vectorA.sqrt(), result)
+    def testRoot2(self):
+        vectorA = m.Vector([1, 2, 3, 4])
+        result = [math.sqrt(x) for x in vectorA.values]
+        self.assertEqual(vectorA.root(2), result)
+    def testRoot3(self):
+        vectorA = m.Vector([1, 2, 3, 4])
+        result = [float(x)**(1.0/3) for x in vectorA.values]
+        self.assertEqual(vectorA.root(3), result)
 
 # def Vector_test():
 
