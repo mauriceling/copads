@@ -1,6 +1,7 @@
 import unittest
 import sys
 import os
+import math
 
 sys.path.append(os.path.join(os.path.dirname(os.getcwd()), 'copads'))
 import matrix as m
@@ -15,6 +16,14 @@ class testVector(unittest.TestCase):
         vectorA = m.Vector()
         vectorA.ones(4)
         self.assertEqual(vectorA.values, [1, 1, 1, 1])
+    def testLog10(self):
+        vectorA = m.Vector([1, 2, 3, 4])
+        result = [math.log10(x) for x in vectorA.values]
+        self.assertEqual(vectorA.log10(), result)
+    def testLog(self):
+        vectorA = m.Vector([1, 2, 3, 4])
+        result = [math.log(x) for x in vectorA.values]
+        self.assertEqual(vectorA.log(), result)
 
 # def Vector_test():
 

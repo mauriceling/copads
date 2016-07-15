@@ -10,6 +10,7 @@ import types
 import operator
 import math
 import random
+from copadsexceptions import VectorOperationError
 from copadsexceptions import MatrixError, MatrixMultiplicationError
 from copadsexceptions import MatrixAdditionError, MatrixSquareError
 from copadsexceptions import MatrixTraceError, MatrixMinorError
@@ -34,15 +35,22 @@ class Vector(object):
         self.values = [random.uniform(min_value, max_value) 
                        for i in int(num_of_elements)]
 
-    # def vLog10(a):
-    # """log10 of each element of a."""
-    # try: return Vector([math.log10(x) for x in a])
-    # except: raise TypeError, 'vector::FAILURE in log10'
+    def log10(self):
+        try:
+            values = [math.log10(x) for x in self.values]
+        except:
+            raise VectorOperationError('Failure in Vector.log10()')
+        self.values = values
+        return self.values
 
-# def vLog(a):
-    # """log of each element of a."""
-    # try: return Vector([math.log10(x) for x in a])
-    # except: raise TypeError, 'vector::FAILURE in log'
+    def log(self):
+        try:
+            values = [math.log(x) for x in self.values]
+        except:
+            raise VectorOperationError('Failure in Vector.log10()')
+        self.values = values
+        return self.values
+
         
 # def vExp(a):
     # """Elementwise exponential."""
