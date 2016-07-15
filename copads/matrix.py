@@ -610,7 +610,7 @@ class SparseMatrix(dict):
 
     def plot(self, width_in=400, height_in=400):
 
-        import ColorMap
+        import colormap
         import Tkinter
 
         cmax = max(self.values())
@@ -641,7 +641,7 @@ class SparseMatrix(dict):
             yb, xb = offset+scale*(ix+1), height_in -offset-scale*(iy)
             yc, xc = offset+scale*(ix+1), height_in -offset-scale*(iy+1)
             yd, xd = offset+scale*(ix), height_in -offset-scale*(iy+1)
-            color = ColorMap.strRgb(self[index], cmin, cmax)
+            color = colormap.strRgb(self[index], cmin, cmax)
             canvas.create_polygon(xa, ya, xb, yb, xc, yc, xd, yd, fill=color)
         
         root.mainloop()
