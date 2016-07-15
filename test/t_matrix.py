@@ -56,6 +56,18 @@ class testVector(unittest.TestCase):
         vectorA = m.Vector([0.1, 0.2, 0.3, 0.4])
         result = [math.atan(x) for x in vectorA.values]
         self.assertEqual(vectorA.atan(), result)
+    def testSinh(self):
+        vectorA = m.Vector([0.1, 0.2, 0.3, 0.4])
+        result = [math.sinh(x) for x in vectorA.values]
+        self.assertEqual(vectorA.sinh(), result)
+    def testCosh(self):
+        vectorA = m.Vector([0.1, 0.2, 0.3, 0.4])
+        result = [math.cosh(x) for x in vectorA.values]
+        self.assertEqual(vectorA.cosh(), result)
+    def testTanh(self):
+        vectorA = m.Vector([0.1, 0.2, 0.3, 0.4])
+        result = [math.tanh(x) for x in vectorA.values]
+        self.assertEqual(vectorA.tanh(), result)
     def testSqrt(self):
         vectorA = m.Vector([1, 2, 3, 4])
         result = [math.sqrt(x) for x in vectorA.values]

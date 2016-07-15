@@ -115,6 +115,30 @@ class Vector(object):
         self.values = values
         return self.values
 
+    def sinh(self):
+        try:
+            values = [math.sinh(x) for x in self.values]
+        except:
+            raise VectorOperationError('Failure in Vector.sinh()')
+        self.values = values
+        return self.values
+
+    def cosh(self):
+        try:
+            values = [math.cosh(x) for x in self.values]
+        except:
+            raise VectorOperationError('Failure in Vector.cosh()')
+        self.values = values
+        return self.values
+        
+    def tanh(self):
+        try:
+            values = [math.tanh(x) for x in self.values]
+        except:
+            raise VectorOperationError('Failure in Vector.tanh()')
+        self.values = values
+        return self.values
+        
     def sqrt(self):
         try:
             values = [math.sqrt(x) for x in self.values]
