@@ -40,6 +40,18 @@ class testVector(unittest.TestCase):
         vectorA = m.Vector([1, 2, 3, 4])
         result = [math.tan(x) for x in vectorA.values]
         self.assertEqual(vectorA.tan(), result)
+    def testASin(self):
+        vectorA = m.Vector([0.1, 0.2, 0.3, 0.4])
+        result = [math.asin(x) for x in vectorA.values]
+        self.assertEqual(vectorA.asin(), result)
+    def testACos(self):
+        vectorA = m.Vector([0.1, 0.2, 0.3, 0.4])
+        result = [math.acos(x) for x in vectorA.values]
+        self.assertEqual(vectorA.acos(), result)
+    def testATan(self):
+        vectorA = m.Vector([0.1, 0.2, 0.3, 0.4])
+        result = [math.atan(x) for x in vectorA.values]
+        self.assertEqual(vectorA.atan(), result)
 
 # def Vector_test():
 

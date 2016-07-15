@@ -82,22 +82,31 @@ class Vector(object):
             raise VectorOperationError('Failure in Vector.tan()')
         self.values = values
         return self.values
+        
+    def asin(self):
+        try:
+            values = [math.asin(x) for x in self.values]
+        except:
+            raise VectorOperationError('Failure in Vector.asin()')
+        self.values = values
+        return self.values
 
+    def acos(self):
+        try:
+            values = [math.acos(x) for x in self.values]
+        except:
+            raise VectorOperationError('Failure in Vector.a()')
+        self.values = values
+        return self.values
+        
+    def atan(self):
+        try:
+            values = [math.atan(x) for x in self.values]
+        except:
+            raise VectorOperationError('Failure in Vector.atan()')
+        self.values = values
+        return self.values
 
-# def vAsin(a):
-    # """Elementwise inverse sine."""
-    # try: return Vector([math.asin(x) for x in a])
-    # except: raise TypeError, 'vector::FAILURE in asin'
-
-# def vAtan(a):
-    # """Elementwise inverse tangent."""
-    # try: return Vector([math.atan(x) for x in a])
-    # except: raise TypeError, 'vector::FAILURE in atan'
-
-# def vAcos(a):
-    # """Elementwise inverse cosine."""
-    # try: return Vector([math.acos(x) for x in a])
-    # except: raise TypeError, 'vector::FAILURE in acos'
 
 # def vSqrt(a):
     # """Elementwise sqrt."""
