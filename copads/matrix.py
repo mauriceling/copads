@@ -59,6 +59,13 @@ class Vector(object):
         self.values = values
         return self.values
         
+    def sin(self):
+        try:
+            values = [math.sin(x) for x in self.values]
+        except:
+            raise VectorOperationError('Failure in Vector.sin()')
+        self.values = values
+        return self.values
 
 # def vSin(a):
     # """Elementwise sine."""
