@@ -59,6 +59,14 @@ class Vector(object):
         self.values = values
         return self.values
         
+    def pow(self, n):
+        try:
+            values = [float(x)**n for x in self.values]
+        except:
+            raise VectorOperationError('Failure in Vector.pow()')
+        self.values = values
+        return self.values
+        
     def sin(self):
         try:
             values = [math.sin(x) for x in self.values]
@@ -138,12 +146,6 @@ class Vector(object):
     # try: return Vector([math.cosh(x) for x in a])
     # except: raise TypeError, 'vector::FAILURE in cosh'
 
-# def vPow(a, b):
-    # """Takes the elements of a and raises them to the b-th power"""
-    # try: return Vector(map(lambda x: x**b, a))
-    # except: 
-        # try: return Vector(map(lambda x, y: x**y, a, b))
-        # except: raise TypeError, 'vector::FAILURE in pow'
     
 # def vAtan2(a, b):    
     # """Arc tangent"""

@@ -28,6 +28,10 @@ class testVector(unittest.TestCase):
         vectorA = m.Vector([1, 2, 3, 4])
         result = [math.exp(x) for x in vectorA.values]
         self.assertEqual(vectorA.exp(), result)
+    def testPow(self):
+        vectorA = m.Vector([1, 2, 3, 4])
+        result = [float(x)**4 for x in vectorA.values]
+        self.assertEqual(vectorA.pow(4), result)
     def testSin(self):
         vectorA = m.Vector([1, 2, 3, 4])
         result = [math.sin(x) for x in vectorA.values]
