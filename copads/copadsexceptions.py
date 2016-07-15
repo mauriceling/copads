@@ -29,6 +29,7 @@ Exceptions Defined for COPADS.
         - FunctionParameterValueError
         - ArrayError
         - MaxIterationException
+        - VectorOperationError
 
 Credits
     - MatrixError subclasses 
@@ -269,3 +270,12 @@ class MaxIterationsException(CopadsError):
     Exception to catch maximum looping.
     """
     pass
+    
+class VectorOperationError(CopadsError):
+    '''Exception to be thrown when encountered operation/calculation error 
+    in Vector type'''
+
+    def __init__(self, msg): self.msg = msg
+
+    def __str__(self): return self.msg
+    
