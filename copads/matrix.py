@@ -43,9 +43,9 @@ class Vector(object):
         self.values = values
         return self.values
 
-    def log(self):
+    def log(self, base=math.e):
         try:
-            values = [math.log(x) for x in self.values]
+            values = [math.log(x, base) for x in self.values]
         except:
             raise VectorOperationError('Failure in Vector.log()')
         self.values = values
@@ -154,21 +154,6 @@ class Vector(object):
             raise VectorOperationError('Failure in Vector.root()')
         self.values = values
         return self.values
-
-# def vSinh(a):
-    # """Elementwise hyperbolic sine."""
-    # try: return Vector([math.sinh(x) for x in a])
-    # except: raise TypeError, 'vector::FAILURE in sinh'
-
-# def vTanh(a):
-    # """Elementwise hyperbolic tangent."""
-    # try: return Vector([math.tanh(x) for x in a])
-    # except: raise TypeError, 'vector::FAILURE in tanh'
-
-# def vCosh(a):
-    # """Elementwise hyperbolic cosine."""
-    # try: return Vector([math.cosh(x) for x in a])
-    # except: raise TypeError, 'vector::FAILURE in cosh'
 
     
 # def vAtan2(a, b):    
@@ -902,10 +887,6 @@ class Vector(object):
                 # (i+OneBased, j+OneBased, self[ij]))
         # f.close()
                 
-# def isVector(x):
-    # """Determines if the argument is a vector class object."""
-    # return hasattr(x, '__class__') and x.__class__ is Vector
-
     
 # def vDot(a, b):
     # """dot product of two vectors."""
@@ -922,11 +903,6 @@ class Vector(object):
     # try: return reduce(lambda x, y: x+y, a, 0)
     # except: raise TypeError, 'vector::FAILURE in sum'
 
-    
-
-    
-# def isSparse(x):
-    # return hasattr(x, '__class__') and x.__class__ is SparseMatrix
 
 # def smTranspose(a):
     # """transpose"""

@@ -20,10 +20,14 @@ class testVector(unittest.TestCase):
         vectorA = m.Vector([1, 2, 3, 4])
         result = [math.log10(x) for x in vectorA.values]
         self.assertEqual(vectorA.log10(), result)
-    def testLog(self):
+    def testLog_e(self):
         vectorA = m.Vector([1, 2, 3, 4])
-        result = [math.log(x) for x in vectorA.values]
+        result = [math.log(x, math.e) for x in vectorA.values]
         self.assertEqual(vectorA.log(), result)
+    def testLog_2(self):
+        vectorA = m.Vector([1, 2, 3, 4])
+        result = [math.log(x, 2) for x in vectorA.values]
+        self.assertEqual(vectorA.log(2), result)
     def testExp(self):
         vectorA = m.Vector([1, 2, 3, 4])
         result = [math.exp(x) for x in vectorA.values]
