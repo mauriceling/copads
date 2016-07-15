@@ -47,15 +47,18 @@ class Vector(object):
         try:
             values = [math.log(x) for x in self.values]
         except:
-            raise VectorOperationError('Failure in Vector.log10()')
+            raise VectorOperationError('Failure in Vector.log()')
         self.values = values
         return self.values
 
+    def exp(self):
+        try:
+            values = [math.exp(x) for x in self.values]
+        except:
+            raise VectorOperationError('Failure in Vector.exp()')
+        self.values = values
+        return self.values
         
-# def vExp(a):
-    # """Elementwise exponential."""
-    # try: return Vector([math.exp(x) for x in a])
-    # except: raise TypeError, 'vector::FAILURE in exp'
 
 # def vSin(a):
     # """Elementwise sine."""

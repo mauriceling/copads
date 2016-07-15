@@ -24,6 +24,10 @@ class testVector(unittest.TestCase):
         vectorA = m.Vector([1, 2, 3, 4])
         result = [math.log(x) for x in vectorA.values]
         self.assertEqual(vectorA.log(), result)
+    def testExp(self):
+        vectorA = m.Vector([1, 2, 3, 4])
+        result = [math.exp(x) for x in vectorA.values]
+        self.assertEqual(vectorA.exp(), result)
 
 # def Vector_test():
 
