@@ -84,6 +84,12 @@ class testVector(unittest.TestCase):
         vectorA = m.Vector([1, 2, 3, 4])
         result = [float(x)**(1.0/3) for x in vectorA.values]
         self.assertEqual(vectorA.root(3), result)
+    def testAdd(self):
+        vectorA = m.Vector([1, 2, 3, 4])
+        vectorB = m.Vector([1, 2, 3, 4])
+        result = [2, 4, 6, 8]
+        vectorC = vectorA + vectorB
+        self.assertEqual(vectorC.values, result)
 
 # def Vector_test():
 

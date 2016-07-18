@@ -154,7 +154,16 @@ class Vector(object):
             raise VectorOperationError('Failure in Vector.root()')
         self.values = values
         return self.values
-
+    
+    def __add__(self, vectorX):
+        if len(self.values) != len(vectorX.values):
+            raise VectorOperationError('Vectors have different sizes')
+        try:
+            values = [self.values[i] + vectorX.values[i] 
+                      for i in range(len(self.values))]
+            return Vector(values)
+        except:
+            raise VectorOperationError('Failure in Vector.__add__()')
     
 # def vAtan2(a, b):    
     # """Arc tangent"""
@@ -167,15 +176,6 @@ class Vector(object):
             # # result to vector
             # return Vector(super(Vector, self).__getslice__(i, j))
         # except: raise TypeError, 'vector::FAILURE in __getslice__'
-        
-    # def __add__(self, other):
-        # '''
-        # Addition of current matrix to "other" matrix.
-        
-        # @status: Tested method
-        # @since: version 0.1
-        # '''
-        # return Vector(map(lambda x, y: x+y, self, other))
         
     # def __neg__(self): 
         # '''
