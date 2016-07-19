@@ -582,7 +582,7 @@ class Matrix(object):
         '''
         self.addReplaceElement((row, column), value, False)
         
-    def __getitem__(self, (row, column)):
+    def __getitem__(self, (row, column), default_value=None):
         '''
         Method to get element in the matrix.
         
@@ -594,13 +594,21 @@ class Matrix(object):
         None
         
         @param (row, column): row and column to get the value.
-        @return: value of the coordinate (if present); or else, return None. 
+        @param default_value: the default value to return when the 
+        coordinate is not present. Default = None
+        @return: value of the coordinate (if present); or else, return 
+        default_value. 
         '''
         try: 
             return self.values[(row, column)]
         except KeyError:
-            return None
+            return default_value
 
+    def trace(self):
+        self.updateDimensions()
+        values = [self.__getitem__((index, index), 0) 
+                  for index in range(max(self.dimensions))]
+        return sum(values)
 
 # class Matrix:
     # """
@@ -780,15 +788,6 @@ class Matrix(object):
         # for col in xrange(self.cols()):
             # r.append(self.col(col))
         # return Matrix(r)
-
-    # def trace(self):
-        # """The trace of the matrix"""
-        # if not self.is_square():
-            # raise MatrixTraceError()
-        # t = 0
-        # for i in xrange(self.rows()):
-            # t += self[(i, i)]
-        # return t
 
     # def determinant(self):
         # """The determinant of the matrix"""

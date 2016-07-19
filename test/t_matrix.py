@@ -195,6 +195,12 @@ class testMatrix(unittest.TestCase):
         self.assertEqual(matrixA[(0,0)], 0)
         self.assertEqual(matrixA[(1,1)], None)
         self.assertEqual(matrixA[(2,2)], 4)
+    def testTrace(self):
+        matrixA = m.Matrix()
+        matrixA[(1,1)] = 1
+        matrixA[(2,2)] = 4
+        self.assertEqual(matrixA.trace(), 5)
+        
     
 # def SparseMatrix_test():
     # print('a = sparse()')
