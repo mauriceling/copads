@@ -316,6 +316,48 @@ class Vector(object):
         self.values = values
         return self.values
     
+    def abs(self):
+        '''
+        Method to perform element-wise absolute on the vector.
+        
+        @return: result vector as a list.
+        '''
+        pass
+        
+    def factorial(self):
+        '''
+        Method to perform element-wise factorial on the vector.
+        
+        @return: result vector as a list.
+        '''
+        pass
+    
+    def degrees(self):
+        '''
+        Method to perform element-wise conversion of values in radians to 
+        degrees on the vector.
+        
+        @return: result vector as a list.
+        '''
+        pass
+        
+    def radians(self):
+        '''
+        Method to perform element-wise conversion of values in degrees to 
+        radians on the vector.
+        
+        @return: result vector as a list.
+        '''
+        pass
+        
+    def sum(self):
+        '''
+        Method to perform summation on the vector.
+        
+        @return: summation of the vector.
+        '''
+        pass
+        
     def __add__(self, vectorX):
         '''
         Method to add a vector (of the same size) to the currect vector.

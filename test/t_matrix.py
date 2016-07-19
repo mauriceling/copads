@@ -96,6 +96,25 @@ class testVector(unittest.TestCase):
         vectorA = m.Vector([1, 2, 3, 4])
         result = [float(x)**(1.0/3) for x in vectorA.values]
         self.assertEqual(vectorA.root(3), result)
+    def testAbs(self):
+        vectorA = m.Vector([1, -2, 3, 4])
+        result = [math.fabs(x) for x in vectorA.values]
+        self.assertEqual(vectorA.abs(), result)
+    def testFactorial(self):
+        vectorA = m.Vector([1, 2, 3, 4])
+        result = [math.factorial(x) for x in vectorA.values]
+        self.assertEqual(vectorA.factorial(), result)
+    def testDegrees(self):
+        vectorA = m.Vector([1, 2, 3, 4])
+        result = [math.degrees(x) for x in vectorA.values]
+        self.assertEqual(vectorA.degrees(), result)
+    def testRadians(self):
+        vectorA = m.Vector([10, 20, 30, 40])
+        result = [math.radians(x) for x in vectorA.values]
+        self.assertEqual(vectorA.radians(), result)
+    def testSum(self):
+        vectorA = m.Vector([1, 2, 3, 4])
+        self.assertEqual(vectorA.factorial(), math.fsum(vectorA.values))
     def testAdd(self):
         vectorA = m.Vector([1, 2, 3, 4])
         vectorB = m.Vector([1, 2, 3, 4])
