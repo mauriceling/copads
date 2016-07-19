@@ -23,19 +23,53 @@ class Vector(object):
     supports elementwise mathematical operations.
     '''
     def __init__(self, values=[]):
-        self.values = values
+        '''
+        Constructor method.
+        
+        @param values: values for the vector. Default is empty list.
+        @type values: list
+        '''
+        self.values = [float(x) for x in values]
         
     def zeros(self, num_of_elements):
-        self.values = [0] * int(num_of_elements)
+        '''
+        Method to initiate the vector to a vector of zeros.
+        
+        @param num_of_elements: length of the vector to initiate.
+        @type num_of_elements: integer
+        '''
+        self.values = [0.0] * int(num_of_elements)
        
     def ones(self, num_of_elements):
-        self.values = [1] * int(num_of_elements)
+        '''
+        Method to initiate the vector to a vector of ones.
+        
+        @param num_of_elements: length of the vector to initiate.
+        @type num_of_elements: integer
+        '''
+        self.values = [1.0] * int(num_of_elements)
         
     def random(self, num_of_elements, min_value=0.0, max_value=1.0):
+        '''
+        Method to initiate the vector to a vector of uniformly distributed 
+        random values .
+        
+        @param num_of_elements: length of the vector to initiate.
+        @type num_of_elements: integer
+        @param min_value: minimum value of the vector. Default = 0.0.
+        @type min_value: float
+        @param max_value: maximum value of the vector. Default = 1.0.
+        @type max_value: float
+        '''
         self.values = [random.uniform(min_value, max_value) 
                        for i in int(num_of_elements)]
 
     def log10(self):
+        '''
+        Method to perform element-wise log10 on the vector.
+        
+        @return: result vector as a list.
+        '''
         try:
             values = [math.log10(x) for x in self.values]
         except:
@@ -44,6 +78,14 @@ class Vector(object):
         return self.values
 
     def log(self, base=math.e):
+        '''
+        Method to perform element-wise log on the vector.
+        
+        @param base: base value of the logarithmic function. Default = e.
+        @type base: float
+        @return: result vector as a list.
+        '''
+        base = float(base)
         try:
             values = [math.log(x, base) for x in self.values]
         except:
@@ -52,6 +94,12 @@ class Vector(object):
         return self.values
 
     def exp(self):
+        '''
+        Method to perform element-wise exponential (e to the power of the 
+        value) on the vector.
+        
+        @return: result vector as a list.
+        '''
         try:
             values = [math.exp(x) for x in self.values]
         except:
@@ -60,6 +108,15 @@ class Vector(object):
         return self.values
         
     def pow(self, n):
+        '''
+        Method to perform element-wise power (value to the power of n) on 
+        the vector.
+        
+        @param n: exponent to be raised.
+        @type n: float
+        @return: result vector as a list.
+        '''
+        n = float(n)
         try:
             values = [float(x)**n for x in self.values]
         except:
@@ -68,6 +125,11 @@ class Vector(object):
         return self.values
         
     def sin(self):
+        '''
+        Method to perform element-wise sine in radians on the vector.
+        
+        @return: result vector as a list.
+        '''
         try:
             values = [math.sin(x) for x in self.values]
         except:
@@ -76,6 +138,11 @@ class Vector(object):
         return self.values
 
     def cos(self):
+        '''
+        Method to perform element-wise cosine in radians on the vector.
+        
+        @return: result vector as a list.
+        '''
         try:
             values = [math.cos(x) for x in self.values]
         except:
@@ -84,6 +151,11 @@ class Vector(object):
         return self.values
         
     def tan(self):
+        '''
+        Method to perform element-wise tangent in randians on the vector.
+        
+        @return: result vector as a list.
+        '''
         try:
             values = [math.tan(x) for x in self.values]
         except:
@@ -92,6 +164,11 @@ class Vector(object):
         return self.values
         
     def asin(self):
+        '''
+        Method to perform element-wise arc sine in radians on the vector.
+        
+        @return: result vector as a list.
+        '''
         try:
             values = [math.asin(x) for x in self.values]
         except:
@@ -100,6 +177,11 @@ class Vector(object):
         return self.values
 
     def acos(self):
+        '''
+        Method to perform element-wise arc cosine in radians on the vector.
+        
+        @return: result vector as a list.
+        '''
         try:
             values = [math.acos(x) for x in self.values]
         except:
@@ -108,6 +190,12 @@ class Vector(object):
         return self.values
         
     def atan(self):
+        '''
+        Method to perform element-wise arc tangent in radians on the 
+        vector.
+        
+        @return: result vector as a list.
+        '''
         try:
             values = [math.atan(x) for x in self.values]
         except:
@@ -116,6 +204,12 @@ class Vector(object):
         return self.values
 
     def sinh(self):
+        '''
+        Method to perform element-wise hyperbolic sine in radians on the 
+        vector.
+        
+        @return: result vector as a list.
+        '''
         try:
             values = [math.sinh(x) for x in self.values]
         except:
@@ -124,6 +218,12 @@ class Vector(object):
         return self.values
 
     def cosh(self):
+        '''
+        Method to perform element-wise hyperbolic cosine in radians on the 
+        vector.
+        
+        @return: result vector as a list.
+        '''
         try:
             values = [math.cosh(x) for x in self.values]
         except:
@@ -132,6 +232,12 @@ class Vector(object):
         return self.values
         
     def tanh(self):
+        '''
+        Method to perform element-wise hyperbolic tangent in radians on the 
+        vector.
+        
+        @return: result vector as a list.
+        '''
         try:
             values = [math.tanh(x) for x in self.values]
         except:
@@ -140,6 +246,12 @@ class Vector(object):
         return self.values
         
     def asinh(self):
+        '''
+        Method to perform element-wise inverse hyperbolic sine in radians 
+        on the vector.
+        
+        @return: result vector as a list.
+        '''
         try:
             values = [math.asinh(x) for x in self.values]
         except:
@@ -148,6 +260,12 @@ class Vector(object):
         return self.values
 
     def acosh(self):
+        '''
+        Method to perform element-wise inverse hyperbolic cosine in radians 
+        on the vector.
+        
+        @return: result vector as a list.
+        '''
         try:
             values = [math.acosh(x) for x in self.values]
         except:
@@ -156,6 +274,12 @@ class Vector(object):
         return self.values
         
     def atanh(self):
+        '''
+        Method to perform element-wise inverse hyperbolic tangent in radians 
+        on the vector.
+        
+        @return: result vector as a list.
+        '''
         try:
             values = [math.atanh(x) for x in self.values]
         except:
@@ -164,6 +288,11 @@ class Vector(object):
         return self.values
         
     def sqrt(self):
+        '''
+        Method to perform element-wise square root on the vector.
+        
+        @return: result vector as a list.
+        '''
         try:
             values = [math.sqrt(x) for x in self.values]
         except:
@@ -172,6 +301,14 @@ class Vector(object):
         return self.values
         
     def root(self, n):
+        '''
+        Method to perform element-wise n-th root on the vector.
+        
+        @param n: value of the root.
+        @type n: float
+        @return: result vector as a list.
+        '''
+        n = float(n)
         try:
             values = [float(x)**(1.0/float(n)) for x in self.values]
         except:
@@ -180,6 +317,13 @@ class Vector(object):
         return self.values
     
     def __add__(self, vectorX):
+        '''
+        Method to add a vector (of the same size) to the currect vector.
+        
+        @param vectorX: vector to be added.
+        @type vectorX: copads.matrix.Vector object
+        @return: resulting copads.matrix.Vector object
+        '''
         if len(self.values) != len(vectorX.values):
             raise VectorOperationError('Vectors have different sizes')
         try:
@@ -189,18 +333,6 @@ class Vector(object):
         except:
             raise VectorOperationError('Failure in Vector.__add__()')
     
-# def vAtan2(a, b):    
-    # """Arc tangent"""
-    # try: return Vector([math.atan2(x) for x in a])
-    # except: raise TypeError, 'vector::FAILURE in atan2'
-    
-    # def __getslice__(self, i, j):
-        # try:
-            # # use the list __getslice__ method and convert
-            # # result to vector
-            # return Vector(super(Vector, self).__getslice__(i, j))
-        # except: raise TypeError, 'vector::FAILURE in __getslice__'
-        
     # def __neg__(self): 
         # '''
         # @status: Tested method
