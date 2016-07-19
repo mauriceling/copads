@@ -146,6 +146,37 @@ class testVector(unittest.TestCase):
         self.assertEqual(vectorC.values, result)
 
     
+class testMatrix(unittest.TestCase):
+    def testInit1(self):
+        matrixA = m.Matrix(2)
+        result = {(0,0): 0, (0,1): 0,
+                  (1,0): 0, (1,1): 0}
+        self.assertEqual(matrixA.values, result)
+        self.assertEqual(matrixA.dimensions, [2, 2])
+    def testInit2(self):
+        matrixA = m.Matrix(2, 3)
+        result = {(0,0): 0, (0,1): 0, (0,2): 0,
+                  (1,0): 0, (1,1): 0, (1,2): 0}
+        self.assertEqual(matrixA.values, result)
+        self.assertEqual(matrixA.dimensions, [2, 3])
+    def testInit3(self):
+        matrixA = m.Matrix([[1, 2, 3], [4, 5, 6]])
+        result = {(0,0): 1, (0,1): 2, (0,2): 3,
+                  (1,0): 4, (1,1): 5, (1,2): 6}
+        self.assertEqual(matrixA.values, result)
+        self.assertEqual(matrixA.dimensions, [2, 3])
+    def testInit4(self):
+        data = {(0,0): 1, (0,2): 3,
+                (1,0): 4, (1,1): 5}
+        matrixA = m.Matrix(data)
+        self.assertEqual(matrixA.values, data)
+        self.assertEqual(matrixA.dimensions, [2, 3])
+    def testInit5(self):
+        data = {(9,9): 100}
+        matrixA = m.Matrix(data)
+        self.assertEqual(matrixA.values, data)
+        self.assertEqual(matrixA.dimensions, [10, 10])
+    
 # def SparseMatrix_test():
     # print('a = sparse()')
     # a = SparseMatrix()

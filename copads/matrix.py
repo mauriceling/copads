@@ -422,6 +422,145 @@ class Vector(object):
         pass   
     
 
+class Matrix(object):
+    '''
+    A Matrix class that is implemented as a sparse matrix.
+    
+    Mathematically speaking, there is no difference between a dense matrix 
+    (most values are non-zero) and a sparse matrix (most values are zero). 
+    However, there are implementation differences and memory usage 
+    differences between sparse and dense matrix. In this case, this 
+    implementation considers all matrix as sparse and stores the values in 
+    a coordinate list. 
+    
+    This class is based on the work of Bill McNeill (http://
+    aspn.activestate.com/ASPN/Cookbook/Python/Recipe/189971) and Alexander 
+    Pletzer (http://aspn.activestate.com/ASPN/Cookbook/Python/Recipe/52275).
+    '''
+    
+    def __init__(self, *args):
+        '''
+        Constructor method. Bear in mind that Python uses zero-index; that 
+        is, the first element of the first row is has the coordinate of 
+        (0,0) rather than {1,1) in regular matrix notations.
+
+        There are 4 ways to construct a matrix.
+        
+        Firstly, a null matrix (no data elements) can be constructed as
+        
+        >>> m = Matrix()
+        
+        Secondly, a zero matrix can be constructed as
+        
+        >>> m = Matrix(2)
+        
+        This will result in a zero square matrix, [[0, 0], [0, 0]]
+        
+        A non-square matrix can be constructed by providing the (row, 
+        column) pairs. For example,
+        
+        >>> m = Matrix(2, 3)
+        
+        will result in [[0, 0, 0], [0, 0, 0]]
+        
+        Thirdly, a matrix can be constructed by providing a list of list in 
+        the format of [[first row], [second row], ... [last row]]
+        
+        >>> m = Matrix([[1, 2, 3], [4, 5, 6]])
+        
+        Lastly, a matrix can be provided by providing a dictionary  
+        non-zero values using (row, column) as key,
+        
+        >>> m = Matrix({(0,0): 3,
+        ...             (1,1): 6})
+        
+        will result in [[3, 0], [0, 6]].
+        
+        @param args: arguments for matrix construction. Please see above 
+        for description.
+        '''
+        self.values = {}
+        self.dimensions = [0, 0]
+        self.padding = 0.0
+        if len(args) == 0:
+            pass
+        if len(args) == 1 and isinstance(args[0], types.IntType):
+            self.createNullMatrix(args[0], args[0])
+        if len(args) == 2 and isinstance(args[0], types.IntType) and \
+            isinstance(args[1], types.IntType):
+            self.createNullMatrix(args[0], args[1])
+        if len(args) == 1 and isinstance(args[0], types.ListType):
+            for row in range(len(args[0])):
+                if isinstance(args[0][row], types.ListType):
+                    self.addReplaceRow(row, args[0][row])
+        if len(args) == 1 and isinstance(args[0], types.DictType):
+            for k in args[0].keys():
+                self.addReplaceElement(k, args[0][k])
+            
+    def _updateDimensions(self):
+        '''
+        Private method to update the dimension of the matrix.
+        '''
+        row_count = set()
+        column_count = set()
+        for coordinate in self.values.keys():
+            row_count.update([coordinate[0]])
+            column_count.update([coordinate[1]])
+        self.dimensions[0] = max(list(row_count)) + 1
+        self.dimensions[1] = max(list(column_count)) + 1
+            
+    def createNullMatrix(self, rows, columns):
+        '''
+        Method to create a null (zero) matrix.
+        
+        @param rows: number of rows.
+        @type rows: integer
+        @param columns: number of columns.
+        @type columns: integer
+        '''
+        rows = int(rows)
+        columns = int(columns)
+        for r in range(rows):
+            for c in range(columns):
+                self.values[(r, c)] = 0
+        self.dimensions = [rows, columns]
+        
+    def addReplaceRow(self, row_number, row_data):
+        '''
+        Method to add a row (if the row does not exist) or to replace a row 
+        (if the row exist) in the matrix.
+        
+        @param row_number: the row number to add or replace, based on 
+        zero-index (the first row is zero-th row).
+        @type row_number: integer
+        @param row_data: data for the row to add or replace.
+        @type row_data: list
+        '''
+        row_number = int(row_number)
+        for c in range(len(row_data)):
+            self.values[(row_number, c)] = row_data[c]
+        self._updateDimensions()
+        
+    def addReplaceElement(self, coordinate, value):
+        '''
+        Method to add an element (if the element does not exist) or to 
+        replace the element (if the element exist) in the matrix.
+        
+        @param coordinate: (row, column) coordinate to add or replace, 
+        based on zero-th index (first element of first row is zero-th row 
+        zero-th column).
+        @type coordinate: list or tuple
+        @param value: value of the coordinate to add or replace.
+        '''
+        if len(coordinate) == 2:
+            r = int(coordinate[0])
+            c = int(coordinate[1])
+            self.values[(r, c)] = value
+            self._updateDimensions()
+            
+    
+
+
 # class Matrix:
     # """
     # A linear algebra matrix
