@@ -493,13 +493,15 @@ class Matrix(object):
             for row in range(len(args[0])):
                 if isinstance(args[0][row], types.ListType):
                     self.addReplaceRow(row, args[0][row])
+            self.updateDimensions()
         if len(args) == 1 and isinstance(args[0], types.DictType):
             for k in args[0].keys():
                 self.addReplaceElement(k, args[0][k])
+            self.updateDimensions()
             
-    def _updateDimensions(self):
+    def updateDimensions(self):
         '''
-        Private method to update the dimension of the matrix.
+        Method to update the dimension of the matrix.
         '''
         row_count = set()
         column_count = set()
@@ -525,7 +527,7 @@ class Matrix(object):
                 self.values[(r, c)] = 0
         self.dimensions = [rows, columns]
         
-    def addReplaceRow(self, row_number, row_data):
+    def addReplaceRow(self, row_number, row_data, update_dimensions=False):
         '''
         Method to add a row (if the row does not exist) or to replace a row 
         (if the row exist) in the matrix.
@@ -535,13 +537,18 @@ class Matrix(object):
         @type row_number: integer
         @param row_data: data for the row to add or replace.
         @type row_data: list
+        @param update_dimensions: flag to determine whether to update 
+        matrix dimensions, which can reduce speed if matrix is large. 
+        Default = false (dimensions not updated).
+        @type update_dimensions: boolean
         '''
         row_number = int(row_number)
         for c in range(len(row_data)):
             self.values[(row_number, c)] = row_data[c]
-        self._updateDimensions()
+        if update_dimensions:
+            self.updateDimensions()
         
-    def addReplaceElement(self, coordinate, value):
+    def addReplaceElement(self, coordinate, value, update_dimensions=False):
         '''
         Method to add an element (if the element does not exist) or to 
         replace the element (if the element exist) in the matrix.
@@ -551,14 +558,48 @@ class Matrix(object):
         zero-th column).
         @type coordinate: list or tuple
         @param value: value of the coordinate to add or replace.
+        @param update_dimensions: flag to determine whether to update 
+        matrix dimensions, which can reduce speed if matrix is large. 
+        Default = false (dimensions not updated).
+        @type update_dimensions: boolean
         '''
         if len(coordinate) == 2:
             r = int(coordinate[0])
             c = int(coordinate[1])
             self.values[(r, c)] = value
-            self._updateDimensions()
+        if update_dimensions:
+            self.updateDimensions()
             
-    
+    def __setitem__(self, (row, column), value):
+        '''
+        Method to set element in the matrix.
+        
+        >>> m = Matrix()
+        >>> m[(1,1)] = 15
+        
+        @param (row, column): row and column to set the value.
+        @param value: value to set.
+        '''
+        self.addReplaceElement((row, column), value, False)
+        
+    def __getitem__(self, (row, column)):
+        '''
+        Method to get element in the matrix.
+        
+        >>> m = Matrix()
+        >>> m[(1,1)] = 15
+        >>> m[(1,1)]
+        15
+        >>> m[(0,0)]
+        None
+        
+        @param (row, column): row and column to get the value.
+        @return: value of the coordinate (if present); or else, return None. 
+        '''
+        try: 
+            return self.values[(row, column)]
+        except KeyError:
+            return None
 
 
 # class Matrix:
@@ -615,93 +656,6 @@ class Matrix(object):
     # identity_element = 1
     # inverse_element = -1
 
-    # def __init__(self, *args):
-        # """Matrix constructor
-
-        # A matrix can be created in three ways.
-
-            # 1. A single integer argument is supplied. The constructor creates a
-            # null square matrix of that size.  For example 
-
-            # Matrix(2)
-
-            # creates the following matrix
-
-            # 0    0
-            # 0    0
-
-            # 2. Two integer arguments are supplied.  The constructor creates a null
-            # matrix of size first argument x second argument.  For example
-
-            # Matrix(2, 3)
-
-            # creates the following matrix
-
-            # 0    0    0
-            # 0    0    0
-
-            # 3. A list of lists is supplied.  It represents a set of initial matrix
-            # values.  Each element is a row and each sub-list is a column.
-            # For example
-
-            # Matrix([[1,2,3], [4,5,6], [7,8,9]])
-
-            # creates the following matrix
-
-            # 1    2    3
-            # 4    5    6
-            # 7    8    9
-        # """
-        # if not (len(args) == 1 or len(args) == 2):
-            # raise TypeError("Matrix() takes 1 or 2 arguments (%d given)") % \
-                # len(args)
-        # if len(args) == 2:    # Two arguments
-            # # Create an null n,m matrix.
-            # row, col = args
-            # self.createNullMatrix(row, col)
-        # else:    # One argument
-            # if isinstance(args[0], types.IntType):
-                # # Create a square null matrix.
-                # self.create_null_matrix(args[0], args[0])
-            # else:
-                # # Create a matrix from initial values.
-                # self.m = args[0]
-                # if __debug__:
-                    # # Verify correct format for m.
-                    # if not isinstance(args[0], types.ListType):
-                        # raise TypeError("Invalid initial data %s" % args[0])
-                    # for row in args[0]:
-                        # if not isinstance(row, types.ListType):
-                            # raise ValueError("Invalid initial data %s" % \
-                                # args[0])
-                        # if not (len(row) == len(args[0][0])):
-                            # raise ValueError("Non-rectangular initial data")
-                    # if not (self.cols() > 0):
-                        # raise ValueError("invalid number of columns %d" % \
-                            # self.cols())
-                    # if self.rows() == 1 and self.cols() == 1:
-                        # raise ValueError("Cannot create 1x1 matrix")
-
-    # def createNullMatrix(self, row, col):
-        # """ Create a matrix using the null value
-
-        # This is a private function called by __init__.
-        # """
-        # if not row > 0:
-            # raise ValueError("invalid number of rows %d" % row)
-        # if not col > 0:
-            # raise ValueError("invalid number of columns %d" % col)
-        # if row == 1 and col == 1:
-            # raise ValueError("Cannot create 1x1 matrix")
-        # # Note, you cannot simply write
-        # #    self.m = [[self.null_element]*col]*row
-        # # because this will make all the rows references of a single instance.
-        # self.m = []
-        # for i in xrange(row):
-            # self.m.append([])
-            # for j in xrange(col):
-                # self.m[i].append(self.null_element)
-
     # def __str__(self):
         # s = ""
         # for row in self.m:
@@ -712,24 +666,6 @@ class Matrix(object):
         # if not isinstance(other, Matrix):
             # raise TypeError("Cannot compare matrix with %s" % type(other))
         # return cmp(self.m, other.m)
-
-    # def __getitem__(self, (row, col)):
-        # """The value at (row, col)
-
-        # For example, to get the value of element 1,3 say
-
-        # m[(1,3)]
-        # """
-        # return self.m[row][col]
-
-    # def __setitem__(self, (row, col), value):
-        # """Sets the value at (row, col)
-
-        # For example, to set the value of element 1,3 to 5 say
-
-        # m[(1,3)] = 5
-        # """
-        # self.m[row][col] = value
 
     # def rows(self):
         # """The number of rows in the matrix"""

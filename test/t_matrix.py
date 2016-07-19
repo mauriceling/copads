@@ -176,6 +176,25 @@ class testMatrix(unittest.TestCase):
         matrixA = m.Matrix(data)
         self.assertEqual(matrixA.values, data)
         self.assertEqual(matrixA.dimensions, [10, 10])
+    def testSetItem(self):
+        matrixA = m.Matrix()
+        matrixA[(0,0)] = 0
+        matrixA[(1,1)] = 1
+        matrixA[(2,2)] = 4
+        matrixA[(3,3)] = 9
+        self.assertEqual(matrixA.dimensions, [0, 0])
+        matrixA.updateDimensions()
+        self.assertEqual(matrixA.dimensions, [4, 4])
+        result = {(0,0): 0, (1,1): 1,
+                  (2,2): 4, (3,3): 9}
+        self.assertEqual(matrixA.values, result)
+    def testGetItem(self):
+        matrixA = m.Matrix()
+        matrixA[(0,0)] = 0
+        matrixA[(2,2)] = 4
+        self.assertEqual(matrixA[(0,0)], 0)
+        self.assertEqual(matrixA[(1,1)], None)
+        self.assertEqual(matrixA[(2,2)], 4)
     
 # def SparseMatrix_test():
     # print('a = sparse()')
