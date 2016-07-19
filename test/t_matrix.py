@@ -96,85 +96,55 @@ class testVector(unittest.TestCase):
         vectorA = m.Vector([1, 2, 3, 4])
         result = [float(x)**(1.0/3) for x in vectorA.values]
         self.assertEqual(vectorA.root(3), result)
+    def testAbs(self):
+        vectorA = m.Vector([1, -2, 3, 4])
+        result = [math.fabs(x) for x in vectorA.values]
+        self.assertEqual(vectorA.abs(), result)
+    def testFactorial(self):
+        vectorA = m.Vector([1, 2, 3, 4])
+        result = [math.factorial(x) for x in vectorA.values]
+        self.assertEqual(vectorA.factorial(), result)
+    def testDegrees(self):
+        vectorA = m.Vector([1, 2, 3, 4])
+        result = [math.degrees(x) for x in vectorA.values]
+        self.assertEqual(vectorA.degrees(), result)
+    def testRadians(self):
+        vectorA = m.Vector([10, 20, 30, 40])
+        result = [math.radians(x) for x in vectorA.values]
+        self.assertEqual(vectorA.radians(), result)
+    def testSum(self):
+        vectorA = m.Vector([1, 2, 3, 4])
+        self.assertEqual(vectorA.factorial(), math.fsum(vectorA.values))
     def testAdd(self):
         vectorA = m.Vector([1, 2, 3, 4])
         vectorB = m.Vector([1, 2, 3, 4])
         result = [2, 4, 6, 8]
         vectorC = vectorA + vectorB
         self.assertEqual(vectorC.values, result)
+    def testNegate(self):
+        vectorA = m.Vector([1, -2, 3, -4])
+        result = [-1, 2, -3, -4]
+        vectorC = -vectorA
+        self.assertEqual(vectorC.values, result)
+    def testSubtract(self):
+        vectorA = m.Vector([1, 2, 3, 4])
+        vectorB = m.Vector([0, 1, 0, 2])
+        result = [1, 1, 3, 2]
+        vectorC = vectorA - vectorB
+        self.assertEqual(vectorC.values, result)
+    def testMultiply(self):
+        vectorA = m.Vector([1, 2, 3, 4])
+        vectorB = m.Vector([1, 2, 3, 4])
+        result = [1, 4, 9, 16]
+        vectorC = vectorA * vectorB
+        self.assertEqual(vectorC.values, result)
+    def testDivide(self):
+        vectorA = m.Vector([1, 2, 3, 4])
+        vectorB = m.Vector([1, 2, 3, 4])
+        result = [1, 1, 1, 1]
+        vectorC = vectorA / vectorB
+        self.assertEqual(vectorC.values, result)
 
-# def Vector_test():
-
-    # print('a[0] = 1.0')
-    # a[0] = 1.0
-
-    # print('a[3] = 3.0')
-    # a[3] = 3.0
-
-    # print('a[0]=', a[0])
-    # print('a[1]=', a[1])
-
-    # print('len(a)=',len(a))
-    # print('a.size()=', a.size())
-            
-    # b = Vector([1, 2, 3, 4])
-    # print('a=', a)
-    # print('b=', b)
-
-    # print('a+b')
-    # c = a + b
-    # c.out()
-
-    # print('-a')
-    # c = -a
-    # c.out()
-    # a.out()
-
-    # print('a-b')
-    # c = a - b
-    # c.out()
-
-    # print('a*1.2')
-    # c = a*1.2
-    # c.out()
-
-    # print('1.2*a')
-    # c = 1.2*a
-    # c.out()
-    # print('a=', a)
-
-    # print('dot(a,b) = ', vDot(a,b))
-    # print('dot(b,a) = ', vDot(b,a))
-
-    # print('a*b')
-    # c = a*b
-    # c.out()
-    
-    # print('a/1.2')
-    # c = a/1.2
-    # c.out()
-
-    # print('a[0:2]')
-    # c = a[0:2]
-    # c.out()
-
-    # print('a[2:5] = [9.0, 4.0, 5.0]')
-    # a[2:5] = [9.0, 4.0, 5.0]
-    # a.out()
-
-    # print('sqrt(a)=', vSqrt(a))
-    # print('pow(a, 2*ones(len(a)))=', vPow(a, 2*vOnes(len(a))))
-    # print('pow(a, 2)=',vPow(a, 2 * vOnes(len(a))))
-  
-
-    # print('del a')
-    # del a
-
-    # try:
-        # a = vRandom(11, 0., 2.)
-        # a.out()
-
-    # except: pass
     
 # def SparseMatrix_test():
     # print('a = sparse()')

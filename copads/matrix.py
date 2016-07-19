@@ -316,9 +316,52 @@ class Vector(object):
         self.values = values
         return self.values
     
+    def abs(self):
+        '''
+        Method to perform element-wise absolute on the vector.
+        
+        @return: result vector as a list.
+        '''
+        pass
+        
+    def factorial(self):
+        '''
+        Method to perform element-wise factorial on the vector.
+        
+        @return: result vector as a list.
+        '''
+        pass
+    
+    def degrees(self):
+        '''
+        Method to perform element-wise conversion of values in radians to 
+        degrees on the vector.
+        
+        @return: result vector as a list.
+        '''
+        pass
+        
+    def radians(self):
+        '''
+        Method to perform element-wise conversion of values in degrees to 
+        radians on the vector.
+        
+        @return: result vector as a list.
+        '''
+        pass
+        
+    def sum(self):
+        '''
+        Method to perform summation on the vector.
+        
+        @return: summation of the vector.
+        '''
+        pass
+        
     def __add__(self, vectorX):
         '''
-        Method to add a vector (of the same size) to the currect vector.
+        Method to add a vector (of the same size) to the currect vector. 
+        The resulting vector will be the result of element-wise addition.
         
         @param vectorX: vector to be added.
         @type vectorX: copads.matrix.Vector object
@@ -333,75 +376,50 @@ class Vector(object):
         except:
             raise VectorOperationError('Failure in Vector.__add__()')
     
-    # def __neg__(self): 
-        # '''
-        # @status: Tested method
-        # @since: version 0.1
-        # '''
-        # return Vector([-x for x in self])
-    
-    # def __sub__(self, other): 
-        # '''
-        # @status: Tested method
-        # @since: version 0.1
-        # '''
-        # return Vector(map(lambda x, y: x-y, self, other))
-
-    # def __mul__(self, other):
-        # """
-        # Element by element multiplication
+    def __neg__(self):
+        '''
+        Method to negate the currect vector. The resulting vector will be 
+        the result of element-wise negation.
         
-        # @status: Tested method
-        # @since: version 0.1
-        # """
-        # try: return Vector(map(lambda x, y: x*y, self, other))
-        # except:
-            # # other is a const
-            # return Vector(map(lambda x: x*other, self))
-
-    # def __rmul__(self, other):
-        # return (self*other)
-
-    # def __div__(self, other):
-        # """
-        # Element by element division.
+        @return: resulting copads.matrix.Vector object
+        '''
+        pass
         
-        # @status: Tested method
-        # @since: version 0.1
-        # """
-        # try: return Vector(map(lambda x, y: x/y, self, other))
-        # except: return Vector(map(lambda x: x/other, self))
-
-    # def __rdiv__(self, other):
-        # """
-        # The same as __div__
-        # """
-        # try: return Vector(map(lambda x, y: x/y, other, self))
-        # except:
-            # # other is a const
-            # return Vector(map(lambda x: other/x, self))
-
-    # def size(self): return len(self)
-    
-    # def conjugate(self): return Vector([x.conjugate() for x in self])
-    
-    # def ReIm(self):
-        # """
-        # Return the real and imaginary parts
-        # """
-        # return [
-                # Vector([x.real for x in self]),
-                # Vector([x.imag for x in self]),
-                # ]
+    def __sub__(self, vectorX):
+        '''
+        Method to subtract a vector (of the same size) from the currect 
+        vector. The resulting vector will be the result of element-wise 
+        subtraction.
         
-    # def AbsArg(self):
-        # """
-        # Return modulus and phase parts
-        # """
-        # return [
-            # Vector([abs(x) for x in self]),
-            # Vector([math.atan2(x.imag, x.real) for x in self]),
-            # ]     
+        @param vectorX: vector to be subtracted.
+        @type vectorX: copads.matrix.Vector object
+        @return: resulting copads.matrix.Vector object
+        '''
+        pass
+        
+    def __mul__(self, vectorX):
+        '''
+        Method to multiply a vector (of the same size) to the currect 
+        vector. The resulting vector will be the result of element-wise 
+        multiplication.
+        
+        @param vectorX: vector to be multiplied.
+        @type vectorX: copads.matrix.Vector object
+        @return: resulting copads.matrix.Vector object
+        '''
+        pass
+        
+    def __div__(self, vectorX):
+        '''
+        Method to divide a vector (of the same size) from the currect 
+        vector. The resulting vector will be the result of element-wise 
+        division.
+        
+        @param vectorX: vector to be divided.
+        @type vectorX: copads.matrix.Vector object
+        @return: resulting copads.matrix.Vector object
+        '''
+        pass   
     
 
 # class Matrix:
