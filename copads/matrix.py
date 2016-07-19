@@ -139,6 +139,30 @@ class Vector(object):
         self.values = values
         return self.values
         
+    def asinh(self):
+        try:
+            values = [math.asinh(x) for x in self.values]
+        except:
+            raise VectorOperationError('Failure in Vector.asinh()')
+        self.values = values
+        return self.values
+
+    def acosh(self):
+        try:
+            values = [math.acosh(x) for x in self.values]
+        except:
+            raise VectorOperationError('Failure in Vector.acosh()')
+        self.values = values
+        return self.values
+        
+    def atanh(self):
+        try:
+            values = [math.atanh(x) for x in self.values]
+        except:
+            raise VectorOperationError('Failure in Vector.atanh()')
+        self.values = values
+        return self.values
+        
     def sqrt(self):
         try:
             values = [math.sqrt(x) for x in self.values]
