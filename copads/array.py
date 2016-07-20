@@ -6,6 +6,7 @@ Copyright (c) Maurice H.T. Ling <mauriceling@acm.org>
 Date created: 19th March 2008
 '''
 
+import types
 from copadsexceptions import ArrayError
 
 class ParallelArray(object):
@@ -34,10 +35,12 @@ class ParallelArray(object):
         @param fields: field names to initiate.
         @type fields: list
         '''
-        if type(fields) <> type([]):
+        if isinstance(fields, types.ListType):
+            for field in fields: 
+                self.addField(field)
+        else:
             raise ArrayError('field parameter must be a list, ' + \
-                str(type(fields)) + ' given.')
-        for field in fields: self.addField(field)  
+                             str(type(fields)) + ' given.')
               
     def addField(self, field):
         '''
