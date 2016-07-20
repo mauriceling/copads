@@ -693,6 +693,17 @@ class Matrix(object):
         except KeyError:
             return default_value
 
+    def diagonal(self, default_value=None):
+        '''
+        Method to get the diagonal values of the matrix.
+        
+        @param default_value: the default value to return when the 
+        coordinate is not present. Default = None.
+        @return: list of the diagonal values of the matrix.
+        '''
+        return [self.__getitem__((index, index), default_value) 
+                for index in range(max(self.dimensions))]
+                
     def trace(self):
         '''
         Method to calculate the trace (summation of diagonals from M[0][0] 
@@ -701,10 +712,20 @@ class Matrix(object):
         @return: trace of matrix.
         '''
         self.updateDimensions()
-        values = [self.__getitem__((index, index), 0) 
-                  for index in range(max(self.dimensions))]
+        values = self.diagonal(0)
         return sum(values)
 
+    def transpose(self):
+        '''
+        Method to generate tranposition of the matrix.
+        
+        @return: transposed matrix.
+        '''
+        result = Matrix()
+        for k in self.values.keys():
+            result[(k[1], k[0])] = self.values[k]
+        return result
+ 
     def _addScalar(self, itemX):
         '''
         Private method for scalar addition where each element (non-None) in 
@@ -922,13 +943,6 @@ class Matrix(object):
     # def isSquare(self):
         # """Is the matrix square?"""
         # return self.rows() == self.cols()
-
-    # def transpose(self):
-        # """The transpose of the matrix"""
-        # r = []
-        # for col in xrange(self.cols()):
-            # r.append(self.col(col))
-        # return Matrix(r)
 
     # def determinant(self):
         # """The determinant of the matrix"""
@@ -1291,14 +1305,6 @@ class Matrix(object):
     # """Returns the sum of the elements of a."""
     # try: return reduce(lambda x, y: x+y, a, 0)
     # except: raise TypeError, 'vector::FAILURE in sum'
-
-
-# def smTranspose(a):
-    # """transpose"""
-    # new = SparseMatrix({})
-    # for ij in a:
-        # new[(ij[1], ij[0])] = a[ij]
-    # return new
 
 # def smDotDot(y, a, x):
     # """double dot product y^+ *A*x """

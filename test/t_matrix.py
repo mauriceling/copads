@@ -221,6 +221,13 @@ class testMatrix(unittest.TestCase):
         matrixA[(1,1)] = 1
         matrixA[(2,2)] = 4
         self.assertEqual(matrixA.trace(), 5)
+    def testTranspose(self):
+        matrixA = m.Matrix()
+        matrixA[(0,1)] = 1
+        matrixA[(2,3)] = 4
+        matrixB = matrixA.transpose()
+        result = {(1,0): 1, (3,2): 4}
+        self.assertEqual(matrixB.values, result)
     def testAddScalar(self):
         matrixA = m.Matrix()
         matrixA[(0,0)] = 0
