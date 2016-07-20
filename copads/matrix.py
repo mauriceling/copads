@@ -570,7 +570,6 @@ class Matrix(object):
         '''
         self.values = {}
         self.dimensions = [0, 0]
-        self.padding = 0.0
         if len(args) == 0:
             pass
         if len(args) == 1 and isinstance(args[0], types.IntType):
@@ -693,13 +692,14 @@ class Matrix(object):
         except KeyError:
             return default_value
 
-    def row(self, row_count, default_value=None):
+    def row(self, row_count, default_value=None, update_dimensions=False):
         '''
         Method to get the values for a specific row in the matrix.
         
         >>> m = m.Matrix()
         >>> m[(0,0)] = 1
         >>> m[(1,1)] = 2
+        >>> m.updateDimensions()
         >>> m.row(0, None)
         [1, None]
         >>> m.row(0, 0)
@@ -709,21 +709,28 @@ class Matrix(object):
         @type row_count: integer
         @param default_value: the default value to return when the 
         coordinate is not present. Default = None.
+        @param update_dimensions: flag to determine whether to update 
+        matrix dimensions, which can reduce speed if matrix is large. 
+        Default = false (dimensions not updated).
+        @type update_dimensions: boolean
         @return: row vector in list.
         '''
-        max_column = [coordinate[1] for coordinate in self.values.keys()]
-        max_column = max(max_column) + 1
+        if update_dimensions:
+            self.updateDimensions()
         row_count = int(row_count)
+        num_of_cols = self.dimensions[1]
         return [self.__getitem__((row_count, c), default_value) 
-                for c in range(max_column)]
+                for c in range(num_of_cols)]
         
-    def column(self, column_count, default_value=None):
+    def column(self, column_count, default_value=None, 
+               update_dimensions=False):
         '''
         Method to get the values for a specific column in the matrix.
         
         >>> m = m.Matrix()
         >>> m[(0,0)] = 1
         >>> m[(1,1)] = 2
+        >>> m.updateDimensions()
         >>> m.column(0, None)
         [1, None]
         >>> m.column(0, 0)
@@ -733,22 +740,33 @@ class Matrix(object):
         @type column_count: integer
         @param default_value: the default value to return when the 
         coordinate is not present. Default = None.
+        @param update_dimensions: flag to determine whether to update 
+        matrix dimensions, which can reduce speed if matrix is large. 
+        Default = false (dimensions not updated).
+        @type update_dimensions: boolean
         @return: column vector in list.
         '''
-        max_row = [coordinate[0] for coordinate in self.values.keys()]
-        max_row = max(max_row) + 1
+        if update_dimensions:
+            self.updateDimensions()
         column_count = int(column_count)
+        num_of_rows = self.dimensions[0]
         return [self.__getitem__((r, column_count), default_value) 
-                for r in range(max_row)]
+                for r in range(num_of_rows)]
             
-    def diagonal(self, default_value=None):
+    def diagonal(self, default_value=None, update_dimensions=False):
         '''
         Method to get the diagonal values of the matrix.
         
         @param default_value: the default value to return when the 
         coordinate is not present. Default = None.
+        @param update_dimensions: flag to determine whether to update 
+        matrix dimensions, which can reduce speed if matrix is large. 
+        Default = false (dimensions not updated).
+        @type update_dimensions: boolean
         @return: list of the diagonal values of the matrix.
         '''
+        if update_dimensions:
+            self.updateDimensions()
         return [self.__getitem__((index, index), default_value) 
                 for index in range(max(self.dimensions))]
                 
@@ -759,7 +777,6 @@ class Matrix(object):
         
         @return: trace of matrix.
         '''
-        self.updateDimensions()
         values = self.diagonal(0)
         return sum(values)
 

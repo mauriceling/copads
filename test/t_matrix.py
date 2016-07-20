@@ -220,6 +220,7 @@ class testMatrix(unittest.TestCase):
         matrixA = m.Matrix()
         matrixA[(0,0)] = 1
         matrixA[(1,1)] = 2
+        matrixA.updateDimensions()
         self.assertEqual(matrixA.row(0, None), [1, None])
         self.assertEqual(matrixA.row(0, 0), [1, 0])
         self.assertEqual(matrixA.row(1, None), [None, 2])
@@ -228,6 +229,7 @@ class testMatrix(unittest.TestCase):
         matrixA = m.Matrix()
         matrixA[(0,0)] = 1
         matrixA[(1,1)] = 2
+        matrixA.updateDimensions()
         self.assertEqual(matrixA.column(0, None), [1, None])
         self.assertEqual(matrixA.column(0, 0), [1, 0])
         self.assertEqual(matrixA.column(1, None), [None, 2])
