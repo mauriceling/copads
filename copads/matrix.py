@@ -358,6 +358,41 @@ class Vector(object):
         '''
         pass
         
+    def __setitem__(self, index, value):
+        '''
+        Method to set element in the vector.
+        
+        >>> v = Vector([0, 0, 0])
+        >>> v[1] = 15
+        
+        @param index: vector index to set the value.
+        @param value: value to set.
+        '''
+        index = int(index)
+        self.values[index] = value
+    
+    def __getitem__(self, index, default_value=None):
+        '''
+        Method to get element in the vector.
+        
+        >>> v = Vector([0, 0, 0])
+        >>> v[1] = 15
+        >>> v[1]
+        15
+        >>> v[5]
+        None
+        
+        @param index: vector index to get the value.
+        @param default_value: the default value to return when the 
+        coordinate is not present. Default = None
+        @return: value of the index (if present); or else, return 
+        default_value. 
+        '''
+        try: 
+            return self.values[int(index)]
+        except IndexError:
+            return default_value
+            
     def __add__(self, vectorX):
         '''
         Method to add a vector (of the same size) to the currect vector. 

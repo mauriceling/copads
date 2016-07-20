@@ -115,6 +115,17 @@ class testVector(unittest.TestCase):
     def testSum(self):
         vectorA = m.Vector([1, 2, 3, 4])
         self.assertEqual(vectorA.factorial(), math.fsum(vectorA.values))
+    def testSetitem(self):
+        vectorA = m.Vector([1, 2, 3, 4])
+        self.assertEqual(vectorA.values, [1, 2, 3, 4])
+        vectorA[1] = 10
+        self.assertEqual(vectorA.values, [1, 10, 3, 4])
+    def testGetItem(self):
+        vectorA = m.Vector([1, 2, 3, 4])
+        self.assertEqual(vectorA.values, [1, 2, 3, 4])
+        vectorA[1] = 10
+        self.assertEqual(vectorA[1], 10)
+        self.assertEqual(vectorA[10], None)
     def testAdd(self):
         vectorA = m.Vector([1, 2, 3, 4])
         vectorB = m.Vector([1, 2, 3, 4])
