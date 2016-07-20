@@ -1197,52 +1197,7 @@ class Matrix(object):
         # return SparseMatrix(zip(list(self.keys()), 
                             # map(lambda x: other/x, list(self.values()))))
 
-    # def abs(self):
-        # return SparseMatrix(zip(list(self.keys()), 
-                            # map(operator.abs, list(self.values()))))
-
-    # def out(self):
-        # print('# (i, j) -- value')
-        # for k in list(self.keys()):
-            # print(k, self[k])
-
-    # def plot(self, width_in=400, height_in=400):
-
-        # import colormap
-        # import Tkinter
-
-        # cmax = max(self.values())
-        # cmin = min(self.values())
-        
-        # offset = 0.05*min(width_in, height_in)
-        # xmin, ymin, xmax, ymax = 0, 0, self.size()[0], self.size()[1]
-        # scale = min(0.9*width_in, 0.9*height_in)/max(xmax-xmin, ymax-ymin)
-
-        # root = Tkinter.Tk()
-        # frame = Tkinter.Frame(root)
-        # frame.pack()
-        
-        # text = Tkinter.Label(width=20, height=10, text='matrix sparsity')
-        # text.pack()
-        
-
-        # canvas = Tkinter.Canvas(bg="black", width=width_in, height=height_in)
-        # canvas.pack()
-
-        # button = Tkinter.Button(frame, text="OK?", fg="red",
-                                # command=frame.quit)
-        # button.pack()
-
-        # for index in list(self.keys()):
-            # ix, iy = index[0], ymax-index[1]-1
-            # ya, xa = offset+scale*(ix), height_in -offset-scale*(iy)
-            # yb, xb = offset+scale*(ix+1), height_in -offset-scale*(iy)
-            # yc, xc = offset+scale*(ix+1), height_in -offset-scale*(iy+1)
-            # yd, xd = offset+scale*(ix), height_in -offset-scale*(iy+1)
-            # color = colormap.strRgb(self[index], cmin, cmax)
-            # canvas.create_polygon(xa, ya, xb, yb, xc, yc, xd, yd, fill=color)
-        
-        # root.mainloop()
+    
 
     # def CGsolve(self, x0, b, tol=1.0e-10, nmax = 1000, verbose=1):
         # """
@@ -1407,19 +1362,3 @@ class Matrix(object):
     # else:
         # raise TypeError, 'in dot'
 
-# def smDiag(b):
-    # # given a sparse matrix b return its diagonal
-    # res = Vector.zeros(b.size()[0])
-    # for i in range(b.size()[0]):
-        # res[i] = b.get((i, i), 0.)
-    # return res
-        
-# def smIdentity(n):
-    # if type(n) != types.IntType:
-        # raise TypeError, ' in identity: # must be integer'
-    # else:
-        # new = SparseMatrix({})
-        # for i in range(n):
-            # new[(i, i)] = 1+0.
-        # return new
- 
