@@ -73,7 +73,7 @@ class Vector(object):
         try:
             values = [math.log10(x) for x in self.values]
         except:
-            raise VectorOperationError('Failure in Vector.log10()')
+            raise VectorError('Failure in Vector.log10()')
         self.values = values
         return self.values
 
@@ -89,7 +89,7 @@ class Vector(object):
         try:
             values = [math.log(x, base) for x in self.values]
         except:
-            raise VectorOperationError('Failure in Vector.log()')
+            raise VectorError('Failure in Vector.log()')
         self.values = values
         return self.values
 
@@ -103,7 +103,7 @@ class Vector(object):
         try:
             values = [math.exp(x) for x in self.values]
         except:
-            raise VectorOperationError('Failure in Vector.exp()')
+            raise VectorError('Failure in Vector.exp()')
         self.values = values
         return self.values
         
@@ -120,7 +120,7 @@ class Vector(object):
         try:
             values = [float(x)**n for x in self.values]
         except:
-            raise VectorOperationError('Failure in Vector.pow()')
+            raise VectorError('Failure in Vector.pow()')
         self.values = values
         return self.values
         
@@ -133,7 +133,7 @@ class Vector(object):
         try:
             values = [math.sin(x) for x in self.values]
         except:
-            raise VectorOperationError('Failure in Vector.sin()')
+            raise VectorError('Failure in Vector.sin()')
         self.values = values
         return self.values
 
@@ -146,7 +146,7 @@ class Vector(object):
         try:
             values = [math.cos(x) for x in self.values]
         except:
-            raise VectorOperationError('Failure in Vector.cos()')
+            raise VectorError('Failure in Vector.cos()')
         self.values = values
         return self.values
         
@@ -159,7 +159,7 @@ class Vector(object):
         try:
             values = [math.tan(x) for x in self.values]
         except:
-            raise VectorOperationError('Failure in Vector.tan()')
+            raise VectorError('Failure in Vector.tan()')
         self.values = values
         return self.values
         
@@ -172,7 +172,7 @@ class Vector(object):
         try:
             values = [math.asin(x) for x in self.values]
         except:
-            raise VectorOperationError('Failure in Vector.asin()')
+            raise VectorError('Failure in Vector.asin()')
         self.values = values
         return self.values
 
@@ -185,7 +185,7 @@ class Vector(object):
         try:
             values = [math.acos(x) for x in self.values]
         except:
-            raise VectorOperationError('Failure in Vector.a()')
+            raise VectorError('Failure in Vector.a()')
         self.values = values
         return self.values
         
@@ -199,7 +199,7 @@ class Vector(object):
         try:
             values = [math.atan(x) for x in self.values]
         except:
-            raise VectorOperationError('Failure in Vector.atan()')
+            raise VectorError('Failure in Vector.atan()')
         self.values = values
         return self.values
 
@@ -213,7 +213,7 @@ class Vector(object):
         try:
             values = [math.sinh(x) for x in self.values]
         except:
-            raise VectorOperationError('Failure in Vector.sinh()')
+            raise VectorError('Failure in Vector.sinh()')
         self.values = values
         return self.values
 
@@ -227,7 +227,7 @@ class Vector(object):
         try:
             values = [math.cosh(x) for x in self.values]
         except:
-            raise VectorOperationError('Failure in Vector.cosh()')
+            raise VectorError('Failure in Vector.cosh()')
         self.values = values
         return self.values
         
@@ -241,7 +241,7 @@ class Vector(object):
         try:
             values = [math.tanh(x) for x in self.values]
         except:
-            raise VectorOperationError('Failure in Vector.tanh()')
+            raise VectorError('Failure in Vector.tanh()')
         self.values = values
         return self.values
         
@@ -255,7 +255,7 @@ class Vector(object):
         try:
             values = [math.asinh(x) for x in self.values]
         except:
-            raise VectorOperationError('Failure in Vector.asinh()')
+            raise VectorError('Failure in Vector.asinh()')
         self.values = values
         return self.values
 
@@ -269,7 +269,7 @@ class Vector(object):
         try:
             values = [math.acosh(x) for x in self.values]
         except:
-            raise VectorOperationError('Failure in Vector.acosh()')
+            raise VectorError('Failure in Vector.acosh()')
         self.values = values
         return self.values
         
@@ -283,7 +283,7 @@ class Vector(object):
         try:
             values = [math.atanh(x) for x in self.values]
         except:
-            raise VectorOperationError('Failure in Vector.atanh()')
+            raise VectorError('Failure in Vector.atanh()')
         self.values = values
         return self.values
         
@@ -296,7 +296,7 @@ class Vector(object):
         try:
             values = [math.sqrt(x) for x in self.values]
         except:
-            raise VectorOperationError('Failure in Vector.sqrt()')
+            raise VectorError('Failure in Vector.sqrt()')
         self.values = values
         return self.values
         
@@ -312,7 +312,7 @@ class Vector(object):
         try:
             values = [float(x)**(1.0/float(n)) for x in self.values]
         except:
-            raise VectorOperationError('Failure in Vector.root()')
+            raise VectorError('Failure in Vector.root()')
         self.values = values
         return self.values
     
@@ -403,13 +403,13 @@ class Vector(object):
         @return: resulting copads.matrix.Vector object
         '''
         if len(self.values) != len(vectorX.values):
-            raise VectorOperationError('Vectors have different sizes')
+            raise VectorError('Vectors have different sizes')
         try:
             values = [self.values[i] + vectorX.values[i] 
                       for i in range(len(self.values))]
             return Vector(values)
         except:
-            raise VectorOperationError('Failure in Vector.__add__()')
+            raise VectorError('Failure in Vector.__add__()')
     
     def __neg__(self):
         '''

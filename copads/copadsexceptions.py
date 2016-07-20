@@ -29,7 +29,7 @@ Exceptions Defined for COPADS.
         - FunctionParameterValueError
         - ArrayError
         - MaxIterationException
-        - VectorOperationError
+        - VectorError
 
 Credits
     - MatrixError subclasses 
