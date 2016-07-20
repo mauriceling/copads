@@ -221,6 +221,29 @@ class testMatrix(unittest.TestCase):
         matrixA[(1,1)] = 1
         matrixA[(2,2)] = 4
         self.assertEqual(matrixA.trace(), 5)
+    def testAddScalar(self):
+        matrixA = m.Matrix()
+        matrixA[(0,0)] = 0
+        matrixA[(1,1)] = 1
+        matrixA[(2,2)] = 4
+        matrixB = matrixA + 3
+        result = {(0,0): 3, (1,1): 4, (2,2): 7}
+        self.assertEqual(matrixB.values, result)
+        matrixC = matrixA.add(3)
+        self.assertEqual(matrixC.values, result)
+    def testAddMatrix(self):
+        matrixA = m.Matrix()
+        matrixA[(0,0)] = 0
+        matrixA[(1,1)] = 1
+        matrixA[(2,2)] = 4
+        matrixB = m.Matrix()
+        matrixB[(1,1)] = 1
+        matrixB[(3,3)] = 4
+        matrixC = matrixA + matrixB
+        result = {(0,0): 0, (1,1): 2, (2,2): 4, (3,3): 4}
+        self.assertEqual(matrixC.values, result)
+        matrixD = matrixA.add(matrixB)
+        self.assertEqual(matrixD.values, result)
         
     
 # def SparseMatrix_test():

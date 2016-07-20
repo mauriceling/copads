@@ -509,18 +509,6 @@ class Vector(object):
         @return: resulting copads.matrix.Vector object
         '''
         return self.__div__(vectorX)  
-        
-    def divide(self, vectorX):
-        '''
-        Alias to Vector.__mul__(vectorX) method: divide a vector (of the 
-        same size) from the currect vector. The resulting vector will be 
-        the result of element-wise division.
-        
-        @param vectorX: vector to be divided.
-        @type vectorX: copads.matrix.Vector object
-        @return: resulting copads.matrix.Vector object
-        '''
-        return self.__div__(vectorX)  
     
 
 class Matrix(object):
@@ -717,6 +705,64 @@ class Matrix(object):
                   for index in range(max(self.dimensions))]
         return sum(values)
 
+    def _addScalar(self, itemX):
+        '''
+        Private method for scalar addition where each element (non-None) in 
+        the matrix is added by a scalar value.
+        
+        @param itemX: scalar value to add.
+        @type itemX: integer or float
+        @return: result of addition in Matrix object.
+        '''
+        result = Matrix()
+        for k in self.values.keys():
+            result.values[k] = itemX + self.values[k]
+        return result
+    
+    def _addMatrix(self, itemX):
+        '''
+        Private method for matrix addition where each element (non-None) to 
+        the current matrix.
+        
+        @param itemX: matrix to add.
+        @type itemX: copads.matrix.Matrix object
+        @return: result of addition in Matrix object.
+        '''
+        mkeys = self.values.keys()
+        xkeys = itemX.values.keys()
+        result = Matrix()
+        for mk in [k for k in mkeys if k not in xkeys]:
+            result.values[mk] = self.values[mk]
+        for xk in [k for k in xkeys if k not in mkeys]:
+            result.values[xk] = itemX.values[xk]
+        for ck in [k for k in xkeys if k in mkeys]:
+            result.values[ck] = self.values[ck] + itemX.values[ck]
+        return result
+    
+    def add(self, itemX):
+        '''
+        Alias to Matrix.__add__(itemX) method: add a matrix or a scalar 
+        value to the current matrix.
+        
+        @param itemX: matrix or scalar value (integer or float) to add.
+        @return: result of addition in Matrix object.
+        '''
+        return self.__add__(itemX)
+        
+    def __add__(self, itemX):
+        '''
+        Method to add a matrix or a scalar value to the current matrix.
+        
+        @param itemX: matrix or scalar value (integer or float) to add.
+        @return: result of addition in Matrix object.
+        '''
+        if isinstance(itemX, Matrix):
+            return self._addMatrix(itemX)
+        elif isinstance(itemX, types.IntType) or \
+            isinstance(itemX, types.FloatType):
+            return self._addScalar(itemX)
+            
+    
         
 # class Matrix:
     # """
@@ -801,19 +847,6 @@ class Matrix(object):
         # for row in self.m:
             # r.append(row[j])
         # return r
-
-    # def __add__(self, other):
-        # """Add matrix self + other"""
-        # if not isinstance(other, Matrix):
-            # raise TypeError("Cannot add a matrix to type %s" % type(other))
-        # if not (self.cols() == other.cols() and self.rows() == other.rows()):
-            # raise MatrixAdditionError(self, other)
-        # r = []
-        # for row in xrange(self.rows()):
-            # r.append([])
-            # for col in xrange(self.cols()):
-                # r[row].append(self[(row, col)] + other[(row, col)])
-        # return Matrix(r)
 
     # def __neg__(self):
         # """Negate the current matrix"""
