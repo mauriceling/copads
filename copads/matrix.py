@@ -693,6 +693,54 @@ class Matrix(object):
         except KeyError:
             return default_value
 
+    def row(self, row_count, default_value=None):
+        '''
+        Method to get the values for a specific row in the matrix.
+        
+        >>> m = m.Matrix()
+        >>> m[(0,0)] = 1
+        >>> m[(1,1)] = 2
+        >>> m.row(0, None)
+        [1, None]
+        >>> m.row(0, 0)
+        [1, 0]
+        
+        @param row_count: index of row (zero index) to get data.
+        @type row_count: integer
+        @param default_value: the default value to return when the 
+        coordinate is not present. Default = None.
+        @return: row vector in list.
+        '''
+        max_column = [coordinate[1] for coordinate in self.values.keys()]
+        max_column = max(max_column) + 1
+        row_count = int(row_count)
+        return [self.__getitem__((row_count, c), default_value) 
+                for c in range(max_column)]
+        
+    def column(self, column_count, default_value=None):
+        '''
+        Method to get the values for a specific column in the matrix.
+        
+        >>> m = m.Matrix()
+        >>> m[(0,0)] = 1
+        >>> m[(1,1)] = 2
+        >>> m.column(0, None)
+        [1, None]
+        >>> m.column(0, 0)
+        [1, 0]
+        
+        @param column_count: index of column (zero index) to get data.
+        @type column_count: integer
+        @param default_value: the default value to return when the 
+        coordinate is not present. Default = None.
+        @return: column vector in list.
+        '''
+        max_row = [coordinate[0] for coordinate in self.values.keys()]
+        max_row = max(max_row) + 1
+        column_count = int(column_count)
+        return [self.__getitem__((r, column_count), default_value) 
+                for r in range(max_row)]
+            
     def diagonal(self, default_value=None):
         '''
         Method to get the diagonal values of the matrix.
@@ -849,25 +897,6 @@ class Matrix(object):
         # if not isinstance(other, Matrix):
             # raise TypeError("Cannot compare matrix with %s" % type(other))
         # return cmp(self.m, other.m)
-
-    # def rows(self):
-        # """The number of rows in the matrix"""
-        # return len(self.m)
-
-    # def cols(self):
-        # """The number of columns in the matrix"""
-        # return len(self.m[0])
-
-    # def row(self, i):
-        # """The ith row of the matrix"""
-        # return self.m[i]
-
-    # def col(self, j):
-        # """The jth row of the matrix"""
-        # r = []
-        # for row in self.m:
-            # r.append(row[j])
-        # return r
 
     # def __neg__(self):
         # """Negate the current matrix"""

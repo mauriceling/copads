@@ -216,6 +216,22 @@ class testMatrix(unittest.TestCase):
         self.assertEqual(matrixA[(0,0)], 0)
         self.assertEqual(matrixA[(1,1)], None)
         self.assertEqual(matrixA[(2,2)], 4)
+    def testRow(self):
+        matrixA = m.Matrix()
+        matrixA[(0,0)] = 1
+        matrixA[(1,1)] = 2
+        self.assertEqual(matrixA.row(0, None), [1, None])
+        self.assertEqual(matrixA.row(0, 0), [1, 0])
+        self.assertEqual(matrixA.row(1, None), [None, 2])
+        self.assertEqual(matrixA.row(1, 0), [0, 2])
+    def testColumn(self):
+        matrixA = m.Matrix()
+        matrixA[(0,0)] = 1
+        matrixA[(1,1)] = 2
+        self.assertEqual(matrixA.column(0, None), [1, None])
+        self.assertEqual(matrixA.column(0, 0), [1, 0])
+        self.assertEqual(matrixA.column(1, None), [None, 2])
+        self.assertEqual(matrixA.column(1, 0), [0, 2])
     def testTrace(self):
         matrixA = m.Matrix()
         matrixA[(1,1)] = 1
