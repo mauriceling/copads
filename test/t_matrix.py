@@ -197,6 +197,13 @@ class testMatrix(unittest.TestCase):
         matrixA = m.Matrix(data)
         self.assertEqual(matrixA.values, data)
         self.assertEqual(matrixA.dimensions, [10, 10])
+    def testIdentityMatrix(self):
+        matrixA = m.Matrix()
+        matrixA.createIdentityMatrix(3)
+        result = {(0,0): 1, (0,1): 0, (0,2): 0,
+                  (1,0): 0, (1,1): 1, (1,2): 0,
+                  (2,0): 0, (2,1): 0, (2,2): 1}
+        self.assertEqual(matrixA.values, result)
     def testSetItem(self):
         matrixA = m.Matrix()
         matrixA[(0,0)] = 0

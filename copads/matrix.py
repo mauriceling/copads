@@ -615,6 +615,22 @@ class Matrix(object):
                 self.values[(r, c)] = 0
         self.dimensions = [rows, columns]
         
+    def createIdentityMatrix(self, size):
+        '''
+        Method to create an identity matrix.
+        
+        @param size: size (number of rows and columns) of identity matrix.
+        @type size: integer
+        '''
+        size = int(size)
+        for r in range(size):
+            for c in range(size):
+                if r == c:
+                    self.values[(r, c)] = 1.0
+                else:
+                    self.values[(r, c)] = 0.0
+        self.dimensions = [size, size]
+        
     def addReplaceRow(self, row_number, row_data, update_dimensions=False):
         '''
         Method to add a row (if the row does not exist) or to replace a row 
@@ -777,7 +793,7 @@ class Matrix(object):
         
         @return: trace of matrix.
         '''
-        values = self.diagonal(0)
+        values = self.diagonal(0, True)
         return sum(values)
 
     def transpose(self):
