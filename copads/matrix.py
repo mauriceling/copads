@@ -605,11 +605,18 @@ class Matrix(object):
             return default_value
 
     def trace(self):
+        '''
+        Method to calculate the trace (summation of diagonals from M[0][0] 
+        to M[i][i]) of the matrix.
+        
+        @return: trace of matrix.
+        '''
         self.updateDimensions()
         values = [self.__getitem__((index, index), 0) 
                   for index in range(max(self.dimensions))]
         return sum(values)
 
+        
 # class Matrix:
     # """
     # A linear algebra matrix
