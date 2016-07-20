@@ -132,29 +132,39 @@ class testVector(unittest.TestCase):
         result = [2, 4, 6, 8]
         vectorC = vectorA + vectorB
         self.assertEqual(vectorC.values, result)
+        vectorD = vectorA.add(vectorB)
+        self.assertEqual(vectorD.values, result)
     def testNegate(self):
         vectorA = m.Vector([1, -2, 3, -4])
         result = [-1, 2, -3, -4]
         vectorC = -vectorA
         self.assertEqual(vectorC.values, result)
+        vectorD = vectorA.negate()
+        self.assertEqual(vectorD.values, result)
     def testSubtract(self):
         vectorA = m.Vector([1, 2, 3, 4])
         vectorB = m.Vector([0, 1, 0, 2])
         result = [1, 1, 3, 2]
         vectorC = vectorA - vectorB
         self.assertEqual(vectorC.values, result)
+        vectorD = vectorA.subtract(vectorB)
+        self.assertEqual(vectorD.values, result)
     def testMultiply(self):
         vectorA = m.Vector([1, 2, 3, 4])
         vectorB = m.Vector([1, 2, 3, 4])
         result = [1, 4, 9, 16]
         vectorC = vectorA * vectorB
         self.assertEqual(vectorC.values, result)
+        vectorD = vectorA.multiply(vectorB)
+        self.assertEqual(vectorD.values, result)
     def testDivide(self):
         vectorA = m.Vector([1, 2, 3, 4])
         vectorB = m.Vector([1, 2, 3, 4])
         result = [1, 1, 1, 1]
         vectorC = vectorA / vectorB
         self.assertEqual(vectorC.values, result)
+        vectorD = vectorA.divide(vectorB)
+        self.assertEqual(vectorD.values, result)
 
     
 class testMatrix(unittest.TestCase):

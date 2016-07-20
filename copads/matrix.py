@@ -408,6 +408,18 @@ class Vector(object):
         except:
             raise VectorError('Failure in Vector.__add__()')
     
+    def add(self, vectorX):
+        '''
+        Alias to Vector.__add__(vectorX) method: add a vector (of the 
+        same size) to the currect vector. The resulting vector will be the 
+        result of element-wise addition.
+        
+        @param vectorX: vector to be added.
+        @type vectorX: copads.matrix.Vector object
+        @return: resulting copads.matrix.Vector object
+        '''
+        return self.__add__(vectorX)
+        
     def __neg__(self):
         '''
         Method to negate the currect vector. The resulting vector will be 
@@ -416,6 +428,15 @@ class Vector(object):
         @return: resulting copads.matrix.Vector object
         '''
         pass
+        
+    def negate(self):
+        '''
+        Alias to Vector.__neg__() method: negate the currect vector. The 
+        resulting vector will be the result of element-wise negation.
+        
+        @return: resulting copads.matrix.Vector object
+        '''
+        return self.__neg__()
         
     def __sub__(self, vectorX):
         '''
@@ -429,6 +450,18 @@ class Vector(object):
         '''
         pass
         
+    def subtract(self, vectorX):
+        '''
+        Alias to Vector.__sub__(vectorX) method: subtract a vector (of 
+        the same size) from the currect vector. The resulting vector will 
+        be the result of element-wise subtraction.
+        
+        @param vectorX: vector to be subtracted.
+        @type vectorX: copads.matrix.Vector object
+        @return: resulting copads.matrix.Vector object
+        '''
+        return self.__sub__(vectorX)
+        
     def __mul__(self, vectorX):
         '''
         Method to multiply a vector (of the same size) to the currect 
@@ -441,6 +474,18 @@ class Vector(object):
         '''
         pass
         
+    def multiply(self, vectorX):
+        '''
+        Alias to Vector.__mul__(vectorX) method: multiply a vector (of the 
+        same size) to the currect vector. The resulting vector will be the 
+        result of element-wise multiplication.
+        
+        @param vectorX: vector to be multiplied.
+        @type vectorX: copads.matrix.Vector object
+        @return: resulting copads.matrix.Vector object
+        '''
+        return self.__mul__(vectorX)
+        
     def __div__(self, vectorX):
         '''
         Method to divide a vector (of the same size) from the currect 
@@ -452,6 +497,30 @@ class Vector(object):
         @return: resulting copads.matrix.Vector object
         '''
         pass   
+        
+    def divide(self, vectorX):
+        '''
+        Alias to Vector.__mul__(vectorX) method: divide a vector (of the 
+        same size) from the currect vector. The resulting vector will be 
+        the result of element-wise division.
+        
+        @param vectorX: vector to be divided.
+        @type vectorX: copads.matrix.Vector object
+        @return: resulting copads.matrix.Vector object
+        '''
+        return self.__div__(vectorX)  
+        
+    def divide(self, vectorX):
+        '''
+        Alias to Vector.__mul__(vectorX) method: divide a vector (of the 
+        same size) from the currect vector. The resulting vector will be 
+        the result of element-wise division.
+        
+        @param vectorX: vector to be divided.
+        @type vectorX: copads.matrix.Vector object
+        @return: resulting copads.matrix.Vector object
+        '''
+        return self.__div__(vectorX)  
     
 
 class Matrix(object):
