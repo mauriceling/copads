@@ -10,7 +10,7 @@ from dataframe import Series
 from dataframe import Dataframe
 from dataframe import MultiDataframe
 
-def Series_Dataframe(source_object):
+def tc_Series_Dataframe(source_object):
     '''
     Function to convert from dataframe.Series object to dataframe.Dataframe 
     object.
@@ -21,7 +21,7 @@ def Series_Dataframe(source_object):
     '''
     return source_object.toDataframe()
     
-def Dataframe_Series(source_object, series_name):
+def tc_Dataframe_Series(source_object, series_name):
     '''
     Function to convert from dataframe.Dataframe object to dataframe.Series 
     object.
@@ -34,7 +34,7 @@ def Dataframe_Series(source_object, series_name):
     '''
     return source_object.toSeries(series_name)
     
-def Dataframe_MultiDataframe(source_object):
+def tc_Dataframe_MultiDataframe(source_object):
     '''
     Function to convert from dataframe.Dataframe object to 
     dataframe.MultiDataframe object.
@@ -46,4 +46,17 @@ def Dataframe_MultiDataframe(source_object):
     mdf = MultiDataframe()
     mdf.addDataframe(source_object, False)
     return mdf
+    
+def tc_MultiDataframe_Dataframe(source_object, dataframe_name):
+    '''
+    Function to convert from dataframe.MultiDataframe object to 
+    dataframe.Dataframe object.
+    
+    @param source_object: object to be type casted / converted.
+    @type source_object: dataframe.MultiDataframe object
+    @param dataframe_name: name of dataframe to extract
+    @type dataframe_name: string
+    @return: dataframe.MultiDataframe object
+    '''
+    pass
     
