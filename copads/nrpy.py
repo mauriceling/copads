@@ -587,7 +587,7 @@ def factln(n):
 
 def fgauss(x, a, y, dyda, na):
     y = 0.0
-    for i in range(1, na, 3)
+    for i in range(1, na, 3):
         arg = (x-a[i+1]) / a[i+2]
         ex = exp(-arg*arg)
         fac = a[i] * ex * 2.0 * arg
