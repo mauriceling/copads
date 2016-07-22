@@ -7,103 +7,151 @@ Date created: 19th March 2008
 '''
 
 import types
-from copadsexceptions import ArrayError
+from copadsexceptions import ParallelArrayError
 
 class ParallelArray(object):
     '''
-    Parallel Array is an array whereby each data list in the array is of the
-    same size.
+    Parallel Array is an array whereby each data list in the array is of 
+    the same size.
     Ref: http://en.wikipedia.org/wiki/Parallel_array
     '''
 
-    def __init__(self, fields=None):
+    def __init__(self, fieldnames=[]):
         '''
-        Constructor.       
+        Constructor method.      
         
-        @param fields: field names to initiate. Default = None.
-        @type fields: list
+        @param fieldnames: field names to initiate. Default = empty list.
+        @type fieldnames: list
         '''
         self.data = {}
         self.fields = []
-        if fields:
-            self.initFields(kwargs['fields'])  
-          
-    def initFields(self, fields):
-        '''
-        Initiates a list of fields into the array.
-        
-        @param fields: field names to initiate.
-        @type fields: list
-        '''
-        if isinstance(fields, types.ListType):
-            for field in fields: 
-                self.addField(field)
-        else:
-            raise ArrayError('field parameter must be a list, ' + \
-                             str(type(fields)) + ' given.')
-              
-    def addField(self, field):
-        '''
-        Method to add a new field into the array. Raises ArrayError if 
-        attempt to add an existing field.
-        
-        @param field: name of field
-        @type field: string
-        '''
-        if field in self.data:
-            raise ArrayError(str(field) + ' existed.')
-        if isinstance(field, types.StringType):
-            raise ArrayError('field must be a string')
-        if len(self.fields) == 0: self.initFields(list(field))
-        else:
-            ddata = [None for x in range(len(self.data[self.fields[0]]))]
-            self.data[field] = ddata
-            self.fields.append(field)
-            self.field_len = len(self.fields)
+        if len(fieldnames) > 0 and isinstance(fieldnames, types.ListType):
+            self.addFields(fieldnames)
             
-    def removeField(self, field):
+    def fieldnames(self):
         '''
-        Removes a field, together with its data, from the array.
+        Method to return a list of field names.
         
-        @param field: name of field
-        @type field: string
+        @return: list of field names.
         '''
-        try:
-            self.data.pop(field)
-            self.fields.remove(field)
-            self.field_len = len(self.fields)
-        except KeyError: pass
+        return self.fields
         
-    def changeField(self, oldname, newname):
+    def _datalength(self):
         '''
-        Change a field name.
+        Private method to get the length of data (number of elements) for 
+        each field. Each data field will have the same number of elements.
         
-        @param oldname: existing name of field
-        @type oldname: string
-        @param newname: new name to change to. A new field by this name 
-        will be created if 'oldname' is not found
-        @type newname: string
+        @return: number of elements.
         '''
-        if self.data.has_key(newname):
-            raise ArrayError(str(newname) + ' already exist in array.')
-        if self.data.has_key(oldname):
-            temp = self.data[oldname]
-            self.removeField(oldname)
-            self.data[newname] = temp
-        else: self.addField(newname)
+        if len(self.fields) > 0:
+            return len(self.data[self.fields[0]])
+        else:
+            return 0
+         
+    def addFields(self, fieldnames):
+        '''
+        Method to add one or more field names.
         
-    def addData(self, fields, data):
+        @param fieldnames: field names to add.
+        @type fieldnames: list or string
         '''
-        Add data into the array.
+        self.fields = self.data.keys()
+        datalength = self._datalength()
+        if isinstance(fieldnames, types.StringType):
+            fieldnames = [fieldnames]
+        for fname in fieldnames:
+            if fname in self.fields:
+                pass
+            else:
+                self.data[fname] = [None] * datalength
+                self.fields.append(fname)
+                
+    def removeField(self, fieldname):
+        '''
+        Method to remove a data field.
         
-        @param fields: ordered list of fields
-        @param data: ordered list of data to add
+        @param fieldname: field name to remove.
+        @type fieldname: string
+        @return: list of data from the removed data field.
         '''
-        if len(fields) <> len(data):
-            raise ArrayError('Field size and data length are different')
-        for x in fields:
-            if not self.data.has_key(x):
-                raise ArrayError(str(x) + ' field not found')
-        for i in range(len(fields)):
-            self.data[fields[i]].append(data[i])
+        if not isinstance(fieldname, types.StringType):
+            raise ParallelArrayError('fieldnames must be a string')
+        if fieldname in self.fields:
+            self.fields.remove(fieldname)
+            data = [x for x in self.data[fieldname]]
+            del self.data[fieldname]
+            return data
+        else:
+            return []
+          
+    def addDataList(self, fieldnames, values):
+        '''
+        Method to add values using an ordered list of field names and the 
+        corresponding ordered list of values. 
+        
+        The lists of field names and and values need not be the complete 
+        set of field names in the array - all missing data (field names 
+        and values not provided) will be deemed as None, in order to 
+        maintain the same number of values in each field.
+        
+        Values can be added to a non-existing field. In this case, a new 
+        field will be added and the values will be front-padded by None.
+        
+        @param fieldnames: ordered names of fields for values to be added 
+        to.
+        @type fieldnames: list
+        @param values: ordered values to be added.
+        @type values: list
+        '''
+        record = {}
+        if not isinstance(fieldnames, types.ListType):
+            raise ParallelArrayError('fieldnames must be a list')
+        if not isinstance(values, types.ListType):
+            raise ParallelArrayError('values must be a string')
+        if len(fieldnames) != len(values):
+            raise ParallelArrayError('fieldnames and values must have \
+            the same number of elements')
+        for index in range(len(fieldnames)):
+            record[fieldnames[index]] = values[index]
+        self.addDataDictionary(record)
+        
+    def addDataDictionary(self, record):
+        '''
+        Method to add values using a dictionary, where the key is the field 
+        name and the value is the value of the field.
+        
+        The set of field names and and values need not be the complete 
+        set of field names in the array - all missing data (field names 
+        and values not provided) will be deemed as None, in order to 
+        maintain the same number of values in each field.
+        
+        Values can be added to a non-existing field. In this case, a new 
+        field will be added and the values will be front-padded by None.
+        
+        @param record: data record to be added.
+        @type record: dictionary
+        '''
+        self.fields = self.data.keys()
+        datalength = self._datalength()
+        self.addFields(record.keys()) # in case there are new fields
+        for k in record:
+            self.data[k].append(record[k])
+        for nk in [k for k in self.fields 
+                   if k not in record.keys()]:
+            self.data[nk].append(None)
+        
+    def changeFieldname(self, original_name, new_name):
+        '''
+        Method to change the name of an existing field.
+        
+        @param original_name: name of the existing field to be changed.
+        @type original_name: string
+        @param new_name: new name for the existing field.
+        @type new_name: string
+        '''
+        if original_name in self.data:
+            data = self.removeField(original_name)
+            self.data[new_name] = data
+        self.fields = self.data.keys()
+
     
