@@ -56,7 +56,7 @@ def tc_MultiDataframe_Dataframe(source_object, dataframe_name):
     @type source_object: dataframe.MultiDataframe object
     @param dataframe_name: name of dataframe to extract
     @type dataframe_name: string
-    @return: dataframe.MultiDataframe object
+    @return: dataframe.Dataframe object
     '''
-    pass
+    return source_object.frames[dataframe_name]
     
