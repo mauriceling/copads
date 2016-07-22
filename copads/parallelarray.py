@@ -52,7 +52,7 @@ class ParallelArray(object):
         '''
         if field in self.data:
             raise ArrayError(str(field) + ' existed.')
-        if type(field) <> type('string'):
+        if isinstance(field, types.StringType):
             raise ArrayError('field must be a string')
         if len(self.fields) == 0: self.initFields(list(field))
         else:
