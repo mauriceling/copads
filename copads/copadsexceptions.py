@@ -20,7 +20,7 @@ Exceptions Defined for COPADS.
             - TreeNodeTypeError
         - FunctionParameterTypeError
         - FunctionParameterValueError
-        - ArrayError
+        - ParallelArrayError
         - MaxIterationException
         - VectorError
 
@@ -154,8 +154,8 @@ class FunctionParameterValueError(CopadsError):
     def __init__(self, msg): self.msg = msg
     def __str__(self): return self.msg
     
-class ArrayError(CopadsError):
-    '''Exception to be thrown when encountered error in Array type'''
+class ParallelArrayError(CopadsError):
+    '''Exception to be thrown when encountered error in ParallelArray type'''
     def __init__(self, msg): self.msg = msg
     def __str__(self): return self.msg
     
