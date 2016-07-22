@@ -8,7 +8,7 @@ Licence: Python Software Foundation License version 2
 C{
 digraph G {
   node [shape = tripleoctagon]; "List" "Dictionary";
-  node [shape = reactangle];
+  node [shape = box];
   "dataframe.Series" -> "dataframe.Dataframe";
   "dataframe.Series" -> "Dictionary";
   "dataframe.Series" -> "List";
@@ -17,7 +17,8 @@ digraph G {
   "dataframe.Dataframe" -> "dataframe.MultiDataframe";
   "dataframe.MultiDataframe" -> "dataframe.Dataframe";
   "matrix.Vector" -> "List";
-  "matrix.Vector" -> "Dictionary"
+  "matrix.Vector" -> "Dictionary";
+  "List" -> "Dictionary";
 }
 }
 '''
@@ -160,4 +161,17 @@ def tc_Vector_Series(source_object):
     series = Series()
     series.addData(source_object.values)
     return series
+    
+def tc_List_Dictionary(source_object):
+    '''
+    Function to convert from list to a dictionary.
+    
+    @param source_object: object to be type casted / converted.
+    @type source_object: list
+    @return: dictionary where key is the index and value is the data value.
+    '''
+    data = {}
+    for index in range(len(source_object)):
+        data[index] = source_object[index]
+    return data
     

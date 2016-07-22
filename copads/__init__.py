@@ -33,20 +33,21 @@ __author__ = 'Maurice H.T. Ling <mauriceling@acm.org>'
 __copyright__ = '(c) 2007-2016, Maurice H.T. Ling.'
 
 # Data Structures
-from dataframe import Series
 from dataframe import Dataframe
 from dataframe import MultiDataframe
-from matrix import Vector
+from dataframe import Series
 from matrix import Matrix
+from matrix import Vector
 from parallelarray import ParallelArray
 
 # Type-casting functions
+from typecast import tc_Dataframe_Series
+from typecast import tc_Dataframe_MultiDataframe
+from typecast import tc_List_Dictionary
+from typecast import tc_MultiDataframe_Dataframe
 from typecast import tc_Series_Dataframe
 from typecast import tc_Series_Dictionary
 from typecast import tc_Series_List
 from typecast import tc_Series_Vector
-from typecast import tc_Dataframe_Series
-from typecast import tc_Dataframe_MultiDataframe
-from typecast import tc_MultiDataframe_Dataframe
 from typecast import tc_Vector_List
 from typecast import tc_Vector_Dictionary
