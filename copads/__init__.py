@@ -31,3 +31,17 @@ __version__ = '0.5.0'
 __author__ = 'Maurice H.T. Ling <mauriceling@acm.org>'
 
 __copyright__ = '(c) 2007-2016, Maurice H.T. Ling.'
+
+# Data Structures
+from dataframe import Series
+from dataframe import Dataframe
+from dataframe import MultiDataframe
+from matrix import Vector
+from matrix import Matrix
+from parallelarray import ParallelArray
+
+# Type-casting functions
+from typecast import tc_Series_Dataframe
+from typecast import tc_Dataframe_Series
+from typecast import tc_Dataframe_MultiDataframe
+from typecast import tc_MultiDataframe_Dataframe
