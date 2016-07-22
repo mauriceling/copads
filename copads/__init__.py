@@ -44,6 +44,9 @@ from parallelarray import ParallelArray
 from typecast import tc_Series_Dataframe
 from typecast import tc_Series_Dictionary
 from typecast import tc_Series_List
+from typecast import tc_Series_Vector
 from typecast import tc_Dataframe_Series
 from typecast import tc_Dataframe_MultiDataframe
 from typecast import tc_MultiDataframe_Dataframe
+from typecast import tc_Vector_List
+from typecast import tc_Vector_Dictionary
