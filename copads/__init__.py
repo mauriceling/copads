@@ -42,6 +42,8 @@ from parallelarray import ParallelArray
 
 # Type-casting functions
 from typecast import tc_Series_Dataframe
+from typecast import tc_Series_Dictionary
+from typecast import tc_Series_List
 from typecast import tc_Dataframe_Series
 from typecast import tc_Dataframe_MultiDataframe
 from typecast import tc_MultiDataframe_Dataframe

@@ -60,3 +60,32 @@ def tc_MultiDataframe_Dataframe(source_object, dataframe_name):
     '''
     return source_object.frames[dataframe_name]
     
+def tc_Series_List(source_object, item='data'):
+    '''
+    Function to convert from dataframe.Series object to a list.
+    
+    @param source_object: object to be type casted / converted.
+    @type source_object: dataframe.Series object
+    @param item: item type to be converted into a list. Allowable items are 
+    'data' and 'label'. Default = data.
+    @type item: string
+    @return: list.
+    '''
+    if item == 'data':
+        return source_object.data
+    if item == 'label':
+        return source_object.label
+        
+def tc_Series_Dictionary(source_object):
+    '''
+    Function to convert from dataframe.Series object to a dictionar.
+    
+    @param source_object: object to be type casted / converted.
+    @type source_object: dataframe.Series object
+    @return: dictionary where key is the label and value is the data value.
+    '''
+    data = {}
+    for index in range(len(source_object.label)):
+        data[source_object.label[index]] = source_object.data[index]
+    return data
+    
