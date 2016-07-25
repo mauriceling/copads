@@ -259,8 +259,9 @@ class Dataframe(object):
         series_name = str(series_name)
         s = Series(series_name)
         try:
-            index = self.series_names.index(series_name)
-            data = [self.data[k][index] for k in self.data.keys()]
+            si = self.series_names.index(series_name)
+            data = [self.data[self.label[li]][si] 
+                    for li in range(len(self.label))]
             s.addData(data, self.label)
             return s
         except ValueError, KeyError: 
