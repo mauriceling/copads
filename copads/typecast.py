@@ -7,13 +7,14 @@ Licence: Python Software Foundation License version 2
 
 C{
 digraph G {
-  node [shape = tripleoctagon]; "List" "Dictionary";
+  node [shape = tripleoctagon]; "List" "Tuple" "Sets" "Dictionary";
   node [shape = box];
-  "dataframe.Series" -> "dataframe.Dataframe";
-  "dataframe.Series" -> "Dictionary";
+  "dataframe.Series" -> "dataframe.Dataframe" [color="green" label="tc_Series_Dataframe"];
+  "dataframe.Series" -> "Dictionary" [color="green" label="tc_Series_Dictionary"];
+  "dataframe.Series" -> "List" [color="green" label="tc_Series_List"];
   "dataframe.Series" -> "List";
   "dataframe.Series" -> "matrix.Vector";
-  "dataframe.Dataframe" -> "dataframe.Series";
+  "dataframe.Dataframe" -> "dataframe.Series" [color="green" label="tc_Dataframe_Series"];
   "dataframe.Dataframe" -> "dataframe.MultiDataframe";
   "dataframe.MultiDataframe" -> "dataframe.Dataframe";
   "matrix.Vector" -> "List";
