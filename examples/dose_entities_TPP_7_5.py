@@ -9,6 +9,10 @@ Papers 7: 5.
 '''
 
 import random
+
+import sys, os
+sys.path.append(os.path.join(os.path.dirname(os.getcwd()), 'copads'))
+
 import genetic as g
 import dose_world as w
 from dose_parameters import initial_chromosome, background_mutation_rate

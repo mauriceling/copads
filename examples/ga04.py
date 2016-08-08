@@ -3,7 +3,7 @@
 # reach the goal of having all 4s for their genome
 ######################################################################
 import sys, os
-sys.path.append(os.path.join(os.path.dirname(os.getcwd()), 'src'))
+sys.path.append(os.path.join(os.path.dirname(os.getcwd()), 'copads'))
 
 import genetic as g
 

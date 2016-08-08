@@ -2,7 +2,7 @@
 # GA Program #3: Simulates crossover events between 2 chromosomes
 ######################################################################
 import sys, os
-sys.path.append(os.path.join(os.path.dirname(os.getcwd()), 'src'))
+sys.path.append(os.path.join(os.path.dirname(os.getcwd()), 'copads'))
 
 import genetic as g
 c1 = g.Chromosome([0]*50, [1,2,3,4])          # integer chromosome

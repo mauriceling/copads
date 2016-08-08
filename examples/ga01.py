@@ -3,7 +3,7 @@
 # invertion and translocation mutations.
 ######################################################################
 import sys, os
-sys.path.append(os.path.join(os.path.dirname(os.getcwd()), 'src'))
+sys.path.append(os.path.join(os.path.dirname(os.getcwd()), 'copads'))
 
 from genetic import Chromosome
 c = Chromosome([0]*150)
