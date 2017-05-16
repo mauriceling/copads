@@ -45,7 +45,6 @@ permutations to assemble 16 64-KB files into the original 1 MB file using
 Jigsaw version 1. 
 
 Jigsaw version 2 provides 63 variations for each Jigsaw file. Hence, the 
-that there are 2 x 10**13 permutations for the 16 64-KB files. Hence, the 
 full permutations possible for 16 64-KB files is (2 x 10**13)**63 or 9 x 
 10**837, and that is just for a 1 MB file split into 16 64-KB.
 Jigsaw files.
@@ -613,6 +612,7 @@ class JigsawFile(JigsawCore):
         @param filename: name (absolute path or relative path) of file to 
         be encrypted.
         @type filename: string
+        @return: number of blocks processed
         '''
         count = 0
         if self.slicer == 'even':
@@ -636,11 +636,11 @@ class JigsawFile(JigsawCore):
                 self.decryptkey.write(data + '\n')
                 self._encryptVerbosity(count, data)
                 count = count + 1
+        return count
 
     def _blockReverse(self, block, reverse_flag):
         '''
         Private method for block reversal based on fixed reversal scheme.
-        version 2).
 
         @param block: data to be reversed.
         @type block: string
@@ -921,6 +921,7 @@ class JigsawFile(JigsawCore):
         @param filename: name (absolute path or relative path) of file to 
         be encrypted.
         @type filename: string
+        @return: number of blocks processed
         '''
         if self.block_size < 4096:
             self.block_size = 4096
@@ -952,6 +953,7 @@ class JigsawFile(JigsawCore):
                 self.decryptkey.write(data + '\n')
                 self._encryptVerbosity(count, data)
                 count = count + 1
+        return count
 
     def _blockSwap(self, block, swap_flag):
         '''
@@ -998,6 +1000,7 @@ class JigsawFile(JigsawCore):
         @param filename: name (absolute path or relative path) of file to 
         be encrypted.
         @type filename: string
+        @return: number of blocks processed
         '''
         if self.block_size < 16384:
             self.block_size = 16384
@@ -1010,12 +1013,6 @@ class JigsawFile(JigsawCore):
                 block = self._blockReverse(block, reverse_flag)
                 swap_flag = 'S' + self.rchoice(self.swapSize)
                 block = self._blockSwap(block, swap_flag)
-                (hash, ofileName) = self._writeJigsawFile(block)
-                data = '>>'.join(['AA', str(count), swap_flag,
-                                  reverse_flag, str(len(block)), 
-                                  self.outputdir, ofileName, hash])
-                self.decryptkey.write(data + '\n')
-                self._encryptVerbosity(count, data)
                 (hash, ofileName) = self._writeJigsawFile(block)
                 data = '>>'.join(['AA', str(count), swap_flag, 
                                   reverse_flag, str(len(block)), 
@@ -1033,18 +1030,13 @@ class JigsawFile(JigsawCore):
                 swap_flag = 'S' + self.rchoice(self.swapSize)
                 block = self._blockSwap(block, swap_flag)
                 (hash, ofileName) = self._writeJigsawFile(block)
-                data = '>>'.join(['AA', str(count), swap_flag,
-                                  reverse_flag, str(len(block)), 
-                                  self.outputdir, ofileName, hash])
-                self.decryptkey.write(data + '\n')
-                self._encryptVerbosity(count, data)
-                (hash, ofileName) = self._writeJigsawFile(block)
                 data = '>>'.join(['AA', str(count), swap_flag, 
                                   reverse_flag, str(len(block)), 
                                   self.outputdir, ofileName, hash])
                 self.decryptkey.write(data + '\n')
                 self._encryptVerbosity(count, data)
                 count = count + 1
+        return count
 
     def encrypt(self, filename, outputdir=''):
         '''
@@ -1085,12 +1077,14 @@ class JigsawFile(JigsawCore):
         self._addHeader('sha512', self.checksums[5])
         keyFileName = self._writeKeyHeader()
         if self.version == 'JigsawFileONE': 
-            self._encrypt1(self.filename)
+            num_blocks = self._encrypt1(self.filename)
         if self.version == 'JigsawFileTWO': 
-            self._encrypt2(self.filename)
+            num_blocks = self._encrypt2(self.filename)
         if self.version == 'JigsawFileTHREE': 
-            self._encrypt3(self.filename)
+            num_blocks = self._encrypt3(self.filename)
         self.decryptkey.close()
+        print('%s blocks processed' % str(num_blocks))
+        print('Encrypting file, %s, completed' % filename)
         print('')
         return keyFileName
     
@@ -1408,4 +1402,6 @@ class JigsawFile(JigsawCore):
         if self.keyhead['version'] == 'JigsawFileTHREE': 
             self._decrypt3()
         self._compareHash()
+        print('Decryption completed')
+        print('')
         self.decryptkey.close()
