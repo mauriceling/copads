@@ -225,9 +225,9 @@ class JigsawCore(object):
         >>> text = 'MyNameIsMauriceLing,AndIInventedJigsawEncryption'
         >>> (shuffled_blocks, block_order) = c.shuffleBlock(text, 10)
         >>> print shuffled_blocks
-        'AndIInventcryptionedJigsawEnMyNameIsMauriceLing,'
+        'edJigsawEnuriceLing,AndIInventMyNameIsMacryption'
         >>> print block_order
-        [2, 4, 3, 0, 1]
+        [3, 1, 2, 0, 4]
         >>>
 
         @param block: data block to be shuffled.
@@ -245,6 +245,30 @@ class JigsawCore(object):
         shuffled_blocks = ''.join(shuffled_blocks)
         return (shuffled_blocks, block_order)
 
+    def deshuffleBlock(self, block, length, block_order):
+        '''
+        
+        >>> import jigsaw
+        >>> c = jigsaw.JigsawCore()
+        >>> text = 'MyNameIsMauriceLing,AndIInventedJigsawEncryption'
+        >>> (shuffled_blocks, block_order) = c.shuffleBlock(text, 10)
+        >>> print shuffled_blocks
+        uriceLing,MyNameIsMaAndIInventedJigsawEncryption
+        >>> print block_order
+        [1, 0, 2, 3, 4]
+        >>> deshuffled_blocks = c.deshuffleBlock(shuffled_blocks, 10, block_order)
+        >>> print deshuffled_blocks
+        MyNameIsMauriceLing,AndIInventedJigsawEncryption
+        >>> 
+        '''
+        sblocks = [sb for sb in self.subBlock(block, length)]
+        deshuffled_blocks = range(len(sblocks))
+        index = 0
+        for order in block_order:
+            deshuffled_blocks[index] = sblocks[order]
+            index = index + 1
+        return ''.join(deshuffled_blocks)
+    
     def reversePartBlock(self, block, length):
         '''
         Function to reverse the first N-th length of a string or 
