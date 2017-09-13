@@ -359,9 +359,9 @@ class lindenmayer(object):
             f.write('t.setposition(%s, %s) \n' % start)
             f.write("t.pencolor('%s') \n" % mapping['set_colour'])
             f.write('t.pendown() \n\n')
-        exec('import turtle')
-        exec('t = turtle.Turtle()')
-        exec('t.setundobuffer(1)')
+        import turtle
+        t = turtle.Turtle()
+        t.setundobuffer(1)
         exec("turtle.bgcolor('%s')" % mapping['background_colour'])
         exec('t.speed(0)')
         exec('t.setheading(%s)' % float(mapping['set_heading']))
