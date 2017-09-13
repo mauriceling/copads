@@ -18,7 +18,7 @@ class testReplacement(unittest.TestCase):
         axiom = 'A'
         self.result = []
         for i in range(10):
-            axiom = s.apply_rules(axiom)
+            axiom = s._apply_rules(axiom)
             self.result.append(axiom)
         self.answer = ['BAC',
                        'BBACC',
@@ -46,7 +46,7 @@ class testReplacementPriority(unittest.TestCase):
         axiom = 'A'
         self.result = []
         for i in range(8):
-            axiom = s.apply_rules(axiom)
+            axiom = s._apply_rules(axiom)
             self.result.append(axiom)
         self.answer = ['BCAC',
                        'BCCBCACC',
@@ -72,7 +72,7 @@ class testReplacementNoPriority(unittest.TestCase):
         axiom = 'A'
         self.result = []
         for i in range(8):
-            axiom = s.apply_rules(axiom)
+            axiom = s._apply_rules(axiom)
             self.result.append(axiom)
         self.answer = ['BAC',
                        'BCBACC',
@@ -99,7 +99,7 @@ class testReplacement2(unittest.TestCase):
         axiom = 'AA'
         self.result = []
         for i in range(8):
-            axiom = s.apply_rules(axiom)
+            axiom = s._apply_rules(axiom)
             self.result.append(axiom)
         self.answer = ['BBAAC',
                        'BBBBAACC',
@@ -128,7 +128,7 @@ class testFunction(unittest.TestCase):
         axiom = 'ACCCABABDD'
         self.result = []
         for i in range(5):
-            axiom = s.apply_rules(axiom)
+            axiom = s._apply_rules(axiom)
             self.result.append(axiom)
         self.answer = ['ACCCOOABOOABDD',
                        'ACCCOOBAABOOAABBDD',
