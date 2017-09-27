@@ -11,8 +11,8 @@ Papers 7: 5.
 import sys, os
 from datetime import datetime
 
-import ragaraja as N
-import register_machine as r
+from . import ragaraja as N
+from . import register_machine as r
 
 def set_instruction_version(ragaraja_version,
                             instruction_set='ragaraja_instructions.txt'):

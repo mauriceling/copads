@@ -23,10 +23,10 @@ digraph G {
 }
 '''
 
-from dataframe import Series
-from dataframe import Dataframe
-from dataframe import MultiDataframe
-from matrix import Vector
+from .dataframe import Series
+from .dataframe import Dataframe
+from .dataframe import MultiDataframe
+from .matrix import Vector
 
 
 def tc_Series_Dataframe(source_object):

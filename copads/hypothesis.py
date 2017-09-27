@@ -21,8 +21,8 @@ Copyright (c) Maurice H.T. Ling <mauriceling@acm.org>
 Date created: 1st September 2008
 """
 
-from statisticsdistribution import *
 from math import sqrt, log, e
+from .statisticsdistribution import *
 
 def test(statistic, distribution, confidence):
     """Generates the critical value from distribution and confidence value

@@ -8,12 +8,12 @@ Genetic Algorithm, 3-Character Genetic Code and Biological Hierarchy. The
 Python Papers 7: 5.
 '''
 
-import genetic as g
-import dose_world as w
-from dose_parameters import background_mutation_rate
-from dose_parameters import initial_chromosome, cytoplasm_size, population_size
-from dose_parameters import maximum_generations
-from dose_parameters import world_x, world_y, world_z
+from . import genetic as g
+from . import dose_world as w
+from .dose_parameters import background_mutation_rate
+from .dose_parameters import initial_chromosome, cytoplasm_size, population_size
+from .dose_parameters import maximum_generations
+from .dose_parameters import world_x, world_y, world_z
 
 Chromosome = g.Chromosome(initial_chromosome, 
                           ['0','1','2','3','4','5','6','7','8','9'], 

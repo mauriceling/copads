@@ -39,10 +39,10 @@ interpreter terminates itself.
 '''
 import random
 import math
-from samplestatistics import SingleSample
-from lc_bf import increment, decrement
-from lc_bf import forward, backward
-from lc_bf import call_out, accept_predefined
+from .samplestatistics import SingleSample
+from .lc_bf import increment, decrement
+from .lc_bf import forward, backward
+from .lc_bf import call_out, accept_predefined
 
 register = [0]*99
 

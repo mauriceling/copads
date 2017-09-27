@@ -7,8 +7,8 @@ Licence: Python Software Foundation License version 2
 import types
 import math
 
-import bag
-from copadsexception import FunctionParameterValueError
+from . import bag
+from .copadsexceptions import FunctionParameterValueError
 
 
 def _listify(data):
@@ -125,8 +125,8 @@ def Collision(data):
 
 def Hartley(data):
     '''
-    Calculates Hartley entropy, which is the same as Renyi entropy when 
-    order = 0.
+    Calculates Hartley entropy (also known as max-entropy), which is the 
+    same as Renyi entropy when order = 0.
 
     @param data: data for entropy calculation
     @type data: string or numerical values or list

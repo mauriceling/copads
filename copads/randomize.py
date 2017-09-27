@@ -38,7 +38,7 @@ class Randomizer(object):
         '''
         raise NotImplementedError
         
-    def randrange(self, start=0, stop=sys.maxint):
+    def randrange(self, start=0, stop=2147483647):
         '''
         Method to generate a random integer between start and stop
         (start < random_number <= stop).
@@ -47,7 +47,7 @@ class Randomizer(object):
         to generate. Default = 0.
         @type start: integer
         @param stop: upper boundary of random integer (inclusive) to
-        generate. Default = maximum integer allowable by system.
+        generate. Default = 2147483647.
         @type stop: integer
         '''
         x = self._random() + int(start)

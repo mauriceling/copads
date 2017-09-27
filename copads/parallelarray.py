@@ -7,7 +7,7 @@ Date created: 19th March 2008
 '''
 
 import types
-from copadsexceptions import ParallelArrayError
+from .copadsexceptions import ParallelArrayError
 
 class ParallelArray(object):
     '''

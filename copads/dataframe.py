@@ -6,7 +6,7 @@ Licence: Python Software Foundation License version 2
 import string
 import random
 
-from copadsexceptions import FunctionParameterValueError
+from .copadsexceptions import FunctionParameterValueError
 
 class Series(object):
     '''
@@ -264,8 +264,8 @@ class Dataframe(object):
                     for li in range(len(self.label))]
             s.addData(data, self.label)
             return s
-        except ValueError, KeyError: 
-            return s
+        except ValueError: return s
+        except KeyError: return s
     
     def extractSeries(self, series_names, new_dataframe_name=''):
         '''

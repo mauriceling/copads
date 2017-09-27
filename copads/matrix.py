@@ -10,8 +10,8 @@ import types
 import operator
 import math
 import random
-from copadsexceptions import VectorError
-from copadsexceptions import MatrixError
+from .copadsexceptions import VectorError
+from .copadsexceptions import MatrixError
 
 class Vector(object):
     '''
@@ -674,19 +674,19 @@ class Matrix(object):
         if update_dimensions:
             self.updateDimensions()
             
-    def __setitem__(self, (row, column), value):
+    def __setitem__(self, index, value):
         '''
         Method to set element in the matrix.
         
         >>> m = Matrix()
         >>> m[(1,1)] = 15
         
-        @param (row, column): row and column to set the value.
+        @param index: row and column (row, column) to set the value.
         @param value: value to set.
         '''
-        self.addReplaceElement((row, column), value, False)
+        self.addReplaceElement((index[0], index[1]), value, False)
         
-    def __getitem__(self, (row, column), default_value=None):
+    def __getitem__(self, index, default_value=None):
         '''
         Method to get element in the matrix.
         
@@ -697,14 +697,14 @@ class Matrix(object):
         >>> m[(0,0)]
         None
         
-        @param (row, column): row and column to get the value.
+        @param index: row and column (row, column) to get the value.
         @param default_value: the default value to return when the 
         coordinate is not present. Default = None
         @return: value of the coordinate (if present); or else, return 
         default_value. 
         '''
         try: 
-            return self.values[(row, column)]
+            return self.values[(index[0], index[1])]
         except KeyError:
             return default_value
 
