@@ -50,13 +50,31 @@ class OptimizerGA(object):
             if self.population[i].comparatorResults =< tolerance:
                 result[i] = True
         return result
-        
+    
+    def setMutate(self, name='random'):
+        availableMutates = ['random']
+        if str(name) in availableMutates:
+            self.mutateFunction = str(name)
+        elif callable(name):
+            self.mutateFunction = name
+        else:
+            self.mutateFunction = 'random'
+            
     def _mutate(self):
         if self.mutateFunction == 'random':
             self.population = self._mutateRandom(self.population)
         elif callable(self.mutateFunction):
             self.population = self.mutateFunction(self.population)
-        
+    
+    def setMate(self, name='top50'):
+        availableMates = ['top50']
+        if str(name) in availableMates:
+            self.mateFunction = str(name)
+        elif callable(name):
+            self.mateFunction = name
+        else:
+            self.mateFunction = 'top50'
+            
     def _mate(self):
         if self.mutateFunction == 'top50':
             self.population = self._mateTop50(self.population)
