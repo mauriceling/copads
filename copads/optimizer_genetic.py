@@ -13,11 +13,15 @@ class OptimizationTarget(object):
         self.chromosomes_upper_bounds = {}
         self.targets = []
         self.results = []
-        self.dataFunction = None
         self.comparatorData = []
-        self.comparatorFunction = None
-        self.comparatorResults = 0
+        self.comparatorResult = 0
 
+    def dataFunction(self):
+        self.comparatorData = []
+    
+    def comparatorFunction(self):
+        self.comparatorResult = 0
+    
     def runnerFunction(self):
         pass
         
@@ -69,3 +73,9 @@ class OptimizerGA(object):
             self._mate()
             self.generation = self.generation + 1
         
+    def _mutateRandom(self, population):
+        pass
+    
+    def _mateTop50(self, population):
+        pass
+    
