@@ -53,7 +53,7 @@ class OptimizerGA(object):
         elif callable(self.mutateFunction):
             self.population = self.mutateFunction(self.population)
         
-    self _mate(self):
+    def _mate(self):
         if self.mutateFunction == 'top50':
             self.population = self._mateTop50(self.population)
         elif callable(self.mutateFunction):
