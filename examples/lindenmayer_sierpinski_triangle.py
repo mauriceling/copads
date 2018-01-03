@@ -1,8 +1,11 @@
+import sys, os
+sys.path.append(os.path.join(os.path.dirname(os.getcwd()), 'copads'))
+
 import random
 from lindenmayer import lindenmayer
 
 axiom = 'A'
-rules = [['A', 'BLALB'], 
+rules = [['A', 'BLALB'],
          ['B', 'ARBRA']]
 start_position = (-300, 250)
 iterations = 8
@@ -17,8 +20,8 @@ mapping = {'set_angle': 60,
            'B': 'forward',
            'R': 'right',
            'L': 'left'}
-           
+
 l = lindenmayer(1)
 l.add_rules(rules)
-l.generate(axiom, iterations)                 
+l.generate(axiom, iterations)
 l.turtle_generate(turtle_file, image_file, start_position, mapping)

@@ -1,3 +1,6 @@
+import sys, os
+sys.path.append(os.path.join(os.path.dirname(os.getcwd()), 'copads'))
+
 import random
 from lindenmayer import lindenmayer
 
@@ -22,8 +25,8 @@ mapping = {'set_angle': 22,
            '1': 'dark green',
            '2': 'forest green'
            }
-           
+
 l = lindenmayer(1)
 l.add_rules(rules)
-l.generate(axiom, iterations)                 
+l.generate(axiom, iterations)
 l.turtle_generate(turtle_file, image_file, start_position, mapping)
