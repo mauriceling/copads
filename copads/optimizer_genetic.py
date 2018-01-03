@@ -74,7 +74,36 @@ class OptimizationTarget(object):
         pass
         
 class OptimizerGA(object):
+    '''
+    Genetic algorithm (GA) optimizer class.
+    
+    This class takes an OptimizationTarget object (which represents an 
+    individual organism) and replicates it to the required population size 
+    and store them in population dictionary (where the keys represents the 
+    sample IDs). These sample IDs will be reused over generations; hence, 
+    have to take account of population count to be unique. Two functions 
+    needs to be defined - mutate (which mutates the chromosomes in 
+    population[ID].chromosomes and are bounded by population[ID].
+    chromosomes_lower_bounds and population[ID].chromosomes_upper_bounds 
+    for lower and upper value boundaries respectively), and mate (which 
+    eliminates unfit organisms and mates fit organisms for the next 
+    generation). There is a defined set of mating and mutation methods 
+    pre-defined but these can be overrode. The run method performs GA 
+    optimization on the population.
+    '''
     def __init__(self, optTarget, population_size=10, max_generations=100):
+        '''
+        Constructor method.
+        
+        @param optTarget: object to optimize.
+        @type optTarget: optimizer_genetic.OptimizationTarget object
+        @param population_size: number of organisms in population (Default 
+        = 10).
+        @type population_size: integer
+        @param max_generations: maximum number of generations to optimize 
+        (Default = 10).
+        @type max_generations: integer
+        '''
         self.optTarget = optTarget
         self.generations = 0
         self.max_generations = int(max_generations)
@@ -115,7 +144,7 @@ class OptimizerGA(object):
         elif callable(self.mutateFunction):
             self.population = self.mateFunction(self.population)
         
-    def run(self, tolerance=0.1):
+    def run(self):
         while (self.generation < self.max_generation):
             for i in range(len(self.population)):
                 self.population.runnerFunction()
