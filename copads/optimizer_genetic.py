@@ -182,9 +182,16 @@ class OptimizerGA(object):
             - if none of the organisms is fitted, execute mutate function and
             mate function
 
+        However, all organisms in the population will undergo mutation before
+        the first execution. This is to prevent all organisms from getting the
+        same fitness score at the first generation as all organisms are clones
+        of each other at instantiation.
+
         @return: (generation count, population dictionary)
         '''
-        while (self.generation < self.max_generation):
+        if self.generations == 0:
+            self._mutate()
+        while (self.generations < self.max_generations):
             for i in range(len(self.population)):
                 self.population.runnerFunction()
                 self.population.dataFunction()
@@ -198,7 +205,13 @@ class OptimizerGA(object):
 
     def _mutateRandom(self, population):
         '''
-        Private method - random mutation scheme (mutation scheme = random).
+        Private method - random mutation scheme (mutation scheme = random). In
+        this scheme, each of the chromosome is randomly mutated. A random float
+        (multiplier) between 0 and 2 will be generated for each element on the
+        chromosome. If the multiplier is lower than 1, then the data value of
+        the element on the chromosome will be reduced. if the multipler is more
+        than 1, then the data value of the element on the chromosome will be
+        increased.
 
         @param population: population to mutate
         @type population: dictionary
@@ -206,11 +219,12 @@ class OptimizerGA(object):
         '''
         def mutateChromosome(chr, lower, upper):
             for i in range(len(chr)):
-                multiplier = random.randint(0,100) / float(50)
+                multiplier = random.randint(0, 2000) / float(1000)
                 if multiplier < 1:
                     gap = chr[i] - lower[i]
                     chr[i] = chr[i] - (gap * multiplier)
                 else:
+                    multiplier = multiplier - 1
                     gap = upper[i] - chr[i]
                     chr[i] = chr[i] + (gap * multiplier)
             return chr
@@ -228,7 +242,10 @@ class OptimizerGA(object):
     def _mateTop50Fission(self, population):
         '''
         Private method - top 50% Fission mating scheme (mating scheme =
-        top50fission).
+        top50fission). In this scheme, organisms with fitness score lower than
+        thhe average fitness score of the population will be removed. The
+        remaining organisms will be randomly selected for cloning / duplication
+        to fill up the population.
 
         @param population: population to mutate
         @type population: dictionary
@@ -249,9 +266,11 @@ class OptimizerGA(object):
             return newpop
         def generate(population):
             fitOrg = population.keys()
-            for i in range(len(population)-1, self.population_size):
+            count = max(fitOrg)
+            while len(population) < self.population_size:
                 ID = random.choice(fitOrg)
-                population[i] = deepcopy(population[ID])
+                population[count] = deepcopy(population[ID])
+                count = count + 1
             return population
         population = kill(population)
         population = generate(population)
