@@ -4,6 +4,7 @@ Date created: 27th December 2017
 Licence: Python Software Foundation License version 2
 '''
 
+import random
 from copy import deepcopy
 
 class OptimizationTarget(object):
@@ -22,7 +23,9 @@ class OptimizationTarget(object):
     select required data variables (reduce the number of data variables)
     from executionResults into comparatorData. Finally, the
     comparatorFunction in the inherited class compares between the
-    targetResults and comparatorData to generate a fitnessScore.
+    targetResults and comparatorData to generate a fitnessScore. The higher
+    the fitness score, the fitter the organism and the higher chances it
+    gets into the next generation.
 
     There can be one or more chromosomes in each organism; hence,
     chromosomes are defined as dictionary in this template class.
@@ -61,7 +64,9 @@ class OptimizationTarget(object):
         which compares self.comparatorData to self.targetResults
         and generate a fitness score (self.fitnessScore). This method
         must set self.fitted to True when the required organism
-        achieves the required fitness score.
+        achieves the required fitness score. The higher the fitness
+        score, the fitter the organism and the higher chances it
+        gets into the next generation.
         '''
         self.fitnessScore = 0
 
@@ -140,21 +145,21 @@ class OptimizerGA(object):
         elif callable(self.mutateFunction):
             self.population = self.mutateFunction(self.population)
 
-    def setMate(self, name='top50'):
+    def setMate(self, name='top50fission'):
         '''
         Method to set mating scheme. Allowable mating schemes are:
-            - top50
+            - top50fission
 
-        @param name: name of mating scheme (Default = top50).
+        @param name: name of mating scheme (Default = top50fission).
         @type name: string
         '''
-        availableMates = ['top50']
+        availableMates = ['top50fission']
         if str(name) in availableMates:
             self.mateFunction = str(name)
         elif callable(name):
             self.mateFunction = name
         else:
-            self.mateFunction = 'top50'
+            self.mateFunction = 'top50fission'
 
     def _mate(self):
         '''
@@ -197,15 +202,61 @@ class OptimizerGA(object):
 
         @param population: population to mutate
         @type population: dictionary
+        @return: mutated population
         '''
-        pass
+        def mutateChromosome(chr, lower, upper):
+            for i in range(len(chr)):
+                multiplier = random.randint(0,100) / float(50)
+                if multiplier < 1:
+                    gap = chr[i] - lower[i]
+                    chr[i] = chr[i] - (gap * multiplier)
+                else:
+                    gap = upper[i] - chr[i]
+                    chr[i] = chr[i] + (gap * multiplier)
+            return chr
+        def mutate(organism):
+            for k in organism.chromosomes.keys():
+                chr = organism.chromosomes[k]
+                lower = organism.chromosomes_lower_bounds[k]
+                upper = organism.chromosomes_upper_bounds[k]
+                organism.chromosomes[k] = mutateChromosome(chr, lower, upper)
+            return organism
+        for k in population.keys():
+            population[k] = mutate(population[k])
+        return population
 
-    def _mateTop50(self, population):
+    def _mateTop50Fission(self, population):
         '''
-        Private method - top 50% mating scheme (mating scheme = top50).
+        Private method - top 50% Fission mating scheme (mating scheme =
+        top50fission).
 
         @param population: population to mutate
         @type population: dictionary
+        @return: mated population
         '''
-        pass
+        def kill(population):
+            meanfitness = [population[k].fitnessScore
+                           for k in self.population.keys()]
+            meanfitness = sum(meanfitness) / len(meanfitness)
+            for k in self.population.keys():
+                if population[k].fitnessScore < meanfitness:
+                    del population[k]
+            newpop = {}
+            count = 0
+            for k in self.population.keys():
+                newpop[count] = population[k]
+                count = count + 1
+            return newpop
+        def generate(population):
+            fitOrg = population.keys()
+            for i in range(len(population)-1, self.population_size):
+                ID = random.choice(fitOrg)
+                population[i] = deepcopy(population[ID])
+            return population
+        population = kill(population)
+        population = generate(population)
+        return population
+
+
+
 
