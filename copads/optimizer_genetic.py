@@ -84,13 +84,6 @@ class OptimizerGA(object):
             self.population[i] = deepcopy(self.optTarget)
         self.mutateFunction = 'random'
         self.matingFunction = 'top50'
-        self.error = 100000
-        
-    def _processPopulation(self):
-        for i in range(len(self.population)):
-            self.population.runnerFunction()
-            self.population.dataFunction()
-            self.population.comparatorFunction()
     
     def setMutate(self, name='random'):
         availableMutates = ['random']
@@ -123,8 +116,11 @@ class OptimizerGA(object):
             self.population = self.mateFunction(self.population)
         
     def run(self, tolerance=0.1):
-        while (self.generation < self.max_generation) and (self.error > tolerance):
-            self._processPopulation() 
+        while (self.generation < self.max_generation):
+            for i in range(len(self.population)):
+                self.population.runnerFunction()
+                self.population.dataFunction()
+                self.population.comparatorFunction()
             if True in [self.population[i].fitted 
                         for i in range(len(self.population))]:
                 return (self.generation, self.population)
