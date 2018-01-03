@@ -23,28 +23,28 @@ digraph G {
 }
 '''
 
-from .dataframe import Series
-from .dataframe import Dataframe
-from .dataframe import MultiDataframe
-from .matrix import Vector
+from dataframe import Series
+from dataframe import Dataframe
+from dataframe import MultiDataframe
+from matrix import Vector
 
 
 def tc_Series_Dataframe(source_object):
     '''
-    Function to convert from dataframe.Series object to dataframe.Dataframe 
+    Function to convert from dataframe.Series object to dataframe.Dataframe
     object.
-    
+
     @param source_object: object to be type casted / converted.
     @type source_object: dataframe.Series object
     @return: dataframe.Dataframe object
     '''
     return source_object.toDataframe()
-    
+
 def tc_Dataframe_Series(source_object, series_name):
     '''
-    Function to convert from dataframe.Dataframe object to dataframe.Series 
+    Function to convert from dataframe.Dataframe object to dataframe.Series
     object.
-    
+
     @param source_object: object to be type casted / converted.
     @type source_object: dataframe.Series object
     @param series_name: name of series to extract
@@ -52,12 +52,12 @@ def tc_Dataframe_Series(source_object, series_name):
     @return: dataframe.Series object
     '''
     return source_object.toSeries(series_name)
-    
+
 def tc_Dataframe_MultiDataframe(source_object):
     '''
-    Function to convert from dataframe.Dataframe object to 
+    Function to convert from dataframe.Dataframe object to
     dataframe.MultiDataframe object.
-    
+
     @param source_object: object to be type casted / converted.
     @type source_object: dataframe.Dataframe object
     @return: dataframe.MultiDataframe object
@@ -65,12 +65,12 @@ def tc_Dataframe_MultiDataframe(source_object):
     mdf = MultiDataframe()
     mdf.addDataframe(source_object, False)
     return mdf
-    
+
 def tc_MultiDataframe_Dataframe(source_object, dataframe_name):
     '''
-    Function to convert from dataframe.MultiDataframe object to 
+    Function to convert from dataframe.MultiDataframe object to
     dataframe.Dataframe object.
-    
+
     @param source_object: object to be type casted / converted.
     @type source_object: dataframe.MultiDataframe object
     @param dataframe_name: name of dataframe to extract
@@ -78,14 +78,14 @@ def tc_MultiDataframe_Dataframe(source_object, dataframe_name):
     @return: dataframe.Dataframe object
     '''
     return source_object.frames[dataframe_name]
-    
+
 def tc_Series_List(source_object, item='data'):
     '''
     Function to convert from dataframe.Series object to a list.
-    
+
     @param source_object: object to be type casted / converted.
     @type source_object: dataframe.Series object
-    @param item: item type to be converted into a list. Allowable items are 
+    @param item: item type to be converted into a list. Allowable items are
     'data' and 'label'. Default = data.
     @type item: string
     @return: list.
@@ -94,15 +94,15 @@ def tc_Series_List(source_object, item='data'):
         return source_object.data
     if item == 'label':
         return source_object.label
-        
+
 def tc_Series_Vector(source_object, item='data'):
     '''
-    Function to convert from dataframe.Series object to a matrix.Vector 
+    Function to convert from dataframe.Series object to a matrix.Vector
     object.
-    
+
     @param source_object: object to be type casted / converted.
     @type source_object: dataframe.Series object
-    @param item: item type to be converted into a list. Allowable items are 
+    @param item: item type to be converted into a list. Allowable items are
     'data' and 'label'. Default = data.
     @type item: string
     @return: matrix.Vector object.
@@ -111,11 +111,11 @@ def tc_Series_Vector(source_object, item='data'):
         return Vector(source_object.data)
     if item == 'label':
         return Vector(source_object.label)
-        
+
 def tc_Series_Dictionary(source_object):
     '''
     Function to convert from dataframe.Series object to a dictionary.
-    
+
     @param source_object: object to be type casted / converted.
     @type source_object: dataframe.Series object
     @return: dictionary where key is the label and value is the data value.
@@ -124,11 +124,11 @@ def tc_Series_Dictionary(source_object):
     for index in range(len(source_object.label)):
         data[source_object.label[index]] = source_object.data[index]
     return data
-    
+
 def tc_Vector_List(source_object):
     '''
     Function to convert from matrix.Vector object to a list.
-    
+
     @param source_object: object to be type casted / converted.
     @type source_object: matrix.Vector object
     @return: list.
@@ -138,7 +138,7 @@ def tc_Vector_List(source_object):
 def tc_Vector_Dictionary(source_object):
     '''
     Function to convert from matrix.Vector object to a dictionary.
-    
+
     @param source_object: object to be type casted / converted.
     @type source_object: matrix.Vector object
     @return: dictionary where key is the index and value is the data value.
@@ -148,12 +148,12 @@ def tc_Vector_Dictionary(source_object):
     for index in range(len(values)):
         data[index] = values[index]
     return data
-    
+
 def tc_Vector_Series(source_object):
     '''
-    Function to convert from matrix.Vector object to a dataframe.Series 
+    Function to convert from matrix.Vector object to a dataframe.Series
     object.
-    
+
     @param source_object: object to be type casted / converted.
     @type source_object: matrix.Vector object
     @return: dataframe.Series object.
@@ -161,11 +161,11 @@ def tc_Vector_Series(source_object):
     series = Series()
     series.addData(source_object.values)
     return series
-    
+
 def tc_List_Dictionary(source_object):
     '''
     Function to convert from list to a dictionary.
-    
+
     @param source_object: object to be type casted / converted.
     @type source_object: list
     @return: dictionary where key is the index and value is the data value.
@@ -174,4 +174,3 @@ def tc_List_Dictionary(source_object):
     for index in range(len(source_object)):
         data[index] = source_object[index]
     return data
-    

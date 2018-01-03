@@ -7,15 +7,15 @@ Licence: Python Software Foundation License version 2
 import types
 import math
 
-from . import bag
-from .copadsexceptions import FunctionParameterValueError
+import bag
+from copadsexceptions import FunctionParameterValueError
 
 
 def _listify(data):
     '''
     Private function - process data into a list when possible.
 
-    @param data: data to be converted (possible data types are 
+    @param data: data to be converted (possible data types are
     list, string, tuple, integer, float, long)
     @return: data in list structure
     '''
@@ -42,9 +42,9 @@ def _process_data(data):
     '''
     Private function - process data into a Bag (bag.Bag) structure.
 
-    @param data: data to be converted (possible data types are 
+    @param data: data to be converted (possible data types are
     list, string, tuple, integer, float, long)
-    @return: (data, length) where data is the converted data into bag 
+    @return: (data, length) where data is the converted data into bag
     structure, and length is the number of unique elements in the bag
     '''
     data = _listify(data)
@@ -88,7 +88,7 @@ def Natural(data):
 
 def Renyi(data, order=2):
     '''
-    Calculates Renyi entropy, which is a generalized version of Shannon 
+    Calculates Renyi entropy, which is a generalized version of Shannon
     entropy. When order = 1, Renyi entropy = Shannon entropy,
 
     @param data: data for entropy calculation
@@ -112,7 +112,7 @@ def Renyi(data, order=2):
 
 def Collision(data):
     '''
-    Calculates Collision entropy, which is the same as Renyi entropy when 
+    Calculates Collision entropy, which is the same as Renyi entropy when
     order = 2.
 
     @param data: data for entropy calculation
@@ -125,7 +125,7 @@ def Collision(data):
 
 def Hartley(data):
     '''
-    Calculates Hartley entropy (also known as max-entropy), which is the 
+    Calculates Hartley entropy (also known as max-entropy), which is the
     same as Renyi entropy when order = 0.
 
     @param data: data for entropy calculation
