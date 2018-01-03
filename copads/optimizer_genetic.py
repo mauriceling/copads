@@ -7,22 +7,67 @@ Licence: Python Software Foundation License version 2
 from copy import deepcopy
 
 class OptimizationTarget(object):
+    '''
+    Abstract class to create the object to be optimized. This class 
+    is used to created an inherited class, which is the optimization 
+    target. In the context of genetic algorithms, the inherited class 
+    represents an organism where its chromosome(s) is/are being 
+    optimized - so that the reduced execution results (comparatorData) 
+    approaches targetResults.
+    
+    The way the organism executes is as follows: Firstly, The 
+    runnerFunction in the inherited class represents the method to 
+    execute the chromosomes to generate the executionResults. Secondly, 
+    the dataFunction in the inherited class represents the method to 
+    select required data variables (reduce the number of data variables) 
+    from executionResults into comparatorData. Finally, the 
+    comparatorFunction in the inherited class compares between the 
+    targetResults and comparatorData to generate a fitnessScore.
+    
+    There can be one or more chromosomes in each organism; hence, 
+    chromosomes are defined as dictionary in this template class.
+    
+    The chromosomes_lower_bounds and chromosomes_upper_bounds 
+    represents the lower and upper bound values of the chromosomes, 
+    which can be used during mutation.
+    '''
     def __init__(self):
+        '''
+        Constructor method.
+        '''
         self.chromosomes = {}
         self.chromosomes_lower_bounds = {}
         self.chromosomes_upper_bounds = {}
-        self.targets = []
-        self.results = []
+        self.targetResults = []
+        self.executionResults = []
         self.comparatorData = []
-        self.comparatorResult = 0
+        self.fitnessScore = 0
 
     def dataFunction(self):
+        '''
+        Method to be inherited and represents the selection of 
+        self.executionResults into self.comparatorData. For example, 
+        self.executionResults may be a list of 100 elements but 
+        obnly 10 of the elements are experimentally known (self.
+        targetResults) and matched. Hence, the format of self.
+        comparatorData should be the same as self.targetResults.
+        '''
         self.comparatorData = []
     
     def comparatorFunction(self):
-        self.comparatorResult = 0
+        '''
+        Method to be inherited and represent the fitness function, 
+        which compares self.comparatorData to self.targetResults 
+        and generate a fitness score (self.fitnessScore)
+        '''
+        self.fitnessScore = 0
     
     def runnerFunction(self):
+        '''
+        Method to be inherited and represents the execution of the 
+        organism. This method must use self.chromosomes and the 
+        results to be fed into self.executionResults.
+        '''
         pass
         
 class OptimizerGA(object):
