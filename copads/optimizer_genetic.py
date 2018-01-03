@@ -42,6 +42,7 @@ class OptimizationTarget(object):
         self.executionResults = []
         self.comparatorData = []
         self.fitnessScore = 0
+        self.fitted = False
 
     def dataFunction(self):
         '''
@@ -58,7 +59,9 @@ class OptimizationTarget(object):
         '''
         Method to be inherited and represent the fitness function, 
         which compares self.comparatorData to self.targetResults 
-        and generate a fitness score (self.fitnessScore)
+        and generate a fitness score (self.fitnessScore). This method 
+        must set self.fitted to True when the required organism 
+        achieves the required fitness score.
         '''
         self.fitnessScore = 0
     
@@ -88,13 +91,6 @@ class OptimizerGA(object):
             self.population.runnerFunction()
             self.population.dataFunction()
             self.population.comparatorFunction()
-    
-    def _testTolerance(self, tolerance):
-        result = [False for i in range(len(self.population))]
-        for i in range(len(self.population)):
-            if self.population[i].comparatorResults =< tolerance:
-                result[i] = True
-        return result
     
     def setMutate(self, name='random'):
         availableMutates = ['random']
@@ -128,9 +124,9 @@ class OptimizerGA(object):
         
     def run(self, tolerance=0.1):
         while (self.generation < self.max_generation) and (self.error > tolerance):
-            self._processPopulation()
-            populationStatus = self._testTolerance(tolerance)
-            if True in populationStatus:
+            self._processPopulation() 
+            if True in [self.population[i].fitted 
+                        for i in range(len(self.population))]:
                 return (self.generation, self.population)
             self._mutate()
             self._mate()
