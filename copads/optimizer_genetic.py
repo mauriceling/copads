@@ -193,15 +193,15 @@ class OptimizerGA(object):
             self._mutate()
         while (self.generations < self.max_generations):
             for i in range(len(self.population)):
-                self.population.runnerFunction()
-                self.population.dataFunction()
-                self.population.comparatorFunction()
+                self.population[i].runnerFunction()
+                self.population[i].dataFunction()
+                self.population[i].comparatorFunction()
             if True in [self.population[i].fitted
                         for i in range(len(self.population))]:
                 return (self.generation, self.population)
             self._mutate()
             self._mate()
-            self.generation = self.generation + 1
+            self.generations = self.generations + 1
 
     def _mutateRandom(self, population):
         '''
