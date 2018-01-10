@@ -119,6 +119,8 @@ class OptimizerGA(object):
         self.mutateFunction = 'random'
         self.mutationRate = 0.1
         self.matingFunction = 'top50'
+        self.bestOrganism = None
+        self.worstOrganism = None
 
     def setMutate(self, name='random'):
         '''
@@ -202,10 +204,11 @@ class OptimizerGA(object):
                 popFitness[k] = self.population[k].fitnessScore
             averageFitness = [self.population[k].fitnessScore
                               for k in list(self.population.keys())]
+            bestFitness = max(averageFitness)
             averageFitness = sum(averageFitness) / float(len(averageFitness))
-            print('Generation %s, Average Fitness: %.7f' % \
-                  (self.generations, averageFitness))
-            print(popFitness)
+            print('Generation %s, Average Fitness: %.7f, Best Fitness: %.7f' % \
+                  (self.generations, averageFitness, bestFitness))
+            print('Organism Fitness Scores: ' + str(popFitness))
         if self.generations == 0:
             self._mutate()
         while (self.generations < self.max_generations):
@@ -214,12 +217,29 @@ class OptimizerGA(object):
                 self.population[i].dataFunction()
                 self.population[i].comparatorFunction()
             runReport(self.population)
+            self._saveExtremes()
             if True in [self.population[i].fitted
                         for i in range(len(self.population))]:
                 return (self.generation, self.population)
             self._mutate()
             self._mate()
             self.generations = self.generations + 1
+
+    def _saveExtremes(self):
+        '''
+        Private method - saves the best organism (organism with the highest
+        fitness score) and worst organism (organism with the lowest fitness
+        score) across generations.
+        '''
+        if self.bestOrganism == None:
+            self.bestOrganism = self.population[0]
+        if self.worstOrganism == None:
+            self.worstOrganism = self.population[0]
+        for k in self.population:
+            if self.population[k].fitnessScore > self.bestOrganism.fitnessScore:
+                self.bestOrganism = self.population[k]
+            if self.population[k].fitnessScore < self.worstOrganism.fitnessScore:
+                self.worstOrganism = self.population[k]
 
     def _mutateRandom(self, population):
         '''
