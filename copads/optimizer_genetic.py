@@ -117,6 +117,7 @@ class OptimizerGA(object):
         for i in range(self.population_size):
             self.population[i] = deepcopy(self.optTarget)
         self.mutateFunction = 'random'
+        self.mutationRate = 0.1
         self.matingFunction = 'top50'
 
     def setMutate(self, name='random'):
@@ -148,12 +149,14 @@ class OptimizerGA(object):
     def setMate(self, name='top50fission'):
         '''
         Method to set mating scheme. Allowable mating schemes are:
+            - none
             - top50fission
+            - topfission
 
-        @param name: name of mating scheme (Default = top50fission).
+        @param name: name of mating scheme (Default = none).
         @type name: string
         '''
-        availableMates = ['top50fission']
+        availableMates = ['none', 'top50fission', 'topfission']
         if str(name) in availableMates:
             self.mateFunction = str(name)
         elif callable(name):
@@ -166,8 +169,12 @@ class OptimizerGA(object):
         Private method to run a specific mating scheme based on the value in
         self.mateFunction.
         '''
-        if self.mateFunction == 'top50':
-            self.population = self._mateTop50(self.population)
+        if self.mateFunction == 'none':
+            self.population = self.population
+        elif self.mateFunction == 'top50fission':
+            self.population = self._mateTop50Fission(self.population)
+        elif self.mateFunction == 'topfission':
+            self.population = self._mateTopFission(self.population)
         elif callable(self.mateFunction):
             self.population = self.mateFunction(self.population)
 
@@ -189,6 +196,16 @@ class OptimizerGA(object):
 
         @return: (generation count, population dictionary)
         '''
+        def runReport(population):
+            popFitness = {}
+            for k in list(self.population.keys()):
+                popFitness[k] = self.population[k].fitnessScore
+            averageFitness = [self.population[k].fitnessScore
+                              for k in list(self.population.keys())]
+            averageFitness = sum(averageFitness) / float(len(averageFitness))
+            print('Generation %s, Average Fitness: %.7f' % \
+                  (self.generations, averageFitness))
+            print(popFitness)
         if self.generations == 0:
             self._mutate()
         while (self.generations < self.max_generations):
@@ -196,6 +213,7 @@ class OptimizerGA(object):
                 self.population[i].runnerFunction()
                 self.population[i].dataFunction()
                 self.population[i].comparatorFunction()
+            runReport(self.population)
             if True in [self.population[i].fitted
                         for i in range(len(self.population))]:
                 return (self.generation, self.population)
@@ -218,7 +236,10 @@ class OptimizerGA(object):
         @return: mutated population
         '''
         def mutateChromosome(chr, lower, upper):
-            for i in range(len(chr)):
+            position = range(len(chr))
+            position = [random.choice(position)
+                        for i in range(int(len(chr)*self.mutationRate))]
+            for i in position:
                 multiplier = random.randint(0, 2000) / float(1000)
                 if multiplier < 1:
                     gap = chr[i] - lower[i]
@@ -243,11 +264,11 @@ class OptimizerGA(object):
         '''
         Private method - top 50% Fission mating scheme (mating scheme =
         top50fission). In this scheme, organisms with fitness score lower than
-        thhe average fitness score of the population will be removed. The
+        the average fitness score of the population will be removed. The
         remaining organisms will be randomly selected for cloning / duplication
         to fill up the population.
 
-        @param population: population to mutate
+        @param population: population to mate
         @type population: dictionary
         @return: mated population
         '''
@@ -255,9 +276,12 @@ class OptimizerGA(object):
             meanfitness = [population[k].fitnessScore
                            for k in self.population.keys()]
             meanfitness = sum(meanfitness) / len(meanfitness)
+            setKill = []
             for k in self.population.keys():
                 if population[k].fitnessScore < meanfitness:
-                    del population[k]
+                    setKill.append(k)
+            for k in setKill:
+                del population[k]
             newpop = {}
             count = 0
             for k in self.population.keys():
@@ -265,7 +289,7 @@ class OptimizerGA(object):
                 count = count + 1
             return newpop
         def generate(population):
-            fitOrg = population.keys()
+            fitOrg = list(population.keys())
             count = max(fitOrg)
             while len(population) < self.population_size:
                 ID = random.choice(fitOrg)
@@ -276,6 +300,41 @@ class OptimizerGA(object):
         population = generate(population)
         return population
 
+    def _mateTopFission(self, population):
+        '''
+        Private method - top organism Fission mating scheme (mating scheme =
+        topfission). In this scheme, only the organism with the best fitness
+        score will survive and be cloned to fill up the population for the
+        next generation.
 
-
+        @param population: population to mate
+        @type population: dictionary
+        @return: mated population
+        '''
+        def kill(population):
+            maxfitness = max([population[k].fitnessScore
+                              for k in self.population.keys()])
+            setKill = []
+            for k in self.population.keys():
+                if population[k].fitnessScore < maxfitness:
+                    setKill.append(k)
+            for k in setKill:
+                del population[k]
+            newpop = {}
+            count = 0
+            for k in self.population.keys():
+                newpop[count] = population[k]
+                count = count + 1
+            return newpop
+        def generate(population):
+            fitOrg = list(population.keys())
+            count = max(fitOrg)
+            while len(population) < self.population_size:
+                ID = random.choice(fitOrg)
+                population[count] = deepcopy(population[ID])
+                count = count + 1
+            return population
+        population = kill(population)
+        population = generate(population)
+        return population
 
