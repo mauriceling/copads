@@ -794,7 +794,7 @@ class RBDict(RBTree):
         return map(tuple, self.nodes())
 
     def has_key(self, key):
-        return self.findNode(key) <> None
+        return self.findNode(key) != None
 
     def clear(self):
         """delete all entries"""
