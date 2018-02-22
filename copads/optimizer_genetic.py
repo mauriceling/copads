@@ -78,6 +78,14 @@ class OptimizationTarget(object):
         '''
         pass
 
+    def modifierFunction(self):
+        '''
+        Method to be inherited and represents a function to modify 
+        the chromosomes (such as, changing the size of the chromosomes) 
+        during execution.
+        '''
+        pass
+
 class OptimizerGA(object):
     '''
     Genetic algorithm (GA) optimizer class.
@@ -120,7 +128,10 @@ class OptimizerGA(object):
         self.mutationRate = 0.1
         self.matingFunction = 'top50'
         self.bestOrganism = None
+        self.bestOrganismGeneration = 0
         self.worstOrganism = None
+        self.worstOrganismGeneration = 0
+        self.verbose = 0
 
     def setMutate(self, name='random'):
         '''
@@ -131,22 +142,12 @@ class OptimizerGA(object):
         @type name: string
         '''
         availableMutates = ['random']
-        if str(name) in availableMutates:
-            self.mutateFunction = str(name)
+        if str(name) == 'random':
+            self.mutateFunction = self._mutateRandom
         elif callable(name):
             self.mutateFunction = name
         else:
-            self.mutateFunction = 'random'
-
-    def _mutate(self):
-        '''
-        Private method to run a specific mutation scheme based on the value in
-        self.mutateFunction.
-        '''
-        if self.mutateFunction == 'random':
-            self.population = self._mutateRandom(self.population)
-        elif callable(self.mutateFunction):
-            self.population = self.mutateFunction(self.population)
+            self.mutateFunction = self._mutateRandom
 
     def setMate(self, name='top50fission'):
         '''
@@ -159,26 +160,16 @@ class OptimizerGA(object):
         @type name: string
         '''
         availableMates = ['none', 'top50fission', 'topfission']
-        if str(name) in availableMates:
-            self.mateFunction = str(name)
+        if str(name) == 'none':
+            self.mateFunction = self._mateNone
+        elif str(name) == 'top50fission':
+            self.mateFunction = self._mateTop50Fission
+        elif str(name) == 'topfission':
+            self.mateFunction = self._mateTopFission    
         elif callable(name):
             self.mateFunction = name
         else:
             self.mateFunction = 'top50fission'
-
-    def _mate(self):
-        '''
-        Private method to run a specific mating scheme based on the value in
-        self.mateFunction.
-        '''
-        if self.mateFunction == 'none':
-            self.population = self.population
-        elif self.mateFunction == 'top50fission':
-            self.population = self._mateTop50Fission(self.population)
-        elif self.mateFunction == 'topfission':
-            self.population = self._mateTopFission(self.population)
-        elif callable(self.mateFunction):
-            self.population = self.mateFunction(self.population)
 
     def run(self):
         '''
@@ -200,17 +191,18 @@ class OptimizerGA(object):
         '''
         def runReport(population):
             popFitness = {}
-            for k in list(self.population.keys()):
-                popFitness[k] = self.population[k].fitnessScore
-            averageFitness = [self.population[k].fitnessScore
-                              for k in list(self.population.keys())]
+            for k in list(population.keys()):
+                popFitness[k] = population[k].fitnessScore
+            averageFitness = [population[k].fitnessScore
+                              for k in list(population.keys())]
             bestFitness = max(averageFitness)
             averageFitness = sum(averageFitness) / float(len(averageFitness))
             print('Generation %s, Average Fitness: %.7f, Best Fitness: %.7f' % \
                   (self.generations, averageFitness, bestFitness))
-            print('Organism Fitness Scores: ' + str(popFitness))
+            if int(self.verbose) > 2:
+                print('Organism Fitness Scores: ' + str(popFitness))
         if self.generations == 0:
-            self._mutate()
+            self.population = self.mutateFunction(self.population)
         while (self.generations < self.max_generations):
             for i in range(len(self.population)):
                 self.population[i].runnerFunction()
@@ -221,8 +213,10 @@ class OptimizerGA(object):
             if True in [self.population[i].fitted
                         for i in range(len(self.population))]:
                 return (self.generation, self.population)
-            self._mutate()
-            self._mate()
+            self.population = self.mutateFunction(self.population)
+            self.population = self.mateFunction(self.population)
+            for i in range(len(self.population)):
+                self.population[i].modifierFunction()
             self.generations = self.generations + 1
 
     def _saveExtremes(self):
@@ -233,13 +227,17 @@ class OptimizerGA(object):
         '''
         if self.bestOrganism == None:
             self.bestOrganism = self.population[0]
+            self.bestOrganismGeneration = self.generations
         if self.worstOrganism == None:
             self.worstOrganism = self.population[0]
+            self.worstOrganismGeneration = self.generations
         for k in self.population:
             if self.population[k].fitnessScore > self.bestOrganism.fitnessScore:
                 self.bestOrganism = self.population[k]
+                self.bestOrganismGeneration = self.generations
             if self.population[k].fitnessScore < self.worstOrganism.fitnessScore:
                 self.worstOrganism = self.population[k]
+                self.worstOrganismGeneration = self.generations
 
     def _mutateRandom(self, population):
         '''
@@ -278,6 +276,18 @@ class OptimizerGA(object):
             return organism
         for k in population.keys():
             population[k] = mutate(population[k])
+        return population
+
+    def _mateNone(self, population):
+        '''
+        Private method - mating scheme which does nothing (mating scheme =
+        top50fission). In this scheme, the original population is the new 
+        population.
+
+        @param population: population to mate
+        @type population: dictionary
+        @return: mated population
+        '''
         return population
 
     def _mateTop50Fission(self, population):

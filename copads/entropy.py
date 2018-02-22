@@ -7,8 +7,8 @@ Licence: Python Software Foundation License version 2
 import types
 import math
 
-import bag
-from copadsexceptions import FunctionParameterValueError
+from . import bag
+from .copadsexceptions import FunctionParameterValueError
 
 
 def _listify(data):

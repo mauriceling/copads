@@ -6,11 +6,11 @@ Copyright (c) Maurice H.T. Ling <mauriceling@acm.org>
 Date created: 17th August 2005
 """
 
-from matrix import Matrix
-from prioritydictionary import PriorityDictionary
-from copadsexceptions import VertexNotFoundError, NotAdjacencyGraphMatrixError
-from copadsexceptions import GraphEdgeSizeMismatchError, GraphParameterError
-from copadsexceptions import FunctionParameterTypeError
+from .matrix import Matrix
+from .prioritydictionary import PriorityDictionary
+from .copadsexceptions import VertexNotFoundError, NotAdjacencyGraphMatrixError
+from .copadsexceptions import GraphEdgeSizeMismatchError, GraphParameterError
+from .copadsexceptions import FunctionParameterTypeError
 
 
 class Graph:

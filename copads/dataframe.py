@@ -6,7 +6,7 @@ Licence: Python Software Foundation License version 2
 import string
 import random
 
-from copadsexceptions import FunctionParameterValueError
+from .copadsexceptions import FunctionParameterValueError
 
 class Series(object):
     '''
