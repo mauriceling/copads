@@ -1,6 +1,8 @@
 from distutils.core import setup
 
-version_number = '0.5.0'
+import copads
+
+version_number = copads.__version__
 
 setup(name='copads',
       version=version_number,
