@@ -35,7 +35,6 @@ nosetests.xml
 .pydevproject
 *.db
 copads/test/sqlite3
-doc/copads-api-documentation
 /MANIFEST
 /Makefile
 *.bat
