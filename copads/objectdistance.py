@@ -10,6 +10,7 @@ In the following formulae, the following notations will be used
     - B = found in 'original' only
     - C = found in 'test' only
     - D = not found in either 'original' or 'test'
+    - P = total (that is, P = A + B + C + D)
 
 Copyright (c) Maurice H.T. Ling <mauriceling@acm.org>
 
@@ -102,7 +103,7 @@ def Sokal_Michener(original, test, absent=0, type='Set'):
     """
     Sokal and Michener coefficient for nominal or ordinal data.
 
-    Coefficient: M{(A + D) / (A + B + C + D)}
+    Coefficient: M{(A + D) / P}
 
     @param original: list of original data
     @param test: list of data to test against original
@@ -288,7 +289,7 @@ def Forbes(original, test, absent=0, type='Set'):
     """
     Forbes coefficient for nominal or ordinal data.
 
-    Coefficient: M{A(A + B + C + D) / ((A + B)(A + C))}
+    Coefficient: M{A(P) / ((A + B)(A + C))}
 
     @param original: list of original data
     @param test: list of data to test against original
@@ -312,7 +313,7 @@ def Hamann(original, test, absent=0, type='Set'):
     """
     Hamann coefficient for nominal or ordinal data.
 
-    Coefficient: M{((A + D) - (B + C)) / (A + B + C + D)}
+    Coefficient: M{((A + D) - (B + C)) / P}
 
     @param original: list of original data
     @param test: list of data to test against original
@@ -357,7 +358,7 @@ def Russel_Rao(original, test, absent=0, type='Set'):
     """
     Russel and Rao coefficient for nominal or ordinal data.
 
-    Coefficient: M{A / (A + B + C + D)}
+    Coefficient: M{A / P}
 
     @param original: list of original data
     @param test: list of data to test against original
@@ -596,7 +597,7 @@ def Stiles(original, test, absent=0, type='Set'):
     Stiles coefficient for nominal or ordinal data.
 
     Coefficient:
-    M{log10(((A + B + C + D)(|(A * D) - (B * C)| - ((A + B + C + D) / 2)) ^ 2) /
+    M{log10((P(|(A * D) - (B * C)| - (P / 2)) ^ 2) /
     (A + B)(A + C)(B + D)(C + D))}
 
     @param original: list of original data
@@ -651,7 +652,7 @@ def Dennis(original, test, absent=0, type='Set'):
     Dennis coefficient for nominal or ordinal data.
 
     Coefficient:
-    M{((A * D) - (B * C)) / (A + B + C + D)(A + B)(A + C)}
+    M{((A * D) - (B * C)) / P(A + B)(A + C)}
 
     @param original: list of original data
     @param test: list of data to test against original
