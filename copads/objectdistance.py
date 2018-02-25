@@ -20,14 +20,31 @@ import math
 from .copadsexceptions import DistanceInputSizeError
 
 
-def binarize(data, absent=0):
+def binarize(data, absent=0, type='Full'):
     """
     Converts input data in a list of presence or absence of values.
     For example,
-    binarize([1, 2, 0, 3, 4, 0], 0) --> [1, 1, 0, 1, 1, 0]
-    binarize([1, 2, 0, 3, 4, 0], 2) --> [1, 0, 1, 1, 1, 1]
+    binarize([1, 2, 0, 3, 4, 0], 0, 'Full') --> [1, 1, 0, 1, 1, 0]
+    binarize([1, 2, 0, 3, 4, 0], 0, 'Partial') --> [1, 2, 0, 3, 4, 0]
+    binarize([1, 2, 0, 3, 4, 0], 2, 'Full') --> [1, 0, 1, 1, 1, 1]
+    binarize([1, 2, 0, 3, 4, 0], 2, 'Partial') --> [1, 0, 0, 3, 4, 0]
+
+    As 1 and 0 are commonly used to denote presence and absence, please 
+    take care when data contains 1s and 0s.
+
+    @param data: data to binarize
+    @type data: list
+    @param absent: value/symbol to denote absent value. Default = 0.
+    @param type: Denotes type of binarization, which can be 'Full' or 
+    'Partial'. If full binarize, the returned data will only be 1 
+    (denote presence) or 0 (denote absence). If partial binarize, the 
+    returned data will be 0 (denote absence) or the original values 
+    in data (denoting not absent). Default = Full. 
     """
-    return [{absent: 0}.get(x, 1) for x in data]
+    if type == 'Full':
+        return [{absent: 0}.get(x, 1) for x in data]
+    elif type == 'Partial':
+        return [{absent: 0}.get(x, x) for x in data]
 
 def compare(original, test, absent, type='Set'):
     """
