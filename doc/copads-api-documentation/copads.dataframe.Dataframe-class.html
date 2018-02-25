@@ -1,0 +1,1558 @@
+<?xml version="1.0" encoding="ascii"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>copads.dataframe.Dataframe</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="copads-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            ><a class="navbar" target="_top" href="https://github.com/mauriceling/copads">https://github.com/mauriceling/copads</a></th>
+          </tr></table></th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <span class="breadcrumbs">
+        <a href="copads-module.html">Package&nbsp;copads</a> ::
+        <a href="copads.dataframe-module.html">Module&nbsp;dataframe</a> ::
+        Class&nbsp;Dataframe
+      </span>
+    </td>
+    <td>
+      <table cellpadding="0" cellspacing="0">
+        <!-- hide/show private -->
+        <tr><td align="right"><span class="options">[<a href="javascript:void(0);" class="privatelink"
+    onclick="toggle_private();">hide&nbsp;private</a>]</span></td></tr>
+        <tr><td align="right"><span class="options"
+            >[<a href="frames.html" target="_top">frames</a
+            >]&nbsp;|&nbsp;<a href="copads.dataframe.Dataframe-class.html"
+            target="_top">no&nbsp;frames</a>]</span></td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<!-- ==================== CLASS DESCRIPTION ==================== -->
+<h1 class="epydoc">Class Dataframe</h1><p class="nomargin-top"><span class="codelink"><a href="copads.dataframe-pysrc.html#Dataframe">source&nbsp;code</a></span></p>
+<pre class="base-tree">
+object --+
+         |
+        <strong class="uidshort">Dataframe</strong>
+</pre>
+
+<hr />
+<p>A data frame is an encapsulation of one or more data series and its 
+  associated analyses. Hence, a data frame can be formed using one or more 
+  data series where data elements across series are linked up by their 
+  respective labels. As a result, a data frame can be viewed as a table or 
+  spreadsheet.</p>
+  <p>For example, a data frame of :</p>
+<pre class="literalblock">
+   &lt;Label&gt;    Height   Weight
+   Tom        165      62
+   Ellis      191      85
+   Richard    172      68
+   Melvin     175      67
+</pre>
+  <p>can be formed using 2 data series - Height, and Weight; where each 
+  data series has 'Tom', 'Ellis', 'Richard', and 'Melvin' as labels.</p>
+
+<!-- ==================== INSTANCE METHODS ==================== -->
+<a name="section-InstanceMethods"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Instance Methods</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-InstanceMethods"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="copads.dataframe.Dataframe-class.html#__init__" class="summary-sig-name">__init__</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">name</span>=<span class="summary-sig-default"><code class="variable-quote">'</code><code class="variable-string"></code><code class="variable-quote">'</code></span>)</span><br />
+      Constructor.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="copads.dataframe-pysrc.html#Dataframe.__init__">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="copads.dataframe.Dataframe-class.html#cast" class="summary-sig-name">cast</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">type</span>,
+        <span class="summary-sig-arg">error_replace</span>,
+        <span class="summary-sig-arg">series_name</span>=<span class="summary-sig-default"><code class="variable-quote">'</code><code class="variable-string">all</code><code class="variable-quote">'</code></span>)</span><br />
+      Method to cast data in the one or all series into a specific data 
+      type.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="copads.dataframe-pysrc.html#Dataframe.cast">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="copads.dataframe.Dataframe-class.html#toSeries" class="summary-sig-name">toSeries</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">series_name</span>)</span><br />
+      Method to extract a series within the current data frame into a 
+      Series object.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="copads.dataframe-pysrc.html#Dataframe.toSeries">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="copads.dataframe.Dataframe-class.html#extractSeries" class="summary-sig-name">extractSeries</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">series_names</span>,
+        <span class="summary-sig-arg">new_dataframe_name</span>=<span class="summary-sig-default"><code class="variable-quote">'</code><code class="variable-string"></code><code class="variable-quote">'</code></span>)</span><br />
+      Method to extract one or more series from the current data frame into
+      a new data frame.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="copads.dataframe-pysrc.html#Dataframe.extractSeries">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="copads.dataframe.Dataframe-class.html#extractGreedySeriesValue" class="summary-sig-name">extractGreedySeriesValue</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">series_names</span>,
+        <span class="summary-sig-arg">operator</span>,
+        <span class="summary-sig-arg">value</span>,
+        <span class="summary-sig-arg">new_dataframe_name</span>=<span class="summary-sig-default"><code class="variable-quote">'</code><code class="variable-string"></code><code class="variable-quote">'</code></span>)</span><br />
+      Method for &quot;greedy&quot; extraction of series name(s) and value 
+      by the following:</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="copads.dataframe-pysrc.html#Dataframe.extractGreedySeriesValue">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="copads.dataframe.Dataframe-class.html#extractSeriesValue" class="summary-sig-name">extractSeriesValue</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">series_name</span>,
+        <span class="summary-sig-arg">operator</span>,
+        <span class="summary-sig-arg">value</span>,
+        <span class="summary-sig-arg">new_dataframe_name</span>=<span class="summary-sig-default"><code class="variable-quote">'</code><code class="variable-string"></code><code class="variable-quote">'</code></span>)</span><br />
+      Method for extraction of row data where a specified value or range of
+      value is found in the current data frame.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="copads.dataframe-pysrc.html#Dataframe.extractSeriesValue">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="copads.dataframe.Dataframe-class.html#extractLabels" class="summary-sig-name">extractLabels</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">label_names</span>,
+        <span class="summary-sig-arg">new_dataframe_name</span>=<span class="summary-sig-default"><code class="variable-quote">'</code><code class="variable-string"></code><code class="variable-quote">'</code></span>)</span><br />
+      Method to extract one or more data labels across all series from the 
+      current data frame into a new data frame.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="copads.dataframe-pysrc.html#Dataframe.extractLabels">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="copads.dataframe.Dataframe-class.html#extractValue" class="summary-sig-name">extractValue</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">operator</span>,
+        <span class="summary-sig-arg">value</span>,
+        <span class="summary-sig-arg">new_dataframe_name</span>=<span class="summary-sig-default"><code class="variable-quote">'</code><code class="variable-string"></code><code class="variable-quote">'</code></span>)</span><br />
+      Method to extract one or more data labels across all series, based on
+      criterion, from the current data frame into a new data frame.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="copads.dataframe-pysrc.html#Dataframe.extractValue">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">string</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="copads.dataframe.Dataframe-class.html#_generateRandomName" class="summary-sig-name" onclick="show_private();">_generateRandomName</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Private method to generate a 8-character upper case name to be used 
+      as series names.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="copads.dataframe-pysrc.html#Dataframe._generateRandomName">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="copads.dataframe.Dataframe-class.html#addSeries" class="summary-sig-name">addSeries</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">series</span>,
+        <span class="summary-sig-arg">fill_in</span>=<span class="summary-sig-default">None</span>)</span><br />
+      Method to add a data series into the data frame.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="copads.dataframe-pysrc.html#Dataframe.addSeries">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="copads.dataframe.Dataframe-class.html#addData" class="summary-sig-name">addData</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">dataset</span>,
+        <span class="summary-sig-arg">labels</span>,
+        <span class="summary-sig-arg">fill_in</span>=<span class="summary-sig-default">None</span>)</span><br />
+      Method to add new data into the current data frame.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="copads.dataframe-pysrc.html#Dataframe.addData">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="copads.dataframe.Dataframe-class.html#addCSV" class="summary-sig-name">addCSV</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">filepath</span>,
+        <span class="summary-sig-arg">series_header</span>=<span class="summary-sig-default">True</span>,
+        <span class="summary-sig-arg">separator</span>=<span class="summary-sig-default"><code class="variable-quote">'</code><code class="variable-string">,</code><code class="variable-quote">'</code></span>,
+        <span class="summary-sig-arg">fill_in</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">newline</span>=<span class="summary-sig-default"><code class="variable-quote">'</code><code class="variable-string">\n</code><code class="variable-quote">'</code></span>)</span><br />
+      Method to add data from comma-delimited file (CSV) into current data 
+      frame.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="copads.dataframe-pysrc.html#Dataframe.addCSV">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="copads.dataframe.Dataframe-class.html#removeSeries" class="summary-sig-name">removeSeries</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">series_name</span>)</span><br />
+      Method to remove / delete a data series from the current data frame.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="copads.dataframe-pysrc.html#Dataframe.removeSeries">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="copads.dataframe.Dataframe-class.html#popSeries" class="summary-sig-name">popSeries</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">series_names</span>,
+        <span class="summary-sig-arg">new_dataframe_name</span>=<span class="summary-sig-default"><code class="variable-quote">'</code><code class="variable-string"></code><code class="variable-quote">'</code></span>)</span><br />
+      Method to pop one or more series (extract one or more series from the
+      current data frame into new data frame, followed by removing the 
+      extracted series from the current data frame).</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="copads.dataframe-pysrc.html#Dataframe.popSeries">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="copads.dataframe.Dataframe-class.html#removeLabel" class="summary-sig-name">removeLabel</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">label</span>)</span><br />
+      Method to remove / delete a label across all data series from the 
+      current data frame.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="copads.dataframe-pysrc.html#Dataframe.removeLabel">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="copads.dataframe.Dataframe-class.html#popLabels" class="summary-sig-name">popLabels</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">label_names</span>,
+        <span class="summary-sig-arg">new_dataframe_name</span>=<span class="summary-sig-default"><code class="variable-quote">'</code><code class="variable-string"></code><code class="variable-quote">'</code></span>)</span><br />
+      Method to pop one or more labels across all data series (extract one 
+      or more labels across all data series from the current data frame 
+      into new data frame, followed by removing the extracted labels from 
+      the current data frame).</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="copads.dataframe-pysrc.html#Dataframe.popLabels">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="copads.dataframe.Dataframe-class.html#changeDatum" class="summary-sig-name">changeDatum</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">new_value</span>,
+        <span class="summary-sig-arg">series</span>,
+        <span class="summary-sig-arg">label</span>)</span><br />
+      Method to change the data value of a series and label.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="copads.dataframe-pysrc.html#Dataframe.changeDatum">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="copads.dataframe.Dataframe-class.html#changeSeriesName" class="summary-sig-name">changeSeriesName</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">new_name</span>,
+        <span class="summary-sig-arg">original_name</span>)</span><br />
+      Method to change the name of an existing series.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="copads.dataframe-pysrc.html#Dataframe.changeSeriesName">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="copads.dataframe.Dataframe-class.html#changeLabel" class="summary-sig-name">changeLabel</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">new_label</span>,
+        <span class="summary-sig-arg">original_label</span>)</span><br />
+      Method to change the name of an existing label.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="copads.dataframe-pysrc.html#Dataframe.changeLabel">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="copads.dataframe.Dataframe-class.html#getDatum" class="summary-sig-name">getDatum</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">series</span>,
+        <span class="summary-sig-arg">label</span>)</span><br />
+      Method to get data value for a given series and label names.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="copads.dataframe-pysrc.html#Dataframe.getDatum">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">list</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="copads.dataframe.Dataframe-class.html#getLabels" class="summary-sig-name">getLabels</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">datum</span>)</span><br />
+      Method to get label name(s) for a given data value.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="copads.dataframe-pysrc.html#Dataframe.getLabels">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">list</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="copads.dataframe.Dataframe-class.html#getSeries" class="summary-sig-name">getSeries</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">datum</span>)</span><br />
+      Method to get series name(s) for a given data value.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="copads.dataframe-pysrc.html#Dataframe.getSeries">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">list</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="copads.dataframe.Dataframe-class.html#getSeriesLabels" class="summary-sig-name">getSeriesLabels</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">datum</span>)</span><br />
+      Method to get series name(s) and label name(s) for a given data 
+      value.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="copads.dataframe-pysrc.html#Dataframe.getSeriesLabels">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="copads.dataframe.Dataframe-class.html#replaceLabel" class="summary-sig-name">replaceLabel</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">label_name</span>,
+        <span class="summary-sig-arg">operator</span>,
+        <span class="summary-sig-arg">original_value</span>,
+        <span class="summary-sig-arg">new_value</span>)</span><br />
+      Method to replace values, within a label, from its original value to 
+      a new value, if and only if the original value meets a certain 
+      criterion.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="copads.dataframe-pysrc.html#Dataframe.replaceLabel">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="copads.dataframe.Dataframe-class.html#replaceSeries" class="summary-sig-name">replaceSeries</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">series_name</span>,
+        <span class="summary-sig-arg">operator</span>,
+        <span class="summary-sig-arg">original_value</span>,
+        <span class="summary-sig-arg">new_value</span>)</span><br />
+      Method to replace values, within a series, from its original value to
+      a new value, if and only if the original value meets a certain 
+      criterion.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="copads.dataframe-pysrc.html#Dataframe.replaceSeries">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" class="summary">
+    <p class="indent-wrapped-lines"><b>Inherited from <code>object</code></b>:
+      <code>__delattr__</code>,
+      <code>__format__</code>,
+      <code>__getattribute__</code>,
+      <code>__hash__</code>,
+      <code>__new__</code>,
+      <code>__reduce__</code>,
+      <code>__reduce_ex__</code>,
+      <code>__repr__</code>,
+      <code>__setattr__</code>,
+      <code>__sizeof__</code>,
+      <code>__str__</code>,
+      <code>__subclasshook__</code>
+      </p>
+    </td>
+  </tr>
+</table>
+<!-- ==================== PROPERTIES ==================== -->
+<a name="section-Properties"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Properties</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-Properties"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+  <tr>
+    <td colspan="2" class="summary">
+    <p class="indent-wrapped-lines"><b>Inherited from <code>object</code></b>:
+      <code>__class__</code>
+      </p>
+    </td>
+  </tr>
+</table>
+<!-- ==================== METHOD DETAILS ==================== -->
+<a name="section-MethodDetails"></a>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Method Details</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-MethodDetails"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+</table>
+<a name="__init__"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">__init__</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">name</span>=<span class="sig-default"><code class="variable-quote">'</code><code class="variable-string"></code><code class="variable-quote">'</code></span>)</span>
+    <br /><em class="fname">(Constructor)</em>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="copads.dataframe-pysrc.html#Dataframe.__init__">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Constructor. Initialize data frame with a name.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>name</code></strong> (string) - Name of this data frame. Default is empty name.</li>
+    </ul></dd>
+    <dt>Overrides:
+        object.__init__
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="cast"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">cast</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">type</span>,
+        <span class="sig-arg">error_replace</span>,
+        <span class="sig-arg">series_name</span>=<span class="sig-default"><code class="variable-quote">'</code><code class="variable-string">all</code><code class="variable-quote">'</code></span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="copads.dataframe-pysrc.html#Dataframe.cast">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Method to cast data in the one or all series into a specific data 
+  type.</p>
+  <p>Allowable data types are:</p>
+  <ol start="1">
+    <li>
+      integer (type == 'int' or 'integer')
+    </li>
+    <li>
+      float (type == 'real' or 'float')
+    </li>
+    <li>
+      string (type == 'str' or 'string')
+    </li>
+  </ol>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>type</code></strong> (string) - data type to cast into</li>
+        <li><strong class="pname"><code>error_replace</code></strong> - in event where there is a failure to cast the data element (such 
+          as attempt to cast a character into an integer, which will result
+          ina ValueError), the data element will be replace with 
+          error_replace</li>
+        <li><strong class="pname"><code>series_name</code></strong> - series name to cast values into a specific data type. If 'all', 
+          the entire data frame (all data series) will be type casted. 
+          Default = 'all'</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="toSeries"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">toSeries</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">series_name</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="copads.dataframe-pysrc.html#Dataframe.toSeries">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Method to extract a series within the current data frame into a Series
+  object.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>series_name</code></strong> (string) - name of series to extract</li>
+    </ul></dd>
+    <dt>Returns:</dt>
+        <dd>dataframe.Series object</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="extractSeries"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">extractSeries</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">series_names</span>,
+        <span class="sig-arg">new_dataframe_name</span>=<span class="sig-default"><code class="variable-quote">'</code><code class="variable-string"></code><code class="variable-quote">'</code></span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="copads.dataframe-pysrc.html#Dataframe.extractSeries">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Method to extract one or more series from the current data frame into 
+  a new data frame.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>series_names</code></strong> (list) - names of series to extract</li>
+        <li><strong class="pname"><code>new_dataframe_name</code></strong> (string) - name for new data frame (that is to be returned)</li>
+    </ul></dd>
+    <dt>Returns:</dt>
+        <dd>dataframe.Dataframe object</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="extractGreedySeriesValue"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">extractGreedySeriesValue</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">series_names</span>,
+        <span class="sig-arg">operator</span>,
+        <span class="sig-arg">value</span>,
+        <span class="sig-arg">new_dataframe_name</span>=<span class="sig-default"><code class="variable-quote">'</code><code class="variable-string"></code><code class="variable-quote">'</code></span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="copads.dataframe-pysrc.html#Dataframe.extractGreedySeriesValue">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Method for &quot;greedy&quot; extraction of series name(s) and value 
+  by the following:</p>
+  <ol start="1">
+    <li>
+      Generate a new data frame by extracting required series using 
+      Dataframe.extractSeries method, which is essentially column 
+      reduction.
+    </li>
+    <li>
+      Reduce the data labels (essentially, row reduction) by finding data 
+      values in any remaining (one or more) series using the search 
+      criterion.
+    </li>
+  </ol>
+  <p>This method is considered to be &quot;greedy&quot; as the row 
+  reduction is not specific to particular series (column).</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>series_names</code></strong> (list) - names of series to extract</li>
+        <li><strong class="pname"><code>operator</code></strong> - comparative operator. Allowed values are: '&gt;' (more than), 
+          '&lt;' (less than), '&gt;=' (more than or equals to), '&lt;=' 
+          (less than or equals to), '=' (equals to), '!=' (not equals to), 
+          and '*' (all, basically replicating the entire data frame).</li>
+        <li><strong class="pname"><code>value</code></strong> - value of the data to compare.</li>
+        <li><strong class="pname"><code>new_dataframe_name</code></strong> (string) - name for new data frame (that is to be returned)</li>
+    </ul></dd>
+    <dt>Returns:</dt>
+        <dd>dataframe.Dataframe object</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="extractSeriesValue"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">extractSeriesValue</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">series_name</span>,
+        <span class="sig-arg">operator</span>,
+        <span class="sig-arg">value</span>,
+        <span class="sig-arg">new_dataframe_name</span>=<span class="sig-default"><code class="variable-quote">'</code><code class="variable-string"></code><code class="variable-quote">'</code></span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="copads.dataframe-pysrc.html#Dataframe.extractSeriesValue">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Method for extraction of row data where a specified value or range of 
+  value is found in the current data frame.</p>
+  <p>This method is logically identical to SQL select.</p>
+  <p>select * from &lt;current&gt; where &lt;current&gt;.seriesA &gt; 
+  30</p>
+  <p>can be represented as</p>
+<pre class="py-doctest">
+<span class="py-prompt">&gt;&gt;&gt; </span>df = &lt;current&gt;.extractSeriesValue(<span class="py-string">'seriesA'</span>, <span class="py-string">'&gt;'</span>, 30, <span class="py-string">''</span>)</pre>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>series_name</code></strong> (list) - name of series to extract</li>
+        <li><strong class="pname"><code>operator</code></strong> - comparative operator. Allowed values are: '&gt;' (more than), 
+          '&lt;' (less than), '&gt;=' (more than or equals to), '&lt;=' 
+          (less than or equals to), '=' (equals to), '!=' (not equals to), 
+          and '*' (all, basically replicating the entire data frame).</li>
+        <li><strong class="pname"><code>value</code></strong> - value of the data to compare.</li>
+        <li><strong class="pname"><code>new_dataframe_name</code></strong> (string) - name for new data frame (that is to be returned)</li>
+    </ul></dd>
+    <dt>Returns:</dt>
+        <dd>dataframe.Dataframe object</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="extractLabels"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">extractLabels</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">label_names</span>,
+        <span class="sig-arg">new_dataframe_name</span>=<span class="sig-default"><code class="variable-quote">'</code><code class="variable-string"></code><code class="variable-quote">'</code></span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="copads.dataframe-pysrc.html#Dataframe.extractLabels">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Method to extract one or more data labels across all series from the 
+  current data frame into a new data frame.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>label_names</code></strong> (list) - names of labels to extract</li>
+        <li><strong class="pname"><code>new_dataframe_name</code></strong> (string) - name for new data frame (that is to be returned)</li>
+    </ul></dd>
+    <dt>Returns:</dt>
+        <dd>dataframe.Dataframe object</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="extractValue"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">extractValue</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">operator</span>,
+        <span class="sig-arg">value</span>,
+        <span class="sig-arg">new_dataframe_name</span>=<span class="sig-default"><code class="variable-quote">'</code><code class="variable-string"></code><code class="variable-quote">'</code></span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="copads.dataframe-pysrc.html#Dataframe.extractValue">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Method to extract one or more data labels across all series, based on 
+  criterion, from the current data frame into a new data frame.</p>
+  <p>For example, the following will extract all data labels across all 
+  series where data value is more than 30, and generate and return a new 
+  dataframe (ndf).</p>
+<pre class="py-doctest">
+<span class="py-prompt">&gt;&gt;&gt; </span>ndf = df.extractValue(<span class="py-string">'&gt;'</span>, 30, <span class="py-string">'newframe'</span>)</pre>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>operator</code></strong> - comparative operator. Allowed values are: '&gt;' (more than), 
+          '&lt;' (less than), '&gt;=' (more than or equals to), '&lt;=' 
+          (less than or equals to), '=' (equals to), '!=' (not equals to), 
+          and '*' (all, basically replicating the entire data frame).</li>
+        <li><strong class="pname"><code>value</code></strong> - value of the data to compare.</li>
+        <li><strong class="pname"><code>new_dataframe_name</code></strong> (string) - name for new data frame (that is to be returned)</li>
+    </ul></dd>
+    <dt>Returns:</dt>
+        <dd>dataframe.Dataframe object</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="_generateRandomName"></a>
+<div class="private">
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">_generateRandomName</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="copads.dataframe-pysrc.html#Dataframe._generateRandomName">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Private method to generate a 8-character upper case name to be used as
+  series names.</p>
+  <dl class="fields">
+    <dt>Returns: string</dt>
+        <dd>generated name.</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="addSeries"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">addSeries</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">series</span>,
+        <span class="sig-arg">fill_in</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="copads.dataframe-pysrc.html#Dataframe.addSeries">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Method to add a data series into the data frame.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>series</code></strong> - data series (dataframe.Series object) for addition.</li>
+        <li><strong class="pname"><code>fill_in</code></strong> - value to fill into missing values during process. This is 
+          required as the number of data elements across each label must be
+          the same. Hence, filling in of missing values can occur when (1) 
+          the newly added data series consists of new labels which are not 
+          found in the current data frame (this will require filling in of 
+          missing values in the current data frame), or (2) the current 
+          data frame consists of labels that are not found in the newly 
+          added data series (this will require filling in of missing values
+          to the newly added data series). Default = None.</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="addData"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">addData</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">dataset</span>,
+        <span class="sig-arg">labels</span>,
+        <span class="sig-arg">fill_in</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="copads.dataframe-pysrc.html#Dataframe.addData">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Method to add new data into the current data frame. For example,</p>
+<pre class="py-doctest">
+<span class="py-prompt">&gt;&gt;&gt; </span>df = d.Dataframe(<span class="py-string">'frame1'</span>)
+<span class="py-prompt">&gt;&gt;&gt; </span>dataset = {<span class="py-string">'seriesA'</span>: [10, 11, 12, 13, 14],
+<span class="py-output">               'seriesB': [20, 21, 22, 23, 24],</span>
+<span class="py-output">               'seriesC': [30, 31, 32, 33, 34],</span>
+<span class="py-output">               'seriesD': [40, 41, 42, 43, 44]}</span>
+<span class="py-output"></span><span class="py-prompt">&gt;&gt;&gt; </span>label = [<span class="py-string">'A'</span>, <span class="py-string">'B'</span>, <span class="py-string">'C'</span>, <span class="py-string">'D'</span>, <span class="py-string">'E'</span>]
+<span class="py-prompt">&gt;&gt;&gt; </span>df.addData(dataset, label)</pre>
+  <p>will result in:</p>
+<pre class="literalblock">
+       seriesA  seriesB  seriesC  seriesD
+   A   10       20       30       40
+   B   11       21       31       41
+   C   12       22       32       42
+   D   13       23       33       43
+   E   14       24       34       44
+</pre>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>dataset</code></strong> (dictionary) - set of data to add. This is formatted as a dictionary where the 
+          key is the series name and the value is a list of data values of 
+          the same number of elements as labels.</li>
+        <li><strong class="pname"><code>labels</code></strong> (list) - list of labels for the data values. If not given, a sequential 
+          number will be given as label but this does not ensure uniqueness
+          in label names across the entire series.</li>
+        <li><strong class="pname"><code>fill_in</code></strong> - value to fill into missing values during process. This is 
+          required as the number of data elements across each label must be
+          the same. Hence, filling in of missing values can occur when (1) 
+          the newly added data series consists of new labels which are not 
+          found in the current data frame (this will require filling in of 
+          missing values in the current data frame), or (2) the current 
+          data frame consists of labels that are not found in the newly 
+          added data series (this will require filling in of missing values
+          to the newly added data series). Default = None.</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="addCSV"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">addCSV</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">filepath</span>,
+        <span class="sig-arg">series_header</span>=<span class="sig-default">True</span>,
+        <span class="sig-arg">separator</span>=<span class="sig-default"><code class="variable-quote">'</code><code class="variable-string">,</code><code class="variable-quote">'</code></span>,
+        <span class="sig-arg">fill_in</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">newline</span>=<span class="sig-default"><code class="variable-quote">'</code><code class="variable-string">\n</code><code class="variable-quote">'</code></span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="copads.dataframe-pysrc.html#Dataframe.addCSV">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Method to add data from comma-delimited file (CSV) into current data 
+  frame.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>filepath</code></strong> (string) - path to CSV file.</li>
+        <li><strong class="pname"><code>series_header</code></strong> - boolean flag to denote whether the first row in the CSV file 
+          contains the data header. It is highly recommended that header is
+          included in the CSV file. Default = True (header is included)</li>
+        <li><strong class="pname"><code>separator</code></strong> - item separator within the CSV file. Default = ','</li>
+        <li><strong class="pname"><code>fill_in</code></strong> - value to fill into missing values during process. This is 
+          required as the number of data elements across each label must be
+          the same. Hence, filling in of missing values can occur when (1) 
+          the newly added data series consists of new labels which are not 
+          found in the current data frame (this will require filling in of 
+          missing values in the current data frame), or (2) the current 
+          data frame consists of labels that are not found in the newly 
+          added data series (this will require filling in of missing values
+          to the newly added data series). Default = None.</li>
+        <li><strong class="pname"><code>newline</code></strong> - character to denote new line or line feed in the CSV file.</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="removeSeries"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">removeSeries</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">series_name</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="copads.dataframe-pysrc.html#Dataframe.removeSeries">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Method to remove / delete a data series from the current data 
+  frame.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>series_name</code></strong> (string) - names of series to remove</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="popSeries"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">popSeries</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">series_names</span>,
+        <span class="sig-arg">new_dataframe_name</span>=<span class="sig-default"><code class="variable-quote">'</code><code class="variable-string"></code><code class="variable-quote">'</code></span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="copads.dataframe-pysrc.html#Dataframe.popSeries">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Method to pop one or more series (extract one or more series from the 
+  current data frame into new data frame, followed by removing the 
+  extracted series from the current data frame).</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>series_names</code></strong> (list) - names of series to pop</li>
+        <li><strong class="pname"><code>new_dataframe_name</code></strong> (string) - name for new data frame (that is to be returned)</li>
+    </ul></dd>
+    <dt>Returns:</dt>
+        <dd>dataframe.Dataframe object</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="removeLabel"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">removeLabel</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">label</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="copads.dataframe-pysrc.html#Dataframe.removeLabel">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Method to remove / delete a label across all data series from the 
+  current data frame.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>label</code></strong> (string) - names of label to remove</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="popLabels"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">popLabels</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">label_names</span>,
+        <span class="sig-arg">new_dataframe_name</span>=<span class="sig-default"><code class="variable-quote">'</code><code class="variable-string"></code><code class="variable-quote">'</code></span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="copads.dataframe-pysrc.html#Dataframe.popLabels">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Method to pop one or more labels across all data series (extract one 
+  or more labels across all data series from the current data frame into 
+  new data frame, followed by removing the extracted labels from the 
+  current data frame).</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>label_names</code></strong> (list) - names of series to pop</li>
+        <li><strong class="pname"><code>new_dataframe_name</code></strong> (string) - name for new data frame (that is to be returned)</li>
+    </ul></dd>
+    <dt>Returns:</dt>
+        <dd>dataframe.Dataframe object</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="changeDatum"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">changeDatum</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">new_value</span>,
+        <span class="sig-arg">series</span>,
+        <span class="sig-arg">label</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="copads.dataframe-pysrc.html#Dataframe.changeDatum">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Method to change the data value of a series and label. If the series 
+  or label is not found within the data series, nothing will be 
+  changed.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>new_value</code></strong> - the new value for the label.</li>
+        <li><strong class="pname"><code>series</code></strong> - the series name for the data value to be changed.</li>
+        <li><strong class="pname"><code>label</code></strong> - the label name for the data value to be changed.</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="changeSeriesName"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">changeSeriesName</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">new_name</span>,
+        <span class="sig-arg">original_name</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="copads.dataframe-pysrc.html#Dataframe.changeSeriesName">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Method to change the name of an existing series. If the existing 
+  (original) series name is not found within the data series, nothing will 
+  be changed.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>new_name</code></strong> - the new name for the series.</li>
+        <li><strong class="pname"><code>original_name</code></strong> - the existing (original) series name to be changed.</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="changeLabel"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">changeLabel</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">new_label</span>,
+        <span class="sig-arg">original_label</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="copads.dataframe-pysrc.html#Dataframe.changeLabel">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Method to change the name of an existing label. If the existing 
+  (original) label is not found within the data series, nothing will be 
+  changed.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>new_label</code></strong> - the new name for the label.</li>
+        <li><strong class="pname"><code>original_label</code></strong> - the existing (original) label name to be changed.</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="getDatum"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getDatum</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">series</span>,
+        <span class="sig-arg">label</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="copads.dataframe-pysrc.html#Dataframe.getDatum">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Method to get data value for a given series and label names. If the 
+  series name or label name is not found within the data series, None will 
+  be returned.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>series</code></strong> - the series name for the data value to retrieve.</li>
+        <li><strong class="pname"><code>label</code></strong> - the label name for the data value to retrieve.</li>
+    </ul></dd>
+    <dt>Returns:</dt>
+        <dd>data value tagged to the series and label (if found), or None (if
+          the series or label is not found).</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="getLabels"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getLabels</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">datum</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="copads.dataframe-pysrc.html#Dataframe.getLabels">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Method to get label name(s) for a given data value. However, this 
+  method does not return the series name from which the data value is/are 
+  found.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>datum</code></strong> - the data value to retrieve its corresponding label.</li>
+    </ul></dd>
+    <dt>Returns: list</dt>
+        <dd>[None] if data value is not found; list of one or more label 
+          names if the data value is found.</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="getSeries"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getSeries</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">datum</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="copads.dataframe-pysrc.html#Dataframe.getSeries">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Method to get series name(s) for a given data value. However, this 
+  method does not return the label name from which the data value is/are 
+  found.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>datum</code></strong> - the data value to retrieve its corresponding series.</li>
+    </ul></dd>
+    <dt>Returns: list</dt>
+        <dd>[None] if data value is not found; list of one or more series 
+          names if the data value is found.</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="getSeriesLabels"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getSeriesLabels</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">datum</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="copads.dataframe-pysrc.html#Dataframe.getSeriesLabels">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Method to get series name(s) and label name(s) for a given data value.
+  This method returns the a list of coodinates tuples, (series name, label 
+  name) in which the given data value is found.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>datum</code></strong> - the data value to retrieve its corresponding coordinates.</li>
+    </ul></dd>
+    <dt>Returns: list</dt>
+        <dd>[(None, None)] if data value is not found; list of one or more 
+          coordinates if the data value is found.</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="replaceLabel"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">replaceLabel</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">label_name</span>,
+        <span class="sig-arg">operator</span>,
+        <span class="sig-arg">original_value</span>,
+        <span class="sig-arg">new_value</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="copads.dataframe-pysrc.html#Dataframe.replaceLabel">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Method to replace values, within a label, from its original value to a
+  new value, if and only if the original value meets a certain 
+  criterion.</p>
+  <p>For example, the following will replace all values of more than 30, 
+  that are found within Label 'B', to 40.</p>
+<pre class="py-doctest">
+<span class="py-prompt">&gt;&gt;&gt; </span>df.replaceLabel(<span class="py-string">'B'</span>, <span class="py-string">'&gt;'</span>, 30, 40)</pre>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>label_name</code></strong> - the label name for the data value to be replaced.</li>
+        <li><strong class="pname"><code>operator</code></strong> - comparative operator. Allowed values are: '&gt;' (more than), 
+          '&lt;' (less than), '&gt;=' (more than or equals to), '&lt;=' 
+          (less than or equals to), '=' (equals to), and '!=' (not equals 
+          to).</li>
+        <li><strong class="pname"><code>original_value</code></strong> - original value of the data.</li>
+        <li><strong class="pname"><code>new_value</code></strong> - new value to be replaced when the criterion is met.</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="replaceSeries"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">replaceSeries</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">series_name</span>,
+        <span class="sig-arg">operator</span>,
+        <span class="sig-arg">original_value</span>,
+        <span class="sig-arg">new_value</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="copads.dataframe-pysrc.html#Dataframe.replaceSeries">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Method to replace values, within a series, from its original value to 
+  a new value, if and only if the original value meets a certain 
+  criterion.</p>
+  <p>For example, the following will replace all values of more than 30, 
+  that are found within Series 'B', to 40.</p>
+<pre class="py-doctest">
+<span class="py-prompt">&gt;&gt;&gt; </span>df.replaceSeries(<span class="py-string">'B'</span>, <span class="py-string">'&gt;'</span>, 30, 40)</pre>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>series_name</code></strong> - the series name for the data value to be replaced.</li>
+        <li><strong class="pname"><code>operator</code></strong> - comparative operator. Allowed values are: '&gt;' (more than), 
+          '&lt;' (less than), '&gt;=' (more than or equals to), '&lt;=' 
+          (less than or equals to), '=' (equals to), and '!=' (not equals 
+          to).</li>
+        <li><strong class="pname"><code>original_value</code></strong> - original value of the data.</li>
+        <li><strong class="pname"><code>new_value</code></strong> - new value to be replaced when the criterion is met.</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<br />
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="copads-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            ><a class="navbar" target="_top" href="https://github.com/mauriceling/copads">https://github.com/mauriceling/copads</a></th>
+          </tr></table></th>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%%">
+  <tr>
+    <td align="left" class="footer">
+    Generated by Epydoc 3.0.1 on Tue May 31 13:09:12 2016
+    </td>
+    <td align="right" class="footer">
+      <a target="mainFrame" href="http://epydoc.sourceforge.net"
+        >http://epydoc.sourceforge.net</a>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  <!--
+  // Private objects are initially displayed (because if
+  // javascript is turned off then we want them to be
+  // visible); but by default, we want to hide them.  So hide
+  // them unless we have a cookie that says to show them.
+  checkCookie();
+  // -->
+</script>
+</body>
+</html>

@@ -1,0 +1,1493 @@
+<?xml version="1.0" encoding="ascii"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>copads.copads.ode</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="copads.copads-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            ><a class="navbar" target="_top" href="https://github.com/mauriceling/copads">https://github.com/mauriceling/copads</a></th>
+          </tr></table></th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <span class="breadcrumbs">
+        Package&nbsp;copads ::
+        <a href="copads.copads-module.html">Package&nbsp;copads</a> ::
+        Module&nbsp;ode
+      </span>
+    </td>
+    <td>
+      <table cellpadding="0" cellspacing="0">
+        <!-- hide/show private -->
+        <tr><td align="right"><span class="options">[<a href="javascript:void(0);" class="privatelink"
+    onclick="toggle_private();">hide&nbsp;private</a>]</span></td></tr>
+        <tr><td align="right"><span class="options"
+            >[<a href="frames.html" target="_top">frames</a
+            >]&nbsp;|&nbsp;<a href="copads.copads.ode-module.html"
+            target="_top">no&nbsp;frames</a>]</span></td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<!-- ==================== MODULE DESCRIPTION ==================== -->
+<h1 class="epydoc">Module ode</h1><p class="nomargin-top"><span class="codelink"><a href="copads.copads.ode-pysrc.html">source&nbsp;code</a></span></p>
+<p>Ordinary Differential Equation (ODE) Solvers.</p>
+  <p>Copyright (c) Maurice H.T. Ling &lt;mauriceling@acm.org&gt;</p>
+  <p>Date created: 20th December 2014</p>
+
+<!-- ==================== FUNCTIONS ==================== -->
+<a name="section-Functions"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Functions</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-Functions"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="copads.copads.ode-module.html#boundary_checker" class="summary-sig-name">boundary_checker</a>(<span class="summary-sig-arg">y</span>,
+        <span class="summary-sig-arg">boundary</span>,
+        <span class="summary-sig-arg">type</span>)</span><br />
+      Private function - called by ODE solvers to perform boundary checking
+      of variable values and reset them to specific values if the original 
+      values fall out of the boundary values.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="copads.copads.ode-pysrc.html#boundary_checker">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="copads.copads.ode-module.html#Euler" class="summary-sig-name">Euler</a>(<span class="summary-sig-arg">funcs</span>,
+        <span class="summary-sig-arg">x0</span>,
+        <span class="summary-sig-arg">y0</span>,
+        <span class="summary-sig-arg">step</span>,
+        <span class="summary-sig-arg">xmax</span>,
+        <span class="summary-sig-arg">nonODEfunc</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">lower_bound</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">upper_bound</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">overflow</span>=<span class="summary-sig-default">1e100</span>,
+        <span class="summary-sig-arg">zerodivision</span>=<span class="summary-sig-default">1e100</span>)</span><br />
+      Generator to integrate a system of ODEs, y0' = funcs(x0, y0), using 
+      Euler method.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="copads.copads.ode-pysrc.html#Euler">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="copads.copads.ode-module.html#Heun" class="summary-sig-name">Heun</a>(<span class="summary-sig-arg">funcs</span>,
+        <span class="summary-sig-arg">x0</span>,
+        <span class="summary-sig-arg">y0</span>,
+        <span class="summary-sig-arg">step</span>,
+        <span class="summary-sig-arg">xmax</span>,
+        <span class="summary-sig-arg">nonODEfunc</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">lower_bound</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">upper_bound</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">overflow</span>=<span class="summary-sig-default">1e100</span>,
+        <span class="summary-sig-arg">zerodivision</span>=<span class="summary-sig-default">1e100</span>)</span><br />
+      Generator to integrate a system of ODEs, y0' = funcs(x0, y0), using 
+      Heun's method, which is also known as Runge-Kutta 2nd method or 
+      Trapezoidal method.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="copads.copads.ode-pysrc.html#Heun">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="copads.copads.ode-module.html#RK3" class="summary-sig-name">RK3</a>(<span class="summary-sig-arg">funcs</span>,
+        <span class="summary-sig-arg">x0</span>,
+        <span class="summary-sig-arg">y0</span>,
+        <span class="summary-sig-arg">step</span>,
+        <span class="summary-sig-arg">xmax</span>,
+        <span class="summary-sig-arg">nonODEfunc</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">lower_bound</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">upper_bound</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">overflow</span>=<span class="summary-sig-default">1e100</span>,
+        <span class="summary-sig-arg">zerodivision</span>=<span class="summary-sig-default">1e100</span>)</span><br />
+      Generator to integrate a system of ODEs, y0' = funcs(x0, y0), using 
+      third order Runge-Kutta method.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="copads.copads.ode-pysrc.html#RK3">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="copads.copads.ode-module.html#RK4" class="summary-sig-name">RK4</a>(<span class="summary-sig-arg">funcs</span>,
+        <span class="summary-sig-arg">x0</span>,
+        <span class="summary-sig-arg">y0</span>,
+        <span class="summary-sig-arg">step</span>,
+        <span class="summary-sig-arg">xmax</span>,
+        <span class="summary-sig-arg">nonODEfunc</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">lower_bound</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">upper_bound</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">overflow</span>=<span class="summary-sig-default">1e100</span>,
+        <span class="summary-sig-arg">zerodivision</span>=<span class="summary-sig-default">1e100</span>)</span><br />
+      Generator to integrate a system of ODEs, y' = f(x, y), using fourth 
+      order Runge-Kutta method.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="copads.copads.ode-pysrc.html#RK4">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="copads.copads.ode-module.html#RK38" class="summary-sig-name">RK38</a>(<span class="summary-sig-arg">funcs</span>,
+        <span class="summary-sig-arg">x0</span>,
+        <span class="summary-sig-arg">y0</span>,
+        <span class="summary-sig-arg">step</span>,
+        <span class="summary-sig-arg">xmax</span>,
+        <span class="summary-sig-arg">nonODEfunc</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">lower_bound</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">upper_bound</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">overflow</span>=<span class="summary-sig-default">1e100</span>,
+        <span class="summary-sig-arg">zerodivision</span>=<span class="summary-sig-default">1e100</span>)</span><br />
+      Generator to integrate a system of ODEs, y' = f(x, y), using fourth 
+      order Runge-Kutta method, 3/8 rule.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="copads.copads.ode-pysrc.html#RK38">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="copads.copads.ode-module.html#CK4" class="summary-sig-name">CK4</a>(<span class="summary-sig-arg">funcs</span>,
+        <span class="summary-sig-arg">x0</span>,
+        <span class="summary-sig-arg">y0</span>,
+        <span class="summary-sig-arg">step</span>,
+        <span class="summary-sig-arg">xmax</span>,
+        <span class="summary-sig-arg">nonODEfunc</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">lower_bound</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">upper_bound</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">overflow</span>=<span class="summary-sig-default">1e100</span>,
+        <span class="summary-sig-arg">zerodivision</span>=<span class="summary-sig-default">1e100</span>)</span><br />
+      Generator to integrate a system of ODEs, y' = f(x, y), using fifth 
+      order Cash-Karp method.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="copads.copads.ode-pysrc.html#CK4">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="copads.copads.ode-module.html#CK5" class="summary-sig-name">CK5</a>(<span class="summary-sig-arg">funcs</span>,
+        <span class="summary-sig-arg">x0</span>,
+        <span class="summary-sig-arg">y0</span>,
+        <span class="summary-sig-arg">step</span>,
+        <span class="summary-sig-arg">xmax</span>,
+        <span class="summary-sig-arg">nonODEfunc</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">lower_bound</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">upper_bound</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">overflow</span>=<span class="summary-sig-default">1e100</span>,
+        <span class="summary-sig-arg">zerodivision</span>=<span class="summary-sig-default">1e100</span>)</span><br />
+      Generator to integrate a system of ODEs, y' = f(x, y), using fifth 
+      order Cash-Karp method.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="copads.copads.ode-pysrc.html#CK5">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="copads.copads.ode-module.html#RKF4" class="summary-sig-name">RKF4</a>(<span class="summary-sig-arg">funcs</span>,
+        <span class="summary-sig-arg">x0</span>,
+        <span class="summary-sig-arg">y0</span>,
+        <span class="summary-sig-arg">step</span>,
+        <span class="summary-sig-arg">xmax</span>,
+        <span class="summary-sig-arg">nonODEfunc</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">lower_bound</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">upper_bound</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">overflow</span>=<span class="summary-sig-default">1e100</span>,
+        <span class="summary-sig-arg">zerodivision</span>=<span class="summary-sig-default">1e100</span>)</span><br />
+      Generator to integrate a system of ODEs, y' = f(x, y), using fourth 
+      order Runge-Kutta_Fehlberg method.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="copads.copads.ode-pysrc.html#RKF4">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="copads.copads.ode-module.html#RKF5" class="summary-sig-name">RKF5</a>(<span class="summary-sig-arg">funcs</span>,
+        <span class="summary-sig-arg">x0</span>,
+        <span class="summary-sig-arg">y0</span>,
+        <span class="summary-sig-arg">step</span>,
+        <span class="summary-sig-arg">xmax</span>,
+        <span class="summary-sig-arg">nonODEfunc</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">lower_bound</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">upper_bound</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">overflow</span>=<span class="summary-sig-default">1e100</span>,
+        <span class="summary-sig-arg">zerodivision</span>=<span class="summary-sig-default">1e100</span>)</span><br />
+      Generator to integrate a system of ODEs, y' = f(x, y), using fifth 
+      order Runge-Kutta_Fehlberg method.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="copads.copads.ode-pysrc.html#RKF5">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="copads.copads.ode-module.html#DP4" class="summary-sig-name">DP4</a>(<span class="summary-sig-arg">funcs</span>,
+        <span class="summary-sig-arg">x0</span>,
+        <span class="summary-sig-arg">y0</span>,
+        <span class="summary-sig-arg">step</span>,
+        <span class="summary-sig-arg">xmax</span>,
+        <span class="summary-sig-arg">nonODEfunc</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">lower_bound</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">upper_bound</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">overflow</span>=<span class="summary-sig-default">1e100</span>,
+        <span class="summary-sig-arg">zerodivision</span>=<span class="summary-sig-default">1e100</span>)</span><br />
+      Generator to integrate a system of ODEs, y' = f(x, y), using fourth 
+      order Dormand-Prince method.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="copads.copads.ode-pysrc.html#DP4">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="copads.copads.ode-module.html#DP5" class="summary-sig-name">DP5</a>(<span class="summary-sig-arg">funcs</span>,
+        <span class="summary-sig-arg">x0</span>,
+        <span class="summary-sig-arg">y0</span>,
+        <span class="summary-sig-arg">step</span>,
+        <span class="summary-sig-arg">xmax</span>,
+        <span class="summary-sig-arg">nonODEfunc</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">lower_bound</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">upper_bound</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">overflow</span>=<span class="summary-sig-default">1e100</span>,
+        <span class="summary-sig-arg">zerodivision</span>=<span class="summary-sig-default">1e100</span>)</span><br />
+      Generator to integrate a system of ODEs, y' = f(x, y), using fifth 
+      order Dormand-Prince method.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="copads.copads.ode-pysrc.html#DP5">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="copads.copads.ode-module.html#_equation_constructor" class="summary-sig-name" onclick="show_private();">_equation_constructor</a>(<span class="summary-sig-arg">expressions</span>=<span class="summary-sig-default">{}</span>,
+        <span class="summary-sig-arg">parameters</span>=<span class="summary-sig-default">{}</span>,
+        <span class="summary-sig-arg">variables</span>=<span class="summary-sig-default">[]</span>)</span><br />
+      Private function to support ODE_constructor to generate ODE function 
+      for each ODE.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="copads.copads.ode-pysrc.html#_equation_constructor">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="copads.copads.ode-module.html#_modifying_constructor" class="summary-sig-name" onclick="show_private();">_modifying_constructor</a>(<span class="summary-sig-arg">modifying_expressions</span>)</span><br />
+      Private function to support ODE_constructor to generate function code
+      for modifying expressions.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="copads.copads.ode-pysrc.html#_modifying_constructor">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">list</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="copads.copads.ode-module.html#ODE_constructor" class="summary-sig-name">ODE_constructor</a>(<span class="summary-sig-arg">scriptfile</span>,
+        <span class="summary-sig-arg">resultsfile</span>,
+        <span class="summary-sig-arg">time</span>=<span class="summary-sig-default">(0.0,0.1,100.0)</span>,
+        <span class="summary-sig-arg">ODE_solver</span>=<span class="summary-sig-default">'RK4'</span>,
+        <span class="summary-sig-arg">expressions</span>=<span class="summary-sig-default">{}</span>,
+        <span class="summary-sig-arg">parameters</span>=<span class="summary-sig-default">{}</span>,
+        <span class="summary-sig-arg">initial_conditions</span>=<span class="summary-sig-default">{}</span>,
+        <span class="summary-sig-arg">modifying_expressions</span>=<span class="summary-sig-default">[]</span>,
+        <span class="summary-sig-arg">lower_bound</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">upper_bound</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">overflow</span>=<span class="summary-sig-default">1e100</span>,
+        <span class="summary-sig-arg">zerodivision</span>=<span class="summary-sig-default">1e100</span>)</span><br />
+      Function to construct an ODE simulation script file from given 
+      definitions.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="copads.copads.ode-pysrc.html#ODE_constructor">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+</table>
+<p class="indent-wrapped-lines"><b>Imports:</b>
+  <span title="re">re</span>
+</p><br />
+<!-- ==================== FUNCTION DETAILS ==================== -->
+<a name="section-FunctionDetails"></a>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Function Details</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-FunctionDetails"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+</table>
+<a name="boundary_checker"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">boundary_checker</span>(<span class="sig-arg">y</span>,
+        <span class="sig-arg">boundary</span>,
+        <span class="sig-arg">type</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="copads.copads.ode-pysrc.html#boundary_checker">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Private function - called by ODE solvers to perform boundary checking 
+  of variable values and reset them to specific values if the original 
+  values fall out of the boundary values.</p>
+  <p>Boundary parameter takes the form of a dictionary with variable number
+  as key and a list of [&lt;boundary value&gt;, &lt;value to set if 
+  boundary is exceeded&gt;]. For example, the following dictionary for 
+  lower boundary (type = 'lower') {'1': [0.0, 0.0], '5': [2.0, 2.0]} will 
+  set the lower boundary of variable y[0] and [5] to 0.0 and 2.0 
+  respectively. This also allows for setting to a different value - for 
+  example, {'1': [0.0, 1.0]} will set variable y[0] to 2.0 if the original 
+  y[0] value is negative.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>y</code></strong> (list) - values for variables</li>
+        <li><strong class="pname"><code>boundary</code></strong> (dictionary) - set of values for boundary of variables</li>
+        <li><strong class="pname"><code>type</code></strong> - the type of boundary to be checked, either 'upper' (upper 
+          boundary) or 'lower' (lower boundary)</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="Euler"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">Euler</span>(<span class="sig-arg">funcs</span>,
+        <span class="sig-arg">x0</span>,
+        <span class="sig-arg">y0</span>,
+        <span class="sig-arg">step</span>,
+        <span class="sig-arg">xmax</span>,
+        <span class="sig-arg">nonODEfunc</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">lower_bound</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">upper_bound</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">overflow</span>=<span class="sig-default">1e100</span>,
+        <span class="sig-arg">zerodivision</span>=<span class="sig-default">1e100</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="copads.copads.ode-pysrc.html#Euler">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Generator to integrate a system of ODEs, y0' = funcs(x0, y0), using 
+  Euler method.</p>
+  <p>A function (as nonODEfunc parameter) can be included to modify one or 
+  more variables (y0 list). This function will not be an ODE (not a dy/dt).
+  This can be used to consolidate the modification of one or more variables
+  at each ODE solving step. For example, y[0] = y[1] / y[2] can be written 
+  as</p>
+<pre class="py-doctest">
+<span class="py-prompt">&gt;&gt;&gt; </span><span class="py-keyword">def</span> <span class="py-defname">modifying_function</span>(y, step):
+<span class="py-output">        y[0] = y[1] / y[2]</span>
+<span class="py-output">        return y</span></pre>
+  <p>This function must take 'y' (variable list) and 'step' (time step) as 
+  parameters and must return 'y' (the modified variable list). This 
+  function will execute before boundary checking at each time step.</p>
+  <p>Upper and lower boundaries of one or more variable can be set using 
+  upper_bound and lower_bound parameters respectively. These parameters 
+  takes the form of a dictionary with variable number as key and a list of 
+  [&lt;boundary value&gt;, &lt;value to set if boundary is exceeded&gt;]. 
+  For example, the following dictionary for lower boundary {'1': [0.0, 
+  0.0], '5': [2.0, 2.0]} will set the lower boundary of variable y[0] and 
+  y[5] to 0.0 and 2.0 respectively. This also allows for setting to a 
+  different value - for example, {'1': [0.0, 1.0]} will set variable y[0] 
+  to 2.0 if the original y[0] value is negative.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>funcs</code></strong> (list) - system of differential equations</li>
+        <li><strong class="pname"><code>x0</code></strong> (float) - initial value of x-axis, which is usually starting time</li>
+        <li><strong class="pname"><code>y0</code></strong> (list) - initial values for variables</li>
+        <li><strong class="pname"><code>step</code></strong> (float) - step size on the x-axis (also known as step in calculus)</li>
+        <li><strong class="pname"><code>xmax</code></strong> (float) - maximum value of x-axis, which is usually ending time</li>
+        <li><strong class="pname"><code>nonODEfunc</code></strong> (function) - a function to modify the variable list (y0)</li>
+        <li><strong class="pname"><code>lower_bound</code></strong> (dictionary) - set of values for lower boundary of variables</li>
+        <li><strong class="pname"><code>upper_bound</code></strong> (dictionary) - set of values for upper boundary of variables</li>
+        <li><strong class="pname"><code>overflow</code></strong> (float) - value (usually a large value) to assign in event of over flow 
+          error (usually caused by a large number) during integration. 
+          Default = 1e100.</li>
+        <li><strong class="pname"><code>zerodivision</code></strong> (float) - value (usually a large value) to assign in event of zero division
+          error, which results in positive infinity, during integration. 
+          Default = 1e100.</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="Heun"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">Heun</span>(<span class="sig-arg">funcs</span>,
+        <span class="sig-arg">x0</span>,
+        <span class="sig-arg">y0</span>,
+        <span class="sig-arg">step</span>,
+        <span class="sig-arg">xmax</span>,
+        <span class="sig-arg">nonODEfunc</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">lower_bound</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">upper_bound</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">overflow</span>=<span class="sig-default">1e100</span>,
+        <span class="sig-arg">zerodivision</span>=<span class="sig-default">1e100</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="copads.copads.ode-pysrc.html#Heun">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Generator to integrate a system of ODEs, y0' = funcs(x0, y0), using 
+  Heun's method, which is also known as Runge-Kutta 2nd method or 
+  Trapezoidal method.</p>
+  <p>A function (as nonODEfunc parameter) can be included to modify one or 
+  more variables (y0 list). This function will not be an ODE (not a dy/dt).
+  This can be used to consolidate the modification of one or more variables
+  at each ODE solving step. For example, y[0] = y[1] / y[2] can be written 
+  as</p>
+<pre class="py-doctest">
+<span class="py-prompt">&gt;&gt;&gt; </span><span class="py-keyword">def</span> <span class="py-defname">modifying_function</span>(y, step):
+<span class="py-output">        y[0] = y[1] / y[2]</span>
+<span class="py-output">        return y</span></pre>
+  <p>This function must take 'y' (variable list) and 'step' (time step) as 
+  parameters and must return 'y' (the modified variable list). This 
+  function will execute before boundary checking at each time step.</p>
+  <p>Upper and lower boundaries of one or more variable can be set using 
+  upper_bound and lower_bound parameters respectively. These parameters 
+  takes the form of a dictionary with variable number as key and a list of 
+  [&lt;boundary value&gt;, &lt;value to set if boundary is exceeded&gt;]. 
+  For example, the following dictionary for lower boundary {'1': [0.0, 
+  0.0], '5': [2.0, 2.0]} will set the lower boundary of variable y[0] and 
+  y[5] to 0.0 and 2.0 respectively. This also allows for setting to a 
+  different value - for example, {'1': [0.0, 1.0]} will set variable y[0] 
+  to 2.0 if the original y[0] value is negative.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>funcs</code></strong> (list) - system of differential equations</li>
+        <li><strong class="pname"><code>x0</code></strong> (float) - initial value of x-axis, which is usually starting time</li>
+        <li><strong class="pname"><code>y0</code></strong> (list) - initial values for variables</li>
+        <li><strong class="pname"><code>step</code></strong> (float) - step size on the x-axis (also known as step in calculus)</li>
+        <li><strong class="pname"><code>xmax</code></strong> (float) - maximum value of x-axis, which is usually ending time</li>
+        <li><strong class="pname"><code>nonODEfunc</code></strong> (function) - a function to modify the variable list (y0)</li>
+        <li><strong class="pname"><code>lower_bound</code></strong> (dictionary) - set of values for lower boundary of variables</li>
+        <li><strong class="pname"><code>upper_bound</code></strong> (dictionary) - set of values for upper boundary of variables</li>
+        <li><strong class="pname"><code>overflow</code></strong> (float) - value (usually a large value) to assign in event of over flow 
+          error (usually caused by a large number) during integration. 
+          Default = 1e100.</li>
+        <li><strong class="pname"><code>zerodivision</code></strong> (float) - value (usually a large value) to assign in event of zero division
+          error, which results in positive infinity, during integration. 
+          Default = 1e100.</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="RK3"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">RK3</span>(<span class="sig-arg">funcs</span>,
+        <span class="sig-arg">x0</span>,
+        <span class="sig-arg">y0</span>,
+        <span class="sig-arg">step</span>,
+        <span class="sig-arg">xmax</span>,
+        <span class="sig-arg">nonODEfunc</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">lower_bound</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">upper_bound</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">overflow</span>=<span class="sig-default">1e100</span>,
+        <span class="sig-arg">zerodivision</span>=<span class="sig-default">1e100</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="copads.copads.ode-pysrc.html#RK3">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Generator to integrate a system of ODEs, y0' = funcs(x0, y0), using 
+  third order Runge-Kutta method.</p>
+  <p>A function (as nonODEfunc parameter) can be included to modify one or 
+  more variables (y0 list). This function will not be an ODE (not a dy/dt).
+  This can be used to consolidate the modification of one or more variables
+  at each ODE solving step. For example, y[0] = y[1] / y[2] can be written 
+  as</p>
+<pre class="py-doctest">
+<span class="py-prompt">&gt;&gt;&gt; </span><span class="py-keyword">def</span> <span class="py-defname">modifying_function</span>(y, step):
+<span class="py-output">        y[0] = y[1] / y[2]</span>
+<span class="py-output">        return y</span></pre>
+  <p>This function must take 'y' (variable list) and 'step' (time step) as 
+  parameters and must return 'y' (the modified variable list). This 
+  function will execute before boundary checking at each time step.</p>
+  <p>Upper and lower boundaries of one or more variable can be set using 
+  upper_bound and lower_bound parameters respectively. These parameters 
+  takes the form of a dictionary with variable number as key and a list of 
+  [&lt;boundary value&gt;, &lt;value to set if boundary is exceeded&gt;]. 
+  For example, the following dictionary for lower boundary {'1': [0.0, 
+  0.0], '5': [2.0, 2.0]} will set the lower boundary of variable y[0] and 
+  y[5] to 0.0 and 2.0 respectively. This also allows for setting to a 
+  different value - for example, {'1': [0.0, 1.0]} will set variable y[0] 
+  to 2.0 if the original y[0] value is negative.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>funcs</code></strong> (list) - system of differential equations</li>
+        <li><strong class="pname"><code>x0</code></strong> (float) - initial value of x-axis, which is usually starting time</li>
+        <li><strong class="pname"><code>y0</code></strong> (list) - initial values for variables</li>
+        <li><strong class="pname"><code>step</code></strong> (float) - step size on the x-axis (also known as step in calculus)</li>
+        <li><strong class="pname"><code>xmax</code></strong> (float) - maximum value of x-axis, which is usually ending time</li>
+        <li><strong class="pname"><code>nonODEfunc</code></strong> (function) - a function to modify the variable list (y0)</li>
+        <li><strong class="pname"><code>lower_bound</code></strong> (dictionary) - set of values for lower boundary of variables</li>
+        <li><strong class="pname"><code>upper_bound</code></strong> (dictionary) - set of values for upper boundary of variables</li>
+        <li><strong class="pname"><code>overflow</code></strong> (float) - value (usually a large value) to assign in event of over flow 
+          error (usually caused by a large number) during integration. 
+          Default = 1e100.</li>
+        <li><strong class="pname"><code>zerodivision</code></strong> (float) - value (usually a large value) to assign in event of zero division
+          error, which results in positive infinity, during integration. 
+          Default = 1e100.</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="RK4"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">RK4</span>(<span class="sig-arg">funcs</span>,
+        <span class="sig-arg">x0</span>,
+        <span class="sig-arg">y0</span>,
+        <span class="sig-arg">step</span>,
+        <span class="sig-arg">xmax</span>,
+        <span class="sig-arg">nonODEfunc</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">lower_bound</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">upper_bound</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">overflow</span>=<span class="sig-default">1e100</span>,
+        <span class="sig-arg">zerodivision</span>=<span class="sig-default">1e100</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="copads.copads.ode-pysrc.html#RK4">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Generator to integrate a system of ODEs, y' = f(x, y), using fourth 
+  order Runge-Kutta method.</p>
+  <p>A function (as nonODEfunc parameter) can be included to modify one or 
+  more variables (y0 list). This function will not be an ODE (not a dy/dt).
+  This can be used to consolidate the modification of one or more variables
+  at each ODE solving step. For example, y[0] = y[1] / y[2] can be written 
+  as</p>
+<pre class="py-doctest">
+<span class="py-prompt">&gt;&gt;&gt; </span><span class="py-keyword">def</span> <span class="py-defname">modifying_function</span>(y, step):
+<span class="py-output">        y[0] = y[1] / y[2]</span>
+<span class="py-output">        return y</span></pre>
+  <p>This function must take 'y' (variable list) and 'step' (time step) as 
+  parameters and must return 'y' (the modified variable list). This 
+  function will execute before boundary checking at each time step.</p>
+  <p>Upper and lower boundaries of one or more variable can be set using 
+  upper_bound and lower_bound parameters respectively. These parameters 
+  takes the form of a dictionary with variable number as key and a list of 
+  [&lt;boundary value&gt;, &lt;value to set if boundary is exceeded&gt;]. 
+  For example, the following dictionary for lower boundary {'1': [0.0, 
+  0.0], '5': [2.0, 2.0]} will set the lower boundary of variable y[0] and 
+  y[5] to 0.0 and 2.0 respectively. This also allows for setting to a 
+  different value - for example, {'1': [0.0, 1.0]} will set variable y[0] 
+  to 2.0 if the original y[0] value is negative.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>funcs</code></strong> (list) - system of differential equations</li>
+        <li><strong class="pname"><code>x0</code></strong> (float) - initial value of x-axis, which is usually starting time</li>
+        <li><strong class="pname"><code>y0</code></strong> (list) - initial values for variables</li>
+        <li><strong class="pname"><code>step</code></strong> (float) - step size on the x-axis (also known as step in calculus)</li>
+        <li><strong class="pname"><code>xmax</code></strong> (float) - maximum value of x-axis, which is usually ending time</li>
+        <li><strong class="pname"><code>nonODEfunc</code></strong> (function) - a function to modify the variable list (y0)</li>
+        <li><strong class="pname"><code>lower_bound</code></strong> (dictionary) - set of values for lower boundary of variables</li>
+        <li><strong class="pname"><code>upper_bound</code></strong> (dictionary) - set of values for upper boundary of variables</li>
+        <li><strong class="pname"><code>overflow</code></strong> (float) - value (usually a large value) to assign in event of over flow 
+          error (usually caused by a large number) during integration. 
+          Default = 1e100.</li>
+        <li><strong class="pname"><code>zerodivision</code></strong> (float) - value (usually a large value) to assign in event of zero division
+          error, which results in positive infinity, during integration. 
+          Default = 1e100.</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="RK38"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">RK38</span>(<span class="sig-arg">funcs</span>,
+        <span class="sig-arg">x0</span>,
+        <span class="sig-arg">y0</span>,
+        <span class="sig-arg">step</span>,
+        <span class="sig-arg">xmax</span>,
+        <span class="sig-arg">nonODEfunc</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">lower_bound</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">upper_bound</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">overflow</span>=<span class="sig-default">1e100</span>,
+        <span class="sig-arg">zerodivision</span>=<span class="sig-default">1e100</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="copads.copads.ode-pysrc.html#RK38">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Generator to integrate a system of ODEs, y' = f(x, y), using fourth 
+  order Runge-Kutta method, 3/8 rule.</p>
+  <p>A function (as nonODEfunc parameter) can be included to modify one or 
+  more variables (y0 list). This function will not be an ODE (not a dy/dt).
+  This can be used to consolidate the modification of one or more variables
+  at each ODE solving step. For example, y[0] = y[1] / y[2] can be written 
+  as</p>
+<pre class="py-doctest">
+<span class="py-prompt">&gt;&gt;&gt; </span><span class="py-keyword">def</span> <span class="py-defname">modifying_function</span>(y, step):
+<span class="py-output">        y[0] = y[1] / y[2]</span>
+<span class="py-output">        return y</span></pre>
+  <p>This function must take 'y' (variable list) and 'step' (time step) as 
+  parameters and must return 'y' (the modified variable list). This 
+  function will execute before boundary checking at each time step.</p>
+  <p>Upper and lower boundaries of one or more variable can be set using 
+  upper_bound and lower_bound parameters respectively. These parameters 
+  takes the form of a dictionary with variable number as key and a list of 
+  [&lt;boundary value&gt;, &lt;value to set if boundary is exceeded&gt;]. 
+  For example, the following dictionary for lower boundary {'1': [0.0, 
+  0.0], '5': [2.0, 2.0]} will set the lower boundary of variable y[0] and 
+  y[5] to 0.0 and 2.0 respectively. This also allows for setting to a 
+  different value - for example, {'1': [0.0, 1.0]} will set variable y[0] 
+  to 2.0 if the original y[0] value is negative.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>funcs</code></strong> (list) - system of differential equations</li>
+        <li><strong class="pname"><code>x0</code></strong> (float) - initial value of x-axis, which is usually starting time</li>
+        <li><strong class="pname"><code>y0</code></strong> (list) - initial values for variables</li>
+        <li><strong class="pname"><code>step</code></strong> (float) - step size on the x-axis (also known as step in calculus)</li>
+        <li><strong class="pname"><code>xmax</code></strong> (float) - maximum value of x-axis, which is usually ending time</li>
+        <li><strong class="pname"><code>nonODEfunc</code></strong> (function) - a function to modify the variable list (y0)</li>
+        <li><strong class="pname"><code>lower_bound</code></strong> (dictionary) - set of values for lower boundary of variables</li>
+        <li><strong class="pname"><code>upper_bound</code></strong> (dictionary) - set of values for upper boundary of variables</li>
+        <li><strong class="pname"><code>overflow</code></strong> (float) - value (usually a large value) to assign in event of over flow 
+          error (usually caused by a large number) during integration. 
+          Default = 1e100.</li>
+        <li><strong class="pname"><code>zerodivision</code></strong> (float) - value (usually a large value) to assign in event of zero division
+          error, which results in positive infinity, during integration. 
+          Default = 1e100.</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="CK4"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">CK4</span>(<span class="sig-arg">funcs</span>,
+        <span class="sig-arg">x0</span>,
+        <span class="sig-arg">y0</span>,
+        <span class="sig-arg">step</span>,
+        <span class="sig-arg">xmax</span>,
+        <span class="sig-arg">nonODEfunc</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">lower_bound</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">upper_bound</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">overflow</span>=<span class="sig-default">1e100</span>,
+        <span class="sig-arg">zerodivision</span>=<span class="sig-default">1e100</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="copads.copads.ode-pysrc.html#CK4">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Generator to integrate a system of ODEs, y' = f(x, y), using fifth 
+  order Cash-Karp method.</p>
+  <p>A function (as nonODEfunc parameter) can be included to modify one or 
+  more variables (y0 list). This function will not be an ODE (not a dy/dt).
+  This can be used to consolidate the modification of one or more variables
+  at each ODE solving step. For example, y[0] = y[1] / y[2] can be written 
+  as</p>
+<pre class="py-doctest">
+<span class="py-prompt">&gt;&gt;&gt; </span><span class="py-keyword">def</span> <span class="py-defname">modifying_function</span>(y, step):
+<span class="py-output">        y[0] = y[1] / y[2]</span>
+<span class="py-output">        return y</span></pre>
+  <p>This function must take 'y' (variable list) and 'step' (time step) as 
+  parameters and must return 'y' (the modified variable list). This 
+  function will execute before boundary checking at each time step.</p>
+  <p>Upper and lower boundaries of one or more variable can be set using 
+  upper_bound and lower_bound parameters respectively. These parameters 
+  takes the form of a dictionary with variable number as key and a list of 
+  [&lt;boundary value&gt;, &lt;value to set if boundary is exceeded&gt;]. 
+  For example, the following dictionary for lower boundary {'1': [0.0, 
+  0.0], '5': [2.0, 2.0]} will set the lower boundary of variable y[0] and 
+  y[5] to 0.0 and 2.0 respectively. This also allows for setting to a 
+  different value - for example, {'1': [0.0, 1.0]} will set variable y[0] 
+  to 2.0 if the original y[0] value is negative.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>funcs</code></strong> (list) - system of differential equations</li>
+        <li><strong class="pname"><code>x0</code></strong> (float) - initial value of x-axis, which is usually starting time</li>
+        <li><strong class="pname"><code>y0</code></strong> (list) - initial values for variables</li>
+        <li><strong class="pname"><code>step</code></strong> (float) - step size on the x-axis (also known as step in calculus)</li>
+        <li><strong class="pname"><code>xmax</code></strong> (float) - maximum value of x-axis, which is usually ending time</li>
+        <li><strong class="pname"><code>nonODEfunc</code></strong> (function) - a function to modify the variable list (y0)</li>
+        <li><strong class="pname"><code>lower_bound</code></strong> (dictionary) - set of values for lower boundary of variables</li>
+        <li><strong class="pname"><code>upper_bound</code></strong> (dictionary) - set of values for upper boundary of variables</li>
+        <li><strong class="pname"><code>overflow</code></strong> (float) - value (usually a large value) to assign in event of over flow 
+          error (usually caused by a large number) during integration. 
+          Default = 1e100.</li>
+        <li><strong class="pname"><code>zerodivision</code></strong> (float) - value (usually a large value) to assign in event of zero division
+          error, which results in positive infinity, during integration. 
+          Default = 1e100.</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="CK5"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">CK5</span>(<span class="sig-arg">funcs</span>,
+        <span class="sig-arg">x0</span>,
+        <span class="sig-arg">y0</span>,
+        <span class="sig-arg">step</span>,
+        <span class="sig-arg">xmax</span>,
+        <span class="sig-arg">nonODEfunc</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">lower_bound</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">upper_bound</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">overflow</span>=<span class="sig-default">1e100</span>,
+        <span class="sig-arg">zerodivision</span>=<span class="sig-default">1e100</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="copads.copads.ode-pysrc.html#CK5">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Generator to integrate a system of ODEs, y' = f(x, y), using fifth 
+  order Cash-Karp method.</p>
+  <p>A function (as nonODEfunc parameter) can be included to modify one or 
+  more variables (y0 list). This function will not be an ODE (not a dy/dt).
+  This can be used to consolidate the modification of one or more variables
+  at each ODE solving step. For example, y[0] = y[1] / y[2] can be written 
+  as</p>
+<pre class="py-doctest">
+<span class="py-prompt">&gt;&gt;&gt; </span><span class="py-keyword">def</span> <span class="py-defname">modifying_function</span>(y, step):
+<span class="py-output">        y[0] = y[1] / y[2]</span>
+<span class="py-output">        return y</span></pre>
+  <p>This function must take 'y' (variable list) and 'step' (time step) as 
+  parameters and must return 'y' (the modified variable list). This 
+  function will execute before boundary checking at each time step.</p>
+  <p>Upper and lower boundaries of one or more variable can be set using 
+  upper_bound and lower_bound parameters respectively. These parameters 
+  takes the form of a dictionary with variable number as key and a list of 
+  [&lt;boundary value&gt;, &lt;value to set if boundary is exceeded&gt;]. 
+  For example, the following dictionary for lower boundary {'1': [0.0, 
+  0.0], '5': [2.0, 2.0]} will set the lower boundary of variable y[0] and 
+  y[5] to 0.0 and 2.0 respectively. This also allows for setting to a 
+  different value - for example, {'1': [0.0, 1.0]} will set variable y[0] 
+  to 2.0 if the original y[0] value is negative.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>funcs</code></strong> (list) - system of differential equations</li>
+        <li><strong class="pname"><code>x0</code></strong> (float) - initial value of x-axis, which is usually starting time</li>
+        <li><strong class="pname"><code>y0</code></strong> (list) - initial values for variables</li>
+        <li><strong class="pname"><code>step</code></strong> (float) - step size on the x-axis (also known as step in calculus)</li>
+        <li><strong class="pname"><code>xmax</code></strong> (float) - maximum value of x-axis, which is usually ending time</li>
+        <li><strong class="pname"><code>nonODEfunc</code></strong> (function) - a function to modify the variable list (y0)</li>
+        <li><strong class="pname"><code>lower_bound</code></strong> (dictionary) - set of values for lower boundary of variables</li>
+        <li><strong class="pname"><code>upper_bound</code></strong> (dictionary) - set of values for upper boundary of variables</li>
+        <li><strong class="pname"><code>overflow</code></strong> (float) - value (usually a large value) to assign in event of over flow 
+          error (usually caused by a large number) during integration. 
+          Default = 1e100.</li>
+        <li><strong class="pname"><code>zerodivision</code></strong> (float) - value (usually a large value) to assign in event of zero division
+          error, which results in positive infinity, during integration. 
+          Default = 1e100.</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="RKF4"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">RKF4</span>(<span class="sig-arg">funcs</span>,
+        <span class="sig-arg">x0</span>,
+        <span class="sig-arg">y0</span>,
+        <span class="sig-arg">step</span>,
+        <span class="sig-arg">xmax</span>,
+        <span class="sig-arg">nonODEfunc</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">lower_bound</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">upper_bound</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">overflow</span>=<span class="sig-default">1e100</span>,
+        <span class="sig-arg">zerodivision</span>=<span class="sig-default">1e100</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="copads.copads.ode-pysrc.html#RKF4">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Generator to integrate a system of ODEs, y' = f(x, y), using fourth 
+  order Runge-Kutta_Fehlberg method.</p>
+  <p>A function (as nonODEfunc parameter) can be included to modify one or 
+  more variables (y0 list). This function will not be an ODE (not a dy/dt).
+  This can be used to consolidate the modification of one or more variables
+  at each ODE solving step. For example, y[0] = y[1] / y[2] can be written 
+  as</p>
+<pre class="py-doctest">
+<span class="py-prompt">&gt;&gt;&gt; </span><span class="py-keyword">def</span> <span class="py-defname">modifying_function</span>(y, step):
+<span class="py-output">        y[0] = y[1] / y[2]</span>
+<span class="py-output">        return y</span></pre>
+  <p>This function must take 'y' (variable list) and 'step' (time step) as 
+  parameters and must return 'y' (the modified variable list). This 
+  function will execute before boundary checking at each time step.</p>
+  <p>Upper and lower boundaries of one or more variable can be set using 
+  upper_bound and lower_bound parameters respectively. These parameters 
+  takes the form of a dictionary with variable number as key and a list of 
+  [&lt;boundary value&gt;, &lt;value to set if boundary is exceeded&gt;]. 
+  For example, the following dictionary for lower boundary {'1': [0.0, 
+  0.0], '5': [2.0, 2.0]} will set the lower boundary of variable y[0] and 
+  y[5] to 0.0 and 2.0 respectively. This also allows for setting to a 
+  different value - for example, {'1': [0.0, 1.0]} will set variable y[0] 
+  to 2.0 if the original y[0] value is negative.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>funcs</code></strong> (list) - system of differential equations</li>
+        <li><strong class="pname"><code>x0</code></strong> (float) - initial value of x-axis, which is usually starting time</li>
+        <li><strong class="pname"><code>y0</code></strong> (list) - initial values for variables</li>
+        <li><strong class="pname"><code>step</code></strong> (float) - step size on the x-axis (also known as step in calculus)</li>
+        <li><strong class="pname"><code>xmax</code></strong> (float) - maximum value of x-axis, which is usually ending time</li>
+        <li><strong class="pname"><code>nonODEfunc</code></strong> (function) - a function to modify the variable list (y0)</li>
+        <li><strong class="pname"><code>lower_bound</code></strong> (dictionary) - set of values for lower boundary of variables</li>
+        <li><strong class="pname"><code>upper_bound</code></strong> (dictionary) - set of values for upper boundary of variables</li>
+        <li><strong class="pname"><code>overflow</code></strong> (float) - value (usually a large value) to assign in event of over flow 
+          error (usually caused by a large number) during integration. 
+          Default = 1e100.</li>
+        <li><strong class="pname"><code>zerodivision</code></strong> (float) - value (usually a large value) to assign in event of zero division
+          error, which results in positive infinity, during integration. 
+          Default = 1e100.</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="RKF5"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">RKF5</span>(<span class="sig-arg">funcs</span>,
+        <span class="sig-arg">x0</span>,
+        <span class="sig-arg">y0</span>,
+        <span class="sig-arg">step</span>,
+        <span class="sig-arg">xmax</span>,
+        <span class="sig-arg">nonODEfunc</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">lower_bound</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">upper_bound</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">overflow</span>=<span class="sig-default">1e100</span>,
+        <span class="sig-arg">zerodivision</span>=<span class="sig-default">1e100</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="copads.copads.ode-pysrc.html#RKF5">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Generator to integrate a system of ODEs, y' = f(x, y), using fifth 
+  order Runge-Kutta_Fehlberg method.</p>
+  <p>A function (as nonODEfunc parameter) can be included to modify one or 
+  more variables (y0 list). This function will not be an ODE (not a dy/dt).
+  This can be used to consolidate the modification of one or more variables
+  at each ODE solving step. For example, y[0] = y[1] / y[2] can be written 
+  as</p>
+<pre class="py-doctest">
+<span class="py-prompt">&gt;&gt;&gt; </span><span class="py-keyword">def</span> <span class="py-defname">modifying_function</span>(y, step):
+<span class="py-output">        y[0] = y[1] / y[2]</span>
+<span class="py-output">        return y</span></pre>
+  <p>This function must take 'y' (variable list) and 'step' (time step) as 
+  parameters and must return 'y' (the modified variable list). This 
+  function will execute before boundary checking at each time step.</p>
+  <p>Upper and lower boundaries of one or more variable can be set using 
+  upper_bound and lower_bound parameters respectively. These parameters 
+  takes the form of a dictionary with variable number as key and a list of 
+  [&lt;boundary value&gt;, &lt;value to set if boundary is exceeded&gt;]. 
+  For example, the following dictionary for lower boundary {'1': [0.0, 
+  0.0], '5': [2.0, 2.0]} will set the lower boundary of variable y[0] and 
+  y[5] to 0.0 and 2.0 respectively. This also allows for setting to a 
+  different value - for example, {'1': [0.0, 1.0]} will set variable y[0] 
+  to 2.0 if the original y[0] value is negative.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>funcs</code></strong> (list) - system of differential equations</li>
+        <li><strong class="pname"><code>x0</code></strong> (float) - initial value of x-axis, which is usually starting time</li>
+        <li><strong class="pname"><code>y0</code></strong> (list) - initial values for variables</li>
+        <li><strong class="pname"><code>step</code></strong> (float) - step size on the x-axis (also known as step in calculus)</li>
+        <li><strong class="pname"><code>xmax</code></strong> (float) - maximum value of x-axis, which is usually ending time</li>
+        <li><strong class="pname"><code>nonODEfunc</code></strong> (function) - a function to modify the variable list (y0)</li>
+        <li><strong class="pname"><code>lower_bound</code></strong> (dictionary) - set of values for lower boundary of variables</li>
+        <li><strong class="pname"><code>upper_bound</code></strong> (dictionary) - set of values for upper boundary of variables</li>
+        <li><strong class="pname"><code>overflow</code></strong> (float) - value (usually a large value) to assign in event of over flow 
+          error (usually caused by a large number) during integration. 
+          Default = 1e100.</li>
+        <li><strong class="pname"><code>zerodivision</code></strong> (float) - value (usually a large value) to assign in event of zero division
+          error, which results in positive infinity, during integration. 
+          Default = 1e100.</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="DP4"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">DP4</span>(<span class="sig-arg">funcs</span>,
+        <span class="sig-arg">x0</span>,
+        <span class="sig-arg">y0</span>,
+        <span class="sig-arg">step</span>,
+        <span class="sig-arg">xmax</span>,
+        <span class="sig-arg">nonODEfunc</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">lower_bound</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">upper_bound</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">overflow</span>=<span class="sig-default">1e100</span>,
+        <span class="sig-arg">zerodivision</span>=<span class="sig-default">1e100</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="copads.copads.ode-pysrc.html#DP4">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Generator to integrate a system of ODEs, y' = f(x, y), using fourth 
+  order Dormand-Prince method.</p>
+  <p>A function (as nonODEfunc parameter) can be included to modify one or 
+  more variables (y0 list). This function will not be an ODE (not a dy/dt).
+  This can be used to consolidate the modification of one or more variables
+  at each ODE solving step. For example, y[0] = y[1] / y[2] can be written 
+  as</p>
+<pre class="py-doctest">
+<span class="py-prompt">&gt;&gt;&gt; </span><span class="py-keyword">def</span> <span class="py-defname">modifying_function</span>(y, step):
+<span class="py-output">        y[0] = y[1] / y[2]</span>
+<span class="py-output">        return y</span></pre>
+  <p>This function must take 'y' (variable list) and 'step' (time step) as 
+  parameters and must return 'y' (the modified variable list). This 
+  function will execute before boundary checking at each time step.</p>
+  <p>Upper and lower boundaries of one or more variable can be set using 
+  upper_bound and lower_bound parameters respectively. These parameters 
+  takes the form of a dictionary with variable number as key and a list of 
+  [&lt;boundary value&gt;, &lt;value to set if boundary is exceeded&gt;]. 
+  For example, the following dictionary for lower boundary {'1': [0.0, 
+  0.0], '5': [2.0, 2.0]} will set the lower boundary of variable y[0] and 
+  y[5] to 0.0 and 2.0 respectively. This also allows for setting to a 
+  different value - for example, {'1': [0.0, 1.0]} will set variable y[0] 
+  to 2.0 if the original y[0] value is negative.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>funcs</code></strong> (list) - system of differential equations</li>
+        <li><strong class="pname"><code>x0</code></strong> (float) - initial value of x-axis, which is usually starting time</li>
+        <li><strong class="pname"><code>y0</code></strong> (list) - initial values for variables</li>
+        <li><strong class="pname"><code>step</code></strong> (float) - step size on the x-axis (also known as step in calculus)</li>
+        <li><strong class="pname"><code>xmax</code></strong> (float) - maximum value of x-axis, which is usually ending time</li>
+        <li><strong class="pname"><code>nonODEfunc</code></strong> (function) - a function to modify the variable list (y0)</li>
+        <li><strong class="pname"><code>lower_bound</code></strong> (dictionary) - set of values for lower boundary of variables</li>
+        <li><strong class="pname"><code>upper_bound</code></strong> (dictionary) - set of values for upper boundary of variables</li>
+        <li><strong class="pname"><code>overflow</code></strong> (float) - value (usually a large value) to assign in event of over flow 
+          error (usually caused by a large number) during integration. 
+          Default = 1e100.</li>
+        <li><strong class="pname"><code>zerodivision</code></strong> (float) - value (usually a large value) to assign in event of zero division
+          error, which results in positive infinity, during integration. 
+          Default = 1e100.</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="DP5"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">DP5</span>(<span class="sig-arg">funcs</span>,
+        <span class="sig-arg">x0</span>,
+        <span class="sig-arg">y0</span>,
+        <span class="sig-arg">step</span>,
+        <span class="sig-arg">xmax</span>,
+        <span class="sig-arg">nonODEfunc</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">lower_bound</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">upper_bound</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">overflow</span>=<span class="sig-default">1e100</span>,
+        <span class="sig-arg">zerodivision</span>=<span class="sig-default">1e100</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="copads.copads.ode-pysrc.html#DP5">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Generator to integrate a system of ODEs, y' = f(x, y), using fifth 
+  order Dormand-Prince method.</p>
+  <p>A function (as nonODEfunc parameter) can be included to modify one or 
+  more variables (y0 list). This function will not be an ODE (not a dy/dt).
+  This can be used to consolidate the modification of one or more variables
+  at each ODE solving step. For example, y[0] = y[1] / y[2] can be written 
+  as</p>
+<pre class="py-doctest">
+<span class="py-prompt">&gt;&gt;&gt; </span><span class="py-keyword">def</span> <span class="py-defname">modifying_function</span>(y, step):
+<span class="py-output">        y[0] = y[1] / y[2]</span>
+<span class="py-output">        return y</span></pre>
+  <p>This function must take 'y' (variable list) and 'step' (time step) as 
+  parameters and must return 'y' (the modified variable list). This 
+  function will execute before boundary checking at each time step.</p>
+  <p>Upper and lower boundaries of one or more variable can be set using 
+  upper_bound and lower_bound parameters respectively. These parameters 
+  takes the form of a dictionary with variable number as key and a list of 
+  [&lt;boundary value&gt;, &lt;value to set if boundary is exceeded&gt;]. 
+  For example, the following dictionary for lower boundary {'1': [0.0, 
+  0.0], '5': [2.0, 2.0]} will set the lower boundary of variable y[0] and 
+  y[5] to 0.0 and 2.0 respectively. This also allows for setting to a 
+  different value - for example, {'1': [0.0, 1.0]} will set variable y[0] 
+  to 2.0 if the original y[0] value is negative.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>funcs</code></strong> (list) - system of differential equations</li>
+        <li><strong class="pname"><code>x0</code></strong> (float) - initial value of x-axis, which is usually starting time</li>
+        <li><strong class="pname"><code>y0</code></strong> (list) - initial values for variables</li>
+        <li><strong class="pname"><code>step</code></strong> (float) - step size on the x-axis (also known as step in calculus)</li>
+        <li><strong class="pname"><code>xmax</code></strong> (float) - maximum value of x-axis, which is usually ending time</li>
+        <li><strong class="pname"><code>nonODEfunc</code></strong> (function) - a function to modify the variable list (y0)</li>
+        <li><strong class="pname"><code>lower_bound</code></strong> (dictionary) - set of values for lower boundary of variables</li>
+        <li><strong class="pname"><code>upper_bound</code></strong> (dictionary) - set of values for upper boundary of variables</li>
+        <li><strong class="pname"><code>overflow</code></strong> (float) - value (usually a large value) to assign in event of over flow 
+          error (usually caused by a large number) during integration. 
+          Default = 1e100.</li>
+        <li><strong class="pname"><code>zerodivision</code></strong> (float) - value (usually a large value) to assign in event of zero division
+          error, which results in positive infinity, during integration. 
+          Default = 1e100.</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="_equation_constructor"></a>
+<div class="private">
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">_equation_constructor</span>(<span class="sig-arg">expressions</span>=<span class="sig-default">{}</span>,
+        <span class="sig-arg">parameters</span>=<span class="sig-default">{}</span>,
+        <span class="sig-arg">variables</span>=<span class="sig-default">[]</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="copads.copads.ode-pysrc.html#_equation_constructor">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Private function to support ODE_constructor to generate ODE function 
+  for each ODE.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>expressions</code></strong> - dictionary of expressions for ODE(s). Please see above 
+          documentation.</li>
+        <li><strong class="pname"><code>parameters</code></strong> - dictionary of parameter values to be substituted into the ODE 
+          equations</li>
+        <li><strong class="pname"><code>variables</code></strong> - list of additional variables to be tagged for substitution(s)</li>
+    </ul></dd>
+    <dt>Returns:</dt>
+        <dd>tuple of (&lt;list of generated ODE functions&gt;, &lt;list of 
+          tagged variables&gt;)</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="_modifying_constructor"></a>
+<div class="private">
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">_modifying_constructor</span>(<span class="sig-arg">modifying_expressions</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="copads.copads.ode-pysrc.html#_modifying_constructor">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Private function to support ODE_constructor to generate function code 
+  for modifying expressions.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>modifying_expressions</code></strong> - list of expressions to modify the variables</li>
+    </ul></dd>
+    <dt>Returns:</dt>
+        <dd>generated function code</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="ODE_constructor"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">ODE_constructor</span>(<span class="sig-arg">scriptfile</span>,
+        <span class="sig-arg">resultsfile</span>,
+        <span class="sig-arg">time</span>=<span class="sig-default">(0.0,0.1,100.0)</span>,
+        <span class="sig-arg">ODE_solver</span>=<span class="sig-default">'RK4'</span>,
+        <span class="sig-arg">expressions</span>=<span class="sig-default">{}</span>,
+        <span class="sig-arg">parameters</span>=<span class="sig-default">{}</span>,
+        <span class="sig-arg">initial_conditions</span>=<span class="sig-default">{}</span>,
+        <span class="sig-arg">modifying_expressions</span>=<span class="sig-default">[]</span>,
+        <span class="sig-arg">lower_bound</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">upper_bound</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">overflow</span>=<span class="sig-default">1e100</span>,
+        <span class="sig-arg">zerodivision</span>=<span class="sig-default">1e100</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="copads.copads.ode-pysrc.html#ODE_constructor">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Function to construct an ODE simulation script file from given 
+  definitions.</p>
+  <p>For example, the following system of ODEs:</p>
+<pre class="literalblock">
+   d(human)/dt = birth - zombied - death
+   d(zombie)/dt = zombied + resurrected - destroyed
+   d(dead)/dt = death + destroyed - resurrected
+   
+   birth = 0
+   zombied = 0.0095 * human * zombie
+   death = 0.0001 * human
+   resurrected = 0.0002 * dead
+   destroyed = 0.0003 * human * zombie
+    
+   where initially (t0), 
+    
+   number of humans = 500
+   number of zombies = 0
+   number of dead = 0
+    
+   and with the following boundaries
+    
+   number of humans &gt; 0
+   number of zombies &lt; 10000
+   number of dead &lt; 10000
+    
+   and there is an influx of 5 humans per day into the infected village
+</pre>
+  <p>can be specified as</p>
+<pre class="py-doctest">
+<span class="py-prompt">&gt;&gt;&gt; </span>scriptfile = <span class="py-string">'zombie_attack.py'</span>
+<span class="py-output">    resultsfile = 'zombie_data.csv'</span>
+<span class="py-output">    time = (0.0, 0.1, 100.0)</span>
+<span class="py-output">    ODE_solver = 'RK4'</span>
+<span class="py-output">    expressions = {'human': ['birth_rate',</span>
+<span class="py-output">                             '- (transmission_rate * human * zombie)',</span>
+<span class="py-output">                             '- (death_rate * human)'],</span>
+<span class="py-output">                   'zombie': ['(transmission_rate * human * zombie)',</span>
+<span class="py-output">                              '(resurrection_rate * dead)',</span>
+<span class="py-output">                              '- (destroy_rate * human * zombie)'],</span>
+<span class="py-output">                   'dead': ['(death_rate * human)',</span>
+<span class="py-output">                            '(destroy_rate * human * zombie)',</span>
+<span class="py-output">                            '- (resurrection_rate * dead)']}</span>
+<span class="py-output">    parameters = {'birth_rate': 0.0,           # birth rate</span>
+<span class="py-output">                  'transmission_rate': 0.0095, # transmission percent   </span>
+<span class="py-output">                  'death_rate': 0.0001,        # natural death percent  </span>
+<span class="py-output">                  'resurrection_rate': 0.0002, # resurect percent  </span>
+<span class="py-output">                  'destroy_rate':0.0003        # destroy percent   </span>
+<span class="py-output">                  }</span>
+<span class="py-output">    initial_conditions = {'human': 500.0,</span>
+<span class="py-output">                          'zombie': 0.0, </span>
+<span class="py-output">                          'dead': 0.0}</span>
+<span class="py-output">    modifying_expression = ['human = human + (5 * step)']</span>
+<span class="py-output">    lower_bound = {'human': [0.0, 0.0]}</span>
+<span class="py-output">    upper_bound = {'zombie': [10000.0, 10000.0],</span>
+<span class="py-output">                   'dead': [10000.0, 10000.0]}</span>
+<span class="py-output">    overflow = 1e100</span>
+<span class="py-output">    zerodivision = 1e100</span></pre>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>scriptfile</code></strong> (string) - name of Python file for the generated ODE script file</li>
+        <li><strong class="pname"><code>resultsfile</code></strong> (string) - name of ODE simulation results file (CSV file), which will be 
+          included into the generated simulation script file</li>
+        <li><strong class="pname"><code>time</code></strong> - tuple of time parameters for simulation in the format of 
+          (&lt;start time&gt;, &lt;time step&gt;, &lt;end time&gt;). 
+          Default = (0.0, 0.1, 100.0)</li>
+        <li><strong class="pname"><code>ODE_solver</code></strong> - name of ODE solver to use. Default = RK4</li>
+        <li><strong class="pname"><code>expressions</code></strong> - dictionary of expressions for ODE(s). Please see above 
+          documentation.</li>
+        <li><strong class="pname"><code>parameters</code></strong> - dictionary of parameter values to be substituted into the ODE 
+          equations</li>
+        <li><strong class="pname"><code>modifying_expressions</code></strong> - list of expressions to modify the variables</li>
+        <li><strong class="pname"><code>initial_conditions</code></strong> - dictionary of initial conditions for each ODE</li>
+        <li><strong class="pname"><code>lower_bound</code></strong> (dictionary) - set of values for lower boundary of variables</li>
+        <li><strong class="pname"><code>upper_bound</code></strong> (dictionary) - set of values for upper boundary of variables</li>
+        <li><strong class="pname"><code>overflow</code></strong> (float) - value (usually a large value) to assign in event of over flow 
+          error (usually caused by a large number) during integration. 
+          Default = 1e100.</li>
+        <li><strong class="pname"><code>zerodivision</code></strong> (float) - value (usually a large value) to assign in event of zero division
+          error, which results in positive infinity, during integration. 
+          Default = 1e100.</li>
+    </ul></dd>
+    <dt>Returns: list</dt>
+        <dd>generated ODE codes for the entire script</dd>
+  </dl>
+</td></tr></table>
+</div>
+<br />
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="copads.copads-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            ><a class="navbar" target="_top" href="https://github.com/mauriceling/copads">https://github.com/mauriceling/copads</a></th>
+          </tr></table></th>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%%">
+  <tr>
+    <td align="left" class="footer">
+    Generated by Epydoc 3.0.1 on Sun Feb 25 20:14:30 2018
+    </td>
+    <td align="right" class="footer">
+      <a target="mainFrame" href="http://epydoc.sourceforge.net"
+        >http://epydoc.sourceforge.net</a>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  <!--
+  // Private objects are initially displayed (because if
+  // javascript is turned off then we want them to be
+  // visible); but by default, we want to hide them.  So hide
+  // them unless we have a cookie that says to show them.
+  checkCookie();
+  // -->
+</script>
+</body>
+</html>

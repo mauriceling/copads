@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="ascii"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>copads.copads.dose_entities</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="copads.copads-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            ><a class="navbar" target="_top" href="https://github.com/mauriceling/copads">https://github.com/mauriceling/copads</a></th>
+          </tr></table></th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <span class="breadcrumbs">
+        Package&nbsp;copads ::
+        <a href="copads.copads-module.html">Package&nbsp;copads</a> ::
+        Module&nbsp;dose_entities
+      </span>
+    </td>
+    <td>
+      <table cellpadding="0" cellspacing="0">
+        <!-- hide/show private -->
+        <tr><td align="right"><span class="options">[<a href="javascript:void(0);" class="privatelink"
+    onclick="toggle_private();">hide&nbsp;private</a>]</span></td></tr>
+        <tr><td align="right"><span class="options"
+            >[<a href="frames.html" target="_top">frames</a
+            >]&nbsp;|&nbsp;<a href="copads.copads.dose_entities-pysrc.html"
+            target="_top">no&nbsp;frames</a>]</span></td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<h1 class="epydoc">Source Code for <a href="copads.copads.dose_entities-module.html">Module copads.copads.dose_entities</a></h1>
+<pre class="py-src">
+<a name="L1"></a><tt class="py-lineno"> 1</tt>  <tt class="py-line"><tt class="py-docstring">'''</tt> </tt>
+<a name="L2"></a><tt class="py-lineno"> 2</tt>  <tt class="py-line"><tt class="py-docstring">Boiler-plate codes for DOSE (digital organism simulation environment) entities</tt> </tt>
+<a name="L3"></a><tt class="py-lineno"> 3</tt>  <tt class="py-line"><tt class="py-docstring">Date created: 13th September 2012</tt> </tt>
+<a name="L4"></a><tt class="py-lineno"> 4</tt>  <tt class="py-line"><tt class="py-docstring">Licence: Python Software Foundation License version 2 </tt> </tt>
+<a name="L5"></a><tt class="py-lineno"> 5</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L6"></a><tt class="py-lineno"> 6</tt>  <tt class="py-line"><tt class="py-docstring">Reference: Ling, MHT. 2012. An Artificial Life Simulation Library Based on </tt> </tt>
+<a name="L7"></a><tt class="py-lineno"> 7</tt>  <tt class="py-line"><tt class="py-docstring">Genetic Algorithm, 3-Character Genetic Code and Biological Hierarchy. The </tt> </tt>
+<a name="L8"></a><tt class="py-lineno"> 8</tt>  <tt class="py-line"><tt class="py-docstring">Python Papers 7: 5.</tt> </tt>
+<a name="L9"></a><tt class="py-lineno"> 9</tt>  <tt class="py-line"><tt class="py-docstring">'''</tt> </tt>
+<a name="L10"></a><tt class="py-lineno">10</tt>  <tt class="py-line"> </tt>
+<a name="L11"></a><tt class="py-lineno">11</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt class="py-op">.</tt> <tt class="py-keyword">import</tt> <tt id="link-0" class="py-name" targets="Module copads.copads.genetic=copads.copads.genetic-module.html"><a title="copads.copads.genetic" class="py-name" href="#" onclick="return doclink('link-0', 'genetic', 'link-0');">genetic</a></tt> <tt class="py-keyword">as</tt> <tt class="py-name">g</tt> </tt>
+<a name="L12"></a><tt class="py-lineno">12</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt class="py-op">.</tt> <tt class="py-keyword">import</tt> <tt id="link-1" class="py-name" targets="Module copads.copads.dose_world=copads.copads.dose_world-module.html"><a title="copads.copads.dose_world" class="py-name" href="#" onclick="return doclink('link-1', 'dose_world', 'link-1');">dose_world</a></tt> <tt class="py-keyword">as</tt> <tt class="py-name">w</tt> </tt>
+<a name="L13"></a><tt class="py-lineno">13</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt class="py-op">.</tt><tt id="link-2" class="py-name" targets="Module copads.copads.dose_parameters=copads.copads.dose_parameters-module.html"><a title="copads.copads.dose_parameters" class="py-name" href="#" onclick="return doclink('link-2', 'dose_parameters', 'link-2');">dose_parameters</a></tt> <tt class="py-keyword">import</tt> <tt id="link-3" class="py-name" targets="Variable copads.copads.dose_parameters.background_mutation_rate=copads.copads.dose_parameters-module.html#background_mutation_rate"><a title="copads.copads.dose_parameters.background_mutation_rate" class="py-name" href="#" onclick="return doclink('link-3', 'background_mutation_rate', 'link-3');">background_mutation_rate</a></tt> </tt>
+<a name="L14"></a><tt class="py-lineno">14</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt class="py-op">.</tt><tt id="link-4" class="py-name"><a title="copads.copads.dose_parameters" class="py-name" href="#" onclick="return doclink('link-4', 'dose_parameters', 'link-2');">dose_parameters</a></tt> <tt class="py-keyword">import</tt> <tt id="link-5" class="py-name" targets="Variable copads.copads.dose_parameters.initial_chromosome=copads.copads.dose_parameters-module.html#initial_chromosome"><a title="copads.copads.dose_parameters.initial_chromosome" class="py-name" href="#" onclick="return doclink('link-5', 'initial_chromosome', 'link-5');">initial_chromosome</a></tt><tt class="py-op">,</tt> <tt id="link-6" class="py-name" targets="Variable copads.copads.dose_parameters.cytoplasm_size=copads.copads.dose_parameters-module.html#cytoplasm_size"><a title="copads.copads.dose_parameters.cytoplasm_size" class="py-name" href="#" onclick="return doclink('link-6', 'cytoplasm_size', 'link-6');">cytoplasm_size</a></tt><tt class="py-op">,</tt> <tt id="link-7" class="py-name" targets="Variable copads.copads.dose_parameters.population_size=copads.copads.dose_parameters-module.html#population_size"><a title="copads.copads.dose_parameters.population_size" class="py-name" href="#" onclick="return doclink('link-7', 'population_size', 'link-7');">population_size</a></tt> </tt>
+<a name="L15"></a><tt class="py-lineno">15</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt class="py-op">.</tt><tt id="link-8" class="py-name"><a title="copads.copads.dose_parameters" class="py-name" href="#" onclick="return doclink('link-8', 'dose_parameters', 'link-2');">dose_parameters</a></tt> <tt class="py-keyword">import</tt> <tt id="link-9" class="py-name" targets="Variable copads.copads.dose_parameters.maximum_generations=copads.copads.dose_parameters-module.html#maximum_generations"><a title="copads.copads.dose_parameters.maximum_generations" class="py-name" href="#" onclick="return doclink('link-9', 'maximum_generations', 'link-9');">maximum_generations</a></tt> </tt>
+<a name="L16"></a><tt class="py-lineno">16</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt class="py-op">.</tt><tt id="link-10" class="py-name"><a title="copads.copads.dose_parameters" class="py-name" href="#" onclick="return doclink('link-10', 'dose_parameters', 'link-2');">dose_parameters</a></tt> <tt class="py-keyword">import</tt> <tt id="link-11" class="py-name" targets="Variable copads.copads.dose_parameters.world_x=copads.copads.dose_parameters-module.html#world_x"><a title="copads.copads.dose_parameters.world_x" class="py-name" href="#" onclick="return doclink('link-11', 'world_x', 'link-11');">world_x</a></tt><tt class="py-op">,</tt> <tt id="link-12" class="py-name" targets="Variable copads.copads.dose_parameters.world_y=copads.copads.dose_parameters-module.html#world_y"><a title="copads.copads.dose_parameters.world_y" class="py-name" href="#" onclick="return doclink('link-12', 'world_y', 'link-12');">world_y</a></tt><tt class="py-op">,</tt> <tt id="link-13" class="py-name" targets="Variable copads.copads.dose_parameters.world_z=copads.copads.dose_parameters-module.html#world_z"><a title="copads.copads.dose_parameters.world_z" class="py-name" href="#" onclick="return doclink('link-13', 'world_z', 'link-13');">world_z</a></tt> </tt>
+<a name="L17"></a><tt class="py-lineno">17</tt>  <tt class="py-line"> </tt>
+<a name="L18"></a><tt class="py-lineno">18</tt>  <tt class="py-line"><tt id="link-14" class="py-name" targets="Variable copads.copads.dose_entities.Chromosome=copads.copads.dose_entities-module.html#Chromosome,Class copads.copads.genetic.Chromosome=copads.copads.genetic.Chromosome-class.html"><a title="copads.copads.dose_entities.Chromosome
+copads.copads.genetic.Chromosome" class="py-name" href="#" onclick="return doclink('link-14', 'Chromosome', 'link-14');">Chromosome</a></tt> <tt class="py-op">=</tt> <tt class="py-name">g</tt><tt class="py-op">.</tt><tt id="link-15" class="py-name"><a title="copads.copads.dose_entities.Chromosome
+copads.copads.genetic.Chromosome" class="py-name" href="#" onclick="return doclink('link-15', 'Chromosome', 'link-14');">Chromosome</a></tt><tt class="py-op">(</tt><tt id="link-16" class="py-name"><a title="copads.copads.dose_parameters.initial_chromosome" class="py-name" href="#" onclick="return doclink('link-16', 'initial_chromosome', 'link-5');">initial_chromosome</a></tt><tt class="py-op">,</tt>  </tt>
+<a name="L19"></a><tt class="py-lineno">19</tt>  <tt class="py-line">                          <tt class="py-op">[</tt><tt class="py-string">'0'</tt><tt class="py-op">,</tt><tt class="py-string">'1'</tt><tt class="py-op">,</tt><tt class="py-string">'2'</tt><tt class="py-op">,</tt><tt class="py-string">'3'</tt><tt class="py-op">,</tt><tt class="py-string">'4'</tt><tt class="py-op">,</tt><tt class="py-string">'5'</tt><tt class="py-op">,</tt><tt class="py-string">'6'</tt><tt class="py-op">,</tt><tt class="py-string">'7'</tt><tt class="py-op">,</tt><tt class="py-string">'8'</tt><tt class="py-op">,</tt><tt class="py-string">'9'</tt><tt class="py-op">]</tt><tt class="py-op">,</tt>  </tt>
+<a name="L20"></a><tt class="py-lineno">20</tt>  <tt class="py-line">                          <tt id="link-17" class="py-name"><a title="copads.copads.dose_parameters.background_mutation_rate" class="py-name" href="#" onclick="return doclink('link-17', 'background_mutation_rate', 'link-3');">background_mutation_rate</a></tt><tt class="py-op">)</tt> </tt>
+<a name="L21"></a><tt class="py-lineno">21</tt>  <tt class="py-line">                           </tt>
+<a name="Organism"></a><div id="Organism-def"><a name="L22"></a><tt class="py-lineno">22</tt> <a class="py-toggle" href="#" id="Organism-toggle" onclick="return toggle('Organism');">-</a><tt class="py-line"><tt class="py-keyword">class</tt> <a class="py-def-name" href="copads.copads.dose_entities.Organism-class.html">Organism</a><tt class="py-op">(</tt><tt class="py-base-class">g</tt><tt class="py-op">.</tt><tt class="py-base-class">Organism</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="Organism-collapsed" style="display:none;" pad="++" indent="++++"></div><div id="Organism-expanded"><a name="L23"></a><tt class="py-lineno">23</tt>  <tt class="py-line">     </tt>
+<a name="L24"></a><tt class="py-lineno">24</tt>  <tt class="py-line">    <tt id="link-18" class="py-name" targets="Variable copads.copads.dose_entities.Organism.cytoplasm=copads.copads.dose_entities.Organism-class.html#cytoplasm"><a title="copads.copads.dose_entities.Organism.cytoplasm" class="py-name" href="#" onclick="return doclink('link-18', 'cytoplasm', 'link-18');">cytoplasm</a></tt> <tt class="py-op">=</tt> <tt class="py-op">[</tt><tt class="py-number">0</tt><tt class="py-op">]</tt><tt class="py-op">*</tt><tt id="link-19" class="py-name"><a title="copads.copads.dose_parameters.cytoplasm_size" class="py-name" href="#" onclick="return doclink('link-19', 'cytoplasm_size', 'link-6');">cytoplasm_size</a></tt> </tt>
+<a name="L25"></a><tt class="py-lineno">25</tt>  <tt class="py-line">     </tt>
+<a name="Organism.__init__"></a><div id="Organism.__init__-def"><a name="L26"></a><tt class="py-lineno">26</tt> <a class="py-toggle" href="#" id="Organism.__init__-toggle" onclick="return toggle('Organism.__init__');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="copads.copads.dose_entities.Organism-class.html#__init__">__init__</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt id="link-20" class="py-name" targets="Variable copads.copads.genetic.Organism.genome=copads.copads.genetic.Organism-class.html#genome"><a title="copads.copads.genetic.Organism.genome" class="py-name" href="#" onclick="return doclink('link-20', 'genome', 'link-20');">genome</a></tt> <tt class="py-op">=</tt> <tt class="py-op">[</tt><tt id="link-21" class="py-name"><a title="copads.copads.dose_entities.Chromosome
+copads.copads.genetic.Chromosome" class="py-name" href="#" onclick="return doclink('link-21', 'Chromosome', 'link-14');">Chromosome</a></tt><tt class="py-op">.</tt><tt id="link-22" class="py-name" targets="Method copads.copads.genetic.Chromosome.replicate()=copads.copads.genetic.Chromosome-class.html#replicate"><a title="copads.copads.genetic.Chromosome.replicate" class="py-name" href="#" onclick="return doclink('link-22', 'replicate', 'link-22');">replicate</a></tt><tt class="py-op">(</tt><tt class="py-op">)</tt><tt class="py-op">]</tt> </tt>
+</div><a name="Organism.get_cytoplasm"></a><div id="Organism.get_cytoplasm-def"><a name="L27"></a><tt class="py-lineno">27</tt> <a class="py-toggle" href="#" id="Organism.get_cytoplasm-toggle" onclick="return toggle('Organism.get_cytoplasm');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="copads.copads.dose_entities.Organism-class.html#get_cytoplasm">get_cytoplasm</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">)</tt><tt class="py-op">:</tt>  </tt>
+</div><a name="L28"></a><tt class="py-lineno">28</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> <tt class="py-string">','</tt><tt class="py-op">.</tt><tt class="py-name">join</tt><tt class="py-op">(</tt><tt class="py-op">[</tt><tt class="py-name">str</tt><tt class="py-op">(</tt><tt class="py-name">x</tt><tt class="py-op">)</tt> <tt class="py-keyword">for</tt> <tt class="py-name">x</tt> <tt class="py-keyword">in</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt id="link-23" class="py-name"><a title="copads.copads.dose_entities.Organism.cytoplasm" class="py-name" href="#" onclick="return doclink('link-23', 'cytoplasm', 'link-18');">cytoplasm</a></tt><tt class="py-op">]</tt><tt class="py-op">)</tt> </tt>
+</div><a name="Organism.fitness"></a><div id="Organism.fitness-def"><a name="L29"></a><tt class="py-lineno">29</tt> <a class="py-toggle" href="#" id="Organism.fitness-toggle" onclick="return toggle('Organism.fitness');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="copads.copads.dose_entities.Organism-class.html#fitness">fitness</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> <tt class="py-keyword">pass</tt> </tt>
+</div><a name="Organism.mutation_scheme"></a><div id="Organism.mutation_scheme-def"><a name="L30"></a><tt class="py-lineno">30</tt> <a class="py-toggle" href="#" id="Organism.mutation_scheme-toggle" onclick="return toggle('Organism.mutation_scheme');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="copads.copads.dose_entities.Organism-class.html#mutation_scheme">mutation_scheme</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> <tt class="py-keyword">pass</tt> </tt>
+</div></div><a name="L31"></a><tt class="py-lineno">31</tt>  <tt class="py-line">         </tt>
+<a name="Population"></a><div id="Population-def"><a name="L32"></a><tt class="py-lineno">32</tt> <a class="py-toggle" href="#" id="Population-toggle" onclick="return toggle('Population');">-</a><tt class="py-line"><tt class="py-keyword">class</tt> <a class="py-def-name" href="copads.copads.dose_entities.Population-class.html">Population</a><tt class="py-op">(</tt><tt class="py-base-class">g</tt><tt class="py-op">.</tt><tt class="py-base-class">Population</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="Population-collapsed" style="display:none;" pad="++" indent="++++"></div><div id="Population-expanded"><a name="L33"></a><tt class="py-lineno">33</tt>  <tt class="py-line">     </tt>
+<a name="Population.__init__"></a><div id="Population.__init__-def"><a name="L34"></a><tt class="py-lineno">34</tt> <a class="py-toggle" href="#" id="Population.__init__-toggle" onclick="return toggle('Population.__init__');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="copads.copads.dose_entities.Population-class.html#__init__">__init__</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">pop_size</tt><tt class="py-op">=</tt><tt id="link-24" class="py-name"><a title="copads.copads.dose_parameters.population_size" class="py-name" href="#" onclick="return doclink('link-24', 'population_size', 'link-7');">population_size</a></tt><tt class="py-op">,</tt>  </tt>
+<a name="L35"></a><tt class="py-lineno">35</tt>  <tt class="py-line">                 <tt class="py-param">max_gen</tt><tt class="py-op">=</tt><tt id="link-25" class="py-name"><a title="copads.copads.dose_parameters.maximum_generations" class="py-name" href="#" onclick="return doclink('link-25', 'maximum_generations', 'link-9');">maximum_generations</a></tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="Population.__init__-collapsed" style="display:none;" pad="++" indent="++++++++"></div><div id="Population.__init__-expanded"><a name="L36"></a><tt class="py-lineno">36</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">agents</tt> <tt class="py-op">=</tt> <tt class="py-op">[</tt><tt id="link-26" class="py-name" targets="Class copads.copads.dose_entities.Organism=copads.copads.dose_entities.Organism-class.html,Class copads.copads.genetic.Organism=copads.copads.genetic.Organism-class.html"><a title="copads.copads.dose_entities.Organism
+copads.copads.genetic.Organism" class="py-name" href="#" onclick="return doclink('link-26', 'Organism', 'link-26');">Organism</a></tt><tt class="py-op">(</tt><tt class="py-op">)</tt> <tt class="py-keyword">for</tt> <tt class="py-name">x</tt> <tt class="py-keyword">in</tt> <tt class="py-name">xrange</tt><tt class="py-op">(</tt><tt class="py-name">pop_size</tt><tt class="py-op">)</tt><tt class="py-op">]</tt> </tt>
+<a name="L37"></a><tt class="py-lineno">37</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">generation</tt> <tt class="py-op">=</tt> <tt class="py-number">0</tt> </tt>
+<a name="L38"></a><tt class="py-lineno">38</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt id="link-27" class="py-name"><a title="copads.copads.dose_parameters.maximum_generations" class="py-name" href="#" onclick="return doclink('link-27', 'maximum_generations', 'link-9');">maximum_generations</a></tt> <tt class="py-op">=</tt> <tt class="py-name">max_gen</tt> </tt>
+</div><a name="Population.prepopulation_control"></a><div id="Population.prepopulation_control-def"><a name="L39"></a><tt class="py-lineno">39</tt> <a class="py-toggle" href="#" id="Population.prepopulation_control-toggle" onclick="return toggle('Population.prepopulation_control');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="copads.copads.dose_entities.Population-class.html#prepopulation_control">prepopulation_control</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> <tt class="py-keyword">pass</tt> </tt>
+</div><a name="Population.mating"></a><div id="Population.mating-def"><a name="L40"></a><tt class="py-lineno">40</tt> <a class="py-toggle" href="#" id="Population.mating-toggle" onclick="return toggle('Population.mating');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="copads.copads.dose_entities.Population-class.html#mating">mating</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> <tt class="py-keyword">pass</tt> </tt>
+</div><a name="Population.postpopulation_control"></a><div id="Population.postpopulation_control-def"><a name="L41"></a><tt class="py-lineno">41</tt> <a class="py-toggle" href="#" id="Population.postpopulation_control-toggle" onclick="return toggle('Population.postpopulation_control');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="copads.copads.dose_entities.Population-class.html#postpopulation_control">postpopulation_control</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> <tt class="py-keyword">pass</tt> </tt>
+</div><a name="Population.generation_events"></a><div id="Population.generation_events-def"><a name="L42"></a><tt class="py-lineno">42</tt> <a class="py-toggle" href="#" id="Population.generation_events-toggle" onclick="return toggle('Population.generation_events');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="copads.copads.dose_entities.Population-class.html#generation_events">generation_events</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> <tt class="py-keyword">pass</tt> </tt>
+</div><a name="Population.report"></a><div id="Population.report-def"><a name="L43"></a><tt class="py-lineno">43</tt> <a class="py-toggle" href="#" id="Population.report-toggle" onclick="return toggle('Population.report');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="copads.copads.dose_entities.Population-class.html#report">report</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> <tt class="py-keyword">pass</tt> </tt>
+</div></div><a name="L44"></a><tt class="py-lineno">44</tt>  <tt class="py-line">     </tt>
+<a name="World"></a><div id="World-def"><a name="L45"></a><tt class="py-lineno">45</tt> <a class="py-toggle" href="#" id="World-toggle" onclick="return toggle('World');">-</a><tt class="py-line"><tt class="py-keyword">class</tt> <a class="py-def-name" href="copads.copads.dose_entities.World-class.html">World</a><tt class="py-op">(</tt><tt class="py-base-class">w</tt><tt class="py-op">.</tt><tt class="py-base-class">World</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="World-collapsed" style="display:none;" pad="++" indent="++++"></div><div id="World-expanded"><a name="World.__init__"></a><div id="World.__init__-def"><a name="L46"></a><tt class="py-lineno">46</tt> <a class="py-toggle" href="#" id="World.__init__-toggle" onclick="return toggle('World.__init__');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="copads.copads.dose_entities.World-class.html#__init__">__init__</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">world_x</tt><tt class="py-op">=</tt><tt id="link-28" class="py-name"><a title="copads.copads.dose_parameters.world_x" class="py-name" href="#" onclick="return doclink('link-28', 'world_x', 'link-11');">world_x</a></tt><tt class="py-op">,</tt> <tt class="py-param">world_y</tt><tt class="py-op">=</tt><tt id="link-29" class="py-name"><a title="copads.copads.dose_parameters.world_y" class="py-name" href="#" onclick="return doclink('link-29', 'world_y', 'link-12');">world_y</a></tt><tt class="py-op">,</tt> <tt class="py-param">world_z</tt><tt class="py-op">=</tt><tt id="link-30" class="py-name"><a title="copads.copads.dose_parameters.world_z" class="py-name" href="#" onclick="return doclink('link-30', 'world_z', 'link-13');">world_z</a></tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="World.__init__-collapsed" style="display:none;" pad="++" indent="++++++++"></div><div id="World.__init__-expanded"><a name="L47"></a><tt class="py-lineno">47</tt>  <tt class="py-line">        <tt class="py-name">super</tt><tt class="py-op">(</tt><tt id="link-31" class="py-name" targets="Class copads.copads.dose_entities.World=copads.copads.dose_entities.World-class.html,Class copads.copads.dose_world.World=copads.copads.dose_world.World-class.html"><a title="copads.copads.dose_entities.World
+copads.copads.dose_world.World" class="py-name" href="#" onclick="return doclink('link-31', 'World', 'link-31');">World</a></tt><tt class="py-op">,</tt> <tt class="py-name">self</tt><tt class="py-op">)</tt><tt class="py-op">.</tt><tt id="link-32" class="py-name" targets="Method copads.copads.bag.Bag.__init__()=copads.copads.bag.Bag-class.html#__init__,Method copads.copads.copadsexceptions.DistanceInputSizeError.__init__()=copads.copads.copadsexceptions.DistanceInputSizeError-class.html#__init__,Method copads.copads.copadsexceptions.DistributionFunctionError.__init__()=copads.copads.copadsexceptions.DistributionFunctionError-class.html#__init__,Method copads.copads.copadsexceptions.DistributionParameterError.__init__()=copads.copads.copadsexceptions.DistributionParameterError-class.html#__init__,Method copads.copads.copadsexceptions.EdgeNotFoundError.__init__()=copads.copads.copadsexceptions.EdgeNotFoundError-class.html#__init__,Method copads.copads.copadsexceptions.FunctionParameterTypeError.__init__()=copads.copads.copadsexceptions.FunctionParameterTypeError-class.html#__init__,Method copads.copads.copadsexceptions.FunctionParameterValueError.__init__()=copads.copads.copadsexceptions.FunctionParameterValueError-class.html#__init__,Method copads.copads.copadsexceptions.GraphEdgeSizeMismatchError.__init__()=copads.copads.copadsexceptions.GraphEdgeSizeMismatchError-class.html#__init__,Method copads.copads.copadsexceptions.GraphParameterError.__init__()=copads.copads.copadsexceptions.GraphParameterError-class.html#__init__,Method copads.copads.copadsexceptions.MatrixError.__init__()=copads.copads.copadsexceptions.MatrixError-class.html#__init__,Method copads.copads.copadsexceptions.NormalDistributionTypeError.__init__()=copads.copads.copadsexceptions.NormalDistributionTypeError-class.html#__init__,Method copads.copads.copadsexceptions.NotAdjacencyGraphMatrixError.__init__()=copads.copads.copadsexceptions.NotAdjacencyGraphMatrixError-class.html#__init__,Method copads.copads.copadsexceptions.ParallelArrayError.__init__()=copads.copads.copadsexceptions.ParallelArrayError-class.html#__init__,Method copads.copads.copadsexceptions.TreeNodeTypeError.__init__()=copads.copads.copadsexceptions.TreeNodeTypeError-class.html#__init__,Method copads.copads.copadsexceptions.UnknownGraphMatrixError.__init__()=copads.copads.copadsexceptions.UnknownGraphMatrixError-class.html#__init__,Method copads.copads.copadsexceptions.VectorError.__init__()=copads.copads.copadsexceptions.VectorError-class.html#__init__,Method copads.copads.copadsexceptions.VertexNotFoundError.__init__()=copads.copads.copadsexceptions.VertexNotFoundError-class.html#__init__,Method copads.copads.dataframe.Dataframe.__init__()=copads.copads.dataframe.Dataframe-class.html#__init__,Method copads.copads.dataframe.MultiDataframe.__init__()=copads.copads.dataframe.MultiDataframe-class.html#__init__,Method copads.copads.dataframe.Series.__init__()=copads.copads.dataframe.Series-class.html#__init__,Method copads.copads.dose_entities.Organism.__init__()=copads.copads.dose_entities.Organism-class.html#__init__,Method copads.copads.dose_entities.Population.__init__()=copads.copads.dose_entities.Population-class.html#__init__,Method copads.copads.dose_entities.World.__init__()=copads.copads.dose_entities.World-class.html#__init__,Method copads.copads.dose_world.World.__init__()=copads.copads.dose_world.World-class.html#__init__,Method copads.copads.genetic.Chromosome.__init__()=copads.copads.genetic.Chromosome-class.html#__init__,Method copads.copads.genetic.Organism.__init__()=copads.copads.genetic.Organism-class.html#__init__,Method copads.copads.genetic.Population.__init__()=copads.copads.genetic.Population-class.html#__init__,Method copads.copads.graph.Graph.__init__()=copads.copads.graph.Graph-class.html#__init__,Method copads.copads.jigsaw.JigsawCore.__init__()=copads.copads.jigsaw.JigsawCore-class.html#__init__,Method copads.copads.jigsaw.JigsawFile.__init__()=copads.copads.jigsaw.JigsawFile-class.html#__init__,Method copads.copads.lindenmayer.lindenmayer.__init__()=copads.copads.lindenmayer.lindenmayer-class.html#__init__,Method copads.copads.matrix.Matrix.__init__()=copads.copads.matrix.Matrix-class.html#__init__,Method copads.copads.matrix.Vector.__init__()=copads.copads.matrix.Vector-class.html#__init__,Method copads.copads.neural.brain.__init__()=copads.copads.neural.brain-class.html#__init__,Method copads.copads.neural.brainbase.__init__()=copads.copads.neural.brainbase-class.html#__init__,Method copads.copads.operations.Boolean.__init__()=copads.copads.operations.Boolean-class.html#__init__,Method copads.copads.operations.Modulus2.__init__()=copads.copads.operations.Modulus2-class.html#__init__,Method copads.copads.optimizer_genetic.OptimizationTarget.__init__()=copads.copads.optimizer_genetic.OptimizationTarget-class.html#__init__,Method copads.copads.optimizer_genetic.OptimizerGA.__init__()=copads.copads.optimizer_genetic.OptimizerGA-class.html#__init__,Method copads.copads.parallelarray.ParallelArray.__init__()=copads.copads.parallelarray.ParallelArray-class.html#__init__,Method copads.copads.pnet.PNet.__init__()=copads.copads.pnet.PNet-class.html#__init__,Method copads.copads.pnet.Place.__init__()=copads.copads.pnet.Place-class.html#__init__,Method copads.copads.prioritydictionary.PriorityDictionary.__init__()=copads.copads.prioritydictionary.PriorityDictionary-class.html#__init__,Method copads.copads.randomize.CLCG.__init__()=copads.copads.randomize.CLCG-class.html#__init__,Method copads.copads.randomize.LCG.__init__()=copads.copads.randomize.LCG-class.html#__init__,Method copads.copads.randomize.MersenneTwister.__init__()=copads.copads.randomize.MersenneTwister-class.html#__init__,Method copads.copads.randomize.Randomizer.__init__()=copads.copads.randomize.Randomizer-class.html#__init__,Method copads.copads.ring.RingList.__init__()=copads.copads.ring.RingList-class.html#__init__,Method copads.copads.samplestatistics.SampleDistribution.__init__()=copads.copads.samplestatistics.SampleDistribution-class.html#__init__,Method copads.copads.samplestatistics.SingleSample.__init__()=copads.copads.samplestatistics.SingleSample-class.html#__init__,Method copads.copads.samplestatistics.TwoSample.__init__()=copads.copads.samplestatistics.TwoSample-class.html#__init__,Method copads.copads.tree.BinaryNode.__init__()=copads.copads.tree.BinaryNode-class.html#__init__,Method copads.copads.tree.FourNode.__init__()=copads.copads.tree.FourNode-class.html#__init__,Method copads.copads.tree.OrderedBinaryTree.__init__()=copads.copads.tree.OrderedBinaryTree-class.html#__init__,Method copads.copads.tree.RBDict.__init__()=copads.copads.tree.RBDict-class.html#__init__,Method copads.copads.tree.RBList.__init__()=copads.copads.tree.RBList-class.html#__init__,Method copads.copads.tree.RBNode.__init__()=copads.copads.tree.RBNode-class.html#__init__,Method copads.copads.tree.RBTree.__init__()=copads.copads.tree.RBTree-class.html#__init__,Method copads.copads.tree.RBTreeIter.__init__()=copads.copads.tree.RBTreeIter-class.html#__init__,Method copads.copads.tree.ThreeNode.__init__()=copads.copads.tree.ThreeNode-class.html#__init__"><a title="copads.copads.bag.Bag.__init__
+copads.copads.copadsexceptions.DistanceInputSizeError.__init__
+copads.copads.copadsexceptions.DistributionFunctionError.__init__
+copads.copads.copadsexceptions.DistributionParameterError.__init__
+copads.copads.copadsexceptions.EdgeNotFoundError.__init__
+copads.copads.copadsexceptions.FunctionParameterTypeError.__init__
+copads.copads.copadsexceptions.FunctionParameterValueError.__init__
+copads.copads.copadsexceptions.GraphEdgeSizeMismatchError.__init__
+copads.copads.copadsexceptions.GraphParameterError.__init__
+copads.copads.copadsexceptions.MatrixError.__init__
+copads.copads.copadsexceptions.NormalDistributionTypeError.__init__
+copads.copads.copadsexceptions.NotAdjacencyGraphMatrixError.__init__
+copads.copads.copadsexceptions.ParallelArrayError.__init__
+copads.copads.copadsexceptions.TreeNodeTypeError.__init__
+copads.copads.copadsexceptions.UnknownGraphMatrixError.__init__
+copads.copads.copadsexceptions.VectorError.__init__
+copads.copads.copadsexceptions.VertexNotFoundError.__init__
+copads.copads.dataframe.Dataframe.__init__
+copads.copads.dataframe.MultiDataframe.__init__
+copads.copads.dataframe.Series.__init__
+copads.copads.dose_entities.Organism.__init__
+copads.copads.dose_entities.Population.__init__
+copads.copads.dose_entities.World.__init__
+copads.copads.dose_world.World.__init__
+copads.copads.genetic.Chromosome.__init__
+copads.copads.genetic.Organism.__init__
+copads.copads.genetic.Population.__init__
+copads.copads.graph.Graph.__init__
+copads.copads.jigsaw.JigsawCore.__init__
+copads.copads.jigsaw.JigsawFile.__init__
+copads.copads.lindenmayer.lindenmayer.__init__
+copads.copads.matrix.Matrix.__init__
+copads.copads.matrix.Vector.__init__
+copads.copads.neural.brain.__init__
+copads.copads.neural.brainbase.__init__
+copads.copads.operations.Boolean.__init__
+copads.copads.operations.Modulus2.__init__
+copads.copads.optimizer_genetic.OptimizationTarget.__init__
+copads.copads.optimizer_genetic.OptimizerGA.__init__
+copads.copads.parallelarray.ParallelArray.__init__
+copads.copads.pnet.PNet.__init__
+copads.copads.pnet.Place.__init__
+copads.copads.prioritydictionary.PriorityDictionary.__init__
+copads.copads.randomize.CLCG.__init__
+copads.copads.randomize.LCG.__init__
+copads.copads.randomize.MersenneTwister.__init__
+copads.copads.randomize.Randomizer.__init__
+copads.copads.ring.RingList.__init__
+copads.copads.samplestatistics.SampleDistribution.__init__
+copads.copads.samplestatistics.SingleSample.__init__
+copads.copads.samplestatistics.TwoSample.__init__
+copads.copads.tree.BinaryNode.__init__
+copads.copads.tree.FourNode.__init__
+copads.copads.tree.OrderedBinaryTree.__init__
+copads.copads.tree.RBDict.__init__
+copads.copads.tree.RBList.__init__
+copads.copads.tree.RBNode.__init__
+copads.copads.tree.RBTree.__init__
+copads.copads.tree.RBTreeIter.__init__
+copads.copads.tree.ThreeNode.__init__" class="py-name" href="#" onclick="return doclink('link-32', '__init__', 'link-32');">__init__</a></tt><tt class="py-op">(</tt><tt id="link-33" class="py-name"><a title="copads.copads.dose_parameters.world_x" class="py-name" href="#" onclick="return doclink('link-33', 'world_x', 'link-11');">world_x</a></tt><tt class="py-op">,</tt> <tt id="link-34" class="py-name"><a title="copads.copads.dose_parameters.world_y" class="py-name" href="#" onclick="return doclink('link-34', 'world_y', 'link-12');">world_y</a></tt><tt class="py-op">,</tt> <tt id="link-35" class="py-name"><a title="copads.copads.dose_parameters.world_z" class="py-name" href="#" onclick="return doclink('link-35', 'world_z', 'link-13');">world_z</a></tt><tt class="py-op">)</tt> </tt>
+</div><a name="World.organism_movement"></a><div id="World.organism_movement-def"><a name="L48"></a><tt class="py-lineno">48</tt> <a class="py-toggle" href="#" id="World.organism_movement-toggle" onclick="return toggle('World.organism_movement');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="copads.copads.dose_entities.World-class.html#organism_movement">organism_movement</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">x</tt><tt class="py-op">,</tt> <tt class="py-param">y</tt><tt class="py-op">,</tt> <tt class="py-param">z</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> <tt class="py-keyword">pass</tt> </tt>
+</div><a name="World.organism_location"></a><div id="World.organism_location-def"><a name="L49"></a><tt class="py-lineno">49</tt> <a class="py-toggle" href="#" id="World.organism_location-toggle" onclick="return toggle('World.organism_location');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="copads.copads.dose_entities.World-class.html#organism_location">organism_location</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">x</tt><tt class="py-op">,</tt> <tt class="py-param">y</tt><tt class="py-op">,</tt> <tt class="py-param">z</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> <tt class="py-keyword">pass</tt> </tt>
+</div><a name="World.ecoregulate"></a><div id="World.ecoregulate-def"><a name="L50"></a><tt class="py-lineno">50</tt> <a class="py-toggle" href="#" id="World.ecoregulate-toggle" onclick="return toggle('World.ecoregulate');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="copads.copads.dose_entities.World-class.html#ecoregulate">ecoregulate</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> <tt class="py-keyword">pass</tt> </tt>
+</div><a name="World.update_ecology"></a><div id="World.update_ecology-def"><a name="L51"></a><tt class="py-lineno">51</tt> <a class="py-toggle" href="#" id="World.update_ecology-toggle" onclick="return toggle('World.update_ecology');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="copads.copads.dose_entities.World-class.html#update_ecology">update_ecology</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">x</tt><tt class="py-op">,</tt> <tt class="py-param">y</tt><tt class="py-op">,</tt> <tt class="py-param">z</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> <tt class="py-keyword">pass</tt> </tt>
+</div><a name="World.update_local"></a><div id="World.update_local-def"><a name="L52"></a><tt class="py-lineno">52</tt> <a class="py-toggle" href="#" id="World.update_local-toggle" onclick="return toggle('World.update_local');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="copads.copads.dose_entities.World-class.html#update_local">update_local</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">x</tt><tt class="py-op">,</tt> <tt class="py-param">y</tt><tt class="py-op">,</tt> <tt class="py-param">z</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> <tt class="py-keyword">pass</tt> </tt>
+</div><a name="World.report"></a><div id="World.report-def"><a name="L53"></a><tt class="py-lineno">53</tt> <a class="py-toggle" href="#" id="World.report-toggle" onclick="return toggle('World.report');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="copads.copads.dose_entities.World-class.html#report">report</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> <tt class="py-keyword">pass</tt> </tt>
+</div></div><a name="L54"></a><tt class="py-lineno">54</tt>  <tt class="py-line"> </tt><script type="text/javascript">
+<!--
+expandto(location.href);
+// -->
+</script>
+</pre>
+<br />
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="copads.copads-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            ><a class="navbar" target="_top" href="https://github.com/mauriceling/copads">https://github.com/mauriceling/copads</a></th>
+          </tr></table></th>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%%">
+  <tr>
+    <td align="left" class="footer">
+    Generated by Epydoc 3.0.1 on Sun Feb 25 20:14:33 2018
+    </td>
+    <td align="right" class="footer">
+      <a target="mainFrame" href="http://epydoc.sourceforge.net"
+        >http://epydoc.sourceforge.net</a>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  <!--
+  // Private objects are initially displayed (because if
+  // javascript is turned off then we want them to be
+  // visible); but by default, we want to hide them.  So hide
+  // them unless we have a cookie that says to show them.
+  checkCookie();
+  // -->
+</script>
+</body>
+</html>

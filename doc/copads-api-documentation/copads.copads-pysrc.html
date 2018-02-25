@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="ascii"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>copads.copads</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th bgcolor="#70b0f0" class="navbar-select"
+          >&nbsp;&nbsp;&nbsp;Home&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            ><a class="navbar" target="_top" href="https://github.com/mauriceling/copads">https://github.com/mauriceling/copads</a></th>
+          </tr></table></th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <span class="breadcrumbs">
+        Package&nbsp;copads ::
+        Package&nbsp;copads
+      </span>
+    </td>
+    <td>
+      <table cellpadding="0" cellspacing="0">
+        <!-- hide/show private -->
+        <tr><td align="right"><span class="options">[<a href="javascript:void(0);" class="privatelink"
+    onclick="toggle_private();">hide&nbsp;private</a>]</span></td></tr>
+        <tr><td align="right"><span class="options"
+            >[<a href="frames.html" target="_top">frames</a
+            >]&nbsp;|&nbsp;<a href="copads.copads-pysrc.html"
+            target="_top">no&nbsp;frames</a>]</span></td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<h1 class="epydoc">Source Code for <a href="copads.copads-module.html">Package copads.copads</a></h1>
+<pre class="py-src">
+<a name="L1"></a><tt class="py-lineno"> 1</tt>  <tt class="py-line"><tt class="py-docstring">"""</tt> </tt>
+<a name="L2"></a><tt class="py-lineno"> 2</tt>  <tt class="py-line"><tt class="py-docstring">COPADS (Collection of Python Algorithms and Data Structures).</tt> </tt>
+<a name="L3"></a><tt class="py-lineno"> 3</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L4"></a><tt class="py-lineno"> 4</tt>  <tt class="py-line"><tt class="py-docstring">The main aim of COPADS is to develop a compilation of of Python data</tt> </tt>
+<a name="L5"></a><tt class="py-lineno"> 5</tt>  <tt class="py-line"><tt class="py-docstring">structures and its algorithms, making it almost a purely developmental</tt> </tt>
+<a name="L6"></a><tt class="py-lineno"> 6</tt>  <tt class="py-line"><tt class="py-docstring">project. Personally, I look at this as a re-usable collection of tools</tt> </tt>
+<a name="L7"></a><tt class="py-lineno"> 7</tt>  <tt class="py-line"><tt class="py-docstring">that I can use in other projects. Therefore, this project is essentially</tt> </tt>
+<a name="L8"></a><tt class="py-lineno"> 8</tt>  <tt class="py-line"><tt class="py-docstring">"needs-driven", except a core subset of data structures and algorithms.</tt> </tt>
+<a name="L9"></a><tt class="py-lineno"> 9</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L10"></a><tt class="py-lineno">10</tt>  <tt class="py-line"><tt class="py-docstring">This project originated from 3 threads of thought. Firstly, while browsing</tt> </tt>
+<a name="L11"></a><tt class="py-lineno">11</tt>  <tt class="py-line"><tt class="py-docstring">through Mehta and Sahni's Handbook of Data Structures and Applications, I</tt> </tt>
+<a name="L12"></a><tt class="py-lineno">12</tt>  <tt class="py-line"><tt class="py-docstring">thought there might be utility to have a number of the listed data</tt> </tt>
+<a name="L13"></a><tt class="py-lineno">13</tt>  <tt class="py-line"><tt class="py-docstring">structures implemented in Python. Given my interest in biological data</tt> </tt>
+<a name="L14"></a><tt class="py-lineno">14</tt>  <tt class="py-line"><tt class="py-docstring">management, having a good set of data structures is always handy. The 2nd</tt> </tt>
+<a name="L15"></a><tt class="py-lineno">15</tt>  <tt class="py-line"><tt class="py-docstring">thread of thought came from Numerical Recipes. Again, I thought these</tt> </tt>
+<a name="L16"></a><tt class="py-lineno">16</tt>  <tt class="py-line"><tt class="py-docstring">algorithms will be handy to have and had started to translate some of</tt> </tt>
+<a name="L17"></a><tt class="py-lineno">17</tt>  <tt class="py-line"><tt class="py-docstring">them into Python during some overly energetic days. Finally, Python</tt> </tt>
+<a name="L18"></a><tt class="py-lineno">18</tt>  <tt class="py-line"><tt class="py-docstring">Cookbook had undergone 2 editions by 2008 and ActiveState had provided an</tt> </tt>
+<a name="L19"></a><tt class="py-lineno">19</tt>  <tt class="py-line"><tt class="py-docstring">online platform for Python Recipes which I found to be useful and can see</tt> </tt>
+<a name="L20"></a><tt class="py-lineno">20</tt>  <tt class="py-line"><tt class="py-docstring">how some of these recipes can be merged. Thus, COPADS is borned.</tt> </tt>
+<a name="L21"></a><tt class="py-lineno">21</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L22"></a><tt class="py-lineno">22</tt>  <tt class="py-line"><tt class="py-docstring">Project website: U{https://github.com/copads/copads}</tt> </tt>
+<a name="L23"></a><tt class="py-lineno">23</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L24"></a><tt class="py-lineno">24</tt>  <tt class="py-line"><tt class="py-docstring">License: Unless specified otherwise, all parts of this package, except</tt> </tt>
+<a name="L25"></a><tt class="py-lineno">25</tt>  <tt class="py-line"><tt class="py-docstring">those adapted, are covered under Python Software Foundation License</tt> </tt>
+<a name="L26"></a><tt class="py-lineno">26</tt>  <tt class="py-line"><tt class="py-docstring">version 2.</tt> </tt>
+<a name="L27"></a><tt class="py-lineno">27</tt>  <tt class="py-line"><tt class="py-docstring">"""</tt> </tt>
+<a name="L28"></a><tt class="py-lineno">28</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt class="py-name">datetime</tt> <tt class="py-keyword">import</tt> <tt class="py-name">datetime</tt> </tt>
+<a name="L29"></a><tt class="py-lineno">29</tt>  <tt class="py-line"> </tt>
+<a name="L30"></a><tt class="py-lineno">30</tt>  <tt class="py-line"><tt class="py-name">__version__</tt> <tt class="py-op">=</tt> <tt class="py-string">'0.5.1'</tt> </tt>
+<a name="L31"></a><tt class="py-lineno">31</tt>  <tt class="py-line"> </tt>
+<a name="L32"></a><tt class="py-lineno">32</tt>  <tt class="py-line"><tt class="py-name">__author__</tt> <tt class="py-op">=</tt> <tt class="py-string">'Maurice H.T. Ling &lt;mauriceling@acm.org&gt;'</tt> </tt>
+<a name="L33"></a><tt class="py-lineno">33</tt>  <tt class="py-line"> </tt>
+<a name="L34"></a><tt class="py-lineno">34</tt>  <tt class="py-line"><tt class="py-name">__copyright__</tt> <tt class="py-op">=</tt> <tt class="py-string">'(c) 2007-%s, Maurice H.T. Ling.'</tt> <tt class="py-op">%</tt> <tt class="py-op">(</tt><tt class="py-name">datetime</tt><tt class="py-op">.</tt><tt class="py-name">now</tt><tt class="py-op">(</tt><tt class="py-op">)</tt><tt class="py-op">.</tt><tt class="py-name">year</tt><tt class="py-op">)</tt> </tt>
+<a name="L35"></a><tt class="py-lineno">35</tt>  <tt class="py-line"> </tt>
+<a name="L36"></a><tt class="py-lineno">36</tt>  <tt class="py-line"><tt class="py-comment"># Data Structures</tt> </tt>
+<a name="L37"></a><tt class="py-lineno">37</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt class="py-op">.</tt><tt id="link-0" class="py-name" targets="Module copads.copads.bag=copads.copads.bag-module.html"><a title="copads.copads.bag" class="py-name" href="#" onclick="return doclink('link-0', 'bag', 'link-0');">bag</a></tt> <tt class="py-keyword">import</tt> <tt id="link-1" class="py-name" targets="Class copads.copads.bag.Bag=copads.copads.bag.Bag-class.html"><a title="copads.copads.bag.Bag" class="py-name" href="#" onclick="return doclink('link-1', 'Bag', 'link-1');">Bag</a></tt> </tt>
+<a name="L38"></a><tt class="py-lineno">38</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt class="py-op">.</tt><tt id="link-2" class="py-name" targets="Module copads.copads.dataframe=copads.copads.dataframe-module.html"><a title="copads.copads.dataframe" class="py-name" href="#" onclick="return doclink('link-2', 'dataframe', 'link-2');">dataframe</a></tt> <tt class="py-keyword">import</tt> <tt id="link-3" class="py-name" targets="Class copads.copads.dataframe.Dataframe=copads.copads.dataframe.Dataframe-class.html"><a title="copads.copads.dataframe.Dataframe" class="py-name" href="#" onclick="return doclink('link-3', 'Dataframe', 'link-3');">Dataframe</a></tt> </tt>
+<a name="L39"></a><tt class="py-lineno">39</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt class="py-op">.</tt><tt id="link-4" class="py-name"><a title="copads.copads.dataframe" class="py-name" href="#" onclick="return doclink('link-4', 'dataframe', 'link-2');">dataframe</a></tt> <tt class="py-keyword">import</tt> <tt id="link-5" class="py-name" targets="Class copads.copads.dataframe.MultiDataframe=copads.copads.dataframe.MultiDataframe-class.html"><a title="copads.copads.dataframe.MultiDataframe" class="py-name" href="#" onclick="return doclink('link-5', 'MultiDataframe', 'link-5');">MultiDataframe</a></tt> </tt>
+<a name="L40"></a><tt class="py-lineno">40</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt class="py-op">.</tt><tt id="link-6" class="py-name"><a title="copads.copads.dataframe" class="py-name" href="#" onclick="return doclink('link-6', 'dataframe', 'link-2');">dataframe</a></tt> <tt class="py-keyword">import</tt> <tt id="link-7" class="py-name" targets="Class copads.copads.dataframe.Series=copads.copads.dataframe.Series-class.html"><a title="copads.copads.dataframe.Series" class="py-name" href="#" onclick="return doclink('link-7', 'Series', 'link-7');">Series</a></tt> </tt>
+<a name="L41"></a><tt class="py-lineno">41</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt class="py-op">.</tt><tt id="link-8" class="py-name" targets="Module copads.copads.graph=copads.copads.graph-module.html,Variable copads.copads.graph.Graph.graph=copads.copads.graph.Graph-class.html#graph"><a title="copads.copads.graph
+copads.copads.graph.Graph.graph" class="py-name" href="#" onclick="return doclink('link-8', 'graph', 'link-8');">graph</a></tt> <tt class="py-keyword">import</tt> <tt id="link-9" class="py-name" targets="Class copads.copads.graph.Graph=copads.copads.graph.Graph-class.html"><a title="copads.copads.graph.Graph" class="py-name" href="#" onclick="return doclink('link-9', 'Graph', 'link-9');">Graph</a></tt> </tt>
+<a name="L42"></a><tt class="py-lineno">42</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt class="py-op">.</tt><tt id="link-10" class="py-name" targets="Module copads.copads.matrix=copads.copads.matrix-module.html"><a title="copads.copads.matrix" class="py-name" href="#" onclick="return doclink('link-10', 'matrix', 'link-10');">matrix</a></tt> <tt class="py-keyword">import</tt> <tt id="link-11" class="py-name" targets="Class copads.copads.matrix.Matrix=copads.copads.matrix.Matrix-class.html"><a title="copads.copads.matrix.Matrix" class="py-name" href="#" onclick="return doclink('link-11', 'Matrix', 'link-11');">Matrix</a></tt> </tt>
+<a name="L43"></a><tt class="py-lineno">43</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt class="py-op">.</tt><tt id="link-12" class="py-name"><a title="copads.copads.matrix" class="py-name" href="#" onclick="return doclink('link-12', 'matrix', 'link-10');">matrix</a></tt> <tt class="py-keyword">import</tt> <tt id="link-13" class="py-name" targets="Class copads.copads.matrix.Vector=copads.copads.matrix.Vector-class.html"><a title="copads.copads.matrix.Vector" class="py-name" href="#" onclick="return doclink('link-13', 'Vector', 'link-13');">Vector</a></tt> </tt>
+<a name="L44"></a><tt class="py-lineno">44</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt class="py-op">.</tt><tt id="link-14" class="py-name" targets="Module copads.copads.parallelarray=copads.copads.parallelarray-module.html"><a title="copads.copads.parallelarray" class="py-name" href="#" onclick="return doclink('link-14', 'parallelarray', 'link-14');">parallelarray</a></tt> <tt class="py-keyword">import</tt> <tt id="link-15" class="py-name" targets="Class copads.copads.parallelarray.ParallelArray=copads.copads.parallelarray.ParallelArray-class.html"><a title="copads.copads.parallelarray.ParallelArray" class="py-name" href="#" onclick="return doclink('link-15', 'ParallelArray', 'link-15');">ParallelArray</a></tt> </tt>
+<a name="L45"></a><tt class="py-lineno">45</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt class="py-op">.</tt><tt id="link-16" class="py-name" targets="Module copads.copads.prioritydictionary=copads.copads.prioritydictionary-module.html"><a title="copads.copads.prioritydictionary" class="py-name" href="#" onclick="return doclink('link-16', 'prioritydictionary', 'link-16');">prioritydictionary</a></tt> <tt class="py-keyword">import</tt> <tt id="link-17" class="py-name" targets="Class copads.copads.prioritydictionary.PriorityDictionary=copads.copads.prioritydictionary.PriorityDictionary-class.html"><a title="copads.copads.prioritydictionary.PriorityDictionary" class="py-name" href="#" onclick="return doclink('link-17', 'PriorityDictionary', 'link-17');">PriorityDictionary</a></tt> </tt>
+<a name="L46"></a><tt class="py-lineno">46</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt class="py-op">.</tt><tt id="link-18" class="py-name" targets="Module copads.copads.ring=copads.copads.ring-module.html"><a title="copads.copads.ring" class="py-name" href="#" onclick="return doclink('link-18', 'ring', 'link-18');">ring</a></tt> <tt class="py-keyword">import</tt> <tt id="link-19" class="py-name" targets="Class copads.copads.ring.RingList=copads.copads.ring.RingList-class.html"><a title="copads.copads.ring.RingList" class="py-name" href="#" onclick="return doclink('link-19', 'RingList', 'link-19');">RingList</a></tt> </tt>
+<a name="L47"></a><tt class="py-lineno">47</tt>  <tt class="py-line"> </tt>
+<a name="L48"></a><tt class="py-lineno">48</tt>  <tt class="py-line"><tt class="py-comment"># Operational classes</tt> </tt>
+<a name="L49"></a><tt class="py-lineno">49</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt class="py-op">.</tt><tt id="link-20" class="py-name" targets="Module copads.copads.randomize=copads.copads.randomize-module.html"><a title="copads.copads.randomize" class="py-name" href="#" onclick="return doclink('link-20', 'randomize', 'link-20');">randomize</a></tt> <tt class="py-keyword">import</tt> <tt id="link-21" class="py-name" targets="Class copads.copads.randomize.MersenneTwister=copads.copads.randomize.MersenneTwister-class.html"><a title="copads.copads.randomize.MersenneTwister" class="py-name" href="#" onclick="return doclink('link-21', 'MersenneTwister', 'link-21');">MersenneTwister</a></tt> </tt>
+<a name="L50"></a><tt class="py-lineno">50</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt class="py-op">.</tt><tt id="link-22" class="py-name"><a title="copads.copads.randomize" class="py-name" href="#" onclick="return doclink('link-22', 'randomize', 'link-20');">randomize</a></tt> <tt class="py-keyword">import</tt> <tt id="link-23" class="py-name" targets="Class copads.copads.randomize.LCG=copads.copads.randomize.LCG-class.html"><a title="copads.copads.randomize.LCG" class="py-name" href="#" onclick="return doclink('link-23', 'LCG', 'link-23');">LCG</a></tt> </tt>
+<a name="L51"></a><tt class="py-lineno">51</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt class="py-op">.</tt><tt id="link-24" class="py-name"><a title="copads.copads.randomize" class="py-name" href="#" onclick="return doclink('link-24', 'randomize', 'link-20');">randomize</a></tt> <tt class="py-keyword">import</tt> <tt id="link-25" class="py-name" targets="Class copads.copads.randomize.CLCG=copads.copads.randomize.CLCG-class.html"><a title="copads.copads.randomize.CLCG" class="py-name" href="#" onclick="return doclink('link-25', 'CLCG', 'link-25');">CLCG</a></tt> </tt>
+<a name="L52"></a><tt class="py-lineno">52</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt class="py-op">.</tt><tt class="py-name">statisticsdistribution</tt> <tt class="py-keyword">import</tt> <tt class="py-name">BetaDistribution</tt> </tt>
+<a name="L53"></a><tt class="py-lineno">53</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt class="py-op">.</tt><tt class="py-name">statisticsdistribution</tt> <tt class="py-keyword">import</tt> <tt class="py-name">BinomialDistribution</tt> </tt>
+<a name="L54"></a><tt class="py-lineno">54</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt class="py-op">.</tt><tt class="py-name">statisticsdistribution</tt> <tt class="py-keyword">import</tt> <tt class="py-name">CauchyDistribution</tt> </tt>
+<a name="L55"></a><tt class="py-lineno">55</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt class="py-op">.</tt><tt class="py-name">statisticsdistribution</tt> <tt class="py-keyword">import</tt> <tt class="py-name">ChiSquareDistribution</tt> </tt>
+<a name="L56"></a><tt class="py-lineno">56</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt class="py-op">.</tt><tt class="py-name">statisticsdistribution</tt> <tt class="py-keyword">import</tt> <tt class="py-name">CosineDistribution</tt> </tt>
+<a name="L57"></a><tt class="py-lineno">57</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt class="py-op">.</tt><tt class="py-name">statisticsdistribution</tt> <tt class="py-keyword">import</tt> <tt class="py-name">ErlangDistribution</tt> </tt>
+<a name="L58"></a><tt class="py-lineno">58</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt class="py-op">.</tt><tt class="py-name">statisticsdistribution</tt> <tt class="py-keyword">import</tt> <tt class="py-name">ExponentialDistribution</tt> </tt>
+<a name="L59"></a><tt class="py-lineno">59</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt class="py-op">.</tt><tt class="py-name">statisticsdistribution</tt> <tt class="py-keyword">import</tt> <tt class="py-name">FDistribution</tt> </tt>
+<a name="L60"></a><tt class="py-lineno">60</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt class="py-op">.</tt><tt class="py-name">statisticsdistribution</tt> <tt class="py-keyword">import</tt> <tt class="py-name">FrechetDistribution</tt> </tt>
+<a name="L61"></a><tt class="py-lineno">61</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt class="py-op">.</tt><tt class="py-name">statisticsdistribution</tt> <tt class="py-keyword">import</tt> <tt class="py-name">FurryDistribution</tt> </tt>
+<a name="L62"></a><tt class="py-lineno">62</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt class="py-op">.</tt><tt class="py-name">statisticsdistribution</tt> <tt class="py-keyword">import</tt> <tt class="py-name">GammaDistribution</tt> </tt>
+<a name="L63"></a><tt class="py-lineno">63</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt class="py-op">.</tt><tt class="py-name">statisticsdistribution</tt> <tt class="py-keyword">import</tt> <tt class="py-name">GeometricDistribution</tt> </tt>
+<a name="L64"></a><tt class="py-lineno">64</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt class="py-op">.</tt><tt class="py-name">statisticsdistribution</tt> <tt class="py-keyword">import</tt> <tt class="py-name">HypergeometricDistribution</tt> </tt>
+<a name="L65"></a><tt class="py-lineno">65</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt class="py-op">.</tt><tt class="py-name">statisticsdistribution</tt> <tt class="py-keyword">import</tt> <tt class="py-name">LogarithmicDistribution</tt> </tt>
+<a name="L66"></a><tt class="py-lineno">66</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt class="py-op">.</tt><tt class="py-name">statisticsdistribution</tt> <tt class="py-keyword">import</tt> <tt class="py-name">NormalDistribution</tt> </tt>
+<a name="L67"></a><tt class="py-lineno">67</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt class="py-op">.</tt><tt class="py-name">statisticsdistribution</tt> <tt class="py-keyword">import</tt> <tt class="py-name">PoissonDistribution</tt> </tt>
+<a name="L68"></a><tt class="py-lineno">68</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt class="py-op">.</tt><tt class="py-name">statisticsdistribution</tt> <tt class="py-keyword">import</tt> <tt class="py-name">SemicircularDistribution</tt> </tt>
+<a name="L69"></a><tt class="py-lineno">69</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt class="py-op">.</tt><tt class="py-name">statisticsdistribution</tt> <tt class="py-keyword">import</tt> <tt class="py-name">TDistribution</tt> </tt>
+<a name="L70"></a><tt class="py-lineno">70</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt class="py-op">.</tt><tt class="py-name">statisticsdistribution</tt> <tt class="py-keyword">import</tt> <tt class="py-name">TriangularDistribution</tt> </tt>
+<a name="L71"></a><tt class="py-lineno">71</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt class="py-op">.</tt><tt class="py-name">statisticsdistribution</tt> <tt class="py-keyword">import</tt> <tt class="py-name">UniformDistribution</tt> </tt>
+<a name="L72"></a><tt class="py-lineno">72</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt class="py-op">.</tt><tt class="py-name">statisticsdistribution</tt> <tt class="py-keyword">import</tt> <tt class="py-name">WeiBullDistribution</tt> </tt>
+<a name="L73"></a><tt class="py-lineno">73</tt>  <tt class="py-line"> </tt>
+<a name="L74"></a><tt class="py-lineno">74</tt>  <tt class="py-line"><tt class="py-comment"># Operational functions</tt> </tt>
+<a name="L75"></a><tt class="py-lineno">75</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt class="py-op">.</tt> <tt class="py-keyword">import</tt> <tt id="link-26" class="py-name" targets="Module copads.copads.entropy=copads.copads.entropy-module.html"><a title="copads.copads.entropy" class="py-name" href="#" onclick="return doclink('link-26', 'entropy', 'link-26');">entropy</a></tt> </tt>
+<a name="L76"></a><tt class="py-lineno">76</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt class="py-op">.</tt> <tt class="py-keyword">import</tt> <tt id="link-27" class="py-name" targets="Module copads.copads.hash=copads.copads.hash-module.html,Variable copads.copads.jigsaw.JigsawCore.hash=copads.copads.jigsaw.JigsawCore-class.html#hash"><a title="copads.copads.hash
+copads.copads.jigsaw.JigsawCore.hash" class="py-name" href="#" onclick="return doclink('link-27', 'hash', 'link-27');">hash</a></tt> </tt>
+<a name="L77"></a><tt class="py-lineno">77</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt class="py-op">.</tt> <tt class="py-keyword">import</tt> <tt class="py-name">hypothesis</tt> </tt>
+<a name="L78"></a><tt class="py-lineno">78</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt class="py-op">.</tt> <tt class="py-keyword">import</tt> <tt id="link-28" class="py-name" targets="Module copads.copads.nrpy=copads.copads.nrpy-module.html"><a title="copads.copads.nrpy" class="py-name" href="#" onclick="return doclink('link-28', 'nrpy', 'link-28');">nrpy</a></tt> </tt>
+<a name="L79"></a><tt class="py-lineno">79</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt class="py-op">.</tt> <tt class="py-keyword">import</tt> <tt id="link-29" class="py-name" targets="Module copads.copads.objectdistance=copads.copads.objectdistance-module.html"><a title="copads.copads.objectdistance" class="py-name" href="#" onclick="return doclink('link-29', 'objectdistance', 'link-29');">objectdistance</a></tt> </tt>
+<a name="L80"></a><tt class="py-lineno">80</tt>  <tt class="py-line"> </tt>
+<a name="L81"></a><tt class="py-lineno">81</tt>  <tt class="py-line"><tt class="py-comment"># Type-casting functions</tt> </tt>
+<a name="L82"></a><tt class="py-lineno">82</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt class="py-op">.</tt><tt id="link-30" class="py-name" targets="Module copads.copads.typecast=copads.copads.typecast-module.html"><a title="copads.copads.typecast" class="py-name" href="#" onclick="return doclink('link-30', 'typecast', 'link-30');">typecast</a></tt> <tt class="py-keyword">import</tt> <tt id="link-31" class="py-name" targets="Function copads.copads.typecast.tc_Dataframe_Series()=copads.copads.typecast-module.html#tc_Dataframe_Series"><a title="copads.copads.typecast.tc_Dataframe_Series" class="py-name" href="#" onclick="return doclink('link-31', 'tc_Dataframe_Series', 'link-31');">tc_Dataframe_Series</a></tt> </tt>
+<a name="L83"></a><tt class="py-lineno">83</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt class="py-op">.</tt><tt id="link-32" class="py-name"><a title="copads.copads.typecast" class="py-name" href="#" onclick="return doclink('link-32', 'typecast', 'link-30');">typecast</a></tt> <tt class="py-keyword">import</tt> <tt id="link-33" class="py-name" targets="Function copads.copads.typecast.tc_Dataframe_MultiDataframe()=copads.copads.typecast-module.html#tc_Dataframe_MultiDataframe"><a title="copads.copads.typecast.tc_Dataframe_MultiDataframe" class="py-name" href="#" onclick="return doclink('link-33', 'tc_Dataframe_MultiDataframe', 'link-33');">tc_Dataframe_MultiDataframe</a></tt> </tt>
+<a name="L84"></a><tt class="py-lineno">84</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt class="py-op">.</tt><tt id="link-34" class="py-name"><a title="copads.copads.typecast" class="py-name" href="#" onclick="return doclink('link-34', 'typecast', 'link-30');">typecast</a></tt> <tt class="py-keyword">import</tt> <tt id="link-35" class="py-name" targets="Function copads.copads.typecast.tc_List_Dictionary()=copads.copads.typecast-module.html#tc_List_Dictionary"><a title="copads.copads.typecast.tc_List_Dictionary" class="py-name" href="#" onclick="return doclink('link-35', 'tc_List_Dictionary', 'link-35');">tc_List_Dictionary</a></tt> </tt>
+<a name="L85"></a><tt class="py-lineno">85</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt class="py-op">.</tt><tt id="link-36" class="py-name"><a title="copads.copads.typecast" class="py-name" href="#" onclick="return doclink('link-36', 'typecast', 'link-30');">typecast</a></tt> <tt class="py-keyword">import</tt> <tt id="link-37" class="py-name" targets="Function copads.copads.typecast.tc_MultiDataframe_Dataframe()=copads.copads.typecast-module.html#tc_MultiDataframe_Dataframe"><a title="copads.copads.typecast.tc_MultiDataframe_Dataframe" class="py-name" href="#" onclick="return doclink('link-37', 'tc_MultiDataframe_Dataframe', 'link-37');">tc_MultiDataframe_Dataframe</a></tt> </tt>
+<a name="L86"></a><tt class="py-lineno">86</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt class="py-op">.</tt><tt id="link-38" class="py-name"><a title="copads.copads.typecast" class="py-name" href="#" onclick="return doclink('link-38', 'typecast', 'link-30');">typecast</a></tt> <tt class="py-keyword">import</tt> <tt id="link-39" class="py-name" targets="Function copads.copads.typecast.tc_Series_Dataframe()=copads.copads.typecast-module.html#tc_Series_Dataframe"><a title="copads.copads.typecast.tc_Series_Dataframe" class="py-name" href="#" onclick="return doclink('link-39', 'tc_Series_Dataframe', 'link-39');">tc_Series_Dataframe</a></tt> </tt>
+<a name="L87"></a><tt class="py-lineno">87</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt class="py-op">.</tt><tt id="link-40" class="py-name"><a title="copads.copads.typecast" class="py-name" href="#" onclick="return doclink('link-40', 'typecast', 'link-30');">typecast</a></tt> <tt class="py-keyword">import</tt> <tt id="link-41" class="py-name" targets="Function copads.copads.typecast.tc_Series_Dictionary()=copads.copads.typecast-module.html#tc_Series_Dictionary"><a title="copads.copads.typecast.tc_Series_Dictionary" class="py-name" href="#" onclick="return doclink('link-41', 'tc_Series_Dictionary', 'link-41');">tc_Series_Dictionary</a></tt> </tt>
+<a name="L88"></a><tt class="py-lineno">88</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt class="py-op">.</tt><tt id="link-42" class="py-name"><a title="copads.copads.typecast" class="py-name" href="#" onclick="return doclink('link-42', 'typecast', 'link-30');">typecast</a></tt> <tt class="py-keyword">import</tt> <tt id="link-43" class="py-name" targets="Function copads.copads.typecast.tc_Series_List()=copads.copads.typecast-module.html#tc_Series_List"><a title="copads.copads.typecast.tc_Series_List" class="py-name" href="#" onclick="return doclink('link-43', 'tc_Series_List', 'link-43');">tc_Series_List</a></tt> </tt>
+<a name="L89"></a><tt class="py-lineno">89</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt class="py-op">.</tt><tt id="link-44" class="py-name"><a title="copads.copads.typecast" class="py-name" href="#" onclick="return doclink('link-44', 'typecast', 'link-30');">typecast</a></tt> <tt class="py-keyword">import</tt> <tt id="link-45" class="py-name" targets="Function copads.copads.typecast.tc_Series_Vector()=copads.copads.typecast-module.html#tc_Series_Vector"><a title="copads.copads.typecast.tc_Series_Vector" class="py-name" href="#" onclick="return doclink('link-45', 'tc_Series_Vector', 'link-45');">tc_Series_Vector</a></tt> </tt>
+<a name="L90"></a><tt class="py-lineno">90</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt class="py-op">.</tt><tt id="link-46" class="py-name"><a title="copads.copads.typecast" class="py-name" href="#" onclick="return doclink('link-46', 'typecast', 'link-30');">typecast</a></tt> <tt class="py-keyword">import</tt> <tt id="link-47" class="py-name" targets="Function copads.copads.typecast.tc_Vector_List()=copads.copads.typecast-module.html#tc_Vector_List"><a title="copads.copads.typecast.tc_Vector_List" class="py-name" href="#" onclick="return doclink('link-47', 'tc_Vector_List', 'link-47');">tc_Vector_List</a></tt> </tt>
+<a name="L91"></a><tt class="py-lineno">91</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt class="py-op">.</tt><tt id="link-48" class="py-name"><a title="copads.copads.typecast" class="py-name" href="#" onclick="return doclink('link-48', 'typecast', 'link-30');">typecast</a></tt> <tt class="py-keyword">import</tt> <tt id="link-49" class="py-name" targets="Function copads.copads.typecast.tc_Vector_Dictionary()=copads.copads.typecast-module.html#tc_Vector_Dictionary"><a title="copads.copads.typecast.tc_Vector_Dictionary" class="py-name" href="#" onclick="return doclink('link-49', 'tc_Vector_Dictionary', 'link-49');">tc_Vector_Dictionary</a></tt> </tt>
+<a name="L92"></a><tt class="py-lineno">92</tt>  <tt class="py-line"> </tt><script type="text/javascript">
+<!--
+expandto(location.href);
+// -->
+</script>
+</pre>
+<br />
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th bgcolor="#70b0f0" class="navbar-select"
+          >&nbsp;&nbsp;&nbsp;Home&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            ><a class="navbar" target="_top" href="https://github.com/mauriceling/copads">https://github.com/mauriceling/copads</a></th>
+          </tr></table></th>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%%">
+  <tr>
+    <td align="left" class="footer">
+    Generated by Epydoc 3.0.1 on Sun Feb 25 20:14:32 2018
+    </td>
+    <td align="right" class="footer">
+      <a target="mainFrame" href="http://epydoc.sourceforge.net"
+        >http://epydoc.sourceforge.net</a>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  <!--
+  // Private objects are initially displayed (because if
+  // javascript is turned off then we want them to be
+  // visible); but by default, we want to hide them.  So hide
+  // them unless we have a cookie that says to show them.
+  checkCookie();
+  // -->
+</script>
+</body>
+</html>

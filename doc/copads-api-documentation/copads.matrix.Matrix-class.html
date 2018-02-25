@@ -1,0 +1,1089 @@
+<?xml version="1.0" encoding="ascii"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>copads.matrix.Matrix</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="copads-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            ><a class="navbar" target="_top" href="https://github.com/mauriceling/copads">https://github.com/mauriceling/copads</a></th>
+          </tr></table></th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <span class="breadcrumbs">
+        <a href="copads-module.html">Package&nbsp;copads</a> ::
+        <a href="copads.matrix-module.html">Module&nbsp;matrix</a> ::
+        Class&nbsp;Matrix
+      </span>
+    </td>
+    <td>
+      <table cellpadding="0" cellspacing="0">
+        <!-- hide/show private -->
+        <tr><td align="right"><span class="options">[<a href="javascript:void(0);" class="privatelink"
+    onclick="toggle_private();">hide&nbsp;private</a>]</span></td></tr>
+        <tr><td align="right"><span class="options"
+            >[<a href="frames.html" target="_top">frames</a
+            >]&nbsp;|&nbsp;<a href="copads.matrix.Matrix-class.html"
+            target="_top">no&nbsp;frames</a>]</span></td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<!-- ==================== CLASS DESCRIPTION ==================== -->
+<h1 class="epydoc">Class Matrix</h1><p class="nomargin-top"><span class="codelink"><a href="copads.matrix-pysrc.html#Matrix">source&nbsp;code</a></span></p>
+<p>A linear algebra matrix</p>
+  <p>This class defines a generic matrix and the basic matrix operations 
+  from linear algebra.  An instance of this class is a single matrix with 
+  particular values.</p>
+  <p>Arithmetic operations, trace, determinant, and minors are defined. 
+  This is a lightweight alternative to a numerical Python package for 
+  people who need to do basic linear algebra.</p>
+  <p>Vectors are implemented as 1xN and Nx1 matricies.  There is no 
+  separate vector class.  This implementation enforces the distinction 
+  between row and column vectors.</p>
+  <p>Indexing is zero-based, i.e. the upper left-hand corner of a matrix is
+  element (0,0), not element (1,1).</p>
+  <p>Matricies are stored as a list of lists, where the top level lists are
+  the rows and the sub-lists are the columns.  Because of the way Python 
+  handles list references, you have be careful when copying matrix objects.
+  If you have a matrix a, assign b=a, and then change values in b, you will
+  change values in a as well.  Matrix copying should be done with 
+  copy.deepcopy.</p>
+  <p>This implementation has no memory-saving optimization for sparse 
+  matricies.  A derived class may implement a more sophisticated storage 
+  method by overriding the __getitem__ and __setitem__ functions.</p>
+  <p>Determinants are taken by expanding by minors on the top row.  The 
+  private functions supplied for expansion by minors are more generic than 
+  what is needed by this implementation.  They may be used by a derived 
+  class that wishes to do more efficient expansion of sparse matricies.</p>
+  <p>By default, Matrix elements are members of the complex field, but if 
+  you want to perform linear algebra on something other than numbers you 
+  may redefine Matrix.null_element, Matrix.identity_element, and 
+  Matrix.inverse_element and override the is_scalar_element function.</p>
+  <p>References George Arfken, &quot;Mathematical Methods for 
+  Physicists&quot;, 3rd ed. San Diego. Academic Press Inc. (1985)</p>
+  <p>Adapted from: 
+  http://aspn.activestate.com/ASPN/Cookbook/Python/Recipe/189971 Original 
+  author: Bill McNeill &lt;billmcn@speakeasy.net&gt;</p>
+  <p>Maintainer: Maurice H.T. Ling &lt;mauriceling@acm.org&gt; Copyright 
+  (c) 2005 Maurice H.T. Ling &lt;mauriceling@acm.org&gt; Date: 1st May 
+  2005</p>
+
+<!-- ==================== INSTANCE METHODS ==================== -->
+<a name="section-InstanceMethods"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Instance Methods</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-InstanceMethods"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="copads.matrix.Matrix-class.html#__init__" class="summary-sig-name">__init__</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">*args</span>)</span><br />
+      Matrix constructor</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="copads.matrix-pysrc.html#Matrix.__init__">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="copads.matrix.Matrix-class.html#createNullMatrix" class="summary-sig-name">createNullMatrix</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">row</span>,
+        <span class="summary-sig-arg">col</span>)</span><br />
+      Create a matrix using the null value</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="copads.matrix-pysrc.html#Matrix.createNullMatrix">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="__str__"></a><span class="summary-sig-name">__str__</span>(<span class="summary-sig-arg">self</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="copads.matrix-pysrc.html#Matrix.__str__">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="__cmp__"></a><span class="summary-sig-name">__cmp__</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">other</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="copads.matrix-pysrc.html#Matrix.__cmp__">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="copads.matrix.Matrix-class.html#__getitem__" class="summary-sig-name">__getitem__</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">(row, col)</span>)</span><br />
+      The value at (row, col)</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="copads.matrix-pysrc.html#Matrix.__getitem__">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="copads.matrix.Matrix-class.html#__setitem__" class="summary-sig-name">__setitem__</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">(row, col)</span>,
+        <span class="summary-sig-arg">value</span>)</span><br />
+      Sets the value at (row, col)</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="copads.matrix-pysrc.html#Matrix.__setitem__">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="rows"></a><span class="summary-sig-name">rows</span>(<span class="summary-sig-arg">self</span>)</span><br />
+      The number of rows in the matrix</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="copads.matrix-pysrc.html#Matrix.rows">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="cols"></a><span class="summary-sig-name">cols</span>(<span class="summary-sig-arg">self</span>)</span><br />
+      The number of columns in the matrix</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="copads.matrix-pysrc.html#Matrix.cols">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="row"></a><span class="summary-sig-name">row</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">i</span>)</span><br />
+      The ith row of the matrix</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="copads.matrix-pysrc.html#Matrix.row">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="col"></a><span class="summary-sig-name">col</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">j</span>)</span><br />
+      The jth row of the matrix</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="copads.matrix-pysrc.html#Matrix.col">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="__add__"></a><span class="summary-sig-name">__add__</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">other</span>)</span><br />
+      Add matrix self + other</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="copads.matrix-pysrc.html#Matrix.__add__">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="__neg__"></a><span class="summary-sig-name">__neg__</span>(<span class="summary-sig-arg">self</span>)</span><br />
+      Negate the current matrix</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="copads.matrix-pysrc.html#Matrix.__neg__">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="__sub__"></a><span class="summary-sig-name">__sub__</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">other</span>)</span><br />
+      Subtract matrix self - other</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="copads.matrix-pysrc.html#Matrix.__sub__">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="copads.matrix.Matrix-class.html#__mul__" class="summary-sig-name">__mul__</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">other</span>)</span><br />
+      Multiply matrix self*other</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="copads.matrix-pysrc.html#Matrix.__mul__">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="copads.matrix.Matrix-class.html#__rmul__" class="summary-sig-name">__rmul__</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">other</span>)</span><br />
+      Multiply other*self</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="copads.matrix-pysrc.html#Matrix.__rmul__">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="copads.matrix.Matrix-class.html#scalarMultiply" class="summary-sig-name">scalarMultiply</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">scalar</span>)</span><br />
+      Multiply the matrix by a scalar value.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="copads.matrix-pysrc.html#Matrix.scalarMultiply">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="copads.matrix.Matrix-class.html#matrixMultiply" class="summary-sig-name">matrixMultiply</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">other</span>)</span><br />
+      Multiply the matrix by another matrix.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="copads.matrix-pysrc.html#Matrix.matrixMultiply">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="isRowVector"></a><span class="summary-sig-name">isRowVector</span>(<span class="summary-sig-arg">self</span>)</span><br />
+      Is the matrix a row vector?</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="copads.matrix-pysrc.html#Matrix.isRowVector">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="isColumnVector"></a><span class="summary-sig-name">isColumnVector</span>(<span class="summary-sig-arg">self</span>)</span><br />
+      Is the matrix a column vector?</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="copads.matrix-pysrc.html#Matrix.isColumnVector">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="isSquare"></a><span class="summary-sig-name">isSquare</span>(<span class="summary-sig-arg">self</span>)</span><br />
+      Is the matrix square?</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="copads.matrix-pysrc.html#Matrix.isSquare">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="transpose"></a><span class="summary-sig-name">transpose</span>(<span class="summary-sig-arg">self</span>)</span><br />
+      The transpose of the matrix</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="copads.matrix-pysrc.html#Matrix.transpose">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="trace"></a><span class="summary-sig-name">trace</span>(<span class="summary-sig-arg">self</span>)</span><br />
+      The trace of the matrix</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="copads.matrix-pysrc.html#Matrix.trace">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="determinant"></a><span class="summary-sig-name">determinant</span>(<span class="summary-sig-arg">self</span>)</span><br />
+      The determinant of the matrix</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="copads.matrix-pysrc.html#Matrix.determinant">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="copads.matrix.Matrix-class.html#expandByMinorsOnRow" class="summary-sig-name">expandByMinorsOnRow</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">row</span>)</span><br />
+      Calculates the determinant by expansion of minors</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="copads.matrix-pysrc.html#Matrix.expandByMinorsOnRow">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="copads.matrix.Matrix-class.html#expandByMinorsOnColumn" class="summary-sig-name">expandByMinorsOnColumn</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">col</span>)</span><br />
+      Calculates the determinant by expansion of minors</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="copads.matrix-pysrc.html#Matrix.expandByMinorsOnColumn">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="copads.matrix.Matrix-class.html#minor" class="summary-sig-name">minor</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">i</span>,
+        <span class="summary-sig-arg">j</span>)</span><br />
+      A minor of the matrix</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="copads.matrix-pysrc.html#Matrix.minor">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="minorMatrix"></a><span class="summary-sig-name">minorMatrix</span>(<span class="summary-sig-arg">self</span>)</span><br />
+      Calculates minor matrix</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="copads.matrix-pysrc.html#Matrix.minorMatrix">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="adjoint"></a><span class="summary-sig-name">adjoint</span>(<span class="summary-sig-arg">self</span>)</span><br />
+      Calculates adjoint matrix</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="copads.matrix-pysrc.html#Matrix.adjoint">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="inverse"></a><span class="summary-sig-name">inverse</span>(<span class="summary-sig-arg">self</span>)</span><br />
+      Calculates inverse matrix</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="copads.matrix-pysrc.html#Matrix.inverse">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="copads.matrix.Matrix-class.html#vectorInnerProduct" class="summary-sig-name">vectorInnerProduct</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">a</span>,
+        <span class="summary-sig-arg">b</span>)</span><br />
+      Takes the inner product of vectors a and b</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="copads.matrix-pysrc.html#Matrix.vectorInnerProduct">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="copads.matrix.Matrix-class.html#isScalarElement" class="summary-sig-name">isScalarElement</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">x</span>)</span><br />
+      Is x a scalar</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="copads.matrix-pysrc.html#Matrix.isScalarElement">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+</table>
+<!-- ==================== CLASS VARIABLES ==================== -->
+<a name="section-ClassVariables"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Class Variables</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-ClassVariables"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="null_element"></a><span class="summary-name">null_element</span> = <code title="0">0</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="identity_element"></a><span class="summary-name">identity_element</span> = <code title="1">1</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="inverse_element"></a><span class="summary-name">inverse_element</span> = <code title="-1">-1</code>
+    </td>
+  </tr>
+</table>
+<!-- ==================== METHOD DETAILS ==================== -->
+<a name="section-MethodDetails"></a>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Method Details</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-MethodDetails"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+</table>
+<a name="__init__"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">__init__</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">*args</span>)</span>
+    <br /><em class="fname">(Constructor)</em>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="copads.matrix-pysrc.html#Matrix.__init__">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Matrix constructor</p>
+  <p>A matrix can be created in three ways.</p>
+  <ol start="1">
+    <li>
+      A single integer argument is supplied. The constructor creates a null
+      square matrix of that size.  For example
+      <p>Matrix(2)</p>
+      <p>creates the following matrix</p>
+      <p>0    0 0    0</p>
+    </li>
+    <li>
+      Two integer arguments are supplied.  The constructor creates a null 
+      matrix of size first argument x second argument.  For example
+      <p>Matrix(2, 3)</p>
+      <p>creates the following matrix</p>
+      <p>0    0    0 0    0    0</p>
+    </li>
+    <li>
+      A list of lists is supplied.  It represents a set of initial matrix 
+      values.  Each element is a row and each sub-list is a column. For 
+      example
+      <p>Matrix([[1,2,3], [4,5,6], [7,8,9]])</p>
+      <p>creates the following matrix</p>
+      <p>1    2    3 4    5    6 7    8    9</p>
+    </li>
+  </ol>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="createNullMatrix"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">createNullMatrix</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">row</span>,
+        <span class="sig-arg">col</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="copads.matrix-pysrc.html#Matrix.createNullMatrix">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Create a matrix using the null value</p>
+  <p>This is a private function called by __init__.</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="__getitem__"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">__getitem__</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">(row, col)</span>)</span>
+    <br /><em class="fname">(Indexing operator)</em>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="copads.matrix-pysrc.html#Matrix.__getitem__">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>The value at (row, col)</p>
+  <p>For example, to get the value of element 1,3 say</p>
+  <p>m[(1,3)]</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="__setitem__"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">__setitem__</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">(row, col)</span>,
+        <span class="sig-arg">value</span>)</span>
+    <br /><em class="fname">(Index assignment operator)</em>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="copads.matrix-pysrc.html#Matrix.__setitem__">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Sets the value at (row, col)</p>
+  <p>For example, to set the value of element 1,3 to 5 say</p>
+  <p>m[(1,3)] = 5</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="__mul__"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">__mul__</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">other</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="copads.matrix-pysrc.html#Matrix.__mul__">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Multiply matrix self*other</p>
+  <p>other can be another matrix or a scalar.</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="__rmul__"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">__rmul__</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">other</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="copads.matrix-pysrc.html#Matrix.__rmul__">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Multiply other*self</p>
+  <p>This is only called if other.__add__ is not defined, so assume that 
+  other is a scalar.</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="scalarMultiply"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">scalarMultiply</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">scalar</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="copads.matrix-pysrc.html#Matrix.scalarMultiply">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Multiply the matrix by a scalar value.</p>
+  <p>This is a private function called by __mul__ and __rmul__.</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="matrixMultiply"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">matrixMultiply</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">other</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="copads.matrix-pysrc.html#Matrix.matrixMultiply">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Multiply the matrix by another matrix.</p>
+  <p>This is a private function called by __mul__.</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="expandByMinorsOnRow"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">expandByMinorsOnRow</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">row</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="copads.matrix-pysrc.html#Matrix.expandByMinorsOnRow">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Calculates the determinant by expansion of minors</p>
+  <p>This function returns the determinant of the matrix by doing an 
+  expansion of minors on the specified row.</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="expandByMinorsOnColumn"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">expandByMinorsOnColumn</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">col</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="copads.matrix-pysrc.html#Matrix.expandByMinorsOnColumn">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Calculates the determinant by expansion of minors</p>
+  <p>This function returns the determinant of the matrix by doing an 
+  expansion of minors on the specified column.</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="minor"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">minor</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">i</span>,
+        <span class="sig-arg">j</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="copads.matrix-pysrc.html#Matrix.minor">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>A minor of the matrix</p>
+  <p>This function returns the minor given by striking out row i and column
+  j of the matrix.</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="vectorInnerProduct"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">vectorInnerProduct</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">a</span>,
+        <span class="sig-arg">b</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="copads.matrix-pysrc.html#Matrix.vectorInnerProduct">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Takes the inner product of vectors a and b</p>
+  <p>a and b are lists. This is a private function called by 
+  matrix_multiply.</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="isScalarElement"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">isScalarElement</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">x</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="copads.matrix-pysrc.html#Matrix.isScalarElement">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Is x a scalar</p>
+  <p>By default a scalar is an element in the complex number field. A class
+  that wants to perform linear algebra on things other than numbers may 
+  override this function.</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<br />
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="copads-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            ><a class="navbar" target="_top" href="https://github.com/mauriceling/copads">https://github.com/mauriceling/copads</a></th>
+          </tr></table></th>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%%">
+  <tr>
+    <td align="left" class="footer">
+    Generated by Epydoc 3.0.1 on Tue May 31 13:09:13 2016
+    </td>
+    <td align="right" class="footer">
+      <a target="mainFrame" href="http://epydoc.sourceforge.net"
+        >http://epydoc.sourceforge.net</a>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  <!--
+  // Private objects are initially displayed (because if
+  // javascript is turned off then we want them to be
+  // visible); but by default, we want to hide them.  So hide
+  // them unless we have a cookie that says to show them.
+  checkCookie();
+  // -->
+</script>
+</body>
+</html>

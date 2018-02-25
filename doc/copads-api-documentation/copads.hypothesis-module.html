@@ -1,0 +1,2620 @@
+<?xml version="1.0" encoding="ascii"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>copads.hypothesis</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="copads-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            ><a class="navbar" target="_top" href="https://github.com/mauriceling/copads">https://github.com/mauriceling/copads</a></th>
+          </tr></table></th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <span class="breadcrumbs">
+        <a href="copads-module.html">Package&nbsp;copads</a> ::
+        Module&nbsp;hypothesis
+      </span>
+    </td>
+    <td>
+      <table cellpadding="0" cellspacing="0">
+        <!-- hide/show private -->
+        <tr><td align="right"><span class="options">[<a href="javascript:void(0);" class="privatelink"
+    onclick="toggle_private();">hide&nbsp;private</a>]</span></td></tr>
+        <tr><td align="right"><span class="options"
+            >[<a href="frames.html" target="_top">frames</a
+            >]&nbsp;|&nbsp;<a href="copads.hypothesis-module.html"
+            target="_top">no&nbsp;frames</a>]</span></td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<!-- ==================== MODULE DESCRIPTION ==================== -->
+<h1 class="epydoc">Module hypothesis</h1><p class="nomargin-top"><span class="codelink"><a href="copads.hypothesis-pysrc.html">source&nbsp;code</a></span></p>
+<p>Statistical Hypothesis Testing Routines.</p>
+  <p>Each routine will Returns a 5-element list</p>
+  <ul>
+    <li>
+      [left result, left critical, statistic, right critical, right result]
+    </li>
+  </ul>
+  <p>where</p>
+  <ul>
+    <li>
+      left result = True (statistic in lower critical region) or False 
+      (statistic not in lower critical region)
+    </li>
+    <li>
+      left critical = lower critical value generated from 1 - confidence
+    </li>
+    <li>
+      statistic = calculated statistic value
+    </li>
+    <li>
+      right critical = upper critical value generated from confidence
+    </li>
+    <li>
+      right result = True (statistic in upper critical region) or False 
+      (statistic not in upper critical region)
+    </li>
+  </ul>
+  <p>References</p>
+  <ul>
+    <li>
+      Test 1-100: Gopal K. Kanji. 2006. 100 Statistical Tests, 3rd edition.
+      Sage Publications.
+    </li>
+  </ul>
+  <p>Copyright (c) Maurice H.T. Ling &lt;mauriceling@acm.org&gt;</p>
+  <p>Date created: 1st September 2008</p>
+
+<!-- ==================== FUNCTIONS ==================== -->
+<a name="section-Functions"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Functions</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-Functions"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="copads.hypothesis-module.html#test" class="summary-sig-name">test</a>(<span class="summary-sig-arg">statistic</span>,
+        <span class="summary-sig-arg">distribution</span>,
+        <span class="summary-sig-arg">confidence</span>)</span><br />
+      Generates the critical value from distribution and confidence value 
+      using the distribution's inverseCDF method and performs 1-tailed and 
+      2-tailed test by comparing the calculated statistic with the critical
+      value.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="copads.hypothesis-pysrc.html#test">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="copads.hypothesis-module.html#Z1Mean1Variance" class="summary-sig-name">Z1Mean1Variance</a>(<span class="summary-sig-arg">smean</span>,
+        <span class="summary-sig-arg">pmean</span>,
+        <span class="summary-sig-arg">pvar</span>,
+        <span class="summary-sig-arg">ssize</span>,
+        <span class="summary-sig-arg">confidence</span>)</span><br />
+      Test 1: Z-test for a population mean (variance known)</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="copads.hypothesis-pysrc.html#Z1Mean1Variance">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="copads.hypothesis-module.html#Z2Mean1Variance" class="summary-sig-name">Z2Mean1Variance</a>(<span class="summary-sig-arg">smean1</span>,
+        <span class="summary-sig-arg">smean2</span>,
+        <span class="summary-sig-arg">pvar</span>,
+        <span class="summary-sig-arg">ssize1</span>,
+        <span class="summary-sig-arg">ssize2</span>,
+        <span class="summary-sig-arg">confidence</span>,
+        <span class="summary-sig-arg">pmean1</span>=<span class="summary-sig-default">0.0</span>,
+        <span class="summary-sig-arg">pmean2</span>=<span class="summary-sig-default">0.0</span>)</span><br />
+      Test 2: Z-test for two population means (variances known and equal)</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="copads.hypothesis-pysrc.html#Z2Mean1Variance">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="copads.hypothesis-module.html#Z2Mean2Variance" class="summary-sig-name">Z2Mean2Variance</a>(<span class="summary-sig-arg">smean1</span>,
+        <span class="summary-sig-arg">smean2</span>,
+        <span class="summary-sig-arg">pvar1</span>,
+        <span class="summary-sig-arg">pvar2</span>,
+        <span class="summary-sig-arg">ssize1</span>,
+        <span class="summary-sig-arg">ssize2</span>,
+        <span class="summary-sig-arg">confidence</span>,
+        <span class="summary-sig-arg">pmean1</span>=<span class="summary-sig-default">0.0</span>,
+        <span class="summary-sig-arg">pmean2</span>=<span class="summary-sig-default">0.0</span>)</span><br />
+      Test 3: Z-test for two population means (variances known and unequal)</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="copads.hypothesis-pysrc.html#Z2Mean2Variance">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="copads.hypothesis-module.html#Z1Proportion" class="summary-sig-name">Z1Proportion</a>(<span class="summary-sig-arg">spro</span>,
+        <span class="summary-sig-arg">ppro</span>,
+        <span class="summary-sig-arg">ssize</span>,
+        <span class="summary-sig-arg">confidence</span>)</span><br />
+      Test 4: Z-test for a proportion (binomial distribution)</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="copads.hypothesis-pysrc.html#Z1Proportion">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="copads.hypothesis-module.html#Z2Proportion" class="summary-sig-name">Z2Proportion</a>(<span class="summary-sig-arg">spro1</span>,
+        <span class="summary-sig-arg">spro2</span>,
+        <span class="summary-sig-arg">ssize1</span>,
+        <span class="summary-sig-arg">ssize2</span>,
+        <span class="summary-sig-arg">confidence</span>)</span><br />
+      Test 5: Z-test for the equality of two proportions (binomial 
+      distribution) To investigate the assumption that the proportions of 
+      elements from two populations are equal, based on two samples, one 
+      from each population.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="copads.hypothesis-pysrc.html#Z2Proportion">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="copads.hypothesis-module.html#Z2Count" class="summary-sig-name">Z2Count</a>(<span class="summary-sig-arg">time1</span>,
+        <span class="summary-sig-arg">time2</span>,
+        <span class="summary-sig-arg">count1</span>,
+        <span class="summary-sig-arg">count2</span>,
+        <span class="summary-sig-arg">confidence</span>)</span><br />
+      Test 6: Z-test for comparing two counts (Poisson distribution)</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="copads.hypothesis-pysrc.html#Z2Count">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="copads.hypothesis-module.html#t1Mean" class="summary-sig-name">t1Mean</a>(<span class="summary-sig-arg">smean</span>,
+        <span class="summary-sig-arg">pmean</span>,
+        <span class="summary-sig-arg">svar</span>,
+        <span class="summary-sig-arg">ssize</span>,
+        <span class="summary-sig-arg">confidence</span>)</span><br />
+      Test 7: t-test for a population mean (population variance unknown)</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="copads.hypothesis-pysrc.html#t1Mean">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="copads.hypothesis-module.html#t2Mean2EqualVariance" class="summary-sig-name">t2Mean2EqualVariance</a>(<span class="summary-sig-arg">smean1</span>,
+        <span class="summary-sig-arg">smean2</span>,
+        <span class="summary-sig-arg">svar1</span>,
+        <span class="summary-sig-arg">svar2</span>,
+        <span class="summary-sig-arg">ssize1</span>,
+        <span class="summary-sig-arg">ssize2</span>,
+        <span class="summary-sig-arg">confidence</span>,
+        <span class="summary-sig-arg">pmean1</span>=<span class="summary-sig-default">0.0</span>,
+        <span class="summary-sig-arg">pmean2</span>=<span class="summary-sig-default">0.0</span>)</span><br />
+      Test 8: t-test for two population means (population variance unknown 
+      but equal)</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="copads.hypothesis-pysrc.html#t2Mean2EqualVariance">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="copads.hypothesis-module.html#t2Mean2UnequalVariance" class="summary-sig-name">t2Mean2UnequalVariance</a>(<span class="summary-sig-arg">smean1</span>,
+        <span class="summary-sig-arg">smean2</span>,
+        <span class="summary-sig-arg">svar1</span>,
+        <span class="summary-sig-arg">svar2</span>,
+        <span class="summary-sig-arg">ssize1</span>,
+        <span class="summary-sig-arg">ssize2</span>,
+        <span class="summary-sig-arg">confidence</span>,
+        <span class="summary-sig-arg">pmean1</span>=<span class="summary-sig-default">0.0</span>,
+        <span class="summary-sig-arg">pmean2</span>=<span class="summary-sig-default">0.0</span>)</span><br />
+      Test 9: t-test for two population means (population variance unknown 
+      and unequal)</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="copads.hypothesis-pysrc.html#t2Mean2UnequalVariance">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="copads.hypothesis-module.html#tPaired" class="summary-sig-name">tPaired</a>(<span class="summary-sig-arg">smean1</span>,
+        <span class="summary-sig-arg">smean2</span>,
+        <span class="summary-sig-arg">svar</span>,
+        <span class="summary-sig-arg">ssize</span>,
+        <span class="summary-sig-arg">confidence</span>)</span><br />
+      Test 10: t-test for two population means (method of paired 
+      comparisons)</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="copads.hypothesis-pysrc.html#tPaired">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="copads.hypothesis-module.html#tRegressionCoefficient" class="summary-sig-name">tRegressionCoefficient</a>(<span class="summary-sig-arg">variancex</span>,
+        <span class="summary-sig-arg">varianceyx</span>,
+        <span class="summary-sig-arg">b</span>,
+        <span class="summary-sig-arg">ssize</span>,
+        <span class="summary-sig-arg">confidence</span>)</span><br />
+      Test 11: t-test of a regression coefficient</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="copads.hypothesis-pysrc.html#tRegressionCoefficient">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="copads.hypothesis-module.html#tPearsonCorrelation" class="summary-sig-name">tPearsonCorrelation</a>(<span class="summary-sig-arg">r</span>,
+        <span class="summary-sig-arg">ssize</span>,
+        <span class="summary-sig-arg">confidence</span>)</span><br />
+      Test 12: t-test of a correlation coefficient</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="copads.hypothesis-pysrc.html#tPearsonCorrelation">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="copads.hypothesis-module.html#ZPearsonCorrelation" class="summary-sig-name">ZPearsonCorrelation</a>(<span class="summary-sig-arg">sr</span>,
+        <span class="summary-sig-arg">pr</span>,
+        <span class="summary-sig-arg">ssize</span>,
+        <span class="summary-sig-arg">confidence</span>)</span><br />
+      Test 13: Z-test of a correlation coefficient</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="copads.hypothesis-pysrc.html#ZPearsonCorrelation">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="copads.hypothesis-module.html#Z2PearsonCorrelation" class="summary-sig-name">Z2PearsonCorrelation</a>(<span class="summary-sig-arg">r1</span>,
+        <span class="summary-sig-arg">r2</span>,
+        <span class="summary-sig-arg">ssize1</span>,
+        <span class="summary-sig-arg">ssize2</span>,
+        <span class="summary-sig-arg">confidence</span>)</span><br />
+      Test 14: Z-test for two correlation coefficients</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="copads.hypothesis-pysrc.html#Z2PearsonCorrelation">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="copads.hypothesis-module.html#ChiSquarePopVar" class="summary-sig-name">ChiSquarePopVar</a>(<span class="summary-sig-arg">values</span>,
+        <span class="summary-sig-arg">ssize</span>,
+        <span class="summary-sig-arg">pv</span>,
+        <span class="summary-sig-arg">confidence</span>=<span class="summary-sig-default">0.95</span>)</span><br />
+      Test 15: Chi-square test for a population variance</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="copads.hypothesis-pysrc.html#ChiSquarePopVar">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="copads.hypothesis-module.html#FVarianceRatio" class="summary-sig-name">FVarianceRatio</a>(<span class="summary-sig-arg">var1</span>,
+        <span class="summary-sig-arg">var2</span>,
+        <span class="summary-sig-arg">ssize1</span>,
+        <span class="summary-sig-arg">ssize2</span>,
+        <span class="summary-sig-arg">confidence</span>)</span><br />
+      Test 16: F-test for two population variances (variance ratio test)</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="copads.hypothesis-pysrc.html#FVarianceRatio">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="copads.hypothesis-module.html#F2CorrelatedObs" class="summary-sig-name">F2CorrelatedObs</a>(<span class="summary-sig-arg">r</span>,
+        <span class="summary-sig-arg">var1</span>,
+        <span class="summary-sig-arg">var2</span>,
+        <span class="summary-sig-arg">ssize1</span>,
+        <span class="summary-sig-arg">ssize2</span>,
+        <span class="summary-sig-arg">confidence</span>)</span><br />
+      Test 17: F-test for two population variances (with correlated 
+      observations)</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="copads.hypothesis-pysrc.html#F2CorrelatedObs">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="copads.hypothesis-module.html#ZCorrProportion" class="summary-sig-name">ZCorrProportion</a>(<span class="summary-sig-arg">ssize</span>,
+        <span class="summary-sig-arg">ny</span>,
+        <span class="summary-sig-arg">yn</span>,
+        <span class="summary-sig-arg">confidence</span>)</span><br />
+      Test 23: Z-test for correlated proportions</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="copads.hypothesis-pysrc.html#ZCorrProportion">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="copads.hypothesis-module.html#Chisq2Variance" class="summary-sig-name">Chisq2Variance</a>(<span class="summary-sig-arg">ssize</span>,
+        <span class="summary-sig-arg">svar</span>,
+        <span class="summary-sig-arg">pvar</span>,
+        <span class="summary-sig-arg">confidence</span>)</span><br />
+      Test 24: Chi-square test for an assumed population variance</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="copads.hypothesis-pysrc.html#Chisq2Variance">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="copads.hypothesis-module.html#F2Count" class="summary-sig-name">F2Count</a>(<span class="summary-sig-arg">count1</span>,
+        <span class="summary-sig-arg">count2</span>,
+        <span class="summary-sig-arg">confidence</span>,
+        <span class="summary-sig-arg">time1</span>=<span class="summary-sig-default">0</span>,
+        <span class="summary-sig-arg">time2</span>=<span class="summary-sig-default">0</span>,
+        <span class="summary-sig-arg">repeat</span>=<span class="summary-sig-default">False</span>)</span><br />
+      Test 25: F-test for two counts (Poisson distribution)</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="copads.hypothesis-pysrc.html#F2Count">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="copads.hypothesis-module.html#ChisqFit" class="summary-sig-name">ChisqFit</a>(<span class="summary-sig-arg">observed</span>,
+        <span class="summary-sig-arg">expected</span>,
+        <span class="summary-sig-arg">confidence</span>)</span><br />
+      Test 37: Chi-square test for goodness of fit</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="copads.hypothesis-pysrc.html#ChisqFit">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="copads.hypothesis-module.html#tx2testofKcounts" class="summary-sig-name">tx2testofKcounts</a>(<span class="summary-sig-arg">T</span>,
+        <span class="summary-sig-arg">V</span>,
+        <span class="summary-sig-arg">confidence</span>)</span><br />
+      Test 38: The x2-test for compatibility of K counts</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="copads.hypothesis-pysrc.html#tx2testofKcounts">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="copads.hypothesis-module.html#Chisq2x2" class="summary-sig-name">Chisq2x2</a>(<span class="summary-sig-arg">s1</span>,
+        <span class="summary-sig-arg">s2</span>,
+        <span class="summary-sig-arg">ssize</span>,
+        <span class="summary-sig-arg">confidence</span>)</span><br />
+      Test 40: Chi-square test for consistency in 2x2 table</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="copads.hypothesis-pysrc.html#Chisq2x2">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="copads.hypothesis-module.html#ChisquareKx2table" class="summary-sig-name">ChisquareKx2table</a>(<span class="summary-sig-arg">c1</span>,
+        <span class="summary-sig-arg">c2</span>,
+        <span class="summary-sig-arg">k</span>,
+        <span class="summary-sig-arg">confidence</span>)</span><br />
+      Test 41: The x2-test for consistency in a K x 2 table</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="copads.hypothesis-pysrc.html#ChisquareKx2table">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="copads.hypothesis-module.html#Chisquare2xKtable" class="summary-sig-name">Chisquare2xKtable</a>(<span class="summary-sig-arg">s1</span>,
+        <span class="summary-sig-arg">s2</span>,
+        <span class="summary-sig-arg">k</span>,
+        <span class="summary-sig-arg">confidence</span>)</span><br />
+      Test 43: The x2-test for consistency in a 2 x K table</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="copads.hypothesis-pysrc.html#Chisquare2xKtable">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="copads.hypothesis-module.html#MedianTestfor2Pop" class="summary-sig-name">MedianTestfor2Pop</a>(<span class="summary-sig-arg">s1</span>=<span class="summary-sig-default"><code class="variable-group">(</code>9<code class="variable-op">, </code>6<code class="variable-group">)</code></span>,
+        <span class="summary-sig-arg">s2</span>=<span class="summary-sig-default"><code class="variable-group">(</code>6<code class="variable-op">, </code>9<code class="variable-group">)</code></span>,
+        <span class="summary-sig-arg">confidence</span>=<span class="summary-sig-default">0.95</span>)</span><br />
+      Test 50: The median test of two populations</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="copads.hypothesis-pysrc.html#MedianTestfor2Pop">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="copads.hypothesis-module.html#SpearmanCorrelation" class="summary-sig-name">SpearmanCorrelation</a>(<span class="summary-sig-arg">ssize</span>,
+        <span class="summary-sig-arg">confidence</span>,
+        <span class="summary-sig-arg">R</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">series1</span>=<span class="summary-sig-default"><code class="variable-group">[</code><code class="variable-group">]</code></span>,
+        <span class="summary-sig-arg">series2</span>=<span class="summary-sig-default"><code class="variable-group">[</code><code class="variable-group">]</code></span>)</span><br />
+      Test 58: Spearman rank correlation test (paired observations) To 
+      investigate the significance of the correlation between two series of
+      observations obtained in pairs.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="copads.hypothesis-pysrc.html#SpearmanCorrelation">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="copads.hypothesis-module.html#ZtestLogOddsRatio" class="summary-sig-name">ZtestLogOddsRatio</a>(<span class="summary-sig-arg">group1</span>,
+        <span class="summary-sig-arg">group2</span>,
+        <span class="summary-sig-arg">confidence</span>)</span><br />
+      Test 84: Z-test for comparing sequential contingencies acoss two 
+      groups using the 'log odds ratio'</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="copads.hypothesis-pysrc.html#ZtestLogOddsRatio">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+</table>
+<!-- ==================== VARIABLES ==================== -->
+<a name="section-Variables"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Variables</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-Variables"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="BACKHOUSE"></a><span class="summary-name">BACKHOUSE</span> = <code title="1.45607494858">1.45607494858</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="CFRACT"></a><span class="summary-name">CFRACT</span> = <code title="1.0306408341">1.0306408341</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="CGOLD"></a><span class="summary-name">CGOLD</span> = <code title="0.38196601125">0.38196601125</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="FRODA"></a><span class="summary-name">FRODA</span> = <code title="6.58088599102">6.58088599102</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="GAMMA"></a><span class="summary-name">GAMMA</span> = <code title="0.577215664902">0.577215664902</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="GOLD"></a><span class="summary-name">GOLD</span> = <code title="1.61803398875">1.61803398875</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="GOLOMB"></a><span class="summary-name">GOLOMB</span> = <code title="0.624329988544">0.624329988544</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="INV2PI"></a><span class="summary-name">INV2PI</span> = <code title="0.159154943092">0.159154943092</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="INVLN10"></a><span class="summary-name">INVLN10</span> = <code title="0.434294481903">0.434294481903</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="INVLN2"></a><span class="summary-name">INVLN2</span> = <code title="1.44269504089">1.44269504089</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="INVPI180"></a><span class="summary-name">INVPI180</span> = <code title="57.2957795131">57.2957795131</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="INVSQRT2PI"></a><span class="summary-name">INVSQRT2PI</span> = <code title="0.398942280401">0.398942280401</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="LEHMER"></a><span class="summary-name">LEHMER</span> = <code title="0.592632718292">0.592632718292</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="LENGYEL"></a><span class="summary-name">LENGYEL</span> = <code title="1.09868580553">1.09868580553</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="LN10"></a><span class="summary-name">LN10</span> = <code title="2.30258509299">2.30258509299</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="LN2"></a><span class="summary-name">LN2</span> = <code title="0.69314718056">0.69314718056</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="LNPI"></a><span class="summary-name">LNPI</span> = <code title="1.14472988585">1.14472988585</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="PARIS"></a><span class="summary-name">PARIS</span> = <code title="1.09864196439">1.09864196439</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="PI"></a><span class="summary-name">PI</span> = <code title="3.14159265359">3.14159265359</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="PI180"></a><span class="summary-name">PI180</span> = <code title="0.0174532925199">0.0174532925199</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="PI2"></a><span class="summary-name">PI2</span> = <code title="6.28318530718">6.28318530718</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="PIDIV2"></a><span class="summary-name">PIDIV2</span> = <code title="1.57079632679">1.57079632679</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="PORTER"></a><span class="summary-name">PORTER</span> = <code title="1.46707807943">1.46707807943</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="RABBIT"></a><span class="summary-name">RABBIT</span> = <code title="0.709803442861">0.709803442861</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="SQRT2"></a><span class="summary-name">SQRT2</span> = <code title="1.41421356237">1.41421356237</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="SQRT2PI"></a><span class="summary-name">SQRT2PI</span> = <code title="2.50662827463">2.50662827463</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="copads.hypothesis-module.html#TKColours" class="summary-name">TKColours</a> = <code title="['snow',
+ 'ghost white',
+ 'white smoke',
+ 'gainsboro',
+ 'floral white',
+ 'old lace',
+ 'linen',
+ 'antique white',
+..."><code class="variable-group">[</code><code class="variable-quote">'</code><code class="variable-string">snow</code><code class="variable-quote">'</code><code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">ghost white</code><code class="variable-quote">'</code><code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">white smoke</code><code class="variable-quote">'</code><code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">gainsboro</code><code class="variable-quote">'</code><code class="variable-ellipsis">...</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="ZETA9"></a><span class="summary-name">ZETA9</span> = <code title="1.00200839283">1.00200839283</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="__package__"></a><span class="summary-name">__package__</span> = <code title="'copads'"><code class="variable-quote">'</code><code class="variable-string">copads</code><code class="variable-quote">'</code></code>
+    </td>
+  </tr>
+</table>
+<p class="indent-wrapped-lines"><b>Imports:</b>
+  <span title="math.sqrt">sqrt</span>,
+  <span title="math.log">log</span>,
+  <span title="math.e">e</span>,
+  <a href="copads.statisticsdistribution-module.html#AntiLogNormalDistribution" title="copads.statisticsdistribution.AntiLogNormalDistribution">AntiLogNormalDistribution</a>,
+  <a href="copads.statisticsdistribution.BernoulliDistribution-class.html" title="copads.statisticsdistribution.BernoulliDistribution">BernoulliDistribution</a>,
+  <a href="copads.statisticsdistribution.BetaDistribution-class.html" title="copads.statisticsdistribution.BetaDistribution">BetaDistribution</a>,
+  <a href="copads.statisticsdistribution-module.html#BilateralExponentialDistribution" title="copads.statisticsdistribution.BilateralExponentialDistribution">BilateralExponentialDistribution</a>,
+  <a href="copads.statisticsdistribution.BinomialDistribution-class.html" title="copads.statisticsdistribution.BinomialDistribution">BinomialDistribution</a>,
+  <a href="copads.statisticsdistribution.BradfordDistribution-class.html" title="copads.statisticsdistribution.BradfordDistribution">BradfordDistribution</a>,
+  <a href="copads.statisticsdistribution.BurrDistribution-class.html" title="copads.statisticsdistribution.BurrDistribution">BurrDistribution</a>,
+  <a href="copads.statisticsdistribution.CauchyDistribution-class.html" title="copads.statisticsdistribution.CauchyDistribution">CauchyDistribution</a>,
+  <a href="copads.statisticsdistribution.ChiDistribution-class.html" title="copads.statisticsdistribution.ChiDistribution">ChiDistribution</a>,
+  <a href="copads.statisticsdistribution.ChiSquareDistribution-class.html" title="copads.statisticsdistribution.ChiSquareDistribution">ChiSquareDistribution</a>,
+  <a href="copads.statisticsdistribution-module.html#CobbDouglasDistribution" title="copads.statisticsdistribution.CobbDouglasDistribution">CobbDouglasDistribution</a>,
+  <a href="copads.statisticsdistribution.CosineDistribution-class.html" title="copads.statisticsdistribution.CosineDistribution">CosineDistribution</a>,
+  <a href="copads.statisticsdistribution.Distribution-class.html" title="copads.statisticsdistribution.Distribution">Distribution</a>,
+  <a href="copads.copadsexceptions.DistributionFunctionError-class.html" title="copads.copadsexceptions.DistributionFunctionError">DistributionFunctionError</a>,
+  <a href="copads.copadsexceptions.DistributionParameterError-class.html" title="copads.copadsexceptions.DistributionParameterError">DistributionParameterError</a>,
+  <a href="copads.statisticsdistribution-module.html#DoubleExponentialDistribution" title="copads.statisticsdistribution.DoubleExponentialDistribution">DoubleExponentialDistribution</a>,
+  <a href="copads.statisticsdistribution.DoubleGammaDistribution-class.html" title="copads.statisticsdistribution.DoubleGammaDistribution">DoubleGammaDistribution</a>,
+  <a href="copads.statisticsdistribution.DoubleWeibullDistribution-class.html" title="copads.statisticsdistribution.DoubleWeibullDistribution">DoubleWeibullDistribution</a>,
+  <a href="copads.statisticsdistribution-module.html#ErlangDistribution" title="copads.statisticsdistribution.ErlangDistribution">ErlangDistribution</a>,
+  <a href="copads.statisticsdistribution.ExponentialDistribution-class.html" title="copads.statisticsdistribution.ExponentialDistribution">ExponentialDistribution</a>,
+  <a href="copads.statisticsdistribution.ExtremeLBDistribution-class.html" title="copads.statisticsdistribution.ExtremeLBDistribution">ExtremeLBDistribution</a>,
+  <a href="copads.statisticsdistribution.FDistribution-class.html" title="copads.statisticsdistribution.FDistribution">FDistribution</a>,
+  <a href="copads.statisticsdistribution-module.html#FisherTippettDistribution" title="copads.statisticsdistribution.FisherTippettDistribution">FisherTippettDistribution</a>,
+  <a href="copads.statisticsdistribution.FiskDistribution-class.html" title="copads.statisticsdistribution.FiskDistribution">FiskDistribution</a>,
+  <a href="copads.statisticsdistribution.FoldedNormalDistribution-class.html" title="copads.statisticsdistribution.FoldedNormalDistribution">FoldedNormalDistribution</a>,
+  <a href="copads.statisticsdistribution-module.html#FrechetDistribution" title="copads.statisticsdistribution.FrechetDistribution">FrechetDistribution</a>,
+  <a href="copads.statisticsdistribution-module.html#FurryDistribution" title="copads.statisticsdistribution.FurryDistribution">FurryDistribution</a>,
+  <a href="copads.statisticsdistribution.GammaDistribution-class.html" title="copads.statisticsdistribution.GammaDistribution">GammaDistribution</a>,
+  <a href="copads.statisticsdistribution.GenLogisticDistribution-class.html" title="copads.statisticsdistribution.GenLogisticDistribution">GenLogisticDistribution</a>,
+  <a href="copads.statisticsdistribution.GeometricDistribution-class.html" title="copads.statisticsdistribution.GeometricDistribution">GeometricDistribution</a>,
+  <a href="copads.statisticsdistribution-module.html#GompertzDistribution" title="copads.statisticsdistribution.GompertzDistribution">GompertzDistribution</a>,
+  <a href="copads.statisticsdistribution.GumbelDistribution-class.html" title="copads.statisticsdistribution.GumbelDistribution">GumbelDistribution</a>,
+  <a href="copads.statisticsdistribution.HalfNormalDistribution-class.html" title="copads.statisticsdistribution.HalfNormalDistribution">HalfNormalDistribution</a>,
+  <a href="copads.statisticsdistribution.HyperbolicSecantDistribution-class.html" title="copads.statisticsdistribution.HyperbolicSecantDistribution">HyperbolicSecantDistribution</a>,
+  <a href="copads.statisticsdistribution.HypergeometricDistribution-class.html" title="copads.statisticsdistribution.HypergeometricDistribution">HypergeometricDistribution</a>,
+  <a href="copads.statisticsdistribution.LaplaceDistribution-class.html" title="copads.statisticsdistribution.LaplaceDistribution">LaplaceDistribution</a>,
+  <a href="copads.statisticsdistribution-module.html#LogLogisticDistribution" title="copads.statisticsdistribution.LogLogisticDistribution">LogLogisticDistribution</a>,
+  <a href="copads.statisticsdistribution.LogNormalDistribution-class.html" title="copads.statisticsdistribution.LogNormalDistribution">LogNormalDistribution</a>,
+  <a href="copads.statisticsdistribution-module.html#LogWeibullDistribution" title="copads.statisticsdistribution.LogWeibullDistribution">LogWeibullDistribution</a>,
+  <a href="copads.statisticsdistribution.LogarithmicDistribution-class.html" title="copads.statisticsdistribution.LogarithmicDistribution">LogarithmicDistribution</a>,
+  <a href="copads.statisticsdistribution.LogisticDistribution-class.html" title="copads.statisticsdistribution.LogisticDistribution">LogisticDistribution</a>,
+  <a href="copads.statisticsdistribution-module.html#LorentzDistribution" title="copads.statisticsdistribution.LorentzDistribution">LorentzDistribution</a>,
+  <a href="copads.statisticsdistribution.MaxwellDistribution-class.html" title="copads.statisticsdistribution.MaxwellDistribution">MaxwellDistribution</a>,
+  <a href="copads.statisticsdistribution.NakagamiDistribution-class.html" title="copads.statisticsdistribution.NakagamiDistribution">NakagamiDistribution</a>,
+  <a href="copads.statisticsdistribution.NegativeBinomialDistribution-class.html" title="copads.statisticsdistribution.NegativeBinomialDistribution">NegativeBinomialDistribution</a>,
+  <a href="copads.statisticsdistribution-module.html#NegativeExponentialDistribution" title="copads.statisticsdistribution.NegativeExponentialDistribution">NegativeExponentialDistribution</a>,
+  <a href="copads.statisticsdistribution.NormalDistribution-class.html" title="copads.statisticsdistribution.NormalDistribution">NormalDistribution</a>,
+  <a href="copads.copadsexceptions.NormalDistributionTypeError-class.html" title="copads.copadsexceptions.NormalDistributionTypeError">NormalDistributionTypeError</a>,
+  <a href="copads.statisticsdistribution.ParetoDistribution-class.html" title="copads.statisticsdistribution.ParetoDistribution">ParetoDistribution</a>,
+  <a href="copads.statisticsdistribution.PascalDistribution-class.html" title="copads.statisticsdistribution.PascalDistribution">PascalDistribution</a>,
+  <a href="copads.statisticsdistribution.PoissonDistribution-class.html" title="copads.statisticsdistribution.PoissonDistribution">PoissonDistribution</a>,
+  <a href="copads.statisticsdistribution-module.html#PolyaDistribution" title="copads.statisticsdistribution.PolyaDistribution">PolyaDistribution</a>,
+  <a href="copads.statisticsdistribution.PowerFunctionDistribution-class.html" title="copads.statisticsdistribution.PowerFunctionDistribution">PowerFunctionDistribution</a>,
+  <a href="copads.statisticsdistribution.RademacherDistribution-class.html" title="copads.statisticsdistribution.RademacherDistribution">RademacherDistribution</a>,
+  <a href="copads.statisticsdistribution.RayleighDistribution-class.html" title="copads.statisticsdistribution.RayleighDistribution">RayleighDistribution</a>,
+  <a href="copads.statisticsdistribution.ReciprocalDistribution-class.html" title="copads.statisticsdistribution.ReciprocalDistribution">ReciprocalDistribution</a>,
+  <a href="copads.statisticsdistribution-module.html#RectangularDistribution" title="copads.statisticsdistribution.RectangularDistribution">RectangularDistribution</a>,
+  <a href="copads.statisticsdistribution-module.html#SechSquaredDistribution" title="copads.statisticsdistribution.SechSquaredDistribution">SechSquaredDistribution</a>,
+  <a href="copads.statisticsdistribution.SemicircularDistribution-class.html" title="copads.statisticsdistribution.SemicircularDistribution">SemicircularDistribution</a>,
+  <a href="copads.statisticsdistribution.TDistribution-class.html" title="copads.statisticsdistribution.TDistribution">TDistribution</a>,
+  <a href="copads.statisticsdistribution.TriangularDistribution-class.html" title="copads.statisticsdistribution.TriangularDistribution">TriangularDistribution</a>,
+  <a href="copads.statisticsdistribution.UniformDistribution-class.html" title="copads.statisticsdistribution.UniformDistribution">UniformDistribution</a>,
+  <a href="copads.statisticsdistribution-module.html#WaldDistribution" title="copads.statisticsdistribution.WaldDistribution">WaldDistribution</a>,
+  <a href="copads.statisticsdistribution.WeiBullDistribution-class.html" title="copads.statisticsdistribution.WeiBullDistribution">WeiBullDistribution</a>,
+  <span title="math">math</span>,
+  <a href="copads.nrpy-module.html" title="copads.nrpy">nrpy</a>,
+  <span title="random">random</span>
+</p><br />
+<!-- ==================== FUNCTION DETAILS ==================== -->
+<a name="section-FunctionDetails"></a>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Function Details</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-FunctionDetails"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+</table>
+<a name="test"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">test</span>(<span class="sig-arg">statistic</span>,
+        <span class="sig-arg">distribution</span>,
+        <span class="sig-arg">confidence</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="copads.hypothesis-pysrc.html#test">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Generates the critical value from distribution and confidence value 
+  using the distribution's inverseCDF method and performs 1-tailed and 
+  2-tailed test by comparing the calculated statistic with the critical 
+  value.</p>
+  <p>Returns a 5-element list [left result, left critical, statistic, right
+  critical, right result] where</p>
+  <ul>
+    <li>
+      left result = True (statistic in lower critical region) or False 
+      (statistic not in lower critical region)
+    </li>
+    <li>
+      left critical = lower critical value generated from 1 - confidence
+    </li>
+    <li>
+      statistic = calculated statistic value
+    </li>
+    <li>
+      right critical = upper critical value generated from confidence
+    </li>
+    <li>
+      right result = True (statistic in upper critical region) or False 
+      (statistic not in upper critical region)
+    </li>
+  </ul>
+  <p>Therefore, null hypothesis is accepted if left result and right result
+  are both False in a 2-tailed test.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>statistic</code></strong> - calculated statistic (float)</li>
+        <li><strong class="pname"><code>distribution</code></strong> (instance of a statistics distribution) - distribution to calculate critical value</li>
+        <li><strong class="pname"><code>confidence</code></strong> (float of less than 1.0) - confidence level of a one-tail test (usually 0.95 or 0.99), use 
+          0.975 or 0.995 for 2-tail test</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="Z1Mean1Variance"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">Z1Mean1Variance</span>(<span class="sig-arg">smean</span>,
+        <span class="sig-arg">pmean</span>,
+        <span class="sig-arg">pvar</span>,
+        <span class="sig-arg">ssize</span>,
+        <span class="sig-arg">confidence</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="copads.hypothesis-pysrc.html#Z1Mean1Variance">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Test 1: Z-test for a population mean (variance known)</p>
+  <p>To investigate the significance of the difference between an assumed 
+  population mean and sample mean when the population variance is 
+  known.</p>
+  <p>Limitations</p>
+  <ol start="1">
+    <li>
+      Requires population variance (use Test 7 if population variance 
+      unknown)
+    </li>
+  </ol>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>smean</code></strong> - sample mean</li>
+        <li><strong class="pname"><code>pmean</code></strong> - population mean</li>
+        <li><strong class="pname"><code>pvar</code></strong> - population variance</li>
+        <li><strong class="pname"><code>ssize</code></strong> - sample size</li>
+        <li><strong class="pname"><code>confidence</code></strong> - confidence level</li>
+    </ul></dd>
+  </dl>
+<div class="fields">      <p><strong>See Also:</strong>
+        Ling, MHT. 2009. Ten Z-Test Routines from Gopal Kanji's 100 
+        Statistical Tests. The Python Papers Source Codes 1:5
+      </p>
+      <p><strong>Status:</strong>
+        Tested function
+      </p>
+      <p><strong>Since:</strong>
+        version 0.1
+      </p>
+</div></td></tr></table>
+</div>
+<a name="Z2Mean1Variance"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">Z2Mean1Variance</span>(<span class="sig-arg">smean1</span>,
+        <span class="sig-arg">smean2</span>,
+        <span class="sig-arg">pvar</span>,
+        <span class="sig-arg">ssize1</span>,
+        <span class="sig-arg">ssize2</span>,
+        <span class="sig-arg">confidence</span>,
+        <span class="sig-arg">pmean1</span>=<span class="sig-default">0.0</span>,
+        <span class="sig-arg">pmean2</span>=<span class="sig-default">0.0</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="copads.hypothesis-pysrc.html#Z2Mean1Variance">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Test 2: Z-test for two population means (variances known and 
+  equal)</p>
+  <p>To investigate the significance of the difference between the means of
+  two samples when the variances are known and equal.</p>
+  <p>Limitations</p>
+  <ol start="1">
+    <li>
+      Population variances must be known and equal (use Test 8 if 
+      population variances unknown
+    </li>
+  </ol>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>smean1</code></strong> - sample mean of sample #1</li>
+        <li><strong class="pname"><code>smean2</code></strong> - sample mean of sample #2</li>
+        <li><strong class="pname"><code>pvar</code></strong> - variances of both populations (variances are equal)</li>
+        <li><strong class="pname"><code>ssize1</code></strong> - sample size of sample #1</li>
+        <li><strong class="pname"><code>ssize2</code></strong> - sample size of sample #2</li>
+        <li><strong class="pname"><code>confidence</code></strong> - confidence level</li>
+        <li><strong class="pname"><code>pmean1</code></strong> - population mean of population #1 (optional)</li>
+        <li><strong class="pname"><code>pmean2</code></strong> - population mean of population #2 (optional)</li>
+    </ul></dd>
+  </dl>
+<div class="fields">      <p><strong>See Also:</strong>
+        Ling, MHT. 2009. Ten Z-Test Routines from Gopal Kanji's 100 
+        Statistical Tests. The Python Papers Source Codes 1:5
+      </p>
+      <p><strong>Status:</strong>
+        Tested function
+      </p>
+      <p><strong>Since:</strong>
+        version 0.1
+      </p>
+</div></td></tr></table>
+</div>
+<a name="Z2Mean2Variance"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">Z2Mean2Variance</span>(<span class="sig-arg">smean1</span>,
+        <span class="sig-arg">smean2</span>,
+        <span class="sig-arg">pvar1</span>,
+        <span class="sig-arg">pvar2</span>,
+        <span class="sig-arg">ssize1</span>,
+        <span class="sig-arg">ssize2</span>,
+        <span class="sig-arg">confidence</span>,
+        <span class="sig-arg">pmean1</span>=<span class="sig-default">0.0</span>,
+        <span class="sig-arg">pmean2</span>=<span class="sig-default">0.0</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="copads.hypothesis-pysrc.html#Z2Mean2Variance">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Test 3: Z-test for two population means (variances known and 
+  unequal)</p>
+  <p>To investigate the significance of the difference between the means of
+  two samples when the variances are known and unequal.</p>
+  <p>Limitations</p>
+  <ol start="1">
+    <li>
+      Population variances must be known(use Test 9 if population variances
+      unknown
+    </li>
+  </ol>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>smean1</code></strong> - sample mean of sample #1</li>
+        <li><strong class="pname"><code>smean2</code></strong> - sample mean of sample #2</li>
+        <li><strong class="pname"><code>pvar1</code></strong> - variance of population #1</li>
+        <li><strong class="pname"><code>pvar2</code></strong> - variance of population #2</li>
+        <li><strong class="pname"><code>ssize1</code></strong> - sample size of sample #1</li>
+        <li><strong class="pname"><code>ssize2</code></strong> - sample size of sample #2</li>
+        <li><strong class="pname"><code>confidence</code></strong> - confidence level</li>
+        <li><strong class="pname"><code>pmean1</code></strong> - population mean of population #1 (optional)</li>
+        <li><strong class="pname"><code>pmean2</code></strong> - population mean of population #2 (optional)</li>
+    </ul></dd>
+  </dl>
+<div class="fields">      <p><strong>See Also:</strong>
+        Ling, MHT. 2009. Ten Z-Test Routines from Gopal Kanji's 100 
+        Statistical Tests. The Python Papers Source Codes 1:5
+      </p>
+      <p><strong>Status:</strong>
+        Tested function
+      </p>
+      <p><strong>Since:</strong>
+        version 0.4
+      </p>
+</div></td></tr></table>
+</div>
+<a name="Z1Proportion"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">Z1Proportion</span>(<span class="sig-arg">spro</span>,
+        <span class="sig-arg">ppro</span>,
+        <span class="sig-arg">ssize</span>,
+        <span class="sig-arg">confidence</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="copads.hypothesis-pysrc.html#Z1Proportion">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Test 4: Z-test for a proportion (binomial distribution)</p>
+  <p>To investigate the significance of the difference between an assumed 
+  proportion and an observed proportion.</p>
+  <p>Limitations</p>
+  <ol start="1">
+    <li>
+      Requires sufficiently large sample size to use Normal approximation 
+      to binomial
+    </li>
+  </ol>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>spro</code></strong> - sample proportion</li>
+        <li><strong class="pname"><code>ppro</code></strong> - population proportion</li>
+        <li><strong class="pname"><code>ssize</code></strong> - sample size</li>
+        <li><strong class="pname"><code>confidence</code></strong> - confidence level</li>
+    </ul></dd>
+  </dl>
+<div class="fields">      <p><strong>See Also:</strong>
+        Ling, MHT. 2009. Ten Z-Test Routines from Gopal Kanji's 100 
+        Statistical Tests. The Python Papers Source Codes 1:5
+      </p>
+      <p><strong>Status:</strong>
+        Tested function
+      </p>
+      <p><strong>Since:</strong>
+        version 0.1
+      </p>
+</div></td></tr></table>
+</div>
+<a name="Z2Proportion"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">Z2Proportion</span>(<span class="sig-arg">spro1</span>,
+        <span class="sig-arg">spro2</span>,
+        <span class="sig-arg">ssize1</span>,
+        <span class="sig-arg">ssize2</span>,
+        <span class="sig-arg">confidence</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="copads.hypothesis-pysrc.html#Z2Proportion">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Test 5: Z-test for the equality of two proportions (binomial 
+  distribution) To investigate the assumption that the proportions of 
+  elements from two populations are equal, based on two samples, one from 
+  each population.</p>
+  <p>Limitations</p>
+  <ol start="1">
+    <li>
+      Requires sufficiently large sample size to use Normal approximation 
+      to binomial
+    </li>
+  </ol>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>spro1</code></strong> - sample proportion #1</li>
+        <li><strong class="pname"><code>spro2</code></strong> - sample proportion #2</li>
+        <li><strong class="pname"><code>ssize1</code></strong> - sample size #1</li>
+        <li><strong class="pname"><code>ssize2</code></strong> - sample size #2</li>
+        <li><strong class="pname"><code>confidence</code></strong> - confidence level</li>
+    </ul></dd>
+  </dl>
+<div class="fields">      <p><strong>See Also:</strong>
+        Ling, MHT. 2009. Ten Z-Test Routines from Gopal Kanji's 100 
+        Statistical Tests. The Python Papers Source Codes 1:5
+      </p>
+      <p><strong>Status:</strong>
+        Tested function
+      </p>
+      <p><strong>Since:</strong>
+        version 0.1
+      </p>
+</div></td></tr></table>
+</div>
+<a name="Z2Count"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">Z2Count</span>(<span class="sig-arg">time1</span>,
+        <span class="sig-arg">time2</span>,
+        <span class="sig-arg">count1</span>,
+        <span class="sig-arg">count2</span>,
+        <span class="sig-arg">confidence</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="copads.hypothesis-pysrc.html#Z2Count">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Test 6: Z-test for comparing two counts (Poisson distribution)</p>
+  <p>To investigate the significance of the differences between two 
+  counts.</p>
+  <p>Limitations</p>
+  <ol start="1">
+    <li>
+      Requires sufficiently large sample size to use Normal approximation 
+      to binomial
+    </li>
+  </ol>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>time1</code></strong> - first measurement time</li>
+        <li><strong class="pname"><code>time2</code></strong> - second measurement time</li>
+        <li><strong class="pname"><code>count1</code></strong> - counts at first measurement time</li>
+        <li><strong class="pname"><code>count2</code></strong> - counts at second measurement time</li>
+        <li><strong class="pname"><code>confidence</code></strong> - confidence level</li>
+    </ul></dd>
+  </dl>
+<div class="fields">      <p><strong>See Also:</strong>
+        Ling, MHT. 2009. Ten Z-Test Routines from Gopal Kanji's 100 
+        Statistical Tests. The Python Papers Source Codes 1:5
+      </p>
+      <p><strong>Status:</strong>
+        Tested function
+      </p>
+      <p><strong>Since:</strong>
+        version 0.1
+      </p>
+</div></td></tr></table>
+</div>
+<a name="t1Mean"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">t1Mean</span>(<span class="sig-arg">smean</span>,
+        <span class="sig-arg">pmean</span>,
+        <span class="sig-arg">svar</span>,
+        <span class="sig-arg">ssize</span>,
+        <span class="sig-arg">confidence</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="copads.hypothesis-pysrc.html#t1Mean">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Test 7: t-test for a population mean (population variance unknown)</p>
+  <p>To investigate the significance of the difference between an assumed 
+  population mean and a sample mean when the population variance is unknown
+  and cannot be assumed equal or not equal.</p>
+  <p>Limitations</p>
+  <ol start="1">
+    <li>
+      Weaker form of Test 1
+    </li>
+  </ol>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>smean</code></strong> - sample mean</li>
+        <li><strong class="pname"><code>pmean</code></strong> - population mean</li>
+        <li><strong class="pname"><code>svar</code></strong> - sample variance</li>
+        <li><strong class="pname"><code>ssize</code></strong> - sample size</li>
+        <li><strong class="pname"><code>confidence</code></strong> - confidence level</li>
+    </ul></dd>
+  </dl>
+<div class="fields">      <p><strong>See Also:</strong>
+        Chay, ZE, Ling, MHT. 2010. COPADS, II: Chi-Square test, F-Test and 
+        t-Test Routines from Gopal Kanji's 100 Statistical Tests. The 
+        Python Papers Source Codes 2:3
+      </p>
+      <p><strong>Status:</strong>
+        Tested function
+      </p>
+      <p><strong>Since:</strong>
+        version 0.4
+      </p>
+</div></td></tr></table>
+</div>
+<a name="t2Mean2EqualVariance"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">t2Mean2EqualVariance</span>(<span class="sig-arg">smean1</span>,
+        <span class="sig-arg">smean2</span>,
+        <span class="sig-arg">svar1</span>,
+        <span class="sig-arg">svar2</span>,
+        <span class="sig-arg">ssize1</span>,
+        <span class="sig-arg">ssize2</span>,
+        <span class="sig-arg">confidence</span>,
+        <span class="sig-arg">pmean1</span>=<span class="sig-default">0.0</span>,
+        <span class="sig-arg">pmean2</span>=<span class="sig-default">0.0</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="copads.hypothesis-pysrc.html#t2Mean2EqualVariance">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Test 8: t-test for two population means (population variance unknown 
+  but equal)</p>
+  <p>To investigate the significance of the difference between the means of
+  two populations when the population variances are unknown but assumed 
+  equal.</p>
+  <p>Limitations</p>
+  <ol start="1">
+    <li>
+      Weaker form of Test 2
+    </li>
+  </ol>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>smean1</code></strong> - sample mean of sample #1</li>
+        <li><strong class="pname"><code>smean2</code></strong> - sample mean of sample #2</li>
+        <li><strong class="pname"><code>svar1</code></strong> - variances of sample #1</li>
+        <li><strong class="pname"><code>svar2</code></strong> - variances of sample #2</li>
+        <li><strong class="pname"><code>ssize1</code></strong> - sample size of sample #1</li>
+        <li><strong class="pname"><code>ssize2</code></strong> - sample size of sample #2</li>
+        <li><strong class="pname"><code>confidence</code></strong> - confidence level</li>
+        <li><strong class="pname"><code>pmean1</code></strong> - population mean of population #1 (optional)</li>
+        <li><strong class="pname"><code>pmean2</code></strong> - population mean of population #2 (optional)</li>
+    </ul></dd>
+  </dl>
+<div class="fields">      <p><strong>See Also:</strong>
+        Chay, ZE, Ling, MHT. 2010. COPADS, II: Chi-Square test, F-Test and 
+        t-Test Routines from Gopal Kanji's 100 Statistical Tests. The 
+        Python Papers Source Codes 2:3
+      </p>
+      <p><strong>Status:</strong>
+        Tested function
+      </p>
+      <p><strong>Since:</strong>
+        version 0.4
+      </p>
+</div></td></tr></table>
+</div>
+<a name="t2Mean2UnequalVariance"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">t2Mean2UnequalVariance</span>(<span class="sig-arg">smean1</span>,
+        <span class="sig-arg">smean2</span>,
+        <span class="sig-arg">svar1</span>,
+        <span class="sig-arg">svar2</span>,
+        <span class="sig-arg">ssize1</span>,
+        <span class="sig-arg">ssize2</span>,
+        <span class="sig-arg">confidence</span>,
+        <span class="sig-arg">pmean1</span>=<span class="sig-default">0.0</span>,
+        <span class="sig-arg">pmean2</span>=<span class="sig-default">0.0</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="copads.hypothesis-pysrc.html#t2Mean2UnequalVariance">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Test 9: t-test for two population means (population variance unknown 
+  and unequal)</p>
+  <p>To investigate the significance of the difference between the means of
+  two populations when the population variances are unknown and 
+  unequal.</p>
+  <p>Limitations</p>
+  <ol start="1">
+    <li>
+      Weaker form of Test 3
+    </li>
+  </ol>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>smean1</code></strong> - sample mean of sample #1</li>
+        <li><strong class="pname"><code>smean2</code></strong> - sample mean of sample #2</li>
+        <li><strong class="pname"><code>svar1</code></strong> - variances of sample #1</li>
+        <li><strong class="pname"><code>svar2</code></strong> - variances of sample #2</li>
+        <li><strong class="pname"><code>ssize1</code></strong> - sample size of sample #1</li>
+        <li><strong class="pname"><code>ssize2</code></strong> - sample size of sample #2</li>
+        <li><strong class="pname"><code>confidence</code></strong> - confidence level</li>
+        <li><strong class="pname"><code>pmean1</code></strong> - population mean of population #1 (optional)</li>
+        <li><strong class="pname"><code>pmean2</code></strong> - population mean of population #2 (optional)</li>
+    </ul></dd>
+  </dl>
+<div class="fields">      <p><strong>See Also:</strong>
+        Chay, ZE, Ling, MHT. 2010. COPADS, II: Chi-Square test, F-Test and 
+        t-Test Routines from Gopal Kanji's 100 Statistical Tests. The 
+        Python Papers Source Codes 2:3
+      </p>
+      <p><strong>Status:</strong>
+        Tested function
+      </p>
+      <p><strong>Since:</strong>
+        version 0.4
+      </p>
+</div></td></tr></table>
+</div>
+<a name="tPaired"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">tPaired</span>(<span class="sig-arg">smean1</span>,
+        <span class="sig-arg">smean2</span>,
+        <span class="sig-arg">svar</span>,
+        <span class="sig-arg">ssize</span>,
+        <span class="sig-arg">confidence</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="copads.hypothesis-pysrc.html#tPaired">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Test 10: t-test for two population means (method of paired 
+  comparisons)</p>
+  <p>To investigate the significance of the difference between two 
+  population means when no assumption is made about the population 
+  variances.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>smean1</code></strong> - sample mean of sample #1</li>
+        <li><strong class="pname"><code>smean2</code></strong> - sample mean of sample #2</li>
+        <li><strong class="pname"><code>svar</code></strong> - variance of differences between pairs</li>
+        <li><strong class="pname"><code>ssize</code></strong> - sample size</li>
+        <li><strong class="pname"><code>confidence</code></strong> - confidence level</li>
+    </ul></dd>
+  </dl>
+<div class="fields">      <p><strong>See Also:</strong>
+        Chay, ZE, Ling, MHT. 2010. COPADS, II: Chi-Square test, F-Test and 
+        t-Test Routines from Gopal Kanji's 100 Statistical Tests. The 
+        Python Papers Source Codes 2:3
+      </p>
+      <p><strong>Status:</strong>
+        Tested function
+      </p>
+      <p><strong>Since:</strong>
+        version 0.4
+      </p>
+</div></td></tr></table>
+</div>
+<a name="tRegressionCoefficient"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">tRegressionCoefficient</span>(<span class="sig-arg">variancex</span>,
+        <span class="sig-arg">varianceyx</span>,
+        <span class="sig-arg">b</span>,
+        <span class="sig-arg">ssize</span>,
+        <span class="sig-arg">confidence</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="copads.hypothesis-pysrc.html#tRegressionCoefficient">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Test 11: t-test of a regression coefficient</p>
+  <p>To investigate the significance of the regression coefficient.</p>
+  <p>Limitations</p>
+  <ol start="1">
+    <li>
+      Homoedasticity of values
+    </li>
+  </ol>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>variancex</code></strong> - variance of x</li>
+        <li><strong class="pname"><code>varianceyx</code></strong> - variance of yx</li>
+        <li><strong class="pname"><code>b</code></strong> - calculated Regression Coefficient</li>
+        <li><strong class="pname"><code>ssize</code></strong> - sample size</li>
+        <li><strong class="pname"><code>confidence</code></strong> - confidence level</li>
+    </ul></dd>
+  </dl>
+<div class="fields">      <p><strong>See Also:</strong>
+        Chay, ZE, Ling, MHT. 2010. COPADS, II: Chi-Square test, F-Test and 
+        t-Test Routines from Gopal Kanji's 100 Statistical Tests. The 
+        Python Papers Source Codes 2:3
+      </p>
+      <p><strong>Status:</strong>
+        Tested function
+      </p>
+      <p><strong>Since:</strong>
+        version 0.4
+      </p>
+</div></td></tr></table>
+</div>
+<a name="tPearsonCorrelation"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">tPearsonCorrelation</span>(<span class="sig-arg">r</span>,
+        <span class="sig-arg">ssize</span>,
+        <span class="sig-arg">confidence</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="copads.hypothesis-pysrc.html#tPearsonCorrelation">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Test 12: t-test of a correlation coefficient</p>
+  <p>To investigate whether the difference between the sample correlation 
+  coefficient and zero is statistically significant.</p>
+  <p>Limitations</p>
+  <ol start="1">
+    <li>
+      Assumes population correlation coefficient to be zero (use Test 13 
+      for testing other population correlation coefficient
+    </li>
+    <li>
+      Assumes a linear relationship (regression line as Y = MX + C)
+    </li>
+    <li>
+      Independence of x-values and y-values
+    </li>
+  </ol>
+  <p>Use Test 59 when these conditions cannot be met</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>r</code></strong> - calculated Pearson's product-moment correlation coefficient</li>
+        <li><strong class="pname"><code>ssize</code></strong> - sample size</li>
+        <li><strong class="pname"><code>confidence</code></strong> - confidence level</li>
+    </ul></dd>
+  </dl>
+<div class="fields">      <p><strong>See Also:</strong>
+        Chay, ZE, Ling, MHT. 2010. COPADS, II: Chi-Square test, F-Test and 
+        t-Test Routines from Gopal Kanji's 100 Statistical Tests. The 
+        Python Papers Source Codes 2:3
+      </p>
+      <p><strong>Status:</strong>
+        Tested function
+      </p>
+      <p><strong>Since:</strong>
+        version 0.4
+      </p>
+</div></td></tr></table>
+</div>
+<a name="ZPearsonCorrelation"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">ZPearsonCorrelation</span>(<span class="sig-arg">sr</span>,
+        <span class="sig-arg">pr</span>,
+        <span class="sig-arg">ssize</span>,
+        <span class="sig-arg">confidence</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="copads.hypothesis-pysrc.html#ZPearsonCorrelation">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Test 13: Z-test of a correlation coefficient</p>
+  <p>To investigate the significance of the difference between a 
+  correlation coefficient and a specified value.</p>
+  <p>Limitations</p>
+  <ol start="1">
+    <li>
+      Assumes a linear relationship (regression line as Y = MX + C)
+    </li>
+    <li>
+      Independence of x-values and y-values
+    </li>
+  </ol>
+  <p>Use Test 59 when these conditions cannot be met</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>sr</code></strong> - calculated sample Pearson's product-moment correlation 
+          coefficient</li>
+        <li><strong class="pname"><code>pr</code></strong> - specified Pearson's product-moment correlation coefficient to 
+          test</li>
+        <li><strong class="pname"><code>ssize</code></strong> - sample size</li>
+        <li><strong class="pname"><code>confidence</code></strong> - confidence level</li>
+    </ul></dd>
+  </dl>
+<div class="fields">      <p><strong>See Also:</strong>
+        Ling, MHT. 2009. Ten Z-Test Routines from Gopal Kanji's 100 
+        Statistical Tests. The Python Papers Source Codes 1:5
+      </p>
+      <p><strong>Status:</strong>
+        Tested function
+      </p>
+      <p><strong>Since:</strong>
+        version 0.1
+      </p>
+</div></td></tr></table>
+</div>
+<a name="Z2PearsonCorrelation"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">Z2PearsonCorrelation</span>(<span class="sig-arg">r1</span>,
+        <span class="sig-arg">r2</span>,
+        <span class="sig-arg">ssize1</span>,
+        <span class="sig-arg">ssize2</span>,
+        <span class="sig-arg">confidence</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="copads.hypothesis-pysrc.html#Z2PearsonCorrelation">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Test 14: Z-test for two correlation coefficients</p>
+  <p>To investigate the significance of the difference between the 
+  correlation coefficients for a pair variables occurring from two 
+  difference populations.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>r1</code></strong> - Pearson correlation coefficient of sample #1</li>
+        <li><strong class="pname"><code>r2</code></strong> - Pearson correlation coefficient of sample #2</li>
+        <li><strong class="pname"><code>ssize1</code></strong> - Sample size #1</li>
+        <li><strong class="pname"><code>ssize2</code></strong> - Sample size #2</li>
+        <li><strong class="pname"><code>confidence</code></strong> - confidence level</li>
+    </ul></dd>
+  </dl>
+<div class="fields">      <p><strong>See Also:</strong>
+        Ling, MHT. 2009. Ten Z-Test Routines from Gopal Kanji's 100 
+        Statistical Tests. The Python Papers Source Codes 1:5
+      </p>
+      <p><strong>Status:</strong>
+        Tested function
+      </p>
+      <p><strong>Since:</strong>
+        version 0.1
+      </p>
+</div></td></tr></table>
+</div>
+<a name="ChiSquarePopVar"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">ChiSquarePopVar</span>(<span class="sig-arg">values</span>,
+        <span class="sig-arg">ssize</span>,
+        <span class="sig-arg">pv</span>,
+        <span class="sig-arg">confidence</span>=<span class="sig-default">0.95</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="copads.hypothesis-pysrc.html#ChiSquarePopVar">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Test 15: Chi-square test for a population variance</p>
+  <p>To investigate the difference between a sample variance and an assumed
+  population variance.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>values</code></strong> - sample values</li>
+        <li><strong class="pname"><code>ssize</code></strong> - sample size</li>
+        <li><strong class="pname"><code>pv</code></strong> - population variance</li>
+        <li><strong class="pname"><code>confidence</code></strong> - confidence level</li>
+    </ul></dd>
+  </dl>
+<div class="fields">      <p><strong>See Also:</strong>
+        Chay, ZE, Ling, MHT. 2010. COPADS, II: Chi-Square test, F-Test and 
+        t-Test Routines from Gopal Kanji's 100 Statistical Tests. The 
+        Python Papers Source Codes 2:3
+      </p>
+      <p><strong>Status:</strong>
+        Tested function
+      </p>
+      <p><strong>Since:</strong>
+        version 0.4
+      </p>
+</div></td></tr></table>
+</div>
+<a name="FVarianceRatio"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">FVarianceRatio</span>(<span class="sig-arg">var1</span>,
+        <span class="sig-arg">var2</span>,
+        <span class="sig-arg">ssize1</span>,
+        <span class="sig-arg">ssize2</span>,
+        <span class="sig-arg">confidence</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="copads.hypothesis-pysrc.html#FVarianceRatio">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Test 16: F-test for two population variances (variance ratio test)</p>
+  <p>To investigate the significance of the difference between two 
+  population variances.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>var1</code></strong> - variance #1</li>
+        <li><strong class="pname"><code>var2</code></strong> - variance #2</li>
+        <li><strong class="pname"><code>ssize1</code></strong> - sample size #1</li>
+        <li><strong class="pname"><code>ssize2</code></strong> - sample size #2</li>
+        <li><strong class="pname"><code>confidence</code></strong> - confidence level</li>
+    </ul></dd>
+  </dl>
+<div class="fields">      <p><strong>See Also:</strong>
+        Chay, ZE, Ling, MHT. 2010. COPADS, II: Chi-Square test, F-Test and 
+        t-Test Routines from Gopal Kanji's 100 Statistical Tests. The 
+        Python Papers Source Codes 2:3
+      </p>
+      <p><strong>Status:</strong>
+        Tested function
+      </p>
+      <p><strong>Since:</strong>
+        version 0.4
+      </p>
+</div></td></tr></table>
+</div>
+<a name="F2CorrelatedObs"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">F2CorrelatedObs</span>(<span class="sig-arg">r</span>,
+        <span class="sig-arg">var1</span>,
+        <span class="sig-arg">var2</span>,
+        <span class="sig-arg">ssize1</span>,
+        <span class="sig-arg">ssize2</span>,
+        <span class="sig-arg">confidence</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="copads.hypothesis-pysrc.html#F2CorrelatedObs">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Test 17: F-test for two population variances (with correlated 
+  observations)</p>
+  <p>To investigate the difference between two population variances when 
+  there is correlation between the pairs of observations.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>r</code></strong> - Sample correlation value</li>
+        <li><strong class="pname"><code>var1</code></strong> - variance #1</li>
+        <li><strong class="pname"><code>var2</code></strong> - variance #2</li>
+        <li><strong class="pname"><code>ssize1</code></strong> - sample size #1</li>
+        <li><strong class="pname"><code>ssize2</code></strong> - sample size #2</li>
+        <li><strong class="pname"><code>confidence</code></strong> - confidence level</li>
+    </ul></dd>
+  </dl>
+<div class="fields">      <p><strong>See Also:</strong>
+        Chay, ZE, Ling, MHT. 2010. COPADS, II: Chi-Square test, F-Test and 
+        t-Test Routines from Gopal Kanji's 100 Statistical Tests. The 
+        Python Papers Source Codes 2:3
+      </p>
+      <p><strong>Status:</strong>
+        Tested function
+      </p>
+      <p><strong>Since:</strong>
+        version 0.4
+      </p>
+</div></td></tr></table>
+</div>
+<a name="ZCorrProportion"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">ZCorrProportion</span>(<span class="sig-arg">ssize</span>,
+        <span class="sig-arg">ny</span>,
+        <span class="sig-arg">yn</span>,
+        <span class="sig-arg">confidence</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="copads.hypothesis-pysrc.html#ZCorrProportion">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Test 23: Z-test for correlated proportions</p>
+  <p>To investigate the significance of the difference between two 
+  correlated proportions in opinion surveys. It can also be used for more 
+  general applications.</p>
+  <p>Limitations</p>
+  <ol start="1">
+    <li>
+      The same people are questioned both times (correlated property).
+    </li>
+    <li>
+      Sample size must be quite large.
+    </li>
+  </ol>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>ssize</code></strong> - sample size</li>
+        <li><strong class="pname"><code>ny</code></strong> - number answered 'no' in first poll and 'yes' in second poll</li>
+        <li><strong class="pname"><code>yn</code></strong> - number answered 'yes' in first poll and 'no' in second poll</li>
+        <li><strong class="pname"><code>confidence</code></strong> - confidence level</li>
+    </ul></dd>
+  </dl>
+<div class="fields">      <p><strong>See Also:</strong>
+        Ling, MHT. 2009. Ten Z-Test Routines from Gopal Kanji's 100 
+        Statistical Tests. The Python Papers Source Codes 1:5
+      </p>
+      <p><strong>Status:</strong>
+        Tested function
+      </p>
+      <p><strong>Since:</strong>
+        version 0.1
+      </p>
+</div></td></tr></table>
+</div>
+<a name="Chisq2Variance"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">Chisq2Variance</span>(<span class="sig-arg">ssize</span>,
+        <span class="sig-arg">svar</span>,
+        <span class="sig-arg">pvar</span>,
+        <span class="sig-arg">confidence</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="copads.hypothesis-pysrc.html#Chisq2Variance">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Test 24: Chi-square test for an assumed population variance</p>
+  <p>To investigate the significance of the difference between a population
+  variance and an assumed variance value.</p>
+  <p>Limitations</p>
+  <ol start="1">
+    <li>
+      Sample from normal distribution
+    </li>
+  </ol>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>ssize</code></strong> - sample size</li>
+        <li><strong class="pname"><code>svar</code></strong> - sample variance</li>
+        <li><strong class="pname"><code>pvar</code></strong> - population variance (assumed)</li>
+        <li><strong class="pname"><code>confidence</code></strong> - confidence level</li>
+    </ul></dd>
+  </dl>
+<div class="fields">      <p><strong>See Also:</strong>
+        Chay, ZE, Ling, MHT. 2010. COPADS, II: Chi-Square test, F-Test and 
+        t-Test Routines from Gopal Kanji's 100 Statistical Tests. The 
+        Python Papers Source Codes 2:3
+      </p>
+      <p><strong>Status:</strong>
+        Tested function
+      </p>
+      <p><strong>Since:</strong>
+        version 0.4
+      </p>
+</div></td></tr></table>
+</div>
+<a name="F2Count"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">F2Count</span>(<span class="sig-arg">count1</span>,
+        <span class="sig-arg">count2</span>,
+        <span class="sig-arg">confidence</span>,
+        <span class="sig-arg">time1</span>=<span class="sig-default">0</span>,
+        <span class="sig-arg">time2</span>=<span class="sig-default">0</span>,
+        <span class="sig-arg">repeat</span>=<span class="sig-default">False</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="copads.hypothesis-pysrc.html#F2Count">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Test 25: F-test for two counts (Poisson distribution)</p>
+  <p>To investigate the significance of the difference between two counted 
+  results (based on a Poisson distribution).</p>
+  <p>Limitations</p>
+  <ol start="1">
+    <li>
+      Counts must satisfy a Poisson distribution
+    </li>
+    <li>
+      Samples obtained under same conditions.
+    </li>
+  </ol>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>count1</code></strong> - count of first sample</li>
+        <li><strong class="pname"><code>count2</code></strong> - count of second sample</li>
+        <li><strong class="pname"><code>repeat</code></strong> - flag for repeated sampling (default = False)</li>
+        <li><strong class="pname"><code>time1</code></strong> - time at which first sample is taken (only needed if repeat = 
+          True)</li>
+        <li><strong class="pname"><code>time2</code></strong> - time at which second sample is taken (only needed if repeat = 
+          True)</li>
+        <li><strong class="pname"><code>confidence</code></strong> - confidence level</li>
+    </ul></dd>
+  </dl>
+<div class="fields">      <p><strong>See Also:</strong>
+        Chay, ZE, Ling, MHT. 2010. COPADS, II: Chi-Square test, F-Test and 
+        t-Test Routines from Gopal Kanji's 100 Statistical Tests. The 
+        Python Papers Source Codes 2:3
+      </p>
+      <p><strong>Status:</strong>
+        Tested function
+      </p>
+      <p><strong>Since:</strong>
+        version 0.4
+      </p>
+</div></td></tr></table>
+</div>
+<a name="ChisqFit"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">ChisqFit</span>(<span class="sig-arg">observed</span>,
+        <span class="sig-arg">expected</span>,
+        <span class="sig-arg">confidence</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="copads.hypothesis-pysrc.html#ChisqFit">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Test 37: Chi-square test for goodness of fit</p>
+  <p>To investigate the significance of the differences between observed 
+  data arranged in K classes, and the theoretical expected frequencies in 
+  the K classes.</p>
+  <p>Limitations</p>
+  <ol start="1">
+    <li>
+      Observed and theoretical distributions should have same number of 
+      elements
+    </li>
+    <li>
+      Same class division for both distributions
+    </li>
+    <li>
+      Expected frequency of each class should be at least 5
+    </li>
+  </ol>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>observed</code></strong> - list of observed frequencies (index matched with expected)</li>
+        <li><strong class="pname"><code>expected</code></strong> - list of expected frequencies (index matched with observed)</li>
+        <li><strong class="pname"><code>confidence</code></strong> - confidence level</li>
+    </ul></dd>
+  </dl>
+<div class="fields">      <p><strong>See Also:</strong>
+        Chay, ZE, Ling, MHT. 2010. COPADS, II: Chi-Square test, F-Test and 
+        t-Test Routines from Gopal Kanji's 100 Statistical Tests. The 
+        Python Papers Source Codes 2:3
+      </p>
+      <p><strong>Status:</strong>
+        Tested function
+      </p>
+      <p><strong>Since:</strong>
+        version 0.4
+      </p>
+</div></td></tr></table>
+</div>
+<a name="tx2testofKcounts"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">tx2testofKcounts</span>(<span class="sig-arg">T</span>,
+        <span class="sig-arg">V</span>,
+        <span class="sig-arg">confidence</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="copads.hypothesis-pysrc.html#tx2testofKcounts">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Test 38: The x2-test for compatibility of K counts</p>
+  <p>To investigate the significance of the differences between K 
+  counts.</p>
+  <p>Limitations:</p>
+  <ol start="1">
+    <li>
+      The counts must be obtained under comparable conditions
+    </li>
+  </ol>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>T</code></strong> - list of time under K counts</li>
+        <li><strong class="pname"><code>V</code></strong> - list of values of K counts</li>
+        <li><strong class="pname"><code>confidence</code></strong> - confidence level</li>
+    </ul></dd>
+  </dl>
+<div class="fields">      <p><strong>See Also:</strong>
+        Chay, ZE, Ling, MHT. 2010. COPADS, II: Chi-Square test, F-Test and 
+        t-Test Routines from Gopal Kanji's 100 Statistical Tests. The 
+        Python Papers Source Codes 2:3
+      </p>
+      <p><strong>Status:</strong>
+        Tested function
+      </p>
+      <p><strong>Since:</strong>
+        version 0.4
+      </p>
+</div></td></tr></table>
+</div>
+<a name="Chisq2x2"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">Chisq2x2</span>(<span class="sig-arg">s1</span>,
+        <span class="sig-arg">s2</span>,
+        <span class="sig-arg">ssize</span>,
+        <span class="sig-arg">confidence</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="copads.hypothesis-pysrc.html#Chisq2x2">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Test 40: Chi-square test for consistency in 2x2 table</p>
+  <p>To investigate the significance of the differences between observed 
+  frequencies for two dichotomous distributions.</p>
+  <p>Limitations</p>
+  <ol start="1">
+    <li>
+      Total sample size (sample 1 + sample 2) must be more than 20
+    </li>
+    <li>
+      Each cell frequency more than 3
+    </li>
+  </ol>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>s1</code></strong> - 2-element list or tuple of frequencies for sample #1</li>
+        <li><strong class="pname"><code>s2</code></strong> - 2-element list or tuple of frequencies for sample #2</li>
+        <li><strong class="pname"><code>ssize</code></strong> - sample size</li>
+        <li><strong class="pname"><code>confidence</code></strong> - confidence level</li>
+    </ul></dd>
+  </dl>
+<div class="fields">      <p><strong>See Also:</strong>
+        Chay, ZE, Ling, MHT. 2010. COPADS, II: Chi-Square test, F-Test and 
+        t-Test Routines from Gopal Kanji's 100 Statistical Tests. The 
+        Python Papers Source Codes 2:3
+      </p>
+      <p><strong>Status:</strong>
+        Tested function
+      </p>
+      <p><strong>Since:</strong>
+        version 0.4
+      </p>
+</div></td></tr></table>
+</div>
+<a name="ChisquareKx2table"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">ChisquareKx2table</span>(<span class="sig-arg">c1</span>,
+        <span class="sig-arg">c2</span>,
+        <span class="sig-arg">k</span>,
+        <span class="sig-arg">confidence</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="copads.hypothesis-pysrc.html#ChisquareKx2table">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Test 41: The x2-test for consistency in a K x 2 table</p>
+  <p>To investigate the significance of the differences between K observed 
+  frequency distributions with a dichotomous classification.</p>
+  <p>Limitations:</p>
+  <ol start="1">
+    <li>
+      K sample sizes must be large enough.
+    </li>
+    <li>
+      It is usually assumed to be satisfied if the cell frequencies are 
+      equal to 5
+    </li>
+  </ol>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>c1</code></strong> - class #1 values of sample k</li>
+        <li><strong class="pname"><code>c2</code></strong> - class #2 values of sample k</li>
+        <li><strong class="pname"><code>k</code></strong> - number of samples</li>
+        <li><strong class="pname"><code>confidence</code></strong> - confidence level</li>
+    </ul></dd>
+  </dl>
+<div class="fields">      <p><strong>See Also:</strong>
+        Chay, ZE, Ling, MHT. 2010. COPADS, II: Chi-Square test, F-Test and 
+        t-Test Routines from Gopal Kanji's 100 Statistical Tests. The 
+        Python Papers Source Codes 2:3
+      </p>
+      <p><strong>Status:</strong>
+        Tested function
+      </p>
+      <p><strong>Since:</strong>
+        version 0.4
+      </p>
+</div></td></tr></table>
+</div>
+<a name="Chisquare2xKtable"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">Chisquare2xKtable</span>(<span class="sig-arg">s1</span>,
+        <span class="sig-arg">s2</span>,
+        <span class="sig-arg">k</span>,
+        <span class="sig-arg">confidence</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="copads.hypothesis-pysrc.html#Chisquare2xKtable">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Test 43: The x2-test for consistency in a 2 x K table</p>
+  <p>To investigate the significance of the differences between two 
+  distributions based on two samples spread over K classes</p>
+  <p>Limitations:</p>
+  <ol start="1">
+    <li>
+      The two samples are sufficiently large
+    </li>
+    <li>
+      The K classes when put together form a complete series
+    </li>
+  </ol>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>s1</code></strong> - sample #1 of class k</li>
+        <li><strong class="pname"><code>s2</code></strong> - sample #2 of class k</li>
+        <li><strong class="pname"><code>k</code></strong> - number of classes</li>
+        <li><strong class="pname"><code>confidence</code></strong> - confidence level</li>
+    </ul></dd>
+  </dl>
+<div class="fields">      <p><strong>See Also:</strong>
+        Chay, ZE, Ling, MHT. 2010. COPADS, II: Chi-Square test, F-Test and 
+        t-Test Routines from Gopal Kanji's 100 Statistical Tests. The 
+        Python Papers Source Codes 2:3
+      </p>
+      <p><strong>Status:</strong>
+        Tested function
+      </p>
+      <p><strong>Since:</strong>
+        version 0.4
+      </p>
+</div></td></tr></table>
+</div>
+<a name="MedianTestfor2Pop"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">MedianTestfor2Pop</span>(<span class="sig-arg">s1</span>=<span class="sig-default"><code class="variable-group">(</code>9<code class="variable-op">, </code>6<code class="variable-group">)</code></span>,
+        <span class="sig-arg">s2</span>=<span class="sig-default"><code class="variable-group">(</code>6<code class="variable-op">, </code>9<code class="variable-group">)</code></span>,
+        <span class="sig-arg">confidence</span>=<span class="sig-default">0.95</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="copads.hypothesis-pysrc.html#MedianTestfor2Pop">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Test 50: The median test of two populations</p>
+  <p>To test if two random samples could have come from two populations 
+  with same frequency distribution</p>
+  <p>Limitations:</p>
+  <ol start="1">
+    <li>
+      The two samples are assumed to be reasonably large
+    </li>
+  </ol>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>s1</code></strong> - 2-element list or tuple of frequencies for sample #1</li>
+        <li><strong class="pname"><code>s2</code></strong> - 2-element list or tuple of frequencies for sample #2</li>
+        <li><strong class="pname"><code>confidence</code></strong> - confidence level</li>
+    </ul></dd>
+  </dl>
+<div class="fields">      <p><strong>See Also:</strong>
+        Chay, ZE, Ling, MHT. 2010. COPADS, II: Chi-Square test, F-Test and 
+        t-Test Routines from Gopal Kanji's 100 Statistical Tests. The 
+        Python Papers Source Codes 2:3
+      </p>
+      <p><strong>Status:</strong>
+        Tested function
+      </p>
+      <p><strong>Since:</strong>
+        version 0.4
+      </p>
+</div></td></tr></table>
+</div>
+<a name="SpearmanCorrelation"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">SpearmanCorrelation</span>(<span class="sig-arg">ssize</span>,
+        <span class="sig-arg">confidence</span>,
+        <span class="sig-arg">R</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">series1</span>=<span class="sig-default"><code class="variable-group">[</code><code class="variable-group">]</code></span>,
+        <span class="sig-arg">series2</span>=<span class="sig-default"><code class="variable-group">[</code><code class="variable-group">]</code></span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="copads.hypothesis-pysrc.html#SpearmanCorrelation">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Test 58: Spearman rank correlation test (paired observations) To 
+  investigate the significance of the correlation between two series of 
+  observations obtained in pairs.</p>
+  <p>Limitations</p>
+  <ol start="1">
+    <li>
+      Assumes the two population distributions to be continuous
+    </li>
+    <li>
+      Sample size must be more than 10
+    </li>
+  </ol>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>R</code></strong> - sum of squared ranks differences</li>
+        <li><strong class="pname"><code>ssize</code></strong> - sample size</li>
+        <li><strong class="pname"><code>series1</code></strong> - ranks of series #1 (not used if R is given)</li>
+        <li><strong class="pname"><code>series2</code></strong> - ranks of series #2 (not used if R is given)</li>
+        <li><strong class="pname"><code>confidence</code></strong> - confidence level</li>
+    </ul></dd>
+  </dl>
+<div class="fields">      <p><strong>See Also:</strong>
+        Ling, MHT. 2009. Ten Z-Test Routines from Gopal Kanji's 100 
+        Statistical Tests. The Python Papers Source Codes 1:5
+      </p>
+      <p><strong>Status:</strong>
+        Tested function
+      </p>
+      <p><strong>Since:</strong>
+        version 0.1
+      </p>
+</div></td></tr></table>
+</div>
+<a name="ZtestLogOddsRatio"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">ZtestLogOddsRatio</span>(<span class="sig-arg">group1</span>,
+        <span class="sig-arg">group2</span>,
+        <span class="sig-arg">confidence</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="copads.hypothesis-pysrc.html#ZtestLogOddsRatio">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Test 84: Z-test for comparing sequential contingencies acoss two 
+  groups using the 'log odds ratio'</p>
+  <p>To test the significance of the difference in sequential connections 
+  across groups</p>
+  <p>Limitations:</p>
+  <ol start="1">
+    <li>
+      This test is applicable when a logit transformation can be used and 2
+      X 2 contingency tables are available
+    </li>
+  </ol>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>group1</code></strong> - group #1 values (row = x, y) &amp; (column a, b) Provide values 
+          in xa, xb, ya, yb format</li>
+        <li><strong class="pname"><code>group2</code></strong> - group #2 values (row = x, y) &amp; (column a, b) Provide values 
+          in xa, xb, ya, yb format</li>
+        <li><strong class="pname"><code>confidence</code></strong> - confidence level</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<br />
+<!-- ==================== VARIABLES DETAILS ==================== -->
+<a name="section-VariablesDetails"></a>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Variables Details</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-VariablesDetails"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+</table>
+<a name="TKColours"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">TKColours</h3>
+  
+  <dl class="fields">
+  </dl>
+  <dl class="fields">
+    <dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+<code class="variable-group">[</code><code class="variable-quote">'</code><code class="variable-string">snow</code><code class="variable-quote">'</code><code class="variable-op">,</code>
+ <code class="variable-quote">'</code><code class="variable-string">ghost white</code><code class="variable-quote">'</code><code class="variable-op">,</code>
+ <code class="variable-quote">'</code><code class="variable-string">white smoke</code><code class="variable-quote">'</code><code class="variable-op">,</code>
+ <code class="variable-quote">'</code><code class="variable-string">gainsboro</code><code class="variable-quote">'</code><code class="variable-op">,</code>
+ <code class="variable-quote">'</code><code class="variable-string">floral white</code><code class="variable-quote">'</code><code class="variable-op">,</code>
+ <code class="variable-quote">'</code><code class="variable-string">old lace</code><code class="variable-quote">'</code><code class="variable-op">,</code>
+ <code class="variable-quote">'</code><code class="variable-string">linen</code><code class="variable-quote">'</code><code class="variable-op">,</code>
+ <code class="variable-quote">'</code><code class="variable-string">antique white</code><code class="variable-quote">'</code><code class="variable-op">,</code>
+<code class="variable-ellipsis">...</code>
+</pre></td></tr></table>
+</dd>
+  </dl>
+</td></tr></table>
+</div>
+<br />
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="copads-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            ><a class="navbar" target="_top" href="https://github.com/mauriceling/copads">https://github.com/mauriceling/copads</a></th>
+          </tr></table></th>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%%">
+  <tr>
+    <td align="left" class="footer">
+    Generated by Epydoc 3.0.1 on Tue May 31 13:09:07 2016
+    </td>
+    <td align="right" class="footer">
+      <a target="mainFrame" href="http://epydoc.sourceforge.net"
+        >http://epydoc.sourceforge.net</a>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  <!--
+  // Private objects are initially displayed (because if
+  // javascript is turned off then we want them to be
+  // visible); but by default, we want to hide them.  So hide
+  // them unless we have a cookie that says to show them.
+  checkCookie();
+  // -->
+</script>
+</body>
+</html>

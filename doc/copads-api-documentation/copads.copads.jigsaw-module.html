@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="ascii"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>copads.copads.jigsaw</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="copads.copads-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            ><a class="navbar" target="_top" href="https://github.com/mauriceling/copads">https://github.com/mauriceling/copads</a></th>
+          </tr></table></th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <span class="breadcrumbs">
+        Package&nbsp;copads ::
+        <a href="copads.copads-module.html">Package&nbsp;copads</a> ::
+        Module&nbsp;jigsaw
+      </span>
+    </td>
+    <td>
+      <table cellpadding="0" cellspacing="0">
+        <!-- hide/show private -->
+        <tr><td align="right"><span class="options">[<a href="javascript:void(0);" class="privatelink"
+    onclick="toggle_private();">hide&nbsp;private</a>]</span></td></tr>
+        <tr><td align="right"><span class="options"
+            >[<a href="frames.html" target="_top">frames</a
+            >]&nbsp;|&nbsp;<a href="copads.copads.jigsaw-module.html"
+            target="_top">no&nbsp;frames</a>]</span></td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<!-- ==================== MODULE DESCRIPTION ==================== -->
+<h1 class="epydoc">Module jigsaw</h1><p class="nomargin-top"><span class="codelink"><a href="copads.copads.jigsaw-pysrc.html">source&nbsp;code</a></span></p>
+<p>Jigsaw Encryption System</p>
+  <p>Date created: 25th May 2016</p>
+  <p>Licence: Python Software Foundation License version 2</p>
+  <p>Jigsaw Encryption System (JES) takes its inspiration from jigsaw 
+  puzzles. Most cryptography methods is a 1-to-1 file method - during 
+  encryption, a single unencrypted file (commonly known as plain text) is 
+  encrypted into one encrypted file (commonly known as cipher text) using a
+  key. Decryption does the reverse. Mathematically,</p>
+  <p><i class="math">encrypt(plaintext, key) --&gt; ciphertext</i></p>
+  <p><i class="math">decrypt(ciphertext, key) --&gt; plaintext</i></p>
+  <p>If encryption and decryption are seen as transformation and de- 
+  transformation functions, respectively, between plain text and cipher 
+  text; the weakest link is in the 1-to-1 file mapping. Brute force attack 
+  is possible because all the plain text information exist in the cipher 
+  text, though transformed.</p>
+  <p>JES addresses the 1-to-1 file weakness by using 1-to-N file mapping. 
+  This is likened to taking a picture and make a jigsaw puzzle out of it. 
+  The complexity of brute force attack increases exponentially with the 
+  number of jigsaw pieces. By producing many files, it also makes it 
+  possible to transport the encrypted file safely via multiple routes, and 
+  this prevents reduces the chances of man-in-the-middle attack. This is 
+  like making a 1000-piece jigsaw puzzle, shuffle the pieces, load the 
+  pieces into 5 containers and the assembly instruction in the 6th 
+  container. If one container is hijacked, all the information is not 
+  compromised.</p>
+  <p>Given that the key size of AES-256 is 32 characters long (32 
+  characters of 8 bytes each = 256 bytes) and given that there are 94 
+  characters in the set of mixed alphanumeric with symbols (that is, 
+  abcdefghijklmnopqr 
+  stuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&amp;*()-_+=~`[]{}|\:;&quot;'
+  &lt;&gt;,.?/), the total number of keys is 1.38 x 10**63 (94**32).</p>
+  <p>How does this number of permutations compare with Jigsaw 
+  Encryption?</p>
+  <p>Assuming that Jigsaw Encryption is used to encrypt a 1 MB (1048576 
+  bytes) file and split into 16 64-KB Jigsaw files, there are 2 x 10**13 
+  permutations to assemble 16 64-KB files into the original 1 MB file using
+  Jigsaw version 1.</p>
+  <p>Jigsaw version 2 provides 63 variations for each Jigsaw file. Hence, 
+  the full permutations possible for 16 64-KB files is (2 x 10**13)**63 or 
+  9 x 10**837, and that is just for a 1 MB file split into 16 64-KB. Jigsaw
+  files.</p>
+  <p>Jigsaw version 3 takes the Jigsaw file provided by Jigsaw version 2 
+  and apply one of the 1350 transpositions. Hence, the full permutations 
+  possible for 16 64-KB files is (9 x 10**837)**1350 or 1 x 
+  10**1131238.</p>
+
+<!-- ==================== CLASSES ==================== -->
+<a name="section-Classes"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Classes</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-Classes"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="copads.copads.jigsaw.JigsawCore-class.html" class="summary-name">JigsawCore</a><br />
+      Class to hold the core functions that are common for Jigsaw 
+        implementations.
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="copads.copads.jigsaw.JigsawFile-class.html" class="summary-name">JigsawFile</a><br />
+      Implementation of Jigsaw System for files, to be used on individual 
+      file; where a file will be split into multiple smaller files of 
+      either equal or unequal file sizes known as Jigsaw files.
+    </td>
+  </tr>
+</table>
+<p class="indent-wrapped-lines"><b>Imports:</b>
+  <span title="os">os</span>,
+  <span title="random">random</span>,
+  <span title="hashlib">hashlib</span>
+</p><br />
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="copads.copads-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            ><a class="navbar" target="_top" href="https://github.com/mauriceling/copads">https://github.com/mauriceling/copads</a></th>
+          </tr></table></th>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%%">
+  <tr>
+    <td align="left" class="footer">
+    Generated by Epydoc 3.0.1 on Sun Feb 25 20:14:29 2018
+    </td>
+    <td align="right" class="footer">
+      <a target="mainFrame" href="http://epydoc.sourceforge.net"
+        >http://epydoc.sourceforge.net</a>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  <!--
+  // Private objects are initially displayed (because if
+  // javascript is turned off then we want them to be
+  // visible); but by default, we want to hide them.  So hide
+  // them unless we have a cookie that says to show them.
+  checkCookie();
+  // -->
+</script>
+</body>
+</html>

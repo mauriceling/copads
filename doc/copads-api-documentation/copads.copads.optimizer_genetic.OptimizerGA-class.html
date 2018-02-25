@@ -1,0 +1,644 @@
+<?xml version="1.0" encoding="ascii"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>copads.copads.optimizer_genetic.OptimizerGA</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="copads.copads-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            ><a class="navbar" target="_top" href="https://github.com/mauriceling/copads">https://github.com/mauriceling/copads</a></th>
+          </tr></table></th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <span class="breadcrumbs">
+        Package&nbsp;copads ::
+        <a href="copads.copads-module.html">Package&nbsp;copads</a> ::
+        <a href="copads.copads.optimizer_genetic-module.html">Module&nbsp;optimizer_genetic</a> ::
+        Class&nbsp;OptimizerGA
+      </span>
+    </td>
+    <td>
+      <table cellpadding="0" cellspacing="0">
+        <!-- hide/show private -->
+        <tr><td align="right"><span class="options">[<a href="javascript:void(0);" class="privatelink"
+    onclick="toggle_private();">hide&nbsp;private</a>]</span></td></tr>
+        <tr><td align="right"><span class="options"
+            >[<a href="frames.html" target="_top">frames</a
+            >]&nbsp;|&nbsp;<a href="copads.copads.optimizer_genetic.OptimizerGA-class.html"
+            target="_top">no&nbsp;frames</a>]</span></td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<!-- ==================== CLASS DESCRIPTION ==================== -->
+<h1 class="epydoc">Class OptimizerGA</h1><p class="nomargin-top"><span class="codelink"><a href="copads.copads.optimizer_genetic-pysrc.html#OptimizerGA">source&nbsp;code</a></span></p>
+<pre class="base-tree">
+object --+
+         |
+        <strong class="uidshort">OptimizerGA</strong>
+</pre>
+
+<hr />
+<p>Genetic algorithm (GA) optimizer class.</p>
+  <p>This class takes an OptimizationTarget object (which represents an 
+  individual organism) and replicates it to the required population size 
+  and store them in population dictionary (where the keys represents the 
+  sample IDs). These sample IDs will be reused over generations; hence, 
+  have to take account of population count to be unique. Two functions 
+  needs to be defined - mutate (which mutates the chromosomes in 
+  population[ID].chromosomes and are bounded by population[ID]. 
+  chromosomes_lower_bounds and population[ID].chromosomes_upper_bounds for 
+  lower and upper value boundaries respectively), and mate (which 
+  eliminates unfit organisms and mates fit organisms for the next 
+  generation). There is a defined set of mating and mutation methods 
+  pre-defined but these can be overrode. The run method performs GA 
+  optimization on the population.</p>
+
+<!-- ==================== INSTANCE METHODS ==================== -->
+<a name="section-InstanceMethods"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Instance Methods</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-InstanceMethods"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="copads.copads.optimizer_genetic.OptimizerGA-class.html#__init__" class="summary-sig-name">__init__</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">optTarget</span>,
+        <span class="summary-sig-arg">population_size</span>=<span class="summary-sig-default">10</span>,
+        <span class="summary-sig-arg">max_generations</span>=<span class="summary-sig-default">100</span>)</span><br />
+      Constructor method.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="copads.copads.optimizer_genetic-pysrc.html#OptimizerGA.__init__">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="copads.copads.optimizer_genetic.OptimizerGA-class.html#setMutate" class="summary-sig-name">setMutate</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">name</span>=<span class="summary-sig-default">'random'</span>)</span><br />
+      Method to set mutation scheme.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="copads.copads.optimizer_genetic-pysrc.html#OptimizerGA.setMutate">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="copads.copads.optimizer_genetic.OptimizerGA-class.html#setMate" class="summary-sig-name">setMate</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">name</span>=<span class="summary-sig-default">'top50fission'</span>)</span><br />
+      Method to set mating scheme.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="copads.copads.optimizer_genetic-pysrc.html#OptimizerGA.setMate">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="copads.copads.optimizer_genetic.OptimizerGA-class.html#run" class="summary-sig-name">run</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Method to run the GA optimizer, which will execute the following 
+      steps until one of the organism is fitted (OptimizationTarget.fitted 
+      == True) or the maximum generation is reached:</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="copads.copads.optimizer_genetic-pysrc.html#OptimizerGA.run">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="_saveExtremes"></a><span class="summary-sig-name">_saveExtremes</span>(<span class="summary-sig-arg">self</span>)</span><br />
+      Private method - saves the best organism (organism with the highest 
+      fitness score) and worst organism (organism with the lowest fitness 
+      score) across generations.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="copads.copads.optimizer_genetic-pysrc.html#OptimizerGA._saveExtremes">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="copads.copads.optimizer_genetic.OptimizerGA-class.html#_mutateRandom" class="summary-sig-name" onclick="show_private();">_mutateRandom</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">population</span>)</span><br />
+      Private method - random mutation scheme (mutation scheme = random).</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="copads.copads.optimizer_genetic-pysrc.html#OptimizerGA._mutateRandom">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="copads.copads.optimizer_genetic.OptimizerGA-class.html#_mateNone" class="summary-sig-name" onclick="show_private();">_mateNone</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">population</span>)</span><br />
+      Private method - mating scheme which does nothing (mating scheme = 
+      top50fission).</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="copads.copads.optimizer_genetic-pysrc.html#OptimizerGA._mateNone">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="copads.copads.optimizer_genetic.OptimizerGA-class.html#_mateTop50Fission" class="summary-sig-name" onclick="show_private();">_mateTop50Fission</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">population</span>)</span><br />
+      Private method - top 50% Fission mating scheme (mating scheme = 
+      top50fission).</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="copads.copads.optimizer_genetic-pysrc.html#OptimizerGA._mateTop50Fission">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="copads.copads.optimizer_genetic.OptimizerGA-class.html#_mateTopFission" class="summary-sig-name" onclick="show_private();">_mateTopFission</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">population</span>)</span><br />
+      Private method - top organism Fission mating scheme (mating scheme = 
+      topfission).</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="copads.copads.optimizer_genetic-pysrc.html#OptimizerGA._mateTopFission">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" class="summary">
+    <p class="indent-wrapped-lines"><b>Inherited from <code>object</code></b>:
+      <code>__delattr__</code>,
+      <code>__format__</code>,
+      <code>__getattribute__</code>,
+      <code>__hash__</code>,
+      <code>__new__</code>,
+      <code>__reduce__</code>,
+      <code>__reduce_ex__</code>,
+      <code>__repr__</code>,
+      <code>__setattr__</code>,
+      <code>__sizeof__</code>,
+      <code>__str__</code>,
+      <code>__subclasshook__</code>
+      </p>
+    </td>
+  </tr>
+</table>
+<!-- ==================== PROPERTIES ==================== -->
+<a name="section-Properties"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Properties</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-Properties"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+  <tr>
+    <td colspan="2" class="summary">
+    <p class="indent-wrapped-lines"><b>Inherited from <code>object</code></b>:
+      <code>__class__</code>
+      </p>
+    </td>
+  </tr>
+</table>
+<!-- ==================== METHOD DETAILS ==================== -->
+<a name="section-MethodDetails"></a>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Method Details</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-MethodDetails"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+</table>
+<a name="__init__"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">__init__</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">optTarget</span>,
+        <span class="sig-arg">population_size</span>=<span class="sig-default">10</span>,
+        <span class="sig-arg">max_generations</span>=<span class="sig-default">100</span>)</span>
+    <br /><em class="fname">(Constructor)</em>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="copads.copads.optimizer_genetic-pysrc.html#OptimizerGA.__init__">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Constructor method.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>optTarget</code></strong> (optimizer_genetic.OptimizationTarget object) - object to optimize.</li>
+        <li><strong class="pname"><code>population_size</code></strong> (integer) - number of organisms in population (Default = 10).</li>
+        <li><strong class="pname"><code>max_generations</code></strong> (integer) - maximum number of generations to optimize (Default = 10).</li>
+    </ul></dd>
+    <dt>Overrides:
+        object.__init__
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="setMutate"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">setMutate</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">name</span>=<span class="sig-default">'random'</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="copads.copads.optimizer_genetic-pysrc.html#OptimizerGA.setMutate">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Method to set mutation scheme. Allowable mutation schemes are:</p>
+  <ul>
+    <li>
+      random
+    </li>
+  </ul>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>name</code></strong> (string) - name of mutation scheme (Default = random).</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="setMate"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">setMate</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">name</span>=<span class="sig-default">'top50fission'</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="copads.copads.optimizer_genetic-pysrc.html#OptimizerGA.setMate">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Method to set mating scheme. Allowable mating schemes are:</p>
+  <ul>
+    <li>
+      none
+    </li>
+    <li>
+      top50fission
+    </li>
+    <li>
+      topfission
+    </li>
+  </ul>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>name</code></strong> (string) - name of mating scheme (Default = none).</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="run"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">run</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="copads.copads.optimizer_genetic-pysrc.html#OptimizerGA.run">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Method to run the GA optimizer, which will execute the following steps
+  until one of the organism is fitted (OptimizationTarget.fitted == True) 
+  or the maximum generation is reached:</p>
+  <ul>
+    <li>
+      for each organism, execute runnerFunction()
+    </li>
+    <li>
+      for each organism, execute dataFunction()
+    </li>
+    <li>
+      for each organism, execute comparatorFunction()
+    </li>
+    <li>
+      if none of the organisms is fitted, execute mutate function and mate 
+      function
+    </li>
+  </ul>
+  <p>However, all organisms in the population will undergo mutation before 
+  the first execution. This is to prevent all organisms from getting the 
+  same fitness score at the first generation as all organisms are clones of
+  each other at instantiation.</p>
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>(generation count, population dictionary)</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="_mutateRandom"></a>
+<div class="private">
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">_mutateRandom</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">population</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="copads.copads.optimizer_genetic-pysrc.html#OptimizerGA._mutateRandom">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Private method - random mutation scheme (mutation scheme = random). In
+  this scheme, each of the chromosome is randomly mutated. A random float 
+  (multiplier) between 0 and 2 will be generated for each element on the 
+  chromosome. If the multiplier is lower than 1, then the data value of the
+  element on the chromosome will be reduced. if the multipler is more than 
+  1, then the data value of the element on the chromosome will be 
+  increased.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>population</code></strong> (dictionary) - population to mutate</li>
+    </ul></dd>
+    <dt>Returns:</dt>
+        <dd>mutated population</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="_mateNone"></a>
+<div class="private">
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">_mateNone</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">population</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="copads.copads.optimizer_genetic-pysrc.html#OptimizerGA._mateNone">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Private method - mating scheme which does nothing (mating scheme = 
+  top50fission). In this scheme, the original population is the new 
+  population.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>population</code></strong> (dictionary) - population to mate</li>
+    </ul></dd>
+    <dt>Returns:</dt>
+        <dd>mated population</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="_mateTop50Fission"></a>
+<div class="private">
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">_mateTop50Fission</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">population</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="copads.copads.optimizer_genetic-pysrc.html#OptimizerGA._mateTop50Fission">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Private method - top 50% Fission mating scheme (mating scheme = 
+  top50fission). In this scheme, organisms with fitness score lower than 
+  the average fitness score of the population will be removed. The 
+  remaining organisms will be randomly selected for cloning / duplication 
+  to fill up the population.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>population</code></strong> (dictionary) - population to mate</li>
+    </ul></dd>
+    <dt>Returns:</dt>
+        <dd>mated population</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="_mateTopFission"></a>
+<div class="private">
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">_mateTopFission</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">population</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="copads.copads.optimizer_genetic-pysrc.html#OptimizerGA._mateTopFission">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Private method - top organism Fission mating scheme (mating scheme = 
+  topfission). In this scheme, only the organism with the best fitness 
+  score will survive and be cloned to fill up the population for the next 
+  generation.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>population</code></strong> (dictionary) - population to mate</li>
+    </ul></dd>
+    <dt>Returns:</dt>
+        <dd>mated population</dd>
+  </dl>
+</td></tr></table>
+</div>
+<br />
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="copads.copads-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            ><a class="navbar" target="_top" href="https://github.com/mauriceling/copads">https://github.com/mauriceling/copads</a></th>
+          </tr></table></th>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%%">
+  <tr>
+    <td align="left" class="footer">
+    Generated by Epydoc 3.0.1 on Sun Feb 25 20:14:31 2018
+    </td>
+    <td align="right" class="footer">
+      <a target="mainFrame" href="http://epydoc.sourceforge.net"
+        >http://epydoc.sourceforge.net</a>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  <!--
+  // Private objects are initially displayed (because if
+  // javascript is turned off then we want them to be
+  // visible); but by default, we want to hide them.  So hide
+  // them unless we have a cookie that says to show them.
+  checkCookie();
+  // -->
+</script>
+</body>
+</html>

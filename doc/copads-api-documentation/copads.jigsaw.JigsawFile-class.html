@@ -1,0 +1,1227 @@
+<?xml version="1.0" encoding="ascii"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>copads.jigsaw.JigsawFile</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="copads-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            ><a class="navbar" target="_top" href="https://github.com/mauriceling/copads">https://github.com/mauriceling/copads</a></th>
+          </tr></table></th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <span class="breadcrumbs">
+        <a href="copads-module.html">Package&nbsp;copads</a> ::
+        <a href="copads.jigsaw-module.html">Module&nbsp;jigsaw</a> ::
+        Class&nbsp;JigsawFile
+      </span>
+    </td>
+    <td>
+      <table cellpadding="0" cellspacing="0">
+        <!-- hide/show private -->
+        <tr><td align="right"><span class="options">[<a href="javascript:void(0);" class="privatelink"
+    onclick="toggle_private();">hide&nbsp;private</a>]</span></td></tr>
+        <tr><td align="right"><span class="options"
+            >[<a href="frames.html" target="_top">frames</a
+            >]&nbsp;|&nbsp;<a href="copads.jigsaw.JigsawFile-class.html"
+            target="_top">no&nbsp;frames</a>]</span></td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<!-- ==================== CLASS DESCRIPTION ==================== -->
+<h1 class="epydoc">Class JigsawFile</h1><p class="nomargin-top"><span class="codelink"><a href="copads.jigsaw-pysrc.html#JigsawFile">source&nbsp;code</a></span></p>
+<pre class="base-tree">
+object --+    
+         |    
+<a href="copads.jigsaw.JigsawCore-class.html">JigsawCore</a> --+
+             |
+            <strong class="uidshort">JigsawFile</strong>
+</pre>
+
+<hr />
+<p>Implementation of Jigsaw System for files, to be used on individual 
+  file; where a file will be split into multiple smaller files of either 
+  equal or unequal file sizes known as Jigsaw files. A keyfile will be 
+  generated (the file name is &lt;original filename with 
+  extension&gt;.jgk), which is required for assembly of the various 
+  sub-files (file extension is '.jig' into the original file.</p>
+<pre class="py-doctest">
+<span class="py-prompt">&gt;&gt;&gt; </span><span class="py-keyword">from</span> jigsaw <span class="py-keyword">import</span> JigsawFile
+<span class="py-prompt">&gt;&gt;&gt; </span>jsys = JigsawFile()
+<span class="py-prompt">&gt;&gt;&gt; </span>jsys.setting(<span class="py-string">'version'</span>, 1)          <span class="py-comment"># Jigsaw version 1</span>
+<span class="py-prompt">&gt;&gt;&gt; </span>jsys.setting(<span class="py-string">'slicer'</span>, <span class="py-string">'uneven'</span>)    <span class="py-comment"># generates uneven sized files</span>
+<span class="py-prompt">&gt;&gt;&gt; </span>jsys.setting(<span class="py-string">'blocksize'</span>, 65535)    <span class="py-comment"># 64kb &lt; file size &lt; 128kb</span>
+<span class="py-prompt">&gt;&gt;&gt; </span>jsys.setting(<span class="py-string">'filenamelength'</span>, 30)  <span class="py-comment"># 30 character sub-file names</span>
+<span class="py-prompt">&gt;&gt;&gt; </span>jsys.setting(<span class="py-string">'hashlength'</span>, 16)      <span class="py-comment"># 16 character sub-file hash</span>
+<span class="py-prompt">&gt;&gt;&gt; </span><span class="py-comment"># encrypt /home/mling/GA.zip and place sub-files and keyfile into </span>
+<span class="py-prompt">&gt;&gt;&gt; </span><span class="py-comment"># /home/jigsaw</span>
+<span class="py-prompt">&gt;&gt;&gt; </span>jsys.encrypt(<span class="py-string">'/home/mling/GA.zip'</span>, /home/jigsaw)
+<span class="py-prompt">&gt;&gt;&gt; </span><span class="py-comment"># decrypt the previously encrypted file</span>
+<span class="py-prompt">&gt;&gt;&gt; </span><span class="py-comment"># keyfile = /home/jigsaw/GA.zip.jgk</span>
+<span class="py-prompt">&gt;&gt;&gt; </span><span class="py-comment"># all the encrypted sub-files are found in /home/jigsaw</span>
+<span class="py-prompt">&gt;&gt;&gt; </span><span class="py-comment"># assembled/decrypted file = /home/jigsaw/GA_decrypt.zip</span>
+<span class="py-prompt">&gt;&gt;&gt; </span>jsys.decrypt(<span class="py-string">'/home/jigsaw/GA.zip.jgk'</span>, 
+<span class="py-more">... </span>             <span class="py-string">'/home/jigsaw/GA_decrypt.zip'</span>, 
+<span class="py-more">... </span>             <span class="py-string">'/home/jigsaw'</span>)
+<span class="py-prompt">&gt;&gt;&gt;</span></pre>
+  <p>The following Jigsaw versions are implemented:</p>
+  <ul>
+    <li>
+      version 1: The original file is sliced and saved as a series of 
+      smaller files.
+    </li>
+    <li>
+      version 2: The original file is sliced into blocks. Each block is 
+      separated into 2 sub-blocks where the first sub-block is reversed and
+      merged before saved as a file.
+    </li>
+  </ul>
+
+<!-- ==================== INSTANCE METHODS ==================== -->
+<a name="section-InstanceMethods"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Instance Methods</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-InstanceMethods"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="copads.jigsaw.JigsawFile-class.html#__init__" class="summary-sig-name">__init__</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Constructor method.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="copads.jigsaw-pysrc.html#JigsawFile.__init__">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="copads.jigsaw.JigsawFile-class.html#setting" class="summary-sig-name">setting</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">key</span>,
+        <span class="summary-sig-arg">value</span>)</span><br />
+      Function to set various options to the system.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="copads.jigsaw-pysrc.html#JigsawFile.setting">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="_generateFilename"></a><span class="summary-sig-name">_generateFilename</span>(<span class="summary-sig-arg">self</span>)</span><br />
+      Private method to generate non-duplicating name for sub-files.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="copads.jigsaw-pysrc.html#JigsawFile._generateFilename">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="copads.jigsaw.JigsawFile-class.html#_setEncryptDir" class="summary-sig-name" onclick="show_private();">_setEncryptDir</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">outputdir</span>=<span class="summary-sig-default"><code class="variable-quote">'</code><code class="variable-string"></code><code class="variable-quote">'</code></span>)</span><br />
+      Private function to set the input and output directories prior to 
+      encryption.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="copads.jigsaw-pysrc.html#JigsawFile._setEncryptDir">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="copads.jigsaw.JigsawFile-class.html#_writeKeyHeader" class="summary-sig-name" onclick="show_private();">_writeKeyHeader</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Private method to write out keyfile (.jgk) header.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="copads.jigsaw-pysrc.html#JigsawFile._writeKeyHeader">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="copads.jigsaw.JigsawFile-class.html#_addHeader" class="summary-sig-name" onclick="show_private();">_addHeader</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">key</span>,
+        <span class="summary-sig-arg">value</span>)</span><br />
+      Private method to add items to be written into keyfile.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="copads.jigsaw-pysrc.html#JigsawFile._addHeader">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="copads.jigsaw.JigsawFile-class.html#_encryptVerbosity" class="summary-sig-name" onclick="show_private();">_encryptVerbosity</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">count</span>,
+        <span class="summary-sig-arg">data</span>)</span><br />
+      Private method to generate process information based in level of 
+      verbosity (1 = most information; highest verbosity) during 
+      encryption.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="copads.jigsaw-pysrc.html#JigsawFile._encryptVerbosity">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="copads.jigsaw.JigsawFile-class.html#_writeJigsawFile" class="summary-sig-name" onclick="show_private();">_writeJigsawFile</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">block</span>)</span><br />
+      Private method to write a block into a Jigsaw file.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="copads.jigsaw-pysrc.html#JigsawFile._writeJigsawFile">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="copads.jigsaw.JigsawFile-class.html#_encrypt1" class="summary-sig-name" onclick="show_private();">_encrypt1</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">filename</span>)</span><br />
+      Private method to run the operations for Jigsaw version 1 encryption.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="copads.jigsaw-pysrc.html#JigsawFile._encrypt1">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="copads.jigsaw.JigsawFile-class.html#_version2BlockReverse" class="summary-sig-name" onclick="show_private();">_version2BlockReverse</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">block</span>,
+        <span class="summary-sig-arg">reverse_flag</span>)</span><br />
+      Private method for block reversal (mainly used by Jigsaw version 2).</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="copads.jigsaw-pysrc.html#JigsawFile._version2BlockReverse">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="copads.jigsaw.JigsawFile-class.html#_encrypt2" class="summary-sig-name" onclick="show_private();">_encrypt2</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">filename</span>)</span><br />
+      Private method to run the operations for Jigsaw version 2 encryption.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="copads.jigsaw-pysrc.html#JigsawFile._encrypt2">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="copads.jigsaw.JigsawFile-class.html#encrypt" class="summary-sig-name">encrypt</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">filename</span>,
+        <span class="summary-sig-arg">outputdir</span>=<span class="summary-sig-default"><code class="variable-quote">'</code><code class="variable-string"></code><code class="variable-quote">'</code></span>)</span><br />
+      Function to run encryption.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="copads.jigsaw-pysrc.html#JigsawFile.encrypt">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="_readKeyFile"></a><span class="summary-sig-name">_readKeyFile</span>(<span class="summary-sig-arg">self</span>)</span><br />
+      Private method to read and process a keyfile (.jgk) for decryption 
+      and assembly.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="copads.jigsaw-pysrc.html#JigsawFile._readKeyFile">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="copads.jigsaw.JigsawFile-class.html#_setDecryptDir" class="summary-sig-name" onclick="show_private();">_setDecryptDir</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">decryptfilename</span>=<span class="summary-sig-default"><code class="variable-quote">'</code><code class="variable-string"></code><code class="variable-quote">'</code></span>,
+        <span class="summary-sig-arg">encryptdir</span>=<span class="summary-sig-default"><code class="variable-quote">'</code><code class="variable-string"></code><code class="variable-quote">'</code></span>)</span><br />
+      Private function to set the input directory and output file name 
+      prior to decryption and assembly.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="copads.jigsaw-pysrc.html#JigsawFile._setDecryptDir">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="copads.jigsaw.JigsawFile-class.html#_decryptVerbosity" class="summary-sig-name" onclick="show_private();">_decryptVerbosity</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">count</span>,
+        <span class="summary-sig-arg">data</span>)</span><br />
+      Private method to generate process information based in level of 
+      verbosity (1 = most information; highest verbosity) during 
+      decryption.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="copads.jigsaw-pysrc.html#JigsawFile._decryptVerbosity">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="copads.jigsaw.JigsawFile-class.html#_decryptSummary" class="summary-sig-name" onclick="show_private();">_decryptSummary</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">num_blocks</span>,
+        <span class="summary-sig-arg">expected</span>,
+        <span class="summary-sig-arg">actual</span>)</span><br />
+      Private method to display summary of decryption.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="copads.jigsaw-pysrc.html#JigsawFile._decryptSummary">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="_decrypt1"></a><span class="summary-sig-name">_decrypt1</span>(<span class="summary-sig-arg">self</span>)</span><br />
+      Private method to run the operations for Jigsaw version 1 decryption.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="copads.jigsaw-pysrc.html#JigsawFile._decrypt1">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="_decrypt2"></a><span class="summary-sig-name">_decrypt2</span>(<span class="summary-sig-arg">self</span>)</span><br />
+      Private method to run the operations for Jigsaw version 2 decryption.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="copads.jigsaw-pysrc.html#JigsawFile._decrypt2">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="_compareHash"></a><span class="summary-sig-name">_compareHash</span>(<span class="summary-sig-arg">self</span>)</span><br />
+      Private method to print out a series of file hashes from the expected
+      decrypted file and the actual decrypted file.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="copads.jigsaw-pysrc.html#JigsawFile._compareHash">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="copads.jigsaw.JigsawFile-class.html#decrypt" class="summary-sig-name">decrypt</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">keyfilename</span>,
+        <span class="summary-sig-arg">decryptfilename</span>=<span class="summary-sig-default"><code class="variable-quote">'</code><code class="variable-string"></code><code class="variable-quote">'</code></span>,
+        <span class="summary-sig-arg">encryptdir</span>=<span class="summary-sig-default"><code class="variable-quote">'</code><code class="variable-string"></code><code class="variable-quote">'</code></span>)</span><br />
+      Function to run decryption.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="copads.jigsaw-pysrc.html#JigsawFile.decrypt">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" class="summary">
+    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="copads.jigsaw.JigsawCore-class.html">JigsawCore</a></code></b>:
+      <code><a href="copads.jigsaw.JigsawCore-class.html#evenSlicer">evenSlicer</a></code>,
+      <code><a href="copads.jigsaw.JigsawCore-class.html#generateHash">generateHash</a></code>,
+      <code><a href="copads.jigsaw.JigsawCore-class.html#hash">hash</a></code>,
+      <code><a href="copads.jigsaw.JigsawCore-class.html#rchoice">rchoice</a></code>,
+      <code><a href="copads.jigsaw.JigsawCore-class.html#reverseBlock">reverseBlock</a></code>,
+      <code><a href="copads.jigsaw.JigsawCore-class.html#reversePartBlock">reversePartBlock</a></code>,
+      <code><a href="copads.jigsaw.JigsawCore-class.html#rfloat">rfloat</a></code>,
+      <code><a href="copads.jigsaw.JigsawCore-class.html#shuffleBlock">shuffleBlock</a></code>,
+      <code><a href="copads.jigsaw.JigsawCore-class.html#subBlock">subBlock</a></code>,
+      <code><a href="copads.jigsaw.JigsawCore-class.html#unevenSlicer">unevenSlicer</a></code>
+      </p>
+    <p class="indent-wrapped-lines"><b>Inherited from <code>object</code></b>:
+      <code>__delattr__</code>,
+      <code>__format__</code>,
+      <code>__getattribute__</code>,
+      <code>__hash__</code>,
+      <code>__new__</code>,
+      <code>__reduce__</code>,
+      <code>__reduce_ex__</code>,
+      <code>__repr__</code>,
+      <code>__setattr__</code>,
+      <code>__sizeof__</code>,
+      <code>__str__</code>,
+      <code>__subclasshook__</code>
+      </p>
+    </td>
+  </tr>
+</table>
+<!-- ==================== PROPERTIES ==================== -->
+<a name="section-Properties"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Properties</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-Properties"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+  <tr>
+    <td colspan="2" class="summary">
+    <p class="indent-wrapped-lines"><b>Inherited from <code>object</code></b>:
+      <code>__class__</code>
+      </p>
+    </td>
+  </tr>
+</table>
+<!-- ==================== METHOD DETAILS ==================== -->
+<a name="section-MethodDetails"></a>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Method Details</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-MethodDetails"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+</table>
+<a name="__init__"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">__init__</span>(<span class="sig-arg">self</span>)</span>
+    <br /><em class="fname">(Constructor)</em>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="copads.jigsaw-pysrc.html#JigsawFile.__init__">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Constructor method.</p>
+  <dl class="fields">
+    <dt>Overrides:
+        object.__init__
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="setting"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">setting</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">key</span>,
+        <span class="sig-arg">value</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="copads.jigsaw-pysrc.html#JigsawFile.setting">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Function to set various options to the system.</p>
+  <p>Available options to set are:</p>
+  <ul>
+    <li>
+      blocksize: Set the size of a Jigsaw file. Allowable values are any 
+      positive integer. In the case of uneven slicer, size of Jisgaw files 
+      will be between 1 to 2  block sizes.
+    </li>
+    <li>
+      filenamelength: Set the length of file name of a Jigsaw file. Longer 
+      file name determines the number of allowable Jigsaw files in a 
+      directory, up to file system limits. Allowable values are any 
+      positive integer.
+    </li>
+    <li>
+      hashlength: Set the file has length of each Jigsaw file. This is used
+      to check for fidelity of the files. Allowable values are any positive
+      integer.
+    </li>
+    <li>
+      slicer: Set the file slicing method. Allowable values are 'even' 
+      (even Jigsaw file size) or 'uneven' (uneven Jigsaw file size).
+    </li>
+    <li>
+      verbose: Set the verbosity from 1 (most information) onwards.
+    </li>
+    <li>
+      version: Set the Jigsaw version. Allowable values are 1 (version 1).
+    </li>
+  </ul>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>key</code></strong> (string) - name of option to set.</li>
+        <li><strong class="pname"><code>value</code></strong> - value to set the option.</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="_setEncryptDir"></a>
+<div class="private">
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">_setEncryptDir</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">outputdir</span>=<span class="sig-default"><code class="variable-quote">'</code><code class="variable-string"></code><code class="variable-quote">'</code></span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="copads.jigsaw-pysrc.html#JigsawFile._setEncryptDir">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Private function to set the input and output directories prior to 
+  encryption.</p>
+  <p>Input directory (directory of file to encrypt): It will first attempt 
+  to get input directory from input file name if the input file name is an 
+  absolute path. Otherwise, if the input file name is a relative path, the 
+  current working directory will be used.</p>
+  <p>Output directory (directory to write out Jigsaw files and keyfile): If
+  given, it will be used. If not given, it will use the input directory 
+  (depending on whether the input file name is absolute or relative file 
+  name).</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>outputdir</code></strong> (string) - absolute path of directory (without trailing slash) to write the 
+          Jigsaw files (encrypted/sub-files) into. This parameter is 
+          optional. If not given, the Jigsaw files will be in the same 
+          directory as the input file or int he current working directory.</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="_writeKeyHeader"></a>
+<div class="private">
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">_writeKeyHeader</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="copads.jigsaw-pysrc.html#JigsawFile._writeKeyHeader">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Private method to write out keyfile (.jgk) header. The header contains
+  information and metadata related to the encryption, which may be used 
+  during decryption process. To separate from header from the encryption 
+  coding, header lines starts with '#'.</p>
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>name of keyfile.</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="_addHeader"></a>
+<div class="private">
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">_addHeader</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">key</span>,
+        <span class="sig-arg">value</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="copads.jigsaw-pysrc.html#JigsawFile._addHeader">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Private method to add items to be written into keyfile.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>key</code></strong> (string) - name of option to set.</li>
+        <li><strong class="pname"><code>value</code></strong> - value to set the option.</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="_encryptVerbosity"></a>
+<div class="private">
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">_encryptVerbosity</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">count</span>,
+        <span class="sig-arg">data</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="copads.jigsaw-pysrc.html#JigsawFile._encryptVerbosity">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Private method to generate process information based in level of 
+  verbosity (1 = most information; highest verbosity) during 
+  encryption.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>count</code></strong> (integer) - block sequence</li>
+        <li><strong class="pname"><code>data</code></strong> (string) - process information</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="_writeJigsawFile"></a>
+<div class="private">
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">_writeJigsawFile</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">block</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="copads.jigsaw-pysrc.html#JigsawFile._writeJigsawFile">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Private method to write a block into a Jigsaw file. A truncated SHA1 
+  hash of the block/Jigsaw file will be generated for checking against 
+  corruption during file storage and transportation.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>block</code></strong> (byte) - data to be written into a Jigsaw file.</li>
+    </ul></dd>
+    <dt>Returns:</dt>
+        <dd>(hash, relative path of Jigsaw file)</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="_encrypt1"></a>
+<div class="private">
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">_encrypt1</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">filename</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="copads.jigsaw-pysrc.html#JigsawFile._encrypt1">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Private method to run the operations for Jigsaw version 1 
+  encryption.</p>
+  <p>The encryption coding write out into keyfile consist of the following 
+  (in the order, delimited by '&gt;&gt;'):</p>
+  <ul>
+    <li>
+      'AA'
+    </li>
+    <li>
+      block sequence (incremental integer from 0)
+    </li>
+    <li>
+      size of block (in bytes)
+    </li>
+    <li>
+      directory to write out Jigsaw file
+    </li>
+    <li>
+      name of Jigsaw file
+    </li>
+    <li>
+      truncated sha256 hash of block
+    </li>
+  </ul>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>filename</code></strong> (string) - name (absolute path or relative path) of file to be encrypted.</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="_version2BlockReverse"></a>
+<div class="private">
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">_version2BlockReverse</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">block</span>,
+        <span class="sig-arg">reverse_flag</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="copads.jigsaw-pysrc.html#JigsawFile._version2BlockReverse">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Private method for block reversal (mainly used by Jigsaw version 
+  2).</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>block</code></strong> (string or list) - data to be reversed.</li>
+        <li><strong class="pname"><code>reverse_flag</code></strong> (string) - type of reversal. Allowable values are:
+          <ul>
+            <li>
+              'A' (no reversal)
+            </li>
+            <li>
+              'B' (full reversal)
+            </li>
+            <li>
+              'C' (reverse first 200 bytes)
+            </li>
+            <li>
+              'D' (reverse first 400 bytes)
+            </li>
+            <li>
+              'E' (reverse first 600 bytes)
+            </li>
+            <li>
+              'F' (reverse first 800 bytes)
+            </li>
+            <li>
+              'G' (reverse first 1000 bytes)
+            </li>
+            <li>
+              'H' (reverse first 1200 bytes)
+            </li>
+            <li>
+              'I' (reverse first 1400 bytes)
+            </li>
+            <li>
+              'J' (reverse first 1600 bytes)
+            </li>
+            <li>
+              'K' (reverse first 1800 bytes)
+            </li>
+            <li>
+              'L' (reverse first 2000 bytes)
+            </li>
+            <li>
+              'M' (reverse first 2200 bytes)
+            </li>
+            <li>
+              'N' (reverse first 2400 bytes)
+            </li>
+            <li>
+              'O' (reverse first 2600 bytes)
+            </li>
+            <li>
+              'P' (reverse first 2800 bytes)
+            </li>
+            <li>
+              'Q' (reverse first 3000 bytes)
+            </li>
+            <li>
+              'R' (reverse first 3200 bytes)
+            </li>
+            <li>
+              'S' (reverse first 3400 bytes)
+            </li>
+            <li>
+              'T' (reverse first 3600 bytes)
+            </li>
+            <li>
+              'U' (reverse first 3800 bytes)
+            </li>
+            <li>
+              'V' (reverse first 4000 bytes)
+            </li>
+            <li>
+              '1' (reverse first 10% of the bytes)
+            </li>
+            <li>
+              '2' (reverse first 20% of the bytes)
+            </li>
+            <li>
+              '3' (reverse first 30% of the bytes)
+            </li>
+            <li>
+              '4' (reverse first 40% of the bytes)
+            </li>
+            <li>
+              '5' (reverse first 50% of the bytes)
+            </li>
+            <li>
+              '6' (reverse first 60% of the bytes)
+            </li>
+            <li>
+              '7' (reverse first 70% of the bytes)
+            </li>
+            <li>
+              '8' (reverse first 80% of the bytes)
+            </li>
+            <li>
+              '9' (reverse first 90% of the bytes)
+            </li>
+          </ul></li>
+    </ul></dd>
+    <dt>Returns:</dt>
+        <dd>reversed block</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="_encrypt2"></a>
+<div class="private">
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">_encrypt2</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">filename</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="copads.jigsaw-pysrc.html#JigsawFile._encrypt2">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Private method to run the operations for Jigsaw version 2 encryption. 
+  Jigsaw version 2 encryption requires block size to be at least 4096 bytes
+  and will set any smaller block size to 4096 bytes.</p>
+  <p>The encryption coding write out into keyfile consist of the following 
+  (in the order, delimited by '&gt;&gt;'):</p>
+  <ul>
+    <li>
+      'AA'
+    </li>
+    <li>
+      block sequence (incremental integer from 0)
+    </li>
+    <li>
+      reverse flag (A = original; B to V = different reversals)
+    </li>
+    <li>
+      size of block (in bytes)
+    </li>
+    <li>
+      directory to write out Jigsaw file
+    </li>
+    <li>
+      name of Jigsaw file
+    </li>
+    <li>
+      truncated sha256 hash of block
+    </li>
+  </ul>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>filename</code></strong> (string) - name (absolute path or relative path) of file to be encrypted.</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="encrypt"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">encrypt</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">filename</span>,
+        <span class="sig-arg">outputdir</span>=<span class="sig-default"><code class="variable-quote">'</code><code class="variable-string"></code><code class="variable-quote">'</code></span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="copads.jigsaw-pysrc.html#JigsawFile.encrypt">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Function to run encryption.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>filename</code></strong> (string) - name (absolute path or relative path) of file to be hashed.</li>
+        <li><strong class="pname"><code>outputdir</code></strong> (string) - absolute path of directory (without trailing slash) to write the 
+          Jigsaw files (encrypted/sub-files) into. This parameter is 
+          optional. If not given, the Jigsaw files will be in the same 
+          directory as the input file or in the current working directory.</li>
+    </ul></dd>
+    <dt>Returns:</dt>
+        <dd>name of keyfile.</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="_setDecryptDir"></a>
+<div class="private">
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">_setDecryptDir</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">decryptfilename</span>=<span class="sig-default"><code class="variable-quote">'</code><code class="variable-string"></code><code class="variable-quote">'</code></span>,
+        <span class="sig-arg">encryptdir</span>=<span class="sig-default"><code class="variable-quote">'</code><code class="variable-string"></code><code class="variable-quote">'</code></span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="copads.jigsaw-pysrc.html#JigsawFile._setDecryptDir">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Private function to set the input directory and output file name prior
+  to decryption and assembly.</p>
+  <p>Input directory (location of Jigsaw files): If given, it will be used.
+  If not given, it will try the following in sequence. Firstly, it will 
+  attempt to set to the directory of the keyfile if name of keyfile is 
+  absolute path. Secondly, it will attempt to set to the directory of the 
+  decrypted file if the name is an absolute path. If both attempt fails, it
+  will set to the current working directory.</p>
+  <p>Output file name (name of decrypted file): If given, it will be used. 
+  Otherwise, it will use the original file name from encryption as the 
+  output file name and write into the input (Jigsaw files) directory.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>decryptfilename</code></strong> (string) - absolute or relative file name for the decrypted file.</li>
+        <li><strong class="pname"><code>encryptdir</code></strong> (string) - absolute path of directory (without trailing slash) where the 
+          required Jigsaw files (encrypted/sub-files) are located.</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="_decryptVerbosity"></a>
+<div class="private">
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">_decryptVerbosity</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">count</span>,
+        <span class="sig-arg">data</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="copads.jigsaw-pysrc.html#JigsawFile._decryptVerbosity">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Private method to generate process information based in level of 
+  verbosity (1 = most information; highest verbosity) during 
+  decryption.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>count</code></strong> (integer) - block sequence</li>
+        <li><strong class="pname"><code>data</code></strong> (string) - process information</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="_decryptSummary"></a>
+<div class="private">
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">_decryptSummary</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">num_blocks</span>,
+        <span class="sig-arg">expected</span>,
+        <span class="sig-arg">actual</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="copads.jigsaw-pysrc.html#JigsawFile._decryptSummary">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Private method to display summary of decryption.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>num_blocks</code></strong> (integer) - number of Jigsaw files processed.</li>
+        <li><strong class="pname"><code>expected</code></strong> (integer) - expected number of bytes to be processed.</li>
+        <li><strong class="pname"><code>actual</code></strong> (integer) - actual number of bytes processed.</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="decrypt"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">decrypt</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">keyfilename</span>,
+        <span class="sig-arg">decryptfilename</span>=<span class="sig-default"><code class="variable-quote">'</code><code class="variable-string"></code><code class="variable-quote">'</code></span>,
+        <span class="sig-arg">encryptdir</span>=<span class="sig-default"><code class="variable-quote">'</code><code class="variable-string"></code><code class="variable-quote">'</code></span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="copads.jigsaw-pysrc.html#JigsawFile.decrypt">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Function to run decryption. The decryption information will be stored 
+  in a file - &lt;decryptfilename&gt;.jkd</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>keyfilename</code></strong> (string) - absolute path to the keyfile (.jgk) required for decryption.</li>
+        <li><strong class="pname"><code>decryptfilename</code></strong> (string) - absolute or relative file name for the decrypted file. This 
+          parameter is optional. If not given, the decrypted file will be 
+          in the same directory as the keyfile or in the current working 
+          directory.</li>
+        <li><strong class="pname"><code>encryptdir</code></strong> (string) - absolute path of directory (without trailing slash) where the 
+          required Jigsaw files (encrypted/sub-files) are located. This 
+          parameter is optional. If not given, it will be set to the same 
+          directory as the keyfile or in the current working directory.</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<br />
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="copads-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            ><a class="navbar" target="_top" href="https://github.com/mauriceling/copads">https://github.com/mauriceling/copads</a></th>
+          </tr></table></th>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%%">
+  <tr>
+    <td align="left" class="footer">
+    Generated by Epydoc 3.0.1 on Tue May 31 13:09:13 2016
+    </td>
+    <td align="right" class="footer">
+      <a target="mainFrame" href="http://epydoc.sourceforge.net"
+        >http://epydoc.sourceforge.net</a>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  <!--
+  // Private objects are initially displayed (because if
+  // javascript is turned off then we want them to be
+  // visible); but by default, we want to hide them.  So hide
+  // them unless we have a cookie that says to show them.
+  checkCookie();
+  // -->
+</script>
+</body>
+</html>

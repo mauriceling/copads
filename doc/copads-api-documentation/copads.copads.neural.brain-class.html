@@ -1,0 +1,1381 @@
+<?xml version="1.0" encoding="ascii"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>copads.copads.neural.brain</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="copads.copads-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            ><a class="navbar" target="_top" href="https://github.com/mauriceling/copads">https://github.com/mauriceling/copads</a></th>
+          </tr></table></th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <span class="breadcrumbs">
+        Package&nbsp;copads ::
+        <a href="copads.copads-module.html">Package&nbsp;copads</a> ::
+        <a href="copads.copads.neural-module.html">Module&nbsp;neural</a> ::
+        Class&nbsp;brain
+      </span>
+    </td>
+    <td>
+      <table cellpadding="0" cellspacing="0">
+        <!-- hide/show private -->
+        <tr><td align="right"><span class="options">[<a href="javascript:void(0);" class="privatelink"
+    onclick="toggle_private();">hide&nbsp;private</a>]</span></td></tr>
+        <tr><td align="right"><span class="options"
+            >[<a href="frames.html" target="_top">frames</a
+            >]&nbsp;|&nbsp;<a href="copads.copads.neural.brain-class.html"
+            target="_top">no&nbsp;frames</a>]</span></td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<!-- ==================== CLASS DESCRIPTION ==================== -->
+<h1 class="epydoc">Class brain</h1><p class="nomargin-top"><span class="codelink"><a href="copads.copads.neural-pysrc.html#brain">source&nbsp;code</a></span></p>
+<pre class="base-tree">
+object --+
+         |
+        <strong class="uidshort">brain</strong>
+</pre>
+
+<hr />
+<p>Class to represent a neuronal network (also known as the brain), using
+  SQLite database.</p>
+
+<!-- ==================== INSTANCE METHODS ==================== -->
+<a name="section-InstanceMethods"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Instance Methods</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-InstanceMethods"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="copads.copads.neural.brain-class.html#__init__" class="summary-sig-name">__init__</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">path</span>)</span><br />
+      Constructor method - initialize a new brain, or connect to an 
+      existing brain.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="copads.copads.neural-pysrc.html#brain.__init__">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="format"></a><span class="summary-sig-name">format</span>(<span class="summary-sig-arg">self</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="copads.copads.neural-pysrc.html#brain.format">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="copads.copads.neural.brain-class.html#add_neuron" class="summary-sig-name">add_neuron</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">**kwargs</span>)</span><br />
+      Method to add a new neuron into the brain.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="copads.copads.neural-pysrc.html#brain.add_neuron">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="copads.copads.neural.brain-class.html#add_synapse" class="summary-sig-name">add_synapse</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">sourceID</span>,
+        <span class="summary-sig-arg">destinationID</span>)</span><br />
+      Method to add a new synapse (connection between 2 neurons) into the 
+      brain.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="copads.copads.neural-pysrc.html#brain.add_synapse">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="copads.copads.neural.brain-class.html#delete_neuron" class="summary-sig-name">delete_neuron</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">ID</span>)</span><br />
+      Method to delete a neuron from the brain and all associated synapses.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="copads.copads.neural-pysrc.html#brain.delete_neuron">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="copads.copads.neural.brain-class.html#delete_synapse" class="summary-sig-name">delete_synapse</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">sourceID</span>,
+        <span class="summary-sig-arg">destinationID</span>)</span><br />
+      Method to delete a synapse (connection between 2 neurons) in the 
+      brain.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="copads.copads.neural-pysrc.html#brain.delete_synapse">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="copads.copads.neural.brain-class.html#_neuron_summation" class="summary-sig-name" onclick="show_private();">_neuron_summation</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">ID</span>)</span><br />
+      Private method - Calculate a single input (to be used as input for 
+      transfer / activation function) from a set of input vectors.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="copads.copads.neural-pysrc.html#brain._neuron_summation">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="copads.copads.neural.brain-class.html#_neuron_transfer" class="summary-sig-name" onclick="show_private();">_neuron_transfer</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">ID</span>,
+        <span class="summary-sig-arg">neuron_input</span>)</span><br />
+      Private method - Calculate the neuron output, using the transfer / 
+      activation function, from the calculated input of the summation 
+      function.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="copads.copads.neural-pysrc.html#brain._neuron_transfer">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="copads.copads.neural.brain-class.html#_synaptic_activation" class="summary-sig-name" onclick="show_private();">_synaptic_activation</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">ID</span>,
+        <span class="summary-sig-arg">state</span>=<span class="summary-sig-default">'pstate'</span>,
+        <span class="summary-sig-arg">stype</span>=<span class="summary-sig-default">'weight'</span>)</span><br />
+      Private method - Calculate each synaptic activation from a source ID 
+      and log the values into the respective input vectors of the 
+      destination neurons.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="copads.copads.neural-pysrc.html#brain._synaptic_activation">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="copads.copads.neural.brain-class.html#execute_neuron" class="summary-sig-name">execute_neuron</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">ID</span>,
+        <span class="summary-sig-arg">state</span>=<span class="summary-sig-default">'pstate'</span>,
+        <span class="summary-sig-arg">stype</span>=<span class="summary-sig-default">'weight'</span>)</span><br />
+      Method to execute a neuron.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="copads.copads.neural-pysrc.html#brain.execute_neuron">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="copads.copads.neural.brain-class.html#add_input_channel" class="summary-sig-name">add_input_channel</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">source</span>,
+        <span class="summary-sig-arg">destinationID</span>)</span><br />
+      Method to add an input channel into a neuron from external source.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="copads.copads.neural-pysrc.html#brain.add_input_channel">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="copads.copads.neural.brain-class.html#get_neurons" class="summary-sig-name">get_neurons</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">status</span>=<span class="summary-sig-default">'alive'</span>)</span><br />
+      Method to get a list of neurons in the brain according to status.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="copads.copads.neural-pysrc.html#brain.get_neurons">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="copads.copads.neural.brain-class.html#get_synapses" class="summary-sig-name">get_synapses</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">source</span>,
+        <span class="summary-sig-arg">stype</span>=<span class="summary-sig-default">'weight'</span>)</span><br />
+      Method to get a list of neurons with a specific input / source type 
+      and synaptic type.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="copads.copads.neural-pysrc.html#brain.get_synapses">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="copads.copads.neural.brain-class.html#get_all_synapses" class="summary-sig-name">get_all_synapses</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Method to get all synapses.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="copads.copads.neural-pysrc.html#brain.get_all_synapses">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="copads.copads.neural.brain-class.html#get_input_values" class="summary-sig-name">get_input_values</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">ID</span>)</span><br />
+      Method to get the input values vector of a neuron.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="copads.copads.neural-pysrc.html#brain.get_input_values">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="copads.copads.neural.brain-class.html#set_neuron_state" class="summary-sig-name">set_neuron_state</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">ID</span>,
+        <span class="summary-sig-arg">state</span>,
+        <span class="summary-sig-arg">value</span>)</span><br />
+      Method to set a specific state of a neuron.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="copads.copads.neural-pysrc.html#brain.set_neuron_state">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="copads.copads.neural.brain-class.html#get_neuron_state" class="summary-sig-name">get_neuron_state</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">ID</span>,
+        <span class="summary-sig-arg">state</span>=<span class="summary-sig-default">'pstate'</span>)</span><br />
+      Method to get a specific state of a neuron.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="copads.copads.neural-pysrc.html#brain.get_neuron_state">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="copads.copads.neural.brain-class.html#set_synapse_state" class="summary-sig-name">set_synapse_state</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">sourceID</span>,
+        <span class="summary-sig-arg">destinationID</span>,
+        <span class="summary-sig-arg">value</span>,
+        <span class="summary-sig-arg">state</span>=<span class="summary-sig-default">'weight'</span>)</span><br />
+      Method to set a state in a synapse.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="copads.copads.neural-pysrc.html#brain.set_synapse_state">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="copads.copads.neural.brain-class.html#get_synapse_state" class="summary-sig-name">get_synapse_state</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">sourceID</span>,
+        <span class="summary-sig-arg">destinationID</span>,
+        <span class="summary-sig-arg">state</span>=<span class="summary-sig-default">'weight'</span>)</span><br />
+      Method to get value of a synaptic state.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="copads.copads.neural-pysrc.html#brain.get_synapse_state">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="copads.copads.neural.brain-class.html#get_all_synaptic_states" class="summary-sig-name">get_all_synaptic_states</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">stype</span>=<span class="summary-sig-default">'weight'</span>)</span><br />
+      Method to get all synaptic states of a specific type.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="copads.copads.neural-pysrc.html#brain.get_all_synaptic_states">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="copads.copads.neural.brain-class.html#set_input" class="summary-sig-name">set_input</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">source</span>,
+        <span class="summary-sig-arg">inputstates</span>)</span><br />
+      Method to set input values (from external) into neurons.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="copads.copads.neural-pysrc.html#brain.set_input">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="copads.copads.neural.brain-class.html#get_neuronID_from_name" class="summary-sig-name">get_neuronID_from_name</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">name</span>)</span><br />
+      Method to get neuron ID from its name.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="copads.copads.neural-pysrc.html#brain.get_neuronID_from_name">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="copads.copads.neural.brain-class.html#get_name_from_neuronID" class="summary-sig-name">get_name_from_neuronID</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">ID</span>)</span><br />
+      Method to get neuron name from its ID.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="copads.copads.neural-pysrc.html#brain.get_name_from_neuronID">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="delete_orphaned_neurons"></a><span class="summary-sig-name">delete_orphaned_neurons</span>(<span class="summary-sig-arg">self</span>)</span><br />
+      Method to delete orphaned neurons (neurons without any synapses).</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="copads.copads.neural-pysrc.html#brain.delete_orphaned_neurons">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="copads.copads.neural.brain-class.html#delete_synapse_by_state" class="summary-sig-name">delete_synapse_by_state</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">threshold</span>=<span class="summary-sig-default">0.1</span>,
+        <span class="summary-sig-arg">mode</span>=<span class="summary-sig-default">'lowest'</span>,
+        <span class="summary-sig-arg">stype</span>=<span class="summary-sig-default">'weight'</span>)</span><br />
+      Method to delete synapse(s) by thresholding on synaptic states.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="copads.copads.neural-pysrc.html#brain.delete_synapse_by_state">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="generate_random_synapses"></a><span class="summary-sig-name">generate_random_synapses</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">count</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="copads.copads.neural-pysrc.html#brain.generate_random_synapses">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" class="summary">
+    <p class="indent-wrapped-lines"><b>Inherited from <code>object</code></b>:
+      <code>__delattr__</code>,
+      <code>__format__</code>,
+      <code>__getattribute__</code>,
+      <code>__hash__</code>,
+      <code>__new__</code>,
+      <code>__reduce__</code>,
+      <code>__reduce_ex__</code>,
+      <code>__repr__</code>,
+      <code>__setattr__</code>,
+      <code>__sizeof__</code>,
+      <code>__str__</code>,
+      <code>__subclasshook__</code>
+      </p>
+    </td>
+  </tr>
+</table>
+<!-- ==================== PROPERTIES ==================== -->
+<a name="section-Properties"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Properties</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-Properties"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+  <tr>
+    <td colspan="2" class="summary">
+    <p class="indent-wrapped-lines"><b>Inherited from <code>object</code></b>:
+      <code>__class__</code>
+      </p>
+    </td>
+  </tr>
+</table>
+<!-- ==================== METHOD DETAILS ==================== -->
+<a name="section-MethodDetails"></a>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Method Details</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-MethodDetails"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+</table>
+<a name="__init__"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">__init__</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">path</span>)</span>
+    <br /><em class="fname">(Constructor)</em>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="copads.copads.neural-pysrc.html#brain.__init__">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Constructor method - initialize a new brain, or connect to an existing
+  brain.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>path</code></strong> (string) - full path name of the brain file (implemented as an SQLite 
+          database.</li>
+    </ul></dd>
+    <dt>Overrides:
+        object.__init__
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="add_neuron"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">add_neuron</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">**kwargs</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="copads.copads.neural-pysrc.html#brain.add_neuron">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Method to add a new neuron into the brain.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>kwargs</code></strong> (dictionary) - initial neuronal data (as dictionary). The following mandatory 
+          fields will be added for each neuron:
+<pre class="literalblock">
+   - name: user-defined name for the neuron. Default = no_name.
+   - summation: type of summation functions. Allowable values are 
+   'summation' (averaged input values). Default = summation.
+   - transfer: type of transfer / activation functions, which will 
+   generate the output value of the neuron. Allowable values are 
+   'linear' (neuron output = output from summation function), 
+   'sigmoid' (sigmoid curve output). Default = linear.
+   - threshold: theshold value of the neuron. Default = 0.5.
+   - pstate: initial output value of the neuron. Default = generated 
+   random value between 0-1.
+</pre></li>
+    </ul></dd>
+    <dt>Returns:</dt>
+        <dd>ID of the new neuron</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="add_synapse"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">add_synapse</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">sourceID</span>,
+        <span class="sig-arg">destinationID</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="copads.copads.neural-pysrc.html#brain.add_synapse">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Method to add a new synapse (connection between 2 neurons) into the 
+  brain. When either of the neurons are not present in the brain, 1 or 2 
+  neurons (depending whether 1 or both neurons are not found) will be 
+  created; however, the ID(s) of the neuron(s) will not be the same as 
+  provided. A random weight between 0 to 1 (as synaptic state) will be 
+  added.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>sourceID</code></strong> (string) - ID of source / originating neuron.</li>
+        <li><strong class="pname"><code>destinationID</code></strong> (string) - ID of destination / sink neuron.</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="delete_neuron"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">delete_neuron</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">ID</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="copads.copads.neural-pysrc.html#brain.delete_neuron">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Method to delete a neuron from the brain and all associated 
+  synapses.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>ID</code></strong> (string) - ID of neuron to delete</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="delete_synapse"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">delete_synapse</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">sourceID</span>,
+        <span class="sig-arg">destinationID</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="copads.copads.neural-pysrc.html#brain.delete_synapse">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Method to delete a synapse (connection between 2 neurons) in the 
+  brain.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>sourceID</code></strong> (string) - ID of source / originating neuron.</li>
+        <li><strong class="pname"><code>destinationID</code></strong> (string) - ID of destination / sink neuron.</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="_neuron_summation"></a>
+<div class="private">
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">_neuron_summation</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">ID</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="copads.copads.neural-pysrc.html#brain._neuron_summation">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Private method - Calculate a single input (to be used as input for 
+  transfer / activation function) from a set of input vectors. If there is 
+  no summation function for the neuron or if the calculation returns an 
+  error (exception), 0.0 will be returned.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>ID</code></strong> (string) - ID of neuron to calculate.</li>
+    </ul></dd>
+    <dt>Returns:</dt>
+        <dd>calculated input.</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="_neuron_transfer"></a>
+<div class="private">
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">_neuron_transfer</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">ID</span>,
+        <span class="sig-arg">neuron_input</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="copads.copads.neural-pysrc.html#brain._neuron_transfer">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Private method - Calculate the neuron output, using the transfer / 
+  activation function, from the calculated input of the summation function.
+  If there is no transfer / activation function for the neuron or if the 
+  calculation returns an error (exception), 0.0 will be returned.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>ID</code></strong> (string) - ID of neuron to calculate.</li>
+        <li><strong class="pname"><code>neuron_input</code></strong> (float) - output from _neuron_summation(), to be used as input for transfer
+          / activation function.</li>
+    </ul></dd>
+    <dt>Returns:</dt>
+        <dd>output of transfer / activation function.</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="_synaptic_activation"></a>
+<div class="private">
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">_synaptic_activation</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">ID</span>,
+        <span class="sig-arg">state</span>=<span class="sig-default">'pstate'</span>,
+        <span class="sig-arg">stype</span>=<span class="sig-default">'weight'</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="copads.copads.neural-pysrc.html#brain._synaptic_activation">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Private method - Calculate each synaptic activation from a source ID 
+  and log the values into the respective input vectors of the destination 
+  neurons.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>ID</code></strong> (string) - ID of source neuron.</li>
+        <li><strong class="pname"><code>state</code></strong> (string) - state name of neuron as input for synaptic activation. Default = 
+          weight.</li>
+        <li><strong class="pname"><code>stype</code></strong> (string) - name of synaptic state for activation.</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="execute_neuron"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">execute_neuron</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">ID</span>,
+        <span class="sig-arg">state</span>=<span class="sig-default">'pstate'</span>,
+        <span class="sig-arg">stype</span>=<span class="sig-default">'weight'</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="copads.copads.neural-pysrc.html#brain.execute_neuron">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Method to execute a neuron.</p>
+  <p>The following tasks will be executed for a neuron:</p>
+<pre class="literalblock">
+   1. calculate a value from the set of input value vectors
+   2. calculate the neuronal output value from (1) using the transfer / 
+   activation function
+   3. set a neuronal state as the neuronal output value from (2)
+   4. activate synapses (using _synaptic_activation function) to 
+   generate input vector(s) for destination neuron(s).
+</pre>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>ID</code></strong> (string) - ID of the neuron to execute.</li>
+        <li><strong class="pname"><code>state</code></strong> (string) - state of neuron to store output from transfer / activation 
+          function. Default = pstate.</li>
+        <li><strong class="pname"><code>stype</code></strong> (string) - type of synapse for synaptic activation. Default = weight.</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="add_input_channel"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">add_input_channel</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">source</span>,
+        <span class="sig-arg">destinationID</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="copads.copads.neural-pysrc.html#brain.add_input_channel">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Method to add an input channel into a neuron from external source. A 
+  random value will be added as the synaptic weight.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>source</code></strong> (string) - name of external source</li>
+        <li><strong class="pname"><code>destinationID</code></strong> (string) - ID of target neuron.</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="get_neurons"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">get_neurons</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">status</span>=<span class="sig-default">'alive'</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="copads.copads.neural-pysrc.html#brain.get_neurons">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Method to get a list of neurons in the brain according to status.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>status</code></strong> (string) - status of neurons to get. Default = alive.</li>
+    </ul></dd>
+    <dt>Returns:</dt>
+        <dd>list of neuron IDs.</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="get_synapses"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">get_synapses</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">source</span>,
+        <span class="sig-arg">stype</span>=<span class="sig-default">'weight'</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="copads.copads.neural-pysrc.html#brain.get_synapses">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Method to get a list of neurons with a specific input / source type 
+  and synaptic type.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>source</code></strong> (string) - source type (can be ID of source neuron, or name of external 
+          source)</li>
+        <li><strong class="pname"><code>stype</code></strong> (string) - type of synapse. To get all types of synapse, stype = 'all'. 
+          Default = weight.</li>
+    </ul></dd>
+    <dt>Returns:</dt>
+        <dd>list of destination neuron IDs</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="get_all_synapses"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">get_all_synapses</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="copads.copads.neural-pysrc.html#brain.get_all_synapses">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Method to get all synapses.</p>
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>list of all synapses in tuple of (&lt;source ID&gt;, 
+          &lt;destination ID&gt;)</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="get_input_values"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">get_input_values</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">ID</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="copads.copads.neural-pysrc.html#brain.get_input_values">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Method to get the input values vector of a neuron.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>ID</code></strong> (string) - ID of neuron.</li>
+    </ul></dd>
+    <dt>Returns:</dt>
+        <dd>list of input values.</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="set_neuron_state"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">set_neuron_state</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">ID</span>,
+        <span class="sig-arg">state</span>,
+        <span class="sig-arg">value</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="copads.copads.neural-pysrc.html#brain.set_neuron_state">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Method to set a specific state of a neuron.</p>
+  <p>Logging messages:</p>
+<pre class="literalblock">
+   - set neuron internals: SNINTERNAL:&lt;ID of neuron&gt;:&lt;state type of 
+   neuron&gt;:&lt;value of the state&gt;
+</pre>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>ID</code></strong> (string) - ID of neuron.</li>
+        <li><strong class="pname"><code>state</code></strong> (string) - type of state to set.</li>
+        <li><strong class="pname"><code>value</code></strong> - value to set for the state.</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="get_neuron_state"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">get_neuron_state</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">ID</span>,
+        <span class="sig-arg">state</span>=<span class="sig-default">'pstate'</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="copads.copads.neural-pysrc.html#brain.get_neuron_state">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Method to get a specific state of a neuron.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>ID</code></strong> (string) - ID of neuron.</li>
+        <li><strong class="pname"><code>state</code></strong> (string) - type of state to get. Default = pstate.</li>
+    </ul></dd>
+    <dt>Returns:</dt>
+        <dd>state value (if present); None (if state is not found).</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="set_synapse_state"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">set_synapse_state</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">sourceID</span>,
+        <span class="sig-arg">destinationID</span>,
+        <span class="sig-arg">value</span>,
+        <span class="sig-arg">state</span>=<span class="sig-default">'weight'</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="copads.copads.neural-pysrc.html#brain.set_synapse_state">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Method to set a state in a synapse.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>sourceID</code></strong> (string) - ID of source / originating neuron.</li>
+        <li><strong class="pname"><code>destinationID</code></strong> (string) - ID of destination / sink neuron.</li>
+        <li><strong class="pname"><code>value</code></strong> (string) - value of the state.</li>
+        <li><strong class="pname"><code>state</code></strong> (string) - state name to set or update.</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="get_synapse_state"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">get_synapse_state</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">sourceID</span>,
+        <span class="sig-arg">destinationID</span>,
+        <span class="sig-arg">state</span>=<span class="sig-default">'weight'</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="copads.copads.neural-pysrc.html#brain.get_synapse_state">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Method to get value of a synaptic state.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>destinationID</code></strong> (string) - ID of destination / sink neuron.</li>
+        <li><strong class="pname"><code>state</code></strong> (string) - state name to set or update. Default = weight.</li>
+        <li><strong class="pname"><code>sourceID</code></strong> (string)</li>
+    </ul></dd>
+    <dt>Returns:</dt>
+        <dd>value of the synaptic state (if found), or None (if state is not 
+          found)</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="get_all_synaptic_states"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">get_all_synaptic_states</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">stype</span>=<span class="sig-default">'weight'</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="copads.copads.neural-pysrc.html#brain.get_all_synaptic_states">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Method to get all synaptic states of a specific type.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>stype</code></strong> (string) - type of synapse. Default = weight.</li>
+    </ul></dd>
+    <dt>Returns:</dt>
+        <dd>list of synaptic values.</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="set_input"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">set_input</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">source</span>,
+        <span class="sig-arg">inputstates</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="copads.copads.neural-pysrc.html#brain.set_input">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Method to set input values (from external) into neurons.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>source</code></strong> (string) - name of external source.</li>
+        <li><strong class="pname"><code>inputstates</code></strong> (dictionary) - input values from the external source in dictionary; where key is
+          the neuron ID to set the input value, and value is the value. For
+          example, {'1': 0.9, '2': 0.5} means set input for neuron ID 1 as 
+          0.9 and input for neuron ID 2 as 0.5.</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="get_neuronID_from_name"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">get_neuronID_from_name</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">name</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="copads.copads.neural-pysrc.html#brain.get_neuronID_from_name">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Method to get neuron ID from its name.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>name</code></strong> (string) - name of neuron.</li>
+    </ul></dd>
+    <dt>Returns:</dt>
+        <dd>ID of neuron (if present); None (if not found).</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="get_name_from_neuronID"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">get_name_from_neuronID</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">ID</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="copads.copads.neural-pysrc.html#brain.get_name_from_neuronID">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Method to get neuron name from its ID.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>ID</code></strong> (string) - ID of neuron.</li>
+    </ul></dd>
+    <dt>Returns:</dt>
+        <dd>name of neuron (if present); None (if not found).</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="delete_synapse_by_state"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">delete_synapse_by_state</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">threshold</span>=<span class="sig-default">0.1</span>,
+        <span class="sig-arg">mode</span>=<span class="sig-default">'lowest'</span>,
+        <span class="sig-arg">stype</span>=<span class="sig-default">'weight'</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="copads.copads.neural-pysrc.html#brain.delete_synapse_by_state">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Method to delete synapse(s) by thresholding on synaptic states. There 
+  are a number of ways (criterion) to select synapses for deletion. The 
+  criterion is determined by the 'mode' parameter.</p>
+  <p>The following criteria (modes) are allowed:</p>
+<pre class="literalblock">
+   - lowest: select the lowest percentage of synapses, by state value, 
+   for deletion. Threshold will determine the ratio. For example, if 
+   threshold = 0.1, means the lowest decile of the synapses, by state 
+   value, will be deleted.
+   - below: select the synapses with state value below the threshold 
+   value for deletion. For example, if threshold = 0.1, means that 
+   synapses with state value lower than 0.1, will be deleted.
+</pre>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>threshold</code></strong> (float) - threshold for use in deletion (as ratio). Default = lowest.</li>
+        <li><strong class="pname"><code>mode</code></strong> (string) - criteria for deletion. Default = lowest.</li>
+        <li><strong class="pname"><code>stype</code></strong> (float) - synaptic state for use in deletion criterion. Default = weight.</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<br />
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="copads.copads-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            ><a class="navbar" target="_top" href="https://github.com/mauriceling/copads">https://github.com/mauriceling/copads</a></th>
+          </tr></table></th>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%%">
+  <tr>
+    <td align="left" class="footer">
+    Generated by Epydoc 3.0.1 on Sun Feb 25 20:14:30 2018
+    </td>
+    <td align="right" class="footer">
+      <a target="mainFrame" href="http://epydoc.sourceforge.net"
+        >http://epydoc.sourceforge.net</a>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  <!--
+  // Private objects are initially displayed (because if
+  // javascript is turned off then we want them to be
+  // visible); but by default, we want to hide them.  So hide
+  // them unless we have a cookie that says to show them.
+  checkCookie();
+  // -->
+</script>
+</body>
+</html>

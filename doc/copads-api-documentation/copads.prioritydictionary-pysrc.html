@@ -1,0 +1,310 @@
+<?xml version="1.0" encoding="ascii"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>copads.prioritydictionary</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="copads-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            ><a class="navbar" target="_top" href="https://github.com/mauriceling/copads">https://github.com/mauriceling/copads</a></th>
+          </tr></table></th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <span class="breadcrumbs">
+        <a href="copads-module.html">Package&nbsp;copads</a> ::
+        Module&nbsp;prioritydictionary
+      </span>
+    </td>
+    <td>
+      <table cellpadding="0" cellspacing="0">
+        <!-- hide/show private -->
+        <tr><td align="right"><span class="options">[<a href="javascript:void(0);" class="privatelink"
+    onclick="toggle_private();">hide&nbsp;private</a>]</span></td></tr>
+        <tr><td align="right"><span class="options"
+            >[<a href="frames.html" target="_top">frames</a
+            >]&nbsp;|&nbsp;<a href="copads.prioritydictionary-pysrc.html"
+            target="_top">no&nbsp;frames</a>]</span></td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<h1 class="epydoc">Source Code for <a href="copads.prioritydictionary-module.html">Module copads.prioritydictionary</a></h1>
+<pre class="py-src">
+<a name="L1"></a><tt class="py-lineno"> 1</tt>  <tt class="py-line"><tt class="py-docstring">"""</tt> </tt>
+<a name="L2"></a><tt class="py-lineno"> 2</tt>  <tt class="py-line"><tt class="py-docstring">Priority Dictionary and Algorithms.</tt> </tt>
+<a name="L3"></a><tt class="py-lineno"> 3</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L4"></a><tt class="py-lineno"> 4</tt>  <tt class="py-line"><tt class="py-docstring">Copyright (c) Maurice H.T. Ling &lt;mauriceling@acm.org&gt;</tt> </tt>
+<a name="L5"></a><tt class="py-lineno"> 5</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L6"></a><tt class="py-lineno"> 6</tt>  <tt class="py-line"><tt class="py-docstring">Date created: 19th March 2008</tt> </tt>
+<a name="L7"></a><tt class="py-lineno"> 7</tt>  <tt class="py-line"><tt class="py-docstring">"""</tt> </tt>
+<a name="L8"></a><tt class="py-lineno"> 8</tt>  <tt class="py-line"> </tt>
+<a name="L9"></a><tt class="py-lineno"> 9</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt class="py-name">__future__</tt> <tt class="py-keyword">import</tt> <tt class="py-name">generators</tt> </tt>
+<a name="L10"></a><tt class="py-lineno">10</tt>  <tt class="py-line"> </tt>
+<a name="PriorityDictionary"></a><div id="PriorityDictionary-def"><a name="L11"></a><tt class="py-lineno">11</tt> <a class="py-toggle" href="#" id="PriorityDictionary-toggle" onclick="return toggle('PriorityDictionary');">-</a><tt class="py-line"><tt class="py-keyword">class</tt> <a class="py-def-name" href="copads.prioritydictionary.PriorityDictionary-class.html">PriorityDictionary</a><tt class="py-op">(</tt><tt class="py-base-class">dict</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="PriorityDictionary-collapsed" style="display:none;" pad="++" indent="++++"></div><div id="PriorityDictionary-expanded"><a name="L12"></a><tt class="py-lineno">12</tt>  <tt class="py-line">    <tt class="py-docstring">"""</tt> </tt>
+<a name="L13"></a><tt class="py-lineno">13</tt>  <tt class="py-line"><tt class="py-docstring">    This data structure acts almost like a dictionary, with two modifications: </tt> </tt>
+<a name="L14"></a><tt class="py-lineno">14</tt>  <tt class="py-line"><tt class="py-docstring">    First, D.smallest() returns the value x minimizing D[x]. For this to work </tt> </tt>
+<a name="L15"></a><tt class="py-lineno">15</tt>  <tt class="py-line"><tt class="py-docstring">    correctly, all values D[x] stored in the dictionary must be comparable. </tt> </tt>
+<a name="L16"></a><tt class="py-lineno">16</tt>  <tt class="py-line"><tt class="py-docstring">    Second, iterating 'for x in D' finds and removes the items from D in </tt> </tt>
+<a name="L17"></a><tt class="py-lineno">17</tt>  <tt class="py-line"><tt class="py-docstring">    sorted order. Each item is not removed until the next item is requested, </tt> </tt>
+<a name="L18"></a><tt class="py-lineno">18</tt>  <tt class="py-line"><tt class="py-docstring">    so D[x] will still return a useful value until the next iteration of the </tt> </tt>
+<a name="L19"></a><tt class="py-lineno">19</tt>  <tt class="py-line"><tt class="py-docstring">    for-loop.</tt> </tt>
+<a name="L20"></a><tt class="py-lineno">20</tt>  <tt class="py-line"><tt class="py-docstring">    </tt> </tt>
+<a name="L21"></a><tt class="py-lineno">21</tt>  <tt class="py-line"><tt class="py-docstring">    Adapted from: http://aspn.activestate.com/ASPN/Cookbook/Python/Recipe/117228</tt> </tt>
+<a name="L22"></a><tt class="py-lineno">22</tt>  <tt class="py-line"><tt class="py-docstring">    Original author: David Eppstein</tt> </tt>
+<a name="L23"></a><tt class="py-lineno">23</tt>  <tt class="py-line"><tt class="py-docstring">    """</tt> </tt>
+<a name="PriorityDictionary.__init__"></a><div id="PriorityDictionary.__init__-def"><a name="L24"></a><tt class="py-lineno">24</tt> <a class="py-toggle" href="#" id="PriorityDictionary.__init__-toggle" onclick="return toggle('PriorityDictionary.__init__');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="copads.prioritydictionary.PriorityDictionary-class.html#__init__">__init__</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="PriorityDictionary.__init__-collapsed" style="display:none;" pad="++" indent="++++++++"></div><div id="PriorityDictionary.__init__-expanded"><a name="L25"></a><tt class="py-lineno">25</tt>  <tt class="py-line">        <tt class="py-docstring">"""</tt> </tt>
+<a name="L26"></a><tt class="py-lineno">26</tt>  <tt class="py-line"><tt class="py-docstring">        Initialize priorityDictionary by creating binary heap of pairs </tt> </tt>
+<a name="L27"></a><tt class="py-lineno">27</tt>  <tt class="py-line"><tt class="py-docstring">        (value,key). Note that changing or removing a dict entry will not </tt> </tt>
+<a name="L28"></a><tt class="py-lineno">28</tt>  <tt class="py-line"><tt class="py-docstring">        remove the old pair from the heap until it is found by smallest() </tt> </tt>
+<a name="L29"></a><tt class="py-lineno">29</tt>  <tt class="py-line"><tt class="py-docstring">        or until the heap is rebuilt.</tt> </tt>
+<a name="L30"></a><tt class="py-lineno">30</tt>  <tt class="py-line"><tt class="py-docstring">        """</tt> </tt>
+<a name="L31"></a><tt class="py-lineno">31</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">__heap</tt> <tt class="py-op">=</tt> <tt class="py-op">[</tt><tt class="py-op">]</tt> </tt>
+<a name="L32"></a><tt class="py-lineno">32</tt>  <tt class="py-line">        <tt class="py-name">dict</tt><tt class="py-op">.</tt><tt id="link-0" class="py-name" targets="Method copads.array.ParallelArray.__init__()=copads.array.ParallelArray-class.html#__init__,Method copads.bag.Bag.__init__()=copads.bag.Bag-class.html#__init__,Method copads.copadsexceptions.ArrayError.__init__()=copads.copadsexceptions.ArrayError-class.html#__init__,Method copads.copadsexceptions.DistanceInputSizeError.__init__()=copads.copadsexceptions.DistanceInputSizeError-class.html#__init__,Method copads.copadsexceptions.DistributionFunctionError.__init__()=copads.copadsexceptions.DistributionFunctionError-class.html#__init__,Method copads.copadsexceptions.DistributionParameterError.__init__()=copads.copadsexceptions.DistributionParameterError-class.html#__init__,Method copads.copadsexceptions.EdgeNotFoundError.__init__()=copads.copadsexceptions.EdgeNotFoundError-class.html#__init__,Method copads.copadsexceptions.FunctionParameterTypeError.__init__()=copads.copadsexceptions.FunctionParameterTypeError-class.html#__init__,Method copads.copadsexceptions.FunctionParameterValueError.__init__()=copads.copadsexceptions.FunctionParameterValueError-class.html#__init__,Method copads.copadsexceptions.GraphEdgeSizeMismatchError.__init__()=copads.copadsexceptions.GraphEdgeSizeMismatchError-class.html#__init__,Method copads.copadsexceptions.GraphParameterError.__init__()=copads.copadsexceptions.GraphParameterError-class.html#__init__,Method copads.copadsexceptions.MatrixAdditionError.__init__()=copads.copadsexceptions.MatrixAdditionError-class.html#__init__,Method copads.copadsexceptions.MatrixArithmeticError.__init__()=copads.copadsexceptions.MatrixArithmeticError-class.html#__init__,Method copads.copadsexceptions.MatrixDeterminantError.__init__()=copads.copadsexceptions.MatrixDeterminantError-class.html#__init__,Method copads.copadsexceptions.MatrixMinorError.__init__()=copads.copadsexceptions.MatrixMinorError-class.html#__init__,Method copads.copadsexceptions.MatrixMultiplicationError.__init__()=copads.copadsexceptions.MatrixMultiplicationError-class.html#__init__,Method copads.copadsexceptions.MatrixSquareError.__init__()=copads.copadsexceptions.MatrixSquareError-class.html#__init__,Method copads.copadsexceptions.MatrixTraceError.__init__()=copads.copadsexceptions.MatrixTraceError-class.html#__init__,Method copads.copadsexceptions.NormalDistributionTypeError.__init__()=copads.copadsexceptions.NormalDistributionTypeError-class.html#__init__,Method copads.copadsexceptions.NotAdjacencyGraphMatrixError.__init__()=copads.copadsexceptions.NotAdjacencyGraphMatrixError-class.html#__init__,Method copads.copadsexceptions.TreeNodeTypeError.__init__()=copads.copadsexceptions.TreeNodeTypeError-class.html#__init__,Method copads.copadsexceptions.UnknownGraphMatrixError.__init__()=copads.copadsexceptions.UnknownGraphMatrixError-class.html#__init__,Method copads.copadsexceptions.VertexNotFoundError.__init__()=copads.copadsexceptions.VertexNotFoundError-class.html#__init__,Method copads.dataframe.Dataframe.__init__()=copads.dataframe.Dataframe-class.html#__init__,Method copads.dataframe.MultiDataframe.__init__()=copads.dataframe.MultiDataframe-class.html#__init__,Method copads.dataframe.Series.__init__()=copads.dataframe.Series-class.html#__init__,Method copads.dose_entities.Organism.__init__()=copads.dose_entities.Organism-class.html#__init__,Method copads.dose_entities.Population.__init__()=copads.dose_entities.Population-class.html#__init__,Method copads.dose_entities.World.__init__()=copads.dose_entities.World-class.html#__init__,Method copads.dose_world.World.__init__()=copads.dose_world.World-class.html#__init__,Method copads.genetic.Chromosome.__init__()=copads.genetic.Chromosome-class.html#__init__,Method copads.genetic.Organism.__init__()=copads.genetic.Organism-class.html#__init__,Method copads.genetic.Population.__init__()=copads.genetic.Population-class.html#__init__,Method copads.graph.Graph.__init__()=copads.graph.Graph-class.html#__init__,Method copads.jigsaw.JigsawCore.__init__()=copads.jigsaw.JigsawCore-class.html#__init__,Method copads.jigsaw.JigsawFile.__init__()=copads.jigsaw.JigsawFile-class.html#__init__,Method copads.lindenmayer.lindenmayer.__init__()=copads.lindenmayer.lindenmayer-class.html#__init__,Method copads.matrix.Matrix.__init__()=copads.matrix.Matrix-class.html#__init__,Method copads.neural.brain.__init__()=copads.neural.brain-class.html#__init__,Method copads.neural.brainbase.__init__()=copads.neural.brainbase-class.html#__init__,Method copads.operations.Boolean.__init__()=copads.operations.Boolean-class.html#__init__,Method copads.operations.Modulus2.__init__()=copads.operations.Modulus2-class.html#__init__,Method copads.pnet.PNet.__init__()=copads.pnet.PNet-class.html#__init__,Method copads.pnet.Place.__init__()=copads.pnet.Place-class.html#__init__,Method copads.prioritydictionary.PriorityDictionary.__init__()=copads.prioritydictionary.PriorityDictionary-class.html#__init__,Method copads.randomize.CLCG.__init__()=copads.randomize.CLCG-class.html#__init__,Method copads.randomize.LCG.__init__()=copads.randomize.LCG-class.html#__init__,Method copads.randomize.MersenneTwister.__init__()=copads.randomize.MersenneTwister-class.html#__init__,Method copads.randomize.Randomizer.__init__()=copads.randomize.Randomizer-class.html#__init__,Method copads.ring.RingList.__init__()=copads.ring.RingList-class.html#__init__,Method copads.samplestatistics.SampleDistribution.__init__()=copads.samplestatistics.SampleDistribution-class.html#__init__,Method copads.samplestatistics.SingleSample.__init__()=copads.samplestatistics.SingleSample-class.html#__init__,Method copads.samplestatistics.TwoSample.__init__()=copads.samplestatistics.TwoSample-class.html#__init__,Method copads.set.Set.__init__()=copads.set.Set-class.html#__init__,Method copads.statisticsdistribution.BernoulliDistribution.__init__()=copads.statisticsdistribution.BernoulliDistribution-class.html#__init__,Method copads.statisticsdistribution.BetaDistribution.__init__()=copads.statisticsdistribution.BetaDistribution-class.html#__init__,Method copads.statisticsdistribution.BinomialDistribution.__init__()=copads.statisticsdistribution.BinomialDistribution-class.html#__init__,Method copads.statisticsdistribution.BradfordDistribution.__init__()=copads.statisticsdistribution.BradfordDistribution-class.html#__init__,Method copads.statisticsdistribution.BurrDistribution.__init__()=copads.statisticsdistribution.BurrDistribution-class.html#__init__,Method copads.statisticsdistribution.CauchyDistribution.__init__()=copads.statisticsdistribution.CauchyDistribution-class.html#__init__,Method copads.statisticsdistribution.ChiSquareDistribution.__init__()=copads.statisticsdistribution.ChiSquareDistribution-class.html#__init__,Method copads.statisticsdistribution.CosineDistribution.__init__()=copads.statisticsdistribution.CosineDistribution-class.html#__init__,Method copads.statisticsdistribution.Distribution.__init__()=copads.statisticsdistribution.Distribution-class.html#__init__,Method copads.statisticsdistribution.DoubleGammaDistribution.__init__()=copads.statisticsdistribution.DoubleGammaDistribution-class.html#__init__,Method copads.statisticsdistribution.ExponentialDistribution.__init__()=copads.statisticsdistribution.ExponentialDistribution-class.html#__init__,Method copads.statisticsdistribution.FDistribution.__init__()=copads.statisticsdistribution.FDistribution-class.html#__init__,Method copads.statisticsdistribution.GammaDistribution.__init__()=copads.statisticsdistribution.GammaDistribution-class.html#__init__,Method copads.statisticsdistribution.GeometricDistribution.__init__()=copads.statisticsdistribution.GeometricDistribution-class.html#__init__,Method copads.statisticsdistribution.GumbelDistribution.__init__()=copads.statisticsdistribution.GumbelDistribution-class.html#__init__,Method copads.statisticsdistribution.HalfNormalDistribution.__init__()=copads.statisticsdistribution.HalfNormalDistribution-class.html#__init__,Method copads.statisticsdistribution.HyperbolicSecantDistribution.__init__()=copads.statisticsdistribution.HyperbolicSecantDistribution-class.html#__init__,Method copads.statisticsdistribution.HypergeometricDistribution.__init__()=copads.statisticsdistribution.HypergeometricDistribution-class.html#__init__,Method copads.statisticsdistribution.LogNormalDistribution.__init__()=copads.statisticsdistribution.LogNormalDistribution-class.html#__init__,Method copads.statisticsdistribution.LogarithmicDistribution.__init__()=copads.statisticsdistribution.LogarithmicDistribution-class.html#__init__,Method copads.statisticsdistribution.MaxwellDistribution.__init__()=copads.statisticsdistribution.MaxwellDistribution-class.html#__init__,Method copads.statisticsdistribution.NegativeBinomialDistribution.__init__()=copads.statisticsdistribution.NegativeBinomialDistribution-class.html#__init__,Method copads.statisticsdistribution.NormalDistribution.__init__()=copads.statisticsdistribution.NormalDistribution-class.html#__init__,Method copads.statisticsdistribution.ParetoDistribution.__init__()=copads.statisticsdistribution.ParetoDistribution-class.html#__init__,Method copads.statisticsdistribution.PascalDistribution.__init__()=copads.statisticsdistribution.PascalDistribution-class.html#__init__,Method copads.statisticsdistribution.PoissonDistribution.__init__()=copads.statisticsdistribution.PoissonDistribution-class.html#__init__,Method copads.statisticsdistribution.PowerFunctionDistribution.__init__()=copads.statisticsdistribution.PowerFunctionDistribution-class.html#__init__,Method copads.statisticsdistribution.RademacherDistribution.__init__()=copads.statisticsdistribution.RademacherDistribution-class.html#__init__,Method copads.statisticsdistribution.RayleighDistribution.__init__()=copads.statisticsdistribution.RayleighDistribution-class.html#__init__,Method copads.statisticsdistribution.SemicircularDistribution.__init__()=copads.statisticsdistribution.SemicircularDistribution-class.html#__init__,Method copads.statisticsdistribution.TDistribution.__init__()=copads.statisticsdistribution.TDistribution-class.html#__init__,Method copads.statisticsdistribution.TriangularDistribution.__init__()=copads.statisticsdistribution.TriangularDistribution-class.html#__init__,Method copads.statisticsdistribution.UniformDistribution.__init__()=copads.statisticsdistribution.UniformDistribution-class.html#__init__,Method copads.statisticsdistribution.WeiBullDistribution.__init__()=copads.statisticsdistribution.WeiBullDistribution-class.html#__init__,Method copads.tree.OrderedBinaryTree.__init__()=copads.tree.OrderedBinaryTree-class.html#__init__,Method copads.tree.RBDict.__init__()=copads.tree.RBDict-class.html#__init__,Method copads.tree.RBList.__init__()=copads.tree.RBList-class.html#__init__,Method copads.tree.RBTree.__init__()=copads.tree.RBTree-class.html#__init__,Method copads.tree.RBTreeIter.__init__()=copads.tree.RBTreeIter-class.html#__init__,Method copads.treenodes.BinaryNode.__init__()=copads.treenodes.BinaryNode-class.html#__init__,Method copads.treenodes.FourNode.__init__()=copads.treenodes.FourNode-class.html#__init__,Method copads.treenodes.RBNode.__init__()=copads.treenodes.RBNode-class.html#__init__,Method copads.treenodes.ThreeNode.__init__()=copads.treenodes.ThreeNode-class.html#__init__"><a title="copads.array.ParallelArray.__init__
+copads.bag.Bag.__init__
+copads.copadsexceptions.ArrayError.__init__
+copads.copadsexceptions.DistanceInputSizeError.__init__
+copads.copadsexceptions.DistributionFunctionError.__init__
+copads.copadsexceptions.DistributionParameterError.__init__
+copads.copadsexceptions.EdgeNotFoundError.__init__
+copads.copadsexceptions.FunctionParameterTypeError.__init__
+copads.copadsexceptions.FunctionParameterValueError.__init__
+copads.copadsexceptions.GraphEdgeSizeMismatchError.__init__
+copads.copadsexceptions.GraphParameterError.__init__
+copads.copadsexceptions.MatrixAdditionError.__init__
+copads.copadsexceptions.MatrixArithmeticError.__init__
+copads.copadsexceptions.MatrixDeterminantError.__init__
+copads.copadsexceptions.MatrixMinorError.__init__
+copads.copadsexceptions.MatrixMultiplicationError.__init__
+copads.copadsexceptions.MatrixSquareError.__init__
+copads.copadsexceptions.MatrixTraceError.__init__
+copads.copadsexceptions.NormalDistributionTypeError.__init__
+copads.copadsexceptions.NotAdjacencyGraphMatrixError.__init__
+copads.copadsexceptions.TreeNodeTypeError.__init__
+copads.copadsexceptions.UnknownGraphMatrixError.__init__
+copads.copadsexceptions.VertexNotFoundError.__init__
+copads.dataframe.Dataframe.__init__
+copads.dataframe.MultiDataframe.__init__
+copads.dataframe.Series.__init__
+copads.dose_entities.Organism.__init__
+copads.dose_entities.Population.__init__
+copads.dose_entities.World.__init__
+copads.dose_world.World.__init__
+copads.genetic.Chromosome.__init__
+copads.genetic.Organism.__init__
+copads.genetic.Population.__init__
+copads.graph.Graph.__init__
+copads.jigsaw.JigsawCore.__init__
+copads.jigsaw.JigsawFile.__init__
+copads.lindenmayer.lindenmayer.__init__
+copads.matrix.Matrix.__init__
+copads.neural.brain.__init__
+copads.neural.brainbase.__init__
+copads.operations.Boolean.__init__
+copads.operations.Modulus2.__init__
+copads.pnet.PNet.__init__
+copads.pnet.Place.__init__
+copads.prioritydictionary.PriorityDictionary.__init__
+copads.randomize.CLCG.__init__
+copads.randomize.LCG.__init__
+copads.randomize.MersenneTwister.__init__
+copads.randomize.Randomizer.__init__
+copads.ring.RingList.__init__
+copads.samplestatistics.SampleDistribution.__init__
+copads.samplestatistics.SingleSample.__init__
+copads.samplestatistics.TwoSample.__init__
+copads.set.Set.__init__
+copads.statisticsdistribution.BernoulliDistribution.__init__
+copads.statisticsdistribution.BetaDistribution.__init__
+copads.statisticsdistribution.BinomialDistribution.__init__
+copads.statisticsdistribution.BradfordDistribution.__init__
+copads.statisticsdistribution.BurrDistribution.__init__
+copads.statisticsdistribution.CauchyDistribution.__init__
+copads.statisticsdistribution.ChiSquareDistribution.__init__
+copads.statisticsdistribution.CosineDistribution.__init__
+copads.statisticsdistribution.Distribution.__init__
+copads.statisticsdistribution.DoubleGammaDistribution.__init__
+copads.statisticsdistribution.ExponentialDistribution.__init__
+copads.statisticsdistribution.FDistribution.__init__
+copads.statisticsdistribution.GammaDistribution.__init__
+copads.statisticsdistribution.GeometricDistribution.__init__
+copads.statisticsdistribution.GumbelDistribution.__init__
+copads.statisticsdistribution.HalfNormalDistribution.__init__
+copads.statisticsdistribution.HyperbolicSecantDistribution.__init__
+copads.statisticsdistribution.HypergeometricDistribution.__init__
+copads.statisticsdistribution.LogNormalDistribution.__init__
+copads.statisticsdistribution.LogarithmicDistribution.__init__
+copads.statisticsdistribution.MaxwellDistribution.__init__
+copads.statisticsdistribution.NegativeBinomialDistribution.__init__
+copads.statisticsdistribution.NormalDistribution.__init__
+copads.statisticsdistribution.ParetoDistribution.__init__
+copads.statisticsdistribution.PascalDistribution.__init__
+copads.statisticsdistribution.PoissonDistribution.__init__
+copads.statisticsdistribution.PowerFunctionDistribution.__init__
+copads.statisticsdistribution.RademacherDistribution.__init__
+copads.statisticsdistribution.RayleighDistribution.__init__
+copads.statisticsdistribution.SemicircularDistribution.__init__
+copads.statisticsdistribution.TDistribution.__init__
+copads.statisticsdistribution.TriangularDistribution.__init__
+copads.statisticsdistribution.UniformDistribution.__init__
+copads.statisticsdistribution.WeiBullDistribution.__init__
+copads.tree.OrderedBinaryTree.__init__
+copads.tree.RBDict.__init__
+copads.tree.RBList.__init__
+copads.tree.RBTree.__init__
+copads.tree.RBTreeIter.__init__
+copads.treenodes.BinaryNode.__init__
+copads.treenodes.FourNode.__init__
+copads.treenodes.RBNode.__init__
+copads.treenodes.ThreeNode.__init__" class="py-name" href="#" onclick="return doclink('link-0', '__init__', 'link-0');">__init__</a></tt><tt class="py-op">(</tt><tt class="py-name">self</tt><tt class="py-op">)</tt> </tt>
+</div><a name="L33"></a><tt class="py-lineno">33</tt>  <tt class="py-line"> </tt>
+<a name="PriorityDictionary.smallest"></a><div id="PriorityDictionary.smallest-def"><a name="L34"></a><tt class="py-lineno">34</tt> <a class="py-toggle" href="#" id="PriorityDictionary.smallest-toggle" onclick="return toggle('PriorityDictionary.smallest');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="copads.prioritydictionary.PriorityDictionary-class.html#smallest">smallest</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="PriorityDictionary.smallest-collapsed" style="display:none;" pad="++" indent="++++++++"></div><div id="PriorityDictionary.smallest-expanded"><a name="L35"></a><tt class="py-lineno">35</tt>  <tt class="py-line">        <tt class="py-docstring">"""Find smallest item after removing deleted items from heap."""</tt> </tt>
+<a name="L36"></a><tt class="py-lineno">36</tt>  <tt class="py-line">        <tt class="py-keyword">if</tt> <tt class="py-name">len</tt><tt class="py-op">(</tt><tt class="py-name">self</tt><tt class="py-op">)</tt> <tt class="py-op">==</tt> <tt class="py-number">0</tt><tt class="py-op">:</tt> </tt>
+<a name="L37"></a><tt class="py-lineno">37</tt>  <tt class="py-line">            <tt class="py-keyword">raise</tt> <tt class="py-name">IndexError</tt><tt class="py-op">,</tt> <tt class="py-string">"smallest of empty priorityDictionary"</tt> </tt>
+<a name="L38"></a><tt class="py-lineno">38</tt>  <tt class="py-line">        <tt class="py-name">heap</tt> <tt class="py-op">=</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">__heap</tt> </tt>
+<a name="L39"></a><tt class="py-lineno">39</tt>  <tt class="py-line">        <tt class="py-keyword">while</tt> <tt class="py-name">heap</tt><tt class="py-op">[</tt><tt class="py-number">0</tt><tt class="py-op">]</tt><tt class="py-op">[</tt><tt class="py-number">1</tt><tt class="py-op">]</tt> <tt class="py-keyword">not</tt> <tt class="py-keyword">in</tt> <tt class="py-name">self</tt> <tt class="py-keyword">or</tt> <tt class="py-name">self</tt><tt class="py-op">[</tt><tt class="py-name">heap</tt><tt class="py-op">[</tt><tt class="py-number">0</tt><tt class="py-op">]</tt><tt class="py-op">[</tt><tt class="py-number">1</tt><tt class="py-op">]</tt><tt class="py-op">]</tt> <tt class="py-op">!=</tt> <tt class="py-name">heap</tt><tt class="py-op">[</tt><tt class="py-number">0</tt><tt class="py-op">]</tt><tt class="py-op">[</tt><tt class="py-number">0</tt><tt class="py-op">]</tt><tt class="py-op">:</tt> </tt>
+<a name="L40"></a><tt class="py-lineno">40</tt>  <tt class="py-line">            <tt class="py-name">lastItem</tt> <tt class="py-op">=</tt> <tt class="py-name">heap</tt><tt class="py-op">.</tt><tt id="link-1" class="py-name" targets="Method copads.tree.RBList.pop()=copads.tree.RBList-class.html#pop"><a title="copads.tree.RBList.pop" class="py-name" href="#" onclick="return doclink('link-1', 'pop', 'link-1');">pop</a></tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+<a name="L41"></a><tt class="py-lineno">41</tt>  <tt class="py-line">            <tt class="py-name">insertionPoint</tt> <tt class="py-op">=</tt> <tt class="py-number">0</tt> </tt>
+<a name="L42"></a><tt class="py-lineno">42</tt>  <tt class="py-line">            <tt class="py-keyword">while</tt> <tt class="py-number">1</tt><tt class="py-op">:</tt> </tt>
+<a name="L43"></a><tt class="py-lineno">43</tt>  <tt class="py-line">                <tt class="py-name">smallChild</tt> <tt class="py-op">=</tt> <tt class="py-number">2</tt><tt class="py-op">*</tt><tt class="py-name">insertionPoint</tt><tt class="py-op">+</tt><tt class="py-number">1</tt> </tt>
+<a name="L44"></a><tt class="py-lineno">44</tt>  <tt class="py-line">                <tt class="py-keyword">if</tt> <tt class="py-name">smallChild</tt><tt class="py-op">+</tt><tt class="py-number">1</tt> <tt class="py-op">&lt;</tt> <tt class="py-name">len</tt><tt class="py-op">(</tt><tt class="py-name">heap</tt><tt class="py-op">)</tt> <tt class="py-keyword">and</tt> \ </tt>
+<a name="L45"></a><tt class="py-lineno">45</tt>  <tt class="py-line">                        <tt class="py-name">heap</tt><tt class="py-op">[</tt><tt class="py-name">smallChild</tt><tt class="py-op">]</tt> <tt class="py-op">&gt;</tt> <tt class="py-name">heap</tt><tt class="py-op">[</tt><tt class="py-name">smallChild</tt><tt class="py-op">+</tt><tt class="py-number">1</tt><tt class="py-op">]</tt><tt class="py-op">:</tt> </tt>
+<a name="L46"></a><tt class="py-lineno">46</tt>  <tt class="py-line">                    <tt class="py-name">smallChild</tt> <tt class="py-op">+=</tt> <tt class="py-number">1</tt> </tt>
+<a name="L47"></a><tt class="py-lineno">47</tt>  <tt class="py-line">                <tt class="py-keyword">if</tt> <tt class="py-name">smallChild</tt> <tt class="py-op">&gt;=</tt> <tt class="py-name">len</tt><tt class="py-op">(</tt><tt class="py-name">heap</tt><tt class="py-op">)</tt> <tt class="py-keyword">or</tt> <tt class="py-name">lastItem</tt> <tt class="py-op">&lt;=</tt> <tt class="py-name">heap</tt><tt class="py-op">[</tt><tt class="py-name">smallChild</tt><tt class="py-op">]</tt><tt class="py-op">:</tt> </tt>
+<a name="L48"></a><tt class="py-lineno">48</tt>  <tt class="py-line">                    <tt class="py-name">heap</tt><tt class="py-op">[</tt><tt class="py-name">insertionPoint</tt><tt class="py-op">]</tt> <tt class="py-op">=</tt> <tt class="py-name">lastItem</tt> </tt>
+<a name="L49"></a><tt class="py-lineno">49</tt>  <tt class="py-line">                    <tt class="py-keyword">break</tt> </tt>
+<a name="L50"></a><tt class="py-lineno">50</tt>  <tt class="py-line">                <tt class="py-name">heap</tt><tt class="py-op">[</tt><tt class="py-name">insertionPoint</tt><tt class="py-op">]</tt> <tt class="py-op">=</tt> <tt class="py-name">heap</tt><tt class="py-op">[</tt><tt class="py-name">smallChild</tt><tt class="py-op">]</tt> </tt>
+<a name="L51"></a><tt class="py-lineno">51</tt>  <tt class="py-line">                <tt class="py-name">insertionPoint</tt> <tt class="py-op">=</tt> <tt class="py-name">smallChild</tt> </tt>
+<a name="L52"></a><tt class="py-lineno">52</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> <tt class="py-name">heap</tt><tt class="py-op">[</tt><tt class="py-number">0</tt><tt class="py-op">]</tt><tt class="py-op">[</tt><tt class="py-number">1</tt><tt class="py-op">]</tt> </tt>
+</div><a name="L53"></a><tt class="py-lineno">53</tt>  <tt class="py-line">     </tt>
+<a name="PriorityDictionary.__iter__"></a><div id="PriorityDictionary.__iter__-def"><a name="L54"></a><tt class="py-lineno">54</tt> <a class="py-toggle" href="#" id="PriorityDictionary.__iter__-toggle" onclick="return toggle('PriorityDictionary.__iter__');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="copads.prioritydictionary.PriorityDictionary-class.html#__iter__">__iter__</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="PriorityDictionary.__iter__-collapsed" style="display:none;" pad="++" indent="++++++++"></div><div id="PriorityDictionary.__iter__-expanded"><a name="L55"></a><tt class="py-lineno">55</tt>  <tt class="py-line">        <tt class="py-docstring">"""Create destructive sorted iterator of priorityDictionary."""</tt> </tt>
+<a name="L56"></a><tt class="py-lineno">56</tt>  <tt class="py-line">        <tt class="py-keyword">def</tt> <tt class="py-def-name">iterfn</tt><tt class="py-op">(</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+<a name="L57"></a><tt class="py-lineno">57</tt>  <tt class="py-line">            <tt class="py-keyword">while</tt> <tt class="py-name">len</tt><tt class="py-op">(</tt><tt class="py-name">self</tt><tt class="py-op">)</tt> <tt class="py-op">&gt;</tt> <tt class="py-number">0</tt><tt class="py-op">:</tt> </tt>
+<a name="L58"></a><tt class="py-lineno">58</tt>  <tt class="py-line">                <tt class="py-name">x</tt> <tt class="py-op">=</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt id="link-2" class="py-name" targets="Method copads.prioritydictionary.PriorityDictionary.smallest()=copads.prioritydictionary.PriorityDictionary-class.html#smallest"><a title="copads.prioritydictionary.PriorityDictionary.smallest" class="py-name" href="#" onclick="return doclink('link-2', 'smallest', 'link-2');">smallest</a></tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+<a name="L59"></a><tt class="py-lineno">59</tt>  <tt class="py-line">                <tt class="py-keyword">yield</tt> <tt class="py-name">x</tt> </tt>
+<a name="L60"></a><tt class="py-lineno">60</tt>  <tt class="py-line">                <tt class="py-keyword">del</tt> <tt class="py-name">self</tt><tt class="py-op">[</tt><tt class="py-name">x</tt><tt class="py-op">]</tt> </tt>
+</div><a name="L61"></a><tt class="py-lineno">61</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> <tt class="py-name">iterfn</tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+</div><a name="L62"></a><tt class="py-lineno">62</tt>  <tt class="py-line">     </tt>
+<a name="PriorityDictionary.__setitem__"></a><div id="PriorityDictionary.__setitem__-def"><a name="L63"></a><tt class="py-lineno">63</tt> <a class="py-toggle" href="#" id="PriorityDictionary.__setitem__-toggle" onclick="return toggle('PriorityDictionary.__setitem__');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="copads.prioritydictionary.PriorityDictionary-class.html#__setitem__">__setitem__</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt><tt class="py-param">key</tt><tt class="py-op">,</tt><tt class="py-param">val</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="PriorityDictionary.__setitem__-collapsed" style="display:none;" pad="++" indent="++++++++"></div><div id="PriorityDictionary.__setitem__-expanded"><a name="L64"></a><tt class="py-lineno">64</tt>  <tt class="py-line">        <tt class="py-docstring">"""</tt> </tt>
+<a name="L65"></a><tt class="py-lineno">65</tt>  <tt class="py-line"><tt class="py-docstring">        Change value stored in dictionary and add corresponding pair to heap.</tt> </tt>
+<a name="L66"></a><tt class="py-lineno">66</tt>  <tt class="py-line"><tt class="py-docstring">        Rebuilds the heap if the number of deleted items grows too large, to </tt> </tt>
+<a name="L67"></a><tt class="py-lineno">67</tt>  <tt class="py-line"><tt class="py-docstring">        avoid memory leakage."""</tt> </tt>
+<a name="L68"></a><tt class="py-lineno">68</tt>  <tt class="py-line">        <tt class="py-name">dict</tt><tt class="py-op">.</tt><tt id="link-3" class="py-name" targets="Method copads.bag.Bag.__setitem__()=copads.bag.Bag-class.html#__setitem__,Method copads.matrix.Matrix.__setitem__()=copads.matrix.Matrix-class.html#__setitem__,Method copads.prioritydictionary.PriorityDictionary.__setitem__()=copads.prioritydictionary.PriorityDictionary-class.html#__setitem__,Method copads.tree.RBDict.__setitem__()=copads.tree.RBDict-class.html#__setitem__"><a title="copads.bag.Bag.__setitem__
+copads.matrix.Matrix.__setitem__
+copads.prioritydictionary.PriorityDictionary.__setitem__
+copads.tree.RBDict.__setitem__" class="py-name" href="#" onclick="return doclink('link-3', '__setitem__', 'link-3');">__setitem__</a></tt><tt class="py-op">(</tt><tt class="py-name">self</tt><tt class="py-op">,</tt><tt class="py-name">key</tt><tt class="py-op">,</tt><tt class="py-name">val</tt><tt class="py-op">)</tt> </tt>
+<a name="L69"></a><tt class="py-lineno">69</tt>  <tt class="py-line">        <tt class="py-name">heap</tt> <tt class="py-op">=</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">__heap</tt> </tt>
+<a name="L70"></a><tt class="py-lineno">70</tt>  <tt class="py-line">        <tt class="py-keyword">if</tt> <tt class="py-name">len</tt><tt class="py-op">(</tt><tt class="py-name">heap</tt><tt class="py-op">)</tt> <tt class="py-op">&gt;</tt> <tt class="py-number">2</tt> <tt class="py-op">*</tt> <tt class="py-name">len</tt><tt class="py-op">(</tt><tt class="py-name">self</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+<a name="L71"></a><tt class="py-lineno">71</tt>  <tt class="py-line">            <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">__heap</tt> <tt class="py-op">=</tt> <tt class="py-op">[</tt><tt class="py-op">(</tt><tt class="py-name">v</tt><tt class="py-op">,</tt><tt class="py-name">k</tt><tt class="py-op">)</tt> <tt class="py-keyword">for</tt> <tt class="py-name">k</tt><tt class="py-op">,</tt><tt class="py-name">v</tt> <tt class="py-keyword">in</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt id="link-4" class="py-name" targets="Function copads.operations.items()=copads.operations-module.html#items,Method copads.set.Set.items()=copads.set.Set-class.html#items,Method copads.tree.RBDict.items()=copads.tree.RBDict-class.html#items"><a title="copads.operations.items
+copads.set.Set.items
+copads.tree.RBDict.items" class="py-name" href="#" onclick="return doclink('link-4', 'items', 'link-4');">items</a></tt><tt class="py-op">(</tt><tt class="py-op">)</tt><tt class="py-op">]</tt> </tt>
+<a name="L72"></a><tt class="py-lineno">72</tt>  <tt class="py-line">            <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">__heap</tt><tt class="py-op">.</tt><tt id="link-5" class="py-name" targets="Method copads.tree.RBList.sort()=copads.tree.RBList-class.html#sort"><a title="copads.tree.RBList.sort" class="py-name" href="#" onclick="return doclink('link-5', 'sort', 'link-5');">sort</a></tt><tt class="py-op">(</tt><tt class="py-op">)</tt>  <tt class="py-comment"># builtin sort likely faster than O(n) heapify</tt> </tt>
+<a name="L73"></a><tt class="py-lineno">73</tt>  <tt class="py-line">        <tt class="py-keyword">else</tt><tt class="py-op">:</tt> </tt>
+<a name="L74"></a><tt class="py-lineno">74</tt>  <tt class="py-line">            <tt class="py-name">newPair</tt> <tt class="py-op">=</tt> <tt class="py-op">(</tt><tt class="py-name">val</tt><tt class="py-op">,</tt><tt class="py-name">key</tt><tt class="py-op">)</tt> </tt>
+<a name="L75"></a><tt class="py-lineno">75</tt>  <tt class="py-line">            <tt class="py-name">insertionPoint</tt> <tt class="py-op">=</tt> <tt class="py-name">len</tt><tt class="py-op">(</tt><tt class="py-name">heap</tt><tt class="py-op">)</tt> </tt>
+<a name="L76"></a><tt class="py-lineno">76</tt>  <tt class="py-line">            <tt class="py-name">heap</tt><tt class="py-op">.</tt><tt id="link-6" class="py-name" targets="Method copads.ring.RingList.append()=copads.ring.RingList-class.html#append,Method copads.tree.RBList.append()=copads.tree.RBList-class.html#append"><a title="copads.ring.RingList.append
+copads.tree.RBList.append" class="py-name" href="#" onclick="return doclink('link-6', 'append', 'link-6');">append</a></tt><tt class="py-op">(</tt><tt class="py-name">None</tt><tt class="py-op">)</tt> </tt>
+<a name="L77"></a><tt class="py-lineno">77</tt>  <tt class="py-line">            <tt class="py-keyword">while</tt> <tt class="py-name">insertionPoint</tt> <tt class="py-op">&gt;</tt> <tt class="py-number">0</tt> <tt class="py-keyword">and</tt> \ </tt>
+<a name="L78"></a><tt class="py-lineno">78</tt>  <tt class="py-line">                    <tt class="py-name">newPair</tt> <tt class="py-op">&lt;</tt> <tt class="py-name">heap</tt><tt class="py-op">[</tt><tt class="py-op">(</tt><tt class="py-name">insertionPoint</tt><tt class="py-op">-</tt><tt class="py-number">1</tt><tt class="py-op">)</tt><tt class="py-op">//</tt><tt class="py-number">2</tt><tt class="py-op">]</tt><tt class="py-op">:</tt> </tt>
+<a name="L79"></a><tt class="py-lineno">79</tt>  <tt class="py-line">                <tt class="py-name">heap</tt><tt class="py-op">[</tt><tt class="py-name">insertionPoint</tt><tt class="py-op">]</tt> <tt class="py-op">=</tt> <tt class="py-name">heap</tt><tt class="py-op">[</tt><tt class="py-op">(</tt><tt class="py-name">insertionPoint</tt><tt class="py-op">-</tt><tt class="py-number">1</tt><tt class="py-op">)</tt><tt class="py-op">//</tt><tt class="py-number">2</tt><tt class="py-op">]</tt> </tt>
+<a name="L80"></a><tt class="py-lineno">80</tt>  <tt class="py-line">                <tt class="py-name">insertionPoint</tt> <tt class="py-op">=</tt> <tt class="py-op">(</tt><tt class="py-name">insertionPoint</tt><tt class="py-op">-</tt><tt class="py-number">1</tt><tt class="py-op">)</tt><tt class="py-op">//</tt><tt class="py-number">2</tt> </tt>
+<a name="L81"></a><tt class="py-lineno">81</tt>  <tt class="py-line">            <tt class="py-name">heap</tt><tt class="py-op">[</tt><tt class="py-name">insertionPoint</tt><tt class="py-op">]</tt> <tt class="py-op">=</tt> <tt class="py-name">newPair</tt> </tt>
+</div><a name="L82"></a><tt class="py-lineno">82</tt>  <tt class="py-line">     </tt>
+<a name="PriorityDictionary.setDefault"></a><div id="PriorityDictionary.setDefault-def"><a name="L83"></a><tt class="py-lineno">83</tt> <a class="py-toggle" href="#" id="PriorityDictionary.setDefault-toggle" onclick="return toggle('PriorityDictionary.setDefault');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="copads.prioritydictionary.PriorityDictionary-class.html#setDefault">setDefault</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt><tt class="py-param">key</tt><tt class="py-op">,</tt><tt class="py-param">val</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="PriorityDictionary.setDefault-collapsed" style="display:none;" pad="++" indent="++++++++"></div><div id="PriorityDictionary.setDefault-expanded"><a name="L84"></a><tt class="py-lineno">84</tt>  <tt class="py-line">        <tt class="py-docstring">"""Reimplement setdefault to call our customized __setitem__."""</tt> </tt>
+<a name="L85"></a><tt class="py-lineno">85</tt>  <tt class="py-line">        <tt class="py-keyword">if</tt> <tt class="py-name">key</tt> <tt class="py-keyword">not</tt> <tt class="py-keyword">in</tt> <tt class="py-name">self</tt><tt class="py-op">:</tt> </tt>
+<a name="L86"></a><tt class="py-lineno">86</tt>  <tt class="py-line">            <tt class="py-name">self</tt><tt class="py-op">[</tt><tt class="py-name">key</tt><tt class="py-op">]</tt> <tt class="py-op">=</tt> <tt class="py-name">val</tt> </tt>
+<a name="L87"></a><tt class="py-lineno">87</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> <tt class="py-name">self</tt><tt class="py-op">[</tt><tt class="py-name">key</tt><tt class="py-op">]</tt> </tt>
+</div></div><a name="L88"></a><tt class="py-lineno">88</tt>  <tt class="py-line"> </tt><script type="text/javascript">
+<!--
+expandto(location.href);
+// -->
+</script>
+</pre>
+<br />
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="copads-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            ><a class="navbar" target="_top" href="https://github.com/mauriceling/copads">https://github.com/mauriceling/copads</a></th>
+          </tr></table></th>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%%">
+  <tr>
+    <td align="left" class="footer">
+    Generated by Epydoc 3.0.1 on Tue May 31 13:09:28 2016
+    </td>
+    <td align="right" class="footer">
+      <a target="mainFrame" href="http://epydoc.sourceforge.net"
+        >http://epydoc.sourceforge.net</a>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  <!--
+  // Private objects are initially displayed (because if
+  // javascript is turned off then we want them to be
+  // visible); but by default, we want to hide them.  So hide
+  // them unless we have a cookie that says to show them.
+  checkCookie();
+  // -->
+</script>
+</body>
+</html>

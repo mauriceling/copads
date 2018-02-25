@@ -1,0 +1,286 @@
+<?xml version="1.0" encoding="ascii"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>copads.set</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="copads-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            ><a class="navbar" target="_top" href="https://github.com/mauriceling/copads">https://github.com/mauriceling/copads</a></th>
+          </tr></table></th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <span class="breadcrumbs">
+        <a href="copads-module.html">Package&nbsp;copads</a> ::
+        Module&nbsp;set
+      </span>
+    </td>
+    <td>
+      <table cellpadding="0" cellspacing="0">
+        <!-- hide/show private -->
+        <tr><td align="right"><span class="options">[<a href="javascript:void(0);" class="privatelink"
+    onclick="toggle_private();">hide&nbsp;private</a>]</span></td></tr>
+        <tr><td align="right"><span class="options"
+            >[<a href="frames.html" target="_top">frames</a
+            >]&nbsp;|&nbsp;<a href="copads.set-pysrc.html"
+            target="_top">no&nbsp;frames</a>]</span></td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<h1 class="epydoc">Source Code for <a href="copads.set-module.html">Module copads.set</a></h1>
+<pre class="py-src">
+<a name="L1"></a><tt class="py-lineno">  1</tt>  <tt class="py-line"><tt class="py-docstring">"""</tt> </tt>
+<a name="L2"></a><tt class="py-lineno">  2</tt>  <tt class="py-line"><tt class="py-docstring">Sets Data Structure and Algorithms. </tt> </tt>
+<a name="L3"></a><tt class="py-lineno">  3</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L4"></a><tt class="py-lineno">  4</tt>  <tt class="py-line"><tt class="py-docstring">Copyright (c) Maurice H.T. Ling &lt;mauriceling@acm.org&gt;</tt> </tt>
+<a name="L5"></a><tt class="py-lineno">  5</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L6"></a><tt class="py-lineno">  6</tt>  <tt class="py-line"><tt class="py-docstring">Date created: 19th March 2008</tt> </tt>
+<a name="L7"></a><tt class="py-lineno">  7</tt>  <tt class="py-line"><tt class="py-docstring">"""</tt> </tt>
+<a name="L8"></a><tt class="py-lineno">  8</tt>  <tt class="py-line"> </tt>
+<a name="Set"></a><div id="Set-def"><a name="L9"></a><tt class="py-lineno">  9</tt> <a class="py-toggle" href="#" id="Set-toggle" onclick="return toggle('Set');">-</a><tt class="py-line"><tt class="py-keyword">class</tt> <a class="py-def-name" href="copads.set.Set-class.html">Set</a><tt class="py-op">:</tt> </tt>
+</div><div id="Set-collapsed" style="display:none;" pad="+++" indent="++++"></div><div id="Set-expanded"><a name="L10"></a><tt class="py-lineno"> 10</tt>  <tt class="py-line">    <tt class="py-docstring">"""The set class. It can contain mutable objects.</tt> </tt>
+<a name="L11"></a><tt class="py-lineno"> 11</tt>  <tt class="py-line"><tt class="py-docstring">    </tt> </tt>
+<a name="L12"></a><tt class="py-lineno"> 12</tt>  <tt class="py-line"><tt class="py-docstring">    Adapted from: http://aspn.activestate.com/ASPN/Cookbook/Python/Recipe/106469"""</tt> </tt>
+<a name="L13"></a><tt class="py-lineno"> 13</tt>  <tt class="py-line"> </tt>
+<a name="Set.__init__"></a><div id="Set.__init__-def"><a name="L14"></a><tt class="py-lineno"> 14</tt> <a class="py-toggle" href="#" id="Set.__init__-toggle" onclick="return toggle('Set.__init__');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="copads.set.Set-class.html#__init__">__init__</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">seq</tt> <tt class="py-op">=</tt> <tt class="py-name">None</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="Set.__init__-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="Set.__init__-expanded"><a name="L15"></a><tt class="py-lineno"> 15</tt>  <tt class="py-line">        <tt class="py-docstring">"""The constructor. It can take any object giving an iterator as an </tt> </tt>
+<a name="L16"></a><tt class="py-lineno"> 16</tt>  <tt class="py-line"><tt class="py-docstring">        optional argument to populate the new set."""</tt> </tt>
+<a name="L17"></a><tt class="py-lineno"> 17</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">elems</tt> <tt class="py-op">=</tt> <tt class="py-op">[</tt><tt class="py-op">]</tt> </tt>
+<a name="L18"></a><tt class="py-lineno"> 18</tt>  <tt class="py-line">        <tt class="py-keyword">if</tt> <tt class="py-name">seq</tt><tt class="py-op">:</tt> </tt>
+<a name="L19"></a><tt class="py-lineno"> 19</tt>  <tt class="py-line">            <tt class="py-keyword">for</tt> <tt class="py-name">elem</tt> <tt class="py-keyword">in</tt> <tt class="py-name">seq</tt><tt class="py-op">:</tt> </tt>
+<a name="L20"></a><tt class="py-lineno"> 20</tt>  <tt class="py-line">                <tt class="py-keyword">if</tt> <tt class="py-name">elem</tt> <tt class="py-keyword">not</tt> <tt class="py-keyword">in</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">elems</tt><tt class="py-op">:</tt> </tt>
+<a name="L21"></a><tt class="py-lineno"> 21</tt>  <tt class="py-line">                    <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">elems</tt><tt class="py-op">.</tt><tt id="link-0" class="py-name" targets="Method copads.ring.RingList.append()=copads.ring.RingList-class.html#append,Method copads.tree.RBList.append()=copads.tree.RBList-class.html#append"><a title="copads.ring.RingList.append
+copads.tree.RBList.append" class="py-name" href="#" onclick="return doclink('link-0', 'append', 'link-0');">append</a></tt><tt class="py-op">(</tt><tt class="py-name">elem</tt><tt class="py-op">)</tt> </tt>
+</div><a name="L22"></a><tt class="py-lineno"> 22</tt>  <tt class="py-line"> </tt>
+<a name="Set.__str__"></a><div id="Set.__str__-def"><a name="L23"></a><tt class="py-lineno"> 23</tt> <a class="py-toggle" href="#" id="Set.__str__-toggle" onclick="return toggle('Set.__str__');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="copads.set.Set-class.html#__str__">__str__</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="Set.__str__-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="Set.__str__-expanded"><a name="L24"></a><tt class="py-lineno"> 24</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> <tt class="py-string">"{%s}"</tt> <tt class="py-op">%</tt> <tt class="py-string">", "</tt><tt class="py-op">.</tt><tt class="py-name">join</tt><tt class="py-op">(</tt><tt class="py-name">map</tt><tt class="py-op">(</tt><tt class="py-name">str</tt><tt class="py-op">,</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">elems</tt><tt class="py-op">)</tt><tt class="py-op">)</tt> </tt>
+</div><a name="L25"></a><tt class="py-lineno"> 25</tt>  <tt class="py-line"> </tt>
+<a name="L26"></a><tt class="py-lineno"> 26</tt>  <tt class="py-line"> </tt>
+<a name="Set.copy"></a><div id="Set.copy-def"><a name="L27"></a><tt class="py-lineno"> 27</tt> <a class="py-toggle" href="#" id="Set.copy-toggle" onclick="return toggle('Set.copy');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="copads.set.Set-class.html#copy">copy</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="Set.copy-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="Set.copy-expanded"><a name="L28"></a><tt class="py-lineno"> 28</tt>  <tt class="py-line">        <tt class="py-docstring">"""Shallow copy of a set object."""</tt> </tt>
+<a name="L29"></a><tt class="py-lineno"> 29</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> <tt id="link-1" class="py-name" targets="Class copads.set.Set=copads.set.Set-class.html"><a title="copads.set.Set" class="py-name" href="#" onclick="return doclink('link-1', 'Set', 'link-1');">Set</a></tt><tt class="py-op">(</tt><tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">elems</tt><tt class="py-op">)</tt> </tt>
+</div><a name="L30"></a><tt class="py-lineno"> 30</tt>  <tt class="py-line"> </tt>
+<a name="Set.__contains__"></a><div id="Set.__contains__-def"><a name="L31"></a><tt class="py-lineno"> 31</tt> <a class="py-toggle" href="#" id="Set.__contains__-toggle" onclick="return toggle('Set.__contains__');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="copads.set.Set-class.html#__contains__">__contains__</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">elem</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="Set.__contains__-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="Set.__contains__-expanded"><a name="L32"></a><tt class="py-lineno"> 32</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> <tt class="py-name">elem</tt> <tt class="py-keyword">in</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">elems</tt> </tt>
+</div><a name="L33"></a><tt class="py-lineno"> 33</tt>  <tt class="py-line"> </tt>
+<a name="Set.__len__"></a><div id="Set.__len__-def"><a name="L34"></a><tt class="py-lineno"> 34</tt> <a class="py-toggle" href="#" id="Set.__len__-toggle" onclick="return toggle('Set.__len__');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="copads.set.Set-class.html#__len__">__len__</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="Set.__len__-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="Set.__len__-expanded"><a name="L35"></a><tt class="py-lineno"> 35</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> <tt class="py-name">len</tt><tt class="py-op">(</tt><tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">elems</tt><tt class="py-op">)</tt> </tt>
+</div><a name="L36"></a><tt class="py-lineno"> 36</tt>  <tt class="py-line"> </tt>
+<a name="Set.items"></a><div id="Set.items-def"><a name="L37"></a><tt class="py-lineno"> 37</tt> <a class="py-toggle" href="#" id="Set.items-toggle" onclick="return toggle('Set.items');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="copads.set.Set-class.html#items">items</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="Set.items-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="Set.items-expanded"><a name="L38"></a><tt class="py-lineno"> 38</tt>  <tt class="py-line">        <tt class="py-docstring">"""Returns a list of the elements in the set."""</tt> </tt>
+<a name="L39"></a><tt class="py-lineno"> 39</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">elems</tt> </tt>
+</div><a name="L40"></a><tt class="py-lineno"> 40</tt>  <tt class="py-line"> </tt>
+<a name="Set.add"></a><div id="Set.add-def"><a name="L41"></a><tt class="py-lineno"> 41</tt> <a class="py-toggle" href="#" id="Set.add-toggle" onclick="return toggle('Set.add');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="copads.set.Set-class.html#add">add</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">elem</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="Set.add-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="Set.add-expanded"><a name="L42"></a><tt class="py-lineno"> 42</tt>  <tt class="py-line">        <tt class="py-docstring">"""Add one element to the set."""</tt> </tt>
+<a name="L43"></a><tt class="py-lineno"> 43</tt>  <tt class="py-line">        <tt class="py-keyword">if</tt> <tt class="py-name">elem</tt> <tt class="py-keyword">not</tt> <tt class="py-keyword">in</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">elems</tt><tt class="py-op">:</tt> </tt>
+<a name="L44"></a><tt class="py-lineno"> 44</tt>  <tt class="py-line">            <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">elems</tt><tt class="py-op">.</tt><tt id="link-2" class="py-name"><a title="copads.ring.RingList.append
+copads.tree.RBList.append" class="py-name" href="#" onclick="return doclink('link-2', 'append', 'link-0');">append</a></tt><tt class="py-op">(</tt><tt class="py-name">elem</tt><tt class="py-op">)</tt> </tt>
+</div><a name="L45"></a><tt class="py-lineno"> 45</tt>  <tt class="py-line"> </tt>
+<a name="Set.remove"></a><div id="Set.remove-def"><a name="L46"></a><tt class="py-lineno"> 46</tt> <a class="py-toggle" href="#" id="Set.remove-toggle" onclick="return toggle('Set.remove');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="copads.set.Set-class.html#remove">remove</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">elem</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="Set.remove-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="Set.remove-expanded"><a name="L47"></a><tt class="py-lineno"> 47</tt>  <tt class="py-line">        <tt class="py-docstring">"""Remove an element from the set. Return an error if elem is not in </tt> </tt>
+<a name="L48"></a><tt class="py-lineno"> 48</tt>  <tt class="py-line"><tt class="py-docstring">        the set."""</tt> </tt>
+<a name="L49"></a><tt class="py-lineno"> 49</tt>  <tt class="py-line">        <tt class="py-keyword">try</tt><tt class="py-op">:</tt> </tt>
+<a name="L50"></a><tt class="py-lineno"> 50</tt>  <tt class="py-line">            <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">elems</tt><tt class="py-op">.</tt><tt id="link-3" class="py-name" targets="Method copads.ring.RingList.remove()=copads.ring.RingList-class.html#remove,Method copads.set.Set.remove()=copads.set.Set-class.html#remove,Method copads.tree.RBList.remove()=copads.tree.RBList-class.html#remove"><a title="copads.ring.RingList.remove
+copads.set.Set.remove
+copads.tree.RBList.remove" class="py-name" href="#" onclick="return doclink('link-3', 'remove', 'link-3');">remove</a></tt><tt class="py-op">(</tt><tt class="py-name">elem</tt><tt class="py-op">)</tt> </tt>
+<a name="L51"></a><tt class="py-lineno"> 51</tt>  <tt class="py-line">        <tt class="py-keyword">except</tt> <tt class="py-name">ValueError</tt><tt class="py-op">:</tt> </tt>
+<a name="L52"></a><tt class="py-lineno"> 52</tt>  <tt class="py-line">            <tt class="py-keyword">raise</tt> <tt class="py-name">LookupError</tt><tt class="py-op">,</tt> <tt class="py-string">"Object %s is not a member of the set."</tt> \ </tt>
+<a name="L53"></a><tt class="py-lineno"> 53</tt>  <tt class="py-line">                <tt class="py-op">%</tt> <tt class="py-name">str</tt><tt class="py-op">(</tt><tt class="py-name">elem</tt><tt class="py-op">)</tt> </tt>
+</div><a name="L54"></a><tt class="py-lineno"> 54</tt>  <tt class="py-line"> </tt>
+<a name="Set.discard"></a><div id="Set.discard-def"><a name="L55"></a><tt class="py-lineno"> 55</tt> <a class="py-toggle" href="#" id="Set.discard-toggle" onclick="return toggle('Set.discard');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="copads.set.Set-class.html#discard">discard</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">elem</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="Set.discard-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="Set.discard-expanded"><a name="L56"></a><tt class="py-lineno"> 56</tt>  <tt class="py-line">        <tt class="py-docstring">"""Remove an element from the set. Do nothing if elem is not in the set."""</tt> </tt>
+<a name="L57"></a><tt class="py-lineno"> 57</tt>  <tt class="py-line">        <tt class="py-keyword">try</tt><tt class="py-op">:</tt> </tt>
+<a name="L58"></a><tt class="py-lineno"> 58</tt>  <tt class="py-line">            <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">elems</tt><tt class="py-op">.</tt><tt id="link-4" class="py-name"><a title="copads.ring.RingList.remove
+copads.set.Set.remove
+copads.tree.RBList.remove" class="py-name" href="#" onclick="return doclink('link-4', 'remove', 'link-3');">remove</a></tt><tt class="py-op">(</tt><tt class="py-name">elem</tt><tt class="py-op">)</tt> </tt>
+<a name="L59"></a><tt class="py-lineno"> 59</tt>  <tt class="py-line">        <tt class="py-keyword">except</tt> <tt class="py-name">ValueError</tt><tt class="py-op">:</tt> </tt>
+<a name="L60"></a><tt class="py-lineno"> 60</tt>  <tt class="py-line">            <tt class="py-keyword">pass</tt> </tt>
+</div><a name="L61"></a><tt class="py-lineno"> 61</tt>  <tt class="py-line"> </tt>
+<a name="L62"></a><tt class="py-lineno"> 62</tt>  <tt class="py-line">    <tt class="py-comment">#Define an iterator for a set.</tt> </tt>
+<a name="Set.__iter__"></a><div id="Set.__iter__-def"><a name="L63"></a><tt class="py-lineno"> 63</tt> <a class="py-toggle" href="#" id="Set.__iter__-toggle" onclick="return toggle('Set.__iter__');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="copads.set.Set-class.html#__iter__">__iter__</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="Set.__iter__-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="Set.__iter__-expanded"><a name="L64"></a><tt class="py-lineno"> 64</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> <tt class="py-name">iter</tt><tt class="py-op">(</tt><tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">elems</tt><tt class="py-op">)</tt> </tt>
+</div><a name="L65"></a><tt class="py-lineno"> 65</tt>  <tt class="py-line"> </tt>
+<a name="L66"></a><tt class="py-lineno"> 66</tt>  <tt class="py-line">    <tt class="py-comment">#The basic binary operations with sets.</tt> </tt>
+<a name="Set.__or__"></a><div id="Set.__or__-def"><a name="L67"></a><tt class="py-lineno"> 67</tt> <a class="py-toggle" href="#" id="Set.__or__-toggle" onclick="return toggle('Set.__or__');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="copads.set.Set-class.html#__or__">__or__</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">other</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="Set.__or__-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="Set.__or__-expanded"><a name="L68"></a><tt class="py-lineno"> 68</tt>  <tt class="py-line">        <tt class="py-docstring">"""Union of two sets."""</tt> </tt>
+<a name="L69"></a><tt class="py-lineno"> 69</tt>  <tt class="py-line">        <tt class="py-name">ret</tt> <tt class="py-op">=</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt id="link-5" class="py-name" targets="Method copads.bag.Bag.copy()=copads.bag.Bag-class.html#copy,Method copads.set.Set.copy()=copads.set.Set-class.html#copy,Method copads.tree.RBDict.copy()=copads.tree.RBDict-class.html#copy"><a title="copads.bag.Bag.copy
+copads.set.Set.copy
+copads.tree.RBDict.copy" class="py-name" href="#" onclick="return doclink('link-5', 'copy', 'link-5');">copy</a></tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+<a name="L70"></a><tt class="py-lineno"> 70</tt>  <tt class="py-line">        <tt class="py-keyword">for</tt> <tt class="py-name">elem</tt> <tt class="py-keyword">in</tt> <tt class="py-name">other</tt><tt class="py-op">.</tt><tt class="py-name">elems</tt><tt class="py-op">:</tt> </tt>
+<a name="L71"></a><tt class="py-lineno"> 71</tt>  <tt class="py-line">            <tt class="py-keyword">if</tt> <tt class="py-name">elem</tt> <tt class="py-keyword">not</tt> <tt class="py-keyword">in</tt> <tt class="py-name">ret</tt><tt class="py-op">:</tt> </tt>
+<a name="L72"></a><tt class="py-lineno"> 72</tt>  <tt class="py-line">                <tt class="py-name">ret</tt><tt class="py-op">.</tt><tt class="py-name">elems</tt><tt class="py-op">.</tt><tt id="link-6" class="py-name"><a title="copads.ring.RingList.append
+copads.tree.RBList.append" class="py-name" href="#" onclick="return doclink('link-6', 'append', 'link-0');">append</a></tt><tt class="py-op">(</tt><tt class="py-name">elem</tt><tt class="py-op">)</tt> </tt>
+<a name="L73"></a><tt class="py-lineno"> 73</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> <tt class="py-name">ret</tt> </tt>
+</div><a name="L74"></a><tt class="py-lineno"> 74</tt>  <tt class="py-line"> </tt>
+<a name="Set.__sub__"></a><div id="Set.__sub__-def"><a name="L75"></a><tt class="py-lineno"> 75</tt> <a class="py-toggle" href="#" id="Set.__sub__-toggle" onclick="return toggle('Set.__sub__');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="copads.set.Set-class.html#__sub__">__sub__</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">other</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="Set.__sub__-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="Set.__sub__-expanded"><a name="L76"></a><tt class="py-lineno"> 76</tt>  <tt class="py-line">        <tt class="py-docstring">"""Difference of two sets."""</tt> </tt>
+<a name="L77"></a><tt class="py-lineno"> 77</tt>  <tt class="py-line">        <tt class="py-name">ret</tt> <tt class="py-op">=</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt id="link-7" class="py-name"><a title="copads.bag.Bag.copy
+copads.set.Set.copy
+copads.tree.RBDict.copy" class="py-name" href="#" onclick="return doclink('link-7', 'copy', 'link-5');">copy</a></tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+<a name="L78"></a><tt class="py-lineno"> 78</tt>  <tt class="py-line">        <tt class="py-keyword">for</tt> <tt class="py-name">elem</tt> <tt class="py-keyword">in</tt> <tt class="py-name">other</tt><tt class="py-op">.</tt><tt class="py-name">elems</tt><tt class="py-op">:</tt> </tt>
+<a name="L79"></a><tt class="py-lineno"> 79</tt>  <tt class="py-line">            <tt class="py-name">ret</tt><tt class="py-op">.</tt><tt id="link-8" class="py-name" targets="Method copads.set.Set.discard()=copads.set.Set-class.html#discard"><a title="copads.set.Set.discard" class="py-name" href="#" onclick="return doclink('link-8', 'discard', 'link-8');">discard</a></tt><tt class="py-op">(</tt><tt class="py-name">elem</tt><tt class="py-op">)</tt> </tt>
+<a name="L80"></a><tt class="py-lineno"> 80</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> <tt class="py-name">ret</tt> </tt>
+</div><a name="L81"></a><tt class="py-lineno"> 81</tt>  <tt class="py-line"> </tt>
+<a name="Set.__and__"></a><div id="Set.__and__-def"><a name="L82"></a><tt class="py-lineno"> 82</tt> <a class="py-toggle" href="#" id="Set.__and__-toggle" onclick="return toggle('Set.__and__');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="copads.set.Set-class.html#__and__">__and__</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">other</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="Set.__and__-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="Set.__and__-expanded"><a name="L83"></a><tt class="py-lineno"> 83</tt>  <tt class="py-line">        <tt class="py-docstring">"""Intersection of two sets."""</tt> </tt>
+<a name="L84"></a><tt class="py-lineno"> 84</tt>  <tt class="py-line">        <tt class="py-name">ret</tt> <tt class="py-op">=</tt> <tt id="link-9" class="py-name"><a title="copads.set.Set" class="py-name" href="#" onclick="return doclink('link-9', 'Set', 'link-1');">Set</a></tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+<a name="L85"></a><tt class="py-lineno"> 85</tt>  <tt class="py-line">        <tt class="py-keyword">for</tt> <tt class="py-name">elem</tt> <tt class="py-keyword">in</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">elems</tt><tt class="py-op">:</tt> </tt>
+<a name="L86"></a><tt class="py-lineno"> 86</tt>  <tt class="py-line">            <tt class="py-keyword">if</tt> <tt class="py-name">elem</tt> <tt class="py-keyword">in</tt> <tt class="py-name">other</tt><tt class="py-op">.</tt><tt class="py-name">elems</tt><tt class="py-op">:</tt> </tt>
+<a name="L87"></a><tt class="py-lineno"> 87</tt>  <tt class="py-line">                <tt class="py-name">ret</tt><tt class="py-op">.</tt><tt class="py-name">elems</tt><tt class="py-op">.</tt><tt id="link-10" class="py-name"><a title="copads.ring.RingList.append
+copads.tree.RBList.append" class="py-name" href="#" onclick="return doclink('link-10', 'append', 'link-0');">append</a></tt><tt class="py-op">(</tt><tt class="py-name">elem</tt><tt class="py-op">)</tt> </tt>
+<a name="L88"></a><tt class="py-lineno"> 88</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> <tt class="py-name">ret</tt> </tt>
+</div><a name="L89"></a><tt class="py-lineno"> 89</tt>  <tt class="py-line"> </tt>
+<a name="Set.__add__"></a><div id="Set.__add__-def"><a name="L90"></a><tt class="py-lineno"> 90</tt> <a class="py-toggle" href="#" id="Set.__add__-toggle" onclick="return toggle('Set.__add__');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="copads.set.Set-class.html#__add__">__add__</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">other</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="Set.__add__-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="Set.__add__-expanded"><a name="L91"></a><tt class="py-lineno"> 91</tt>  <tt class="py-line">        <tt class="py-docstring">"""Symmetric difference of two sets."""</tt> </tt>
+<a name="L92"></a><tt class="py-lineno"> 92</tt>  <tt class="py-line">        <tt class="py-name">ret</tt> <tt class="py-op">=</tt> <tt id="link-11" class="py-name"><a title="copads.set.Set" class="py-name" href="#" onclick="return doclink('link-11', 'Set', 'link-1');">Set</a></tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+<a name="L93"></a><tt class="py-lineno"> 93</tt>  <tt class="py-line">        <tt class="py-name">temp</tt> <tt class="py-op">=</tt> <tt class="py-name">other</tt><tt class="py-op">.</tt><tt id="link-12" class="py-name"><a title="copads.bag.Bag.copy
+copads.set.Set.copy
+copads.tree.RBDict.copy" class="py-name" href="#" onclick="return doclink('link-12', 'copy', 'link-5');">copy</a></tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+<a name="L94"></a><tt class="py-lineno"> 94</tt>  <tt class="py-line">        <tt class="py-keyword">for</tt> <tt class="py-name">elem</tt> <tt class="py-keyword">in</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">elems</tt><tt class="py-op">:</tt> </tt>
+<a name="L95"></a><tt class="py-lineno"> 95</tt>  <tt class="py-line">            <tt class="py-keyword">if</tt> <tt class="py-name">elem</tt> <tt class="py-keyword">in</tt> <tt class="py-name">temp</tt><tt class="py-op">.</tt><tt class="py-name">elems</tt><tt class="py-op">:</tt> </tt>
+<a name="L96"></a><tt class="py-lineno"> 96</tt>  <tt class="py-line">                <tt class="py-name">temp</tt><tt class="py-op">.</tt><tt class="py-name">elems</tt><tt class="py-op">.</tt><tt id="link-13" class="py-name"><a title="copads.ring.RingList.remove
+copads.set.Set.remove
+copads.tree.RBList.remove" class="py-name" href="#" onclick="return doclink('link-13', 'remove', 'link-3');">remove</a></tt><tt class="py-op">(</tt><tt class="py-name">elem</tt><tt class="py-op">)</tt> </tt>
+<a name="L97"></a><tt class="py-lineno"> 97</tt>  <tt class="py-line">            <tt class="py-keyword">else</tt><tt class="py-op">:</tt> </tt>
+<a name="L98"></a><tt class="py-lineno"> 98</tt>  <tt class="py-line">                <tt class="py-name">ret</tt><tt class="py-op">.</tt><tt class="py-name">elems</tt><tt class="py-op">.</tt><tt id="link-14" class="py-name"><a title="copads.ring.RingList.append
+copads.tree.RBList.append" class="py-name" href="#" onclick="return doclink('link-14', 'append', 'link-0');">append</a></tt><tt class="py-op">(</tt><tt class="py-name">elem</tt><tt class="py-op">)</tt> </tt>
+<a name="L99"></a><tt class="py-lineno"> 99</tt>  <tt class="py-line">        <tt class="py-comment">#Add remaining elements.</tt> </tt>
+<a name="L100"></a><tt class="py-lineno">100</tt>  <tt class="py-line">        <tt class="py-keyword">for</tt> <tt class="py-name">elem</tt> <tt class="py-keyword">in</tt> <tt class="py-name">temp</tt><tt class="py-op">.</tt><tt class="py-name">elems</tt><tt class="py-op">:</tt> </tt>
+<a name="L101"></a><tt class="py-lineno">101</tt>  <tt class="py-line">                <tt class="py-name">ret</tt><tt class="py-op">.</tt><tt class="py-name">elems</tt><tt class="py-op">.</tt><tt id="link-15" class="py-name"><a title="copads.ring.RingList.append
+copads.tree.RBList.append" class="py-name" href="#" onclick="return doclink('link-15', 'append', 'link-0');">append</a></tt><tt class="py-op">(</tt><tt class="py-name">elem</tt><tt class="py-op">)</tt> </tt>
+<a name="L102"></a><tt class="py-lineno">102</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> <tt class="py-name">ret</tt> </tt>
+</div><a name="L103"></a><tt class="py-lineno">103</tt>  <tt class="py-line"> </tt>
+<a name="Set.__mul__"></a><div id="Set.__mul__-def"><a name="L104"></a><tt class="py-lineno">104</tt> <a class="py-toggle" href="#" id="Set.__mul__-toggle" onclick="return toggle('Set.__mul__');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="copads.set.Set-class.html#__mul__">__mul__</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">other</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="Set.__mul__-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="Set.__mul__-expanded"><a name="L105"></a><tt class="py-lineno">105</tt>  <tt class="py-line">        <tt class="py-docstring">"""Cartesian product of two sets."""</tt> </tt>
+<a name="L106"></a><tt class="py-lineno">106</tt>  <tt class="py-line">        <tt class="py-name">ret</tt> <tt class="py-op">=</tt> <tt id="link-16" class="py-name"><a title="copads.set.Set" class="py-name" href="#" onclick="return doclink('link-16', 'Set', 'link-1');">Set</a></tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+<a name="L107"></a><tt class="py-lineno">107</tt>  <tt class="py-line">        <tt class="py-keyword">for</tt> <tt class="py-name">elemself</tt> <tt class="py-keyword">in</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">elems</tt><tt class="py-op">:</tt> </tt>
+<a name="L108"></a><tt class="py-lineno">108</tt>  <tt class="py-line">            <tt class="py-name">ret</tt><tt class="py-op">.</tt><tt class="py-name">elems</tt><tt class="py-op">.</tt><tt id="link-17" class="py-name" targets="Method copads.tree.RBList.extend()=copads.tree.RBList-class.html#extend"><a title="copads.tree.RBList.extend" class="py-name" href="#" onclick="return doclink('link-17', 'extend', 'link-17');">extend</a></tt><tt class="py-op">(</tt><tt class="py-op">[</tt><tt class="py-op">(</tt><tt class="py-name">elemself</tt><tt class="py-op">,</tt> <tt class="py-name">elemother</tt><tt class="py-op">)</tt>  </tt>
+<a name="L109"></a><tt class="py-lineno">109</tt>  <tt class="py-line">                            <tt class="py-keyword">for</tt> <tt class="py-name">elemother</tt> <tt class="py-keyword">in</tt> <tt class="py-name">other</tt><tt class="py-op">.</tt><tt class="py-name">elems</tt><tt class="py-op">]</tt><tt class="py-op">)</tt> </tt>
+<a name="L110"></a><tt class="py-lineno">110</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> <tt class="py-name">ret</tt> </tt>
+</div><a name="L111"></a><tt class="py-lineno">111</tt>  <tt class="py-line"> </tt>
+<a name="L112"></a><tt class="py-lineno">112</tt>  <tt class="py-line">    <tt class="py-comment">#Some of the binary comparisons.</tt> </tt>
+<a name="Set.__lt__"></a><div id="Set.__lt__-def"><a name="L113"></a><tt class="py-lineno">113</tt> <a class="py-toggle" href="#" id="Set.__lt__-toggle" onclick="return toggle('Set.__lt__');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="copads.set.Set-class.html#__lt__">__lt__</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">other</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="Set.__lt__-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="Set.__lt__-expanded"><a name="L114"></a><tt class="py-lineno">114</tt>  <tt class="py-line">        <tt class="py-docstring">"""Returns 1 if the lhs set is contained but not equal to the rhs set."""</tt> </tt>
+<a name="L115"></a><tt class="py-lineno">115</tt>  <tt class="py-line">        <tt class="py-keyword">if</tt> <tt class="py-name">len</tt><tt class="py-op">(</tt><tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">elems</tt><tt class="py-op">)</tt> <tt class="py-op">&lt;</tt> <tt class="py-name">len</tt><tt class="py-op">(</tt><tt class="py-name">other</tt><tt class="py-op">.</tt><tt class="py-name">elems</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+<a name="L116"></a><tt class="py-lineno">116</tt>  <tt class="py-line">            <tt class="py-name">temp</tt> <tt class="py-op">=</tt> <tt class="py-name">other</tt><tt class="py-op">.</tt><tt id="link-18" class="py-name"><a title="copads.bag.Bag.copy
+copads.set.Set.copy
+copads.tree.RBDict.copy" class="py-name" href="#" onclick="return doclink('link-18', 'copy', 'link-5');">copy</a></tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+<a name="L117"></a><tt class="py-lineno">117</tt>  <tt class="py-line">            <tt class="py-keyword">for</tt> <tt class="py-name">elem</tt> <tt class="py-keyword">in</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">elems</tt><tt class="py-op">:</tt> </tt>
+<a name="L118"></a><tt class="py-lineno">118</tt>  <tt class="py-line">                <tt class="py-keyword">if</tt> <tt class="py-name">elem</tt> <tt class="py-keyword">in</tt> <tt class="py-name">temp</tt><tt class="py-op">.</tt><tt class="py-name">elems</tt><tt class="py-op">:</tt> </tt>
+<a name="L119"></a><tt class="py-lineno">119</tt>  <tt class="py-line">                    <tt class="py-name">temp</tt><tt class="py-op">.</tt><tt id="link-19" class="py-name"><a title="copads.ring.RingList.remove
+copads.set.Set.remove
+copads.tree.RBList.remove" class="py-name" href="#" onclick="return doclink('link-19', 'remove', 'link-3');">remove</a></tt><tt class="py-op">(</tt><tt class="py-name">elem</tt><tt class="py-op">)</tt> </tt>
+<a name="L120"></a><tt class="py-lineno">120</tt>  <tt class="py-line">                <tt class="py-keyword">else</tt><tt class="py-op">:</tt> </tt>
+<a name="L121"></a><tt class="py-lineno">121</tt>  <tt class="py-line">                    <tt class="py-keyword">return</tt> <tt class="py-number">0</tt> </tt>
+<a name="L122"></a><tt class="py-lineno">122</tt>  <tt class="py-line">            <tt class="py-keyword">return</tt> <tt class="py-name">len</tt><tt class="py-op">(</tt><tt class="py-name">temp</tt><tt class="py-op">.</tt><tt class="py-name">elems</tt><tt class="py-op">)</tt> <tt class="py-op">==</tt> <tt class="py-number">0</tt> </tt>
+<a name="L123"></a><tt class="py-lineno">123</tt>  <tt class="py-line">        <tt class="py-keyword">else</tt><tt class="py-op">:</tt> </tt>
+<a name="L124"></a><tt class="py-lineno">124</tt>  <tt class="py-line">            <tt class="py-keyword">return</tt> <tt class="py-number">0</tt> </tt>
+</div><a name="L125"></a><tt class="py-lineno">125</tt>  <tt class="py-line"> </tt>
+<a name="Set.__le__"></a><div id="Set.__le__-def"><a name="L126"></a><tt class="py-lineno">126</tt> <a class="py-toggle" href="#" id="Set.__le__-toggle" onclick="return toggle('Set.__le__');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="copads.set.Set-class.html#__le__">__le__</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">other</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="Set.__le__-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="Set.__le__-expanded"><a name="L127"></a><tt class="py-lineno">127</tt>  <tt class="py-line">        <tt class="py-docstring">"""Returns 1 if the lhs set is contained in the rhs set."""</tt> </tt>
+<a name="L128"></a><tt class="py-lineno">128</tt>  <tt class="py-line">        <tt class="py-keyword">if</tt> <tt class="py-name">len</tt><tt class="py-op">(</tt><tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">elems</tt><tt class="py-op">)</tt> <tt class="py-op">&lt;=</tt> <tt class="py-name">len</tt><tt class="py-op">(</tt><tt class="py-name">other</tt><tt class="py-op">.</tt><tt class="py-name">elems</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+<a name="L129"></a><tt class="py-lineno">129</tt>  <tt class="py-line">            <tt class="py-name">ret</tt> <tt class="py-op">=</tt> <tt class="py-number">1</tt> </tt>
+<a name="L130"></a><tt class="py-lineno">130</tt>  <tt class="py-line">            <tt class="py-keyword">for</tt> <tt class="py-name">elem</tt> <tt class="py-keyword">in</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">elems</tt><tt class="py-op">:</tt> </tt>
+<a name="L131"></a><tt class="py-lineno">131</tt>  <tt class="py-line">                <tt class="py-keyword">if</tt> <tt class="py-name">elem</tt> <tt class="py-keyword">not</tt> <tt class="py-keyword">in</tt> <tt class="py-name">other</tt><tt class="py-op">.</tt><tt class="py-name">elems</tt><tt class="py-op">:</tt> </tt>
+<a name="L132"></a><tt class="py-lineno">132</tt>  <tt class="py-line">                    <tt class="py-name">ret</tt> <tt class="py-op">=</tt> <tt class="py-number">0</tt> </tt>
+<a name="L133"></a><tt class="py-lineno">133</tt>  <tt class="py-line">                    <tt class="py-keyword">break</tt> </tt>
+<a name="L134"></a><tt class="py-lineno">134</tt>  <tt class="py-line">            <tt class="py-keyword">return</tt> <tt class="py-name">ret</tt> </tt>
+<a name="L135"></a><tt class="py-lineno">135</tt>  <tt class="py-line">        <tt class="py-keyword">else</tt><tt class="py-op">:</tt> </tt>
+<a name="L136"></a><tt class="py-lineno">136</tt>  <tt class="py-line">            <tt class="py-keyword">return</tt> <tt class="py-number">0</tt> </tt>
+</div><a name="L137"></a><tt class="py-lineno">137</tt>  <tt class="py-line"> </tt>
+<a name="Set.__eq__"></a><div id="Set.__eq__-def"><a name="L138"></a><tt class="py-lineno">138</tt> <a class="py-toggle" href="#" id="Set.__eq__-toggle" onclick="return toggle('Set.__eq__');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="copads.set.Set-class.html#__eq__">__eq__</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">other</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="Set.__eq__-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="Set.__eq__-expanded"><a name="L139"></a><tt class="py-lineno">139</tt>  <tt class="py-line">        <tt class="py-docstring">"""Returns 1 if the sets are equal."""</tt> </tt>
+<a name="L140"></a><tt class="py-lineno">140</tt>  <tt class="py-line">        <tt class="py-keyword">if</tt> <tt class="py-name">len</tt><tt class="py-op">(</tt><tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">elems</tt><tt class="py-op">)</tt> <tt class="py-op">!=</tt> <tt class="py-name">len</tt><tt class="py-op">(</tt><tt class="py-name">other</tt><tt class="py-op">.</tt><tt class="py-name">elems</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+<a name="L141"></a><tt class="py-lineno">141</tt>  <tt class="py-line">            <tt class="py-keyword">return</tt> <tt class="py-number">0</tt> </tt>
+<a name="L142"></a><tt class="py-lineno">142</tt>  <tt class="py-line">        <tt class="py-keyword">else</tt><tt class="py-op">:</tt> </tt>
+<a name="L143"></a><tt class="py-lineno">143</tt>  <tt class="py-line">            <tt class="py-keyword">return</tt> <tt class="py-name">len</tt><tt class="py-op">(</tt><tt class="py-name">self</tt> <tt class="py-op">-</tt> <tt class="py-name">other</tt><tt class="py-op">)</tt> <tt class="py-op">==</tt> <tt class="py-number">0</tt> </tt>
+</div></div><a name="L144"></a><tt class="py-lineno">144</tt>  <tt class="py-line"> </tt><script type="text/javascript">
+<!--
+expandto(location.href);
+// -->
+</script>
+</pre>
+<br />
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="copads-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            ><a class="navbar" target="_top" href="https://github.com/mauriceling/copads">https://github.com/mauriceling/copads</a></th>
+          </tr></table></th>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%%">
+  <tr>
+    <td align="left" class="footer">
+    Generated by Epydoc 3.0.1 on Tue May 31 13:09:22 2016
+    </td>
+    <td align="right" class="footer">
+      <a target="mainFrame" href="http://epydoc.sourceforge.net"
+        >http://epydoc.sourceforge.net</a>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  <!--
+  // Private objects are initially displayed (because if
+  // javascript is turned off then we want them to be
+  // visible); but by default, we want to hide them.  So hide
+  // them unless we have a cookie that says to show them.
+  checkCookie();
+  // -->
+</script>
+</body>
+</html>

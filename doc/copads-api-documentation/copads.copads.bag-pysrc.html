@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="ascii"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>copads.copads.bag</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="copads.copads-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            ><a class="navbar" target="_top" href="https://github.com/mauriceling/copads">https://github.com/mauriceling/copads</a></th>
+          </tr></table></th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <span class="breadcrumbs">
+        Package&nbsp;copads ::
+        <a href="copads.copads-module.html">Package&nbsp;copads</a> ::
+        Module&nbsp;bag
+      </span>
+    </td>
+    <td>
+      <table cellpadding="0" cellspacing="0">
+        <!-- hide/show private -->
+        <tr><td align="right"><span class="options">[<a href="javascript:void(0);" class="privatelink"
+    onclick="toggle_private();">hide&nbsp;private</a>]</span></td></tr>
+        <tr><td align="right"><span class="options"
+            >[<a href="frames.html" target="_top">frames</a
+            >]&nbsp;|&nbsp;<a href="copads.copads.bag-pysrc.html"
+            target="_top">no&nbsp;frames</a>]</span></td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<h1 class="epydoc">Source Code for <a href="copads.copads.bag-module.html">Module copads.copads.bag</a></h1>
+<pre class="py-src">
+<a name="L1"></a><tt class="py-lineno">  1</tt>  <tt class="py-line"><tt class="py-docstring">"""</tt> </tt>
+<a name="L2"></a><tt class="py-lineno">  2</tt>  <tt class="py-line"><tt class="py-docstring">Bag Data Structures and Algorithms.</tt> </tt>
+<a name="L3"></a><tt class="py-lineno">  3</tt>  <tt class="py-line"><tt class="py-docstring">"""</tt> </tt>
+<a name="L4"></a><tt class="py-lineno">  4</tt>  <tt class="py-line"> </tt>
+<a name="L5"></a><tt class="py-lineno">  5</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt class="py-name">operator</tt> <tt class="py-keyword">import</tt> <tt class="py-name">itemgetter</tt> </tt>
+<a name="L6"></a><tt class="py-lineno">  6</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt class="py-name">heapq</tt> <tt class="py-keyword">import</tt> <tt class="py-name">nlargest</tt> </tt>
+<a name="L7"></a><tt class="py-lineno">  7</tt>  <tt class="py-line"> </tt>
+<a name="Bag"></a><div id="Bag-def"><a name="L8"></a><tt class="py-lineno">  8</tt> <a class="py-toggle" href="#" id="Bag-toggle" onclick="return toggle('Bag');">-</a><tt class="py-line"><tt class="py-keyword">class</tt> <a class="py-def-name" href="copads.copads.bag.Bag-class.html">Bag</a><tt class="py-op">(</tt><tt class="py-base-class">object</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="Bag-collapsed" style="display:none;" pad="+++" indent="++++"></div><div id="Bag-expanded"><a name="L9"></a><tt class="py-lineno">  9</tt>  <tt class="py-line">    <tt class="py-docstring">"""</tt> </tt>
+<a name="L10"></a><tt class="py-lineno"> 10</tt>  <tt class="py-line"><tt class="py-docstring">    Bag is also known as multi-set, or a set that can have duplicate elements</tt> </tt>
+<a name="L11"></a><tt class="py-lineno"> 11</tt>  <tt class="py-line"><tt class="py-docstring">    </tt> </tt>
+<a name="L12"></a><tt class="py-lineno"> 12</tt>  <tt class="py-line"><tt class="py-docstring">    Adapted from: http://aspn.activestate.com/ASPN/Cookbook/</tt> </tt>
+<a name="L13"></a><tt class="py-lineno"> 13</tt>  <tt class="py-line"><tt class="py-docstring">    Python/Recipe/259174 </tt> </tt>
+<a name="L14"></a><tt class="py-lineno"> 14</tt>  <tt class="py-line"><tt class="py-docstring">    Original author: Raymond Hettinger</tt> </tt>
+<a name="L15"></a><tt class="py-lineno"> 15</tt>  <tt class="py-line"><tt class="py-docstring">    """</tt> </tt>
+<a name="L16"></a><tt class="py-lineno"> 16</tt>  <tt class="py-line"> </tt>
+<a name="Bag.__init__"></a><div id="Bag.__init__-def"><a name="L17"></a><tt class="py-lineno"> 17</tt> <a class="py-toggle" href="#" id="Bag.__init__-toggle" onclick="return toggle('Bag.__init__');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="copads.copads.bag.Bag-class.html#__init__">__init__</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">iterable</tt><tt class="py-op">=</tt><tt class="py-op">{</tt><tt class="py-op">}</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="Bag.__init__-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="Bag.__init__-expanded"><a name="L18"></a><tt class="py-lineno"> 18</tt>  <tt class="py-line">        <tt class="py-docstring">"""Constructor.</tt> </tt>
+<a name="L19"></a><tt class="py-lineno"> 19</tt>  <tt class="py-line"><tt class="py-docstring">        @param iterable: dictionary of elements to add"""</tt> </tt>
+<a name="L20"></a><tt class="py-lineno"> 20</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_data</tt> <tt class="py-op">=</tt> <tt class="py-op">{</tt><tt class="py-op">}</tt> </tt>
+<a name="L21"></a><tt class="py-lineno"> 21</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_len</tt> <tt class="py-op">=</tt> <tt class="py-number">0</tt> </tt>
+<a name="L22"></a><tt class="py-lineno"> 22</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt id="link-0" class="py-name" targets="Method copads.copads.bag.Bag.update()=copads.copads.bag.Bag-class.html#update,Method copads.copads.tree.RBDict.update()=copads.copads.tree.RBDict-class.html#update"><a title="copads.copads.bag.Bag.update
+copads.copads.tree.RBDict.update" class="py-name" href="#" onclick="return doclink('link-0', 'update', 'link-0');">update</a></tt><tt class="py-op">(</tt><tt class="py-name">iterable</tt><tt class="py-op">)</tt> </tt>
+</div><a name="L23"></a><tt class="py-lineno"> 23</tt>  <tt class="py-line"> </tt>
+<a name="Bag.update"></a><div id="Bag.update-def"><a name="L24"></a><tt class="py-lineno"> 24</tt> <a class="py-toggle" href="#" id="Bag.update-toggle" onclick="return toggle('Bag.update');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="copads.copads.bag.Bag-class.html#update">update</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">iterable</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="Bag.update-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="Bag.update-expanded"><a name="L25"></a><tt class="py-lineno"> 25</tt>  <tt class="py-line">        <tt class="py-docstring">"""Update the bag</tt> </tt>
+<a name="L26"></a><tt class="py-lineno"> 26</tt>  <tt class="py-line"><tt class="py-docstring">        @param iterable: dictionary if elements to add"""</tt> </tt>
+<a name="L27"></a><tt class="py-lineno"> 27</tt>  <tt class="py-line">        <tt class="py-keyword">if</tt> <tt class="py-name">isinstance</tt><tt class="py-op">(</tt><tt class="py-name">iterable</tt><tt class="py-op">,</tt> <tt class="py-name">dict</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+<a name="L28"></a><tt class="py-lineno"> 28</tt>  <tt class="py-line">            <tt class="py-keyword">for</tt> <tt class="py-name">elem</tt><tt class="py-op">,</tt> <tt class="py-name">n</tt> <tt class="py-keyword">in</tt> <tt class="py-name">iterable</tt><tt class="py-op">.</tt><tt id="link-1" class="py-name" targets="Function copads.copads.operations.items()=copads.copads.operations-module.html#items,Method copads.copads.tree.RBDict.items()=copads.copads.tree.RBDict-class.html#items"><a title="copads.copads.operations.items
+copads.copads.tree.RBDict.items" class="py-name" href="#" onclick="return doclink('link-1', 'items', 'link-1');">items</a></tt><tt class="py-op">(</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+<a name="L29"></a><tt class="py-lineno"> 29</tt>  <tt class="py-line">                <tt class="py-name">self</tt><tt class="py-op">[</tt><tt class="py-name">elem</tt><tt class="py-op">]</tt> <tt class="py-op">+=</tt> <tt class="py-name">n</tt> </tt>
+<a name="L30"></a><tt class="py-lineno"> 30</tt>  <tt class="py-line">        <tt class="py-keyword">else</tt><tt class="py-op">:</tt> </tt>
+<a name="L31"></a><tt class="py-lineno"> 31</tt>  <tt class="py-line">            <tt class="py-keyword">for</tt> <tt class="py-name">elem</tt> <tt class="py-keyword">in</tt> <tt class="py-name">iterable</tt><tt class="py-op">:</tt> </tt>
+<a name="L32"></a><tt class="py-lineno"> 32</tt>  <tt class="py-line">                <tt class="py-name">self</tt><tt class="py-op">[</tt><tt class="py-name">elem</tt><tt class="py-op">]</tt> <tt class="py-op">+=</tt> <tt class="py-number">1</tt>  </tt>
+</div><a name="L33"></a><tt class="py-lineno"> 33</tt>  <tt class="py-line"> </tt>
+<a name="Bag.__contains__"></a><div id="Bag.__contains__-def"><a name="L34"></a><tt class="py-lineno"> 34</tt> <a class="py-toggle" href="#" id="Bag.__contains__-toggle" onclick="return toggle('Bag.__contains__');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="copads.copads.bag.Bag-class.html#__contains__">__contains__</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">elem</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="Bag.__contains__-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="Bag.__contains__-expanded"><a name="L35"></a><tt class="py-lineno"> 35</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> <tt class="py-name">elem</tt> <tt class="py-keyword">in</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_data</tt> </tt>
+</div><a name="L36"></a><tt class="py-lineno"> 36</tt>  <tt class="py-line"> </tt>
+<a name="Bag.__getitem__"></a><div id="Bag.__getitem__-def"><a name="L37"></a><tt class="py-lineno"> 37</tt> <a class="py-toggle" href="#" id="Bag.__getitem__-toggle" onclick="return toggle('Bag.__getitem__');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="copads.copads.bag.Bag-class.html#__getitem__">__getitem__</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">elem</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="Bag.__getitem__-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="Bag.__getitem__-expanded"><a name="L38"></a><tt class="py-lineno"> 38</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_data</tt><tt class="py-op">.</tt><tt id="link-2" class="py-name" targets="Method copads.copads.ring.RingList.get()=copads.copads.ring.RingList-class.html#get,Method copads.copads.tree.RBDict.get()=copads.copads.tree.RBDict-class.html#get"><a title="copads.copads.ring.RingList.get
+copads.copads.tree.RBDict.get" class="py-name" href="#" onclick="return doclink('link-2', 'get', 'link-2');">get</a></tt><tt class="py-op">(</tt><tt class="py-name">elem</tt><tt class="py-op">,</tt> <tt class="py-number">0</tt><tt class="py-op">)</tt> </tt>
+</div><a name="L39"></a><tt class="py-lineno"> 39</tt>  <tt class="py-line"> </tt>
+<a name="Bag.__setitem__"></a><div id="Bag.__setitem__-def"><a name="L40"></a><tt class="py-lineno"> 40</tt> <a class="py-toggle" href="#" id="Bag.__setitem__-toggle" onclick="return toggle('Bag.__setitem__');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="copads.copads.bag.Bag-class.html#__setitem__">__setitem__</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">elem</tt><tt class="py-op">,</tt> <tt class="py-param">n</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="Bag.__setitem__-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="Bag.__setitem__-expanded"><a name="L41"></a><tt class="py-lineno"> 41</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_len</tt> <tt class="py-op">+=</tt> <tt class="py-name">n</tt> <tt class="py-op">-</tt> <tt class="py-name">self</tt><tt class="py-op">[</tt><tt class="py-name">elem</tt><tt class="py-op">]</tt> </tt>
+<a name="L42"></a><tt class="py-lineno"> 42</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_data</tt><tt class="py-op">[</tt><tt class="py-name">elem</tt><tt class="py-op">]</tt> <tt class="py-op">=</tt> <tt class="py-name">n</tt> </tt>
+<a name="L43"></a><tt class="py-lineno"> 43</tt>  <tt class="py-line">        <tt class="py-keyword">if</tt> <tt class="py-name">n</tt> <tt class="py-op">==</tt> <tt class="py-number">0</tt><tt class="py-op">:</tt> </tt>
+<a name="L44"></a><tt class="py-lineno"> 44</tt>  <tt class="py-line">            <tt class="py-keyword">del</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_data</tt><tt class="py-op">[</tt><tt class="py-name">elem</tt><tt class="py-op">]</tt> </tt>
+</div><a name="L45"></a><tt class="py-lineno"> 45</tt>  <tt class="py-line"> </tt>
+<a name="Bag.__delitem__"></a><div id="Bag.__delitem__-def"><a name="L46"></a><tt class="py-lineno"> 46</tt> <a class="py-toggle" href="#" id="Bag.__delitem__-toggle" onclick="return toggle('Bag.__delitem__');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="copads.copads.bag.Bag-class.html#__delitem__">__delitem__</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">elem</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="Bag.__delitem__-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="Bag.__delitem__-expanded"><a name="L47"></a><tt class="py-lineno"> 47</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_len</tt> <tt class="py-op">-=</tt> <tt class="py-name">self</tt><tt class="py-op">[</tt><tt class="py-name">elem</tt><tt class="py-op">]</tt> </tt>
+<a name="L48"></a><tt class="py-lineno"> 48</tt>  <tt class="py-line">        <tt class="py-keyword">del</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_data</tt><tt class="py-op">[</tt><tt class="py-name">elem</tt><tt class="py-op">]</tt> </tt>
+</div><a name="L49"></a><tt class="py-lineno"> 49</tt>  <tt class="py-line"> </tt>
+<a name="Bag.__len__"></a><div id="Bag.__len__-def"><a name="L50"></a><tt class="py-lineno"> 50</tt> <a class="py-toggle" href="#" id="Bag.__len__-toggle" onclick="return toggle('Bag.__len__');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="copads.copads.bag.Bag-class.html#__len__">__len__</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="Bag.__len__-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="Bag.__len__-expanded"><a name="L51"></a><tt class="py-lineno"> 51</tt>  <tt class="py-line">        <tt class="py-keyword">assert</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_len</tt> <tt class="py-op">==</tt> <tt id="link-3" class="py-name" targets="Method copads.copads.matrix.Vector.sum()=copads.copads.matrix.Vector-class.html#sum"><a title="copads.copads.matrix.Vector.sum" class="py-name" href="#" onclick="return doclink('link-3', 'sum', 'link-3');">sum</a></tt><tt class="py-op">(</tt><tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_data</tt><tt class="py-op">.</tt><tt id="link-4" class="py-name" targets="Method copads.copads.tree.RBDict.values()=copads.copads.tree.RBDict-class.html#values,Method copads.copads.tree.RBList.values()=copads.copads.tree.RBList-class.html#values"><a title="copads.copads.tree.RBDict.values
+copads.copads.tree.RBList.values" class="py-name" href="#" onclick="return doclink('link-4', 'values', 'link-4');">values</a></tt><tt class="py-op">(</tt><tt class="py-op">)</tt><tt class="py-op">)</tt> </tt>
+<a name="L52"></a><tt class="py-lineno"> 52</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_len</tt> </tt>
+</div><a name="L53"></a><tt class="py-lineno"> 53</tt>  <tt class="py-line"> </tt>
+<a name="Bag.__eq__"></a><div id="Bag.__eq__-def"><a name="L54"></a><tt class="py-lineno"> 54</tt> <a class="py-toggle" href="#" id="Bag.__eq__-toggle" onclick="return toggle('Bag.__eq__');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="copads.copads.bag.Bag-class.html#__eq__">__eq__</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">other</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="Bag.__eq__-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="Bag.__eq__-expanded"><a name="L55"></a><tt class="py-lineno"> 55</tt>  <tt class="py-line">        <tt class="py-keyword">if</tt> <tt class="py-keyword">not</tt> <tt class="py-name">isinstance</tt><tt class="py-op">(</tt><tt class="py-name">other</tt><tt class="py-op">,</tt> <tt id="link-5" class="py-name" targets="Module copads.copads.bag=copads.copads.bag-module.html"><a title="copads.copads.bag" class="py-name" href="#" onclick="return doclink('link-5', 'bag', 'link-5');">bag</a></tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+<a name="L56"></a><tt class="py-lineno"> 56</tt>  <tt class="py-line">            <tt class="py-keyword">return</tt> <tt class="py-name">False</tt> </tt>
+<a name="L57"></a><tt class="py-lineno"> 57</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_data</tt> <tt class="py-op">==</tt> <tt class="py-name">other</tt><tt class="py-op">.</tt><tt class="py-name">_data</tt> </tt>
+</div><a name="L58"></a><tt class="py-lineno"> 58</tt>  <tt class="py-line"> </tt>
+<a name="Bag.__ne__"></a><div id="Bag.__ne__-def"><a name="L59"></a><tt class="py-lineno"> 59</tt> <a class="py-toggle" href="#" id="Bag.__ne__-toggle" onclick="return toggle('Bag.__ne__');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="copads.copads.bag.Bag-class.html#__ne__">__ne__</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">other</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="Bag.__ne__-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="Bag.__ne__-expanded"><a name="L60"></a><tt class="py-lineno"> 60</tt>  <tt class="py-line">        <tt class="py-keyword">if</tt> <tt class="py-keyword">not</tt> <tt class="py-name">isinstance</tt><tt class="py-op">(</tt><tt class="py-name">other</tt><tt class="py-op">,</tt> <tt id="link-6" class="py-name"><a title="copads.copads.bag" class="py-name" href="#" onclick="return doclink('link-6', 'bag', 'link-5');">bag</a></tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+<a name="L61"></a><tt class="py-lineno"> 61</tt>  <tt class="py-line">            <tt class="py-keyword">return</tt> <tt class="py-name">True</tt> </tt>
+<a name="L62"></a><tt class="py-lineno"> 62</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_data</tt> <tt class="py-op">!=</tt> <tt class="py-name">other</tt><tt class="py-op">.</tt><tt class="py-name">_data</tt> </tt>
+</div><a name="L63"></a><tt class="py-lineno"> 63</tt>  <tt class="py-line"> </tt>
+<a name="Bag.__hash__"></a><div id="Bag.__hash__-def"><a name="L64"></a><tt class="py-lineno"> 64</tt> <a class="py-toggle" href="#" id="Bag.__hash__-toggle" onclick="return toggle('Bag.__hash__');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="copads.copads.bag.Bag-class.html#__hash__">__hash__</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="Bag.__hash__-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="Bag.__hash__-expanded"><a name="L65"></a><tt class="py-lineno"> 65</tt>  <tt class="py-line">        <tt class="py-keyword">raise</tt> <tt class="py-name">TypeError</tt> </tt>
+</div><a name="L66"></a><tt class="py-lineno"> 66</tt>  <tt class="py-line"> </tt>
+<a name="Bag.__repr__"></a><div id="Bag.__repr__-def"><a name="L67"></a><tt class="py-lineno"> 67</tt> <a class="py-toggle" href="#" id="Bag.__repr__-toggle" onclick="return toggle('Bag.__repr__');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="copads.copads.bag.Bag-class.html#__repr__">__repr__</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="Bag.__repr__-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="Bag.__repr__-expanded"><a name="L68"></a><tt class="py-lineno"> 68</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> <tt class="py-string">'bag(%r)'</tt> <tt class="py-op">%</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_data</tt> </tt>
+</div><a name="L69"></a><tt class="py-lineno"> 69</tt>  <tt class="py-line"> </tt>
+<a name="Bag.copy"></a><div id="Bag.copy-def"><a name="L70"></a><tt class="py-lineno"> 70</tt> <a class="py-toggle" href="#" id="Bag.copy-toggle" onclick="return toggle('Bag.copy');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="copads.copads.bag.Bag-class.html#copy">copy</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="Bag.copy-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="Bag.copy-expanded"><a name="L71"></a><tt class="py-lineno"> 71</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">__class__</tt><tt class="py-op">(</tt><tt class="py-name">self</tt><tt class="py-op">)</tt> </tt>
+</div><a name="L72"></a><tt class="py-lineno"> 72</tt>  <tt class="py-line"> </tt>
+<a name="L73"></a><tt class="py-lineno"> 73</tt>  <tt class="py-line">    <tt class="py-name">__copy__</tt> <tt class="py-op">=</tt> <tt id="link-7" class="py-name" targets="Method copads.copads.bag.Bag.copy()=copads.copads.bag.Bag-class.html#copy,Method copads.copads.tree.RBDict.copy()=copads.copads.tree.RBDict-class.html#copy"><a title="copads.copads.bag.Bag.copy
+copads.copads.tree.RBDict.copy" class="py-name" href="#" onclick="return doclink('link-7', 'copy', 'link-7');">copy</a></tt> <tt class="py-comment"># For the copy module</tt> </tt>
+<a name="L74"></a><tt class="py-lineno"> 74</tt>  <tt class="py-line"> </tt>
+<a name="Bag.__deepcopy__"></a><div id="Bag.__deepcopy__-def"><a name="L75"></a><tt class="py-lineno"> 75</tt> <a class="py-toggle" href="#" id="Bag.__deepcopy__-toggle" onclick="return toggle('Bag.__deepcopy__');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="copads.copads.bag.Bag-class.html#__deepcopy__">__deepcopy__</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">memo</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="Bag.__deepcopy__-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="Bag.__deepcopy__-expanded"><a name="L76"></a><tt class="py-lineno"> 76</tt>  <tt class="py-line">        <tt class="py-keyword">from</tt> <tt id="link-8" class="py-name"><a title="copads.copads.bag.Bag.copy
+copads.copads.tree.RBDict.copy" class="py-name" href="#" onclick="return doclink('link-8', 'copy', 'link-7');">copy</a></tt> <tt class="py-keyword">import</tt> <tt class="py-name">deepcopy</tt> </tt>
+<a name="L77"></a><tt class="py-lineno"> 77</tt>  <tt class="py-line">        <tt class="py-name">result</tt> <tt class="py-op">=</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">__class__</tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+<a name="L78"></a><tt class="py-lineno"> 78</tt>  <tt class="py-line">        <tt class="py-name">memo</tt><tt class="py-op">[</tt><tt class="py-name">id</tt><tt class="py-op">(</tt><tt class="py-name">self</tt><tt class="py-op">)</tt><tt class="py-op">]</tt> <tt class="py-op">=</tt> <tt class="py-name">result</tt> </tt>
+<a name="L79"></a><tt class="py-lineno"> 79</tt>  <tt class="py-line">        <tt id="link-9" class="py-name" targets="Variable copads.copads.samplestatistics.SingleSample.data=copads.copads.samplestatistics.SingleSample-class.html#data"><a title="copads.copads.samplestatistics.SingleSample.data" class="py-name" href="#" onclick="return doclink('link-9', 'data', 'link-9');">data</a></tt> <tt class="py-op">=</tt> <tt class="py-name">result</tt><tt class="py-op">.</tt><tt class="py-name">_data</tt> </tt>
+<a name="L80"></a><tt class="py-lineno"> 80</tt>  <tt class="py-line">        <tt class="py-name">result</tt><tt class="py-op">.</tt><tt class="py-name">_data</tt> <tt class="py-op">=</tt> <tt class="py-name">deepcopy</tt><tt class="py-op">(</tt><tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_data</tt><tt class="py-op">,</tt> <tt class="py-name">memo</tt><tt class="py-op">)</tt> </tt>
+<a name="L81"></a><tt class="py-lineno"> 81</tt>  <tt class="py-line">        <tt class="py-name">result</tt><tt class="py-op">.</tt><tt class="py-name">_len</tt> <tt class="py-op">=</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_len</tt> </tt>
+<a name="L82"></a><tt class="py-lineno"> 82</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> <tt class="py-name">result</tt> </tt>
+</div><a name="L83"></a><tt class="py-lineno"> 83</tt>  <tt class="py-line"> </tt>
+<a name="Bag.__getstate__"></a><div id="Bag.__getstate__-def"><a name="L84"></a><tt class="py-lineno"> 84</tt> <a class="py-toggle" href="#" id="Bag.__getstate__-toggle" onclick="return toggle('Bag.__getstate__');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="copads.copads.bag.Bag-class.html#__getstate__">__getstate__</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="Bag.__getstate__-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="Bag.__getstate__-expanded"><a name="L85"></a><tt class="py-lineno"> 85</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_data</tt><tt class="py-op">.</tt><tt id="link-10" class="py-name"><a title="copads.copads.bag.Bag.copy
+copads.copads.tree.RBDict.copy" class="py-name" href="#" onclick="return doclink('link-10', 'copy', 'link-7');">copy</a></tt><tt class="py-op">(</tt><tt class="py-op">)</tt><tt class="py-op">,</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_len</tt> </tt>
+</div><a name="L86"></a><tt class="py-lineno"> 86</tt>  <tt class="py-line"> </tt>
+<a name="Bag.__setstate__"></a><div id="Bag.__setstate__-def"><a name="L87"></a><tt class="py-lineno"> 87</tt> <a class="py-toggle" href="#" id="Bag.__setstate__-toggle" onclick="return toggle('Bag.__setstate__');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="copads.copads.bag.Bag-class.html#__setstate__">__setstate__</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">data</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="Bag.__setstate__-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="Bag.__setstate__-expanded"><a name="L88"></a><tt class="py-lineno"> 88</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_data</tt> <tt class="py-op">=</tt> <tt id="link-11" class="py-name"><a title="copads.copads.samplestatistics.SingleSample.data" class="py-name" href="#" onclick="return doclink('link-11', 'data', 'link-9');">data</a></tt><tt class="py-op">[</tt><tt class="py-number">0</tt><tt class="py-op">]</tt><tt class="py-op">.</tt><tt id="link-12" class="py-name"><a title="copads.copads.bag.Bag.copy
+copads.copads.tree.RBDict.copy" class="py-name" href="#" onclick="return doclink('link-12', 'copy', 'link-7');">copy</a></tt><tt class="py-op">(</tt><tt class="py-op">)</tt>         </tt>
+<a name="L89"></a><tt class="py-lineno"> 89</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_len</tt> <tt class="py-op">=</tt> <tt id="link-13" class="py-name"><a title="copads.copads.samplestatistics.SingleSample.data" class="py-name" href="#" onclick="return doclink('link-13', 'data', 'link-9');">data</a></tt><tt class="py-op">[</tt><tt class="py-number">1</tt><tt class="py-op">]</tt> </tt>
+</div><a name="L90"></a><tt class="py-lineno"> 90</tt>  <tt class="py-line"> </tt>
+<a name="Bag.clear"></a><div id="Bag.clear-def"><a name="L91"></a><tt class="py-lineno"> 91</tt> <a class="py-toggle" href="#" id="Bag.clear-toggle" onclick="return toggle('Bag.clear');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="copads.copads.bag.Bag-class.html#clear">clear</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="Bag.clear-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="Bag.clear-expanded"><a name="L92"></a><tt class="py-lineno"> 92</tt>  <tt class="py-line">        <tt class="py-docstring">"""Remove all data elements in the bag"""</tt> </tt>
+<a name="L93"></a><tt class="py-lineno"> 93</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_data</tt><tt class="py-op">.</tt><tt id="link-14" class="py-name" targets="Method copads.copads.bag.Bag.clear()=copads.copads.bag.Bag-class.html#clear,Method copads.copads.tree.RBDict.clear()=copads.copads.tree.RBDict-class.html#clear,Method copads.copads.tree.RBList.clear()=copads.copads.tree.RBList-class.html#clear"><a title="copads.copads.bag.Bag.clear
+copads.copads.tree.RBDict.clear
+copads.copads.tree.RBList.clear" class="py-name" href="#" onclick="return doclink('link-14', 'clear', 'link-14');">clear</a></tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+<a name="L94"></a><tt class="py-lineno"> 94</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_len</tt> <tt class="py-op">=</tt> <tt class="py-number">0</tt> </tt>
+</div><a name="L95"></a><tt class="py-lineno"> 95</tt>  <tt class="py-line"> </tt>
+<a name="Bag.__iter__"></a><div id="Bag.__iter__-def"><a name="L96"></a><tt class="py-lineno"> 96</tt> <a class="py-toggle" href="#" id="Bag.__iter__-toggle" onclick="return toggle('Bag.__iter__');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="copads.copads.bag.Bag-class.html#__iter__">__iter__</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="Bag.__iter__-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="Bag.__iter__-expanded"><a name="L97"></a><tt class="py-lineno"> 97</tt>  <tt class="py-line">        <tt class="py-keyword">for</tt> <tt class="py-name">elem</tt><tt class="py-op">,</tt> <tt class="py-name">cnt</tt> <tt class="py-keyword">in</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_data</tt><tt class="py-op">.</tt><tt id="link-15" class="py-name"><a title="copads.copads.operations.items
+copads.copads.tree.RBDict.items" class="py-name" href="#" onclick="return doclink('link-15', 'items', 'link-1');">items</a></tt><tt class="py-op">(</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+<a name="L98"></a><tt class="py-lineno"> 98</tt>  <tt class="py-line">            <tt class="py-keyword">for</tt> <tt class="py-name">i</tt> <tt class="py-keyword">in</tt> <tt class="py-name">xrange</tt><tt class="py-op">(</tt><tt class="py-name">cnt</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+<a name="L99"></a><tt class="py-lineno"> 99</tt>  <tt class="py-line">                <tt class="py-keyword">yield</tt> <tt class="py-name">elem</tt> </tt>
+</div><a name="L100"></a><tt class="py-lineno">100</tt>  <tt class="py-line">                 </tt>
+<a name="Bag.iterunique"></a><div id="Bag.iterunique-def"><a name="L101"></a><tt class="py-lineno">101</tt> <a class="py-toggle" href="#" id="Bag.iterunique-toggle" onclick="return toggle('Bag.iterunique');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="copads.copads.bag.Bag-class.html#iterunique">iterunique</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="Bag.iterunique-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="Bag.iterunique-expanded"><a name="L102"></a><tt class="py-lineno">102</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> <tt class="py-name">iter</tt><tt class="py-op">(</tt><tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_data</tt><tt class="py-op">.</tt><tt id="link-16" class="py-name" targets="Method copads.copads.tree.RBDict.keys()=copads.copads.tree.RBDict-class.html#keys"><a title="copads.copads.tree.RBDict.keys" class="py-name" href="#" onclick="return doclink('link-16', 'keys', 'link-16');">keys</a></tt><tt class="py-op">(</tt><tt class="py-op">)</tt><tt class="py-op">)</tt> </tt>
+</div><a name="L103"></a><tt class="py-lineno">103</tt>  <tt class="py-line"> </tt>
+<a name="Bag.itercounts"></a><div id="Bag.itercounts-def"><a name="L104"></a><tt class="py-lineno">104</tt> <a class="py-toggle" href="#" id="Bag.itercounts-toggle" onclick="return toggle('Bag.itercounts');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="copads.copads.bag.Bag-class.html#itercounts">itercounts</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="Bag.itercounts-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="Bag.itercounts-expanded"><a name="L105"></a><tt class="py-lineno">105</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> <tt class="py-name">iter</tt><tt class="py-op">(</tt><tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">_data</tt><tt class="py-op">.</tt><tt id="link-17" class="py-name"><a title="copads.copads.operations.items
+copads.copads.tree.RBDict.items" class="py-name" href="#" onclick="return doclink('link-17', 'items', 'link-1');">items</a></tt><tt class="py-op">(</tt><tt class="py-op">)</tt><tt class="py-op">)</tt>      </tt>
+</div><a name="L106"></a><tt class="py-lineno">106</tt>  <tt class="py-line"> </tt>
+<a name="Bag.mostcommon"></a><div id="Bag.mostcommon-def"><a name="L107"></a><tt class="py-lineno">107</tt> <a class="py-toggle" href="#" id="Bag.mostcommon-toggle" onclick="return toggle('Bag.mostcommon');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="copads.copads.bag.Bag-class.html#mostcommon">mostcommon</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">n</tt><tt class="py-op">=</tt><tt class="py-name">None</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="Bag.mostcommon-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="Bag.mostcommon-expanded"><a name="L108"></a><tt class="py-lineno">108</tt>  <tt class="py-line">        <tt class="py-docstring">"""Lists the most common elements of the bag and its counts</tt> </tt>
+<a name="L109"></a><tt class="py-lineno">109</tt>  <tt class="py-line"><tt class="py-docstring">        </tt> </tt>
+<a name="L110"></a><tt class="py-lineno">110</tt>  <tt class="py-line"><tt class="py-docstring">        @return: list of (element, count of the element)"""</tt> </tt>
+<a name="L111"></a><tt class="py-lineno">111</tt>  <tt class="py-line">        <tt class="py-keyword">if</tt> <tt class="py-name">n</tt> <tt class="py-keyword">is</tt> <tt class="py-name">None</tt><tt class="py-op">:</tt> </tt>
+<a name="L112"></a><tt class="py-lineno">112</tt>  <tt class="py-line">            <tt class="py-keyword">return</tt> <tt class="py-name">sorted</tt><tt class="py-op">(</tt><tt class="py-name">self</tt><tt class="py-op">.</tt><tt id="link-18" class="py-name" targets="Method copads.copads.bag.Bag.itercounts()=copads.copads.bag.Bag-class.html#itercounts"><a title="copads.copads.bag.Bag.itercounts" class="py-name" href="#" onclick="return doclink('link-18', 'itercounts', 'link-18');">itercounts</a></tt><tt class="py-op">(</tt><tt class="py-op">)</tt><tt class="py-op">,</tt> <tt class="py-name">key</tt><tt class="py-op">=</tt><tt class="py-name">itemgetter</tt><tt class="py-op">(</tt><tt class="py-number">1</tt><tt class="py-op">)</tt><tt class="py-op">,</tt> <tt id="link-19" class="py-name" targets="Method copads.copads.tree.RBList.reverse()=copads.copads.tree.RBList-class.html#reverse"><a title="copads.copads.tree.RBList.reverse" class="py-name" href="#" onclick="return doclink('link-19', 'reverse', 'link-19');">reverse</a></tt><tt class="py-op">=</tt><tt class="py-name">True</tt><tt class="py-op">)</tt> </tt>
+<a name="L113"></a><tt class="py-lineno">113</tt>  <tt class="py-line">        <tt class="py-name">it</tt> <tt class="py-op">=</tt> <tt class="py-name">enumerate</tt><tt class="py-op">(</tt><tt class="py-name">self</tt><tt class="py-op">.</tt><tt id="link-20" class="py-name"><a title="copads.copads.bag.Bag.itercounts" class="py-name" href="#" onclick="return doclink('link-20', 'itercounts', 'link-18');">itercounts</a></tt><tt class="py-op">(</tt><tt class="py-op">)</tt><tt class="py-op">)</tt> </tt>
+<a name="L114"></a><tt class="py-lineno">114</tt>  <tt class="py-line">        <tt class="py-name">nl</tt> <tt class="py-op">=</tt> <tt class="py-name">nlargest</tt><tt class="py-op">(</tt><tt class="py-name">n</tt><tt class="py-op">,</tt> <tt class="py-op">(</tt><tt class="py-op">(</tt><tt class="py-name">cnt</tt><tt class="py-op">,</tt> <tt class="py-name">i</tt><tt class="py-op">,</tt> <tt class="py-name">elem</tt><tt class="py-op">)</tt> <tt class="py-keyword">for</tt> <tt class="py-op">(</tt><tt class="py-name">i</tt><tt class="py-op">,</tt> <tt class="py-op">(</tt><tt class="py-name">elem</tt><tt class="py-op">,</tt> <tt class="py-name">cnt</tt><tt class="py-op">)</tt><tt class="py-op">)</tt> <tt class="py-keyword">in</tt> <tt class="py-name">it</tt><tt class="py-op">)</tt><tt class="py-op">)</tt> </tt>
+<a name="L115"></a><tt class="py-lineno">115</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> <tt class="py-op">[</tt><tt class="py-op">(</tt><tt class="py-name">elem</tt><tt class="py-op">,</tt> <tt class="py-name">cnt</tt><tt class="py-op">)</tt> <tt class="py-keyword">for</tt> <tt class="py-name">cnt</tt><tt class="py-op">,</tt> <tt class="py-name">i</tt><tt class="py-op">,</tt> <tt class="py-name">elem</tt> <tt class="py-keyword">in</tt> <tt class="py-name">nl</tt><tt class="py-op">]</tt> </tt>
+</div></div><a name="L116"></a><tt class="py-lineno">116</tt>  <tt class="py-line"> </tt><script type="text/javascript">
+<!--
+expandto(location.href);
+// -->
+</script>
+</pre>
+<br />
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="copads.copads-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            ><a class="navbar" target="_top" href="https://github.com/mauriceling/copads">https://github.com/mauriceling/copads</a></th>
+          </tr></table></th>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%%">
+  <tr>
+    <td align="left" class="footer">
+    Generated by Epydoc 3.0.1 on Sun Feb 25 20:14:32 2018
+    </td>
+    <td align="right" class="footer">
+      <a target="mainFrame" href="http://epydoc.sourceforge.net"
+        >http://epydoc.sourceforge.net</a>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  <!--
+  // Private objects are initially displayed (because if
+  // javascript is turned off then we want them to be
+  // visible); but by default, we want to hide them.  So hide
+  // them unless we have a cookie that says to show them.
+  checkCookie();
+  // -->
+</script>
+</body>
+</html>

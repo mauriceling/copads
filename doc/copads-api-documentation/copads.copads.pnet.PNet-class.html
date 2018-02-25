@@ -1,0 +1,1009 @@
+<?xml version="1.0" encoding="ascii"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>copads.copads.pnet.PNet</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="copads.copads-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            ><a class="navbar" target="_top" href="https://github.com/mauriceling/copads">https://github.com/mauriceling/copads</a></th>
+          </tr></table></th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <span class="breadcrumbs">
+        Package&nbsp;copads ::
+        <a href="copads.copads-module.html">Package&nbsp;copads</a> ::
+        <a href="copads.copads.pnet-module.html">Module&nbsp;pnet</a> ::
+        Class&nbsp;PNet
+      </span>
+    </td>
+    <td>
+      <table cellpadding="0" cellspacing="0">
+        <!-- hide/show private -->
+        <tr><td align="right"><span class="options">[<a href="javascript:void(0);" class="privatelink"
+    onclick="toggle_private();">hide&nbsp;private</a>]</span></td></tr>
+        <tr><td align="right"><span class="options"
+            >[<a href="frames.html" target="_top">frames</a
+            >]&nbsp;|&nbsp;<a href="copads.copads.pnet.PNet-class.html"
+            target="_top">no&nbsp;frames</a>]</span></td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<!-- ==================== CLASS DESCRIPTION ==================== -->
+<h1 class="epydoc">Class PNet</h1><p class="nomargin-top"><span class="codelink"><a href="copads.copads.pnet-pysrc.html#PNet">source&nbsp;code</a></span></p>
+<pre class="base-tree">
+object --+
+         |
+        <strong class="uidshort">PNet</strong>
+</pre>
+
+<hr />
+<p>Class to represent a Petri Net or Petri Net typed object.</p>
+  <p>The places and transition rules are represented as dictionary objects.
+  Places dictionary will have the name of place as key and the Place 
+  (pnet.Place object) as value. Transition rules dictionary will have the 
+  name of rule appended with a number (in the format of &lt;rule name&gt;_ 
+  &lt;number&gt; in order to ensure uniqueness) as key and the value is a 
+  dictionary to represent the transition rule (the structure of the 
+  transition rule dictionary is dependent on the type of rules).</p>
+  <p>The following types of transition rules are allowed:</p>
+  <ul>
+    <li>
+      step rule
+    </li>
+    <li>
+      delay rule
+    </li>
+    <li>
+      incubate rule
+    </li>
+    <li>
+      ratio rule
+    </li>
+    <li>
+      function rule
+    </li>
+  </ul>
+  <p>Step rule is to be executed at each time step. For example, if 20g of 
+  flour is to be transferred from flour bowl to mixer bowl at each time 
+  step, this 'add_flour' rule can be defined as:</p>
+<pre class="py-doctest">
+<span class="py-prompt">&gt;&gt;&gt; </span>net.add_rules(<span class="py-string">'add_flour'</span>, <span class="py-string">'step'</span>, 
+<span class="py-output">                  ['flour.flour -&gt; mixer.flour; 20'])</span></pre>
+  <p>A single step rule can trigger more than one token movement. For 
+  example, the following step rule simulates the mixing of ingredients into
+  a flour dough:</p>
+<pre class="py-doctest">
+<span class="py-prompt">&gt;&gt;&gt; </span>net.add_rules(<span class="py-string">'blend'</span>, <span class="py-string">'step'</span>, 
+<span class="py-output">                  ['mixer.flour -&gt; mixer.dough; 15',</span>
+<span class="py-output">                   'mixer.water -&gt; mixer.dough; 10',</span>
+<span class="py-output">                   'mixer.sugar -&gt; mixer.dough; 0.9',</span>
+<span class="py-output">                   'mixer.yeast -&gt; mixer.dough; 1'])</span></pre>
+  <p>Delay rule acts as a time delay between each token movement. For 
+  example, the following rule simulates the transfer of 0.5g of yeast into 
+  the mixer bowl:</p>
+<pre class="py-doctest">
+<span class="py-prompt">&gt;&gt;&gt; </span>net.add_rules(<span class="py-string">'add_yeast'</span>, <span class="py-string">'delay'</span>, 
+<span class="py-output">                  ['yeast.yeast -&gt; mixer.yeast; 0.5; 10'])</span></pre>
+  <p>Incubate rule is a variation of delay rule. While delay rule is not 
+  condition dependent, incubate rule starts a time delay when one or more 
+  conditions are met. For example,</p>
+<pre class="py-doctest">
+<span class="py-prompt">&gt;&gt;&gt; </span>net.add_rules(<span class="py-string">'rise'</span>, <span class="py-string">'incubate'</span>, 
+<span class="py-output">                  ['10; mixer.dough -&gt; pan.dough;                        mixer.flour == 0; mixer.water == 0;                        mixer.sugar == 0; mixer.yeast == 0'])</span></pre>
+  <p>sets a 10 time step delay when all flour, water, sugar, and yeast in 
+  the mixer bowl are used up, which simulates the completemixing into a 
+  bread dough. The 10 time step then simulates the time needed for the 
+  dough to rise. After 10 time steps, dough in the mixer is transferred 
+  into the pan.</p>
+  <p>Ratio rule is a variant of step rule. Instead of absolute number of 
+  tokens to move, the movement is a percentage of the number of tokens. For
+  example,</p>
+<pre class="py-doctest">
+<span class="py-prompt">&gt;&gt;&gt; </span>net.add_rules(<span class="py-string">'bake'</span>, <span class="py-string">'ratio'</span>, 
+<span class="py-output">                  ['pan.dough -&gt; pan.bread; 0.3; pan.dough &lt; 1; 0'])</span></pre>
+  <p>will move 30% of the token value from dough in pan to bread in pan. If
+  the token value of dough in pan is less than 1, then the token value of 
+  dough in pan will be set to 0.</p>
+  <p>Function rule is a generic and free-form rule, that takes the form of 
+  a Python function. This is usually used when the transition cannot be 
+  represented by any other rules. Given a user-defined function, FUNC,</p>
+<pre class="py-doctest">
+<span class="py-prompt">&gt;&gt;&gt; </span>net.add_rules(<span class="py-string">'cool'</span>, <span class="py-string">'function'</span>, 
+<span class="py-output">                  ['table.temperature -&gt; air.temperature', FUNC, </span>
+<span class="py-output">                   'table.bread &gt; 0; table.temperature &gt; 30'])</span></pre>
+  <p>FUNC will be executed when table.bread &gt; 0 and table.temperature 
+  &gt; 30. The returned result of FUNC will be the token transfer from 
+  table.temperature to air.temperature.</p>
+  <p>FUNC takes all the places as a single parameter, such as FUNC(places),
+  where 'places' is a dictionary with the name of each place as key. Token 
+  values in any place can be assessed. For example,</p>
+<pre class="py-doctest">
+<span class="py-prompt">&gt;&gt;&gt; </span>place_names = places.keys()
+<span class="py-prompt">&gt;&gt;&gt; </span>a_place = places[places_names[0]]
+<span class="py-prompt">&gt;&gt;&gt; </span>token_set = a_place.attributes.keys()
+<span class="py-prompt">&gt;&gt;&gt; </span>a_token_value = a_place.attributes[token_set[0]]</pre>
+
+<!-- ==================== INSTANCE METHODS ==================== -->
+<a name="section-InstanceMethods"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Instance Methods</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-InstanceMethods"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="copads.copads.pnet.PNet-class.html#__init__" class="summary-sig-name">__init__</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">zerolowerbound</span>=<span class="summary-sig-default">True</span>)</span><br />
+      Contructor method.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="copads.copads.pnet-pysrc.html#PNet.__init__">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="copads.copads.pnet.PNet-class.html#add_places" class="summary-sig-name">add_places</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">place_name</span>,
+        <span class="summary-sig-arg">tokens</span>)</span><br />
+      Method to add a place/container into the Petri Net.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="copads.copads.pnet-pysrc.html#PNet.add_places">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="copads.copads.pnet.PNet-class.html#add_rules" class="summary-sig-name">add_rules</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">rule_name</span>,
+        <span class="summary-sig-arg">rule_type</span>,
+        <span class="summary-sig-arg">actions</span>)</span><br />
+      Method to add a transition rule into the Petri Net.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="copads.copads.pnet-pysrc.html#PNet.add_rules">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="copads.copads.pnet.PNet-class.html#_step_rule" class="summary-sig-name" onclick="show_private();">_step_rule</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">movement</span>,
+        <span class="summary-sig-arg">value</span>,
+        <span class="summary-sig-arg">interval</span>)</span><br />
+      Private method which simulates a step rule action.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="copads.copads.pnet-pysrc.html#PNet._step_rule">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="copads.copads.pnet.PNet-class.html#_test_condition" class="summary-sig-name" onclick="show_private();">_test_condition</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">place</span>,
+        <span class="summary-sig-arg">token</span>,
+        <span class="summary-sig-arg">operator</span>,
+        <span class="summary-sig-arg">value</span>)</span><br />
+      Private method used by rule processors for logical check of 
+      condition.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="copads.copads.pnet-pysrc.html#PNet._test_condition">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="copads.copads.pnet.PNet-class.html#_conditions_processor" class="summary-sig-name" onclick="show_private();">_conditions_processor</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">conditions</span>)</span><br />
+      Private method used by rule processors to evaluate logical 
+      conditions.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="copads.copads.pnet-pysrc.html#PNet._conditions_processor">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="copads.copads.pnet.PNet-class.html#_incubate_rule" class="summary-sig-name" onclick="show_private();">_incubate_rule</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">rule</span>,
+        <span class="summary-sig-arg">interval</span>)</span><br />
+      Private method which simulates an incubate rule action.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="copads.copads.pnet-pysrc.html#PNet._incubate_rule">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="copads.copads.pnet.PNet-class.html#_ratio_rule" class="summary-sig-name" onclick="show_private();">_ratio_rule</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">movement</span>,
+        <span class="summary-sig-arg">ratio</span>,
+        <span class="summary-sig-arg">limit_check</span>,
+        <span class="summary-sig-arg">limit_set</span>,
+        <span class="summary-sig-arg">interval</span>)</span><br />
+      Private method which simulates a ratio rule action.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="copads.copads.pnet-pysrc.html#PNet._ratio_rule">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="copads.copads.pnet.PNet-class.html#_function_rule" class="summary-sig-name" onclick="show_private();">_function_rule</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">movement</span>,
+        <span class="summary-sig-arg">function</span>,
+        <span class="summary-sig-arg">conditions</span>)</span><br />
+      Private method which simulates a function rule action.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="copads.copads.pnet-pysrc.html#PNet._function_rule">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="copads.copads.pnet.PNet-class.html#_execute_rules" class="summary-sig-name" onclick="show_private();">_execute_rules</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">clock</span>,
+        <span class="summary-sig-arg">interval</span>)</span><br />
+      Private method used by PNet.simulate() and PNet.simulate_yield() to 
+      execute all the rules.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="copads.copads.pnet-pysrc.html#PNet._execute_rules">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="copads.copads.pnet.PNet-class.html#simulate" class="summary-sig-name">simulate</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">end_time</span>,
+        <span class="summary-sig-arg">interval</span>=<span class="summary-sig-default">1.0</span>,
+        <span class="summary-sig-arg">report_frequency</span>=<span class="summary-sig-default">1.0</span>)</span><br />
+      Method to simulate the Petri Net.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="copads.copads.pnet-pysrc.html#PNet.simulate">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="copads.copads.pnet.PNet-class.html#simulate_yield" class="summary-sig-name">simulate_yield</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">end_time</span>,
+        <span class="summary-sig-arg">interval</span>=<span class="summary-sig-default">1.0</span>)</span><br />
+      Method to simulate the Petri Net.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="copads.copads.pnet-pysrc.html#PNet.simulate_yield">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="copads.copads.pnet.PNet-class.html#_generate_report" class="summary-sig-name" onclick="show_private();">_generate_report</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">clock</span>)</span><br />
+      Private method to generate and store report in memory of each token 
+      status (the value of each token) in every place/container.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="copads.copads.pnet-pysrc.html#PNet._generate_report">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="copads.copads.pnet.PNet-class.html#report_tokens" class="summary-sig-name">report_tokens</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">reportdict</span>=<span class="summary-sig-default">None</span>)</span><br />
+      Method to report the status of each token(s) from each place as a 
+      list.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="copads.copads.pnet-pysrc.html#PNet.report_tokens">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" class="summary">
+    <p class="indent-wrapped-lines"><b>Inherited from <code>object</code></b>:
+      <code>__delattr__</code>,
+      <code>__format__</code>,
+      <code>__getattribute__</code>,
+      <code>__hash__</code>,
+      <code>__new__</code>,
+      <code>__reduce__</code>,
+      <code>__reduce_ex__</code>,
+      <code>__repr__</code>,
+      <code>__setattr__</code>,
+      <code>__sizeof__</code>,
+      <code>__str__</code>,
+      <code>__subclasshook__</code>
+      </p>
+    </td>
+  </tr>
+</table>
+<!-- ==================== PROPERTIES ==================== -->
+<a name="section-Properties"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Properties</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-Properties"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+  <tr>
+    <td colspan="2" class="summary">
+    <p class="indent-wrapped-lines"><b>Inherited from <code>object</code></b>:
+      <code>__class__</code>
+      </p>
+    </td>
+  </tr>
+</table>
+<!-- ==================== METHOD DETAILS ==================== -->
+<a name="section-MethodDetails"></a>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Method Details</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-MethodDetails"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+</table>
+<a name="__init__"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">__init__</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">zerolowerbound</span>=<span class="sig-default">True</span>)</span>
+    <br /><em class="fname">(Constructor)</em>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="copads.copads.pnet-pysrc.html#PNet.__init__">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Contructor method.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>zerolowerbound</code></strong> (boolean) - flag to determine whether number of tokens is bounded at zero. 
+          Default = True (the lowest number for tokens is zero)</li>
+    </ul></dd>
+    <dt>Overrides:
+        object.__init__
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="add_places"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">add_places</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">place_name</span>,
+        <span class="sig-arg">tokens</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="copads.copads.pnet-pysrc.html#PNet.add_places">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Method to add a place/container into the Petri Net.</p>
+  <p>For example, the following adds a &quot;flour&quot; place containing 
+  1000 tokens of flour, which can be seen as a bowl of 1000g of flour:</p>
+<pre class="py-doctest">
+<span class="py-prompt">&gt;&gt;&gt; </span>net.add_places(<span class="py-string">'flour'</span>, {<span class="py-string">'flour'</span>: 1000})</pre>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>place_name</code></strong> (string) - name of the place/container</li>
+        <li><strong class="pname"><code>tokens</code></strong> (dictionary) - token(s) for the place/container where key is the name/type of 
+          token and value is the number of tokens for the specific type</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="add_rules"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">add_rules</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">rule_name</span>,
+        <span class="sig-arg">rule_type</span>,
+        <span class="sig-arg">actions</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="copads.copads.pnet-pysrc.html#PNet.add_rules">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Method to add a transition rule into the Petri Net.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>rule_name</code></strong> (string) - name of the transition rule. This name need not be unique within 
+          the model as this method will append a running rule number to the
+          name to ensure internal uniqueness.</li>
+        <li><strong class="pname"><code>rule_type</code></strong> (string) - type of rule. Allowable types are 'step' for step rule, 'delay' 
+          for delay rule, and 'incubate' for incubate rule. Please see 
+          module documentation for the description of rules.</li>
+        <li><strong class="pname"><code>actions</code></strong> (list) - describe the action(s) of the transition rule</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="_step_rule"></a>
+<div class="private">
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">_step_rule</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">movement</span>,
+        <span class="sig-arg">value</span>,
+        <span class="sig-arg">interval</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="copads.copads.pnet-pysrc.html#PNet._step_rule">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Private method which simulates a step rule action.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>movement</code></strong> (string) - defines the movement of a token type. Each movement is defined in
+          the following format: &lt;source place&gt;.&lt;source token&gt; 
+          -&gt; &lt;destination place&gt;.&lt;destination token&gt;</li>
+        <li><strong class="pname"><code>value</code></strong> (float) - the number of tokens to move</li>
+        <li><strong class="pname"><code>interval</code></strong> (integer) - simulation time interval</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="_test_condition"></a>
+<div class="private">
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">_test_condition</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">place</span>,
+        <span class="sig-arg">token</span>,
+        <span class="sig-arg">operator</span>,
+        <span class="sig-arg">value</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="copads.copads.pnet-pysrc.html#PNet._test_condition">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Private method used by rule processors for logical check of condition.
+  For example, the condition 'mixer.flour == 0' will be written as</p>
+<pre class="py-doctest">
+<span class="py-prompt">&gt;&gt;&gt; </span>_test_condition(<span class="py-string">'mixer'</span>, <span class="py-string">'flour'</span>, <span class="py-string">'=='</span>, 0)</pre>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>place</code></strong> (string) - name of place/container</li>
+        <li><strong class="pname"><code>token</code></strong> (string) - name of token</li>
+        <li><strong class="pname"><code>operator</code></strong> (string) - binary operator. Allowable values are '==' (equals to), '&gt;' 
+          (more than), '&gt;=' (more than or equals to), '&lt;' (less 
+          than), '&lt;=' (less than or equals to), and '!=' (not equals 
+          to).</li>
+        <li><strong class="pname"><code>value</code></strong> - value to be checked</li>
+    </ul></dd>
+    <dt>Returns:</dt>
+        <dd>'passed' if test result is true, or 0 if test result is false</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="_conditions_processor"></a>
+<div class="private">
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">_conditions_processor</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">conditions</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="copads.copads.pnet-pysrc.html#PNet._conditions_processor">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Private method used by rule processors to evaluate logical 
+  conditions.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>conditions</code></strong> (list) - one or more logical conditions in the format of 
+          '&lt;place&gt;.&lt;token&gt; &lt;binary operator&gt; 
+          &lt;criterion&gt;', such as 'oven.heat &gt; 300', for evaluation</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="_incubate_rule"></a>
+<div class="private">
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">_incubate_rule</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">rule</span>,
+        <span class="sig-arg">interval</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="copads.copads.pnet-pysrc.html#PNet._incubate_rule">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Private method which simulates an incubate rule action.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>rule</code></strong> - a dictionary representing the incubate rule</li>
+        <li><strong class="pname"><code>interval</code></strong> (integer) - simulation time interval</li>
+    </ul></dd>
+    <dt>Returns:</dt>
+        <dd>modified rule dictionary</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="_ratio_rule"></a>
+<div class="private">
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">_ratio_rule</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">movement</span>,
+        <span class="sig-arg">ratio</span>,
+        <span class="sig-arg">limit_check</span>,
+        <span class="sig-arg">limit_set</span>,
+        <span class="sig-arg">interval</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="copads.copads.pnet-pysrc.html#PNet._ratio_rule">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Private method which simulates a ratio rule action.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>movement</code></strong> (string) - defines the movement of a token type. Each movement is defined in
+          the following format: &lt;source place&gt;.&lt;source token&gt; 
+          -&gt; &lt;destination place&gt;.&lt;destination token&gt;</li>
+        <li><strong class="pname"><code>ratio</code></strong> (float) - the ratio of tokens to move</li>
+        <li><strong class="pname"><code>limit_check</code></strong> (string) - logical check for remainder value</li>
+        <li><strong class="pname"><code>limit_set</code></strong> (float) - value to set token if token in limit_check is true</li>
+        <li><strong class="pname"><code>interval</code></strong> (integer) - simulation time interval</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="_function_rule"></a>
+<div class="private">
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">_function_rule</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">movement</span>,
+        <span class="sig-arg">function</span>,
+        <span class="sig-arg">conditions</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="copads.copads.pnet-pysrc.html#PNet._function_rule">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Private method which simulates a function rule action.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>movement</code></strong> (string) - defines the movement of a token type. Each movement is defined in
+          the following format: &lt;source place&gt;.&lt;source token&gt; 
+          -&gt; &lt;destination place&gt;.&lt;destination token&gt;</li>
+        <li><strong class="pname"><code>function</code></strong> (function) - a Python function to be executed when conditions are met. This 
+          function describes the transition of token.</li>
+        <li><strong class="pname"><code>conditions</code></strong> (list) - one or more logical conditions in the format of 
+          '&lt;place&gt;.&lt;token&gt; &lt;binary operator&gt; 
+          &lt;criterion&gt;', such as 'oven.heat &gt; 300', for evaluation</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="_execute_rules"></a>
+<div class="private">
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">_execute_rules</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">clock</span>,
+        <span class="sig-arg">interval</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="copads.copads.pnet-pysrc.html#PNet._execute_rules">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Private method used by PNet.simulate() and PNet.simulate_yield() to 
+  execute all the rules.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>clock</code></strong> (float) - wall time of the current simulation</li>
+        <li><strong class="pname"><code>interval</code></strong> (integer) - simulation time interval</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="simulate"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">simulate</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">end_time</span>,
+        <span class="sig-arg">interval</span>=<span class="sig-default">1.0</span>,
+        <span class="sig-arg">report_frequency</span>=<span class="sig-default">1.0</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="copads.copads.pnet-pysrc.html#PNet.simulate">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Method to simulate the Petri Net. This method stores the generated 
+  report in memory; hence, not suitable for extended simulations as it can 
+  run out of memory. It is possible to conserve memory by reducing the 
+  reporting frequency. Use simulate_yield method for extended 
+  simulations.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>end_time</code></strong> (integer) - number of time steps to simulate. If end_time = 1000, it can be 
+          1000 seconds or 1000 days, depending on the significance of each 
+          step</li>
+        <li><strong class="pname"><code>interval</code></strong> (float) - number of intervals between each time step. Default = 1.0, 
+          simulate by time step interval</li>
+        <li><strong class="pname"><code>report_frequency</code></strong> (float) - number of time steps between each reporting. Default = 1.0, each 
+          time step is reported</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="simulate_yield"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">simulate_yield</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">end_time</span>,
+        <span class="sig-arg">interval</span>=<span class="sig-default">1.0</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="copads.copads.pnet-pysrc.html#PNet.simulate_yield">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Method to simulate the Petri Net. This method runs as a generator, 
+  making it suitable for extended simulation.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>end_time</code></strong> (integer) - number of time steps to simulate. If end_time = 1000, it can be 
+          1000 seconds or 1000 days, depending on the significance of each 
+          step</li>
+        <li><strong class="pname"><code>interval</code></strong> (float) - number of intervals between each time step. Default = 1.0, 
+          simulate by time step interval</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="_generate_report"></a>
+<div class="private">
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">_generate_report</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">clock</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="copads.copads.pnet-pysrc.html#PNet._generate_report">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Private method to generate and store report in memory of each token 
+  status (the value of each token) in every place/container.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>clock</code></strong> (float) - step count of the current simulation</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="report_tokens"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">report_tokens</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">reportdict</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="copads.copads.pnet-pysrc.html#PNet.report_tokens">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Method to report the status of each token(s) from each place as a 
+  list. This can be used in 2 different ways: to generate a list 
+  representation of a status from one time step (such as from 
+  simulate_yield method), or to generate a list representation of a status 
+  from entire simulation (such as from simulate method).</p>
+<pre class="py-doctest">
+<span class="py-prompt">&gt;&gt;&gt; </span><span class="py-comment"># from simulate method</span>
+<span class="py-prompt">&gt;&gt;&gt; </span>net.simulate(65, 1, 1)
+<span class="py-prompt">&gt;&gt;&gt; </span>status = net.report_tokens()</pre>
+<pre class="py-doctest">
+<span class="py-prompt">&gt;&gt;&gt; </span><span class="py-comment"># from simulate_yield method</span>
+<span class="py-prompt">&gt;&gt;&gt; </span>status = [d <span class="py-keyword">for</span> d <span class="py-keyword">in</span> net.simulate_yield(65, 1)]
+<span class="py-prompt">&gt;&gt;&gt; </span>status = [(d[0], net.report_tokens(d[1])) <span class="py-keyword">for</span> d <span class="py-keyword">in</span> status]</pre>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>reportdict</code></strong> (dictionary) - status from one time step. Default = None. If None, it will 
+          assume that simulate method had been executed and all status are 
+          stored in memory, and this method will generate a report from 
+          status stored in memory</li>
+    </ul></dd>
+    <dt>Returns:</dt>
+        <dd>tuple of ([&lt;place.token name&gt;], [([&lt;place.token 
+          value&gt;]]) if reportdict is given, or tuple of (time step, 
+          [&lt;place.token name&gt;], [([&lt;place.token value&gt;]]) if 
+          reportdict is None.</dd>
+  </dl>
+</td></tr></table>
+</div>
+<br />
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="copads.copads-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            ><a class="navbar" target="_top" href="https://github.com/mauriceling/copads">https://github.com/mauriceling/copads</a></th>
+          </tr></table></th>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%%">
+  <tr>
+    <td align="left" class="footer">
+    Generated by Epydoc 3.0.1 on Sun Feb 25 20:14:31 2018
+    </td>
+    <td align="right" class="footer">
+      <a target="mainFrame" href="http://epydoc.sourceforge.net"
+        >http://epydoc.sourceforge.net</a>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  <!--
+  // Private objects are initially displayed (because if
+  // javascript is turned off then we want them to be
+  // visible); but by default, we want to hide them.  So hide
+  // them unless we have a cookie that says to show them.
+  checkCookie();
+  // -->
+</script>
+</body>
+</html>
