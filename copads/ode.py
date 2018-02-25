@@ -49,11 +49,9 @@ def Euler(funcs, x0, y0, step, xmax, nonODEfunc=None,
     more variables at each ODE solving step. For example, y[0] = y[1] / y[2] 
     can be written as 
     
-    C{
-    def modifying_function(y, step):
-        y[0] = y[1] / y[2]
-        return y
-    }
+    >>> def modifying_function(y, step):
+            y[0] = y[1] / y[2]
+            return y
     
     This function must take 'y' (variable list) and 'step' (time step) as 
     parameters and must return 'y' (the modified variable list). This 
@@ -129,11 +127,9 @@ def Heun(funcs, x0, y0, step, xmax, nonODEfunc=None,
     more variables at each ODE solving step. For example, y[0] = y[1] / y[2] 
     can be written as 
     
-    C{
-    def modifying_function(y, step):
-        y[0] = y[1] / y[2]
-        return y
-    }
+    >>> def modifying_function(y, step):
+            y[0] = y[1] / y[2]
+            return y
     
     This function must take 'y' (variable list) and 'step' (time step) as 
     parameters and must return 'y' (the modified variable list). This 
@@ -220,11 +216,9 @@ def RK3(funcs, x0, y0, step, xmax, nonODEfunc=None,
     more variables at each ODE solving step. For example, y[0] = y[1] / y[2] 
     can be written as 
     
-    C{
-    def modifying_function(y, step):
-        y[0] = y[1] / y[2]
-        return y
-    }
+    >>> def modifying_function(y, step):
+            y[0] = y[1] / y[2]
+            return y
     
     This function must take 'y' (variable list) and 'step' (time step) as 
     parameters and must return 'y' (the modified variable list). This 
@@ -321,11 +315,9 @@ def RK4(funcs, x0, y0, step, xmax, nonODEfunc=None,
     more variables at each ODE solving step. For example, y[0] = y[1] / y[2] 
     can be written as 
     
-    C{
-    def modifying_function(y, step):
-        y[0] = y[1] / y[2]
-        return y
-    }
+    >>> def modifying_function(y, step):
+            y[0] = y[1] / y[2]
+            return y
     
     This function must take 'y' (variable list) and 'step' (time step) as 
     parameters and must return 'y' (the modified variable list). This 
@@ -429,11 +421,9 @@ def RK38(funcs, x0, y0, step, xmax, nonODEfunc=None,
     more variables at each ODE solving step. For example, y[0] = y[1] / y[2] 
     can be written as 
     
-    C{
-    def modifying_function(y, step):
-        y[0] = y[1] / y[2]
-        return y
-    }
+    >>> def modifying_function(y, step):
+            y[0] = y[1] / y[2]
+            return y
     
     This function must take 'y' (variable list) and 'step' (time step) as 
     parameters and must return 'y' (the modified variable list). This 
@@ -537,11 +527,9 @@ def CK4(funcs, x0, y0, step, xmax, nonODEfunc=None,
     more variables at each ODE solving step. For example, y[0] = y[1] / y[2] 
     can be written as 
     
-    C{
-    def modifying_function(y, step):
-        y[0] = y[1] / y[2]
-        return y
-    }
+    >>> def modifying_function(y, step):
+            y[0] = y[1] / y[2]
+            return y
     
     This function must take 'y' (variable list) and 'step' (time step) as 
     parameters and must return 'y' (the modified variable list). This 
@@ -665,11 +653,9 @@ def CK5(funcs, x0, y0, step, xmax, nonODEfunc=None,
     more variables at each ODE solving step. For example, y[0] = y[1] / y[2] 
     can be written as 
     
-    C{
-    def modifying_function(y, step):
-        y[0] = y[1] / y[2]
-        return y
-    }
+    >>> def modifying_function(y, step):
+            y[0] = y[1] / y[2]
+            return y
     
     This function must take 'y' (variable list) and 'step' (time step) as 
     parameters and must return 'y' (the modified variable list). This 
@@ -792,11 +778,9 @@ def RKF4(funcs, x0, y0, step, xmax, nonODEfunc=None,
     more variables at each ODE solving step. For example, y[0] = y[1] / y[2] 
     can be written as 
     
-    C{
-    def modifying_function(y, step):
-        y[0] = y[1] / y[2]
-        return y
-    }
+    >>> def modifying_function(y, step):
+            y[0] = y[1] / y[2]
+            return y
     
     This function must take 'y' (variable list) and 'step' (time step) as 
     parameters and must return 'y' (the modified variable list). This 
@@ -920,11 +904,9 @@ def RKF5(funcs, x0, y0, step, xmax, nonODEfunc=None,
     more variables at each ODE solving step. For example, y[0] = y[1] / y[2] 
     can be written as 
     
-    C{
-    def modifying_function(y, step):
-        y[0] = y[1] / y[2]
-        return y
-    }
+    >>> def modifying_function(y, step):
+            y[0] = y[1] / y[2]
+            return y
     
     This function must take 'y' (variable list) and 'step' (time step) as 
     parameters and must return 'y' (the modified variable list). This 
@@ -1050,11 +1032,9 @@ def DP4(funcs, x0, y0, step, xmax, nonODEfunc=None,
     more variables at each ODE solving step. For example, y[0] = y[1] / y[2] 
     can be written as 
     
-    C{
-    def modifying_function(y, step):
-        y[0] = y[1] / y[2]
-        return y
-    }
+    >>> def modifying_function(y, step):
+            y[0] = y[1] / y[2]
+            return y
     
     This function must take 'y' (variable list) and 'step' (time step) as 
     parameters and must return 'y' (the modified variable list). This 
@@ -1190,11 +1170,9 @@ def DP5(funcs, x0, y0, step, xmax, nonODEfunc=None,
     more variables at each ODE solving step. For example, y[0] = y[1] / y[2] 
     can be written as 
     
-    C{
-    def modifying_function(y, step):
-        y[0] = y[1] / y[2]
-        return y
-    }
+    >>> def modifying_function(y, step):
+            y[0] = y[1] / y[2]
+            return y
     
     This function must take 'y' (variable list) and 'step' (time step) as 
     parameters and must return 'y' (the modified variable list). This 
@@ -1393,66 +1371,62 @@ def ODE_constructor(scriptfile,
     Function to construct an ODE simulation script file from given 
     definitions.
     
-    For example, the following system of ODEs
+    For example, the following system of ODEs::
     
-    M{
-    d(human)/dt = birth - zombied - death
-    d(zombie)/dt = zombied + resurrected - destroyed
-    d(dead)/dt = death + destroyed - resurrected
-    
-    birth = 0
-    zombied = 0.0095 * human * zombie
-    death = 0.0001 * human
-    resurrected = 0.0002 * dead
-    destroyed = 0.0003 * human * zombie
-    
-    where initially (t0), 
-    
-    number of humans = 500
-    number of zombies = 0
-    number of dead = 0
-    
-    and with the following boundaries
-    
-    number of humans > 0
-    number of zombies < 10000
-    number of dead < 10000
-    
-    and there is an influx of 5 humans per day into the infected village
-    }
+        d(human)/dt = birth - zombied - death
+        d(zombie)/dt = zombied + resurrected - destroyed
+        d(dead)/dt = death + destroyed - resurrected
+        
+        birth = 0
+        zombied = 0.0095 * human * zombie
+        death = 0.0001 * human
+        resurrected = 0.0002 * dead
+        destroyed = 0.0003 * human * zombie
+         
+        where initially (t0), 
+         
+        number of humans = 500
+        number of zombies = 0
+        number of dead = 0
+         
+        and with the following boundaries
+         
+        number of humans > 0
+        number of zombies < 10000
+        number of dead < 10000
+         
+        and there is an influx of 5 humans per day into the infected village
     
     can be specified as 
     
-    C{
-    scriptfile = 'zombie_attack.py'
-    resultsfile = 'zombie_data.csv'
-    time = (0.0, 0.1, 100.0)
-    ODE_solver = 'RK4'
-    expressions = {'human': ['birth_rate',
-                             '- (transmission_rate * human * zombie)',
-                             '- (death_rate * human)'],
-                   'zombie': ['(transmission_rate * human * zombie)',
-                              '(resurrection_rate * dead)',
-                              '- (destroy_rate * human * zombie)'],
-                   'dead': ['(death_rate * human)',
-                            '(destroy_rate * human * zombie)',
-                            '- (resurrection_rate * dead)']}
-    parameters = {'birth_rate': 0.0,           # birth rate
-                  'transmission_rate': 0.0095, # transmission percent   
-                  'death_rate': 0.0001,        # natural death percent  
-                  'resurrection_rate': 0.0002, # resurect percent  
-                  'destroy_rate':0.0003        # destroy percent   
-                  }
-    initial_conditions = {'human': 500.0,
-                          'zombie': 0.0, 
-                          'dead': 0.0}
-    modifying_expression = ['human = human + (5 * step)']
-    lower_bound = {'human': [0.0, 0.0]}
-    upper_bound = {'zombie': [10000.0, 10000.0],
-                   'dead': [10000.0, 10000.0]}
-    overflow = 1e100
-    zerodivision = 1e100
-    }
+    >>> scriptfile = 'zombie_attack.py'
+        resultsfile = 'zombie_data.csv'
+        time = (0.0, 0.1, 100.0)
+        ODE_solver = 'RK4'
+        expressions = {'human': ['birth_rate',
+                                 '- (transmission_rate * human * zombie)',
+                                 '- (death_rate * human)'],
+                       'zombie': ['(transmission_rate * human * zombie)',
+                                  '(resurrection_rate * dead)',
+                                  '- (destroy_rate * human * zombie)'],
+                       'dead': ['(death_rate * human)',
+                                '(destroy_rate * human * zombie)',
+                                '- (resurrection_rate * dead)']}
+        parameters = {'birth_rate': 0.0,           # birth rate
+                      'transmission_rate': 0.0095, # transmission percent   
+                      'death_rate': 0.0001,        # natural death percent  
+                      'resurrection_rate': 0.0002, # resurect percent  
+                      'destroy_rate':0.0003        # destroy percent   
+                      }
+        initial_conditions = {'human': 500.0,
+                              'zombie': 0.0, 
+                              'dead': 0.0}
+        modifying_expression = ['human = human + (5 * step)']
+        lower_bound = {'human': [0.0, 0.0]}
+        upper_bound = {'zombie': [10000.0, 10000.0],
+                       'dead': [10000.0, 10000.0]}
+        overflow = 1e100
+        zerodivision = 1e100
     
     @param scriptfile: name of Python file for the generated ODE script 
     file

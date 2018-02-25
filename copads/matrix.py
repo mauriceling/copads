@@ -531,7 +531,7 @@ class Matrix(object):
         '''
         Constructor method. Bear in mind that Python uses zero-index; that
         is, the first element of the first row is has the coordinate of
-        (0,0) rather than {1,1) in regular matrix notations.
+        (0,0) rather than (1,1) in regular matrix notations.
 
         There are 4 ways to construct a matrix.
 
