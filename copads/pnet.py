@@ -386,7 +386,7 @@ class PNet(object):
         check_value = float(limit_check[1])
         if self._test_condition(check_place, check_token, 
             operator, check_value) == 'passed':
-            if self.losses.has_key(source_value):
+            if source_value in self.losses:
                 self.losses[source_value] = self.losses[source_value] + \
                 source_place.attributes[source_value] - limit_set
             else:
@@ -563,10 +563,10 @@ class PNet(object):
             tokenvalues = [reportdict[k] for k in placetokens]
             return (placetokens, tokenvalues)
         else:
-            timelist = self.report.keys()
+            timelist = list(self.report.keys())
             datalist = [0] * len(timelist)
             for i in range(len(timelist)):
-                placetokens = self.report[timelist[i]].keys()
+                placetokens = list(self.report[timelist[i]].keys())
                 tokenvalues = [self.report[timelist[i]][k] 
                                for k in placetokens]
                 datalist[i] = (timelist[i], placetokens, tokenvalues)
