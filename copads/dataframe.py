@@ -1,6 +1,8 @@
-'''
+'''!
 A generic series and data frame to hold data and analysis
+
 Date created: 24th September 2012
+
 Licence: Python Software Foundation License version 2
 '''
 import string
@@ -9,7 +11,7 @@ import random
 from .copadsexceptions import FunctionParameterValueError
 
 class Series(object):
-    '''
+    '''!
     A data series is essentially a labeled list or vector. Each item in
     the list/vector is given a label for identification and retrieval.
     Hence, the number of labels and the number of data elements must be
@@ -23,11 +25,11 @@ class Series(object):
         Height      165     191     172         175
     '''
     def __init__(self, name=''):
-        '''
+        '''!
         Constructor. Initialize data series with a name.
 
-        @param name: Name of this data series. Default is empty name.
-        @type name: string
+        @param name string: Name of this data series. Default is empty 
+        name.
         '''
         self.name = str(name)
         self.data = []
@@ -35,7 +37,7 @@ class Series(object):
         self.analyses = {}
 
     def cast(self, type, error_replace):
-        '''
+        '''!
         Method to cast data in the series into a specific data type.
 
         Allowable data types are:
@@ -43,12 +45,11 @@ class Series(object):
             2. float (type == 'real' or 'float')
             3. string (type == 'str' or 'string')
 
-        @param type: data type to cast into
-        @type type: string
+        @param type string: data type to cast into
         @param error_replace: in event where there is a failure to cast
         the data element (such as attempt to cast a character into an
-        integer, which will result ina ValueError), the data element will
-        be replace with error_replace
+        integer, which will result ina ValueError), the data element 
+        will be replace with error_replace
         '''
         data = [0] * len(self.data)
         type = str(type)
@@ -65,37 +66,36 @@ class Series(object):
         self.data = data
 
     def toDataframe(self):
-        '''
+        '''!
         Method to convert and return the current data series as a data
-        frame object. The following will happen in the returned data frame
-        object:
-            1. Name of the data frame will be the name of the current data
-            series
+        frame object. The following will happen in the returned data 
+        frame object:
+            1. Name of the data frame will be the name of the current 
+            data series
             2. Name of the series in the data frame will be the name of
             the current data series
-            3. Hence, name of the returned data frame and its data series
-            will be the same
+            3. Hence, name of the returned data frame and its data 
+            series will be the same
 
-        @return: dataframe.Dataframe object
+        @return dataframe.Dataframe object
         '''
         df = Dataframe(self.name)
         df.addSeries(self)
         return df
 
     def addData(self, data, label=[]):
-        '''
-        Method to add data into the data series. If provided, the number
-        of elements in data and label have to be the same. However, the
-        labels need not be unique (duplicated labels are allowed) but this
-        is highly undesirable as it can cause issues which requires unique
-        labels.
+        '''!
+        Method to add data into the data series. If provided, the 
+        number of elements in data and label have to be the same. 
+        However, the labels need not be unique (duplicated labels are 
+        allowed) but this is highly undesirable as it can cause issues 
+        which requires unique labels.
 
-        @param data: list of data values.
-        @type data: list
-        @param label: list of labels for the data values. If not given,
-        a sequential number will be given as label but this does not ensure
-        uniqueness in label names across the entire series.
-        @type label: list
+        @param data list: list of data values.
+        @param label list: list of labels for the data values. If not 
+        given, a sequential number will be given as label but this 
+        does not ensure uniqueness in label names across the entire 
+        series.
         '''
         if len(label) == 0:
             label = range(len(data))
@@ -106,7 +106,7 @@ class Series(object):
             self.label.append(label[i])
 
     def changeDatum(self, new_value, label):
-        '''
+        '''!
         Method to change the data value of a label. If the label is not
         found within the data series, nothing will be changed.
 
@@ -119,10 +119,10 @@ class Series(object):
         except ValueError: pass
 
     def changeLabel(self, new_label, original_label):
-        '''
+        '''!
         Method to change the name of an existing label. If the existing
-        (original) label is not found within the data series, nothing will
-        be changed.
+        (original) label is not found within the data series, nothing 
+        will be changed.
 
         @param new_label: the new name for the label.
         @param original_label: the existing (original) label name to be
@@ -134,13 +134,13 @@ class Series(object):
         except ValueError: pass
 
     def getDatum(self, label):
-        '''
+        '''!
         Method to get data value for a given label. If the label is not
         found within the data series, None will be returned.
 
         @param label: the label name for the data value to retrieve.
-        @return: data value tagged to the label (if found), or None (if the
-        label is not found).
+        @return data value tagged to the label (if found), or None (if 
+        the label is not found).
         '''
         try:
             index = self.label.index(label)
@@ -148,13 +148,13 @@ class Series(object):
         except ValueError: return None
 
     def getLabels(self, datum):
-        '''
+        '''!
         Method to get label name(s) for a given data value.
 
-        @param datum: the data value to retrieve its corresponding label.
-        @return: [None] if data value is not found; list of one or more
+        @param datum: the data value to retrieve its corresponding 
+        label.
+        @return [None] if data value is not found; list of one or more
         label names if the data value is found.
-        @rtype: list
         '''
         labels = [self.label[index]
                   for index in range(len(self.data))
@@ -164,7 +164,7 @@ class Series(object):
 
 
 class Dataframe(object):
-    '''
+    '''!
     A data frame is an encapsulation of one or more data series and its
     associated analyses. Hence, a data frame can be formed using one or
     more data series where data elements across series are linked up by
@@ -183,11 +183,11 @@ class Dataframe(object):
     data series has 'Tom', 'Ellis', 'Richard', and 'Melvin' as labels.
     '''
     def __init__(self, name=''):
-        '''
+        '''!
         Constructor. Initialize data frame with a name.
 
-        @param name: Name of this data frame. Default is empty name.
-        @type name: string
+        @param name string: Name of this data frame. Default is empty 
+        name.
         '''
         self.name = str(name)
         self.series_names = []
@@ -196,24 +196,22 @@ class Dataframe(object):
         self.analyses = {}
 
     def cast(self, type, error_replace, series_name='all'):
-        '''
-        Method to cast data in the one or all series into a specific data
-        type.
+        '''!
+        Method to cast data in the one or all series into a specific data type.
 
         Allowable data types are:
             1. integer (type == 'int' or 'integer')
             2. float (type == 'real' or 'float')
             3. string (type == 'str' or 'string')
 
-        @param type: data type to cast into
-        @type type: string
+        @param type string: data type to cast into
         @param error_replace: in event where there is a failure to cast
         the data element (such as attempt to cast a character into an
-        integer, which will result ina ValueError), the data element will
-        be replace with error_replace
+        integer, which will result ina ValueError), the data element 
+        will be replace with error_replace
         @param series_name: series name to cast values into a specific
-        data type. If 'all', the entire data frame (all data series) will
-        be type casted. Default = 'all'
+        data type. If 'all', the entire data frame (all data series) 
+        will be type casted. Default = 'all'
         '''
         if series_name != 'all':
             try:
@@ -248,13 +246,12 @@ class Dataframe(object):
                      self.data[k][index] = error_replace
 
     def toSeries(self, series_name):
-        '''
+        '''!
         Method to extract a series within the current data frame into a
         Series object.
 
-        @param series_name: name of series to extract
-        @type series_name: string
-        @return: dataframe.Series object
+        @param series_name string: name of series to extractg
+        @return dataframe.Series object
         '''
         series_name = str(series_name)
         s = Series(series_name)
@@ -268,16 +265,14 @@ class Dataframe(object):
         except KeyError: return s
 
     def extractSeries(self, series_names, new_dataframe_name=''):
-        '''
-        Method to extract one or more series from the current data frame
-        into a new data frame.
+        '''!
+        Method to extract one or more series from the current data 
+        frame into a new data frame.
 
-        @param series_names: names of series to extract
-        @type series_names: list
-        @param new_dataframe_name: name for new data frame (that is to be
-        returned)
-        @type new_dataframe_name: string
-        @return: dataframe.Dataframe object
+        @param series_names list: names of series to extract
+        @param new_dataframe_name string: name for new data frame (
+        that is to be returned)
+        @return dataframe.Dataframe object
         '''
         df = Dataframe(str(new_dataframe_name))
         for series in series_names:
@@ -287,39 +282,39 @@ class Dataframe(object):
 
     def extractGreedySeriesValue(self, series_names, operator, value,
                                  new_dataframe_name=''):
-        '''
-        Method for "greedy" extraction of series name(s) and value by the
-        following:
-            1. Generate a new data frame by extracting required series using
-            Dataframe.extractSeries method, which is essentially column
-            reduction.
-            2. Reduce the data labels (essentially, row reduction) by finding
-            data values in any remaining (one or more) series using the
-            search criterion.
+        '''!
+        Method for "greedy" extraction of series name(s) and value by 
+        the following:
+            1. Generate a new data frame by extracting required series 
+            using Dataframe.extractSeries method, which is essentially 
+            column reduction.
+            2. Reduce the data labels (essentially, row reduction) by 
+            finding data values in any remaining (one or more) series 
+            using the search criterion.
 
-        This method is considered to be "greedy" as the row reduction is not
-        specific to particular series (column).
+        This method is considered to be "greedy" as the row reduction 
+        is not specific to particular series (column).
 
-        @param series_names: names of series to extract
-        @type series_names: list
-        @param operator: comparative operator. Allowed values are: '>' (more
-        than), '<' (less than), '>=' (more than or equals to), '<=' (less
-        than or equals to), '=' (equals to), '!=' (not equals to), and '*'
-        (all, basically replicating the entire data frame).
+        @param series_names list: names of series to extract
+        @param operator: comparative operator. Allowed values are: '>' 
+        (more than), '<' (less than), '>=' (more than or equals to), 
+        '<=' (less than or equals to), '=' (equals to), '!=' (not 
+        equals to), and '*' (all, basically replicating the entire 
+        data frame).
         @param value: value of the data to compare.
-        @param new_dataframe_name: name for new data frame (that is to be
-        returned)
+        @param new_dataframe_name string: name for new data frame (
+        that is to be returned)
         @type new_dataframe_name: string
-        @return: dataframe.Dataframe object
+        @return dataframe.Dataframe object
         '''
         df = self.extractSeries(series_names, new_dataframe_name)
         return df.extractValue(operator, value, new_dataframe_name)
 
     def extractSeriesValue(self, series_name, operator, value,
                            new_dataframe_name=''):
-        '''
-        Method for extraction of row data where a specified value or range of
-        value is found in the current data frame.
+        '''!
+        Method for extraction of row data where a specified value or 
+        range of value is found in the current data frame.
 
         This method is logically identical to SQL select.
 
@@ -329,17 +324,16 @@ class Dataframe(object):
 
         >>> df = <current>.extractSeriesValue('seriesA', '>', 30, '')
 
-        @param series_name: name of series to extract
-        @type series_name: list
-        @param operator: comparative operator. Allowed values are: '>' (more
-        than), '<' (less than), '>=' (more than or equals to), '<=' (less
-        than or equals to), '=' (equals to), '!=' (not equals to), and '*'
-        (all, basically replicating the entire data frame).
+        @param series_name list: name of series to extract
+        @param operator: comparative operator. Allowed values are: '>' 
+        (more than), '<' (less than), '>=' (more than or equals to), 
+        '<=' (less than or equals to), '=' (equals to), '!=' (not 
+        equals to), and '*' (all, basically replicating the entire 
+        data frame).
         @param value: value of the data to compare.
-        @param new_dataframe_name: name for new data frame (that is to be
-        returned)
-        @type new_dataframe_name: string
-        @return: dataframe.Dataframe object
+        @param new_dataframe_name string: name for new data frame (
+        that is to be returned)
+        @return dataframe.Dataframe object
         '''
         df = Dataframe(new_dataframe_name)
         try:
@@ -365,16 +359,14 @@ class Dataframe(object):
         return df
 
     def extractLabels(self, label_names, new_dataframe_name=''):
-        '''
-        Method to extract one or more data labels across all series from
-        the current data frame into a new data frame.
+        '''!
+        Method to extract one or more data labels across all series 
+        from the current data frame into a new data frame.
 
-        @param label_names: names of labels to extract
-        @type label_names: list
-        @param new_dataframe_name: name for new data frame (that is to be
-        returned)
-        @type new_dataframe_name: string
-        @return: dataframe.Dataframe object
+        @param label_names list: names of labels to extract
+        @param new_dataframe_name string: name for new data frame (
+        that is to be returned)
+        @return dataframe.Dataframe object
         '''
         df = Dataframe(str(new_dataframe_name))
         data = {}
@@ -387,25 +379,26 @@ class Dataframe(object):
         return df
 
     def extractValue(self, operator, value, new_dataframe_name=''):
-        '''
-        Method to extract one or more data labels across all series, based on
-        criterion, from the current data frame into a new data frame.
+        '''!
+        Method to extract one or more data labels across all series, 
+        based on criterion, from the current data frame into a new 
+        data frame.
 
-        For example, the following will extract all data labels across all
-        series where data value is more than 30, and generate and return a new
-        dataframe (ndf).
+        For example, the following will extract all data labels across 
+        all series where data value is more than 30, and generate and 
+        return a new dataframe (ndf).
 
         >>> ndf = df.extractValue('>', 30, 'newframe')
 
-        @param operator: comparative operator. Allowed values are: '>' (more
-        than), '<' (less than), '>=' (more than or equals to), '<=' (less
-        than or equals to), '=' (equals to), '!=' (not equals to), and '*'
-        (all, basically replicating the entire data frame).
+        @param operator: comparative operator. Allowed values are: '>' 
+        (more than), '<' (less than), '>=' (more than or equals to), 
+        '<=' (less than or equals to), '=' (equals to), '!=' (not 
+        equals to), and '*' (all, basically replicating the entire 
+        data frame).
         @param value: value of the data to compare.
-        @param new_dataframe_name: name for new data frame (that is to be
-        returned)
-        @type new_dataframe_name: string
-        @return: dataframe.Dataframe object
+        @param new_dataframe_name string: name for new data frame (
+        that is to be returned)
+        @return dataframe.Dataframe object
         '''
         df = Dataframe(str(new_dataframe_name))
         data = {}
@@ -438,12 +431,10 @@ class Dataframe(object):
         return df
 
     def _generateRandomName(self):
-        '''
-        Private method to generate a 8-character upper case name to be used
-        as series names.
+        '''!
+        Private method to generate a 8-character upper case name to be used as series names.
 
-        @return: generated name.
-        @rtype: string
+        @return generated name as string.
         '''
         name = ''.join([random.choice(string.ascii_uppercase)
                         for i in range(8)])
@@ -453,19 +444,21 @@ class Dataframe(object):
         return name
 
     def addSeries(self, series, fill_in=None):
-        '''
+        '''!
         Method to add a data series into the data frame.
 
-        @param series: data series (dataframe.Series object) for addition.
-        @param fill_in: value to fill into missing values during process.
-        This is required as the number of data elements across each label
-        must be the same. Hence, filling in of missing values can occur
-        when (1) the newly added data series consists of new labels which
-        are not found in the current data frame (this will require filling
-        in of missing values in the current data frame), or (2) the current
-        data frame consists of labels that are not found in the newly
-        added data series (this will require filling in of missing values
-        to the newly added data series). Default = None.
+        @param series: data series (dataframe.Series object) for 
+        addition.
+        @param fill_in: value to fill into missing values during 
+        process. This is required as the number of data elements 
+        across each label must be the same. Hence, filling in of 
+        missing values can occur when (1) the newly added data series 
+        consists of new labels which are not found in the current data 
+        frame (this will require filling in of missing values in the 
+        current data frame), or (2) the current data frame consists of 
+        labels that are not found in the newly added data series (this 
+        will require filling in of missing values to the newly added 
+        data series). Default = None.
         '''
         if series.name == '':
             series.name = self._generateRandomName()
@@ -488,8 +481,9 @@ class Dataframe(object):
                 self.data[k] = temp
 
     def addData(self, dataset, labels, fill_in=None):
-        '''
-        Method to add new data into the current data frame. For example,
+        '''!
+        Method to add new data into the current data frame. For 
+        example,
 
         >>> df = d.Dataframe('frame1')
         >>> dataset = {'seriesA': [10, 11, 12, 13, 14],
@@ -508,23 +502,24 @@ class Dataframe(object):
             D   13       23       33       43
             E   14       24       34       44
 
-        @param dataset: set of data to add. This is formatted as a
-        dictionary where the key is the series name and the value is a list
-        of data values of the same number of elements as labels.
-        @type dataset: dictionary
-        @param labels: list of labels for the data values. If not given,
-        a sequential number will be given as label but this does not ensure
-        uniqueness in label names across the entire series.
-        @type labels: list
-        @param fill_in: value to fill into missing values during process.
-        This is required as the number of data elements across each label
-        must be the same. Hence, filling in of missing values can occur
-        when (1) the newly added data series consists of new labels which
-        are not found in the current data frame (this will require filling
-        in of missing values in the current data frame), or (2) the current
-        data frame consists of labels that are not found in the newly
-        added data series (this will require filling in of missing values
-        to the newly added data series). Default = None.
+        @param dataset dictionary: set of data to add. This is 
+        formatted as a dictionary where the key is the series name and 
+        the value is a list of data values of the same number of 
+        elements as labels.
+        @param labels list: list of labels for the data values. If not 
+        given, a sequential number will be given as label but this 
+        does not ensure uniqueness in label names across the entire 
+        series.
+        @param fill_in: value to fill into missing values during 
+        process. This is required as the number of data elements 
+        across each label must be the same. Hence, filling in of 
+        missing values can occur when (1) the newly added data series 
+        consists of new labels which are not found in the current data 
+        frame (this will require filling in of missing values in the 
+        current data frame), or (2) the current data frame consists of 
+        labels that are not found in the newly added data series (this 
+        will require filling in of missing values to the newly added 
+        data series). Default = None.
         '''
         series_names = dataset.keys()
         series_names.sort()
@@ -535,28 +530,29 @@ class Dataframe(object):
 
     def addCSV(self, filepath, series_header=True, separator=',',
                fill_in=None, newline='\n'):
-        '''
+        '''!
         Method to add data from comma-delimited file (CSV) into current
         data frame.
 
-        @param filepath: path to CSV file.
-        @type filepath: string
-        @param series_header: boolean flag to denote whether the first row
-        in the CSV file contains the data header. It is highly recommended
-        that header is included in the CSV file. Default = True (header is
-        included)
-        @param separator: item separator within the CSV file. Default = ','
-        @param fill_in: value to fill into missing values during process.
-        This is required as the number of data elements across each label
-        must be the same. Hence, filling in of missing values can occur
-        when (1) the newly added data series consists of new labels which
-        are not found in the current data frame (this will require filling
-        in of missing values in the current data frame), or (2) the current
-        data frame consists of labels that are not found in the newly
-        added data series (this will require filling in of missing values
-        to the newly added data series). Default = None.
-        @param newline: character to denote new line or line feed in the
-        CSV file.
+        @param filepath string: path to CSV file.
+        @param series_header: boolean flag to denote whether the first 
+        row in the CSV file contains the data header. It is highly 
+        recommended that header is included in the CSV file. Default = 
+        True (header is included)
+        @param separator: item separator within the CSV file. Default 
+        = ','
+        @param fill_in: value to fill into missing values during 
+        process. This is required as the number of data elements 
+        across each label must be the same. Hence, filling in of 
+        missing values can occur when (1) the newly added data series 
+        consists of new labels which are not found in the current data 
+        frame (this will require filling in of missing values in the 
+        current data frame), or (2) the current data frame consists of 
+        labels that are not found in the newly added data series (this 
+        will require filling in of missing values to the newly added 
+        data series). Default = None.
+        @param newline: character to denote new line or line feed in 
+        the CSV file.
         '''
         data = open(filepath, 'r').readlines()
         data = [x[:(-1)*len(newline)] for x in data]
@@ -575,12 +571,11 @@ class Dataframe(object):
             self.addSeries(s, fill_in)
 
     def removeSeries(self, series_name):
-        '''
+        '''!
         Method to remove / delete a data series from the current data
         frame.
 
-        @param series_name: names of series to remove
-        @type series_name: string
+        @param series_name string: names of series to remove
         '''
         series_name = str(series_name)
         try:
@@ -590,29 +585,26 @@ class Dataframe(object):
         except: pass
 
     def popSeries(self, series_names, new_dataframe_name=''):
-        '''
-        Method to pop one or more series (extract one or more series from
-        the current data frame into new data frame, followed by removing
-        the extracted series from the current data frame).
+        '''!
+        Method to pop one or more series (extract one or more series 
+        from the current data frame into new data frame, followed by 
+        removing the extracted series from the current data frame).
 
-        @param series_names: names of series to pop
-        @type series_names: list
-        @param new_dataframe_name: name for new data frame (that is to be
-        returned)
-        @type new_dataframe_name: string
-        @return: dataframe.Dataframe object
+        @param series_names list: names of series to pop
+        @param new_dataframe_name string: name for new data frame (
+        that is to be returned)
+        @return dataframe.Dataframe object
         '''
         df = self.extractSeries(series_names, new_dataframe_name)
         for series in series_names: self.removeSeries(series)
         return df
 
     def removeLabel(self, label):
-        '''
-        Method to remove / delete a label across all data series from the
-        current data frame.
+        '''!
+        Method to remove / delete a label across all data series from 
+        the current data frame.
 
-        @param label: names of label to remove
-        @type label: string
+        @param label string: names of label to remove
         '''
         label = str(label)
         try:
@@ -622,31 +614,31 @@ class Dataframe(object):
         except: pass
 
     def popLabels(self, label_names, new_dataframe_name=''):
-        '''
-        Method to pop one or more labels across all data series (extract
-        one or more labels across all data series from the current data
-        frame into new data frame, followed by removing the extracted
-        labels from the current data frame).
+        '''!
+        Method to pop one or more labels across all data series (
+        extract one or more labels across all data series from the 
+        current data frame into new data frame, followed by removing 
+        the extracted labels from the current data frame).
 
-        @param label_names: names of series to pop
+        @param label_names list: names of series to pop
         @type label_names: list
-        @param new_dataframe_name: name for new data frame (that is to be
-        returned)
-        @type new_dataframe_name: string
-        @return: dataframe.Dataframe object
+        @param new_dataframe_name string: name for new data frame (
+        that is to be returned)
+        @return dataframe.Dataframe object
         '''
         df = self.extractLabels(label_names, new_dataframe_name)
         for label in label_names: self.removeLabel(label)
         return df
 
     def changeDatum(self, new_value, series, label):
-        '''
+        '''!
         Method to change the data value of a series and label. If the
-        series or label is not found within the data series, nothing will
-        be changed.
+        series or label is not found within the data series, nothing 
+        will be changed.
 
         @param new_value: the new value for the label.
-        @param series: the series name for the data value to be changed.
+        @param series: the series name for the data value to be 
+        changed.
         @param label: the label name for the data value to be changed.
         '''
         try:
@@ -656,10 +648,10 @@ class Dataframe(object):
         except KeyError: pass
 
     def changeSeriesName(self, new_name, original_name):
-        '''
-        Method to change the name of an existing series. If the existing
-        (original) series name is not found within the data series, nothing
-        will be changed.
+        '''!
+        Method to change the name of an existing series. If the 
+        existing (original) series name is not found within the data 
+        series, nothing will be changed.
 
         @param new_name: the new name for the series.
         @param original_name: the existing (original) series name to be
@@ -671,10 +663,10 @@ class Dataframe(object):
         except ValueError: pass
 
     def changeLabel(self, new_label, original_label):
-        '''
+        '''!
         Method to change the name of an existing label. If the existing
-        (original) label is not found within the data series, nothing will
-        be changed.
+        (original) label is not found within the data series, nothing 
+        will be changed.
 
         @param new_label: the new name for the label.
         @param original_label: the existing (original) label name to be
@@ -691,15 +683,15 @@ class Dataframe(object):
         except ValueError: pass
 
     def getDatum(self, series, label):
-        '''
-        Method to get data value for a given series and label names. If the
-        series name or label name is not found within the data series, None
-        will be returned.
+        '''!
+        Method to get data value for a given series and label names. 
+        If the series name or label name is not found within the data 
+        series, None will be returned.
 
         @param series: the series name for the data value to retrieve.
         @param label: the label name for the data value to retrieve.
-        @return: data value tagged to the series and label (if found), or
-        None (if the series or label is not found).
+        @return data value tagged to the series and label (if found), 
+        or None (if the series or label is not found).
         '''
         try:
             s = self.series_names.index(series)
@@ -708,15 +700,15 @@ class Dataframe(object):
         except KeyError: return None
 
     def getLabels(self, datum):
-        '''
-        Method to get label name(s) for a given data value. However, this
-        method does not return the series name from which the data value
-        is/are found.
+        '''!
+        Method to get label name(s) for a given data value. However, 
+        this method does not return the series name from which the 
+        data value is/are found.
 
-        @param datum: the data value to retrieve its corresponding label.
-        @return: [None] if data value is not found; list of one or more
+        @param datum: the data value to retrieve its corresponding 
+        label.
+        @return [None] if data value is not found; list of one or more
         label names if the data value is found.
-        @rtype: list
         '''
         labels = [label
                   for label in self.data.keys()
@@ -726,15 +718,15 @@ class Dataframe(object):
         if len(labels) > 0: return labels
 
     def getSeries(self, datum):
-        '''
-        Method to get series name(s) for a given data value. However, this
-        method does not return the label name from which the data value
-        is/are found.
+        '''!
+        Method to get series name(s) for a given data value. However, 
+        this method does not return the label name from which the data 
+        value is/are found.
 
-        @param datum: the data value to retrieve its corresponding series.
-        @return: [None] if data value is not found; list of one or more
+        @param datum: the data value to retrieve its corresponding 
+        series.
+        @return [None] if data value is not found; list of one or more
         series names if the data value is found.
-        @rtype: list
         '''
         series = [self.series_names[series]
                   for label in self.data.keys()
@@ -744,16 +736,16 @@ class Dataframe(object):
         if len(series) > 0: return series
 
     def getSeriesLabels(self, datum):
-        '''
+        '''!
         Method to get series name(s) and label name(s) for a given data
         value. This method returns the a list of coodinates tuples,
-        (series name, label name) in which the given data value is found.
+        (series name, label name) in which the given data value is 
+        found.
 
         @param datum: the data value to retrieve its corresponding
         coordinates.
-        @return: [(None, None)] if data value is not found; list of one or
-        more coordinates if the data value is found.
-        @rtype: list
+        @return [(None, None)] if data value is not found; list of one 
+        or more coordinates if the data value is found.
         '''
         coordinates = [(self.series_names[series], label)
                        for label in self.data.keys()
@@ -763,22 +755,25 @@ class Dataframe(object):
         else: return list(set(coordinates))
 
     def replaceLabel(self, label_name, operator, original_value, new_value):
-        '''
-        Method to replace values, within a label, from its original value
-        to a new value, if and only if the original value meets a certain
-        criterion.
+        '''!
+        Method to replace values, within a label, from its original 
+        value to a new value, if and only if the original value meets 
+        a certain criterion.
 
-        For example, the following will replace all values of more than 30,
-        that are found within Label 'B', to 40.
+        For example, the following will replace all values of more 
+        than 30, that are found within Label 'B', to 40.
 
         >>> df.replaceLabel('B', '>', 30, 40)
 
-        @param label_name: the label name for the data value to be replaced.
-        @param operator: comparative operator. Allowed values are: '>' (more
-        than), '<' (less than), '>=' (more than or equals to), '<=' (less
-        than or equals to), '=' (equals to), and '!=' (not equals to).
+        @param label_name: the label name for the data value to be 
+        replaced.
+        @param operator: comparative operator. Allowed values are: '>' 
+        (more than), '<' (less than), '>=' (more than or equals to), 
+        '<=' (less than or equals to), '=' (equals to), and '!=' (not 
+        equals to).
         @param original_value: original value of the data.
-        @param new_value: new value to be replaced when the criterion is met.
+        @param new_value: new value to be replaced when the criterion 
+        is met.
         '''
         if label_name not in self.data: return None
         for i in range(len(self.data[label_name])):
@@ -802,22 +797,25 @@ class Dataframe(object):
                     self.data[label_name][i] = new_value
 
     def replaceSeries(self, series_name, operator, original_value, new_value):
-        '''
-        Method to replace values, within a series, from its original value
-        to a new value, if and only if the original value meets a certain
-        criterion.
+        '''!
+        Method to replace values, within a series, from its original 
+        value to a new value, if and only if the original value meets 
+        a certain criterion.
 
-        For example, the following will replace all values of more than 30,
-        that are found within Series 'B', to 40.
+        For example, the following will replace all values of more 
+        than 30, that are found within Series 'B', to 40.
 
         >>> df.replaceSeries('B', '>', 30, 40)
 
-        @param series_name: the series name for the data value to be replaced.
-        @param operator: comparative operator. Allowed values are: '>' (more
-        than), '<' (less than), '>=' (more than or equals to), '<=' (less
-        than or equals to), '=' (equals to), and '!=' (not equals to).
+        @param series_name: the series name for the data value to be 
+        replaced.
+        @param operator: comparative operator. Allowed values are: '>' 
+        (more than), '<' (less than), '>=' (more than or equals to), 
+        '<=' (less than or equals to), '=' (equals to), and '!=' (not 
+        equals to).
         @param original_value: original value of the data.
-        @param new_value: new value to be replaced when the criterion is met.
+        @param new_value: new value to be replaced when the criterion 
+        is met.
         '''
         if series_name not in self.series_names: return None
         else: index = self.series_names.index(series_name)
@@ -843,17 +841,17 @@ class Dataframe(object):
 
 
 class MultiDataframe(object):
-    '''
+    '''!
     A multidata frame is a container of one or more data frames. This
     allows for processing across more than one data frames.
     '''
 
     def __init__(self, name=''):
-        '''
+        '''!
         Constructor. Initialize multidata frame with a name.
 
-        @param name: Name of this data frame. Default is empty name.
-        @type name: string
+        @param name string: Name of this data frame. Default is empty 
+        name.
         '''
         self.name = str(name)
         self.frames = {}
@@ -861,18 +859,18 @@ class MultiDataframe(object):
         self.analyses = {}
 
     def addDataframe(self, dataframe, replace=False):
-        '''
+        '''!
         Method to add a data frame. It is highly encouraged that all
-        data frames to be added have their own identifying names. In event
-        whereby the data frame does not have a name, a randomly generated
-        8-character name will be assigned.
+        data frames to be added have their own identifying names. In 
+        event whereby the data frame does not have a name, a randomly 
+        generated 8-character name will be assigned.
 
         This method allows for replacement of existing data frame when
         'replace' flag is set to True. In event where 'replace' flag is
-        False (do not replace existing data frame, if present) and there
-        is an existing data frame with the same name, a randomly generated
-        8-character name will be appended to the name of the data frame to
-        be added.
+        False (do not replace existing data frame, if present) and 
+        there is an existing data frame with the same name, a randomly 
+        generated 8-character name will be appended to the name of the 
+        data frame to be added.
         '''
         df_name = dataframe.name
         used_names = self.frames.keys()
