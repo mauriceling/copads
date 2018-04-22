@@ -47,34 +47,25 @@ class PNet(object):
     of flour is to be transferred from flour bowl to mixer bowl at 
     each time step, this 'add_flour' rule can be defined as:
     
-    >>> net.add_rules('add_flour', 'step', 
-                      ['flour.flour -> mixer.flour; 20'])
+    >>> net.add_rules('add_flour', 'step', ['flour.flour -> mixer.flour; 20'])
     
     A single step rule can trigger more than one token movement. For 
     example, the following step rule simulates the mixing of 
     ingredients into a flour dough:
     
-    >>> net.add_rules('blend', 'step', 
-                      ['mixer.flour -> mixer.dough; 15',
-                       'mixer.water -> mixer.dough; 10',
-                       'mixer.sugar -> mixer.dough; 0.9',
-                       'mixer.yeast -> mixer.dough; 1'])
+    >>> net.add_rules('blend', 'step', ['mixer.flour -> mixer.dough; 15', 'mixer.water -> mixer.dough; 10', 'mixer.sugar -> mixer.dough; 0.9', 'mixer.yeast -> mixer.dough; 1'])
                        
     Delay rule acts as a time delay between each token movement. For 
     example, the following rule simulates the transfer of 0.5g of 
     yeast into the mixer bowl:
     
-    >>> net.add_rules('add_yeast', 'delay', 
-                      ['yeast.yeast -> mixer.yeast; 0.5; 10'])
+    >>> net.add_rules('add_yeast', 'delay', ['yeast.yeast -> mixer.yeast; 0.5; 10'])
                       
     Incubate rule is a variation of delay rule. While delay rule is 
     not condition dependent, incubate rule starts a time delay when 
     one or more conditions are met. For example,
     
-    >>> net.add_rules('rise', 'incubate', 
-                      ['10; mixer.dough -> pan.dough; \
-                       mixer.flour == 0; mixer.water == 0; \
-                       mixer.sugar == 0; mixer.yeast == 0'])
+    >>> net.add_rules('rise', 'incubate', ['10; mixer.dough -> pan.dough; mixer.flour == 0; mixer.water == 0; mixer.sugar == 0; mixer.yeast == 0'])
                        
     sets a 10 time step delay when all flour, water, sugar, and yeast 
     in the mixer bowl are used up, which simulates the completemixing 
@@ -86,9 +77,7 @@ class PNet(object):
     of tokens to move, the movement is a percentage of the number of 
     tokens. For example, 
     
-    >>> net.add_rules('bake', 'ratio', 
-                      ['pan.dough -> pan.bread; 0.3; pan.dough < 1; 
-                      0'])
+    >>> net.add_rules('bake', 'ratio', ['pan.dough -> pan.bread; 0.3; pan.dough < 1; 0'])
                       
     will move 30% of the token value from dough in pan to bread in 
     pan. If the token value of dough in pan is less than 1, then the 
@@ -99,9 +88,7 @@ class PNet(object):
     cannot be represented by any other rules. Given a user-defined 
     function, FUNC, 
     
-    >>> net.add_rules('cool', 'function', 
-                      ['table.temperature -> air.temperature', FUNC, 
-                       'table.bread > 0; table.temperature > 30'])
+    >>> net.add_rules('cool', 'function', ['table.temperature -> air.temperature', FUNC, 'table.bread > 0; table.temperature > 30'])
                        
     FUNC will be executed when table.bread > 0 and table.temperature > 
     30. The returned result of FUNC will be the token transfer from 
@@ -113,8 +100,11 @@ class PNet(object):
     example,
     
     >>> place_names = places.keys()
+
     >>> a_place = places[places_names[0]]
+    
     >>> token_set = a_place.attributes.keys()
+    
     >>> a_token_value = a_place.attributes[token_set[0]]
     '''
     def __init__(self, zerolowerbound=True):
@@ -526,12 +516,14 @@ class PNet(object):
         representation of a status from entire simulation (such as 
         from simulate method). 
         
-        >>> # from simulate method
+        from simulate method
         >>> net.simulate(65, 1, 1)
+        
         >>> status = net.report_tokens()
         
-        >>> # from simulate_yield method
+        from simulate_yield method
         >>> status = [d for d in net.simulate_yield(65, 1)]
+        
         >>> status = [(d[0], net.report_tokens(d[1])) for d in status]
         
         @param reportdict dictionary: status from one time step. 
