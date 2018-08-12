@@ -1,0 +1,28 @@
+var classcopads_1_1copads_1_1neural_1_1brainbase =
+[
+    [ "__init__", "classcopads_1_1copads_1_1neural_1_1brainbase.html#aa76c210b6e41ce76b232d0663e70396e", null ],
+    [ "add_external_input", "classcopads_1_1copads_1_1neural_1_1brainbase.html#ad5a1f9462c073db803dd52a39944d33c", null ],
+    [ "add_neuron", "classcopads_1_1copads_1_1neural_1_1brainbase.html#a0b15f1d4343d72322ce2b3f905b41136", null ],
+    [ "add_synapse", "classcopads_1_1copads_1_1neural_1_1brainbase.html#a6a80de47b07b6971ee5db05061522f82", null ],
+    [ "close_brain", "classcopads_1_1copads_1_1neural_1_1brainbase.html#a68c9a5ff58141e4fc733c79d1999b0e5", null ],
+    [ "delete_neuron", "classcopads_1_1copads_1_1neural_1_1brainbase.html#a6f0a0415ec96c60581bd73b6223877a9", null ],
+    [ "delete_synapse", "classcopads_1_1copads_1_1neural_1_1brainbase.html#a0b03ab39d5368f9bccef14a54b335df3", null ],
+    [ "get_all_synapses", "classcopads_1_1copads_1_1neural_1_1brainbase.html#a05a559d47800c6de89f930a16eb0ebb6", null ],
+    [ "get_all_synaptic_states", "classcopads_1_1copads_1_1neural_1_1brainbase.html#a632d7e0ecfa29a41ce602df07c6436d6", null ],
+    [ "get_input_values", "classcopads_1_1copads_1_1neural_1_1brainbase.html#a8b0a46f0ef8b9f62809e167cae49200f", null ],
+    [ "get_name_from_neuronID", "classcopads_1_1copads_1_1neural_1_1brainbase.html#a3afa02b73004e0109da5683c2bd71d0c", null ],
+    [ "get_neuron_state", "classcopads_1_1copads_1_1neural_1_1brainbase.html#af5d252670c044b00d3577d18a2e82f85", null ],
+    [ "get_neuronID_from_name", "classcopads_1_1copads_1_1neural_1_1brainbase.html#a7f725ed217549f73738cebb3cc14d085", null ],
+    [ "get_neurons", "classcopads_1_1copads_1_1neural_1_1brainbase.html#a8c14d9060c3d675327a783e3d34dff2d", null ],
+    [ "get_next_neurons", "classcopads_1_1copads_1_1neural_1_1brainbase.html#a0afdb18342c0dd5950f70a22031bec32", null ],
+    [ "get_summation", "classcopads_1_1copads_1_1neural_1_1brainbase.html#ab941d36179b0c58efb91b72228cbfe4b", null ],
+    [ "get_synapse_state", "classcopads_1_1copads_1_1neural_1_1brainbase.html#aad6ee97e4f0f062fbb421aa912300d50", null ],
+    [ "get_synapses", "classcopads_1_1copads_1_1neural_1_1brainbase.html#a00038a89cb08825ef6e55d865bc95466", null ],
+    [ "get_transfer", "classcopads_1_1copads_1_1neural_1_1brainbase.html#a4eadd1eff9141d669c06c683ada9e7c7", null ],
+    [ "log", "classcopads_1_1copads_1_1neural_1_1brainbase.html#aea33b1073e0cfebec5d66342eec6097b", null ],
+    [ "set_input_states", "classcopads_1_1copads_1_1neural_1_1brainbase.html#a9814e7f4ef72cf8f67e80855ab796758", null ],
+    [ "set_neuron_state", "classcopads_1_1copads_1_1neural_1_1brainbase.html#ac27e2d6fe3c846657091322bcde67ca6", null ],
+    [ "set_synapse_state", "classcopads_1_1copads_1_1neural_1_1brainbase.html#a1321400df48aa64f654679f4fd18fe66", null ],
+    [ "conn", "classcopads_1_1copads_1_1neural_1_1brainbase.html#ad71621ead86ad2597cf1ff78f062fe1f", null ],
+    [ "cur", "classcopads_1_1copads_1_1neural_1_1brainbase.html#a3f1bc454e639ac1907aadc6f9a93a25a", null ]
+];
