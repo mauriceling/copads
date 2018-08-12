@@ -5,7 +5,6 @@ Copyright (c) Maurice H.T. Ling <mauriceling@acm.org>
 
 Date created: 20th December 2014
 '''
-import re
 
 def boundary_checker(y, boundary, type):
     '''
@@ -518,7 +517,7 @@ def CK4(funcs, x0, y0, step, xmax, nonODEfunc=None,
         lower_bound=None, upper_bound=None,
         overflow=1e100, zerodivision=1e100):
     '''
-    Generator to integrate a system of ODEs, y' = f(x, y), using fifth 
+    Generator to integrate a system of ODEs, y' = f(x, y), using fourth 
     order Cash-Karp method.
     
     A function (as nonODEfunc parameter) can be included to modify one or 
@@ -770,7 +769,7 @@ def RKF4(funcs, x0, y0, step, xmax, nonODEfunc=None,
         overflow=1e100, zerodivision=1e100):
     '''
     Generator to integrate a system of ODEs, y' = f(x, y), using fourth 
-    order Runge-Kutta_Fehlberg method.
+    order Runge-Kutta-Fehlberg method.
     
     A function (as nonODEfunc parameter) can be included to modify one or 
     more variables (y0 list). This function will not be an ODE (not a 
@@ -896,7 +895,7 @@ def RKF5(funcs, x0, y0, step, xmax, nonODEfunc=None,
         overflow=1e100, zerodivision=1e100):
     '''
     Generator to integrate a system of ODEs, y' = f(x, y), using fifth 
-    order Runge-Kutta_Fehlberg method.
+    order Runge-Kutta-Fehlberg method.
     
     A function (as nonODEfunc parameter) can be included to modify one or 
     more variables (y0 list). This function will not be an ODE (not a 
