@@ -1,1 +1,0 @@
-python2 c:/Python27/Scripts/epydoc --verbose --html --output=doc/copads-api-documentation --name="COPADS: Collection of Python Algorithms and Data Structures" --url=https://github.com/mauriceling/copads --show-imports --show-private --show-sourcecode --show-frames --navlink=https://github.com/mauriceling/copads copads
