@@ -38,3 +38,4 @@ copads/test/sqlite3
 /MANIFEST
 /Makefile
 *.bat
+*.dropbox.attr
