@@ -57,7 +57,7 @@ testdata = {1: {'in_source': 'AAAA',
                 'spointer': 24},
            }
 
-tests = testdata.keys()
+tests = list(testdata.keys())
 tests.sort()
 
 source = ''
