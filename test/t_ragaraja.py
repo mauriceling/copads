@@ -1206,7 +1206,7 @@ def comparator(data, result):
 full_source = ''
 source = ''
 
-tests = testdata.keys()
+tests = list(testdata.keys())
 # ensure that tests will be executed in ascending case number (1 to N)
 tests.sort() 
 for t in tests:
@@ -1275,7 +1275,7 @@ for t in tests:
                     'source code pointer after execution.', 
                     'Expected source pointer:', str(ospointer),
                     'Actual source pointer:', str(spointer)]))
-    if testdata[t].has_key('register'):
+    if 'register' in testdata[t]:
         print('Internal registers: ' + str(N.register))
     print('==========================================================')
 # -----------------------------
@@ -1309,7 +1309,7 @@ print('===== End of random operations testing =====')
 isource = full_source + isource + random_source
 instruction_set = {}
 for i in range(0, len(isource), 3): instruction_set[isource[i:i+3]] = ''
-instruction_set = instruction_set.keys()
+instruction_set = list(instruction_set.keys())
 instruction_set.sort()
 print() 
 print('Instruction set tested: ')

@@ -10,8 +10,8 @@ import types
 import operator
 import math
 import random
-from .copadsexceptions import VectorError
-from .copadsexceptions import MatrixError
+from copadsexceptions import VectorError
+from copadsexceptions import MatrixError
 
 class Vector(object):
     '''
