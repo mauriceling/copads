@@ -57,6 +57,12 @@ class target(opt.OptimizationTarget):
                        for i in range(len(self.targetResults))]
         differences = [(-1)*x for x in differences]
         self.fitnessScore = sum(differences)
+    def modifierFunction(self):
+        zerolist = [i for i in range(len(self.chromosomes['rates'])) 
+                    if self.chromosomes['rates'][i] < 1]
+        for i in zerolist:
+            try: del self.transitions[i]
+            except KeyError: pass
 
 t = target()
 t.states = states
@@ -71,8 +77,10 @@ t.fitted = False
 t.runnerFunction()
 t.dataFunction()
 t.comparatorFunction()
+print('Basal Fitness Score: %.7f' % t.fitnessScore)
 
-optimizer = opt.OptimizerGA(t, 10, 1000000)
+optimizer = opt.OptimizerGA(t, 10, 10000)
 optimizer.setMutate('random')
 optimizer.setMate('topfission')
+optimizer.verbose = 0
 optimizer.run()
