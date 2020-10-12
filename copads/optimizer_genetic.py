@@ -132,6 +132,7 @@ class OptimizerGA(object):
         self.worstOrganism = None
         self.worstOrganismGeneration = 0
         self.verbose = 0
+        self.reportFunction = None
 
     def setMutate(self, name='random'):
         '''
@@ -171,6 +172,18 @@ class OptimizerGA(object):
         else:
             self.mateFunction = 'top50fission'
 
+    def _runReport(self, population):
+        '''
+        Private method - Default population report for each generation.
+        '''
+        popFitness = [population[k].fitnessScore for k in population.keys()]
+        bestFitness = max(popFitness)
+        averageFitness = sum(popFitness) / float(len(popFitness))
+        print('Generation %s, Average Fitness: %.7f, Best Fitness: %.7f' % \
+              (self.generations+1, averageFitness, bestFitness))
+        if int(self.verbose) > 2:
+            print('Organism Fitness Scores: ' + str(popFitness))
+
     def run(self):
         '''
         Method to run the GA optimizer, which will execute the following steps
@@ -189,18 +202,7 @@ class OptimizerGA(object):
 
         @return: (generation count, population dictionary)
         '''
-        def runReport(population):
-            popFitness = {}
-            for k in list(population.keys()):
-                popFitness[k] = population[k].fitnessScore
-            averageFitness = [population[k].fitnessScore
-                              for k in list(population.keys())]
-            bestFitness = max(averageFitness)
-            averageFitness = sum(averageFitness) / float(len(averageFitness))
-            print('Generation %s, Average Fitness: %.7f, Best Fitness: %.7f' % \
-                  (self.generations, averageFitness, bestFitness))
-            if int(self.verbose) > 2:
-                print('Organism Fitness Scores: ' + str(popFitness))
+
         if self.generations == 0:
             self.population = self.mutateFunction(self.population)
         while (self.generations < self.max_generations):
@@ -208,7 +210,10 @@ class OptimizerGA(object):
                 self.population[i].runnerFunction()
                 self.population[i].dataFunction()
                 self.population[i].comparatorFunction()
-            runReport(self.population)
+            if self.reportFunction == None:
+                self._runReport(self.population)
+            else:
+                reportFunction(self.generations, self.population)
             self._saveExtremes()
             if True in [self.population[i].fitted
                         for i in range(len(self.population))]:
@@ -241,13 +246,13 @@ class OptimizerGA(object):
 
     def _mutateRandom(self, population):
         '''
-        Private method - random mutation scheme (mutation scheme = random). In
-        this scheme, each of the chromosome is randomly mutated. A random float
-        (multiplier) between 0 and 2 will be generated for each element on the
-        chromosome. If the multiplier is lower than 1, then the data value of
-        the element on the chromosome will be reduced. if the multipler is more
-        than 1, then the data value of the element on the chromosome will be
-        increased.
+        Private method - random mutation scheme (mutation scheme = random). 
+        In this scheme, each of the chromosome is randomly mutated. A 
+        random float (multiplier) between 0 and 2 will be generated for 
+        each element on the chromosome. If the multiplier is lower than 
+        1, then the data value of the element on the chromosome will be 
+        reduced. if the multipler is more than 1, then the data value 
+        of the element on the chromosome will be increased.
 
         @param population: population to mutate
         @type population: dictionary
@@ -310,6 +315,10 @@ class OptimizerGA(object):
             for k in self.population.keys():
                 if population[k].fitnessScore < meanfitness:
                     setKill.append(k)
+            if len(setKill) > (0.5*len(population)):
+                setKill = [random.choice(setKill) 
+                           for i in range(int(0.5*len(population)))]
+                setKill = list(set(setKill))
             for k in setKill:
                 del population[k]
             newpop = {}
