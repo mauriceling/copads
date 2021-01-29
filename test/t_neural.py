@@ -11,26 +11,75 @@ brainfile = 'testbrain.db'
 
 class testSimpleBrain(unittest.TestCase):
     '''
-    setUp: format(self)
-    testAddNeuron: add_neuron(self, **kwargs)
-    testAddSynapse: add_synapse(self, sourceID, destinationID)
-    testDeleteNeuron: delete_neuron(self, ID)
-    testDeleteSynapse: delete_synapse(self, sourceID, destinationID)
-    testExecuteNeuron1: execute_neuron(self, ID, state='pstate', stype='weight')
-    testAddInputChannel: add_input_channel(self, source, destinationID)
-    testAddNeuron1: get_neurons(self, status='alive')
-    testGetSynapse: get_synapses(self, source, stype='weight') 
-    testAddInputChannel: get_input_values(self, ID)
-    testSetNeuronState: set_neuron_state(self, ID, state, value)
-    testExecuteNeuron1: get_neuron_state(self, ID, state='pstate')
-    testSetSynapseState: set_synapse_state(self, sourceID, destinationID, value, state='weight')
-    testSetSynapseState: get_synapse_state(self, sourceID, destinationID, state='weight')
-    testSetInput: set_input(self, source, inputstates)
-    testAddNeuron2: get_neuronID_from_name(self, name)
-    testAddNeuron2: get_name_from_neuronID(self, ID)
-    testDeleteOrphanedNeurons: delete_orphaned_neurons(self)
-    testDeleteSynapseByState: delete_synapse_by_state(self, threshold=0.1, mode='lowest', stype='weight')
-    testDeleteSynapseByState: get_all_synaptic_states(self, stype='weight')
+    setUp(self): add_neuron()
+    setUp(self): add_synapse(x[0], x[1])
+
+    testAddNeuron1(self): get_neurons('alive')
+    testAddNeuron1(self): add_neuron()
+
+    testAddNeuron2(self): add_neuron(name='test', summation='sumtest', transfer='transfer_test', threshold='0.1', pstate='0.11')
+    testAddNeuron2(self): get_neuronID_from_name('test')
+    testAddNeuron2(self): get_name_from_neuronID(nID)
+    testAddNeuron2(self): get_neuron_state(nID, 'summation')
+    testAddNeuron2(self): get_neuron_state(nID, 'pstate')
+    
+    testGetSynapse(self): get_synapses('1', 'weight')
+    testGetSynapse(self): get_synapses('1', 'all')
+    testGetSynapse(self): get_synapses('2', 'weight')
+
+    testAddSynapse1(self): add_synapse('1', '8')
+
+    testDeleteNeuron(self): get_neurons('alive')
+    testDeleteNeuron(self): get_synapses('3', 'weight')
+    testDeleteNeuron(self): get_synapses('6', 'weight')
+    testDeleteNeuron(self): delete_neuron('6')
+    testDeleteNeuron(self): get_neurons('alive')
+    testDeleteNeuron(self): get_synapses('3', 'weight')
+    testDeleteNeuron(self): get_synapses('6', 'weight')
+
+    testDeleteOrphanedNeurons(self): delete_orphaned_neurons()
+
+    testDeleteSynapse(self): get_synapses('1', 'weight')
+    testDeleteSynapse(self): delete_synapse('1', '3')
+    testDeleteSynapse(self): get_synapses('1', 'weight')
+
+    testDeleteSynapseByState(self): add_synapse(x[0], x[1])
+    testDeleteSynapseByState(self): get_all_synaptic_states('weight')
+    testDeleteSynapseByState(self): delete_synapse_by_state(0.1, 'lowest', 'weight')
+    testDeleteSynapseByState(self): get_all_synaptic_states('weight')
+
+    testSetNeuronState(self): set_neuron_state('1', 'trialstate', 0.5)
+    testSetNeuronState(self): get_neuron_state('1', 'trialstate')
+
+    testSetSynapseState(self): set_synapse_state('1', '2', 'testvalue', 'teststate')
+    testSetSynapseState(self): get_synapse_state('1', '2', 'teststate')
+
+    testAddInputChannel(self): get_input_values('1')
+    testAddInputChannel(self): add_input_channel('eye', '1')
+    testAddInputChannel(self): get_input_values('1')
+
+    testSetInput(self): set_input('eye', {'1': 0.9})
+    testSetInput(self): get_input_values('1')
+    testSetInput(self): set_input('eye', {'1': 0.7})
+    testSetInput(self): get_input_values('1')
+    testSetInput(self): set_input('eye', {'1': 0.15})
+    testSetInput(self): get_input_values('1')
+
+    testExecuteNeuron1(self): set_input('eye', {'1': 0.15})
+    testExecuteNeuron1(self): get_input_values('1')
+    testExecuteNeuron1(self): get_neuron_state('1', 'pstate')
+    testExecuteNeuron1(self): get_input_values('2')
+    testExecuteNeuron1(self): get_input_values('3')
+    testExecuteNeuron1(self): execute_neuron('1', 'pstate', 'weight')
+    testExecuteNeuron1(self): get_neuron_state('1', 'pstate')
+    testExecuteNeuron1(self): get_input_values('2')
+    testExecuteNeuron1(self): get_input_values('3')
+
+    testExecuteNeuron2(self): set_input('eye', {'1': 0.15})
+    testExecuteNeuron2(self): get_input_values('1')
+    testExecuteNeuron2(self): get_neuron_state(str(ID), state='pstate') 
+    testExecuteNeuron2(self): execute_neuron(str(ID), 'pstate', 'weight')
+    testExecuteNeuron2(self): get_neuron_state(str(ID), state='pstate')
     '''
     def setUp(self):
         self.brain = n.brain(brainfile)
@@ -40,6 +89,7 @@ class testSimpleBrain(unittest.TestCase):
         for x in [('1', '2'), ('1', '3'), ('2', '4'), ('4', '5'), ('3', '6'),
                   ('5', '7'), ('6', '7')]:
             self.brain.add_synapse(x[0], x[1])
+
     def testAddNeuron1(self):
         nIDs = self.brain.get_neurons('alive')
         self.assertEqual(len(nIDs), 10)
@@ -47,6 +97,7 @@ class testSimpleBrain(unittest.TestCase):
             self.brain.add_neuron()
         nIDs = self.brain.get_neurons('alive')
         self.assertEqual(len(nIDs), 15)
+
     def testAddNeuron2(self):
         nID = self.brain.add_neuron(name='test', summation='sumtest',
                                     transfer='transfer_test', threshold='0.1',
@@ -59,6 +110,7 @@ class testSimpleBrain(unittest.TestCase):
         self.assertEqual(summation, 'sumtest')
         pstate = self.brain.get_neuron_state(nID, 'pstate')
         self.assertEqual(pstate, '0.11')
+
     def testGetSynapse(self):
         nIDs = self.brain.get_synapses('1', 'weight')
         self.assertEqual(nIDs, ['2', '3'])
@@ -66,10 +118,12 @@ class testSimpleBrain(unittest.TestCase):
         self.assertEqual(nIDs, ['2', '3'])
         nIDs = self.brain.get_synapses('2', 'weight')
         self.assertEqual(nIDs, ['4'])
+
     def testAddSynapse1(self):
         self.brain.add_synapse('1', '8')
         nIDs = self.brain.get_synapses('1', 'weight')
         self.assertEqual(nIDs, ['2', '3', '8'])
+
     def testDeleteNeuron(self):
         # before deleting neuron #6 - 10 neurons present
         nIDs = self.brain.get_neurons('alive')
@@ -91,17 +145,20 @@ class testSimpleBrain(unittest.TestCase):
         # after deleting neuron #6 - (nothing --> #7)
         nIDs = self.brain.get_synapses('6', 'weight')
         self.assertEqual(nIDs, [])
+
     def testDeleteOrphanedNeurons(self):
         self.brain.delete_orphaned_neurons()
         nIDs = self.brain.get_neurons('alive')
         self.assertEqual(len(nIDs), 7)
         self.assertEqual(nIDs, ['1', '2', '3', '4', '5', '6', '7'])
+
     def testDeleteSynapse(self):
         nIDs = self.brain.get_synapses('1', 'weight')
         self.assertEqual(nIDs, ['2', '3'])
         self.brain.delete_synapse('1', '3')
         nIDs = self.brain.get_synapses('1', 'weight')
         self.assertEqual(nIDs, ['2'])
+
     def testDeleteSynapseByState(self):
         # add 14 more synapses (only 7 in setUp) to 21
         for x in [('6', '8'), ('6', '9'), ('6', '10'), 
@@ -115,14 +172,17 @@ class testSimpleBrain(unittest.TestCase):
         self.brain.delete_synapse_by_state(0.1, 'lowest', 'weight')
         new_synaptic_states = self.brain.get_all_synaptic_states('weight')
         self.assertEqual(len(new_synaptic_states), 19)
+
     def testSetNeuronState(self):
         self.brain.set_neuron_state('1', 'trialstate', 0.5)
         pstate = self.brain.get_neuron_state('1', 'trialstate')
         self.assertEqual(pstate, '0.5')
+
     def testSetSynapseState(self):
         self.brain.set_synapse_state('1', '2', 'testvalue', 'teststate')
         value = self.brain.get_synapse_state('1', '2', 'teststate')
         self.assertEqual(value, 'testvalue')
+
     def testAddInputChannel(self):
         # before adding input channel - there is no input into neuron #1
         input_vector = self.brain.get_input_values('1')
@@ -132,6 +192,7 @@ class testSimpleBrain(unittest.TestCase):
         # after adding input channel - there is 1 input into neuron #1
         input_vector = self.brain.get_input_values('1')
         self.assertEqual(len(input_vector), 1)
+
     def testSetInput(self):
         # test 1
         self.brain.set_input('eye', {'1': 0.9})
@@ -145,6 +206,7 @@ class testSimpleBrain(unittest.TestCase):
         self.brain.set_input('eye', {'1': 0.15})
         input_vector = self.brain.get_input_values('1')
         self.assertEqual(input_vector, [0.15])
+
     def testExecuteNeuron1(self):
         # set an input into neuron #1
         self.brain.set_input('eye', {'1': 0.15})
@@ -174,6 +236,7 @@ class testSimpleBrain(unittest.TestCase):
         self.assertNotEqual(old_input3, new_input3)
         #print 'Neuron #3 Input (before): ', old_input3
         #print 'Neuron #3 Input (after): ', new_input3
+
     def testExecuteNeuron2(self):
         # set an input into neuron #1
         self.brain.set_input('eye', {'1': 0.15})
@@ -189,9 +252,9 @@ class testSimpleBrain(unittest.TestCase):
         new_pstates = [self.brain.get_neuron_state(str(ID), state='pstate') 
                        for ID in range(1, 11)]
         self.assertNotEqual(old_pstates, new_pstates)
-        #print
-        #print 'pstates (before): ', pprint.pprint(old_pstates)
-        #print 'pstates (after): ', pprint.pprint(new_pstates)
+        print("Execute Neuron 2")
+        print('pstates (before): ' + str(old_pstates))
+        print('pstates (after): ' + str(new_pstates)) 
         
   
 if __name__ == '__main__':
