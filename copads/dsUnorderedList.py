@@ -37,7 +37,7 @@ class UnorderedList:
         count = 0
         while current != None:
             count = count + 1
-            current = current.getNext()
+            current = current.get_next()
 
         return count
 
@@ -45,10 +45,10 @@ class UnorderedList:
         current = self.head
         found = False
         while current != None and not found:
-            if current.getData() == item:
+            if current.get_data() == item:
                 found = True
             else:
-                current = current.getNext()
+                current = current.get_next()
 
         return found
 
@@ -57,13 +57,13 @@ class UnorderedList:
         previous = None
         found = False
         while not found:
-            if current.getData() == item:
+            if current.get_data() == item:
                 found = True
             else:
                 previous = current
-                current = current.getNext()
+                current = current.get_next()
 
         if previous == None:
-            self.head = current.getNext()
+            self.head = current.get_next()
         else:
-            previous.setNext(current.getNext())
+            previous.setNext(current.get_next())
