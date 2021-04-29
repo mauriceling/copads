@@ -1,59 +1,63 @@
 """
 https://runestone.academy/runestone/books/published/pythonds/SortSearch/Hashing.html#implementing-the-map-abstract-data-type
 """
+import typing
+
 class HashTable:
     def __init__(self):
-        self.size = 11
-        self.slots = [None] * self.size
-        self.data = [None] * self.size
+        self.size: int = 11
+        self.slots: list = [None] * self.size
+        self.data: list = [None] * self.size
 
-    def put(self,key,data):
-      hashvalue = self.hashfunction(key,len(self.slots))
+    def put(self, key: int, data) -> None:
+        hash_value: int = self.hash_function(key, len(self.slots))
 
-      if self.slots[hashvalue] == None:
-        self.slots[hashvalue] = key
-        self.data[hashvalue] = data
-      else:
-        if self.slots[hashvalue] == key:
-          self.data[hashvalue] = data  #replace
+        if self.slots[hash_value] is None:
+            self.slots[hash_value] = key
+            self.data[hash_value] = data
         else:
-          nextslot = self.rehash(hashvalue,len(self.slots))
-          while self.slots[nextslot] != None and \
-                          self.slots[nextslot] != key:
-            nextslot = self.rehash(nextslot,len(self.slots))
+            if self.slots[hash_value] == key:
+                self.data[hash_value] = data  # replace
+            else:
+                next_slot = self.rehash(hash_value, len(self.slots))
+                while self.slots[next_slot] is not None and \
+                        self.slots[next_slot] != key:
+                    next_slot = self.rehash(next_slot, len(self.slots))
 
-          if self.slots[nextslot] == None:
-            self.slots[nextslot]=key
-            self.data[nextslot]=data
-          else:
-            self.data[nextslot] = data #replace
+                if self.slots[next_slot] is None:
+                    self.slots[next_slot] = key
+                    self.data[next_slot] = data
+                else:
+                    self.data[next_slot] = data  # replace
 
-    def hashfunction(self,key,size):
-         return key%size
+    @staticmethod
+    def hash_function(key: int, size: int) -> int:
+        return key % size
 
-    def rehash(self,oldhash,size):
-        return (oldhash+1)%size
+    @staticmethod
+    def rehash(old_hash: int, size: int) -> int:
+        return (old_hash + 1) % size
 
-    def get(self,key):
-      startslot = self.hashfunction(key,len(self.slots))
+    def get(self, key: int) -> typing.Union[None, str]:
+        start_slot: int = self.hash_function(key, len(self.slots))
 
-      data = None
-      stop = False
-      found = False
-      position = startslot
-      while self.slots[position] != None and  \
-                           not found and not stop:
-         if self.slots[position] == key:
-           found = True
-           data = self.data[position]
-         else:
-           position=self.rehash(position,len(self.slots))
-           if position == startslot:
-               stop = True
-      return data
+        data: typing.Union[None, str] = None
+        stop: bool = False
+        found: bool = False
+        position: int = start_slot
+        while self.slots[position] is not None and \
+                not found and not stop:
+            if self.slots[position] == key:
+                found: bool = True
+                data: typing.Union[None, str] = self.data[position]
+            else:
+                position: int = self.rehash(position, len(self.slots))
+                if position == start_slot:
+                    stop: bool = True
+        return data
 
-    def __getitem__(self,key):
+    def __getitem__(self, key: int) -> typing.Optional[str]:
         return self.get(key)
 
-    def __setitem__(self,key,data):
-        self.put(key,data)
+    def __setitem__(self, key: int, data: typing.Union[None, str]) -> None:
+        self.put(key, data)
