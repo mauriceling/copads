@@ -29,7 +29,7 @@ class OrderedList:
         current = self.head
         found = False
         stop = False
-        while current != None and not found and not stop:
+        while current is not None and not found and not stop:
             if current.get_data() == item:
                 found = True
             else:
@@ -44,7 +44,7 @@ class OrderedList:
         current = self.head
         previous = None
         stop = False
-        while current != None and not stop:
+        while current is not None and not stop:
             if current.get_data() > item:
                 stop = True
             else:
@@ -52,7 +52,7 @@ class OrderedList:
                 current = current.get_next()
 
         temp = Node(item)
-        if previous == None:
+        if previous is None:
             temp.set_next(self.head)
             self.head = temp
         else:
@@ -60,12 +60,12 @@ class OrderedList:
             previous.set_next(temp)
 
     def isEmpty(self):
-        return self.head == None
+        return self.head is None
 
     def size(self):
         current = self.head
         count = 0
-        while current != None:
+        while current is not None:
             count = count + 1
             current = current.get_next()
 
