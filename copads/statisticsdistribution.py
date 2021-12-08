@@ -82,11 +82,11 @@ Date created: 17th August 2005
 import math
 import random
 
-from copadsexceptions import DistributionParameterError
-from copadsexceptions import DistributionFunctionError
-from copadsexceptions import NormalDistributionTypeError
-from constants import *
-import nrpy
+from .copadsexceptions import DistributionParameterError
+from .copadsexceptions import DistributionFunctionError
+from .copadsexceptions import NormalDistributionTypeError
+from .constants import *
+from . import nrpy
 
 class Distribution:
     """
