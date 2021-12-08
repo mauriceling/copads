@@ -3,22 +3,22 @@ https://runestone.academy/runestone/books/published/pythonds/BasicDS/Implementin
 """
 class Deque:
     def __init__(self):
-        self.items = []
+        self.items: list = []
 
-    def isEmpty(self):
+    def is_empty(self) -> bool:
         return self.items == []
 
-    def addFront(self, item):
+    def add_front(self, item: any) -> None:
         self.items.append(item)
 
-    def addRear(self, item):
-        self.items.insert(0,item)
+    def add_rear(self, item: any) -> None:
+        self.items.insert(0, item)
 
-    def removeFront(self):
+    def remove_front(self) -> any:
         return self.items.pop()
 
-    def removeRear(self):
+    def remove_rear(self) -> any:
         return self.items.pop(0)
 
-    def size(self):
+    def size(self) -> int:
         return len(self.items)

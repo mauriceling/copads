@@ -97,6 +97,7 @@ class GraphEdgeSizeMismatchError(GraphError):
     def __init__(self, index, edge):
         self.index = index
         self.edge = edge
+
     def __str__(self):
         return "Number of edges do not match at index %s, %s" % \
                (str(self.index), str(self.edge))
@@ -110,15 +111,15 @@ class GraphParameterError(GraphError):
     
 
 class StatisticsError(CopadsError):
-    '''!
-    Abstract parent for all statistics exceptions
+    '''
+        Abstract parent for all statistics exceptions
     '''
     pass
     
 class DistributionError(StatisticsError):
     '''!
-    Abstract parent for all exceptions pertaining to statistical 
-    distributions
+        Abstract parent for all exceptions pertaining to statistical
+        distributions
     '''
     pass
     
