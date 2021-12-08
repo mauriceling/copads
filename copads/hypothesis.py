@@ -1,16 +1,10 @@
 """
 Statistical Hypothesis Testing Routines.
 
-Each routine will Returns a 5-element list
-    - [left result, left critical, statistic, right critical, right result]
-where
-    - left result = True (statistic in lower critical region) or
-    False (statistic not in lower critical region)
-    - left critical = lower critical value generated from 1 - confidence
-    - statistic = calculated statistic value
-    - right critical = upper critical value generated from confidence
-    - right result = True (statistic in upper critical region) or
-    False (statistic not in upper critical region)
+Each test has 2 options:
+
+    - Default option (p-value method): Returns [statistic, p-value] where p-value = the right-tailed p-value of the distrbution with the calculated statistic on horizontal axis.
+    - Non-default option (confidence interval method): Each routine will Returns a 5-element list: [left result, left critical, statistic, right critical, right result] where (a) left result = True (statistic in lower critical region) or False (statistic not in lower critical region), (b) left critical = lower critical value generated from 1 - confidence, (c) statistic = calculated statistic value, (d) right critical = upper critical value generated from confidence, and (e) right result = True (statistic in upper critical region) or False (statistic not in upper critical region).
 
 References
     - Test 1-100: Gopal K. Kanji. 2006. 100 Statistical Tests, 3rd edition.
@@ -24,12 +18,11 @@ Date created: 1st September 2008
 from math import sqrt, log, e
 from .statisticsdistribution import *
 
-def test(statistic, distribution, confidence):
+def test_CI(statistic, distribution, confidence):
     """Generates the critical value from distribution and confidence value
     using the distribution's inverseCDF method and performs 1-tailed and
     2-tailed test by comparing the calculated statistic with the critical
     value.
-
 
     Returns a 5-element list
     [left result, left critical, statistic, right critical, right result]
@@ -60,7 +53,7 @@ def test(statistic, distribution, confidence):
     else: data[4] = True
     return data
 
-def Z1Mean1Variance(smean, pmean, pvar, ssize, confidence):
+def Z1Mean1Variance(smean, pmean, pvar, ssize, confidence, is_testCI=False):
     """
     Test 1: Z-test for a population mean (variance known)
 
@@ -77,6 +70,7 @@ def Z1Mean1Variance(smean, pmean, pvar, ssize, confidence):
     @param pvar: population variance
     @param ssize: sample size
     @param confidence: confidence level
+    @param is_testCI: If True, confidence interval will be used. If False, p-value will be calculated. Default = False.
 
     @see: Ling, MHT. 2009. Ten Z-Test Routines from Gopal Kanji's 100
     Statistical Tests. The Python Papers Source Codes 1:5
@@ -86,10 +80,13 @@ def Z1Mean1Variance(smean, pmean, pvar, ssize, confidence):
     """
     statistic = float(abs(smean - pmean)/ \
                 (pvar / sqrt(ssize)))
-    return test(statistic, NormalDistribution(), confidence)
+    if is_testCI:
+        return test_CI(statistic, NormalDistribution(), confidence)
+    else:
+        return [statistic, 1 - NormalDistribution().CDF(statistic)]
 
 def Z2Mean1Variance(smean1, smean2, pvar, ssize1, ssize2, confidence,
-                    pmean1=0.0, pmean2=0.0):
+                    pmean1=0.0, pmean2=0.0, is_testCI=False):
     """
     Test 2: Z-test for two population means (variances known and equal)
 
@@ -108,6 +105,7 @@ def Z2Mean1Variance(smean1, smean2, pvar, ssize1, ssize2, confidence,
     @param confidence: confidence level
     @param pmean1: population mean of population #1 (optional)
     @param pmean2: population mean of population #2 (optional)
+    @param is_testCI: If True, confidence interval will be used. If False, p-value will be calculated. Default = False.
 
     @see: Ling, MHT. 2009. Ten Z-Test Routines from Gopal Kanji's 100
     Statistical Tests. The Python Papers Source Codes 1:5
@@ -117,10 +115,13 @@ def Z2Mean1Variance(smean1, smean2, pvar, ssize1, ssize2, confidence,
     """
     statistic = float(((smean1 - smean2) - (pmean1 - pmean2))/ \
                 (pvar * sqrt((1.0 / ssize1) + (1.0 / ssize2))))
-    return test(statistic, NormalDistribution(), confidence)
+    if is_testCI:
+        return test_CI(statistic, NormalDistribution(), confidence)
+    else:
+        return [statistic, 1 - NormalDistribution().CDF(statistic)]
 
 def Z2Mean2Variance(smean1, smean2, pvar1, pvar2, ssize1, ssize2, confidence,
-                    pmean1=0.0, pmean2=0.0):
+                    pmean1=0.0, pmean2=0.0, is_testCI=False):
     """
     Test 3: Z-test for two population means (variances known and unequal)
 
@@ -140,6 +141,7 @@ def Z2Mean2Variance(smean1, smean2, pvar1, pvar2, ssize1, ssize2, confidence,
     @param confidence: confidence level
     @param pmean1: population mean of population #1 (optional)
     @param pmean2: population mean of population #2 (optional)
+    @param is_testCI: If True, confidence interval will be used. If False, p-value will be calculated. Default = False.
 
     @see: Ling, MHT. 2009. Ten Z-Test Routines from Gopal Kanji's 100
     Statistical Tests. The Python Papers Source Codes 1:5
@@ -149,9 +151,12 @@ def Z2Mean2Variance(smean1, smean2, pvar1, pvar2, ssize1, ssize2, confidence,
     """
     statistic = float(((smean1 - smean2) - (pmean1 - pmean2))/ \
                 sqrt((pvar1 / ssize1) + (pvar2 / ssize2)))
-    return test(statistic, NormalDistribution(), confidence)
+    if is_testCI:
+        return test_CI(statistic, NormalDistribution(), confidence)
+    else:
+        return [statistic, 1 - NormalDistribution().CDF(statistic)]
 
-def Z1Proportion(spro, ppro, ssize, confidence):
+def Z1Proportion(spro, ppro, ssize, confidence, is_testCI=False):
     """
     Test 4: Z-test for a proportion (binomial distribution)
 
@@ -166,6 +171,7 @@ def Z1Proportion(spro, ppro, ssize, confidence):
     @param ppro: population proportion
     @param ssize: sample size
     @param confidence: confidence level
+    @param is_testCI: If True, confidence interval will be used. If False, p-value will be calculated. Default = False.
 
     @see: Ling, MHT. 2009. Ten Z-Test Routines from Gopal Kanji's 100
     Statistical Tests. The Python Papers Source Codes 1:5
@@ -175,9 +181,12 @@ def Z1Proportion(spro, ppro, ssize, confidence):
     """
     statistic = float((abs(ppro - spro) - (1 / (2 * ssize)))/ \
                 sqrt((ppro * (1 - spro)) / ssize))
-    return test(statistic, NormalDistribution(), confidence)
+    if is_testCI:
+        return test_CI(statistic, NormalDistribution(), confidence)
+    else:
+        return [statistic, 1 - NormalDistribution().CDF(statistic)]
 
-def Z2Proportion(spro1, spro2, ssize1, ssize2, confidence):
+def Z2Proportion(spro1, spro2, ssize1, ssize2, confidence, is_testCI=False):
     """
     Test 5: Z-test for the equality of two proportions (binomial distribution)
     To investigate the assumption that the proportions of elements from two
@@ -192,6 +201,7 @@ def Z2Proportion(spro1, spro2, ssize1, ssize2, confidence):
     @param ssize1: sample size #1
     @param ssize2: sample size #2
     @param confidence: confidence level
+    @param is_testCI: If True, confidence interval will be used. If False, p-value will be calculated. Default = False.
 
     @see: Ling, MHT. 2009. Ten Z-Test Routines from Gopal Kanji's 100
     Statistical Tests. The Python Papers Source Codes 1:5
@@ -202,9 +212,12 @@ def Z2Proportion(spro1, spro2, ssize1, ssize2, confidence):
     P = float(((spro1 * ssize1) + (spro2 * ssize2)) / (ssize1 + ssize2))
     statistic = float((spro1 - spro2) / \
                 (P * (1.0 - P) * ((1.0 / ssize1) + (1.0 / ssize2))) ** 0.5)
-    return test(statistic, NormalDistribution(), confidence)
+    if is_testCI:
+        return test_CI(statistic, NormalDistribution(), confidence)
+    else:
+        return [statistic, 1 - NormalDistribution().CDF(statistic)]
 
-def Z2Count(time1, time2, count1, count2, confidence):
+def Z2Count(time1, time2, count1, count2, confidence, is_testCI=False):
     """
     Test 6: Z-test for comparing two counts (Poisson distribution)
 
@@ -219,6 +232,7 @@ def Z2Count(time1, time2, count1, count2, confidence):
     @param count1: counts at first measurement time
     @param count2: counts at second measurement time
     @param confidence: confidence level
+    @param is_testCI: If True, confidence interval will be used. If False, p-value will be calculated. Default = False.
 
     @see: Ling, MHT. 2009. Ten Z-Test Routines from Gopal Kanji's 100
     Statistical Tests. The Python Papers Source Codes 1:5
@@ -229,9 +243,12 @@ def Z2Count(time1, time2, count1, count2, confidence):
     R1 = count1 / float(time1)
     R2 = count2 / float(time2)
     statistic = float((R1 - R2) / sqrt((R1 / time1) + (R2 / time2)))
-    return test(statistic, NormalDistribution(), confidence)
+    if is_testCI:
+        return test_CI(statistic, NormalDistribution(), confidence)
+    else:
+        return [statistic, 1 - NormalDistribution().CDF(statistic)]
 
-def t1Mean(smean, pmean, svar, ssize, confidence):
+def t1Mean(smean, pmean, svar, ssize, confidence, is_testCI=False):
     """
     Test 7: t-test for a population mean (population variance unknown)
 
@@ -247,6 +264,7 @@ def t1Mean(smean, pmean, svar, ssize, confidence):
     @param svar: sample variance
     @param ssize: sample size
     @param confidence: confidence level
+    @param is_testCI: If True, confidence interval will be used. If False, p-value will be calculated. Default = False.
 
     @see: Chay, ZE, Ling, MHT. 2010. COPADS, II: Chi-Square test, F-Test
     and t-Test Routines from Gopal Kanji's 100 Statistical Tests. The Python
@@ -256,10 +274,13 @@ def t1Mean(smean, pmean, svar, ssize, confidence):
     @since: version 0.4
     """
     statistic = float((smean - pmean) / (svar / sqrt(ssize)))
-    return test(statistic, TDistribution(shape = ssize-1), confidence)
+    if is_testCI:
+        return test_CI(statistic, TDistribution(shape = ssize-1), confidence)
+    else:
+        return [statistic, 1 - TDistribution(shape = ssize-1).CDF(statistic)]
 
 def t2Mean2EqualVariance(smean1, smean2, svar1, svar2, ssize1, ssize2,
-                         confidence, pmean1=0.0, pmean2=0.0):
+                         confidence, pmean1=0.0, pmean2=0.0, is_testCI=False):
     """
     Test 8: t-test for two population means (population variance unknown but
     equal)
@@ -280,6 +301,7 @@ def t2Mean2EqualVariance(smean1, smean2, svar1, svar2, ssize1, ssize2,
     @param confidence: confidence level
     @param pmean1: population mean of population #1 (optional)
     @param pmean2: population mean of population #2 (optional)
+    @param is_testCI: If True, confidence interval will be used. If False, p-value will be calculated. Default = False.
 
     @see: Chay, ZE, Ling, MHT. 2010. COPADS, II: Chi-Square test, F-Test
     and t-Test Routines from Gopal Kanji's 100 Statistical Tests. The Python
@@ -292,10 +314,13 @@ def t2Mean2EqualVariance(smean1, smean2, svar1, svar2, ssize1, ssize2,
     pvar = float((((ssize1 - 1) * svar1) + ((ssize2 - 1) * svar2)) / df)
     statistic = float(((smean1 - smean2) - (pmean1 - pmean2)) / \
                 ((sqrt(pvar)) * sqrt((1.0 / ssize1) + (1.0 / ssize2))))
-    return test(statistic, TDistribution(shape = df), confidence)
+    if is_testCI:
+        return test_CI(statistic, TDistribution(shape = df), confidence)
+    else:
+        return [statistic, 1 - TDistribution(shape = df).CDF(statistic)]
 
 def t2Mean2UnequalVariance(smean1, smean2, svar1, svar2, ssize1, ssize2,
-                           confidence, pmean1=0.0, pmean2=0.0):
+                           confidence, pmean1=0.0, pmean2=0.0, is_testCI=False):
     """
     Test 9: t-test for two population means (population variance unknown and
     unequal)
@@ -315,6 +340,7 @@ def t2Mean2UnequalVariance(smean1, smean2, svar1, svar2, ssize1, ssize2,
     @param confidence: confidence level
     @param pmean1: population mean of population #1 (optional)
     @param pmean2: population mean of population #2 (optional)
+    @param is_testCI: If True, confidence interval will be used. If False, p-value will be calculated. Default = False.
 
     @see: Chay, ZE, Ling, MHT. 2010. COPADS, II: Chi-Square test, F-Test
     and t-Test Routines from Gopal Kanji's 100 Statistical Tests. The Python
@@ -329,8 +355,12 @@ def t2Mean2UnequalVariance(smean1, smean2, svar1, svar2, ssize1, ssize2,
         (((svar1 ** 2) / ((ssize1 ** 2) * (ssize1 - 1))) + \
             ((svar2 ** 2) / ((ssize2 ** 2) * (ssize2 - 1)))))
     return test(statistic, TDistribution(shape = df), confidence)
+    if is_testCI:
+        return test_CI(statistic, TDistribution(shape = df), confidence)
+    else:
+        return [statistic, 1 - TDistribution(shape = df).CDF(statistic)]
 
-def tPaired(smean1, smean2, svar, ssize, confidence):
+def tPaired(smean1, smean2, svar, ssize, confidence, is_testCI=False):
     """
     Test 10: t-test for two population means (method of paired comparisons)
 
@@ -342,6 +372,7 @@ def tPaired(smean1, smean2, svar, ssize, confidence):
     @param svar: variance of differences between pairs
     @param ssize: sample size
     @param confidence: confidence level
+    @param is_testCI: If True, confidence interval will be used. If False, p-value will be calculated. Default = False.
 
     @see: Chay, ZE, Ling, MHT. 2010. COPADS, II: Chi-Square test, F-Test
     and t-Test Routines from Gopal Kanji's 100 Statistical Tests. The Python
@@ -351,9 +382,12 @@ def tPaired(smean1, smean2, svar, ssize, confidence):
     @since: version 0.4
     """
     statistic = float((smean1 - smean2) / (svar / sqrt(ssize)))
-    return test(statistic, TDistribution(shape = ssize - 1), confidence)
+    if is_testCI:
+        return test_CI(statistic, TDistribution(shape = ssize-1), confidence)
+    else:
+        return [statistic, 1 - TDistribution(shape = ssize-1).CDF(statistic)]
 
-def tRegressionCoefficient(variancex, varianceyx, b, ssize, confidence):
+def tRegressionCoefficient(variancex, varianceyx, b, ssize, confidence, is_testCI=False):
     """
     Test 11: t-test of a regression coefficient
 
@@ -367,6 +401,7 @@ def tRegressionCoefficient(variancex, varianceyx, b, ssize, confidence):
     @param b: calculated Regression Coefficient
     @param ssize: sample size
     @param confidence: confidence level
+    @param is_testCI: If True, confidence interval will be used. If False, p-value will be calculated. Default = False.
 
     @see: Chay, ZE, Ling, MHT. 2010. COPADS, II: Chi-Square test, F-Test
     and t-Test Routines from Gopal Kanji's 100 Statistical Tests. The Python
@@ -377,9 +412,12 @@ def tRegressionCoefficient(variancex, varianceyx, b, ssize, confidence):
     """
     statistic = float(((b * sqrt(variancex)) / \
         sqrt(varianceyx)) * ((ssize-1) ** -0.5))
-    return test(statistic, TDistribution(shape = ssize - 2), confidence)
+    if is_testCI:
+        return test_CI(statistic, TDistribution(shape = ssize-2), confidence)
+    else:
+        return [statistic, 1 - TDistribution(shape = ssize-2).CDF(statistic)]
 
-def tPearsonCorrelation(r, ssize, confidence):
+def tPearsonCorrelation(r, ssize, confidence, is_testCI=False):
     """
     Test 12: t-test of a correlation coefficient
 
@@ -397,6 +435,7 @@ def tPearsonCorrelation(r, ssize, confidence):
     @param r: calculated Pearson's product-moment correlation coefficient
     @param ssize: sample size
     @param confidence: confidence level
+    @param is_testCI: If True, confidence interval will be used. If False, p-value will be calculated. Default = False.
 
     @see: Chay, ZE, Ling, MHT. 2010. COPADS, II: Chi-Square test, F-Test
     and t-Test Routines from Gopal Kanji's 100 Statistical Tests. The Python
@@ -406,9 +445,12 @@ def tPearsonCorrelation(r, ssize, confidence):
     @since: version 0.4
     """
     statistic = float((r * sqrt(ssize - 2)) / sqrt(1 - (r **2)))
-    return test(statistic, TDistribution(shape = ssize - 2), confidence)
+    if is_testCI:
+        return test_CI(statistic, TDistribution(shape = ssize-2), confidence)
+    else:
+        return [statistic, 1 - TDistribution(shape = ssize-2).CDF(statistic)]
 
-def ZPearsonCorrelation(sr, pr, ssize, confidence):
+def ZPearsonCorrelation(sr, pr, ssize, confidence, is_testCI=False):
     """
     Test 13: Z-test of a correlation coefficient
 
@@ -427,6 +469,7 @@ def ZPearsonCorrelation(sr, pr, ssize, confidence):
         to test
     @param ssize: sample size
     @param confidence: confidence level
+    @param is_testCI: If True, confidence interval will be used. If False, p-value will be calculated. Default = False.
 
     @see: Ling, MHT. 2009. Ten Z-Test Routines from Gopal Kanji's 100
     Statistical Tests. The Python Papers Source Codes 1:5
@@ -440,9 +483,12 @@ def ZPearsonCorrelation(sr, pr, ssize, confidence):
     meanZ1 = float(0.5 * log((1 + pr) / (1 - pr)))
     sigmaZ1 = float(1.0 / sqrt(ssize - 3))
     statistic = float((Z1 - meanZ1) / sigmaZ1)
-    return test(statistic, NormalDistribution(), confidence)
+    if is_testCI:
+        return test_CI(statistic, NormalDistribution(), confidence)
+    else:
+        return [statistic, 1 - NormalDistribution().CDF(statistic)]
 
-def Z2PearsonCorrelation(r1, r2, ssize1, ssize2, confidence):
+def Z2PearsonCorrelation(r1, r2, ssize1, ssize2, confidence, is_testCI=False):
     """
     Test 14: Z-test for two correlation coefficients
 
@@ -455,6 +501,7 @@ def Z2PearsonCorrelation(r1, r2, ssize1, ssize2, confidence):
     @param ssize1: Sample size #1
     @param ssize2: Sample size #2
     @param confidence: confidence level
+    @param is_testCI: If True, confidence interval will be used. If False, p-value will be calculated. Default = False.
 
     @see: Ling, MHT. 2009. Ten Z-Test Routines from Gopal Kanji's 100
     Statistical Tests. The Python Papers Source Codes 1:5
@@ -468,9 +515,12 @@ def Z2PearsonCorrelation(r1, r2, ssize1, ssize2, confidence):
     sigma2 = float(1.0 / sqrt(ssize2 - 3))
     sigma = float(sqrt((sigma1 ** 2) + (sigma2 ** 2)))
     statistic = float(abs(z1 - z2) / sigma)
-    return test(statistic, NormalDistribution(), confidence)
+    if is_testCI:
+        return test_CI(statistic, NormalDistribution(), confidence)
+    else:
+        return [statistic, 1 - NormalDistribution().CDF(statistic)]
 
-def ChiSquarePopVar(values, ssize, pv, confidence = 0.95):
+def ChiSquarePopVar(values, ssize, pv, confidence = 0.95, is_testCI=False):
     """
     Test 15: Chi-square test for a population variance
 
@@ -481,6 +531,7 @@ def ChiSquarePopVar(values, ssize, pv, confidence = 0.95):
     @param ssize: sample size
     @param pv: population variance
     @param confidence: confidence level
+    @param is_testCI: If True, confidence interval will be used. If False, p-value will be calculated. Default = False.
 
     @see: Chay, ZE, Ling, MHT. 2010. COPADS, II: Chi-Square test, F-Test
     and t-Test Routines from Gopal Kanji's 100 Statistical Tests. The Python
@@ -494,9 +545,12 @@ def ChiSquarePopVar(values, ssize, pv, confidence = 0.95):
             for i in range(len(values))]
     sv = float((sum(freq)/(ssize-1)))
     statistic = float((((ssize - 1) * sv) / pv))
-    return test(statistic, ChiSquareDistribution(df = ssize-1), confidence)
+    if is_testCI:
+        return test_CI(statistic, ChiSquareDistribution(df = ssize-1), confidence)
+    else:
+        return [statistic, 1 - ChiSquareDistribution(df = ssize-1).CDF(statistic)]
 
-def FVarianceRatio(var1, var2, ssize1, ssize2, confidence):
+def FVarianceRatio(var1, var2, ssize1, ssize2, confidence, is_testCI=False):
     """
     Test 16: F-test for two population variances (variance ratio test)
 
@@ -508,6 +562,7 @@ def FVarianceRatio(var1, var2, ssize1, ssize2, confidence):
     @param ssize1: sample size #1
     @param ssize2: sample size #2
     @param confidence: confidence level
+    @param is_testCI: If True, confidence interval will be used. If False, p-value will be calculated. Default = False.
 
     @see: Chay, ZE, Ling, MHT. 2010. COPADS, II: Chi-Square test, F-Test
     and t-Test Routines from Gopal Kanji's 100 Statistical Tests. The Python
@@ -517,10 +572,12 @@ def FVarianceRatio(var1, var2, ssize1, ssize2, confidence):
     @since: version 0.4
     """
     statistic = float(var1 / var2)
-    return test(statistic, FDistribution(df1=ssize1-1, df2=ssize2-1),
-    confidence)
+    if is_testCI:
+        return test_CI(statistic, FDistribution(df1=ssize1-1, df2=ssize2-1), confidence)
+    else:
+        return [statistic, 1 - FDistribution(df1=ssize1-1, df2=ssize2-1).CDF(statistic)]
 
-def F2CorrelatedObs(r, var1, var2, ssize1, ssize2, confidence):
+def F2CorrelatedObs(r, var1, var2, ssize1, ssize2, confidence, is_testCI=False):
     """
     Test 17: F-test for two population variances (with correlated observations)
 
@@ -532,6 +589,7 @@ def F2CorrelatedObs(r, var1, var2, ssize1, ssize2, confidence):
     @param ssize1: sample size #1
     @param ssize2: sample size #2
     @param confidence: confidence level
+    @param is_testCI: If True, confidence interval will be used. If False, p-value will be calculated. Default = False.
 
     @see: Chay, ZE, Ling, MHT. 2010. COPADS, II: Chi-Square test, F-Test
     and t-Test Routines from Gopal Kanji's 100 Statistical Tests. The Python
@@ -542,7 +600,10 @@ def F2CorrelatedObs(r, var1, var2, ssize1, ssize2, confidence):
     """
     statistic = float(((var1 / var2)- 1) / (((((var1 / var2) + 1) ** 2) - \
         (4 * (r ** 2) * (var1 / var2))) ** 0.5))
-    return test(statistic, FDistribution(ssize1-1, ssize2-1), confidence)
+    if is_testCI:
+        return test_CI(statistic, FDistribution(df1=ssize1-1, df2=ssize2-1), confidence)
+    else:
+        return [statistic, 1 - FDistribution(df1=ssize1-1, df2=ssize2-1).CDF(statistic)]
 
 #def t18(**kwargs):
 #    """
