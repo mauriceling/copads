@@ -79,6 +79,7 @@ from . import hypothesis
 from . import nrpy
 from . import objectdistance
 from . import ode
+from . import utils_statistics
 
 # Type-casting functions
 
