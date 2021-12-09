@@ -10,7 +10,7 @@ def randomize_1d_lists(datalists):
     """
     Function to take in a list of lists to randomize / shuffle the values. Returned shuffled list will have the same number of elements as the given list of lists. For example, if datalists is a list containing 3 lists of 4, 5, and 6 items respectively; then the returned shuffled list will be a list containing 3 lists of 4, 5, and 6 items respectively.
 
-    @param datalist: List of lists to be shuffled.
+    @param datalists: List of lists to be shuffled.
     @return: Shuffled list of lists.
     """
     sizes = [len(x) for x in datalists]
@@ -29,3 +29,17 @@ def randomize_1d_lists(datalists):
             x = combined_list[position:]
             shuffled_list.append(x)
     return shuffled_list
+
+def bootstrap_replicates(datalists, function, replicates=2000):
+    """
+    Generate bootstrap replicates and calculate the statistic for each bootstrap replicate using given function.
+
+    @param datalists: List of lists containing the data; eg, [[sample A], [sample B]]
+    @param function: Function to process the shuffled lists; eg, function(shuffled_lists)
+    @param replicates: Number of bootstrap replicates. Default = 2000
+    @return: Shuffled list of lists.
+    """
+    replicates = int(replicates)
+    return [function(randomize_1d_lists(datalists)) 
+            for n in range(replicates)]
+        
