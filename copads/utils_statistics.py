@@ -53,12 +53,11 @@ def randomization_test(datalists, function, replicates=2000):
     @param datalists: List of lists containing the data; eg, [[sample A], [sample B]]
     @param function: Function to process the datalist and shuffled lists to generate a statistic; eg, function(datalists)
     @param replicates: Number of bootstrap replicates. Default = 2000
-    @return: List of (p-value, statistic, bootstrap statistics) where statistic is calculated from function on the datalists, p-value is the proportion of bootstrap statistics that is more than or equal to the statistic.
+    @return: List of (bootstrap mean, bootstrap standard deviation, statistic, bootstrap statistics) where statistic is calculated from function on the datalists
     """
     statistic = function(datalists)
     bs_replicates = bootstrap_replicates(datalists, function, replicates)
-    pvalue = sum([1 for x in bs_replicates if statistic >= x]) / int(replicates)
-    return (pvalue, statistic, bs_replicates)
+    return (np.mean(bs_replicates), np.std(bs_replicates), statistic, bs_replicates)
 
 def jackknife_estimator(datalist, function):
     """
