@@ -4,7 +4,10 @@ Date created: 8th December 2021
 Licence: Python Software Foundation License version 2
 """
 
+import copy
 import random
+
+import numpy as np
 
 def randomize_lists(datalists):
     """
@@ -56,3 +59,20 @@ def randomization_test(datalists, function, replicates=2000):
     bs_replicates = bootstrap_replicates(datalists, function, replicates)
     pvalue = sum([1 for x in bs_replicates if statistic >= x]) / int(replicates)
     return (pvalue, statistic, bs_replicates)
+
+def jackknife_estimator(datalist, function):
+    """
+    Estimates the mean and standard deviation of a statistic using Jackknife (leave one out) method.
+
+    @param datalist: List containing the data
+    @param function: Function to process the leave-one-out to generate a statistic; eg, function(datalist)
+    @return: (mean of statistic, standard deviation of statistic, list of leave-one-out statistics)
+    """
+    estimates = []
+    for i in range(len(datalist)):
+        t = copy.deepcopy(datalist)
+        _ = b.pop(datalist)
+        estimates.append(function(datalist))
+    mean = np.mean(estimates)
+    std = np.std(estimates)
+    return (mean, std, estimates)
