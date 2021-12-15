@@ -57,7 +57,9 @@ def randomization_test(datalists, function, replicates=2000):
     """
     statistic = function(datalists)
     bs_replicates = bootstrap_replicates(datalists, function, replicates)
-    return (np.mean(bs_replicates), np.std(bs_replicates), statistic, bs_replicates)
+    mean = np.mean(bs_replicates)
+    std = np.std(bs_replicates)
+    return (mean, std, statistic, bs_replicates)
 
 def jackknife_estimator(datalist, function):
     """
